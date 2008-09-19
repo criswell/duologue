@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
+using Mimicware.Graphics;
+using Mimicware.Manager;
 
 namespace Duologue
 {
@@ -15,6 +17,12 @@ namespace Duologue
     /// </summary>
     public class GamePlayTest : Microsoft.Xna.Framework.DrawableGameComponent
     {
+        #region Fields
+        private SpriteObject playerBase;
+        private SpriteObject playerCannon;
+        private SpriteObject playerLight;
+        private SpriteObject beam;
+        #endregion
         public GamePlayTest(Game game)
             : base(game)
         {
