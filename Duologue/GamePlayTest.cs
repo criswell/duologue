@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
 using Mimicware.Graphics;
 using Mimicware.Manager;
+using Duologue.PlayObjects;
+using Mimicware.Debug;
 
 namespace Duologue
 {
@@ -18,14 +20,13 @@ namespace Duologue
     public class GamePlayTest : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Fields
-        private SpriteObject playerBase;
-        private SpriteObject playerCannon;
-        private SpriteObject playerLight;
-        private SpriteObject beam;
-        private SpriteObject shot;
         private AssetManager assets;
         private RenderSprite render;
         private GraphicsDevice device;
+        private Player player;
+        private GamePadState lastState;
+        private Vector2 motionScaler;
+        private Game1 localGame;
         #endregion
 
         #region Properties
@@ -51,18 +52,25 @@ namespace Duologue
         /// Write-only property for setting the current graphics device
         /// Must be set before component is added to the game.
         /// </summary>
-        public GraphicsDevice GraphicsDevice
+        public GraphicsDevice Device
         {
             set { device = value; }
         }
+
+        /// <summary>
+        /// Set to enable logging
+        /// </summary>
+        public Logger Log;
         #endregion
 
         public GamePlayTest(Game game)
             : base(game)
         {
+            localGame = (Game1)game;
             render = null;
             assets = null;
             device = null;
+            Log = null;
         }
 
         /// <summary>
@@ -71,12 +79,7 @@ namespace Duologue
         /// </summary>
         public override void Initialize()
         {
-            if (render == null)
-                throw new NullReferenceException("The RenderSprite instance was not set before call to Init");
-            if (assets == null)
-                throw new NullReferenceException("The AssetManager instance was not set before call to Init");
-            if (device == null)
-                throw new NullReferenceException("The GraphicsDevice instance was not set before call to Init");
+            motionScaler = new Vector2(10f, 10f);
             base.Initialize();
         }
 
@@ -85,58 +88,25 @@ namespace Duologue
         /// </summary>
         protected override void LoadContent()
         {
-            playerBase = new SpriteObject(
-                assets.LoadTexture2D("player-base"),
-                new Vector2(device.Viewport.Width / 2f, device.Viewport.Height / 2f),
-                new Vector2(assets.LoadTexture2D("player-base").Width / 2f, assets.LoadTexture2D("player-base").Height / 2f),
-                null,
-                Color.Teal,
-                0f,
-                1f,
-                0.5f);
+            /*if (render == null)
+                throw new NullReferenceException("The RenderSprite instance was not set before call to Init");
+            if (assets == null)
+                throw new NullReferenceException("The AssetManager instance was not set before call to Init");
+            if (device == null)
+                throw new NullReferenceException("The GraphicsDevice instance was not set before call to Init");*/
 
-            playerCannon = new SpriteObject(
-                assets.LoadTexture2D("player-cannon"),
-                new Vector2(device.Viewport.Width / 2f, device.Viewport.Height / 2f),
-                new Vector2(assets.LoadTexture2D("player-cannon").Width / 2f, assets.LoadTexture2D("player-cannon").Height / 2f),
-                null,
-                Color.Red,
-                0f,
-                1f,
-                0.4f);
-
-            playerLight = new SpriteObject(
-                assets.LoadTexture2D("player-light"),
-                new Vector2(device.Viewport.Width / 2f, device.Viewport.Height / 2f),
-                new Vector2(assets.LoadTexture2D("player-light").Width / 2f, assets.LoadTexture2D("player-light").Height / 2f),
-                null,
-                Color.Blue,
-                0f,
-                1f,
-                0.4f);
-
-            shot = new SpriteObject(
-                assets.LoadTexture2D("shot"),
-                Vector2.Zero,
-                new Vector2(assets.LoadTexture2D("shot").Width / 2f, assets.LoadTexture2D("shot").Height / 2f),
-                null,
-                Color.Red,
-                0f,
-                1f,
-                1f);
-
-            shot.Alive = false;
-
-            beam = new SpriteObject(
-                assets.LoadTexture2D("beam"),
-                new Vector2(device.Viewport.Width / 2f, device.Viewport.Height / 2f),
-                new Vector2(971f, 254f),
-                null,
-                Color.Blue - new Color((byte)0, (byte)0, (byte)0, (byte)100),
-                0f,
-                1f,
-                1f);
-
+            if (device == null)
+            {
+                device = localGame.GraphicsDevice;
+            }
+            if (assets == null)
+            {
+                assets = localGame.Assets;
+            }
+            player = new Player(assets, device, render);
+            player.Position = new Vector2(
+                device.Viewport.Width / 2f,
+                device.Viewport.Height / 2f);
             base.LoadContent();
         }
 
@@ -146,7 +116,26 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            GamePadState currentState = GamePad.GetState(PlayerIndex.One);
+
+            // Update player position, aim, and orientation
+            if (currentState.ThumbSticks.Left.X != 0f ||
+                currentState.ThumbSticks.Left.Y != 0f)
+            {
+                player.Orientation.X = currentState.ThumbSticks.Left.X;
+                player.Orientation.Y = -1 * currentState.ThumbSticks.Left.Y;
+            }
+            if (currentState.ThumbSticks.Right.X != 0f ||
+                currentState.ThumbSticks.Right.Y != 0f)
+            {
+                player.Aim.X = currentState.ThumbSticks.Right.X;
+                player.Aim.Y = currentState.ThumbSticks.Right.Y * -1;
+            }
+
+            player.Position.X += currentState.ThumbSticks.Left.X * motionScaler.X;
+            player.Position.Y -= currentState.ThumbSticks.Left.Y * motionScaler.Y;
+
+            lastState = currentState;
 
             base.Update(gameTime);
         }
@@ -157,6 +146,16 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Draw(GameTime gameTime)
         {
+            if (render == null)
+            {
+                render = localGame.Render;
+                player.RenderSprite = render;
+            }
+
+            if (Log != null)
+                Log.LogEntry("O:" + player.Orientation.ToString() + ", TS.L: " + lastState.ThumbSticks.Left.ToString() + ", BR: " + player.BaseRotation.ToString());
+            
+            player.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

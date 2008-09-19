@@ -78,6 +78,22 @@ namespace Mimicware.Graphics
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="vector2"></param>
+        /// <param name="color"></param>
+        internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color)
+        {
+            this.Add(new SpriteObject(
+                font,
+                p,
+                vector2,
+                color));
+        }
+
+        /// <summary>
         /// Run the batch of sprites
         /// </summary>
         public void Run()
@@ -87,16 +103,23 @@ namespace Mimicware.Graphics
 
             foreach (SpriteObject sobj in sprites)
             {
-                batch.Draw(
-                    sobj.Texture,
-                    sobj.Position,
-                    sobj.Source,
-                    sobj.Tint,
-                    sobj.Rotation,
-                    sobj.Center,
-                    sobj.Scale,
-                    SpriteEffects.None,
-                    sobj.Layer);
+                if (sobj.Texture != null)
+                    batch.Draw(
+                        sobj.Texture,
+                        sobj.Position,
+                        sobj.Source,
+                        sobj.Tint,
+                        sobj.Rotation,
+                        sobj.Center,
+                        sobj.Scale,
+                        SpriteEffects.None,
+                        sobj.Layer);
+                else if (sobj.Text != null)
+                    batch.DrawString(
+                        sobj.Font,
+                        sobj.Text,
+                        sobj.Position,
+                        sobj.Tint);
             }
             batch.End();
             sprites.Clear();

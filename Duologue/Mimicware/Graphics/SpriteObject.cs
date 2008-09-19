@@ -103,6 +103,16 @@ namespace Mimicware.Graphics
             get { return source; }
             set { source = value; }
         }
+
+        /// <summary>
+        /// Text (if this is rendered text)
+        /// </summary>
+        public string Text;
+
+        /// <summary>
+        /// If rendered text, this is the font
+        /// </summary>
+        public SpriteFont Font;
         #endregion
 
         #region Constructor/Init/Destructor
@@ -135,6 +145,20 @@ namespace Mimicware.Graphics
             scale = textureScale;
             source = textureRect;
             layer = textureLayer;
+            Text = null;
+        }
+
+        public SpriteObject(
+            SpriteFont font,
+            string text,
+            Vector2 textPosition,
+            Color textTint)
+        {
+            Font = font;
+            Text = text;
+            texture = null;
+            position = textPosition;
+            tint = textTint;
         }
         #endregion
 

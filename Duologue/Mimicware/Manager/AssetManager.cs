@@ -16,10 +16,11 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace Mimicware.Manager
 {
-    class AssetManager
+    public class AssetManager
     {
         #region Fields
         private Dictionary<string, Texture2D> graphicAssets;
+        private Dictionary<string, SpriteFont> fontAssets;
         private ContentManager content;
         #endregion
 
@@ -36,6 +37,8 @@ namespace Mimicware.Manager
         public AssetManager(ContentManager ContentManager)
         {
             content = ContentManager;
+            graphicAssets = new Dictionary<string,Texture2D>();
+            fontAssets = new Dictionary<string, SpriteFont>();
         }
         #endregion
 
@@ -55,6 +58,20 @@ namespace Mimicware.Manager
                 graphicAssets.Add(filename, content.Load<Texture2D>(filename));
             }
             return graphicAssets[filename];
+        }
+
+        /// <summary>
+        /// Load a SpriteFont
+        /// </summary>
+        /// <param name="p">The filename of the asset to load</param>
+        /// <returns>The font</returns>
+        public SpriteFont LoadSpriteFont(string filename)
+        {
+            if (!fontAssets.ContainsKey(filename))
+            {
+                fontAssets.Add(filename, content.Load<SpriteFont>(filename));
+            }
+            return fontAssets[filename];
         }
         #endregion
     }
