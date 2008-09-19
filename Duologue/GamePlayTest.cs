@@ -135,6 +135,12 @@ namespace Duologue
             player.Position.X += currentState.ThumbSticks.Left.X * motionScaler.X;
             player.Position.Y -= currentState.ThumbSticks.Left.Y * motionScaler.Y;
 
+            if (currentState.Triggers.Left > 0 &&
+                lastState.Triggers.Left == 0)
+            {
+                player.SwapColors();
+            }
+
             lastState = currentState;
 
             base.Update(gameTime);

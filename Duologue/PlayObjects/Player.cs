@@ -213,5 +213,12 @@ namespace Duologue.PlayObjects
             CannonRotation += 3f * MathHelper.PiOver4;
 
         }
+
+        internal void SwapColors()
+        {
+            beam.Tint = playerCannon.Tint;
+            playerCannon.Tint = playerLight.Tint;
+            playerLight.Tint = beam.Tint;
+        }
     }
 }
