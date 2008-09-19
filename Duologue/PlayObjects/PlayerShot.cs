@@ -16,11 +16,14 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const int numShots = 10;
+        private const int timeBetweenShots = 8; // Frames
+        private const int shotScaler = 10;
         #endregion
 
         #region Fields
-        private SpriteObject shot;
-        private Vector2[] shots;
+        private SpriteObject[] shots;
+        private int shotTimer;
+        private Random rand;
         #endregion
 
         #region Properties
@@ -36,19 +39,108 @@ namespace Duologue.PlayObjects
         public PlayerShot()
             : base()
         {
+            // FIXME: We need to get rid of this
             Initialize();
         }
 
         private void Initialize()
         {
-            
+            shotTimer = timeBetweenShots;
+            rand = new Random();
+            shots = new SpriteObject[numShots];
+            for (int i = 0; i < numShots; i++)
+            {
+                shots[i] = new SpriteObject(
+                    AssetManager.LoadTexture2D("shot"),
+                    Vector2.Zero,
+                    new Vector2(AssetManager.LoadTexture2D("shot").Width / 2f, AssetManager.LoadTexture2D("shot").Height / 2f),
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    0.5f);
+                shots[i].Alive = false;
+            }
         }
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Ensure that we're still inside screenboundaries.
+        /// </summary>
+        private bool IsInScreen(Vector2 Position, Vector2 Dimensions)
+        {
+            if (Position.X > GraphicsDevice.Viewport.Width + Dimensions.X / 2f ||
+                Position.X < Dimensions.X / -2f ||
+                Position.Y > GraphicsDevice.Viewport.Height + Dimensions.Y / 2f ||
+                Position.Y < Dimensions.Y / -2f)
+                return false;
+            else
+                return true;
+        }
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Call when requesting we fire a shot in a given direction.
+        /// Will only fire if there is a shot available, and a certain
+        /// shot timer has elapsed.
+        /// </summary>
+        /// <param name="Aim">The direction to fire in</param>
+        /// <param name="Tint">The tint of the blast</param>
+        /// <param name="StartPos">The start position of the blast</param>
+        internal void Fire(Vector2 Aim, Color Tint, Vector2 StartPos)
+        {
+            if (shotTimer >= timeBetweenShots)
+            {
+                for (int i = 0; i < shots.Length; i++)
+                {
+                    if (!shots[i].Alive)
+                    {
+                        shots[i].Alive = true;
+                        shots[i].Rotation = (float)rand.NextDouble();
+                        shots[i].Tint = Tint;
+                        shots[i].Position = StartPos;
+                        shots[i].Direction = Aim;
+                        shotTimer = 0;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draw the shots. Call once per frame.
+        /// </summary>
+        /// <param name="gameTime">The gametime</param>
+        internal void Draw(GameTime gameTime)
+        {
+            for (int i = 0; i < shots.Length; i++)
+            {
+                if (shots[i].Alive)
+                    RenderSprite.Draw(shots[i]);
+            }
+        }
+
+        /// <summary>
+        /// Called once per frame
+        /// </summary>
+        /// <param name="gameTime"></param>
+        internal void Update(GameTime gameTime)
+        {
+            if (shotTimer < timeBetweenShots)
+                shotTimer++;
+            for (int i = 0; i < shots.Length; i++)
+            {
+                if (shots[i].Alive)
+                {
+                    shots[i].Position += shotScaler * Vector2.Normalize(shots[i].Direction);
+                    shots[i].Alive = IsInScreen(shots[i].Position,
+                        new Vector2(shots[i].Texture.Width, shots[i].Texture.Height));
+                }
+            }
+        }
         #endregion
+
     }
 }

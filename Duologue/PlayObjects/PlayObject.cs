@@ -61,6 +61,7 @@ namespace Duologue.PlayObjects
         /// </summary>
         public PlayObject()
         {
+            // FIXME: We need to get rid of this
             AssetManager = null;
             GraphicsDevice = null;
             RenderSprite = null;

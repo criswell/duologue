@@ -48,6 +48,8 @@ namespace Duologue.PlayObjects
         /// The rotation of the beam
         /// </summary>
         public float BeamRotation;
+
+        public PlayerShot Shot;
         #endregion
 
         #region Constructor / Init
@@ -61,11 +63,14 @@ namespace Duologue.PlayObjects
         public Player()
             : base()
         {
+            // FIXME: We need to get rid of this
             Initialize();
         }
 
         private void Initialize()
         {
+            // Gonna cause some errors me think
+            Shot = new PlayerShot(AssetManager, GraphicsDevice, RenderSprite);
             Orientation = Vector2.UnitX;
             Aim = Vector2.Negate(Orientation);
             CaclulateRotations();
@@ -185,6 +190,7 @@ namespace Duologue.PlayObjects
                 1f,
                 0.5f);
 
+            Shot.Draw(gameTime);
         }
 
         /// <summary>
@@ -240,6 +246,24 @@ namespace Duologue.PlayObjects
             beam.Tint = playerCannon.Tint;
             playerCannon.Tint = playerLight.Tint;
             playerLight.Tint = beam.Tint;
+        }
+
+        /// <summary>
+        /// Call when a fire request is made
+        /// </summary>
+        internal void Fire()
+        {
+            Vector2 startPos = Position; // FIXME
+            Shot.Fire(Aim, playerCannon.Tint, startPos);
+        }
+
+        /// <summary>
+        /// Called once per frame
+        /// </summary>
+        /// <param name="gameTime"></param>
+        internal void Update(GameTime gameTime)
+        {
+            Shot.Update(gameTime);
         }
     }
 }

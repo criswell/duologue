@@ -94,6 +94,15 @@ namespace Mimicware.Graphics
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="spriteObject"></param>
+        internal void Draw(SpriteObject spriteObject)
+        {
+            this.Add(spriteObject);
+        }
+
+        /// <summary>
         /// Run the batch of sprites
         /// </summary>
         public void Run()
