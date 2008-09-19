@@ -123,7 +123,7 @@ namespace Duologue.PlayObjects
                     Position,
                     new Vector2(971f, 254f),
                     null,
-                    new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, (byte)100),
+                    new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, (byte)50),
                     0f,
                     1f,
                     1f);
@@ -160,7 +160,18 @@ namespace Duologue.PlayObjects
                 playerLight.Tint,
                 LightRotation,
                 1f,
-                0.5f);                
+                0.5f);
+
+            // Lightbeam
+            RenderSprite.Draw(
+                beam.Texture,
+                Position,
+                beam.Center,
+                null,
+                beam.Tint,
+                BeamRotation,
+                1f,
+                0.5f);
 
         }
 
@@ -176,8 +187,11 @@ namespace Duologue.PlayObjects
             if (Orientation.Y < 0)
                 BaseRotation *= -1;
 
-            // The cannon rotation is a bit tricky because it starts in the left coordinate system
+            // The light rotation is a bit tricky because it starts in the left coordinate system
             LightRotation = BaseRotation +3f*MathHelper.PiOver4;
+
+            // Next up, the light beam rotation is 180 degrees from the base
+            BeamRotation = BaseRotation + MathHelper.Pi;
         }
     }
 }
