@@ -206,10 +206,11 @@ namespace Duologue.PlayObjects
 
             // Next, we do the cannon
             float dotAim = Vector2.Dot(Aim, Vector2.UnitX);
-            CannonRotation = (float)Math.Acos((double)(dotAim / Aim.Length()));// -MathHelper.PiOver2;
+            CannonRotation = (float)Math.Acos((double)(dotAim / Aim.Length()));
             if (Aim.Y < 0)
                 CannonRotation *= -1;
 
+            // We have to do this after the Aim.Y test because it could cross the angle = 0/Pi boundary
             CannonRotation += 3f * MathHelper.PiOver4;
 
         }
