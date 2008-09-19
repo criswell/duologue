@@ -27,9 +27,18 @@ namespace Mimicware.Graphics
         private float rotation;
         private float scale;
         private float layer;
+        private bool alive;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Determines if the sprite is alive or not
+        /// </summary>
+        public bool Alive
+        {
+            set { alive = value; }
+            get { return alive; }
+        }
         /// <summary>
         /// The sprite texture
         /// </summary>
