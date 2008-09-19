@@ -232,6 +232,9 @@ namespace Duologue.PlayObjects
 
         }
 
+        /// <summary>
+        /// Call when the colors need to be swapped
+        /// </summary>
         internal void SwapColors()
         {
             beam.Tint = playerCannon.Tint;
