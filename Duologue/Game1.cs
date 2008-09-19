@@ -103,7 +103,7 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            Graphics.GraphicsDevice.Clear(Color.DarkBlue);
 
             // TODO: Add your drawing code here
             Render.Run();

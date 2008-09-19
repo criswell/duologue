@@ -79,7 +79,7 @@ namespace Duologue.PlayObjects
                     Position,
                     new Vector2(AssetManager.LoadTexture2D("player-base").Width / 2f, AssetManager.LoadTexture2D("player-base").Height / 2f),
                     null,
-                    Color.Teal,
+                    Color.Honeydew,
                     0f,
                     1f,
                     0.5f);
@@ -99,7 +99,7 @@ namespace Duologue.PlayObjects
                     Position,
                     new Vector2(AssetManager.LoadTexture2D("player-light").Width / 2f, AssetManager.LoadTexture2D("player-light").Height / 2f),
                     null,
-                    Color.Blue,
+                    Color.Teal,
                     0f,
                     1f,
                     0.4f);
@@ -123,7 +123,7 @@ namespace Duologue.PlayObjects
                     Position,
                     new Vector2(971f, 254f),
                     null,
-                    new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, (byte)50),
+                    Color.Teal, //new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, (byte)100),
                     0f,
                     1f,
                     1f);
@@ -173,6 +173,17 @@ namespace Duologue.PlayObjects
                 1f,
                 0.5f);
 
+            // Cannon
+            RenderSprite.Draw(
+                playerCannon.Texture,
+                Position,
+                playerCannon.Center,
+                null,
+                playerCannon.Tint,
+                CannonRotation,
+                1f,
+                0.5f);
+
         }
 
         /// <summary>
@@ -192,6 +203,15 @@ namespace Duologue.PlayObjects
 
             // Next up, the light beam rotation is 180 degrees from the base
             BeamRotation = BaseRotation + MathHelper.Pi;
+
+            // Next, we do the cannon
+            float dotAim = Vector2.Dot(Aim, Vector2.UnitX);
+            CannonRotation = (float)Math.Acos((double)(dotAim / Aim.Length()));// -MathHelper.PiOver2;
+            if (Aim.Y < 0)
+                CannonRotation *= -1;
+
+            CannonRotation += 3f * MathHelper.PiOver4;
+
         }
     }
 }
