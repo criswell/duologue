@@ -139,6 +139,7 @@ namespace Duologue.PlayObjects
         internal void Draw(GameTime gameTime)
         {
             CaclulateRotations();
+            CheckScreenBoundary();
 
             // Base
             RenderSprite.Draw(
@@ -184,6 +185,22 @@ namespace Duologue.PlayObjects
                 1f,
                 0.5f);
 
+        }
+
+        /// <summary>
+        /// Ensure that we're still inside screenboundaries.
+        /// </summary>
+        private void CheckScreenBoundary()
+        {
+            if (Position.X > GraphicsDevice.Viewport.Width - playerBase.Texture.Width /2f)
+                Position.X = GraphicsDevice.Viewport.Width - playerBase.Texture.Width/2f;
+            if (Position.X < playerBase.Texture.Width/2f)
+                Position.X = playerBase.Texture.Width/2f;
+
+            if (Position.Y > GraphicsDevice.Viewport.Height - playerBase.Texture.Height/2f)
+                Position.Y = GraphicsDevice.Viewport.Height - playerBase.Texture.Height/2f;
+            if (Position.Y < playerBase.Texture.Height/2f)
+                Position.Y = playerBase.Texture.Height/2f;
         }
 
         /// <summary>
