@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using Mimicware.Graphics;
+using Mimicware.Manager;
+using Mimicware.Debug;
 
 namespace Duologue
 {
@@ -16,12 +19,16 @@ namespace Duologue
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager Graphics;
         SpriteBatch spriteBatch;
+        GamePlayTest gamePlayTest;
+        public AssetManager Assets;
+        public RenderSprite Render;
+        public Logger Log;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -34,7 +41,17 @@ namespace Duologue
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            Assets = new AssetManager(Content);
+            gamePlayTest = new GamePlayTest(this);
+            gamePlayTest.Enabled = true;
+            gamePlayTest.Visible = true;
+            this.Components.Add(gamePlayTest);
+            Log = new Logger(this);
+            Log.Enabled = true;
+            Log.Visible = true;
+            this.Components.Add(Log);
+            Log.AssetManager = Assets;
+            gamePlayTest.Log = Log;
             base.Initialize();
         }
 
@@ -46,6 +63,11 @@ namespace Duologue
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Render = new RenderSprite(spriteBatch);
+            Log.RenderSprite = Render;
+            /*gamePlayTest.RenderSprite = Render;
+            gamePlayTest.AssetManager = Assets;
+            gamePlayTest.Device = GraphicsDevice;*/
 
             // TODO: use this.Content to load your game content here
         }
@@ -81,10 +103,10 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            Graphics.GraphicsDevice.Clear(Color.DarkBlue);
 
             // TODO: Add your drawing code here
-
+            Render.Run();
             base.Draw(gameTime);
         }
     }
