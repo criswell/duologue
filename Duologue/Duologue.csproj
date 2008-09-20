@@ -61,12 +61,14 @@
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />
     <Compile Include="Mimicware\Graphics\SpriteObject.cs" />
     <Compile Include="Mimicware\Manager\AssetManager.cs" />
+    <Compile Include="PlayObjects\EnemyFloater.cs" />
     <Compile Include="PlayObjects\Player.cs" />
     <Compile Include="PlayObjects\PlayerShot.cs" />
     <Compile Include="PlayObjects\PlayObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="State\ColorState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

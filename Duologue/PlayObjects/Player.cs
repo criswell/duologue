@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
 using Mimicware.Graphics;
 using Mimicware.Manager;
+using Duologue.State;
 
 namespace Duologue.PlayObjects
 {
@@ -50,13 +51,14 @@ namespace Duologue.PlayObjects
         public float BeamRotation;
 
         public PlayerShot Shot;
+        public ColorState colorState;
         #endregion
 
         #region Constructor / Init
-        public Player(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer)
+        public Player(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer, ColorState currentColorState)
             : base(manager, graphics, renderer)
         {
-
+            colorState = currentColorState;
             Initialize();
         }
 
@@ -94,7 +96,7 @@ namespace Duologue.PlayObjects
                     Position,
                     new Vector2(AssetManager.LoadTexture2D("player-cannon").Width / 2f, AssetManager.LoadTexture2D("player-cannon").Height / 2f),
                     null,
-                    Color.Red,
+                    colorState.Positive[1],
                     0f,
                     1f,
                     0.4f);
@@ -104,7 +106,7 @@ namespace Duologue.PlayObjects
                     Position,
                     new Vector2(AssetManager.LoadTexture2D("player-light").Width / 2f, AssetManager.LoadTexture2D("player-light").Height / 2f),
                     null,
-                    Color.Teal,
+                    colorState.Negative[1],
                     0f,
                     1f,
                     0.4f);
@@ -115,7 +117,7 @@ namespace Duologue.PlayObjects
                     Vector2.Zero,
                     new Vector2(AssetManager.LoadTexture2D("shot").Width / 2f, AssetManager.LoadTexture2D("shot").Height / 2f),
                     null,
-                    Color.Red,
+                    colorState.Positive[0],
                     0f,
                     1f,
                     1f);
@@ -128,7 +130,7 @@ namespace Duologue.PlayObjects
                     Position,
                     new Vector2(971f, 253f),
                     null,
-                    Color.Teal, //new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, (byte)100),
+                    colorState.Negative[0],
                     0f,
                     1f,
                     1f);
