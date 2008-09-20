@@ -103,7 +103,7 @@ namespace Duologue
             player.Position = new Vector2(
                 device.Viewport.Width / 2f,
                 device.Viewport.Height / 2f);
-            floater = new EnemyFloater(assets, device, render, 20);
+            floater = new EnemyFloater(assets, device, render, 20, player);
             minMaxX = new Vector2(
                 64f, device.Viewport.Width - 64f);
             minMaxY = new Vector2(

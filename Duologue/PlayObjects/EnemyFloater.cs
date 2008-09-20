@@ -37,8 +37,9 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const int defaultNumEnemies = 10;
-        private const int minSpeed = 2;
-        private const int maxSpeed = 10;
+        private const int minSpeed = 1;
+        private const int maxSpeed = 5;
+        private const int turnRadius = 100; // larger is slower
         #endregion
 
         #region Fields
@@ -49,13 +50,15 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Properties
+        public Player Player;
         #endregion
 
         #region Constructor / Init
-        public EnemyFloater(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer, int numberEnemies)
+        public EnemyFloater(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer, int numberEnemies, Player player)
             : base(manager, graphics, renderer)
         {
             numEnemies = numberEnemies;
+            Player = player;
             Initialize();
         }
 
@@ -131,7 +134,24 @@ namespace Duologue.PlayObjects
                 }
                 else
                 {
+                    // Aim at the player
+                    Vector2 vector2player = Player.Position - enemies[i].Position;
+                    vector2player.Normalize();
+
+                    enemies[i].Direction += turnRadius* vector2player;
+                    enemies[i].Direction.Normalize();
+
+                    // Rotate
+                    float dotDirection = Vector2.Dot(enemies[i].Direction, Vector2.UnitX);
+                    enemies[i].Rotation = (float)Math.Acos((double)(dotDirection / 1f));
+                    if (enemies[i].Direction.Y < 0)
+                        enemies[i].Rotation *= -1;
+
+                    enemies[i].Rotation += 3f * MathHelper.PiOver2;
+
+                    // Update position
                     enemies[i].Position += enemies[i].Speed * enemies[i].Direction;
+                    enemies[i].Speed = rand.Next(minSpeed, maxSpeed);
                     if (enemies[i].Position.X > GraphicsDevice.Viewport.Width - enemies[i].Texture.Width / 2f)
                     {
                         enemies[i].Position.X = GraphicsDevice.Viewport.Width - enemies[i].Texture.Width / 2f;
