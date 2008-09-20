@@ -278,7 +278,8 @@ namespace Duologue.PlayObjects
         /// <returns>Returns 0 if not in beam. -1 if in beam and opposite colors. +1 if in beam and complimentary colors.</returns>
         internal int IsInBeam(Vector2 vector2, Color color)
         {
-            
+            // ERE I AM JH
+            return 0;
         }
 
         #region Public Overrides

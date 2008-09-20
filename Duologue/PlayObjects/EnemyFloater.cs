@@ -157,8 +157,9 @@ namespace Duologue.PlayObjects
                     enemies[i].Direction.Normalize();
 
                     // See if we're in the beam
-                    if (Player.IsInBeam(enemies[i].Position, enemies[i].Tint))
-                        enemies[i].Direction = Vector2.Negate(enemies[i].Direction);
+                    int inBeam = Player.IsInBeam(enemies[i].Position, enemies[i].Tint);
+                    //if (Player.IsInBeam(enemies[i].Position, enemies[i].Tint))
+                    //    enemies[i].Direction = Vector2.Negate(enemies[i].Direction);
 
                     // Rotate
                     float dotDirection = Vector2.Dot(enemies[i].Direction, Vector2.UnitX);
