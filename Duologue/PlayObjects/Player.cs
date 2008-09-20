@@ -126,7 +126,7 @@ namespace Duologue.PlayObjects
                 beam = new SpriteObject(
                     AssetManager.LoadTexture2D("beam"),
                     Position,
-                    new Vector2(971f, 254f),
+                    new Vector2(971f, 253f),
                     null,
                     Color.Teal, //new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, (byte)100),
                     0f,
@@ -166,7 +166,8 @@ namespace Duologue.PlayObjects
                 playerLight.Tint,
                 LightRotation,
                 1f,
-                0.5f);
+                0.5f,
+                true);
 
             // Lightbeam
             RenderSprite.Draw(
@@ -177,7 +178,8 @@ namespace Duologue.PlayObjects
                 beam.Tint,
                 BeamRotation,
                 1f,
-                0.5f);
+                0.5f,
+                true);
 
             // Cannon
             RenderSprite.Draw(
