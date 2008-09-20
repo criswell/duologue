@@ -27,6 +27,9 @@ namespace Duologue
         private GamePadState lastState;
         private Vector2 motionScaler;
         private Game1 localGame;
+        private EnemyFloater floater;
+        private Vector2 minMaxX;
+        private Vector2 minMaxY;
         #endregion
 
         #region Properties
@@ -100,6 +103,11 @@ namespace Duologue
             player.Position = new Vector2(
                 device.Viewport.Width / 2f,
                 device.Viewport.Height / 2f);
+            floater = new EnemyFloater(assets, device, render, 20);
+            minMaxX = new Vector2(
+                64f, device.Viewport.Width - 64f);
+            minMaxY = new Vector2(
+                64f, device.Viewport.Height - 64f);
             base.LoadContent();
         }
 
@@ -144,7 +152,7 @@ namespace Duologue
             lastState = currentState;
 
             player.Update(gameTime);
-
+            floater.Update(gameTime, minMaxX, minMaxY, Color.Teal, Color.Tomato);
             base.Update(gameTime);
         }
 
@@ -158,9 +166,11 @@ namespace Duologue
             {
                 render = localGame.Render;
                 player.SetRenderSprite(render);
+                floater.SetRenderSprite(render);
             }
             
             player.Draw(gameTime);
+            floater.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

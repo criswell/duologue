@@ -20,7 +20,6 @@ namespace Mimicware.Graphics
     {
         #region Fields
         private Texture2D texture;
-        private Vector2 position;
         private Vector2 center;
         private Rectangle? source;
         private Color tint;
@@ -50,11 +49,8 @@ namespace Mimicware.Graphics
         /// <summary>
         /// The sprite position
         /// </summary>
-        public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
+        public Vector2 Position;
+
         /// <summary>
         /// The center of the sprite
         /// </summary>
@@ -143,7 +139,7 @@ namespace Mimicware.Graphics
             float textureLayer)
         {
             texture = texture2D;
-            position = texturePosition;
+            Position = texturePosition;
             center = textureCenter;
             tint = textureTint;
             rotation = textureRotation;
@@ -162,7 +158,7 @@ namespace Mimicware.Graphics
             Font = font;
             Text = text;
             texture = null;
-            position = textPosition;
+            Position = textPosition;
             tint = textTint;
         }
         #endregion
