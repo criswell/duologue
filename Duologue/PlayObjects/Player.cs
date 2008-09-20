@@ -267,5 +267,37 @@ namespace Duologue.PlayObjects
         {
             Shot.Update(gameTime);
         }
+
+        #region Public Overrides
+        /// <summary>
+        /// Call to set the AssetManager
+        /// </summary>
+        /// <param name="manager">The AssetManager</param>
+        public override void SetAssetManager(AssetManager manager)
+        {
+            Shot.SetAssetManager(manager);
+            base.SetAssetManager(manager);
+        }
+
+        /// <summary>
+        /// Call to set the graphics device
+        /// </summary>
+        /// <param name="device">The GraphicsDevice</param>
+        public override void SetGraphicsDevice(GraphicsDevice device)
+        {
+            Shot.SetGraphicsDevice(device);
+            base.SetGraphicsDevice(device);
+        }
+
+        /// <summary>
+        /// Call to set the render sprite
+        /// </summary>
+        /// <param name="render">Do you really need to ask?</param>
+        public override void SetRenderSprite(RenderSprite render)
+        {
+            Shot.SetRenderSprite(render);
+            base.SetRenderSprite(render);
+        }
+        #endregion
     }
 }

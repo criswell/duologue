@@ -88,13 +88,6 @@ namespace Duologue
         /// </summary>
         protected override void LoadContent()
         {
-            /*if (render == null)
-                throw new NullReferenceException("The RenderSprite instance was not set before call to Init");
-            if (assets == null)
-                throw new NullReferenceException("The AssetManager instance was not set before call to Init");
-            if (device == null)
-                throw new NullReferenceException("The GraphicsDevice instance was not set before call to Init");*/
-
             if (device == null)
             {
                 device = localGame.GraphicsDevice;
@@ -118,7 +111,7 @@ namespace Duologue
         {
             GamePadState currentState = GamePad.GetState(PlayerIndex.One);
 
-            // Update player position, aim, and orientation
+            // Update player position, aim, fire, and orientatio
             if (currentState.ThumbSticks.Left.X != 0f ||
                 currentState.ThumbSticks.Left.Y != 0f)
             {
@@ -139,9 +132,12 @@ namespace Duologue
             player.Position.X += currentState.ThumbSticks.Left.X * motionScaler.X;
             player.Position.Y -= currentState.ThumbSticks.Left.Y * motionScaler.Y;
 
+            // Button handling
             if (currentState.Triggers.Left > 0 &&
                 lastState.Triggers.Left == 0)
             {
+                if (Log != null)
+                    Log.LogEntry("Color swap requested");
                 player.SwapColors();
             }
 
@@ -161,8 +157,7 @@ namespace Duologue
             if (render == null)
             {
                 render = localGame.Render;
-                player.RenderSprite = render;
-                player.Shot.RenderSprite = render;
+                player.SetRenderSprite(render);
             }
 
             //if (Log != null)

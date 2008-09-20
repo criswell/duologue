@@ -69,6 +69,32 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Call to set the assetmanager.
+        /// </summary>
+        /// <param name="manager">The AssetManager</param>
+        public virtual void SetAssetManager(AssetManager manager)
+        {
+            AssetManager = manager;
+        }
+
+        /// <summary>
+        /// Call to set the render sprite
+        /// </summary>
+        /// <param name="render">The RenderSprite</param>
+        public virtual void SetRenderSprite(RenderSprite render)
+        {
+            RenderSprite = render;
+        }
+
+        /// <summary>
+        /// Call to set the GraphicsDevice
+        /// </summary>
+        /// <param name="device">The GraphicsDevice</param>
+        public virtual void SetGraphicsDevice(GraphicsDevice device)
+        {
+            GraphicsDevice = device;
+        }
         #endregion
     }
 }
