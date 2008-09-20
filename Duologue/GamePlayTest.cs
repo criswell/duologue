@@ -159,9 +159,6 @@ namespace Duologue
                 render = localGame.Render;
                 player.SetRenderSprite(render);
             }
-
-            //if (Log != null)
-            //    Log.LogEntry("O:" + player.Orientation.ToString() + ", TS.L: " + lastState.ThumbSticks.Left.ToString() + ", BR: " + player.BaseRotation.ToString());
             
             player.Draw(gameTime);
             base.Draw(gameTime);
