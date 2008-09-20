@@ -101,7 +101,7 @@ namespace Duologue.State
                 theStates[2].Positive[0] = new Color((byte)254, (byte)249, (byte)0);
                 theStates[2].Positive[1] = new Color((byte)63, (byte)185, (byte)0);
                 theStates[2].NegativeName = "Violet";
-                theStates[2].Negative[0] = new Color((byet)111, (byte)0, (byte)128);
+                theStates[2].Negative[0] = new Color((byte)111, (byte)0, (byte)128);
                 theStates[2].Negative[1] = new Color((byte)88, (byte)21, (byte)64);
             }
             return theStates;

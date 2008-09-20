@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
 using Mimicware.Graphics;
 using Mimicware.Manager;
+using Duologue.State;
 
 namespace Duologue.PlayObjects
 {
@@ -51,14 +52,22 @@ namespace Duologue.PlayObjects
 
         #region Properties
         public Player Player;
+        public ColorState colorState;
         #endregion
 
         #region Constructor / Init
-        public EnemyFloater(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer, int numberEnemies, Player player)
+        public EnemyFloater(
+            AssetManager manager,
+            GraphicsDevice graphics,
+            RenderSprite renderer,
+            int numberEnemies,
+            Player player,
+            ColorState currentColorState)
             : base(manager, graphics, renderer)
         {
             numEnemies = numberEnemies;
             Player = player;
+            colorState = currentColorState;
             Initialize();
         }
 
@@ -112,9 +121,7 @@ namespace Duologue.PlayObjects
         /// <param name="gameTime">The current gametime</param>
         /// <param name="minMaxX">The minimum/maximum X values</param>
         /// <param name="minMaxY">The minimum/maximum Y values</param>
-        /// <param name="tint">The color of the enemy</param>
-        /// <param name="eyeTint">The color of the enemy's eye</param>
-        public void Update(GameTime gameTime, Vector2 minMaxX, Vector2 minMaxY, Color tint, Color eyeTint)
+        public void Update(GameTime gameTime, Vector2 minMaxX, Vector2 minMaxY)
         {
             for (int i = 0; i < enemies.Length; i++)
             {
@@ -124,8 +131,16 @@ namespace Duologue.PlayObjects
                     float y = rand.Next((int)minMaxY.X, (int)minMaxY.Y);
                     enemies[i].Alive = true;
                     enemies[i].Position = new Vector2(x, y);
-                    enemies[i].EyeTint = eyeTint;
-                    enemies[i].Tint = tint;
+                    if (rand.Next(2) == 0)
+                    {
+                        enemies[i].EyeTint = colorState.Positive[1];
+                        enemies[i].Tint = colorState.Positive[0];
+                    }
+                    else
+                    {
+                        enemies[i].EyeTint = colorState.Negative[1];
+                        enemies[i].Tint = colorState.Negative[0];
+                    }
                     float dx = rand.Next(-10, 10);
                     float dy = rand.Next(-10, 10);
                     enemies[i].Direction = new Vector2(dx, dy);

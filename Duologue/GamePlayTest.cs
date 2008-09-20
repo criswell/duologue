@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Duologue.PlayObjects;
+using Duologue.State;
 using Mimicware.Debug;
 
 namespace Duologue
@@ -30,6 +31,8 @@ namespace Duologue
         private EnemyFloater floater;
         private Vector2 minMaxX;
         private Vector2 minMaxY;
+        private ColorState[] colorStates;
+        private int currentColorState;
         #endregion
 
         #region Properties
@@ -74,6 +77,8 @@ namespace Duologue
             assets = null;
             device = null;
             Log = null;
+            colorStates = ColorState.GetColorStates();
+            currentColorState = 0;
         }
 
         /// <summary>
@@ -99,11 +104,11 @@ namespace Duologue
             {
                 assets = localGame.Assets;
             }
-            player = new Player(assets, device, render);
+            player = new Player(assets, device, render, colorStates[currentColorState]);
             player.Position = new Vector2(
                 device.Viewport.Width / 2f,
                 device.Viewport.Height / 2f);
-            floater = new EnemyFloater(assets, device, render, 20, player);
+            floater = new EnemyFloater(assets, device, render, 20, player, colorStates[currentColorState]);
             minMaxX = new Vector2(
                 64f, device.Viewport.Width - 64f);
             minMaxY = new Vector2(
@@ -152,7 +157,7 @@ namespace Duologue
             lastState = currentState;
 
             player.Update(gameTime);
-            floater.Update(gameTime, minMaxX, minMaxY, Color.Teal, Color.Tomato);
+            floater.Update(gameTime, minMaxX, minMaxY);
             base.Update(gameTime);
         }
 
