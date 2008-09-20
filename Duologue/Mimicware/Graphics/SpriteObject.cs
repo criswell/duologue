@@ -113,6 +113,11 @@ namespace Mimicware.Graphics
         /// If rendered text, this is the font
         /// </summary>
         public SpriteFont Font;
+
+        /// <summary>
+        /// The direction of this spriteobject
+        /// </summary>
+        public Vector2 Direction;
         #endregion
 
         #region Constructor/Init/Destructor

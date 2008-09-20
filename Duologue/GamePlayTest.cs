@@ -130,6 +130,10 @@ namespace Duologue
             {
                 player.Aim.X = currentState.ThumbSticks.Right.X;
                 player.Aim.Y = currentState.ThumbSticks.Right.Y * -1;
+                
+                if (Log != null)
+                    Log.LogEntry("Fire requested");
+                player.Fire();
             }
 
             player.Position.X += currentState.ThumbSticks.Left.X * motionScaler.X;
@@ -142,6 +146,8 @@ namespace Duologue
             }
 
             lastState = currentState;
+
+            player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -156,10 +162,11 @@ namespace Duologue
             {
                 render = localGame.Render;
                 player.RenderSprite = render;
+                player.Shot.RenderSprite = render;
             }
 
-            if (Log != null)
-                Log.LogEntry("O:" + player.Orientation.ToString() + ", TS.L: " + lastState.ThumbSticks.Left.ToString() + ", BR: " + player.BaseRotation.ToString());
+            //if (Log != null)
+            //    Log.LogEntry("O:" + player.Orientation.ToString() + ", TS.L: " + lastState.ThumbSticks.Left.ToString() + ", BR: " + player.BaseRotation.ToString());
             
             player.Draw(gameTime);
             base.Draw(gameTime);
