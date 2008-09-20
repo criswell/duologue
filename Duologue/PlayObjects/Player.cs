@@ -270,6 +270,17 @@ namespace Duologue.PlayObjects
             Shot.Update(gameTime);
         }
 
+        /// <summary>
+        /// Given a position and color, will determine if it is in the beam, and if it is complementary or opposite
+        /// </summary>
+        /// <param name="vector2">Position vector</param>
+        /// <param name="color">Color of the itme</param>
+        /// <returns>Returns 0 if not in beam. -1 if in beam and opposite colors. +1 if in beam and complimentary colors.</returns>
+        internal int IsInBeam(Vector2 vector2, Color color)
+        {
+            
+        }
+
         #region Public Overrides
         /// <summary>
         /// Call to set the AssetManager
