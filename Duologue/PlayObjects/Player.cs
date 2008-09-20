@@ -126,7 +126,7 @@ namespace Duologue.PlayObjects
                 beam = new SpriteObject(
                     AssetManager.LoadTexture2D("beam"),
                     Position,
-                    new Vector2(971f, 254f),
+                    new Vector2(971f, 253f),
                     null,
                     Color.Teal, //new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, (byte)100),
                     0f,
@@ -166,7 +166,8 @@ namespace Duologue.PlayObjects
                 playerLight.Tint,
                 LightRotation,
                 1f,
-                0.5f);
+                0.5f,
+                true);
 
             // Lightbeam
             RenderSprite.Draw(
@@ -177,7 +178,8 @@ namespace Duologue.PlayObjects
                 beam.Tint,
                 BeamRotation,
                 1f,
-                0.5f);
+                0.5f,
+                true);
 
             // Cannon
             RenderSprite.Draw(
@@ -265,5 +267,37 @@ namespace Duologue.PlayObjects
         {
             Shot.Update(gameTime);
         }
+
+        #region Public Overrides
+        /// <summary>
+        /// Call to set the AssetManager
+        /// </summary>
+        /// <param name="manager">The AssetManager</param>
+        public override void SetAssetManager(AssetManager manager)
+        {
+            Shot.SetAssetManager(manager);
+            base.SetAssetManager(manager);
+        }
+
+        /// <summary>
+        /// Call to set the graphics device
+        /// </summary>
+        /// <param name="device">The GraphicsDevice</param>
+        public override void SetGraphicsDevice(GraphicsDevice device)
+        {
+            Shot.SetGraphicsDevice(device);
+            base.SetGraphicsDevice(device);
+        }
+
+        /// <summary>
+        /// Call to set the render sprite
+        /// </summary>
+        /// <param name="render">Do you really need to ask?</param>
+        public override void SetRenderSprite(RenderSprite render)
+        {
+            Shot.SetRenderSprite(render);
+            base.SetRenderSprite(render);
+        }
+        #endregion
     }
 }

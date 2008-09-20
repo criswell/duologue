@@ -118,7 +118,7 @@ namespace Duologue.PlayObjects
             for (int i = 0; i < shots.Length; i++)
             {
                 if (shots[i].Alive)
-                    RenderSprite.Draw(shots[i]);
+                    RenderSprite.Draw(shots[i], true);
             }
         }
 
