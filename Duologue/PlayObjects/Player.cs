@@ -262,7 +262,7 @@ namespace Duologue.PlayObjects
                 CannonRotation *= -1;
 
             // We have to do this after the Aim.Y test because it could cross the angle = 0/Pi boundary
-            CannonRotation += 3f * MathHelper.PiOver4;
+            CannonRotation +=  MathHelper.PiOver2;
 
         }
 
