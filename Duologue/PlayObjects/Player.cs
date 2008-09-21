@@ -21,6 +21,8 @@ namespace Duologue.PlayObjects
         private SpriteObject playerLight;
         private SpriteObject beam;
         private SpriteObject shot;
+        private SpriteObject beamBase;
+        private bool lightIsNegative;
         #endregion
 
         #region Properties
@@ -59,6 +61,7 @@ namespace Duologue.PlayObjects
             : base(manager, graphics, renderer)
         {
             colorState = currentColorState;
+            lightIsNegative = true;
             Initialize();
         }
 
@@ -130,11 +133,21 @@ namespace Duologue.PlayObjects
                     Position,
                     new Vector2(971f, 253f),
                     null,
-                    colorState.Negative[0],
+                    colorState.Negative[1],
                     0f,
                     1f,
                     1f);
 
+                beamBase = new SpriteObject(
+                    AssetManager.LoadTexture2D("beam-base"),
+                    Position,
+                    new Vector2(971f, 253f),
+                    null,
+                    colorState.Negative[0],
+                    0f,
+                    1f,
+                    1f);
+                SetColors();
             }
         }
         #endregion
@@ -178,6 +191,17 @@ namespace Duologue.PlayObjects
                 beam.Center,
                 null,
                 beam.Tint,
+                BeamRotation,
+                1f,
+                0.5f,
+                true);
+
+            RenderSprite.Draw(
+                beamBase.Texture,
+                Position,
+                beamBase.Center,
+                null,
+                beamBase.Tint,
                 BeamRotation,
                 1f,
                 0.5f,
@@ -247,9 +271,30 @@ namespace Duologue.PlayObjects
         /// </summary>
         internal void SwapColors()
         {
-            beam.Tint = playerCannon.Tint;
-            playerCannon.Tint = playerLight.Tint;
-            playerLight.Tint = beam.Tint;
+            lightIsNegative = !lightIsNegative;
+            SetColors();
+        }
+
+        private void SetColors()
+        {
+            if (lightIsNegative)
+            {
+                playerLight.Tint = colorState.Negative[1];
+                beam.Tint = colorState.Negative[1];
+                beamBase.Tint = colorState.Negative[0];
+
+                playerCannon.Tint = colorState.Positive[1];
+                shot.Tint = colorState.Positive[0];
+            }
+            else
+            {
+                playerLight.Tint = colorState.Positive[1];
+                beam.Tint = colorState.Positive[1];
+                beamBase.Tint = colorState.Positive[0];
+
+                playerCannon.Tint = colorState.Negative[1];
+                shot.Tint = colorState.Negative[0];
+            }
         }
 
         /// <summary>
@@ -268,6 +313,18 @@ namespace Duologue.PlayObjects
         internal void Update(GameTime gameTime)
         {
             Shot.Update(gameTime);
+        }
+
+        /// <summary>
+        /// Given a position and color, will determine if it is in the beam, and if it is complementary or opposite
+        /// </summary>
+        /// <param name="vector2">Position vector</param>
+        /// <param name="color">Color of the itme</param>
+        /// <returns>Returns 0 if not in beam. -1 if in beam and opposite colors. +1 if in beam and complimentary colors.</returns>
+        internal int IsInBeam(Vector2 vector2, Color color)
+        {
+            // ERE I AM JH
+            return 0;
         }
 
         #region Public Overrides
