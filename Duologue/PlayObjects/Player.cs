@@ -22,6 +22,8 @@ namespace Duologue.PlayObjects
         private SpriteObject beam;
         private SpriteObject shot;
         private SpriteObject beamBase;
+        private const int treadFrames = 3;
+        private Texture2D[] playerTreads;
         private bool lightIsNegative;
         #endregion
 
