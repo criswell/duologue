@@ -24,7 +24,67 @@ using Duologue.State;
 
 namespace Duologue.State
 {
-    class StandardLevelState
+    class StandardLevelState : GameState
     {
+        #region Constants
+        #endregion
+
+        #region Fields
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructor / Init / Load
+        public StandardLevelState(Game game)
+            : base(game)
+        {
+            // TODO: Construct any child components here
+        }
+
+        /// <summary>
+        /// Allows the game component to perform any initialization it needs to before starting
+        /// to run.  This is where it can query for any required services and load content.
+        /// </summary>
+        public override void Initialize()
+        {
+            // TODO: Add your initialization code here
+
+            base.Initialize();
+        }
+
+        /// <summary>
+        /// Loads the content associated with this GameState
+        /// </summary>
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+        }
+        #endregion
+
+        #region Private Methods
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Allows the game component to update itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        public override void Update(GameTime gameTime)
+        {
+            // TODO: Add your update code here
+
+            base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// Allows the game component to draw on the screen
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+        }
+        #endregion
     }
 }
