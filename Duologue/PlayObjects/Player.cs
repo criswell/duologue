@@ -24,7 +24,18 @@ namespace Duologue.PlayObjects
         private SpriteObject beamBase;
         private const int treadFrames = 3;
         private Texture2D[] playerTreads;
+        private Vector2 treadCenter;
+        private int currentTread;
+        private int treadTimer;
+        private const int maxTreadTimer = 10;
+        private const int shineFrames = 4;
+        private Texture2D[] playerShines;
+        private Vector2 shineCenter;
+        private int currentShine;
+        private int shineTimer;
+        private const int maxShineTimer = 20;
         private bool lightIsNegative;
+        private Vector2 lastPosition;
         #endregion
 
         #region Properties
@@ -54,6 +65,8 @@ namespace Duologue.PlayObjects
         /// </summary>
         public float BeamRotation;
 
+        public float TreadRotation;
+
         public PlayerShot Shot;
         public ColorState colorState;
         #endregion
@@ -81,6 +94,9 @@ namespace Duologue.PlayObjects
             Orientation = Vector2.UnitX;
             Aim = Vector2.Negate(Orientation);
             CaclulateRotations();
+            lastPosition = Vector2.Zero;
+            treadTimer = 0;
+            shineTimer = 0;
             
             if (AssetManager != null && GraphicsDevice != null)
             {
@@ -150,6 +166,27 @@ namespace Duologue.PlayObjects
                     1f,
                     1f);
                 SetColors();
+
+                playerTreads = new Texture2D[treadFrames];
+                for (int i = 0; i < treadFrames; i++)
+                {
+                    playerTreads[i] = AssetManager.LoadTexture2D(String.Format("{0:tread00}", treadFrames-i));
+                }
+                currentTread = 0;
+                treadCenter = new Vector2(
+                    playerTreads[currentTread].Width / 2f,
+                    playerTreads[currentTread].Height / 2f);
+
+                playerShines = new Texture2D[shineFrames];
+                for (int i = 0; i < shineFrames; i++)
+                {
+                    //string temp = String.Format("shine{0:00}", i + 1);
+                    playerShines[i] = AssetManager.LoadTexture2D(String.Format("shine{0:00}", i+1));
+                }
+                currentShine = 0;
+                shineCenter = new Vector2(
+                    playerShines[currentShine].Width / 2f,
+                    playerShines[currentShine].Height / 2f);
             }
         }
         #endregion
@@ -163,6 +200,18 @@ namespace Duologue.PlayObjects
             CaclulateRotations();
             CheckScreenBoundary();
 
+            // Treads
+            RenderSprite.Draw(
+                playerTreads[currentTread],
+                Position,
+                treadCenter,
+                null,
+                playerBase.Tint,
+                TreadRotation,
+                1f,
+                0.5f);
+                
+
             // Base
             RenderSprite.Draw(
                 playerBase.Texture,
@@ -171,6 +220,17 @@ namespace Duologue.PlayObjects
                 null,
                 playerBase.Tint,
                 BaseRotation,
+                1f,
+                0.5f);
+
+            // Shine
+            RenderSprite.Draw(
+                playerShines[currentShine],
+                Position,
+                shineCenter,
+                null,
+                playerBase.Tint,
+                0f,
                 1f,
                 0.5f);
 
@@ -266,6 +326,9 @@ namespace Duologue.PlayObjects
             // We have to do this after the Aim.Y test because it could cross the angle = 0/Pi boundary
             CannonRotation +=  MathHelper.PiOver2;
 
+            // Now, tread rotation
+            TreadRotation = BaseRotation + MathHelper.PiOver2;
+
         }
 
         /// <summary>
@@ -314,6 +377,31 @@ namespace Duologue.PlayObjects
         /// <param name="gameTime"></param>
         internal void Update(GameTime gameTime)
         {
+            if (lastPosition != Position)
+            {
+                treadTimer++;
+                if(treadTimer > maxTreadTimer)
+                {
+                    treadTimer = 0;
+                    currentTread++;
+                    if(currentTread >= treadFrames)
+                        currentTread = 0;
+                }
+            }
+            if(lastPosition.X !=Position.X)
+            {
+                shineTimer++;
+                if (shineTimer > maxShineTimer)
+                {
+                    shineTimer = 0;
+                    currentShine += (int)((lastPosition.X - Position.X)/Math.Abs(lastPosition.X - Position.X));
+                    if (currentShine >= shineFrames)
+                        currentShine = 0;
+                    else if (currentShine < 0)
+                        currentShine = shineFrames - 1;
+                }
+            }
+            lastPosition = Position;
             Shot.Update(gameTime);
         }
 
