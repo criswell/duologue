@@ -7,19 +7,24 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
+using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Duologue.State;
 
 namespace Duologue.PlayObjects
 {
-    class FloaterObject : SpriteObject
+    class BuzzsawObject : SpriteObject
     {
-        public Color EyeTint;
-        public int Speed;
+        public Color FaceTint;
+        public float Speed;
+        public float SpeedMultiplier;
+        public Texture2D FleeTexture;
+        public bool Fleeing;
 
-        public FloaterObject(
+        public BuzzsawObject(
             Texture2D texture2D,
+            Texture2D fleeTexture,
             Vector2 texturePosition,
             Vector2 textureCenter,
             Rectangle? textureRect,
@@ -29,23 +34,27 @@ namespace Duologue.PlayObjects
             float textureLayer) :
             base(texture2D, texturePosition, textureCenter, textureRect, textureTint, textureRotation, textureScale, textureLayer)
         {
-            EyeTint = Color.White;
-            Speed = 1;
+            FaceTint = Color.White;
+            Speed = 0.5f;
+            FleeTexture = fleeTexture;
+            Fleeing = false;
+            SpeedMultiplier = 1f;
         }
     }
 
-    class EnemyFloater : PlayObject
+    class EnemyBuzzsaw : PlayObject
     {
         #region Constants
         private const int defaultNumEnemies = 10;
-        private const int minSpeed = 1;
-        private const int maxSpeed = 5;
+        private const float minSpeed = 0.2f;
+        private const float maxSpeed = 2.5f;
         private const int turnRadius = 100; // larger is slower
         #endregion
 
         #region Fields
-        private FloaterObject[] enemies;
-        private SpriteObject enemyEye;
+        private BuzzsawObject[] enemies;
+        private Texture2D enemyFaceAgg;
+        private Texture2D enemyFaceFlee;
         private int numEnemies;
         private Random rand;
         #endregion
@@ -56,7 +65,7 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
-        public EnemyFloater(
+        public EnemyBuzzsaw(
             AssetManager manager,
             GraphicsDevice graphics,
             RenderSprite renderer,
@@ -71,7 +80,7 @@ namespace Duologue.PlayObjects
             Initialize();
         }
 
-        public EnemyFloater()
+        public EnemyBuzzsaw()
             : base()
         {
             // FIXME: We need to get rid of this
@@ -85,13 +94,14 @@ namespace Duologue.PlayObjects
         private void Initialize()
         {
             rand = new Random();
-            enemies = new FloaterObject[numEnemies];
+            enemies = new BuzzsawObject[numEnemies];
             for (int i = 0; i < numEnemies; i++)
             {
-                enemies[i] = new FloaterObject(
-                    AssetManager.LoadTexture2D("enemy-floater"),
+                enemies[i] = new BuzzsawObject(
+                    AssetManager.LoadTexture2D("buzzsaw-agg"),
+                    AssetManager.LoadTexture2D("buzzsaw-flee"),
                     Vector2.Zero,
-                    new Vector2(AssetManager.LoadTexture2D("enemy-floater").Width / 2f, AssetManager.LoadTexture2D("enemy-floater").Height / 2f),
+                    new Vector2(AssetManager.LoadTexture2D("buzzsaw-agg").Width / 2f, AssetManager.LoadTexture2D("buzzsaw-agg").Height / 2f),
                     null,
                     Color.White,
                     0f,
@@ -100,17 +110,8 @@ namespace Duologue.PlayObjects
                 enemies[i].Alive = false;
             }
 
-            enemyEye = new SpriteObject(
-                    AssetManager.LoadTexture2D("enemy-floater-eye"),
-                    Vector2.Zero,
-                    new Vector2(AssetManager.LoadTexture2D("enemy-floater-eye").Width / 2f, AssetManager.LoadTexture2D("enemy-floater-eye").Height / 2f),
-                    null,
-                    Color.White,
-                    0f,
-                    1f,
-                    0.5f);
-
-            
+            enemyFaceAgg = AssetManager.LoadTexture2D("buzzsaw-face-agg");
+            enemyFaceFlee = AssetManager.LoadTexture2D("buzzsaw-face-flee");
         }
         #endregion
 
@@ -133,19 +134,19 @@ namespace Duologue.PlayObjects
                     enemies[i].Position = new Vector2(x, y);
                     if (rand.Next(2) == 0)
                     {
-                        enemies[i].EyeTint = colorState.Positive[1];
+                        enemies[i].FaceTint = colorState.Positive[1];
                         enemies[i].Tint = colorState.Positive[0];
                     }
                     else
                     {
-                        enemies[i].EyeTint = colorState.Negative[1];
+                        enemies[i].FaceTint = colorState.Negative[1];
                         enemies[i].Tint = colorState.Negative[0];
                     }
                     float dx = rand.Next(-10, 10);
                     float dy = rand.Next(-10, 10);
                     enemies[i].Direction = new Vector2(dx, dy);
                     enemies[i].Direction.Normalize();
-                    enemies[i].Speed = rand.Next(minSpeed, maxSpeed);
+                    enemies[i].Speed = maxSpeed * (float)rand.NextDouble() + minSpeed;
                 }
                 else
                 {
@@ -157,21 +158,35 @@ namespace Duologue.PlayObjects
                     enemies[i].Direction.Normalize();
 
                     // See if we're in the beam
-                    int inBeam = Player.IsInBeam(enemies[i].Position, enemies[i].Tint);
-                    //if (Player.IsInBeam(enemies[i].Position, enemies[i].Tint))
-                    //    enemies[i].Direction = Vector2.Negate(enemies[i].Direction);
+                    //int inBeam = Player.IsInBeam(enemies[i].Position, enemies[i].Tint);
+                    switch (Player.IsInBeam(enemies[i].Position, enemies[i].Tint))
+                    {
+                        case -1:
+                            // RUN AWAY!
+                            enemies[i].Direction = Vector2.Negate(enemies[i].Direction);
+                            enemies[i].Fleeing = true;
+                            enemies[i].SpeedMultiplier = 2f;
+                            break;
+                        case 0:
+                            // Not in beam
+                            enemies[i].Fleeing = false;
+                            enemies[i].SpeedMultiplier = 1f;
+                            break;
+                        default:
+                            // In beam, soak it up!
+                            enemies[i].Fleeing = false;
+                            enemies[i].SpeedMultiplier = 2f;
+                            break;
+                    }
 
                     // Rotate
-                    float dotDirection = Vector2.Dot(enemies[i].Direction, Vector2.UnitX);
-                    enemies[i].Rotation = (float)Math.Acos((double)(dotDirection / 1f));
-                    if (enemies[i].Direction.Y < 0)
-                        enemies[i].Rotation *= -1;
-
+                    enemies[i].Direction.Normalize();
+                    enemies[i].Rotation = MWMathHelper.ComputeAngleAgainstX(enemies[i].Direction);
                     enemies[i].Rotation += 3f * MathHelper.PiOver2;
 
                     // Update position
-                    enemies[i].Position += enemies[i].Speed * enemies[i].Direction;
-                    enemies[i].Speed = rand.Next(minSpeed, maxSpeed);
+                    enemies[i].Position += enemies[i].Speed * enemies[i].Direction; //rand.Next(minSpeed, maxSpeed) * 
+                    enemies[i].Speed = enemies[i].SpeedMultiplier * (maxSpeed * (float)rand.NextDouble() + minSpeed);
                     if (enemies[i].Position.X > GraphicsDevice.Viewport.Width - enemies[i].Texture.Width / 2f)
                     {
                         enemies[i].Position.X = GraphicsDevice.Viewport.Width - enemies[i].Texture.Width / 2f;
@@ -207,16 +222,40 @@ namespace Duologue.PlayObjects
             {
                 if (enemies[i].Alive)
                 {
-                    RenderSprite.Draw(enemies[i]);
-                    RenderSprite.Draw(new SpriteObject(
-                        enemyEye.Texture,
-                        enemies[i].Position,
-                        enemyEye.Center,
-                        null,
-                        enemies[i].EyeTint,
-                        enemies[i].Rotation,
-                        enemies[i].Scale,
-                        enemies[i].Layer));
+                    if (enemies[i].Fleeing)
+                    {
+                        RenderSprite.Draw(
+                            enemies[i].FleeTexture,
+                            enemies[i].Position,
+                            enemies[i].Center,
+                            null,
+                            enemies[i].Tint,
+                            enemies[i].Rotation,
+                            enemies[i].Scale,
+                            enemies[i].Layer);
+                        RenderSprite.Draw(
+                            enemyFaceFlee,
+                            enemies[i].Position,
+                            enemies[i].Center,
+                            null,
+                            enemies[i].Tint,
+                            0f,
+                            enemies[i].Scale,
+                            enemies[i].Layer);
+                    }
+                    else
+                    {
+                        RenderSprite.Draw(enemies[i]);
+                        RenderSprite.Draw(
+                            enemyFaceAgg,
+                            enemies[i].Position,
+                            enemies[i].Center,
+                            null,
+                            enemies[i].Tint,
+                            0f,
+                            enemies[i].Scale,
+                            enemies[i].Layer);
+                    }
                 }
             }
         }

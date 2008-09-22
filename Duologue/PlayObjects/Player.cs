@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
+using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Duologue.State;
@@ -36,6 +37,11 @@ namespace Duologue.PlayObjects
         private const int maxShineTimer = 20;
         private bool lightIsNegative;
         private Vector2 lastPosition;
+
+        // The beam arc and radius
+        private const float beamRadius = 400f;
+        private float beamArcMin;
+        private float beamArcMax;
         #endregion
 
         #region Properties
@@ -97,6 +103,8 @@ namespace Duologue.PlayObjects
             lastPosition = Vector2.Zero;
             treadTimer = 0;
             shineTimer = 0;
+            beamArcMax = 0f;
+            beamArcMin = 0f;
             
             if (AssetManager != null && GraphicsDevice != null)
             {
@@ -306,10 +314,7 @@ namespace Duologue.PlayObjects
         {
             // The base is easy because we can fuck it up- the base is a circle with
             // no real orientation.
-            float dotOrientation = Vector2.Dot(Orientation, Vector2.UnitX);
-            BaseRotation = (float)Math.Acos((double)(dotOrientation / Orientation.Length()));
-            if (Orientation.Y < 0)
-                BaseRotation *= -1;
+            BaseRotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
 
             // The light rotation is a bit tricky because it starts in the left coordinate system
             LightRotation = BaseRotation +3f*MathHelper.PiOver4;
@@ -317,18 +322,18 @@ namespace Duologue.PlayObjects
             // Next up, the light beam rotation is 180 degrees from the base
             BeamRotation = BaseRotation + MathHelper.Pi;
 
+            // We also need the arc that defines the beam;
+            beamArcMin = BaseRotation - MathHelper.PiOver4;
+            beamArcMax = BaseRotation + MathHelper.PiOver4;
+
             // Next, we do the cannon
-            float dotAim = Vector2.Dot(Aim, Vector2.UnitX);
-            CannonRotation = (float)Math.Acos((double)(dotAim / Aim.Length()));
-            if (Aim.Y < 0)
-                CannonRotation *= -1;
+            CannonRotation = MWMathHelper.ComputeAngleAgainstX(Aim);
 
             // We have to do this after the Aim.Y test because it could cross the angle = 0/Pi boundary
             CannonRotation +=  MathHelper.PiOver2;
 
             // Now, tread rotation
             TreadRotation = BaseRotation + MathHelper.PiOver2;
-
         }
 
         /// <summary>
@@ -413,8 +418,29 @@ namespace Duologue.PlayObjects
         /// <returns>Returns 0 if not in beam. -1 if in beam and opposite colors. +1 if in beam and complimentary colors.</returns>
         internal int IsInBeam(Vector2 vector2, Color color)
         {
-            // ERE I AM JH
-            return 0;
+            int retval = 0;
+            // Check if in-beam
+            Vector2 distance = vector2 - Position;
+            if (Math.Abs(distance.Length()) < beamRadius)
+            {
+                // We're close enough... inside the arc?
+                float rotation = MWMathHelper.ComputeAngleAgainstX(distance);
+                if (rotation > beamArcMin && rotation < beamArcMax)
+                {
+                    // In the beam
+                    // Check if complimentary color
+                    if (colorState.SameColor(color, playerLight.Tint))
+                    {
+                        retval = 1;
+                    }
+                    else
+                    {
+                        retval = -1;
+                    }
+                }
+            }
+
+            return retval;
         }
 
         #region Public Overrides
