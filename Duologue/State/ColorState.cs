@@ -80,8 +80,8 @@ namespace Duologue.State
                 // Blue/Orange
                 theStates[0] = new ColorState();
                 theStates[0].PositiveName = "Blue";
-                theStates[0].Positive[0] = new Color((byte)0, (byte)64, (byte)110);
-                theStates[0].Positive[1] = new Color((byte)33, (byte)0, (byte)79);
+                theStates[0].Positive[0] = new Color((byte)0, (byte)123, (byte)215);
+                theStates[0].Positive[1] = new Color((byte)95, (byte)0, (byte)228);
                 theStates[0].NegativeName = "Orange";
                 theStates[0].Negative[0] = new Color((byte)255, (byte)7, (byte)0);
                 theStates[0].Negative[1] = new Color((byte)253, (byte)128, (byte)0);
