@@ -36,13 +36,6 @@ namespace Duologue.PlayObjects
             Initialize();
         }
 
-        public PlayerShot()
-            : base()
-        {
-            // FIXME: We need to get rid of this
-            Initialize();
-        }
-
         private void Initialize()
         {
             shotTimer = timeBetweenShots;

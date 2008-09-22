@@ -80,14 +80,6 @@ namespace Duologue.PlayObjects
             Initialize();
         }
 
-        public EnemyBuzzsaw()
-            : base()
-        {
-            // FIXME: We need to get rid of this
-            numEnemies = defaultNumEnemies;
-            Initialize();
-        }
-
         /// <summary>
         /// Initialize
         /// </summary>

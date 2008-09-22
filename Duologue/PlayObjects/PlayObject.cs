@@ -55,17 +55,6 @@ namespace Duologue.PlayObjects
             RenderSprite = renderer;
             GraphicsDevice = graphics;
         }
-
-        /// <summary>
-        /// Empty constructor
-        /// </summary>
-        public PlayObject()
-        {
-            // FIXME: We need to get rid of this
-            AssetManager = null;
-            GraphicsDevice = null;
-            RenderSprite = null;
-        }
         #endregion
 
         #region Public methods

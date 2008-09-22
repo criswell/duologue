@@ -86,13 +86,6 @@ namespace Duologue.PlayObjects
             Initialize();
         }
 
-        public Player()
-            : base()
-        {
-            // FIXME: We need to get rid of this
-            Initialize();
-        }
-
         private void Initialize()
         {
             // Gonna cause some errors me think
