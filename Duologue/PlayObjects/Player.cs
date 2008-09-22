@@ -441,7 +441,14 @@ namespace Duologue.PlayObjects
                 {
                     // In the beam
                     // Check if complimentary color
-                    retval = -1;
+                    if (colorState.SameColor(color, playerLight.Tint))
+                    {
+                        retval = 1;
+                    }
+                    else
+                    {
+                        retval = -1;
+                    }
                 }
             }
 

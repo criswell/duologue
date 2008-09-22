@@ -106,6 +106,20 @@ namespace Duologue.State
             }
             return theStates;
         }
+
+        /// <summary>
+        /// Given two colors, determine if they are the same in a colorstate
+        /// </summary>
+        /// <param name="color">First color</param>
+        /// <param name="color_2">Second color</param>
+        /// <returns>True/Fase</returns>
+        internal bool SameColor(Color color, Color color_2)
+        {
+            return ((color == Positive[0] || color == Positive[1]) &&
+                (color_2 == Positive[0] || color_2 == Positive[1])) ||
+                ((color == Negative[0] || color == Negative[1]) &&
+                (color_2 == Negative[0] || color_2 == Negative[1]));
+        }
         #endregion
     }
 }
