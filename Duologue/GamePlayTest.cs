@@ -28,7 +28,7 @@ namespace Duologue
         private GamePadState lastState;
         private Vector2 motionScaler;
         private Game1 localGame;
-        private EnemyFloater floater;
+        private EnemyBuzzsaw floater;
         private Vector2 minMaxX;
         private Vector2 minMaxY;
         private ColorState[] colorStates;
@@ -108,7 +108,7 @@ namespace Duologue
             player.Position = new Vector2(
                 device.Viewport.Width / 2f,
                 device.Viewport.Height / 2f);
-            floater = new EnemyFloater(assets, device, render, 20, player, colorStates[currentColorState]);
+            floater = new EnemyBuzzsaw(assets, device, render, 20, player, colorStates[currentColorState]);
             minMaxX = new Vector2(
                 64f, device.Viewport.Width - 64f);
             minMaxY = new Vector2(
