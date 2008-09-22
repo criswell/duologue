@@ -1,0 +1,8 @@
+# use glob syntax.
+syntax: glob
+
+*.xnb
+*.suo
+Duologue\Content\obj\*
+Duologue\bin\*
+Duologue\obj\*
