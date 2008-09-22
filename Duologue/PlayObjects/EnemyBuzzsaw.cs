@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
+using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Duologue.State;
@@ -179,12 +180,8 @@ namespace Duologue.PlayObjects
                     }
 
                     // Rotate
-                    // FIXME! Mimicware needs a mathlib
-                    float dotDirection = Vector2.Dot(enemies[i].Direction, Vector2.UnitX);
-                    enemies[i].Rotation = (float)Math.Acos((double)(dotDirection / 1f));
-                    if (enemies[i].Direction.Y < 0)
-                        enemies[i].Rotation *= -1;
-
+                    enemies[i].Direction.Normalize();
+                    enemies[i].Rotation = MWMathHelper.ComputeAngleAgainstX(enemies[i].Direction);
                     enemies[i].Rotation += 3f * MathHelper.PiOver2;
 
                     // Update position

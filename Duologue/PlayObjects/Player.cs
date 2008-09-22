@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
+using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Duologue.State;
@@ -307,26 +308,13 @@ namespace Duologue.PlayObjects
         }
 
         /// <summary>
-        /// Given a vector, computes its angle against the X axis
-        /// </summary>
-        /// <param name="vector">Vector</param>
-        /// <returns>Float, angle in radians</returns>
-        private float ComputeAngleAgainstX(Vector2 vector)
-        {
-            float dotVector = Vector2.Dot(vector, Vector2.UnitX);
-            float rotation = (float)Math.Acos((double)(dotVector / vector.Length()));
-            if (vector.Y < 0)
-                rotation *= -1;
-            return rotation;
-        }
-        /// <summary>
         /// Calculate the various rotations, should be called once per frame
         /// </summary>
         private void CaclulateRotations()
         {
             // The base is easy because we can fuck it up- the base is a circle with
             // no real orientation.
-            BaseRotation = ComputeAngleAgainstX(Orientation);
+            BaseRotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
 
             // The light rotation is a bit tricky because it starts in the left coordinate system
             LightRotation = BaseRotation +3f*MathHelper.PiOver4;
@@ -339,7 +327,7 @@ namespace Duologue.PlayObjects
             beamArcMax = BaseRotation + MathHelper.PiOver4;
 
             // Next, we do the cannon
-            CannonRotation = ComputeAngleAgainstX(Aim);
+            CannonRotation = MWMathHelper.ComputeAngleAgainstX(Aim);
 
             // We have to do this after the Aim.Y test because it could cross the angle = 0/Pi boundary
             CannonRotation +=  MathHelper.PiOver2;
@@ -436,7 +424,7 @@ namespace Duologue.PlayObjects
             if (Math.Abs(distance.Length()) < beamRadius)
             {
                 // We're close enough... inside the arc?
-                float rotation = ComputeAngleAgainstX(distance);
+                float rotation = MWMathHelper.ComputeAngleAgainstX(distance);
                 if (rotation > beamArcMin && rotation < beamArcMax)
                 {
                     // In the beam
