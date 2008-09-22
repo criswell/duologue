@@ -22,12 +22,12 @@ namespace Duologue.PlayObjects
         private SpriteObject beam;
         private SpriteObject shot;
         private SpriteObject beamBase;
-        private const int treadFrames = 3;
+        private const int treadFrames = 2;
         private Texture2D[] playerTreads;
         private Vector2 treadCenter;
         private int currentTread;
         private int treadTimer;
-        private const int maxTreadTimer = 10;
+        private const int maxTreadTimer = 50;
         private const int shineFrames = 4;
         private Texture2D[] playerShines;
         private Vector2 shineCenter;
