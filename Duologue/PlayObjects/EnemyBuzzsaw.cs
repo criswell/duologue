@@ -46,8 +46,8 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const int defaultNumEnemies = 10;
-        private const float minSpeed = 0.2f;
-        private const float maxSpeed = 2.5f;
+        private const double minSpeed = 0.2;
+        private const double maxSpeed = 2.5;
         private const int turnRadius = 100; // larger is slower
         #endregion
 
@@ -138,7 +138,7 @@ namespace Duologue.PlayObjects
                     float dy = rand.Next(-10, 10);
                     enemies[i].Direction = new Vector2(dx, dy);
                     enemies[i].Direction.Normalize();
-                    enemies[i].Speed = maxSpeed * (float)rand.NextDouble() + minSpeed;
+                    enemies[i].Speed = (float)MWMathHelper.GetRandomInRange(minSpeed, maxSpeed);
                 }
                 else
                 {
@@ -178,7 +178,7 @@ namespace Duologue.PlayObjects
 
                     // Update position
                     enemies[i].Position += enemies[i].Speed * enemies[i].Direction; //rand.Next(minSpeed, maxSpeed) * 
-                    enemies[i].Speed = enemies[i].SpeedMultiplier * (maxSpeed * (float)rand.NextDouble() + minSpeed);
+                    enemies[i].Speed = enemies[i].SpeedMultiplier * (float)MWMathHelper.GetRandomInRange(minSpeed, maxSpeed);
                     if (enemies[i].Position.X > GraphicsDevice.Viewport.Width - enemies[i].Texture.Width / 2f)
                     {
                         enemies[i].Position.X = GraphicsDevice.Viewport.Width - enemies[i].Texture.Width / 2f;

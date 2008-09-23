@@ -88,7 +88,7 @@ namespace Mimicware.Fx
             this.Lifetime = lifetime;
             this.RotationSpeed = rotationSpeed;
             this.TimeSinceStart = 0.0f;
-            this.Rotation = MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
+            this.Rotation = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
         }
         #endregion
 
