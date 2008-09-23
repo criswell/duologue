@@ -327,6 +327,8 @@ namespace Mimicware.Fx
             p.Scale = scale;
             p.RotationSpeed = rotationSpeed;
             p.Tint = tint;
+            p.TimeSinceStart = 0f;
+            p.Rotation = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
         }
 
         /// <summary>
@@ -362,10 +364,10 @@ namespace Mimicware.Fx
                     p.Update(dt);
                     // if that update finishes them, put them onto the free particles
                     // queue.
-                    InstanceManager.Logger.LogEntry("p.alive: " + p.TimeSinceStart + " < " + p.Lifetime);
+                    //InstanceManager.Logger.LogEntry("p.alive: " + p.TimeSinceStart + " < " + p.Lifetime);
                     if (!p.Alive)
                     {
-                        InstanceManager.Logger.LogEntry("ENQUEUEUEUEUUE :" + FreeParticleCount);
+                        InstanceManager.Logger.LogEntry("Free :" + FreeParticleCount);
                         freeParticles.Enqueue(p);
                     }
                 }   
