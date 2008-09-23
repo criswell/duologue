@@ -30,14 +30,16 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
-        public PlayerShot(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer)
-            : base(manager, graphics, renderer)
+        public PlayerShot()
+            : base()
         {
             Initialize();
         }
 
         private void Initialize()
         {
+            if (AssetManager == null)
+                AssetManager = InstanceManager.AssetManager;
             shotTimer = timeBetweenShots;
             rand = new Random();
             shots = new SpriteObject[numShots];
@@ -63,9 +65,9 @@ namespace Duologue.PlayObjects
         /// </summary>
         private bool IsInScreen(Vector2 Position, Vector2 Dimensions)
         {
-            if (Position.X > GraphicsDevice.Viewport.Width + Dimensions.X / 2f ||
+            if (Position.X > InstanceManager.DefaultViewport.Width + Dimensions.X / 2f ||
                 Position.X < Dimensions.X / -2f ||
-                Position.Y > GraphicsDevice.Viewport.Height + Dimensions.Y / 2f ||
+                Position.Y > InstanceManager.DefaultViewport.Height + Dimensions.Y / 2f ||
                 Position.Y < Dimensions.Y / -2f)
                 return false;
             else
@@ -108,6 +110,8 @@ namespace Duologue.PlayObjects
         /// <param name="gameTime">The gametime</param>
         internal void Draw(GameTime gameTime)
         {
+            if (RenderSprite == null)
+                RenderSprite = InstanceManager.RenderSprite;
             for (int i = 0; i < shots.Length; i++)
             {
                 if (shots[i].Alive)

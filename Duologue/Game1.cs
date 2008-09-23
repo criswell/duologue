@@ -50,7 +50,11 @@ namespace Duologue
             Log.Enabled = true;
             Log.Visible = true;
             this.Components.Add(Log);
-            Log.AssetManager = Assets;
+
+            // Set the instance manager
+            InstanceManager.AssetManager = Assets;
+            InstanceManager.Logger = Log;
+            //Log.AssetManager = Assets;
             gamePlayTest.Log = Log;
             base.Initialize();
         }
@@ -64,7 +68,10 @@ namespace Duologue
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Render = new RenderSprite(spriteBatch);
-            Log.RenderSprite = Render;
+            InstanceManager.RenderSprite = Render;
+            InstanceManager.GraphicsDevice = GraphicsDevice;
+            InstanceManager.DefaultViewport = GraphicsDevice.Viewport;
+            //Log.RenderSprite = Render;
             /*gamePlayTest.RenderSprite = Render;
             gamePlayTest.AssetManager = Assets;
             gamePlayTest.Device = GraphicsDevice;*/

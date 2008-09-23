@@ -66,13 +66,10 @@ namespace Duologue.PlayObjects
 
         #region Constructor / Init
         public EnemyBuzzsaw(
-            AssetManager manager,
-            GraphicsDevice graphics,
-            RenderSprite renderer,
             int numberEnemies,
             Player player,
             ColorState currentColorState)
-            : base(manager, graphics, renderer)
+            : base()
         {
             numEnemies = numberEnemies;
             Player = player;
@@ -87,6 +84,8 @@ namespace Duologue.PlayObjects
         {
             rand = new Random();
             enemies = new BuzzsawObject[numEnemies];
+            if (AssetManager == null)
+                AssetManager = InstanceManager.AssetManager;
             for (int i = 0; i < numEnemies; i++)
             {
                 enemies[i] = new BuzzsawObject(
@@ -179,9 +178,9 @@ namespace Duologue.PlayObjects
                     // Update position
                     enemies[i].Position += enemies[i].Speed * enemies[i].Direction; //rand.Next(minSpeed, maxSpeed) * 
                     enemies[i].Speed = enemies[i].SpeedMultiplier * (float)MWMathHelper.GetRandomInRange(minSpeed, maxSpeed);
-                    if (enemies[i].Position.X > GraphicsDevice.Viewport.Width - enemies[i].Texture.Width / 2f)
+                    if (enemies[i].Position.X > InstanceManager.DefaultViewport.Width - enemies[i].Texture.Width / 2f)
                     {
-                        enemies[i].Position.X = GraphicsDevice.Viewport.Width - enemies[i].Texture.Width / 2f;
+                        enemies[i].Position.X = InstanceManager.DefaultViewport.Width - enemies[i].Texture.Width / 2f;
                         enemies[i].Direction.X *= -1;
                     }
                     else if (enemies[i].Position.X < enemies[i].Texture.Width / 2f)
@@ -190,9 +189,9 @@ namespace Duologue.PlayObjects
                         enemies[i].Direction.X *= -1;
                     }
 
-                    if (enemies[i].Position.Y > GraphicsDevice.Viewport.Height - enemies[i].Texture.Height / 2f)
+                    if (enemies[i].Position.Y > InstanceManager.DefaultViewport.Height - enemies[i].Texture.Height / 2f)
                     {
-                        enemies[i].Position.Y = GraphicsDevice.Viewport.Height - enemies[i].Texture.Height / 2f;
+                        enemies[i].Position.Y = InstanceManager.DefaultViewport.Height - enemies[i].Texture.Height / 2f;
                         enemies[i].Direction.Y *= -1;
                     }
                     else if (enemies[i].Position.Y < enemies[i].Texture.Height / 2f)
@@ -210,6 +209,8 @@ namespace Duologue.PlayObjects
         /// <param name="gameTime">Current gameTime</param>
         internal void Draw(GameTime gameTime)
         {
+            if (RenderSprite == null)
+                RenderSprite = InstanceManager.RenderSprite;
             for (int i = 0; i < enemies.Length; i++)
             {
                 if (enemies[i].Alive)

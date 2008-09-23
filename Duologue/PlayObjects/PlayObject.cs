@@ -46,14 +46,11 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// Constructs a new PlayObject
         /// </summary>
-        /// <param name="manager">The game's asset manager</param>
-        /// <param name="graphics">The game's graphics device</param>
-        /// <param name="renderer">The game's sprite renderer</param>
-        public PlayObject(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer)
+        public PlayObject()
         {
-            AssetManager = manager;
-            RenderSprite = renderer;
-            GraphicsDevice = graphics;
+            AssetManager = InstanceManager.AssetManager;
+            RenderSprite = InstanceManager.RenderSprite;
+            GraphicsDevice = InstanceManager.GraphicsDevice;
         }
         #endregion
 
