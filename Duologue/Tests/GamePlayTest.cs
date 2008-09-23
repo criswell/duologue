@@ -34,6 +34,7 @@ namespace Duologue
         private Vector2 minMaxY;
         private ColorState[] colorStates;
         private int currentColorState;
+        private bool fireTriggered;
         #endregion
 
         #region Properties
@@ -80,6 +81,7 @@ namespace Duologue
             Log = null;
             colorStates = ColorState.GetColorStates();
             currentColorState = 0;
+            fireTriggered = false;
         }
 
         /// <summary>
@@ -106,22 +108,31 @@ namespace Duologue
                 assets = InstanceManager.AssetManager;
             }
 
+            Color[] playerTints = new Color[LocalInstanceManager.MaxNumberOfPlayers];
+            playerTints[0] = Color.LimeGreen;
+            playerTints[1] = Color.LightSkyBlue;
+            playerTints[2] = Color.LemonChiffon;
+            playerTints[3] = Color.Peru;
+
             LocalInstanceManager.InitializePlayers();
             for (int i=0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
             {
                 LocalInstanceManager.Players[i] =
-                    new Player(colorStates[currentColorState]);
+                    new Player(colorStates[currentColorState], playerTints[i]);
                 LocalInstanceManager.Players[i].Position = new Vector2(
                 device.Viewport.Width / 2f,
                 device.Viewport.Height / 2f);
-                LocalInstanceManager.Players[i].Alive = false;
 
-                LocalInstanceManager.PlayersIndex[i] = PlayerIndex.One;
+                LocalInstanceManager.PlayersIndex[i] = (PlayerIndex)i;
+                GamePadState tempState = GamePad.GetState((PlayerIndex)i);
+                if (tempState.IsConnected)
+                    LocalInstanceManager.Players[i].Alive = true;
+                else
+                    LocalInstanceManager.Players[i].Alive = false;
             }
             LocalInstanceManager.Players[0].Alive = true;
 
             // See what controllers are active
-
             floater = new EnemyBuzzsaw(20, colorStates[currentColorState]);
             minMaxX = new Vector2(
                 64f, device.Viewport.Width - 64f);
@@ -167,11 +178,17 @@ namespace Duologue
 
                     // Button handling
                     if (currentState.Triggers.Left > 0 &&
-                        lastState.Triggers.Left == 0)
+                        !fireTriggered)
                     {
                         if (Log != null)
                             Log.LogEntry("Color swap requested");
                         player.SwapColors();
+                        fireTriggered = true;
+                    }
+                    else if (currentState.Triggers.Left == 0 &&
+                        fireTriggered)
+                    {
+                        fireTriggered = false;
                     }
 
                     lastState = currentState;

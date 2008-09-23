@@ -59,7 +59,21 @@ namespace Duologue
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Determine what our aspect ratio is, and set resolution accordingly
+            DisplayMode currentMode = GraphicsDevice.DisplayMode;
+            if (currentMode.AspectRatio > 1.25)
+            {
+                // Set to 720p (1280×720)
+                Graphics.PreferredBackBufferWidth = 1280;
+                Graphics.PreferredBackBufferHeight = 720;
+            }
+            else
+            {
+                // Set to SDTV (960x720- not really SDTV, but 360 will scale for us)
+                Graphics.PreferredBackBufferWidth = 960;
+                Graphics.PreferredBackBufferHeight = 720;
+            }
+
             // FIXME:
             // In the final game, the enable/visible stuff set here should be in a game state engine
             Assets = new AssetManager(Content);
@@ -80,6 +94,9 @@ namespace Duologue
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
+
+            Log.LogEntry(currentMode.AspectRatio.ToString());
+            Log.LogEntry(Graphics.PreferredBackBufferWidth.ToString() + "x" + Graphics.PreferredBackBufferHeight.ToString());
             
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;

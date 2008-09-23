@@ -75,14 +75,17 @@ namespace Duologue.PlayObjects
 
         public PlayerShot Shot;
         public ColorState colorState;
+
+        public Color PlayerTint;
         #endregion
 
         #region Constructor / Init
-        public Player(ColorState currentColorState)
+        public Player(ColorState currentColorState, Color playerTint)
             : base()
         {
             colorState = currentColorState;
             lightIsNegative = true;
+            PlayerTint = playerTint;
             Initialize();
         }
 
@@ -109,7 +112,7 @@ namespace Duologue.PlayObjects
                 Position,
                 new Vector2(AssetManager.LoadTexture2D("player-base").Width / 2f, AssetManager.LoadTexture2D("player-base").Height / 2f),
                 null,
-                Color.Honeydew,
+                PlayerTint,
                 0f,
                 1f,
                 0.5f);
