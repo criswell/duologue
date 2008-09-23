@@ -65,6 +65,19 @@ namespace Mimicware
                 rand = new Random();
             return lower + rand.NextDouble() * (upper - lower);
         }
+
+        /// <summary>
+        /// Given a range, return a random integer.
+        /// </summary>
+        /// <param name="lower">Lower bounds</param>
+        /// <param name="upper">Upper bounds</param>
+        /// <returns>Random integer</returns>
+        public static int GetRandomInRange(int lower, int upper)
+        {
+            if (rand == null)
+                rand = new Random();
+            return rand.Next(lower, upper);
+        }
         #endregion
     }
 }
