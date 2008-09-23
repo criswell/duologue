@@ -1,16 +1,25 @@
+#region File Description
+#endregion
+
+#region Using statements
 using System;
 using System.Collections.Generic;
+// XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Content;
+// Mimicware
+using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Mimicware.Debug;
+// Duologue
+using Duologue.ParticleEffects;
+#endregion
 
 namespace Duologue
 {
@@ -19,12 +28,22 @@ namespace Duologue
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        #region Constants
+        public const int MaxSteamEffects = 20;
+        #endregion
+
+        #region Fields
+        #endregion
+
+        #region Properties
+        #endregion
         public GraphicsDeviceManager Graphics;
         SpriteBatch spriteBatch;
         GamePlayTest gamePlayTest;
         public AssetManager Assets;
         public RenderSprite Render;
         public Logger Log;
+        public Steam steamSystem;
 
         public Game1()
         {
@@ -41,6 +60,8 @@ namespace Duologue
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            // FIXME:
+            // In the final game, the enable/visible stuff set here should be in a game state engine
             Assets = new AssetManager(Content);
             gamePlayTest = new GamePlayTest(this);
             gamePlayTest.Enabled = true;
@@ -51,10 +72,18 @@ namespace Duologue
             Log.Visible = true;
             this.Components.Add(Log);
 
+            steamSystem = new Steam(this, MaxSteamEffects);
+            steamSystem.Enabled = true;
+            steamSystem.Visible = true;
+            this.Components.Add(steamSystem);
+
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
-            //Log.AssetManager = Assets;
+            
+            // Set the local instance manager
+            LocalInstanceManager.Steam = steamSystem;
+
             gamePlayTest.Log = Log;
             base.Initialize();
         }
