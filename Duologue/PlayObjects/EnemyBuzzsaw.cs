@@ -181,7 +181,7 @@ namespace Duologue.PlayObjects
                             if (timeSinceLastSteam > delayBetweenSteam)
                             {
                                 timeSinceLastSteam = 0;
-                                steamSystem.AddParticles(enemies[i].Position, enemies[i].FaceTint);
+                                steamSystem.AddParticles(enemies[i].Position, enemies[i].Tint);
                             }
                             timeSinceLastSteam++;
                             break;

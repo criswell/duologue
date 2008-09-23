@@ -16,28 +16,17 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace Mimicware.Graphics
 {
-    public class SpriteObject
+    public class SpriteObject : DrawableObject
     {
         #region Fields
         private Texture2D texture;
-        private Vector2 center;
         private Rectangle? source;
-        private Color tint;
         private float rotation;
         private float scale;
         private float layer;
-        private bool alive;
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Determines if the sprite is alive or not
-        /// </summary>
-        public virtual bool Alive
-        {
-            set { alive = value; }
-            get { return alive; }
-        }
         /// <summary>
         /// The sprite texture
         /// </summary>
@@ -45,27 +34,6 @@ namespace Mimicware.Graphics
         {
             get { return texture; }
             set { texture = value; }
-        }
-        /// <summary>
-        /// The sprite position
-        /// </summary>
-        public Vector2 Position;
-
-        /// <summary>
-        /// The center of the sprite
-        /// </summary>
-        public Vector2 Center
-        {
-            get { return center; }
-            set { center = value; }
-        }
-        /// <summary>
-        /// The tint of the sprite
-        /// </summary>
-        public Color Tint
-        {
-            get { return tint; }
-            set { tint = value; }
         }
         /// <summary>
         /// The rotation of the sprite
@@ -136,12 +104,10 @@ namespace Mimicware.Graphics
             Color textureTint,
             float textureRotation,
             float textureScale,
-            float textureLayer)
+            float textureLayer) :
+            base(texturePosition, textureCenter, textureTint)
         {
             texture = texture2D;
-            Position = texturePosition;
-            center = textureCenter;
-            tint = textureTint;
             rotation = textureRotation;
             scale = textureScale;
             source = textureRect;
@@ -153,13 +119,13 @@ namespace Mimicware.Graphics
             SpriteFont font,
             string text,
             Vector2 textPosition,
-            Color textTint)
+            Color textTint) :
+            base(textPosition, Vector2.Zero, textTint)
         {
             Font = font;
             Text = text;
             texture = null;
             Position = textPosition;
-            tint = textTint;
         }
         #endregion
 
