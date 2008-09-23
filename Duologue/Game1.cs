@@ -60,6 +60,8 @@ namespace Duologue
         protected override void Initialize()
         {
             // Determine what our aspect ratio is, and set resolution accordingly
+            // FIXME
+            // BAH! We really should check for available modes and not just do this
             DisplayMode currentMode = GraphicsDevice.DisplayMode;
             if (currentMode.AspectRatio > 1.25)
             {
@@ -156,7 +158,7 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            Graphics.GraphicsDevice.Clear(Color.DarkBlue);
+            Graphics.GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             Render.Run();
