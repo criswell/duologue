@@ -33,7 +33,7 @@ namespace Mimicware.Graphics
         /// <summary>
         /// Determines if the sprite is alive or not
         /// </summary>
-        public bool Alive
+        public virtual bool Alive
         {
             set { alive = value; }
             get { return alive; }

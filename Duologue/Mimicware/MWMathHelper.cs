@@ -22,6 +22,7 @@ namespace Mimicware
         #endregion
 
         #region Fields
+        private static Random rand;
         #endregion
 
         #region Constructor
@@ -50,6 +51,19 @@ namespace Mimicware
             if (vector.Y < 0)
                 rotation *= -1;
             return rotation;
+        }
+
+        /// <summary>
+        /// Given a range, return a random double in that range
+        /// </summary>
+        /// <param name="lower">Lower bounds</param>
+        /// <param name="upper">Upper bounds</param>
+        /// <returns>Random double</returns>
+        public static double GetRandomInRange(double lower, double upper)
+        {
+            if (rand == null)
+                rand = new Random();
+            return lower + rand.NextDouble() * (upper - lower);
         }
         #endregion
     }
