@@ -40,6 +40,11 @@ namespace Duologue.PlayObjects
         /// The current position of the play object
         /// </summary>
         public Vector2 Position;
+
+        /// <summary>
+        /// Determines if this playObject is alive
+        /// </summary>
+        public bool Alive;
         #endregion
 
         #region Constructor

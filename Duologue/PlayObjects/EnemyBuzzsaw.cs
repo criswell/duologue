@@ -76,19 +76,16 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Properties
-        public Player Player;
         public ColorState colorState;
         #endregion
 
         #region Constructor / Init
         public EnemyBuzzsaw(
             int numberEnemies,
-            Player player,
             ColorState currentColorState)
             : base()
         {
             numEnemies = numberEnemies;
-            Player = player;
             colorState = currentColorState;
             Initialize();
         }
@@ -162,6 +159,25 @@ namespace Duologue.PlayObjects
                 }
                 else
                 {
+                    Player Player = LocalInstanceManager.Players[0];
+                    float distance;
+                    float lastDistance = float.PositiveInfinity;
+                    // Get the nearest player
+                    for (int j = 0; j < LocalInstanceManager.MaxNumberOfPlayers; j++)
+                    {
+                        if (LocalInstanceManager.Players[j] != null &&
+                            LocalInstanceManager.Players[j].Alive)
+                        {
+                            distance = Vector2.Add(LocalInstanceManager.Players[j].Position, enemies[i].Position).Length();
+                            if (distance < lastDistance)
+                            {
+                                Player = LocalInstanceManager.Players[j];
+                                break;
+                            }
+
+                        }
+                    }
+
                     // Aim at the player
                     Vector2 vector2player = Player.Position - enemies[i].Position;
                     vector2player.Normalize();

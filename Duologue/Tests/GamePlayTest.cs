@@ -11,6 +11,7 @@ using Mimicware.Graphics;
 using Mimicware.Manager;
 using Duologue.PlayObjects;
 using Duologue.State;
+using Duologue;
 using Mimicware.Debug;
 
 namespace Duologue
@@ -24,7 +25,7 @@ namespace Duologue
         private AssetManager assets;
         private RenderSprite render;
         private GraphicsDevice device;
-        private Player player;
+        //private Player player;
         private GamePadState lastState;
         private Vector2 motionScaler;
         private Game1 localGame;
@@ -104,11 +105,24 @@ namespace Duologue
             {
                 assets = InstanceManager.AssetManager;
             }
-            player = new Player(colorStates[currentColorState]);
-            player.Position = new Vector2(
+
+            LocalInstanceManager.InitializePlayers();
+            for (int i=0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
+            {
+                LocalInstanceManager.Players[i] =
+                    new Player(colorStates[currentColorState]);
+                LocalInstanceManager.Players[i].Position = new Vector2(
                 device.Viewport.Width / 2f,
                 device.Viewport.Height / 2f);
-            floater = new EnemyBuzzsaw(20, player, colorStates[currentColorState]);
+                LocalInstanceManager.Players[i].Alive = false;
+
+                LocalInstanceManager.PlayersIndex[i] = PlayerIndex.One;
+            }
+            LocalInstanceManager.Players[0].Alive = true;
+
+            // See what controllers are active
+
+            floater = new EnemyBuzzsaw(20, colorStates[currentColorState]);
             minMaxX = new Vector2(
                 64f, device.Viewport.Width - 64f);
             minMaxY = new Vector2(
@@ -122,41 +136,49 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            GamePadState currentState = GamePad.GetState(PlayerIndex.One);
-
-            // Update player position, aim, fire, and orientatio
-            if (currentState.ThumbSticks.Left.X != 0f ||
-                currentState.ThumbSticks.Left.Y != 0f)
+            for (int i = 0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
             {
-                player.Orientation.X = currentState.ThumbSticks.Left.X;
-                player.Orientation.Y = -1 * currentState.ThumbSticks.Left.Y;
+                if (LocalInstanceManager.Players[i].Alive)
+                {
+                    GamePadState currentState = GamePad.GetState(LocalInstanceManager.PlayersIndex[i]);
+
+                    Player player = LocalInstanceManager.Players[i];
+
+                    // Update player position, aim, fire, and orientatio
+                    if (currentState.ThumbSticks.Left.X != 0f ||
+                        currentState.ThumbSticks.Left.Y != 0f)
+                    {
+                        player.Orientation.X = currentState.ThumbSticks.Left.X;
+                        player.Orientation.Y = -1 * currentState.ThumbSticks.Left.Y;
+                    }
+                    if (currentState.ThumbSticks.Right.X != 0f ||
+                        currentState.ThumbSticks.Right.Y != 0f)
+                    {
+                        player.Aim.X = currentState.ThumbSticks.Right.X;
+                        player.Aim.Y = currentState.ThumbSticks.Right.Y * -1;
+
+                        if (Log != null)
+                            Log.LogEntry("Fire requested");
+                        player.Fire();
+                    }
+
+                    player.Position.X += currentState.ThumbSticks.Left.X * motionScaler.X;
+                    player.Position.Y -= currentState.ThumbSticks.Left.Y * motionScaler.Y;
+
+                    // Button handling
+                    if (currentState.Triggers.Left > 0 &&
+                        lastState.Triggers.Left == 0)
+                    {
+                        if (Log != null)
+                            Log.LogEntry("Color swap requested");
+                        player.SwapColors();
+                    }
+
+                    lastState = currentState;
+
+                    player.Update(gameTime);
+                }
             }
-            if (currentState.ThumbSticks.Right.X != 0f ||
-                currentState.ThumbSticks.Right.Y != 0f)
-            {
-                player.Aim.X = currentState.ThumbSticks.Right.X;
-                player.Aim.Y = currentState.ThumbSticks.Right.Y * -1;
-                
-                if (Log != null)
-                    Log.LogEntry("Fire requested");
-                player.Fire();
-            }
-
-            player.Position.X += currentState.ThumbSticks.Left.X * motionScaler.X;
-            player.Position.Y -= currentState.ThumbSticks.Left.Y * motionScaler.Y;
-
-            // Button handling
-            if (currentState.Triggers.Left > 0 &&
-                lastState.Triggers.Left == 0)
-            {
-                if (Log != null)
-                    Log.LogEntry("Color swap requested");
-                player.SwapColors();
-            }
-
-            lastState = currentState;
-
-            player.Update(gameTime);
             floater.Update(gameTime, minMaxX, minMaxY);
             base.Update(gameTime);
         }
@@ -169,12 +191,18 @@ namespace Duologue
         {
             if (render == null)
             {
+                // FIXME
+                // We dont even need render in this test any more
                 render = InstanceManager.RenderSprite;
-                player.SetRenderSprite(render);
-                floater.SetRenderSprite(render);
+                //player.SetRenderSprite(render);
+                //floater.SetRenderSprite(render);
             }
-            
-            player.Draw(gameTime);
+
+            for (int i =0 ; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
+            {
+                if(LocalInstanceManager.Players[i].Alive)
+                    LocalInstanceManager.Players[i].Draw(gameTime);
+            }
             floater.Draw(gameTime);
             base.Draw(gameTime);
         }
