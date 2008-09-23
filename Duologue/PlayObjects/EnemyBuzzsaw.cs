@@ -1,5 +1,11 @@
+#region File Description
+#endregion
+
+#region Using statements
+// System
 using System;
 using System.Collections.Generic;
+// XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.GamerServices;
@@ -7,13 +13,19 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
+// Mimicware
 using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
+// Duologue
 using Duologue.State;
+using Duologue.ParticleEffects;
+using Duologue;
+#endregion
 
 namespace Duologue.PlayObjects
 {
+    #region BuzzsawObject
     class BuzzsawObject : SpriteObject
     {
         public Color FaceTint;
@@ -41,6 +53,7 @@ namespace Duologue.PlayObjects
             SpeedMultiplier = 1f;
         }
     }
+    #endregion
 
     class EnemyBuzzsaw : PlayObject
     {
@@ -49,6 +62,7 @@ namespace Duologue.PlayObjects
         private const double minSpeed = 0.2;
         private const double maxSpeed = 2.5;
         private const int turnRadius = 100; // larger is slower
+        private const int delayBetweenSteam = 20;
         #endregion
 
         #region Fields
@@ -57,6 +71,8 @@ namespace Duologue.PlayObjects
         private Texture2D enemyFaceFlee;
         private int numEnemies;
         private Random rand;
+        private Steam steamSystem;
+        private int timeSinceLastSteam;
         #endregion
 
         #region Properties
@@ -103,6 +119,7 @@ namespace Duologue.PlayObjects
 
             enemyFaceAgg = AssetManager.LoadTexture2D("buzzsaw-face-agg");
             enemyFaceFlee = AssetManager.LoadTexture2D("buzzsaw-face-flee");
+            timeSinceLastSteam = 0;
         }
         #endregion
 
@@ -115,6 +132,10 @@ namespace Duologue.PlayObjects
         /// <param name="minMaxY">The minimum/maximum Y values</param>
         public void Update(GameTime gameTime, Vector2 minMaxX, Vector2 minMaxY)
         {
+            // Get the steam system if we don't already have it
+            if (steamSystem == null)
+                steamSystem = LocalInstanceManager.Steam;
+
             for (int i = 0; i < enemies.Length; i++)
             {
                 if (!enemies[i].Alive)
@@ -157,6 +178,12 @@ namespace Duologue.PlayObjects
                             enemies[i].Direction = Vector2.Negate(enemies[i].Direction);
                             enemies[i].Fleeing = true;
                             enemies[i].SpeedMultiplier = 2f;
+                            if (timeSinceLastSteam > delayBetweenSteam)
+                            {
+                                timeSinceLastSteam = 0;
+                                steamSystem.AddParticles(enemies[i].Position, enemies[i].FaceTint);
+                            }
+                            timeSinceLastSteam++;
                             break;
                         case 0:
                             // Not in beam

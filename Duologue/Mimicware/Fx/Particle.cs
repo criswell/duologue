@@ -25,7 +25,7 @@ namespace Mimicware.Fx
     /// The basic Mimicware particle unit. Many of these individual units will be combined to make
     /// a larger particle effect.
     /// </summary>
-    public class Particle : SpriteObject
+    public class Particle : DrawableObject
     {
         #region Constants
         #endregion
@@ -61,6 +61,8 @@ namespace Mimicware.Fx
         {
             get { return TimeSinceStart < Lifetime; }
         }
+        public float Rotation;
+        public float Scale;
         #endregion
 
         #region Constructor / Init
@@ -74,16 +76,12 @@ namespace Mimicware.Fx
             float rotationSpeed,
             float textureScale,
             float textureLayer) : 
-            base(texture2D,
+            base(
             texturePosition,
             textureCenter,
-            null,
-            textureTint,
-            0f,
-            textureScale,
-            textureLayer)
+            textureTint)
         {
-            Text = null;
+            //Text = null;
             this.Acceleration = acceleration;
             this.Lifetime = lifetime;
             this.RotationSpeed = rotationSpeed;
