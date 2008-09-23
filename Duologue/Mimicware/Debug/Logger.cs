@@ -69,6 +69,7 @@ namespace Mimicware.Debug
         /// </summary>
         protected override void LoadContent()
         {
+            AssetManager = InstanceManager.AssetManager;
             if (AssetManager == null)
                 throw new NullReferenceException("AssetManager not set before LoadContent() call!");
 
@@ -91,6 +92,8 @@ namespace Mimicware.Debug
 
         public override void Draw(GameTime gameTime)
         {
+            if (RenderSprite == null)
+                RenderSprite = InstanceManager.RenderSprite;
             this.RenderSprite.DrawString(
                 font,
                 "Log:",

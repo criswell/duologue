@@ -102,13 +102,13 @@ namespace Duologue
             }
             if (assets == null)
             {
-                assets = localGame.Assets;
+                assets = InstanceManager.AssetManager;
             }
-            player = new Player(assets, device, render, colorStates[currentColorState]);
+            player = new Player(colorStates[currentColorState]);
             player.Position = new Vector2(
                 device.Viewport.Width / 2f,
                 device.Viewport.Height / 2f);
-            floater = new EnemyBuzzsaw(assets, device, render, 20, player, colorStates[currentColorState]);
+            floater = new EnemyBuzzsaw(20, player, colorStates[currentColorState]);
             minMaxX = new Vector2(
                 64f, device.Viewport.Width - 64f);
             minMaxY = new Vector2(
@@ -169,7 +169,7 @@ namespace Duologue
         {
             if (render == null)
             {
-                render = localGame.Render;
+                render = InstanceManager.RenderSprite;
                 player.SetRenderSprite(render);
                 floater.SetRenderSprite(render);
             }

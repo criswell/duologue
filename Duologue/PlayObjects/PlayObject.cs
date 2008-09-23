@@ -46,25 +46,11 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// Constructs a new PlayObject
         /// </summary>
-        /// <param name="manager">The game's asset manager</param>
-        /// <param name="graphics">The game's graphics device</param>
-        /// <param name="renderer">The game's sprite renderer</param>
-        public PlayObject(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer)
-        {
-            AssetManager = manager;
-            RenderSprite = renderer;
-            GraphicsDevice = graphics;
-        }
-
-        /// <summary>
-        /// Empty constructor
-        /// </summary>
         public PlayObject()
         {
-            // FIXME: We need to get rid of this
-            AssetManager = null;
-            GraphicsDevice = null;
-            RenderSprite = null;
+            AssetManager = InstanceManager.AssetManager;
+            RenderSprite = InstanceManager.RenderSprite;
+            GraphicsDevice = InstanceManager.GraphicsDevice;
         }
         #endregion
 

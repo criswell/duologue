@@ -78,25 +78,18 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
-        public Player(AssetManager manager, GraphicsDevice graphics, RenderSprite renderer, ColorState currentColorState)
-            : base(manager, graphics, renderer)
+        public Player(ColorState currentColorState)
+            : base()
         {
             colorState = currentColorState;
             lightIsNegative = true;
             Initialize();
         }
 
-        public Player()
-            : base()
-        {
-            // FIXME: We need to get rid of this
-            Initialize();
-        }
-
         private void Initialize()
         {
             // Gonna cause some errors me think
-            Shot = new PlayerShot(AssetManager, GraphicsDevice, RenderSprite);
+            Shot = new PlayerShot();
             Orientation = Vector2.UnitX;
             Aim = Vector2.Negate(Orientation);
             CaclulateRotations();
@@ -105,97 +98,97 @@ namespace Duologue.PlayObjects
             shineTimer = 0;
             beamArcMax = 0f;
             beamArcMin = 0f;
-            
-            if (AssetManager != null && GraphicsDevice != null)
+
+            if (AssetManager == null)
+                AssetManager = InstanceManager.AssetManager;
+        
+            // Load player objects
+            Position = new Vector2(InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
+            playerBase = new SpriteObject(
+                AssetManager.LoadTexture2D("player-base"),
+                Position,
+                new Vector2(AssetManager.LoadTexture2D("player-base").Width / 2f, AssetManager.LoadTexture2D("player-base").Height / 2f),
+                null,
+                Color.Honeydew,
+                0f,
+                1f,
+                0.5f);
+
+            playerCannon = new SpriteObject(
+                AssetManager.LoadTexture2D("player-cannon"),
+                Position,
+                new Vector2(AssetManager.LoadTexture2D("player-cannon").Width / 2f, AssetManager.LoadTexture2D("player-cannon").Height / 2f),
+                null,
+                colorState.Positive[1],
+                0f,
+                1f,
+                0.4f);
+
+            playerLight = new SpriteObject(
+                AssetManager.LoadTexture2D("player-light"),
+                Position,
+                new Vector2(AssetManager.LoadTexture2D("player-light").Width / 2f, AssetManager.LoadTexture2D("player-light").Height / 2f),
+                null,
+                colorState.Negative[1],
+                0f,
+                1f,
+                0.4f);
+
+            // Load projectile object
+            shot = new SpriteObject(
+                AssetManager.LoadTexture2D("shot"),
+                Vector2.Zero,
+                new Vector2(AssetManager.LoadTexture2D("shot").Width / 2f, AssetManager.LoadTexture2D("shot").Height / 2f),
+                null,
+                colorState.Positive[0],
+                0f,
+                1f,
+                1f);
+
+            shot.Alive = false;
+
+            // Load beam object
+            beam = new SpriteObject(
+                AssetManager.LoadTexture2D("beam"),
+                Position,
+                new Vector2(971f, 253f),
+                null,
+                colorState.Negative[1],
+                0f,
+                1f,
+                1f);
+
+            beamBase = new SpriteObject(
+                AssetManager.LoadTexture2D("beam-base"),
+                Position,
+                new Vector2(971f, 253f),
+                null,
+                colorState.Negative[0],
+                0f,
+                1f,
+                1f);
+            SetColors();
+
+            playerTreads = new Texture2D[treadFrames];
+            for (int i = 0; i < treadFrames; i++)
             {
-                // Load player objects
-                Position = new Vector2(GraphicsDevice.Viewport.Width / 2f, GraphicsDevice.Viewport.Height / 2f);
-                playerBase = new SpriteObject(
-                    AssetManager.LoadTexture2D("player-base"),
-                    Position,
-                    new Vector2(AssetManager.LoadTexture2D("player-base").Width / 2f, AssetManager.LoadTexture2D("player-base").Height / 2f),
-                    null,
-                    Color.Honeydew,
-                    0f,
-                    1f,
-                    0.5f);
-
-                playerCannon = new SpriteObject(
-                    AssetManager.LoadTexture2D("player-cannon"),
-                    Position,
-                    new Vector2(AssetManager.LoadTexture2D("player-cannon").Width / 2f, AssetManager.LoadTexture2D("player-cannon").Height / 2f),
-                    null,
-                    colorState.Positive[1],
-                    0f,
-                    1f,
-                    0.4f);
-
-                playerLight = new SpriteObject(
-                    AssetManager.LoadTexture2D("player-light"),
-                    Position,
-                    new Vector2(AssetManager.LoadTexture2D("player-light").Width / 2f, AssetManager.LoadTexture2D("player-light").Height / 2f),
-                    null,
-                    colorState.Negative[1],
-                    0f,
-                    1f,
-                    0.4f);
-
-                // Load projectile object
-                shot = new SpriteObject(
-                    AssetManager.LoadTexture2D("shot"),
-                    Vector2.Zero,
-                    new Vector2(AssetManager.LoadTexture2D("shot").Width / 2f, AssetManager.LoadTexture2D("shot").Height / 2f),
-                    null,
-                    colorState.Positive[0],
-                    0f,
-                    1f,
-                    1f);
-
-                shot.Alive = false;
-
-                // Load beam object
-                beam = new SpriteObject(
-                    AssetManager.LoadTexture2D("beam"),
-                    Position,
-                    new Vector2(971f, 253f),
-                    null,
-                    colorState.Negative[1],
-                    0f,
-                    1f,
-                    1f);
-
-                beamBase = new SpriteObject(
-                    AssetManager.LoadTexture2D("beam-base"),
-                    Position,
-                    new Vector2(971f, 253f),
-                    null,
-                    colorState.Negative[0],
-                    0f,
-                    1f,
-                    1f);
-                SetColors();
-
-                playerTreads = new Texture2D[treadFrames];
-                for (int i = 0; i < treadFrames; i++)
-                {
-                    playerTreads[i] = AssetManager.LoadTexture2D(String.Format("{0:tread00}", treadFrames-i));
-                }
-                currentTread = 0;
-                treadCenter = new Vector2(
-                    playerTreads[currentTread].Width / 2f,
-                    playerTreads[currentTread].Height / 2f);
-
-                playerShines = new Texture2D[shineFrames];
-                for (int i = 0; i < shineFrames; i++)
-                {
-                    //string temp = String.Format("shine{0:00}", i + 1);
-                    playerShines[i] = AssetManager.LoadTexture2D(String.Format("shine{0:00}", i+1));
-                }
-                currentShine = 0;
-                shineCenter = new Vector2(
-                    playerShines[currentShine].Width / 2f,
-                    playerShines[currentShine].Height / 2f);
+                playerTreads[i] = AssetManager.LoadTexture2D(String.Format("{0:tread00}", treadFrames-i));
             }
+            currentTread = 0;
+            treadCenter = new Vector2(
+                playerTreads[currentTread].Width / 2f,
+                playerTreads[currentTread].Height / 2f);
+
+            playerShines = new Texture2D[shineFrames];
+            for (int i = 0; i < shineFrames; i++)
+            {
+                //string temp = String.Format("shine{0:00}", i + 1);
+                playerShines[i] = AssetManager.LoadTexture2D(String.Format("shine{0:00}", i+1));
+            }
+            currentShine = 0;
+            shineCenter = new Vector2(
+                playerShines[currentShine].Width / 2f,
+                playerShines[currentShine].Height / 2f);
         }
         #endregion
 
@@ -205,6 +198,9 @@ namespace Duologue.PlayObjects
         /// <param name="gameTime">Gametime</param>
         internal void Draw(GameTime gameTime)
         {
+            if (RenderSprite == null)
+                RenderSprite = InstanceManager.RenderSprite;
+
             CaclulateRotations();
             CheckScreenBoundary();
 
@@ -296,13 +292,13 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void CheckScreenBoundary()
         {
-            if (Position.X > GraphicsDevice.Viewport.Width - playerBase.Texture.Width /2f)
-                Position.X = GraphicsDevice.Viewport.Width - playerBase.Texture.Width/2f;
+            if (Position.X > InstanceManager.DefaultViewport.Width - playerBase.Texture.Width /2f)
+                Position.X = InstanceManager.DefaultViewport.Width - playerBase.Texture.Width/2f;
             if (Position.X < playerBase.Texture.Width/2f)
                 Position.X = playerBase.Texture.Width/2f;
 
-            if (Position.Y > GraphicsDevice.Viewport.Height - playerBase.Texture.Height/2f)
-                Position.Y = GraphicsDevice.Viewport.Height - playerBase.Texture.Height/2f;
+            if (Position.Y > InstanceManager.DefaultViewport.Height - playerBase.Texture.Height/2f)
+                Position.Y = InstanceManager.DefaultViewport.Height - playerBase.Texture.Height/2f;
             if (Position.Y < playerBase.Texture.Height/2f)
                 Position.Y = playerBase.Texture.Height/2f;
         }
