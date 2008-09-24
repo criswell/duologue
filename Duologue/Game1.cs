@@ -71,9 +71,9 @@ namespace Duologue
             }
             else
             {
-                // Set to SDTV (960x720- not really SDTV, but 360 will scale for us)
-                Graphics.PreferredBackBufferWidth = 960;
-                Graphics.PreferredBackBufferHeight = 720;
+                // Set to SDTV (1024x768- not really SDTV, but 360 will scale for us)
+                Graphics.PreferredBackBufferWidth = 1024;
+                Graphics.PreferredBackBufferHeight = 768;
             }
 
             // FIXME:

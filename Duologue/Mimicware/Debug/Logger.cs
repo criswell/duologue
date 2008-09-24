@@ -38,7 +38,7 @@ namespace Mimicware.Debug
         #endregion
 
         #region Constants
-        private const int maxLogLength = 10;
+        private const int maxLogLength = 30;
         #endregion
 
         #region Constructor / Init / Load
