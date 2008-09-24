@@ -367,7 +367,7 @@ namespace Mimicware.Fx
                     //InstanceManager.Logger.LogEntry("p.alive: " + p.TimeSinceStart + " < " + p.Lifetime);
                     if (!p.Alive)
                     {
-                        InstanceManager.Logger.LogEntry("Free :" + FreeParticleCount);
+                        //InstanceManager.Logger.LogEntry("Free :" + FreeParticleCount);
                         freeParticles.Enqueue(p);
                     }
                 }   

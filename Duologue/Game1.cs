@@ -59,7 +59,23 @@ namespace Duologue
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Determine what our aspect ratio is, and set resolution accordingly
+            // FIXME
+            // BAH! We really should check for available modes and not just do this
+            DisplayMode currentMode = GraphicsDevice.DisplayMode;
+            if (currentMode.AspectRatio > 1.25)
+            {
+                // Set to 720p (1280×720)
+                Graphics.PreferredBackBufferWidth = 1280;
+                Graphics.PreferredBackBufferHeight = 720;
+            }
+            else
+            {
+                // Set to SDTV (1024x768- not really SDTV, but 360 will scale for us)
+                Graphics.PreferredBackBufferWidth = 1024;
+                Graphics.PreferredBackBufferHeight = 768;
+            }
+
             // FIXME:
             // In the final game, the enable/visible stuff set here should be in a game state engine
             Assets = new AssetManager(Content);
@@ -80,6 +96,9 @@ namespace Duologue
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
+
+            Log.LogEntry(currentMode.AspectRatio.ToString());
+            Log.LogEntry(Graphics.PreferredBackBufferWidth.ToString() + "x" + Graphics.PreferredBackBufferHeight.ToString());
             
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;
@@ -139,7 +158,7 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            Graphics.GraphicsDevice.Clear(Color.DarkBlue);
+            Graphics.GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             Render.Run();

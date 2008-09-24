@@ -20,6 +20,7 @@ using Mimicware.Debug;
 using Mimicware.Fx;
 // Duologue
 using Duologue.ParticleEffects;
+using Duologue.PlayObjects;
 #endregion
 
 namespace Duologue
@@ -31,6 +32,37 @@ namespace Duologue
         /// The local instance of the steam particle system.
         /// </summary>
         public static Steam Steam;
+
+        /// <summary>
+        /// The local players
+        /// </summary>
+        public static Player[] Players;
+
+        /// <summary>
+        /// The local player index mapping
+        /// </summary>
+        public static PlayerIndex[] PlayersIndex;
+
+        /// <summary>
+        /// The maximum number of players
+        /// </summary>
+        public static int MaxNumberOfPlayers
+        {
+            get { return 4; }
+        }
+        #endregion
+
+        #region Public methods
+        /// <summary>
+        /// Will initialize the player indexes
+        /// </summary>
+        internal static void InitializePlayers()
+        {
+            if (Players == null)
+                Players = new Player[MaxNumberOfPlayers];
+            if (PlayersIndex == null)
+                PlayersIndex = new PlayerIndex[MaxNumberOfPlayers];
+        }
         #endregion
     }
 }
