@@ -39,9 +39,20 @@ namespace Duologue
         private Game localGame;
         private Texture2D[] backgrounds;
         private int currentBackground;
+        private int lastBackground;
+        private float timeSinceTransitionRequest;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// How long it takes to transition between backgrounds
+        /// </summary>
+        public float TransitionTime;
+
+        public bool InTransition
+        {
+            get { timeSinceTransitionRequest < TransitionTime; }
+        }
         #endregion
 
         #region Constructor / Init / Load
