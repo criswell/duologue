@@ -158,10 +158,11 @@ namespace Duologue.PlayObjects
             shot.Alive = false;
 
             // Load beam object
+            Vector2 beamCenter = new Vector2(747f, 197.5f);
             beam = new SpriteObject(
                 AssetManager.LoadTexture2D("beam"),
                 Position,
-                new Vector2(971f, 253f),
+                beamCenter,
                 null,
                 colorState.Negative[1],
                 0f,
@@ -171,7 +172,7 @@ namespace Duologue.PlayObjects
             beamBase = new SpriteObject(
                 AssetManager.LoadTexture2D("beam-base"),
                 Position,
-                new Vector2(971f, 253f),
+                beamCenter,
                 null,
                 colorState.Negative[0],
                 0f,
