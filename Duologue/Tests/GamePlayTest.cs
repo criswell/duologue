@@ -35,6 +35,8 @@ namespace Duologue
         private ColorState[] colorStates;
         private int currentColorState;
         private bool fireTriggered;
+        private int timeSinceExplosion;
+        private const int ticksExplosion = 60 * 10;
         #endregion
 
         #region Properties
@@ -91,6 +93,7 @@ namespace Duologue
         public override void Initialize()
         {
             motionScaler = new Vector2(10f, 10f);
+            timeSinceExplosion = 0;
             base.Initialize();
         }
 
@@ -147,6 +150,7 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            timeSinceExplosion++;
             for (int i = 0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
             {
                 if (LocalInstanceManager.Players[i].Alive)
@@ -219,8 +223,16 @@ namespace Duologue
             {
                 if(LocalInstanceManager.Players[i].Alive)
                     LocalInstanceManager.Players[i].Draw(gameTime);
+                if (timeSinceExplosion > ticksExplosion)
+                {
+                    timeSinceExplosion = 0;
+                    LocalInstanceManager.PlayerRing.AddRing(
+                        LocalInstanceManager.Players[i].Position,
+                        Color.White);
+                }
             }
             floater.Draw(gameTime);
+
             base.Draw(gameTime);
         }
     }

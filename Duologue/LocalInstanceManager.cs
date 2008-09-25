@@ -50,6 +50,11 @@ namespace Duologue
         {
             get { return 4; }
         }
+
+        /// <summary>
+        /// The local instance of the player explosion ring system
+        /// </summary>
+        public static PlayerRing PlayerRing;
         #endregion
 
         #region Public methods

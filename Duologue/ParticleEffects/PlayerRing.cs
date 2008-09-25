@@ -22,11 +22,16 @@ using Mimicware.Fx;
 
 namespace Duologue.ParticleEffects
 {
-    class PlayerRing : ExplodeRingSystem
+    public class PlayerRing : ExplodeRingSystem
     {
+        public PlayerRing(Game game, int howManyEffects)
+            : base(game, howManyEffects)
+        {
+        }
+
         protected override void InitializeConstants()
         {
-            textureFilename = "steam";
+            textureFilename = "explode-ring";
 
             minInitialSpeed = 20;
             maxInitialSpeed = 100;
@@ -40,11 +45,11 @@ namespace Duologue.ParticleEffects
             minLifetime = 1.0f;
             maxLifetime = 2.0f;
 
-            minScale = .5f;
-            maxScale = 1.0f;
+            minScaleSpeed = 0.01f;
+            maxScaleSpeed = 0.2f;
 
-            minNumParticles = 7;
-            maxNumParticles = 15;
+            minNumRings = 7;
+            maxNumRings = 15;
 
             // rotate slowly, we want a fairly relaxed effect
             minRotationSpeed = -MathHelper.PiOver4 / 2.0f;
