@@ -1,6 +1,6 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{465ba138-2891-4e79-a94a-75f1ca57d9c2}</ProjectGuid>
+    <ProjectGuid>{465BA138-2891-4E79-A94A-75F1CA57D9C2}</ProjectGuid>
     <ProjectTypeGuids>{2DF5C3F4-5A5F-47a9-8E94-23B4456F55E2};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
@@ -38,11 +38,15 @@
     <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Background.cs" />
     <Compile Include="LocalInstanceManager.cs" />
     <Compile Include="Mimicware\Fx\Particle.cs" />
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
     <Compile Include="Mimicware\Manager\InstanceManager.cs" />
+    <Compile Include="ParticleEffects\ExplodeRing.cs" />
+    <Compile Include="ParticleEffects\ExplodeRingSystem.cs" />
+    <Compile Include="ParticleEffects\PlayerRing.cs" />
     <Compile Include="ParticleEffects\Steam.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
