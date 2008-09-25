@@ -30,6 +30,7 @@ namespace Duologue
     {
         #region Constants
         public const int MaxSteamEffects = 20;
+        public const int MaxExplosionEffects = 5;
         #endregion
 
         #region Fields
@@ -44,6 +45,7 @@ namespace Duologue
         public RenderSprite Render;
         public Logger Log;
         public Steam steamSystem;
+        public PlayerRing playerRing;
 
         public Game1()
         {
@@ -93,6 +95,11 @@ namespace Duologue
             steamSystem.Visible = true;
             this.Components.Add(steamSystem);
 
+            playerRing = new PlayerRing(this, MaxExplosionEffects);
+            playerRing.Enabled = true;
+            playerRing.Visible = true;
+            this.Components.Add(playerRing);
+
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
@@ -102,6 +109,7 @@ namespace Duologue
             
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;
+            LocalInstanceManager.PlayerRing = playerRing;
 
             gamePlayTest.Log = Log;
             base.Initialize();

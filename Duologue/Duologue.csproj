@@ -61,6 +61,9 @@
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
     <Compile Include="Mimicware\Manager\InstanceManager.cs" />
+    <Compile Include="ParticleEffects\ExplodeRingSystem.cs" />
+    <Compile Include="ParticleEffects\ExplodeRing.cs" />
+    <Compile Include="ParticleEffects\PlayerRing.cs" />
     <Compile Include="ParticleEffects\Steam.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
