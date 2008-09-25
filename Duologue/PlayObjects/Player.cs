@@ -38,10 +38,16 @@ namespace Duologue.PlayObjects
         private bool lightIsNegative;
         private Vector2 lastPosition;
 
+        // Stuff for computing the tread offset
+        private Vector2 treadOffset;
+        private const float maxTreadOffset = 10f;
+        private Vector2 screenCenter;
+
         // The beam arc and radius
         private const float beamRadius = 400f;
         private float beamArcMin;
         private float beamArcMax;
+        private float piOver6 = MathHelper.Pi / 6f;
         #endregion
 
         #region Properties
@@ -101,6 +107,7 @@ namespace Duologue.PlayObjects
             shineTimer = 0;
             beamArcMax = 0f;
             beamArcMin = 0f;
+            treadOffset = Vector2.Zero;
 
             if (AssetManager == null)
                 AssetManager = InstanceManager.AssetManager;
@@ -195,6 +202,147 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
+        #region Private Methods
+        /// <summary>
+        /// Ensure that we're still inside screenboundaries.
+        /// </summary>
+        private void CheckScreenBoundary()
+        {
+            if (Position.X > InstanceManager.DefaultViewport.Width - playerBase.Texture.Width / 2f)
+                Position.X = InstanceManager.DefaultViewport.Width - playerBase.Texture.Width / 2f;
+            if (Position.X < playerBase.Texture.Width / 2f)
+                Position.X = playerBase.Texture.Width / 2f;
+
+            if (Position.Y > InstanceManager.DefaultViewport.Height - playerBase.Texture.Height / 2f)
+                Position.Y = InstanceManager.DefaultViewport.Height - playerBase.Texture.Height / 2f;
+            if (Position.Y < playerBase.Texture.Height / 2f)
+                Position.Y = playerBase.Texture.Height / 2f;
+        }
+
+        /// <summary>
+        /// Calculate the various rotations, should be called once per frame
+        /// </summary>
+        private void CaclulateRotations()
+        {
+            // The base is easy because we can fuck it up- the base is a circle with
+            // no real orientation.
+            BaseRotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
+
+            // The light rotation is a bit tricky because it starts in the left coordinate system
+            LightRotation = BaseRotation + 3f * MathHelper.PiOver4;
+
+            // Next up, the light beam rotation is 180 degrees from the base
+            BeamRotation = BaseRotation + MathHelper.Pi;
+
+            // We also need the arc that defines the beam;
+            beamArcMin = BaseRotation - piOver6;
+            beamArcMax = BaseRotation + piOver6;
+
+            // Next, we do the cannon
+            CannonRotation = MWMathHelper.ComputeAngleAgainstX(Aim);
+
+            // We have to do this after the Aim.Y test because it could cross the angle = 0/Pi boundary
+            CannonRotation += MathHelper.PiOver2;
+
+            // Now, tread rotation
+            TreadRotation = BaseRotation + MathHelper.PiOver2;
+        }
+
+        private void SetColors()
+        {
+            if (lightIsNegative)
+            {
+                playerLight.Tint = colorState.Negative[1];
+                beam.Tint = colorState.Negative[1];
+                beamBase.Tint = colorState.Negative[0];
+
+                playerCannon.Tint = colorState.Positive[1];
+                shot.Tint = colorState.Positive[0];
+            }
+            else
+            {
+                playerLight.Tint = colorState.Positive[1];
+                beam.Tint = colorState.Positive[1];
+                beamBase.Tint = colorState.Positive[0];
+
+                playerCannon.Tint = colorState.Negative[1];
+                shot.Tint = colorState.Negative[0];
+            }
+        }
+
+        /// <summary>
+        /// Figure out the current treadoffset
+        /// </summary>
+        private void ComputeTreadOffset()
+        {
+            // Get distance
+            float distance = Vector2.Subtract(screenCenter, Position).Length();
+
+            // Compute the size of the offset based on distance
+            float size = maxTreadOffset * (distance / screenCenter.Length());
+
+            // Aim at center of screen
+            treadOffset = Vector2.Add(screenCenter, Position);
+            treadOffset.Normalize();
+            treadOffset *= size;
+        }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Call when the colors need to be swapped
+        /// </summary>
+        internal void SwapColors()
+        {
+            lightIsNegative = !lightIsNegative;
+            SetColors();
+        }
+
+        /// <summary>
+        /// Call when a fire request is made
+        /// </summary>
+        internal void Fire()
+        {
+            Vector2 startPos = Position; // FIXME
+            Shot.Fire(Aim, playerCannon.Tint, startPos);
+        }
+
+        /// <summary>
+        /// Given a position and color, will determine if it is in the beam, and if it is complementary or opposite
+        /// </summary>
+        /// <param name="vector2">Position vector</param>
+        /// <param name="color">Color of the itme</param>
+        /// <returns>Returns 0 if not in beam. -1 if in beam and opposite colors. +1 if in beam and complimentary colors.</returns>
+        internal int IsInBeam(Vector2 vector2, Color color)
+        {
+            int retval = 0;
+            // Check if in-beam
+            Vector2 distance = vector2 - Position;
+            if (Math.Abs(distance.Length()) < beamRadius)
+            {
+                // We're close enough... inside the arc?
+                float rotation = MWMathHelper.ComputeAngleAgainstX(distance);
+                if (rotation > beamArcMin && rotation < beamArcMax)
+                {
+                    // In the beam
+                    // Check if complimentary color
+                    if (colorState.SameColor(color, playerLight.Tint))
+                    {
+                        retval = 1;
+                    }
+                    else
+                    {
+                        retval = -1;
+                    }
+                }
+            }
+
+            return retval;
+        }
+
+        #endregion
+
+        #region Draw / Update
         /// <summary>
         /// Draw the player object
         /// </summary>
@@ -210,7 +358,7 @@ namespace Duologue.PlayObjects
             // Treads
             RenderSprite.Draw(
                 playerTreads[currentTread],
-                Position,
+                Position + treadOffset,
                 treadCenter,
                 null,
                 playerBase.Tint,
@@ -291,91 +439,6 @@ namespace Duologue.PlayObjects
         }
 
         /// <summary>
-        /// Ensure that we're still inside screenboundaries.
-        /// </summary>
-        private void CheckScreenBoundary()
-        {
-            if (Position.X > InstanceManager.DefaultViewport.Width - playerBase.Texture.Width /2f)
-                Position.X = InstanceManager.DefaultViewport.Width - playerBase.Texture.Width/2f;
-            if (Position.X < playerBase.Texture.Width/2f)
-                Position.X = playerBase.Texture.Width/2f;
-
-            if (Position.Y > InstanceManager.DefaultViewport.Height - playerBase.Texture.Height/2f)
-                Position.Y = InstanceManager.DefaultViewport.Height - playerBase.Texture.Height/2f;
-            if (Position.Y < playerBase.Texture.Height/2f)
-                Position.Y = playerBase.Texture.Height/2f;
-        }
-
-        /// <summary>
-        /// Calculate the various rotations, should be called once per frame
-        /// </summary>
-        private void CaclulateRotations()
-        {
-            // The base is easy because we can fuck it up- the base is a circle with
-            // no real orientation.
-            BaseRotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
-
-            // The light rotation is a bit tricky because it starts in the left coordinate system
-            LightRotation = BaseRotation +3f*MathHelper.PiOver4;
-
-            // Next up, the light beam rotation is 180 degrees from the base
-            BeamRotation = BaseRotation + MathHelper.Pi;
-
-            // We also need the arc that defines the beam;
-            beamArcMin = BaseRotation - MathHelper.PiOver4;
-            beamArcMax = BaseRotation + MathHelper.PiOver4;
-
-            // Next, we do the cannon
-            CannonRotation = MWMathHelper.ComputeAngleAgainstX(Aim);
-
-            // We have to do this after the Aim.Y test because it could cross the angle = 0/Pi boundary
-            CannonRotation +=  MathHelper.PiOver2;
-
-            // Now, tread rotation
-            TreadRotation = BaseRotation + MathHelper.PiOver2;
-        }
-
-        /// <summary>
-        /// Call when the colors need to be swapped
-        /// </summary>
-        internal void SwapColors()
-        {
-            lightIsNegative = !lightIsNegative;
-            SetColors();
-        }
-
-        private void SetColors()
-        {
-            if (lightIsNegative)
-            {
-                playerLight.Tint = colorState.Negative[1];
-                beam.Tint = colorState.Negative[1];
-                beamBase.Tint = colorState.Negative[0];
-
-                playerCannon.Tint = colorState.Positive[1];
-                shot.Tint = colorState.Positive[0];
-            }
-            else
-            {
-                playerLight.Tint = colorState.Positive[1];
-                beam.Tint = colorState.Positive[1];
-                beamBase.Tint = colorState.Positive[0];
-
-                playerCannon.Tint = colorState.Negative[1];
-                shot.Tint = colorState.Negative[0];
-            }
-        }
-
-        /// <summary>
-        /// Call when a fire request is made
-        /// </summary>
-        internal void Fire()
-        {
-            Vector2 startPos = Position; // FIXME
-            Shot.Fire(Aim, playerCannon.Tint, startPos);
-        }
-
-        /// <summary>
         /// Called once per frame
         /// </summary>
         /// <param name="gameTime"></param>
@@ -384,63 +447,40 @@ namespace Duologue.PlayObjects
             if (lastPosition != Position)
             {
                 treadTimer++;
-                if(treadTimer > maxTreadTimer)
+                if (treadTimer > maxTreadTimer)
                 {
                     treadTimer = 0;
                     currentTread++;
-                    if(currentTread >= treadFrames)
+                    if (currentTread >= treadFrames)
                         currentTread = 0;
                 }
             }
-            if(lastPosition.X !=Position.X)
+            if (lastPosition.X != Position.X)
             {
                 shineTimer++;
                 if (shineTimer > maxShineTimer)
                 {
                     shineTimer = 0;
-                    currentShine += (int)((lastPosition.X - Position.X)/Math.Abs(lastPosition.X - Position.X));
+                    currentShine += (int)((lastPosition.X - Position.X) / Math.Abs(lastPosition.X - Position.X));
                     if (currentShine >= shineFrames)
                         currentShine = 0;
                     else if (currentShine < 0)
                         currentShine = shineFrames - 1;
                 }
             }
+            if (screenCenter == Vector2.Zero)
+            {
+                screenCenter = new Vector2(
+                    InstanceManager.GraphicsDevice.Viewport.Width / 2f,
+                    InstanceManager.GraphicsDevice.Viewport.Height / 2f);
+                InstanceManager.Logger.LogEntry(screenCenter.ToString());
+            }
+            ComputeTreadOffset();
             lastPosition = Position;
             Shot.Update(gameTime);
         }
+        #endregion
 
-        /// <summary>
-        /// Given a position and color, will determine if it is in the beam, and if it is complementary or opposite
-        /// </summary>
-        /// <param name="vector2">Position vector</param>
-        /// <param name="color">Color of the itme</param>
-        /// <returns>Returns 0 if not in beam. -1 if in beam and opposite colors. +1 if in beam and complimentary colors.</returns>
-        internal int IsInBeam(Vector2 vector2, Color color)
-        {
-            int retval = 0;
-            // Check if in-beam
-            Vector2 distance = vector2 - Position;
-            if (Math.Abs(distance.Length()) < beamRadius)
-            {
-                // We're close enough... inside the arc?
-                float rotation = MWMathHelper.ComputeAngleAgainstX(distance);
-                if (rotation > beamArcMin && rotation < beamArcMax)
-                {
-                    // In the beam
-                    // Check if complimentary color
-                    if (colorState.SameColor(color, playerLight.Tint))
-                    {
-                        retval = 1;
-                    }
-                    else
-                    {
-                        retval = -1;
-                    }
-                }
-            }
-
-            return retval;
-        }
 
         #region Public Overrides
         /// <summary>

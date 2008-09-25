@@ -117,6 +117,7 @@ namespace Duologue
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;
             LocalInstanceManager.PlayerRing = playerRing;
+            LocalInstanceManager.Background = background;
 
             gamePlayTest.Log = Log;
             base.Initialize();
