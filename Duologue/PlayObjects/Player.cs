@@ -38,6 +38,8 @@ namespace Duologue.PlayObjects
         private bool lightIsNegative;
         private Vector2 lastPosition;
 
+        private Vector2 treadOffset;
+
         // The beam arc and radius
         private const float beamRadius = 400f;
         private float beamArcMin;
@@ -101,6 +103,7 @@ namespace Duologue.PlayObjects
             shineTimer = 0;
             beamArcMax = 0f;
             beamArcMin = 0f;
+            treadOffset = new Vector2(5f, 5f);
 
             if (AssetManager == null)
                 AssetManager = InstanceManager.AssetManager;
@@ -210,7 +213,7 @@ namespace Duologue.PlayObjects
             // Treads
             RenderSprite.Draw(
                 playerTreads[currentTread],
-                Position,
+                Position + treadOffset,
                 treadCenter,
                 null,
                 playerBase.Tint,
