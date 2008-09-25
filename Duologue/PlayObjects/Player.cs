@@ -38,7 +38,9 @@ namespace Duologue.PlayObjects
         private bool lightIsNegative;
         private Vector2 lastPosition;
 
+        // Stuff for computing the tread offset
         private Vector2 treadOffset;
+        private const float maxTreadOffset = 10f;
         private Vector2 screenCenter;
 
         // The beam arc and radius
@@ -105,6 +107,7 @@ namespace Duologue.PlayObjects
             shineTimer = 0;
             beamArcMax = 0f;
             beamArcMin = 0f;
+            treadOffset = Vector2.Zero;
 
             if (AssetManager == null)
                 AssetManager = InstanceManager.AssetManager;
@@ -272,7 +275,16 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void ComputeTreadOffset()
         {
-            throw new Exception("The method or operation is not implemented.");
+            // Get distance
+            float distance = Vector2.Subtract(screenCenter, Position).Length();
+
+            // Compute the size of the offset based on distance
+            float size = maxTreadOffset * (distance / screenCenter.Length());
+
+            // Aim at center of screen
+            treadOffset = Vector2.Add(screenCenter, Position);
+            treadOffset.Normalize();
+            treadOffset *= size;
         }
         #endregion
 
@@ -463,6 +475,7 @@ namespace Duologue.PlayObjects
                     InstanceManager.GraphicsDevice.Viewport.Height / 2f);
                 InstanceManager.Logger.LogEntry(screenCenter.ToString());
             }
+            ComputeTreadOffset();
             lastPosition = Position;
             Shot.Update(gameTime);
         }
