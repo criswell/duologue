@@ -44,6 +44,7 @@ namespace Duologue.PlayObjects
         private const float beamRadius = 400f;
         private float beamArcMin;
         private float beamArcMax;
+        private float piOver6 = MathHelper.Pi / 6f;
         #endregion
 
         #region Properties
@@ -325,8 +326,8 @@ namespace Duologue.PlayObjects
             BeamRotation = BaseRotation + MathHelper.Pi;
 
             // We also need the arc that defines the beam;
-            beamArcMin = BaseRotation - MathHelper.PiOver4;
-            beamArcMax = BaseRotation + MathHelper.PiOver4;
+            beamArcMin = BaseRotation - piOver6;
+            beamArcMax = BaseRotation + piOver6;
 
             // Next, we do the cannon
             CannonRotation = MWMathHelper.ComputeAngleAgainstX(Aim);
