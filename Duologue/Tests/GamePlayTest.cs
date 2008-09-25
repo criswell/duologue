@@ -34,7 +34,8 @@ namespace Duologue
         private Vector2 minMaxY;
         private ColorState[] colorStates;
         private int currentColorState;
-        private bool fireTriggered;
+        private bool leftFireTriggered;
+        private bool rightFireTriggered;
         private int timeSinceExplosion;
         private const int ticksExplosion = 60 * 10;
         #endregion
@@ -83,7 +84,8 @@ namespace Duologue
             Log = null;
             colorStates = ColorState.GetColorStates();
             currentColorState = 0;
-            fireTriggered = false;
+            leftFireTriggered = false;
+            rightFireTriggered = false;
         }
 
         /// <summary>
@@ -182,17 +184,32 @@ namespace Duologue
 
                     // Button handling
                     if (currentState.Triggers.Left > 0 &&
-                        !fireTriggered)
+                        !leftFireTriggered)
                     {
                         if (Log != null)
                             Log.LogEntry("Color swap requested");
                         player.SwapColors();
-                        fireTriggered = true;
+                        leftFireTriggered = true;
                     }
                     else if (currentState.Triggers.Left == 0 &&
-                        fireTriggered)
+                        leftFireTriggered)
                     {
-                        fireTriggered = false;
+                        leftFireTriggered = false;
+                    }
+
+                    // Background cycler
+                    if (currentState.Triggers.Right > 0 &&
+                        !rightFireTriggered)
+                    {
+                        if (Log != null)
+                            Log.LogEntry("Background swap requested");
+                        LocalInstanceManager.Background.NextBackground();
+                        rightFireTriggered = true;
+                    }
+                    else if (currentState.Triggers.Right == 0 &&
+                        rightFireTriggered)
+                    {
+                        rightFireTriggered = false;
                     }
 
                     lastState = currentState;

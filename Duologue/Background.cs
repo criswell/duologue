@@ -40,6 +40,8 @@ namespace Duologue
         private Texture2D[] backgrounds;
         private int currentBackground;
         private int lastBackground;
+        private Color lastColor;
+        private Color currentColor;
         private float timeSinceTransitionRequest;
         #endregion
 
@@ -51,7 +53,7 @@ namespace Duologue
 
         public bool InTransition
         {
-            get { timeSinceTransitionRequest < TransitionTime; }
+            get { return timeSinceTransitionRequest < TransitionTime; }
         }
         #endregion
 
@@ -89,7 +91,12 @@ namespace Duologue
                 center[i] = new Vector2(backgrounds[i].Width / 2f, backgrounds[i].Height / 2f);
             }
 
-            currentBackground = 2;
+            currentBackground = 0;
+            lastBackground = numBackgrounds - 1;
+            TransitionTime = 0.5f;
+            timeSinceTransitionRequest = 1f;
+            currentColor = Color.White;
+            lastColor = Color.White;
         }
         #endregion
 
@@ -97,6 +104,19 @@ namespace Duologue
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Request a switch to the next background
+        /// </summary>
+        public void NextBackground()
+        {
+            lastBackground = currentBackground;
+            currentBackground++;
+            if (currentBackground >= numBackgrounds)
+                currentBackground = 0;
+            timeSinceTransitionRequest = 0f;
+            lastColor = Color.White;
+            currentColor = new Color(Vector4.Zero);
+        }
         #endregion
 
         #region Update / Draw
@@ -106,6 +126,22 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (InTransition)
+            {
+                float curAlpha = timeSinceTransitionRequest / TransitionTime;
+                float lastAlpha = 1 - curAlpha;
+                currentColor = new Color(new Vector4(
+                    1f,
+                    1f,
+                    1f,
+                    curAlpha));
+                lastColor = new Color(new Vector4(
+                    1f,
+                    1f,
+                    1f,
+                    lastAlpha));
+                timeSinceTransitionRequest += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
             if (screenCenter == Vector2.Zero)
             {
                 screenCenter = new Vector2(
@@ -121,15 +157,39 @@ namespace Duologue
             if (render == null)
                 render = InstanceManager.RenderSprite;
 
-            render.Draw(
-                backgrounds[currentBackground],
-                screenCenter,
-                center[currentBackground],
-                null,
-                Color.White,
-                0f,
-                1f,
-                1f);
+            if (InTransition)
+            {
+                render.Draw(
+                    backgrounds[lastBackground],
+                    screenCenter,
+                    center[lastBackground],
+                    null,
+                    lastColor,
+                    0f,
+                    1f,
+                    1f);
+                render.Draw(
+                    backgrounds[currentBackground],
+                    screenCenter,
+                    center[currentBackground],
+                    null,
+                    currentColor,
+                    0f,
+                    1f,
+                    1f);
+            }
+            else
+            {
+                render.Draw(
+                    backgrounds[currentBackground],
+                    screenCenter,
+                    center[currentBackground],
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    1f);
+            }
             base.Draw(gameTime);
         }
         #endregion

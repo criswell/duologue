@@ -55,6 +55,11 @@ namespace Duologue
         /// The local instance of the player explosion ring system
         /// </summary>
         public static PlayerRing PlayerRing;
+
+        /// <summary>
+        /// The local instance of the background object
+        /// </summary>
+        public static Background Background;
         #endregion
 
         #region Public methods
