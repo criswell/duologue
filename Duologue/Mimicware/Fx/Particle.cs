@@ -95,7 +95,7 @@ namespace Mimicware.Fx
         /// Update is to be called once per frame by the particle system
         /// </summary>
         /// <param name="dt">Delta time</param>
-        public void Update(float dt)
+        public virtual void  Update(float dt)
         {
             Velocity += Acceleration * dt;
             Position += Velocity * dt;
