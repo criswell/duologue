@@ -46,6 +46,7 @@ namespace Duologue
         public Logger Log;
         public Steam steamSystem;
         public PlayerRing playerRing;
+        public Background background;
 
         public Game1()
         {
@@ -81,6 +82,12 @@ namespace Duologue
             // FIXME:
             // In the final game, the enable/visible stuff set here should be in a game state engine
             Assets = new AssetManager(Content);
+
+            background = new Background(this);
+            background.Visible = true;
+            background.Enabled = true;
+            this.Components.Add(background);
+            
             gamePlayTest = new GamePlayTest(this);
             gamePlayTest.Enabled = true;
             gamePlayTest.Visible = true;
@@ -166,7 +173,7 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            Graphics.GraphicsDevice.Clear(Color.Black);
+            //Graphics.GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             Render.Run();
