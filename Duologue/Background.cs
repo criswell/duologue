@@ -28,7 +28,7 @@ namespace Duologue
     public class Background : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
-        private const int numBackgrounds = 3;
+        private const int numBackgrounds = 4;
         #endregion
 
         #region Fields
