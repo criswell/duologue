@@ -174,8 +174,8 @@ namespace Duologue
                         player.Aim.X = currentState.ThumbSticks.Right.X;
                         player.Aim.Y = currentState.ThumbSticks.Right.Y * -1;
 
-                        if (Log != null)
-                            Log.LogEntry("Fire requested");
+                        /*if (Log != null)
+                            Log.LogEntry("Fire requested");*/
                         player.Fire();
                     }
 
