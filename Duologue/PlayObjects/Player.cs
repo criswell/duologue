@@ -1,5 +1,11 @@
+#region File Description
+#endregion
+
+#region Using Statements
+// System
 using System;
 using System.Collections.Generic;
+// XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.GamerServices;
@@ -7,40 +13,55 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
+// Mimicware
 using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
+// Duologue
 using Duologue.State;
+#endregion
 
 namespace Duologue.PlayObjects
 {
+    /// <summary>
+    /// The play object defining the game player.
+    /// </summary>
     class Player : PlayObject
     {
         #region Fields
+        // sprite objects defining the player
         private SpriteObject playerBase;
         private SpriteObject playerCannon;
         private SpriteObject playerLight;
+
+        // The beam and shot
         private SpriteObject beam;
-        private SpriteObject shot;
         private SpriteObject beamBase;
+        private SpriteObject shot;
+
+        // Tread items
         private const int treadFrames = 2;
         private Texture2D[] playerTreads;
         private Vector2 treadCenter;
         private int currentTread;
         private int treadTimer;
         private const int maxTreadTimer = 50;
+        private Vector2 treadOffset;
+        private const float maxTreadOffset = 10f;
+
+        // Things relating to the "shine" or glimmer on the player
         private const int shineFrames = 4;
         private Texture2D[] playerShines;
         private Vector2 shineCenter;
         private int currentShine;
         private int shineTimer;
         private const int maxShineTimer = 20;
-        private bool lightIsNegative;
-        private Vector2 lastPosition;
 
-        // Stuff for computing the tread offset
-        private Vector2 treadOffset;
-        private const float maxTreadOffset = 10f;
+        // FIXME, dude, got me
+        private bool lightIsNegative;
+
+        // The last position, and screen center
+        private Vector2 lastPosition;
         private Vector2 screenCenter;
 
         // The beam arc and radius
