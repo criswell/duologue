@@ -98,15 +98,33 @@ namespace Duologue.PlayObjects
         /// </summary>
         public float BeamRotation;
 
+        /// <summary>
+        /// The current rotation of the tread
+        /// </summary>
         public float TreadRotation;
 
+        /// <summary>
+        /// The shot object
+        /// </summary>
         public PlayerShot Shot;
+
+        /// <summary>
+        /// The current colorstate
+        /// </summary>
         public ColorState colorState;
 
+        /// <summary>
+        /// This player's tint (multiple players will have different tints)
+        /// </summary>
         public Color PlayerTint;
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// Constructs a player.
+        /// </summary>
+        /// <param name="currentColorState">The current color state of this player.</param>
+        /// <param name="playerTint">The player's tint</param>
         public Player(ColorState currentColorState, Color playerTint)
             : base()
         {
@@ -116,6 +134,9 @@ namespace Duologue.PlayObjects
             Initialize();
         }
 
+        /// <summary>
+        /// Long and tedious initialize function
+        /// </summary>
         private void Initialize()
         {
             // Gonna cause some errors me think
@@ -132,8 +153,8 @@ namespace Duologue.PlayObjects
 
             if (AssetManager == null)
                 AssetManager = InstanceManager.AssetManager;
-        
-            // Load player objects
+
+            #region Load player objects
             Position = new Vector2(InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
             playerBase = new SpriteObject(
                 AssetManager.LoadTexture2D("player-base"),
@@ -199,8 +220,11 @@ namespace Duologue.PlayObjects
                 0f,
                 1f,
                 1f);
+            #endregion Wow, that was a lot, wasn't it?
+
             SetColors();
 
+            // Set up the treads and shines
             playerTreads = new Texture2D[treadFrames];
             for (int i = 0; i < treadFrames; i++)
             {
@@ -270,6 +294,11 @@ namespace Duologue.PlayObjects
             TreadRotation = BaseRotation + MathHelper.PiOver2;
         }
 
+        /// <summary>
+        /// Set the color of the player's utilities (light and gun)
+        /// This should be called at the start of the object's life,
+        /// and any other time the ColorState changes.
+        /// </summary>
         private void SetColors()
         {
             if (lightIsNegative)
@@ -361,7 +390,6 @@ namespace Duologue.PlayObjects
 
             return retval;
         }
-
         #endregion
 
         #region Draw / Update
@@ -502,7 +530,6 @@ namespace Duologue.PlayObjects
             Shot.Update(gameTime);
         }
         #endregion
-
 
         #region Public Overrides
         /// <summary>
