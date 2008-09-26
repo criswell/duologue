@@ -45,11 +45,11 @@ namespace Duologue.ParticleEffects
             minLifetime = 1.0f;
             maxLifetime = 2.0f;
 
-            minScaleSpeed = 0.01f;
+            minScaleSpeed = 0.05f;
             maxScaleSpeed = 0.2f;
 
-            minNumRings = 7;
-            maxNumRings = 15;
+            minNumRings = 2;
+            maxNumRings = 7;
 
             // rotate slowly, we want a fairly relaxed effect
             minRotationSpeed = -MathHelper.PiOver4 / 2.0f;

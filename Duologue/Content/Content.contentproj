@@ -118,22 +118,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="buzzsaw-agg.png">
+    <Compile Include="Enemies\buzzsaw-agg.png">
       <Name>buzzsaw-agg</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="buzzsaw-face-agg.png">
+    <Compile Include="Enemies\buzzsaw-face-agg.png">
       <Name>buzzsaw-face-agg</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="buzzsaw-face-flee.png">
+    <Compile Include="Enemies\buzzsaw-face-flee.png">
       <Name>buzzsaw-face-flee</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="buzzsaw-flee.png">
+    <Compile Include="Enemies\buzzsaw-flee.png">
       <Name>buzzsaw-flee</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -184,6 +184,68 @@
   <ItemGroup>
     <Compile Include="background-05.png">
       <Name>background-05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enemies\roller-01-color.png">
+      <Name>roller-01-color</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-01-face.png">
+      <Name>roller-01-face</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-02-color.png">
+      <Name>roller-02-color</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-02-face.png">
+      <Name>roller-02-face</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-03-color.png">
+      <Name>roller-03-color</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-03-face.png">
+      <Name>roller-03-face</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-04-color.png">
+      <Name>roller-04-color</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-04-face.png">
+      <Name>roller-04-face</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-05-color.png">
+      <Name>roller-05-color</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-05-face.png">
+      <Name>roller-05-face</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-06-color.png">
+      <Name>roller-06-color</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\roller-06-face.png">
+      <Name>roller-06-face</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
