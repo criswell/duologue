@@ -102,10 +102,10 @@ namespace Duologue.PlayObjects
             for (int i = 0; i < numEnemies; i++)
             {
                 enemies[i] = new BuzzsawObject(
-                    AssetManager.LoadTexture2D("buzzsaw-agg"),
-                    AssetManager.LoadTexture2D("buzzsaw-flee"),
+                    AssetManager.LoadTexture2D("Enemies\\buzzsaw-agg"),
+                    AssetManager.LoadTexture2D("Enemies\\buzzsaw-flee"),
                     Vector2.Zero,
-                    new Vector2(AssetManager.LoadTexture2D("buzzsaw-agg").Width / 2f, AssetManager.LoadTexture2D("buzzsaw-agg").Height / 2f),
+                    new Vector2(AssetManager.LoadTexture2D("Enemies\\buzzsaw-agg").Width / 2f, AssetManager.LoadTexture2D("Enemies\\buzzsaw-agg").Height / 2f),
                     null,
                     Color.White,
                     0f,
@@ -114,8 +114,8 @@ namespace Duologue.PlayObjects
                 enemies[i].Alive = false;
             }
 
-            enemyFaceAgg = AssetManager.LoadTexture2D("buzzsaw-face-agg");
-            enemyFaceFlee = AssetManager.LoadTexture2D("buzzsaw-face-flee");
+            enemyFaceAgg = AssetManager.LoadTexture2D("Enemies\\buzzsaw-face-agg");
+            enemyFaceFlee = AssetManager.LoadTexture2D("Enemies\\buzzsaw-face-flee");
             timeSinceLastSteam = 0;
         }
         #endregion
