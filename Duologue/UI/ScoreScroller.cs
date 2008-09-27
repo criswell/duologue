@@ -19,6 +19,8 @@ using Mimicware.Graphics;
 using Mimicware.Manager;
 // Duologue
 using Duologue;
+using Duologue.State;
+using Duologue.PlayObjects;
 #endregion
 
 namespace Duologue.UI
@@ -41,6 +43,9 @@ namespace Duologue.UI
         private Vector2 finalPosition;
         private float timeToMove;
         private float timeSinceStart;
+        private ColorState colorState;
+        private Game localGame;
+        private int score;
         #endregion
 
         #region Properties
@@ -71,13 +76,49 @@ namespace Duologue.UI
         {
             get { return finalPosition; }
         }
+
+        /// <summary>
+        /// Get the current color state of the player this scroller is associated with (read-only)
+        /// </summary>
+        public ColorState ColorState
+        {
+            get { return colorState; }
+        }
+
+        /// <summary>
+        /// Get or set the current player we're associated with
+        /// </summary>
+        public Player AssociatedPlayer;
+
+        /// <summary>
+        ///  Read-only access to the current score
+        /// </summary>
+        public int Score
+        {
+            get { return score; }
+        }
         #endregion
 
         #region Constructor / Init / Load
-        public ScoreScroller(Game game)
+        /// <summary>
+        /// Constructs a score scroller object
+        /// </summary>
+        /// <param name="game">The game this object belongs to</param>
+        /// <param name="myPlayer">The player this object is associated with</param>
+        public ScoreScroller(Game game, Player myPlayer)
             : base(game)
         {
-            // TODO: Construct any child components here
+            localGame = game;
+            AssociatedPlayer = myPlayer;
+            score = 0;
+        }
+
+        public ScoreScroller(Game game, Player myPlayer, int defaultScore)
+            : base(game)
+        {
+            localGame = game;
+            AssociatedPlayer = myPlayer;
+            score = 0;
         }
 
         /// <summary>
@@ -86,13 +127,19 @@ namespace Duologue.UI
         /// </summary>
         public override void Initialize()
         {
-            // TODO: Add your initialization code here
-
+            timeSinceStart = 0;
             base.Initialize();
         }
 
+        /// <summary>
+        /// Load the object's content
+        /// </summary>
         protected override void LoadContent()
         {
+            if (Assets == null)
+                Assets = InstanceManager.AssetManager;
+
+            font = Assets.LoadSpriteFont(fontFilename);
             base.LoadContent();
         }
         #endregion
