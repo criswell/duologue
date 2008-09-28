@@ -16,7 +16,6 @@ using Microsoft.Xna.Framework.Content;
 // Mimicware
 using Mimicware.Manager;
 using Mimicware.Graphics;
-using Mimicware.Manager;
 // Duologue
 using Duologue;
 using Duologue.State;
@@ -35,17 +34,31 @@ namespace Duologue.UI
         /// The filename for the font we use
         /// </summary>
         private const string fontFilename = "inero-40";
+        private const int maxScore = 999999;
+        private const int defaultDeltaScore = 5;
         #endregion
 
         #region Fields
+        // Font stuff
         private SpriteFont font;
+        private Vector2 fontCharSize;
+        // Position, moving and timing
         private Vector2 position;
         private Vector2 finalPosition;
         private float timeToMove;
         private float timeSinceStart;
         private ColorState colorState;
-        private Game localGame;
+        // Score stuff
         private int score;
+        private int scrollingScore;
+        private int lastScore;
+        private float timeToScroll;
+        private float timeSinceScrollStart;
+        private int lengthOfMaxScore;
+        private int deltaScore;
+        // Misc stuff
+        private Random rand;
+        private Game localGame;
         #endregion
 
         #region Properties
@@ -105,20 +118,27 @@ namespace Duologue.UI
         /// </summary>
         /// <param name="game">The game this object belongs to</param>
         /// <param name="myPlayer">The player this object is associated with</param>
-        public ScoreScroller(Game game, Player myPlayer)
+        /// <param name="defaultScore">The default or starting score</param>
+        /// <param name="moveTime">The time it takes to move the score from the start position
+        /// to the end position</param>
+        /// <param name="startPosition">The starting position for this score</param>
+        /// <param name="endPosition">The end position for this score</param>
+        public ScoreScroller(
+            Game game,
+            Player myPlayer,
+            float moveTime,
+            Vector2 startPosition,
+            Vector2 endPosition,
+            int defaultScore,
+            float scoreScrollTime)
             : base(game)
         {
             localGame = game;
             AssociatedPlayer = myPlayer;
-            score = 0;
-        }
-
-        public ScoreScroller(Game game, Player myPlayer, int defaultScore)
-            : base(game)
-        {
-            localGame = game;
-            AssociatedPlayer = myPlayer;
-            score = 0;
+            score = defaultScore;
+            timeToMove = moveTime;
+            position = startPosition;
+            finalPosition = endPosition;
         }
 
         /// <summary>
@@ -128,6 +148,10 @@ namespace Duologue.UI
         public override void Initialize()
         {
             timeSinceStart = 0;
+            timeSinceScrollStart = 0f;
+            lengthOfMaxScore = maxScore.ToString().Length;
+            rand = new Random();
+            deltaScore = defaultDeltaScore;
             base.Initialize();
         }
 
@@ -140,6 +164,15 @@ namespace Duologue.UI
                 Assets = InstanceManager.AssetManager;
 
             font = Assets.LoadSpriteFont(fontFilename);
+
+            // Determine the max width a character needs to display
+            fontCharSize = font.MeasureString("0");
+            for(int i = 1; i < 10; i++)
+            {
+                Vector2 w = font.MeasureString(i.ToString());
+                if(w.X > fontCharSize.X)
+                    fontCharSize = w;
+            }
             base.LoadContent();
         }
         #endregion
@@ -148,6 +181,15 @@ namespace Duologue.UI
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Call when you want to add new points to the score
+        /// </summary>
+        /// <param name="points">The points to add to the score</param>
+        public void AddScore(int points)
+        {
+            lastScore = score;
+            score += points;
+        }
         #endregion
 
         #region Update / Draw
@@ -157,13 +199,74 @@ namespace Duologue.UI
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            timeSinceStart += dt;
+            timeSinceScrollStart += dt;
+            // Update the position
+
+            // Update the scrolling score
+            if (scrollingScore < score)
+            {
+                scrollingScore += deltaScore;
+            }
+            if (scrollingScore > score)
+                scrollingScore = score;
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            if (Render == null)
+                Render = InstanceManager.RenderSprite;
+
+            int length = scrollingScore.ToString().Length;
+            CharEnumerator chars = scrollingScore.ToString().GetEnumerator();
+            int currentChar = 0;
+            Vector2 charPos = position;
+            int difference = score - scrollingScore;
+            int diffLength = difference.ToString().Length;
+
+            for (int i = 0; i < maxScore - length; i++)
+            {
+                charPos = position + new Vector2((float)(currentChar * fontCharSize.X), 0f);
+                Render.DrawString(
+                    font,
+                    "0",
+                    charPos,
+                    AssociatedPlayer.PlayerTint);
+                currentChar++;
+            }
+
+            while (true)
+            {
+                charPos = position + new Vector2((float)(currentChar * fontCharSize.X), 0f);
+                Render.DrawString(
+                    font,
+                    chars.Current.ToString(),
+                    charPos,
+                    AssociatedPlayer.PlayerTint);
+
+                if(scrollingScore < score &&
+                    diffLength > 0 &&
+                    currentChar >= lengthOfMaxScore - diffLength)
+                {
+                    Render.DrawString(
+                        font,
+                        rand.Next(9).ToString(),
+                        charPos,
+                        new Color(
+                            AssociatedPlayer.PlayerTint.R,
+                            AssociatedPlayer.PlayerTint.G,
+                            AssociatedPlayer.PlayerTint.B,
+                            (byte)100),
+                        true);
+                }
+
+                currentChar++;
+                if (!chars.MoveNext())
+                    break;
+            }
             base.Draw(gameTime);
         }
         #endregion

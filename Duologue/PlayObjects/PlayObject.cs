@@ -12,7 +12,7 @@ using Mimicware.Manager;
 
 namespace Duologue.PlayObjects
 {
-    class PlayObject
+    public class PlayObject
     {
         #region Fields
         #endregion

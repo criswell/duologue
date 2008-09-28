@@ -26,7 +26,7 @@ namespace Duologue.PlayObjects
     /// <summary>
     /// The play object defining the game player.
     /// </summary>
-    class Player : PlayObject
+    public class Player : PlayObject
     {
         #region Fields
         // sprite objects defining the player
