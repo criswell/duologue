@@ -34,15 +34,19 @@ namespace Duologue.UI
         /// The filename for the font we use
         /// </summary>
         private const string fontFilename = "Fonts/inero-40";
+        private const string smallFontFilename = "Fonts/inero-28";
         private const int maxScore = 999999;
         private const int defaultDeltaScore = 5;
-        private const int numPointlets = 20;
+        private const int numPointlets = 10;
         private const float timeToMovePointlet = 1f;
+        private const int minPointletAlpha = 150;
+        private const int maxPointletAlpha = 225;
         #endregion
 
         #region Fields
         // Font stuff
         private SpriteFont font;
+        private SpriteFont smallFont;
         private Vector2 fontCharSize;
         // Position, moving and timing
         private Vector2 position;
@@ -161,7 +165,9 @@ namespace Duologue.UI
             freePointlets = new Queue<Pointlet>(numPointlets);
             for (int i = 0; i < numPointlets; i++)
             {
-                pointlets[i] = new Pointlet(Vector2.Zero, Color.White);
+                pointlets[i] = new Pointlet(
+                    position,
+                    Color.White);
                 freePointlets.Enqueue(pointlets[i]);
             }
             base.Initialize();
@@ -176,6 +182,7 @@ namespace Duologue.UI
                 Assets = InstanceManager.AssetManager;
 
             font = Assets.LoadSpriteFont(fontFilename);
+            smallFont = Assets.LoadSpriteFont(smallFontFilename);
 
             // Determine the max width a character needs to display
             fontCharSize = font.MeasureString("0");
@@ -205,7 +212,7 @@ namespace Duologue.UI
                         AssociatedPlayer.PlayerTint.R,
                         AssociatedPlayer.PlayerTint.G,
                         AssociatedPlayer.PlayerTint.B,
-                        (byte)rand.Next(50, 200)),
+                        (byte)rand.Next(minPointletAlpha, maxPointletAlpha)),
                     points,
                     new Rectangle(
                         (int)position.X,
@@ -213,7 +220,6 @@ namespace Duologue.UI
                         (int)(fontCharSize.X * maxScore.ToString().Length),
                         (int)(fontCharSize.Y)),
                         timeToMovePointlet);
-
             }
         }
         #endregion
@@ -227,6 +233,7 @@ namespace Duologue.UI
         public void AddScore(int points, Vector2? pointPos)
         {
             lastScore = score;
+            scrollingScore = score;
             score += points;
             if(pointPos != null)
                 AddPointlet(points, (Vector2)pointPos);
@@ -306,11 +313,14 @@ namespace Duologue.UI
             // Do pointlets first
             foreach (Pointlet p in pointlets)
             {
-                if (!p.Alive)
-                    continue;
-
-                Render.DrawString(
-                    font,
+                if (p.Alive)
+                {
+                    Render.DrawString(
+                        smallFont,
+                        p.Points.ToString(),
+                        p.Position,
+                        p.Tint);
+                }
             }
             int length = scrollingScore.ToString().Length;
             CharEnumerator chars = scrollingScore.ToString().GetEnumerator();

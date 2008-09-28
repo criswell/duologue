@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
 // Mimicware
-//using Mimicware.Manager;
+using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
@@ -54,9 +54,9 @@ namespace Duologue.UI
         {
             get
             {
-                return finalRect.Contains(
-                    (int)Position.X,
-                    (int)Position.Y);
+                return !finalRect.Contains(
+                    (Int32)Position.X,
+                    (Int32)Position.Y);
             }
         }
 
@@ -66,6 +66,15 @@ namespace Duologue.UI
         public float Lifetime
         {
             get { return lifetime; }
+        }
+
+        /// <summary>
+        /// Gets or sets the final rectangle
+        /// </summary>
+        public Rectangle FinalRect
+        {
+            get { return finalRect; }
+            set { finalRect = value; }
         }
         #endregion
 
@@ -78,7 +87,7 @@ namespace Duologue.UI
         public Pointlet(Vector2 pos, Color tint)
             : base(pos, Vector2.Zero, tint)
         {
-            finalRect = new Rectangle(int.MinValue, int.MinValue, 0, 0);
+            finalRect = new Rectangle((int)pos.X, (int)pos.Y, 1,1);
             lifetime = 0f;
             velocity = Vector2.Zero;
         }
