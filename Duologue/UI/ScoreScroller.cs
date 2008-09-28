@@ -36,6 +36,7 @@ namespace Duologue.UI
         private const string fontFilename = "Fonts/inero-40";
         private const int maxScore = 999999;
         private const int defaultDeltaScore = 5;
+        private const int numPointlets = 20;
         #endregion
 
         #region Fields
@@ -56,6 +57,8 @@ namespace Duologue.UI
         private float timeSinceScrollStart;
         private int lengthOfMaxScore;
         private int deltaScore;
+        // Pointlets
+        private Pointlet[] pointlets;
         // Misc stuff
         private Random rand;
         private Game localGame;
@@ -152,6 +155,11 @@ namespace Duologue.UI
             lengthOfMaxScore = maxScore.ToString().Length;
             rand = new Random();
             deltaScore = defaultDeltaScore;
+            pointlets = new Pointlet[numPointlets];
+            for (int i = 0; i < numPointlets; i++)
+            {
+                pointlets[i] = new Pointlet(Vector2.Zero, Color.White);
+            }
             base.Initialize();
         }
 
@@ -178,6 +186,15 @@ namespace Duologue.UI
         #endregion
 
         #region Private methods
+        /// <summary>
+        /// Add a pointlet
+        /// </summary>
+        /// <param name="points">Points to add</param>
+        /// <param name="pointPos">Pointlet position</param>
+        private void AddPointlet(int points, Vector2 pointPos)
+        {
+            // ERE I AM JH
+        }
         #endregion
 
         #region Public methods
@@ -185,10 +202,13 @@ namespace Duologue.UI
         /// Call when you want to add new points to the score
         /// </summary>
         /// <param name="points">The points to add to the score</param>
-        public void AddScore(int points)
+        /// <param name="pointPos">The position of the pointlet to launch</param>
+        public void AddScore(int points, Vector2? pointPos)
         {
             lastScore = score;
             score += points;
+            if(pointPos != null)
+                AddPointlet(points, (Vector2)pointPos);
         }
 
         /// <summary>

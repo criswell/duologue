@@ -173,6 +173,9 @@ namespace Duologue
             {
                 if (LocalInstanceManager.Players[i].Alive)
                 {
+                    // Okay, just realized how fucked up this is... the lastState
+                    // is updated EVERY time... meaning the states get muddled
+                    // FIXME
                     GamePadState currentState = GamePad.GetState(LocalInstanceManager.PlayersIndex[i]);
 
                     Player player = LocalInstanceManager.Players[i];
@@ -232,7 +235,7 @@ namespace Duologue
                     if (currentState.Buttons.A == ButtonState.Pressed &&
                         lastState.Buttons.A == ButtonState.Released)
                     {
-                        score.AddScore(200);
+                        score.AddScore(200, LocalInstanceManager.Players[i].Position);
                     }
 
                     lastState = currentState;
