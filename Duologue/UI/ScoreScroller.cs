@@ -33,7 +33,7 @@ namespace Duologue.UI
         /// <summary>
         /// The filename for the font we use
         /// </summary>
-        private const string fontFilename = "inero-40";
+        private const string fontFilename = "Fonts/inero-40";
         private const int maxScore = 999999;
         private const int defaultDeltaScore = 5;
         #endregion
@@ -190,6 +190,31 @@ namespace Duologue.UI
             lastScore = score;
             score += points;
         }
+
+        /// <summary>
+        /// Set the desired start and end positions. Note that this will be treated
+        /// differently depending upon whether the component is visible or not. If it
+        /// is visible, the startPosition will be ignored, and the endPosition will
+        /// be set. If the component is not visible, then the start and end positions
+        /// will be respected outright.
+        /// </summary>
+        /// <param name="startPosition"></param>
+        /// <param name="endPosition"></param>
+        public void SetPositions(Vector2? startPosition, Vector2 endPosition)
+        {
+            if (this.Visible)
+            {
+                finalPosition = endPosition;
+            }
+            else if (!this.Visible)
+            {
+                finalPosition = endPosition;
+                if (startPosition != null)
+                    position = (Vector2)startPosition;
+                else
+                    position = endPosition;
+            }
+        }
         #endregion
 
         #region Update / Draw
@@ -227,7 +252,7 @@ namespace Duologue.UI
             int difference = score - scrollingScore;
             int diffLength = difference.ToString().Length;
 
-            for (int i = 0; i < maxScore - length; i++)
+            for (int i = 0; i < lengthOfMaxScore - length; i++)
             {
                 charPos = position + new Vector2((float)(currentChar * fontCharSize.X), 0f);
                 Render.DrawString(
@@ -238,7 +263,7 @@ namespace Duologue.UI
                 currentChar++;
             }
 
-            while (true)
+            while (chars.MoveNext())
             {
                 charPos = position + new Vector2((float)(currentChar * fontCharSize.X), 0f);
                 Render.DrawString(
@@ -264,8 +289,6 @@ namespace Duologue.UI
                 }
 
                 currentChar++;
-                if (!chars.MoveNext())
-                    break;
             }
             base.Draw(gameTime);
         }
