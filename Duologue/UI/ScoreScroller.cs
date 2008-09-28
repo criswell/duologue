@@ -37,6 +37,7 @@ namespace Duologue.UI
         private const int maxScore = 999999;
         private const int defaultDeltaScore = 5;
         private const int numPointlets = 20;
+        private const float timeToMovePointlet = 1f;
         #endregion
 
         #region Fields
@@ -59,6 +60,7 @@ namespace Duologue.UI
         private int deltaScore;
         // Pointlets
         private Pointlet[] pointlets;
+        private Queue<Pointlet> freePointlets;
         // Misc stuff
         private Random rand;
         private Game localGame;
@@ -156,9 +158,11 @@ namespace Duologue.UI
             rand = new Random();
             deltaScore = defaultDeltaScore;
             pointlets = new Pointlet[numPointlets];
+            freePointlets = new Queue<Pointlet>(numPointlets);
             for (int i = 0; i < numPointlets; i++)
             {
                 pointlets[i] = new Pointlet(Vector2.Zero, Color.White);
+                freePointlets.Enqueue(pointlets[i]);
             }
             base.Initialize();
         }
@@ -193,7 +197,24 @@ namespace Duologue.UI
         /// <param name="pointPos">Pointlet position</param>
         private void AddPointlet(int points, Vector2 pointPos)
         {
-            // ERE I AM JH
+            if (freePointlets.Count > 0)
+            {
+                Pointlet p = freePointlets.Dequeue();
+                p.Initialize(pointPos,
+                    new Color(
+                        AssociatedPlayer.PlayerTint.R,
+                        AssociatedPlayer.PlayerTint.G,
+                        AssociatedPlayer.PlayerTint.B,
+                        (byte)rand.Next(50, 200)),
+                    points,
+                    new Rectangle(
+                        (int)position.X,
+                        (int)position.Y,
+                        (int)(fontCharSize.X * maxScore.ToString().Length),
+                        (int)(fontCharSize.Y)),
+                        timeToMovePointlet);
+
+            }
         }
         #endregion
 
@@ -257,14 +278,40 @@ namespace Duologue.UI
             if (scrollingScore > score)
                 scrollingScore = score;
 
+            // Update pointlets
+            foreach (Pointlet p in pointlets)
+            {
+                if (p.Alive)
+                {
+                    p.Update(dt);
+                    if (!p.Alive)
+                    {
+                        freePointlets.Enqueue(p);
+                    }
+                }
+            }
+
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Draw
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Draw(GameTime gameTime)
         {
             if (Render == null)
                 Render = InstanceManager.RenderSprite;
 
+            // Do pointlets first
+            foreach (Pointlet p in pointlets)
+            {
+                if (!p.Alive)
+                    continue;
+
+                Render.DrawString(
+                    font,
+            }
             int length = scrollingScore.ToString().Length;
             CharEnumerator chars = scrollingScore.ToString().GetEnumerator();
             int currentChar = 0;
