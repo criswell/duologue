@@ -48,6 +48,7 @@ namespace Duologue.UI
         private SpriteFont font;
         private SpriteFont smallFont;
         private Vector2 fontCharSize;
+        private Vector2 smallFontCharSize;
         // Position, moving and timing
         private Vector2 position;
         private Vector2 finalPosition;
@@ -62,6 +63,7 @@ namespace Duologue.UI
         private float timeSinceScrollStart;
         private int lengthOfMaxScore;
         private int deltaScore;
+        private string scoreText;
         // Pointlets
         private Pointlet[] pointlets;
         private Queue<Pointlet> freePointlets;
@@ -119,6 +121,14 @@ namespace Duologue.UI
         {
             get { return score; }
         }
+
+        /// <summary>
+        /// Read-only access to the score text
+        /// </summary>
+        public string ScoreText
+        {
+            get { return scoreText;}
+        }
         #endregion
 
         #region Constructor / Init / Load
@@ -139,7 +149,8 @@ namespace Duologue.UI
             Vector2 startPosition,
             Vector2 endPosition,
             int defaultScore,
-            float scoreScrollTime)
+            float scoreScrollTime,
+            string scoretext)
             : base(game)
         {
             localGame = game;
@@ -148,6 +159,7 @@ namespace Duologue.UI
             timeToMove = moveTime;
             position = startPosition;
             finalPosition = endPosition;
+            scoreText = scoretext;
         }
 
         /// <summary>
@@ -186,6 +198,8 @@ namespace Duologue.UI
 
             // Determine the max width a character needs to display
             fontCharSize = font.MeasureString("0");
+            // We assume small font only needs Y
+            smallFontCharSize = smallFont.MeasureString("0");
             for(int i = 1; i < 10; i++)
             {
                 Vector2 w = font.MeasureString(i.ToString());
@@ -325,13 +339,21 @@ namespace Duologue.UI
             int length = scrollingScore.ToString().Length;
             CharEnumerator chars = scrollingScore.ToString().GetEnumerator();
             int currentChar = 0;
-            Vector2 charPos = position;
+            Vector2 offsetPos = position + new Vector2(0f, smallFontCharSize.Y/2f);
+            Vector2 charPos = offsetPos;
             int difference = score - scrollingScore;
             int diffLength = difference.ToString().Length;
 
+            // Next do the scoreText
+            Render.DrawString(
+                smallFont,
+                scoreText,
+                position,
+                AssociatedPlayer.PlayerTint);
+
             for (int i = 0; i < lengthOfMaxScore - length; i++)
             {
-                charPos = position + new Vector2((float)(currentChar * fontCharSize.X), 0f);
+                charPos = offsetPos + new Vector2((float)(currentChar * fontCharSize.X), 0f);
                 Render.DrawString(
                     font,
                     "0",
@@ -342,7 +364,7 @@ namespace Duologue.UI
 
             while (chars.MoveNext())
             {
-                charPos = position + new Vector2((float)(currentChar * fontCharSize.X), 0f);
+                charPos = offsetPos + new Vector2((float)(currentChar * fontCharSize.X), 0f);
                 Render.DrawString(
                     font,
                     chars.Current.ToString(),

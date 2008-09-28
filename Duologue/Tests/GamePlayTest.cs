@@ -154,7 +154,8 @@ namespace Duologue
                 Vector2.Zero,
                 Vector2.Zero,
                 0,
-                1f);
+                1f,
+                "Player 1");
             score.Enabled = true;
             score.Visible = true;
             localGame.Components.Add(score);
