@@ -193,6 +193,25 @@ namespace Mimicware.Manager
         /// screen has taken the focus.
         /// </summary>
         public virtual void HandleInput(InputManager input) { }
+
+        /// <summary>
+        /// Tells the screen to go away. Unlike ScreenManager.RemoveScreen, which
+        /// instantly kills the screen, this method respects the transition timings
+        /// and will give the screen a chance to gradually transition off.
+        /// </summary>
+        public void ExitScreen()
+        {
+            if (TransitionOffTime == TimeSpan.Zero)
+            {
+                // If the screen has a zero transition time, remove it immediately.
+                ScreenManager.RemoveScreen(this);
+            }
+            else
+            {
+                // Otherwise flag that it should transition off and then exit.
+                isExiting = true;
+            }
+        }
         #endregion
 
         #region Draw / Update
