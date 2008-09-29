@@ -82,5 +82,10 @@ namespace Mimicware.Manager
             base.Draw(gameTime);
         }
         #endregion
+
+        internal static void RemoveScreen(GameScreen gameScreen)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

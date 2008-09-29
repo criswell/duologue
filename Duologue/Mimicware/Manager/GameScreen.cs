@@ -41,8 +41,8 @@ namespace Mimicware.Manager
     {
         #region Fields
         private bool isPopup = false;
-        private float transitionOnTime = 0f;
-        private float transitionOffTime = 0f;
+        private TimeSpan transitionOnTime = TimeSpan.Zero;
+        private TimeSpan transitionOffTime = TimeSpan.Zero;
         private float transitionPercentage = 1f;
         private ScreenState screenState;
         private bool isExiting = false;
@@ -63,7 +63,7 @@ namespace Mimicware.Manager
         /// <summary>
         /// How long (in seconds) the transition on effect will be
         /// </summary>
-        public float TransitionOnTime
+        public TimeSpan TransitionOnTime
         {
             get { return transitionOnTime; }
             protected set { transitionOnTime = value; }
@@ -72,7 +72,7 @@ namespace Mimicware.Manager
         /// <summary>
         /// How long (in seconds) the transition off effect will be
         /// </summary>
-        public float TransitionOffTime
+        public TimeSpan TransitionOffTime
         {
             get { return transitionOffTime; }
             protected set { transitionOffTime = value; }
@@ -94,7 +94,7 @@ namespace Mimicware.Manager
         /// </summary>
         public byte TransitionAlpha
         {
-            get { return (byte)(255 - TransitionPosition * 255); }
+            get { return (byte)(255 - TransitionPercentage * 255); }
         }
 
         /// <summary>
@@ -247,6 +247,11 @@ namespace Mimicware.Manager
                 }
             }
         }
+
+        /// <summary>
+        /// This is called when the screen should draw itself.
+        /// </summary>
+        public virtual void Draw(GameTime gameTime) { }
         #endregion
     }
 }

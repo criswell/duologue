@@ -62,6 +62,7 @@
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
     <Compile Include="Mimicware\Manager\GameScreen.cs" />
+    <Compile Include="Mimicware\Manager\InputManager.cs" />
     <Compile Include="Mimicware\Manager\InstanceManager.cs" />
     <Compile Include="Mimicware\Manager\ScreenManager.cs" />
     <Compile Include="ParticleEffects\ExplodeRingSystem.cs" />
