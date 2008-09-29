@@ -144,15 +144,109 @@ namespace Mimicware.Manager
         #endregion
 
         #region Constructor / Init / Load
+        /// <summary>
+        /// Load graphics content for the screen.
+        /// </summary>
+        public virtual void LoadContent() { }
+
+
+        /// <summary>
+        /// Unload content for the screen.
+        /// </summary>
+        public virtual void UnloadContent() { }
         #endregion
 
         #region Private methods
+        /// <summary>
+        /// Helper for updating the screen transition
+        /// </summary>
+        private bool UpdateTransition(GameTime gameTime, TimeSpan time, int direction)
+        {
+            // How much should we move by?
+            float transitionDelta;
+
+            if (time == TimeSpan.Zero)
+                transitionDelta = 1;
+            else
+                transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds /
+                                          time.TotalMilliseconds);
+
+            // Update the transition position.
+            transitionPercentage += transitionDelta * direction;
+
+            // Did we reach the end of the transition?
+            if ((transitionPercentage <= 0) || (transitionPercentage >= 1))
+            {
+                transitionPercentage = MathHelper.Clamp(transitionPercentage, 0, 1);
+                return false;
+            }
+
+            // Otherwise we are still busy transitioning.
+            return true;
+        }
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Allows the screen to handle user input. Unlike Update, this method
+        /// is only called when the screen is active, and not when some other
+        /// screen has taken the focus.
+        /// </summary>
+        public virtual void HandleInput(InputManager input) { }
         #endregion
 
         #region Draw / Update
+        /// <summary>
+        /// Allows the screen to update itself.
+        /// </summary>
+        /// <param name="gameTime">The current gametime</param>
+        /// <param name="otherScreenHasFocus">If another screen has focus or not</param>
+        /// <param name="coveredByOtherScreen">If we are covered by another screen</param>
+        public virtual void Update(GameTime gameTime, bool otherScreenHasFocus,
+                                              bool coveredByOtherScreen)
+        {
+            this.otherScreenHasFocus = otherScreenHasFocus;
+
+            if (isExiting)
+            {
+                // If the screen is going away to die, it should transition off.
+                screenState = ScreenState.TransitionOff;
+
+                if (!UpdateTransition(gameTime, transitionOffTime, 1))
+                {
+                    // When the transition finishes, remove the screen.
+                    ScreenManager.RemoveScreen(this);
+                }
+            }
+            else if (coveredByOtherScreen)
+            {
+                // If the screen is covered by another, it should transition off.
+                if (UpdateTransition(gameTime, transitionOffTime, 1))
+                {
+                    // Still busy transitioning.
+                    screenState = ScreenState.TransitionOff;
+                }
+                else
+                {
+                    // Transition finished!
+                    screenState = ScreenState.Hidden;
+                }
+            }
+            else
+            {
+                // Otherwise the screen should transition on and become active.
+                if (UpdateTransition(gameTime, transitionOnTime, -1))
+                {
+                    // Still busy transitioning.
+                    screenState = ScreenState.TransitionOn;
+                }
+                else
+                {
+                    // Transition finished!
+                    screenState = ScreenState.Active;
+                }
+            }
+        }
         #endregion
     }
 }
