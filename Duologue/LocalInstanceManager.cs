@@ -21,6 +21,7 @@ using Mimicware.Fx;
 // Duologue
 using Duologue.ParticleEffects;
 using Duologue.PlayObjects;
+using Duologue.UI;
 #endregion
 
 namespace Duologue

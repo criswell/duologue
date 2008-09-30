@@ -93,8 +93,8 @@ namespace Duologue
             gamePlayTest.Visible = true;
             this.Components.Add(gamePlayTest);
             Log = new Logger(this);
-            Log.Enabled = true;
-            Log.Visible = true;
+            Log.Enabled = false;
+            Log.Visible = false;
             this.Components.Add(Log);
 
             steamSystem = new Steam(this, MaxSteamEffects);

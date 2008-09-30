@@ -56,6 +56,11 @@ namespace Mimicware.Manager
         /// The game-wide graphics device
         /// </summary>
         public static GraphicsDevice GraphicsDevice;
+
+        /// <summary>
+        /// The game-wide screen manager
+        /// </summary>
+        public static ScreenManager ScreenManager;
         #endregion
 
         #region Private Methods

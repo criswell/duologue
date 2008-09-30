@@ -12,7 +12,7 @@ using Mimicware.Manager;
 
 namespace Duologue.PlayObjects
 {
-    class PlayerShot : PlayObject
+    public class PlayerShot : PlayObject
     {
         #region Constants
         private const int numShots = 10;

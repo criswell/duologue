@@ -9,10 +9,11 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
 using Mimicware.Graphics;
 using Mimicware.Manager;
+using Mimicware.Debug;
 using Duologue.PlayObjects;
 using Duologue.State;
 using Duologue;
-using Mimicware.Debug;
+using Duologue.UI;
 
 namespace Duologue
 {
@@ -38,6 +39,7 @@ namespace Duologue
         private bool rightFireTriggered;
         private int timeSinceExplosion;
         private const int ticksExplosion = 60 * 10;
+        private ScoreScroller score;
         #endregion
 
         #region Properties
@@ -143,6 +145,21 @@ namespace Duologue
                 64f, device.Viewport.Width - 64f);
             minMaxY = new Vector2(
                 64f, device.Viewport.Height - 64f);
+
+            // Make the score
+            score = new ScoreScroller(
+                localGame,
+                LocalInstanceManager.Players[0],
+                1f,
+                Vector2.Zero,
+                Vector2.Zero,
+                0,
+                1f,
+                "Player 1");
+            score.Enabled = true;
+            score.Visible = true;
+            localGame.Components.Add(score);
+            score.Initialize();
             base.LoadContent();
         }
 
@@ -157,6 +174,9 @@ namespace Duologue
             {
                 if (LocalInstanceManager.Players[i].Alive)
                 {
+                    // Okay, just realized how fucked up this is... the lastState
+                    // is updated EVERY time... meaning the states get muddled
+                    // FIXME
                     GamePadState currentState = GamePad.GetState(LocalInstanceManager.PlayersIndex[i]);
 
                     Player player = LocalInstanceManager.Players[i];
@@ -210,6 +230,13 @@ namespace Duologue
                         rightFireTriggered)
                     {
                         rightFireTriggered = false;
+                    }
+
+                    //Test the score
+                    if (currentState.Buttons.A == ButtonState.Pressed &&
+                        lastState.Buttons.A == ButtonState.Released)
+                    {
+                        score.AddScore(200, LocalInstanceManager.Players[i].Position);
                     }
 
                     lastState = currentState;

@@ -61,11 +61,15 @@
     <Compile Include="Mimicware\Fx\Particle.cs" />
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
+    <Compile Include="Mimicware\Manager\GameScreen.cs" />
+    <Compile Include="Mimicware\Manager\InputManager.cs" />
     <Compile Include="Mimicware\Manager\InstanceManager.cs" />
+    <Compile Include="Mimicware\Manager\ScreenManager.cs" />
     <Compile Include="ParticleEffects\ExplodeRingSystem.cs" />
     <Compile Include="ParticleEffects\ExplodeRing.cs" />
     <Compile Include="ParticleEffects\PlayerRing.cs" />
     <Compile Include="ParticleEffects\Steam.cs" />
+    <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />
@@ -80,8 +84,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="State\ColorState.cs" />
-    <Compile Include="State\GameState.cs" />
-    <Compile Include="State\StandardLevelState.cs" />
+    <Compile Include="UI\Pointlet.cs" />
+    <Compile Include="UI\ScoreScroller.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

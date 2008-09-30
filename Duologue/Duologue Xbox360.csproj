@@ -62,8 +62,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="State\ColorState.cs" />
-    <Compile Include="State\GameState.cs" />
-    <Compile Include="State\StandardLevelState.cs" />
+    <Compile Include="UI\ScoreScroller.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
