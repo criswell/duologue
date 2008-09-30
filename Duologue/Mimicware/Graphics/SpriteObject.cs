@@ -22,7 +22,7 @@ namespace Mimicware.Graphics
         private Texture2D texture;
         private Rectangle? source;
         private float rotation;
-        private float scale;
+        private Vector2 scale;
         private float layer;
         #endregion
 
@@ -46,7 +46,7 @@ namespace Mimicware.Graphics
         /// <summary>
         /// The scale of the sprite
         /// </summary>
-        public float Scale
+        public Vector2 Scale
         {
             get { return scale; }
             set { scale = value; }
@@ -109,7 +109,7 @@ namespace Mimicware.Graphics
         {
             texture = texture2D;
             rotation = textureRotation;
-            scale = textureScale;
+            scale = new Vector2(textureScale, textureScale);
             source = textureRect;
             layer = textureLayer;
             Text = null;
@@ -127,6 +127,27 @@ namespace Mimicware.Graphics
             texture = null;
             Position = textPosition;
         }
+
+        public SpriteObject(
+            Texture2D texture2D,
+            Vector2 texturePosition,
+            Vector2 textureCenter,
+            Rectangle? textureRect,
+            Color textureTint,
+            float textureRotation,
+            Vector2 textureScale,
+            float textureLayer)
+            :
+            base(texturePosition, textureCenter, textureTint)
+        {
+            texture = texture2D;
+            rotation = textureRotation;
+            scale = textureScale;
+            source = textureRect;
+            layer = textureLayer;
+            Text = null;
+        }
+
         #endregion
 
         #region Private Methods

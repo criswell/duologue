@@ -105,6 +105,37 @@ namespace Mimicware.Graphics
             Rectangle? source,
             Color tint,
             float rotation,
+            Vector2 scale,
+            float layer)
+        {
+            this.Add(new SpriteObject(
+                texture,
+                position,
+                center,
+                source,
+                tint,
+                rotation,
+                scale,
+                layer));
+        }
+
+        /// <summary>
+        /// Draw a sprite
+        /// </summary>
+        /// <param name="texture"></param>
+        /// <param name="position"></param>
+        /// <param name="center"></param>
+        /// <param name="source"></param>
+        /// <param name="tint"></param>
+        /// <param name="rotation"></param>
+        /// <param name="scale"></param>
+        public void Draw(
+            Texture2D texture,
+            Vector2 position,
+            Vector2 center,
+            Rectangle? source,
+            Color tint,
+            float rotation,
             float scale,
             float layer,
             bool additive)
@@ -132,6 +163,50 @@ namespace Mimicware.Graphics
                     layer));
         }
 
+
+        /// <summary>
+        /// Draw a sprite
+        /// </summary>
+        /// <param name="texture"></param>
+        /// <param name="position"></param>
+        /// <param name="center"></param>
+        /// <param name="source"></param>
+        /// <param name="tint"></param>
+        /// <param name="rotation"></param>
+        /// <param name="scale"></param>
+        public void Draw(
+            Texture2D texture,
+            Vector2 position,
+            Vector2 center,
+            Rectangle? source,
+            Color tint,
+            float rotation,
+            Vector2 scale,
+            float layer,
+            bool additive)
+        {
+            if (additive)
+                this.AddAdditive(
+                    new SpriteObject(
+                        texture,
+                        position,
+                        center,
+                        source,
+                        tint,
+                        rotation,
+                        scale,
+                        layer));
+            else
+                this.Add(new SpriteObject(
+                    texture,
+                    position,
+                    center,
+                    source,
+                    tint,
+                    rotation,
+                    scale,
+                    layer));
+        }
         /// <summary>
         /// 
         /// </summary>

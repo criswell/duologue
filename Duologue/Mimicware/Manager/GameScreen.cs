@@ -37,7 +37,7 @@ namespace Mimicware.Manager
     /// A game screen defines a basic layer element. In the game, multiple game screens
     /// can be stacked to define a blah blah
     /// </summary>
-    class GameScreen
+    public class GameScreen
     {
         #region Fields
         private bool isPopup = false;

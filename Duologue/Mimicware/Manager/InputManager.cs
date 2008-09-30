@@ -24,7 +24,7 @@ namespace Mimicware.Manager
     /// <summary>
     /// Standard input manager
     /// </summary>
-    class InputManager
+    public class InputManager
     {
         #region Constants
         public const int MaxInputs = 4;
