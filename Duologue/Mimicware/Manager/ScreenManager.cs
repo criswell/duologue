@@ -55,7 +55,7 @@ namespace Mimicware.Manager
         /// </summary>
         public override void Initialize()
         {
-            // TODO: Add your initialization code here
+            isInitialized = true;
 
             base.Initialize();
         }
@@ -65,6 +65,13 @@ namespace Mimicware.Manager
         /// </summary>
         protected override void LoadContent()
         {
+            blankTexture = InstanceManager.AssetManager.LoadTexture2D("Mimicware\\blank");
+
+            // Tell each of the screens to load their content.
+            foreach (GameScreen screen in screens)
+            {
+                screen.LoadContent();
+            }
             base.LoadContent();
         }
         #endregion
