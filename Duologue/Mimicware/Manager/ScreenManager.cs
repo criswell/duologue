@@ -152,7 +152,7 @@ namespace Mimicware.Manager
                 null,
                 new Color(0, 0, 0, (byte)alpha),
                 0f,
-                1f,
+                new Vector2((float)viewport.Width, (float)viewport.Height),
                 0f
                 );
         }
