@@ -21,6 +21,9 @@ using Mimicware.Debug;
 
 namespace Mimicware.Manager
 {
+    /// <summary>
+    /// Standard input manager
+    /// </summary>
     class InputManager
     {
         #region Constants

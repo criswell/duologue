@@ -22,11 +22,21 @@ using Mimicware.Debug;
 namespace Mimicware.Manager
 {
     /// <summary>
-    /// This is a game component that implements IUpdateable.
+    /// The ScreenManager manages one or more GameScreens which detail different elements in the game.
+    /// It maintains a stack of screens, calls their update & draw methods, and passes input to
+    /// the active one.
     /// </summary>
     public class ScreenManager : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Fields
+        List<GameScreen> screens = new List<GameScreen>();
+        List<GameScreen> screensToUpdate = new List<GameScreen>();
+
+        InputManager input = new InputManager();
+
+        Texture2D blankTexture;
+
+        bool isInitialized;
         #endregion
 
         #region Properties
