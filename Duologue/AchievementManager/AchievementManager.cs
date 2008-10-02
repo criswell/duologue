@@ -34,9 +34,15 @@ namespace Duologue.AchievementManager
     public class AchievementManager : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
+        private const int possibleAchievements = 20;
         #endregion
 
         #region Fields
+        private SpriteFont font;
+        private RenderSprite render;
+        private Achievement[] achievements;
+        private Queue<Achievement> unlockedYetToDisplay;
+        private Vector2 centerPos;
         #endregion
 
         #region Properties
@@ -55,15 +61,37 @@ namespace Duologue.AchievementManager
         /// </summary>
         public override void Initialize()
         {
-            // TODO: Add your initialization code here
+            achievements = new Achievement[possibleAchievements];
+            unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
+
+            GenerateAchievements();
 
             base.Initialize();
         }
-
         protected override void LoadContent()
         {
             base.LoadContent();
         }
+        #endregion
+
+        #region Private Methods
+        private void GenerateAchievements()
+        {
+            // FIXME
+            // When we do this "for real" we want to pre-populate this with achievements
+            // the player already has
+            int i = 0;
+
+            // Rolled Score
+            achievements[i] = new Achievement(
+                Resources.Achievement_Name_RolledScore,
+                Resources.Achievement_Desc_RolledScore,
+                int.Parse(Resources.Achievement_Points_RolledScore));
+            i++;
+        }
+        #endregion
+
+        #region Achievement calls
         #endregion
 
         #region Update / Draw

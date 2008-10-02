@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Achievement_Desc_RolledScore" xml:space="preserve">
+    <value>Rolled the score back to all zeros</value>
+  </data>
+  <data name="Achievement_Name_RolledScore" xml:space="preserve">
+    <value>Rolled the score</value>
+  </data>
+  <data name="Achievement_Points_RolledScore" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="ScoreUI_Lives" xml:space="preserve">
+    <value>Lives: {0}</value>
+  </data>
   <data name="ScoreUI_Player" xml:space="preserve">
     <value>Player {0}</value>
   </data>

@@ -61,6 +61,42 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rolled the score back to all zeros.
+        /// </summary>
+        internal static string Achievement_Desc_RolledScore {
+            get {
+                return ResourceManager.GetString("Achievement_Desc_RolledScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rolled the score.
+        /// </summary>
+        internal static string Achievement_Name_RolledScore {
+            get {
+                return ResourceManager.GetString("Achievement_Name_RolledScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.
+        /// </summary>
+        internal static string Achievement_Points_RolledScore {
+            get {
+                return ResourceManager.GetString("Achievement_Points_RolledScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lives: {0}.
+        /// </summary>
+        internal static string ScoreUI_Lives {
+            get {
+                return ResourceManager.GetString("ScoreUI_Lives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player {0}.
         /// </summary>
         internal static string ScoreUI_Player {
