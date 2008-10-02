@@ -26,7 +26,7 @@ using Duologue;
 using Duologue.Properties;
 #endregion
 
-namespace Duologue.AchievementManager
+namespace Duologue.AchievementSystem
 {
     public enum Achievements
     {

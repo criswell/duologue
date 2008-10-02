@@ -21,6 +21,7 @@ using Duologue;
 using Duologue.Properties;
 using Duologue.State;
 using Duologue.PlayObjects;
+using Duologue.AchievementSystem;
 #endregion
 
 namespace Duologue.UI
@@ -253,6 +254,12 @@ namespace Duologue.UI
             score += points;
             if(pointPos != null)
                 AddPointlet(points, (Vector2)pointPos);
+            if (score > maxScore)
+            {
+                LocalInstanceManager.AchievementManager.AchievementRolledScore();
+                score -= maxScore;
+                scrollingScore = 0;
+            }
         }
 
         /// <summary>

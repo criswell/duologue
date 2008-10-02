@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Duologue.AchievementManager
+namespace Duologue.AchievementSystem
 {
     /// <summary>
     /// Represents an individual achievement in the game
