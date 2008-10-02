@@ -55,12 +55,12 @@ namespace Duologue.UI
         private Vector2 finalPosition;
         private float timeToMove;
         private float timeSinceStart;
-        private ColorState colorState;
+        //private ColorState colorState;
         // Score stuff
         private int score;
         private int scrollingScore;
         private int lastScore;
-        private float timeToScroll;
+        //private float timeToScroll;
         private float timeSinceScrollStart;
         private int lengthOfMaxScore;
         private int deltaScore;
@@ -110,10 +110,10 @@ namespace Duologue.UI
         /// <summary>
         /// Get the current color state of the player this scroller is associated with (read-only)
         /// </summary>
-        public ColorState ColorState
-        {
-            get { return colorState; }
-        }
+        //public ColorState ColorState
+        //{
+            //get { return colorState; }
+        //}
 
         /// <summary>
         ///  Read-only access to the current score

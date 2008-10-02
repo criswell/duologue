@@ -28,6 +28,10 @@ using Duologue.Properties;
 
 namespace Duologue.AchievementManager
 {
+    public enum Achievements
+    {
+        RolledScore,
+    }
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -85,18 +89,38 @@ namespace Duologue.AchievementManager
             // FIXME
             // When we do this "for real" we want to pre-populate this with achievements
             // the player already has
-            int i = 0;
 
             // Rolled Score
-            achievements[i] = new Achievement(
+            achievements[(int)Achievements.RolledScore] = new Achievement(
                 Resources.Achievement_Name_RolledScore,
                 Resources.Achievement_Desc_RolledScore,
                 int.Parse(Resources.Achievement_Points_RolledScore));
-            i++;
+        }
+
+        /// <summary>
+        /// Internal- called when an achievement is unlocked
+        /// </summary>
+        /// <param name="i">The achievement enum</param>
+        private void UnlockAchievement(Achievements i)
+        {
+            int j = (int)i;
+            if (!achievements[j].Unlocked)
+            {
+                achievements[j].Displayed = false;
+                achievements[j].Unlocked = true;
+                unlockedYetToDisplay.Enqueue(achievements[j]);
+            }
         }
         #endregion
 
         #region Achievement calls
+        /// <summary>
+        /// Unlock "Rolled Score" achievement
+        /// </summary>
+        public void AchievementRolledScore()
+        {
+            UnlockAchievement(Achievements.RolledScore);
+        }
         #endregion
 
         #region Update / Draw
