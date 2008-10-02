@@ -149,13 +149,12 @@ namespace Duologue
             // Make the score
             score = new ScoreScroller(
                 localGame,
-                LocalInstanceManager.Players[0],
+                0,
                 1f,
                 Vector2.Zero,
                 Vector2.Zero,
                 0,
-                1f,
-                "Player 1");
+                1f);
             score.Enabled = true;
             score.Visible = true;
             localGame.Components.Add(score);
