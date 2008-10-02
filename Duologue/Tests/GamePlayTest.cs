@@ -153,7 +153,7 @@ namespace Duologue
                 1f,
                 Vector2.Zero,
                 Vector2.Zero,
-                0,
+                9999000,
                 1f);
             score.Enabled = true;
             score.Visible = true;

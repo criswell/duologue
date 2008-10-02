@@ -19,6 +19,7 @@ using Mimicware.Manager;
 using Mimicware.Debug;
 // Duologue
 using Duologue.ParticleEffects;
+using Duologue.AchievementSystem;
 #endregion
 
 namespace Duologue
@@ -47,6 +48,7 @@ namespace Duologue
         public Steam steamSystem;
         public PlayerRing playerRing;
         public Background background;
+        public AchievementManager achievements;
 
         public Game1()
         {
@@ -107,6 +109,11 @@ namespace Duologue
             playerRing.Visible = true;
             this.Components.Add(playerRing);
 
+            achievements = new AchievementManager(this);
+            achievements.Enabled = true;
+            achievements.Visible = true;
+            this.Components.Add(achievements);
+
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
@@ -118,6 +125,7 @@ namespace Duologue
             LocalInstanceManager.Steam = steamSystem;
             LocalInstanceManager.PlayerRing = playerRing;
             LocalInstanceManager.Background = background;
+            LocalInstanceManager.AchievementManager = achievements;
 
             gamePlayTest.Log = Log;
             base.Initialize();

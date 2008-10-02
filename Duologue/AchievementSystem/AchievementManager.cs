@@ -39,7 +39,8 @@ namespace Duologue.AchievementSystem
     {
         #region Constants
         private const int possibleAchievements = 20;
-        private const float lifetime = 1f;
+        private const float lifetime = 0.001f;
+        private const string fontfilename = "Fonts/inero-28";
         #endregion
 
         #region Fields
@@ -78,7 +79,7 @@ namespace Duologue.AchievementSystem
         }
         protected override void LoadContent()
         {
-            font = InstanceManager.AssetManager.LoadSpriteFont("inero-28");
+            font = InstanceManager.AssetManager.LoadSpriteFont(fontfilename);
             base.LoadContent();
         }
         #endregion
@@ -158,7 +159,7 @@ namespace Duologue.AchievementSystem
                 if (centerPos == Vector2.Zero)
                 {
                     centerPos = new Vector2(
-                        InstanceManager.DefaultViewport.Width / 2f,
+                        InstanceManager.DefaultViewport.Width / 2f - size.X/2f,
                         (float)InstanceManager.DefaultViewport.Height - 2 * size.Y);
                 }
                 render.DrawString(font,
