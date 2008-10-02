@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AchievementManager\AchievementManager.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="LocalInstanceManager.cs" />
     <Compile Include="Mimicware\Fx\Particle.cs" />
