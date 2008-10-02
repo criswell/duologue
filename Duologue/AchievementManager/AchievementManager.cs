@@ -35,6 +35,7 @@ namespace Duologue.AchievementManager
     {
         #region Constants
         private const int possibleAchievements = 20;
+        private const float lifetime = 1f;
         #endregion
 
         #region Fields
@@ -43,6 +44,8 @@ namespace Duologue.AchievementManager
         private Achievement[] achievements;
         private Queue<Achievement> unlockedYetToDisplay;
         private Vector2 centerPos;
+        private float timeSinceStart;
+        private Achievement currentDisplayed;
         #endregion
 
         #region Properties
@@ -63,13 +66,15 @@ namespace Duologue.AchievementManager
         {
             achievements = new Achievement[possibleAchievements];
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
-
+            timeSinceStart = 0f;
+            centerPos = Vector2.Zero;
             GenerateAchievements();
 
             base.Initialize();
         }
         protected override void LoadContent()
         {
+            font = InstanceManager.AssetManager.LoadSpriteFont("inero-28");
             base.LoadContent();
         }
         #endregion
@@ -101,13 +106,42 @@ namespace Duologue.AchievementManager
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
-
+            if (currentDisplayed != null)
+            {
+                timeSinceStart += (float)gameTime.ElapsedRealTime.TotalSeconds;
+                if (timeSinceStart > lifetime)
+                {
+                    currentDisplayed.Displayed = true;
+                    currentDisplayed = null;
+                }
+            }
+            else if (unlockedYetToDisplay.Count > 0)
+            {
+                currentDisplayed = unlockedYetToDisplay.Dequeue();
+                timeSinceStart = 0f;
+            }
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            if (render == null)
+                render = InstanceManager.RenderSprite;
+
+            if (currentDisplayed != null)
+            {
+                Vector2 size = font.MeasureString(currentDisplayed.Name);
+                if (centerPos == Vector2.Zero)
+                {
+                    centerPos = new Vector2(
+                        InstanceManager.DefaultViewport.Width / 2f,
+                        (float)InstanceManager.DefaultViewport.Height - 2 * size.Y);
+                }
+                render.DrawString(font,
+                    currentDisplayed.Name,
+                    centerPos,
+                    Color.White);
+            }
             base.Draw(gameTime);
         }
         #endregion
