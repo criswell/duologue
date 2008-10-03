@@ -81,6 +81,7 @@ namespace Duologue.Screens
                 mi.Invisible = false;
             }
 
+            // Turn off those items we don't support yet
             mainMenuItems[3].Invisible = true;
             mainMenuItems[4].Invisible = true;
 
