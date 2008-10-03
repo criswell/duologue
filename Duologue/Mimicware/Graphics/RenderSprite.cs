@@ -16,12 +16,27 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace Mimicware.Graphics
 {
+    /// <summary>
+    /// The blend mode used in RenderSprite.
+    /// </summary>
+    /// <remarks>
+    /// The blend mode used in RenderSprite is a bit more expansive than the
+    /// stock SpriteBlendModes for SpriteBatch. We include the standard AlphaBlend and
+    /// Additive. But we add Multiplicative.
+    /// </remarks>
+    public enum RenderSpriteBlendMode
+    {
+        AlphaBlend,
+        Addititive,
+        Multiplicative,
+    }
     public class RenderSprite
     {
         #region Fields
         private SpriteBatch batch;
         private List<SpriteObject> sprites;
         private List<SpriteObject> additiveSprites;
+        private List<SpriteObject> multiplicativeSprites;
         #endregion
 
         #region Properties
@@ -33,6 +48,7 @@ namespace Mimicware.Graphics
             batch = spriteBatch;
             sprites = new List<SpriteObject>();
             additiveSprites = new List<SpriteObject>();
+            multiplicativeSprites = new List<SpriteObject>();
         }
         #endregion
 
@@ -53,6 +69,15 @@ namespace Mimicware.Graphics
         private void AddAdditive(SpriteObject spriteObject)
         {
             additiveSprites.Add(spriteObject);
+        }
+
+        /// <summary>
+        /// Adds a sprite to the multiplicative batch
+        /// </summary>
+        /// <param name="spriteObject">The sprite object to add</param>
+        private void AddMultiplicative(SpriteObject spriteObject)
+        {
+            multiplicativeSprites.Add(spriteObject);
         }
         #endregion
 
@@ -138,10 +163,21 @@ namespace Mimicware.Graphics
             float rotation,
             float scale,
             float layer,
-            bool additive)
+            RenderSpriteBlendMode mode)
         {
-            if(additive)
+            if (mode == RenderSpriteBlendMode.Addititive)
                 this.AddAdditive(
+                    new SpriteObject(
+                        texture,
+                        position,
+                        center,
+                        source,
+                        tint,
+                        rotation,
+                        scale,
+                        layer));
+            else if (mode == RenderSpriteBlendMode.Multiplicative)
+                this.AddMultiplicative(
                     new SpriteObject(
                         texture,
                         position,
@@ -183,10 +219,21 @@ namespace Mimicware.Graphics
             float rotation,
             Vector2 scale,
             float layer,
-            bool additive)
+            RenderSpriteBlendMode mode)
         {
-            if (additive)
+            if (mode == RenderSpriteBlendMode.Addititive)
                 this.AddAdditive(
+                    new SpriteObject(
+                        texture,
+                        position,
+                        center,
+                        source,
+                        tint,
+                        rotation,
+                        scale,
+                        layer));
+            else if (mode == RenderSpriteBlendMode.Multiplicative)
+                this.AddMultiplicative(
                     new SpriteObject(
                         texture,
                         position,
@@ -230,10 +277,16 @@ namespace Mimicware.Graphics
         /// <param name="p"></param>
         /// <param name="vector2"></param>
         /// <param name="color"></param>
-        internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color, bool additive)
+        internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color, RenderSpriteBlendMode mode)
         {
-            if(additive)
+            if (mode == RenderSpriteBlendMode.Addititive)
                 this.AddAdditive(new SpriteObject(
+                    font,
+                    p,
+                    vector2,
+                    color));
+            else if (mode == RenderSpriteBlendMode.Multiplicative)
+                this.AddMultiplicative(new SpriteObject(
                     font,
                     p,
                     vector2,
@@ -259,10 +312,12 @@ namespace Mimicware.Graphics
         /// 
         /// </summary>
         /// <param name="spriteObject"></param>
-        internal void Draw(SpriteObject spriteObject, bool additive)
+        internal void Draw(SpriteObject spriteObject, RenderSpriteBlendMode mode)
         {
-            if (additive)
+            if (mode == RenderSpriteBlendMode.Addititive)
                 this.AddAdditive(spriteObject);
+            else if (mode == RenderSpriteBlendMode.Multiplicative)
+                this.AddMultiplicative(spriteObject);
             else
                 this.Add(spriteObject);
         }

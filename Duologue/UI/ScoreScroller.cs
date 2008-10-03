@@ -18,8 +18,10 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.Properties;
 using Duologue.State;
 using Duologue.PlayObjects;
+using Duologue.AchievementSystem;
 #endregion
 
 namespace Duologue.UI
@@ -35,7 +37,7 @@ namespace Duologue.UI
         /// </summary>
         private const string fontFilename = "Fonts/inero-40";
         private const string smallFontFilename = "Fonts/inero-28";
-        private const int maxScore = 999999;
+        private const int maxScore = 9999999;
         private const int defaultDeltaScore = 5;
         private const int numPointlets = 10;
         private const float timeToMovePointlet = 1f;
@@ -54,12 +56,12 @@ namespace Duologue.UI
         private Vector2 finalPosition;
         private float timeToMove;
         private float timeSinceStart;
-        private ColorState colorState;
+        //private ColorState colorState;
         // Score stuff
         private int score;
         private int scrollingScore;
         private int lastScore;
-        private float timeToScroll;
+        //private float timeToScroll;
         private float timeSinceScrollStart;
         private int lengthOfMaxScore;
         private int deltaScore;
@@ -70,6 +72,11 @@ namespace Duologue.UI
         // Misc stuff
         private Random rand;
         private Game localGame;
+        /// <summary>
+        /// Get or set the current player we're associated with
+        /// </summary>
+        private Player associatedPlayer;
+        private int myPlayerNumber;
         #endregion
 
         #region Properties
@@ -104,15 +111,10 @@ namespace Duologue.UI
         /// <summary>
         /// Get the current color state of the player this scroller is associated with (read-only)
         /// </summary>
-        public ColorState ColorState
-        {
-            get { return colorState; }
-        }
-
-        /// <summary>
-        /// Get or set the current player we're associated with
-        /// </summary>
-        public Player AssociatedPlayer;
+        //public ColorState ColorState
+        //{
+            //get { return colorState; }
+        //}
 
         /// <summary>
         ///  Read-only access to the current score
@@ -144,22 +146,20 @@ namespace Duologue.UI
         /// <param name="endPosition">The end position for this score</param>
         public ScoreScroller(
             Game game,
-            Player myPlayer,
+            int myPlayer,
             float moveTime,
             Vector2 startPosition,
             Vector2 endPosition,
             int defaultScore,
-            float scoreScrollTime,
-            string scoretext)
+            float scoreScrollTime)
             : base(game)
         {
             localGame = game;
-            AssociatedPlayer = myPlayer;
+            myPlayerNumber = myPlayer;
             score = defaultScore;
             timeToMove = moveTime;
             position = startPosition;
             finalPosition = endPosition;
-            scoreText = scoretext;
         }
 
         /// <summary>
@@ -182,6 +182,9 @@ namespace Duologue.UI
                     Color.White);
                 freePointlets.Enqueue(pointlets[i]);
             }
+
+            // Set the score text
+            scoreText = String.Format(Resources.ScoreUI_Player, myPlayerNumber+1);
             base.Initialize();
         }
 
@@ -223,9 +226,9 @@ namespace Duologue.UI
                 Pointlet p = freePointlets.Dequeue();
                 p.Initialize(pointPos,
                     new Color(
-                        AssociatedPlayer.PlayerTint.R,
-                        AssociatedPlayer.PlayerTint.G,
-                        AssociatedPlayer.PlayerTint.B,
+                        associatedPlayer.PlayerTint.R,
+                        associatedPlayer.PlayerTint.G,
+                        associatedPlayer.PlayerTint.B,
                         (byte)rand.Next(minPointletAlpha, maxPointletAlpha)),
                     points,
                     new Rectangle(
@@ -251,6 +254,12 @@ namespace Duologue.UI
             score += points;
             if(pointPos != null)
                 AddPointlet(points, (Vector2)pointPos);
+            if (score > maxScore)
+            {
+                LocalInstanceManager.AchievementManager.AchievementRolledScore();
+                score -= maxScore;
+                scrollingScore = 0;
+            }
         }
 
         /// <summary>
@@ -324,6 +333,9 @@ namespace Duologue.UI
             if (Render == null)
                 Render = InstanceManager.RenderSprite;
 
+            if (associatedPlayer == null)
+                associatedPlayer = LocalInstanceManager.Players[myPlayerNumber];
+
             // Do pointlets first
             foreach (Pointlet p in pointlets)
             {
@@ -349,7 +361,7 @@ namespace Duologue.UI
                 smallFont,
                 scoreText,
                 position,
-                AssociatedPlayer.PlayerTint);
+                associatedPlayer.PlayerTint);
 
             for (int i = 0; i < lengthOfMaxScore - length; i++)
             {
@@ -358,7 +370,7 @@ namespace Duologue.UI
                     font,
                     "0",
                     charPos,
-                    AssociatedPlayer.PlayerTint);
+                    associatedPlayer.PlayerTint);
                 currentChar++;
             }
 
@@ -369,7 +381,7 @@ namespace Duologue.UI
                     font,
                     chars.Current.ToString(),
                     charPos,
-                    AssociatedPlayer.PlayerTint);
+                    associatedPlayer.PlayerTint);
 
                 if(scrollingScore < score &&
                     diffLength > 0 &&
@@ -380,11 +392,11 @@ namespace Duologue.UI
                         rand.Next(9).ToString(),
                         charPos,
                         new Color(
-                            AssociatedPlayer.PlayerTint.R,
-                            AssociatedPlayer.PlayerTint.G,
-                            AssociatedPlayer.PlayerTint.B,
+                            associatedPlayer.PlayerTint.R,
+                            associatedPlayer.PlayerTint.G,
+                            associatedPlayer.PlayerTint.B,
                             (byte)100),
-                        true);
+                        RenderSpriteBlendMode.Addititive);
                 }
 
                 currentChar++;

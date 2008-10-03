@@ -22,6 +22,7 @@ using Mimicware.Fx;
 using Duologue.ParticleEffects;
 using Duologue.PlayObjects;
 using Duologue.UI;
+using Duologue.AchievementSystem;
 #endregion
 
 namespace Duologue
@@ -61,6 +62,8 @@ namespace Duologue
         /// The local instance of the background object
         /// </summary>
         public static Background Background;
+
+        public static AchievementManager AchievementManager;
         #endregion
 
         #region Public methods
