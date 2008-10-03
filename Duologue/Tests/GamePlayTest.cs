@@ -15,7 +15,7 @@ using Duologue.State;
 using Duologue;
 using Duologue.UI;
 
-namespace Duologue
+namespace Duologue.Tests
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.

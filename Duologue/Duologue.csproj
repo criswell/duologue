@@ -74,6 +74,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Screens\GameScreen.cs" />
+    <Compile Include="Screens\MainGameLogo.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="State\ColorState.cs" />
+    <Compile Include="Tests\MainMenuTest.cs" />
     <Compile Include="UI\Pointlet.cs" />
     <Compile Include="UI\ScoreScroller.cs" />
   </ItemGroup>
@@ -107,9 +110,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Screens\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.Common.targets" />
