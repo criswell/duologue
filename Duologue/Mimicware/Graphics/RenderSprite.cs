@@ -2,8 +2,10 @@
 #endregion
 
 #region Using statements
+// System
 using System;
 using System.Collections.Generic;
+// XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -12,6 +14,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+// Mimicware
+using Mimicware.Manager;
 #endregion
 
 namespace Mimicware.Graphics
@@ -78,6 +82,33 @@ namespace Mimicware.Graphics
         private void AddMultiplicative(SpriteObject spriteObject)
         {
             multiplicativeSprites.Add(spriteObject);
+        }
+
+        /// <summary>
+        /// Given a list of sprites, render them
+        /// </summary>
+        private void RenderAllSprites(List<SpriteObject> sobjs)
+        {
+            foreach (SpriteObject sobj in sobjs)
+            {
+                if (sobj.Texture != null)
+                    batch.Draw(
+                        sobj.Texture,
+                        sobj.Position,
+                        sobj.Source,
+                        sobj.Tint,
+                        sobj.Rotation,
+                        sobj.Center,
+                        sobj.Scale,
+                        SpriteEffects.None,
+                        sobj.Layer);
+                else if (sobj.Text != null)
+                    batch.DrawString(
+                        sobj.Font,
+                        sobj.Text,
+                        sobj.Position,
+                        sobj.Tint);
+            }
         }
         #endregion
 
@@ -328,55 +359,31 @@ namespace Mimicware.Graphics
         public void Run()
         {
             // Render the standard alphablend sprites
-            batch.Begin(SpriteBlendMode.AlphaBlend);
-
-            foreach (SpriteObject sobj in sprites)
+            if (sprites.Count > 0)
             {
-                if (sobj.Texture != null)
-                    batch.Draw(
-                        sobj.Texture,
-                        sobj.Position,
-                        sobj.Source,
-                        sobj.Tint,
-                        sobj.Rotation,
-                        sobj.Center,
-                        sobj.Scale,
-                        SpriteEffects.None,
-                        sobj.Layer);
-                else if (sobj.Text != null)
-                    batch.DrawString(
-                        sobj.Font,
-                        sobj.Text,
-                        sobj.Position,
-                        sobj.Tint);
+                batch.Begin(SpriteBlendMode.AlphaBlend);
+                RenderAllSprites(sprites);
+                batch.End();
             }
-            batch.End();
             sprites.Clear();
+
+            if (multiplicativeSprites.Count > 0)
+            {
+                batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.None);
+                InstanceManager.GraphicsDevice.RenderState.SourceBlend = Blend.DestinationColor;
+                InstanceManager.GraphicsDevice.RenderState.DestinationBlend = Blend.SourceColor;
+
+                RenderAllSprites(multiplicativeSprites);
+
+                batch.End();
+            }
+            multiplicativeSprites.Clear();
 
             if (additiveSprites.Count > 0)
             {
                 batch.Begin(SpriteBlendMode.Additive);
 
-                foreach (SpriteObject sobj in additiveSprites)
-                {
-                    if (sobj.Texture != null)
-                        batch.Draw(
-                            sobj.Texture,
-                            sobj.Position,
-                            sobj.Source,
-                            sobj.Tint,
-                            sobj.Rotation,
-                            sobj.Center,
-                            sobj.Scale,
-                            SpriteEffects.None,
-                            sobj.Layer);
-                    else if (sobj.Text != null)
-                        batch.DrawString(
-                            sobj.Font,
-                            sobj.Text,
-                            sobj.Position,
-                            sobj.Tint);                    
-                }
+                RenderAllSprites(additiveSprites);
 
                 batch.End();
             }

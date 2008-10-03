@@ -20,6 +20,7 @@ using Mimicware.Debug;
 // Duologue
 using Duologue.ParticleEffects;
 using Duologue.AchievementSystem;
+using Duologue.Tests;
 #endregion
 
 namespace Duologue
@@ -41,7 +42,7 @@ namespace Duologue
         #endregion
         public GraphicsDeviceManager Graphics;
         SpriteBatch spriteBatch;
-        GamePlayTest gamePlayTest;
+        //GamePlayTest gamePlayTest;
         public AssetManager Assets;
         public RenderSprite Render;
         public Logger Log;
@@ -49,6 +50,8 @@ namespace Duologue
         public PlayerRing playerRing;
         public Background background;
         public AchievementManager achievements;
+        public MainMenuTest mainMenuTest;
+        //public
 
         public Game1()
         {
@@ -80,6 +83,7 @@ namespace Duologue
                 Graphics.PreferredBackBufferWidth = 1024;
                 Graphics.PreferredBackBufferHeight = 768;
             }
+            Graphics.ApplyChanges();
 
             // FIXME:
             // In the final game, the enable/visible stuff set here should be in a game state engine
@@ -90,44 +94,52 @@ namespace Duologue
             background.Enabled = true;
             this.Components.Add(background);
             
+            /*
             gamePlayTest = new GamePlayTest(this);
             gamePlayTest.Enabled = true;
             gamePlayTest.Visible = true;
-            this.Components.Add(gamePlayTest);
+            this.Components.Add(gamePlayTest);*/
             Log = new Logger(this);
             Log.Enabled = false;
             Log.Visible = false;
             this.Components.Add(Log);
 
             steamSystem = new Steam(this, MaxSteamEffects);
-            steamSystem.Enabled = true;
-            steamSystem.Visible = true;
+            /*steamSystem.Enabled = true;
+            steamSystem.Visible = true;*/
             this.Components.Add(steamSystem);
 
             playerRing = new PlayerRing(this, MaxExplosionEffects);
-            playerRing.Enabled = true;
-            playerRing.Visible = true;
+            /*playerRing.Enabled = true;
+            playerRing.Visible = true;*/
             this.Components.Add(playerRing);
 
             achievements = new AchievementManager(this);
-            achievements.Enabled = true;
-            achievements.Visible = true;
+            /*achievements.Enabled = true;
+            achievements.Visible = true;*/
             this.Components.Add(achievements);
+
+
 
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
 
-            Log.LogEntry(currentMode.AspectRatio.ToString());
-            Log.LogEntry(Graphics.PreferredBackBufferWidth.ToString() + "x" + Graphics.PreferredBackBufferHeight.ToString());
+            /*Log.LogEntry(currentMode.AspectRatio.ToString());
+            Log.LogEntry(Graphics.PreferredBackBufferWidth.ToString() + "x" + Graphics.PreferredBackBufferHeight.ToString());*/
             
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;
             LocalInstanceManager.PlayerRing = playerRing;
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;
+            mainMenuTest = new MainMenuTest(this);
+            this.Components.Add(mainMenuTest);
+            mainMenuTest.SetEnable(true);
+            mainMenuTest.SetVisible(true);
+            mainMenuTest.Enabled = true;
 
-            gamePlayTest.Log = Log;
+            //gamePlayTest.Log = Log;
             base.Initialize();
         }
 

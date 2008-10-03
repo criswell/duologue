@@ -1,6 +1,6 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{465BA138-2891-4E79-A94A-75F1CA57D9C2}</ProjectGuid>
+    <ProjectGuid>{e82e9ca2-a8a5-4ea3-8ccd-a5b354a83ba4}</ProjectGuid>
     <ProjectTypeGuids>{2DF5C3F4-5A5F-47a9-8E94-23B4456F55E2};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
@@ -38,16 +38,24 @@
     <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AchievementSystem\Achievement.cs" />
+    <Compile Include="AchievementSystem\AchievementManager.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="LocalInstanceManager.cs" />
     <Compile Include="Mimicware\Fx\Particle.cs" />
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
+    <Compile Include="Mimicware\Manager\InputManager.cs" />
     <Compile Include="Mimicware\Manager\InstanceManager.cs" />
-    <Compile Include="ParticleEffects\ExplodeRing.cs" />
     <Compile Include="ParticleEffects\ExplodeRingSystem.cs" />
+    <Compile Include="ParticleEffects\ExplodeRing.cs" />
     <Compile Include="ParticleEffects\PlayerRing.cs" />
     <Compile Include="ParticleEffects\Steam.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />
@@ -62,6 +70,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="State\ColorState.cs" />
+    <Compile Include="UI\Pointlet.cs" />
     <Compile Include="UI\ScoreScroller.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +82,16 @@
       <Project>af64c3b5-09ad-46a3-969b-48db06dfb063</Project>
       <Visible>False</Visible>
     </NestedContentProject>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Screens\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework">
