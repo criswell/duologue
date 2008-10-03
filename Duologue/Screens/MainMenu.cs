@@ -33,12 +33,19 @@ namespace Duologue.Screens
         private const float yOffset = 325f;
         private const float extraLineSpacing = 12;
         private const float selectOffset = 8;
+        // FIXME
+        // The following should be deleted, testing
+        private const float lifetime = 1f;
         #endregion
 
         #region Fields
         private SpriteFont font;
         private Vector2 position;
         private List<MenuItem> mainMenuItems;
+        private int currentSelection;
+        // FIXME
+        // The following should be deleted, testing
+        private float timeSinceStart;
         #endregion
 
         #region Properties
@@ -49,7 +56,11 @@ namespace Duologue.Screens
             : base(game)
         {
             position = Vector2.Zero;
+            currentSelection = 0;
             mainMenuItems = new List<MenuItem>();
+            // FIXME
+            // delete the following test
+            timeSinceStart = 0f;
         }
 
         /// <summary>
@@ -104,7 +115,19 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            mainMenuItems[3].Selected = true;
+            mainMenuItems[currentSelection].Selected = true;
+
+            // FIXME
+            // Delete the following test
+            timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeSinceStart > lifetime)
+            {
+                timeSinceStart = 0f;
+                mainMenuItems[currentSelection].Selected = false;
+                currentSelection++;
+                if (currentSelection >= mainMenuItems.Count)
+                    currentSelection = 0;
+            }
             
             base.Update(gameTime);
         }
