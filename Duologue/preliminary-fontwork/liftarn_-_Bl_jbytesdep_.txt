@@ -1,0 +1,10 @@
+Inero font
+Made by Staffan Vilcans.
+
+Inspired by the Eniro logotype. I know that the font lacks some characters. If you want to add them, please do, but send me the updated font so I can include it in the next release. You will ofcourse be credited as a co-creator.
+
+If you want to contact me, do so via e-mail to liftarn@interface1.net or visit my page at http://www.interface1.net
+
+----
+Public Domain : http://creativecommons.org/licenses/publicdomain/
+Specified here: http://openfontlibrary.org/media/files/liftarn/25
