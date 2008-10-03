@@ -126,6 +126,24 @@
   <data name="Achievement_Points_RolledScore" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="MainMenu_Achievements" xml:space="preserve">
+    <value>Achievements</value>
+  </data>
+  <data name="MainMenu_Exit" xml:space="preserve">
+    <value>Return to Arcade</value>
+  </data>
+  <data name="MainMenu_Leaderboards" xml:space="preserve">
+    <value>Leaderboards</value>
+  </data>
+  <data name="MainMenu_MultiPlayer" xml:space="preserve">
+    <value>Multiplayer</value>
+  </data>
+  <data name="MainMenu_Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="MainMenu_SinglePlayer" xml:space="preserve">
+    <value>Single Player</value>
+  </data>
   <data name="ScoreUI_Lives" xml:space="preserve">
     <value>Lives: {0}</value>
   </data>

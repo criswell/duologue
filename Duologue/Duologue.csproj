@@ -76,6 +76,8 @@
     </Compile>
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\MainGameLogo.cs" />
+    <Compile Include="Screens\MainMenu.cs" />
+    <Compile Include="Screens\MenuItem.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />

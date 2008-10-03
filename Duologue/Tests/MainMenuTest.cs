@@ -35,6 +35,7 @@ namespace Duologue.Tests
 
         #region Fields
         private MainGameLogo mainGameLogo;
+        private MainMenu mainMenu;
         private float timeSinceStart;
         private Game localGame;
         #endregion
@@ -49,7 +50,9 @@ namespace Duologue.Tests
             timeSinceStart = 0f;
             localGame = game;
             mainGameLogo = new MainGameLogo(localGame);
+            mainMenu = new MainMenu(localGame);
             localGame.Components.Add(mainGameLogo);
+            localGame.Components.Add(mainMenu);
             
         }
 
@@ -67,6 +70,7 @@ namespace Duologue.Tests
         protected override void InitializeConstants()
         {
             MyComponents.Add(mainGameLogo);
+            MyComponents.Add(mainMenu);
 
             this.SetEnable(true);
             this.SetVisible(true);
