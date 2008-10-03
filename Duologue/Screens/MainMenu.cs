@@ -76,6 +76,14 @@ namespace Duologue.Screens
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Leaderboards));
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
 
+            foreach (MenuItem mi in mainMenuItems)
+            {
+                mi.Invisible = false;
+            }
+
+            mainMenuItems[3].Invisible = true;
+            mainMenuItems[4].Invisible = true;
+
             base.Initialize();
         }
 
@@ -147,11 +155,22 @@ namespace Duologue.Screens
                     curPos,
                     Color.Azure,
                     RenderSpriteBlendMode.Multiplicative);
-                InstanceManager.RenderSprite.DrawString(font,
-                    mi.Text,
-                    curPos + mi.FadePercent * selectOffset * Vector2.One,
-                    mi.Selected ? Color.Azure : Color.DimGray,
-                    RenderSpriteBlendMode.Addititive);
+                if (mi.Invisible)
+                {
+                    InstanceManager.RenderSprite.DrawString(font,
+                        mi.Text,
+                        curPos,
+                        mi.Selected ? Color.DarkSlateBlue : Color.DarkSlateGray,
+                        RenderSpriteBlendMode.Addititive);
+                }
+                else
+                {
+                    InstanceManager.RenderSprite.DrawString(font,
+                        mi.Text,
+                        curPos + mi.FadePercent * selectOffset * Vector2.One,
+                        mi.Selected ? Color.Azure : Color.DimGray,
+                        RenderSpriteBlendMode.Addititive);
+                }
                 curPos.Y += font.LineSpacing + extraLineSpacing;
             }
             base.Draw(gameTime);

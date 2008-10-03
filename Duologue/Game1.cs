@@ -124,6 +124,7 @@ namespace Duologue
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
+            InstanceManager.InputManager = new InputManager();
 
             /*Log.LogEntry(currentMode.AspectRatio.ToString());
             Log.LogEntry(Graphics.PreferredBackBufferWidth.ToString() + "x" + Graphics.PreferredBackBufferHeight.ToString());*/
