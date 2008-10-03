@@ -80,6 +80,7 @@ namespace Duologue
                 Graphics.PreferredBackBufferWidth = 1024;
                 Graphics.PreferredBackBufferHeight = 768;
             }
+            Graphics.ApplyChanges();
 
             // FIXME:
             // In the final game, the enable/visible stuff set here should be in a game state engine
