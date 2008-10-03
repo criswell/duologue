@@ -396,7 +396,7 @@ namespace Duologue.UI
                             associatedPlayer.PlayerTint.G,
                             associatedPlayer.PlayerTint.B,
                             (byte)100),
-                        true);
+                        RenderSpriteBlendMode.Addititive);
                 }
 
                 currentChar++;

@@ -157,7 +157,7 @@ namespace Mimicware.Fx
         /// different effects can use different blend modes. fire and explosions work
         /// well with additive blending, for example.
         /// </summary>
-        protected SpriteBlendMode spriteBlendMode;
+        protected RenderSpriteBlendMode spriteBlendMode;
         #endregion
 
         #region Constructor / Init / Load
@@ -422,7 +422,7 @@ namespace Mimicware.Fx
                 //    p.Rotation, center, scale, SpriteEffects.None, 0.0f);
                 //InstanceManager.Logger.LogEntry(p.TimeSinceStart + " < " + p.Lifetime);
                 RenderSprite.Draw(texture, p.Position, center, null, color, p.Rotation,
-                    scale, 0.0f, (spriteBlendMode == SpriteBlendMode.Additive));
+                    scale, 0.0f, spriteBlendMode);
             }
 
             //game.SpriteBatch.End();

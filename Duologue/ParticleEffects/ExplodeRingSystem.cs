@@ -151,7 +151,7 @@ namespace Duologue.ParticleEffects
         /// different effects can use different blend modes. fire and explosions work
         /// well with additive blending, for example.
         /// </summary>
-        protected SpriteBlendMode spriteBlendMode;
+        protected RenderSpriteBlendMode spriteBlendMode;
         #endregion
 
         #region Constructor / Init / Load
@@ -385,7 +385,7 @@ namespace Duologue.ParticleEffects
                 Color color = new Color(new Vector4((float)p.Tint.R, (float)p.Tint.G, (float)p.Tint.B, alpha));
 
                 RenderSprite.Draw(texture, p.Position, center, null, color, p.Rotation,
-                    p.Scale, 0.0f, (spriteBlendMode == SpriteBlendMode.Additive));
+                    p.Scale, 0.0f, spriteBlendMode);
             }
 
             base.Draw(gameTime);
