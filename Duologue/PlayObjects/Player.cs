@@ -449,7 +449,7 @@ namespace Duologue.PlayObjects
                 LightRotation,
                 1f,
                 0.5f,
-                true);
+                RenderSpriteBlendMode.Addititive);
 
             // Lightbeam
             RenderSprite.Draw(
@@ -461,7 +461,7 @@ namespace Duologue.PlayObjects
                 BeamRotation,
                 1f,
                 0.5f,
-                true);
+                RenderSpriteBlendMode.Addititive);
 
             RenderSprite.Draw(
                 beamBase.Texture,
@@ -472,7 +472,7 @@ namespace Duologue.PlayObjects
                 BeamRotation,
                 1f,
                 0.5f,
-                true);
+                RenderSpriteBlendMode.Addititive);
 
             // Cannon
             RenderSprite.Draw(
