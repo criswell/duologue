@@ -1,6 +1,6 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{28e8ab43-fe13-4370-a451-7b5f45a30dbd}</ProjectGuid>
+    <ProjectGuid>{28E8AB43-FE13-4370-A451-7B5F45A30DBD}</ProjectGuid>
     <ProjectTypeGuids>{2DF5C3F4-5A5F-47a9-8E94-23B4456F55E2};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
@@ -58,6 +58,8 @@
     </Compile>
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\MainGameLogo.cs" />
+    <Compile Include="Screens\MainMenu.cs" />
+    <Compile Include="Screens\MenuItem.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />
