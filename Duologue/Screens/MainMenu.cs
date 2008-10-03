@@ -150,7 +150,7 @@ namespace Duologue.Screens
                 InstanceManager.RenderSprite.DrawString(font,
                     mi.Text,
                     curPos + mi.FadePercent * selectOffset * Vector2.One,
-                    mi.Selected ? Color.Azure : Color.Crimson,
+                    mi.Selected ? Color.Azure : Color.DimGray,
                     RenderSpriteBlendMode.Addititive);
                 curPos.Y += font.LineSpacing + extraLineSpacing;
             }
