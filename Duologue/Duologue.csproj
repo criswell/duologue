@@ -78,6 +78,7 @@
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\MainGameLogo.cs" />
     <Compile Include="Screens\MainMenu.cs" />
+    <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\MenuItem.cs" />
     <Compile Include="State\GameState.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />

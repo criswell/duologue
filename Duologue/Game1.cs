@@ -52,7 +52,8 @@ namespace Duologue
         public PlayerRing playerRing;
         public Background background;
         public AchievementManager achievements;
-        public MainMenuTest mainMenuTest;
+        //public MainMenuTest mainMenuTest;
+        public MainMenuScreen mainMenuScreen;
         public ExitScreen exitScreen;
 
         /// <summary>
@@ -153,12 +154,12 @@ namespace Duologue
             dispatchTable.Add(GameState.Exit, exitScreen);
 
             // Main menu
-            mainMenuTest = new MainMenuTest(this);
-            this.Components.Add(mainMenuTest);
+            mainMenuScreen = new MainMenuScreen(this);
+            this.Components.Add(mainMenuScreen);
             //mainMenuTest.SetEnable(true);
             //mainMenuTest.SetVisible(true);
             //mainMenuTest.Enabled = true;
-            dispatchTable.Add(GameState.MainMenuSystem, mainMenuTest);
+            dispatchTable.Add(GameState.MainMenuSystem, mainMenuScreen);
 
             //gamePlayTest.Log = Log;
             base.Initialize();

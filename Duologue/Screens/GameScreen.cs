@@ -91,6 +91,15 @@ namespace Duologue.Screens
             foreach (DrawableGameComponent comp in MyComponents)
                 comp.Visible = t;
         }
+
+        /// <summary>
+        /// Call to re-init all components I own
+        /// </summary>
+        public virtual void ReInitAll()
+        {
+            foreach (DrawableGameComponent comp in MyComponents)
+                comp.Initialize();
+        }
         #endregion
 
         #region Update

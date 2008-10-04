@@ -70,17 +70,9 @@ namespace Duologue.Screens
             : base(game)
         {
             position = Vector2.Zero;
-            currentSelection = 0;
             mainMenuItems = new List<MenuItem>();
             gameSelectItems = new List<MenuItem>();
-        }
 
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public override void Initialize()
-        {
             // Set up the main menu
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_SinglePlayer));
             menuSinglePlayer = 0;
@@ -93,13 +85,6 @@ namespace Duologue.Screens
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
             menuExit = 4;
 
-            foreach (MenuItem mi in mainMenuItems)
-                mi.Invisible = false;
-
-            // Turn off those items we don't support yet
-            mainMenuItems[menuAchievements].Invisible = true;
-            mainMenuItems[menuLeaderboards].Invisible = true;
-
             // Set up the game select menu
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
             gameSelectCampaign = 0;
@@ -107,6 +92,20 @@ namespace Duologue.Screens
             gameSelectInfinite = 1;
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Back));
             gameSelectBack = 2;
+        }
+
+        /// <summary>
+        /// Allows the game component to perform any initialization it needs to before starting
+        /// to run.  This is where it can query for any required services and load content.
+        /// </summary>
+        public override void Initialize()
+        {
+            foreach (MenuItem mi in mainMenuItems)
+                mi.Invisible = false;
+
+            // Turn off those items we don't support yet
+            mainMenuItems[menuAchievements].Invisible = true;
+            mainMenuItems[menuLeaderboards].Invisible = true;
 
             foreach (MenuItem mi in gameSelectItems)
                 mi.Invisible = false;
@@ -114,6 +113,7 @@ namespace Duologue.Screens
             ResetMenuItems();
 
             currentState = MainMenuState.MainMenu;
+            currentSelection = 0;
 
             base.Initialize();
         }
@@ -134,6 +134,13 @@ namespace Duologue.Screens
             float center = InstanceManager.DefaultViewport.Width / 2f;
             float xOffset = center;
             foreach (MenuItem mi in mainMenuItems)
+            {
+                Vector2 size = font.MeasureString(mi.Text);
+                float xTest = center - size.X / 2f;
+                if (xTest < xOffset)
+                    xOffset = xTest;
+            }
+            foreach (MenuItem mi in gameSelectItems)
             {
                 Vector2 size = font.MeasureString(mi.Text);
                 float xTest = center - size.X / 2f;
