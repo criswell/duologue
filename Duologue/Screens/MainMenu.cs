@@ -34,9 +34,6 @@ namespace Duologue.Screens
         private const float yOffset = 325f;
         private const float extraLineSpacing = 12;
         private const float selectOffset = 8;
-        // FIXME
-        // The following should be deleted, testing
-        private const float lifetime = 1f;
         #endregion
 
         #region Fields
@@ -44,6 +41,12 @@ namespace Duologue.Screens
         private Vector2 position;
         private List<MenuItem> mainMenuItems;
         private int currentSelection;
+        // The list of menu items
+        private int menuSinglePlayer;
+        private int menuMultiPlayer;
+        private int menuAchievements;
+        private int menuLeaderboards;
+        private int menuExit;
         #endregion
 
         #region Properties
@@ -65,11 +68,16 @@ namespace Duologue.Screens
         public override void Initialize()
         {
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_SinglePlayer));
+            menuSinglePlayer = 0;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_MultiPlayer));
-            mainMenuItems.Add(new MenuItem(Resources.MainMenu_Options));
+            menuMultiPlayer = 1;
+            //mainMenuItems.Add(new MenuItem(Resources.MainMenu_Options));
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Achievements));
+            menuAchievements = 2;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Leaderboards));
+            menuLeaderboards = 3;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
+            menuExit = 4;
 
             foreach (MenuItem mi in mainMenuItems)
             {
@@ -77,8 +85,8 @@ namespace Duologue.Screens
             }
 
             // Turn off those items we don't support yet
-            mainMenuItems[3].Invisible = true;
-            mainMenuItems[4].Invisible = true;
+            mainMenuItems[menuAchievements].Invisible = true;
+            mainMenuItems[menuLeaderboards].Invisible = true;
 
             base.Initialize();
         }
@@ -113,14 +121,8 @@ namespace Duologue.Screens
         /// </summary>
         private void ParseSelected()
         {
-            switch (currentSelection)
-            {
-                case 5:
+            if(currentSelection == menuExit)
                     LocalInstanceManager.CurrentGameState = GameState.Exit;
-                    break;
-                default:
-                    break;
-            }
         }
 
         /// <summary>

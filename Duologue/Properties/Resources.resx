@@ -138,9 +138,6 @@
   <data name="MainMenu_MultiPlayer" xml:space="preserve">
     <value>Multiplayer</value>
   </data>
-  <data name="MainMenu_Options" xml:space="preserve">
-    <value>Options</value>
-  </data>
   <data name="MainMenu_SinglePlayer" xml:space="preserve">
     <value>Single Player</value>
   </data>
