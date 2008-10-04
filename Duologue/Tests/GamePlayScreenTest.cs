@@ -24,11 +24,38 @@ using Duologue.Screens;
 
 namespace Duologue.Tests
 {
-    class GamePlayScreenTest : GameScreen
+    public class GamePlayScreenTest : GameScreen
     {
+        #region Constants
+        #endregion
+
+        #region Fields
+        private Game localGame;
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructor / Init
+        public GamePlayScreenTest(Game game)
+            : base(game)
+        {
+            localGame = game;
+        }
+
         protected override void InitializeConstants()
         {
             throw new Exception("The method or operation is not implemented.");
         }
+        #endregion
+
+        #region Private Methods
+        #endregion
+
+        #region Public Methods
+        #endregion
+
+        #region Update
+        #endregion
     }
 }
