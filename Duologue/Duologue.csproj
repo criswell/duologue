@@ -99,6 +99,7 @@
     <Compile Include="Tests\MainMenuTest.cs" />
     <Compile Include="UI\Pointlet.cs" />
     <Compile Include="UI\ScoreScroller.cs" />
+    <Compile Include="Waves\GameWave.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

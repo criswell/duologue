@@ -221,6 +221,32 @@ namespace Duologue.Screens
         }
 
         /// <summary>
+        /// Check to see if the B or select button is pressed
+        /// </summary>
+        /// <returns>True if it was</returns>
+        private bool CheckButtonB()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape))
+                {
+                    pressed = true;
+                    break;
+                }
+                if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
+                   InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released)
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
         /// Checks to see if the "menu down" controll was triggered
         /// </summary>
         private bool IsMenuDown()
@@ -358,7 +384,12 @@ namespace Duologue.Screens
             if (currentState == MainMenuState.MainMenu)
                 InnerUpdate(mainMenuItems);
             else
-                InnerUpdate(gameSelectItems);
+            {
+                if (CheckButtonB())
+                    currentState = MainMenuState.MainMenu;
+                else
+                    InnerUpdate(gameSelectItems);
+            }
             
             base.Update(gameTime);
         }
