@@ -55,6 +55,7 @@ namespace Duologue.Screens
         private int menuMultiPlayer;
         private int menuAchievements;
         private int menuLeaderboards;
+        private int menuCredits;
         private int menuExit;
         private int gameSelectCampaign;
         private int gameSelectInfinite;
@@ -82,8 +83,10 @@ namespace Duologue.Screens
             menuAchievements = 2;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Leaderboards));
             menuLeaderboards = 3;
+            mainMenuItems.Add(new MenuItem(Resources.MainMenu_Credits));
+            menuCredits = 4;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
-            menuExit = 4;
+            menuExit = 5;
 
             // Set up the game select menu
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));

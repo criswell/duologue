@@ -20,6 +20,7 @@ using Mimicware.Graphics;
 using Duologue;
 using Duologue.Properties;
 using Duologue.Screens;
+using Duologue.UI;
 #endregion
 
 namespace Duologue.Tests
@@ -31,6 +32,8 @@ namespace Duologue.Tests
 
         #region Fields
         private Game localGame;
+        // The UI elements
+        private ScoreScroller scoreScroller;
         #endregion
 
         #region Properties

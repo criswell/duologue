@@ -97,6 +97,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credits.
+        /// </summary>
+        internal static string MainMenu_Credits {
+            get {
+                return ResourceManager.GetString("MainMenu_Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return to Arcade.
         /// </summary>
         internal static string MainMenu_Exit {
