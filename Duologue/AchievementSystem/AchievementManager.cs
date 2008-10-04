@@ -60,7 +60,9 @@ namespace Duologue.AchievementSystem
         public AchievementManager(Game game)
             : base(game)
         {
-            // TODO: Construct any child components here
+            achievements = new Achievement[possibleAchievements];
+            unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
+            GenerateAchievements();
         }
 
         /// <summary>
@@ -69,11 +71,8 @@ namespace Duologue.AchievementSystem
         /// </summary>
         public override void Initialize()
         {
-            achievements = new Achievement[possibleAchievements];
-            unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             timeSinceStart = 0f;
             centerPos = Vector2.Zero;
-            GenerateAchievements();
 
             base.Initialize();
         }
