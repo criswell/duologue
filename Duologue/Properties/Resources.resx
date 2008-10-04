@@ -132,6 +132,15 @@
   <data name="MainMenu_Exit" xml:space="preserve">
     <value>Return to Arcade</value>
   </data>
+  <data name="MainMenu_GameSelect_Back" xml:space="preserve">
+    <value>Back to main menu</value>
+  </data>
+  <data name="MainMenu_GameSelect_Campaign" xml:space="preserve">
+    <value>Play the campaign</value>
+  </data>
+  <data name="MainMenu_GameSelect_Infinite" xml:space="preserve">
+    <value>Play infinite mode</value>
+  </data>
   <data name="MainMenu_Leaderboards" xml:space="preserve">
     <value>Leaderboards</value>
   </data>

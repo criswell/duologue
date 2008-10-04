@@ -25,6 +25,14 @@ using Duologue.State;
 namespace Duologue.Screens
 {
     /// <summary>
+    /// The possible states for the main menu
+    /// </summary>
+    public enum MainMenuState
+    {
+        MainMenu,
+        GameSelect,
+    }
+    /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
     public class MainMenu : Microsoft.Xna.Framework.DrawableGameComponent
@@ -40,6 +48,7 @@ namespace Duologue.Screens
         private SpriteFont font;
         private Vector2 position;
         private List<MenuItem> mainMenuItems;
+        private List<MenuItem> gameSelectItems;
         private int currentSelection;
         // The list of menu items
         private int menuSinglePlayer;
@@ -47,6 +56,10 @@ namespace Duologue.Screens
         private int menuAchievements;
         private int menuLeaderboards;
         private int menuExit;
+        private int gameSelectCampaign;
+        private int gameSelectInfinite;
+        private int gameSelectBack;
+        private MainMenuState currentState;
         #endregion
 
         #region Properties
@@ -59,6 +72,7 @@ namespace Duologue.Screens
             position = Vector2.Zero;
             currentSelection = 0;
             mainMenuItems = new List<MenuItem>();
+            gameSelectItems = new List<MenuItem>();
         }
 
         /// <summary>
@@ -67,11 +81,11 @@ namespace Duologue.Screens
         /// </summary>
         public override void Initialize()
         {
+            // Set up the main menu
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_SinglePlayer));
             menuSinglePlayer = 0;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_MultiPlayer));
             menuMultiPlayer = 1;
-            //mainMenuItems.Add(new MenuItem(Resources.MainMenu_Options));
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Achievements));
             menuAchievements = 2;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Leaderboards));
@@ -80,13 +94,26 @@ namespace Duologue.Screens
             menuExit = 4;
 
             foreach (MenuItem mi in mainMenuItems)
-            {
                 mi.Invisible = false;
-            }
 
             // Turn off those items we don't support yet
             mainMenuItems[menuAchievements].Invisible = true;
             mainMenuItems[menuLeaderboards].Invisible = true;
+
+            // Set up the game select menu
+            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
+            gameSelectCampaign = 0;
+            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Infinite));
+            gameSelectInfinite = 1;
+            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Back));
+            gameSelectBack = 2;
+
+            foreach (MenuItem mi in gameSelectItems)
+                mi.Invisible = false;
+
+            ResetMenuItems();
+
+            currentState = MainMenuState.MainMenu;
 
             base.Initialize();
         }
@@ -121,8 +148,40 @@ namespace Duologue.Screens
         /// </summary>
         private void ParseSelected()
         {
-            if(currentSelection == menuExit)
+            if (currentState == MainMenuState.MainMenu)
+            {
+                if (currentSelection == menuExit)
                     LocalInstanceManager.CurrentGameState = GameState.Exit;
+                else if (currentSelection == menuSinglePlayer)
+                {
+                    currentState = MainMenuState.GameSelect;
+                    currentSelection = 0;
+                    ResetMenuItems();
+                }
+                else if (currentSelection == menuMultiPlayer)
+                {
+                    currentState = MainMenuState.GameSelect;
+                    currentSelection = 0;
+                    ResetMenuItems();
+                }
+            }
+            else
+            {
+                if (currentSelection == gameSelectBack)
+                {
+                    currentState = MainMenuState.MainMenu;
+                    currentSelection = 0;
+                    ResetMenuItems();
+                }
+            }
+        }
+
+        private void ResetMenuItems()
+        {
+            foreach (MenuItem mi in mainMenuItems)
+                mi.Selected = false;
+            foreach (MenuItem mi in gameSelectItems)
+                mi.Selected = false;
         }
 
         /// <summary>
@@ -205,57 +264,13 @@ namespace Duologue.Screens
             return pressed;
         }
 
-        #endregion
-
-        #region Public Methods
-        #endregion
-
-        #region Update / Draw
         /// <summary>
-        /// Allows the game component to update itself.
+        /// Draw a list of menu items
         /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public override void Update(GameTime gameTime)
+        private void DrawMenu(List<MenuItem> mis, GameTime gameTime)
         {
-            mainMenuItems[currentSelection].Selected = true;
-
-            // See if we have a button down to select
-            if (CheckButtonA())
-            {
-                ParseSelected();
-            }
-
-            // Determine if we've got a new selection
-            // Down -- Yeech, this be fugly
-            if (IsMenuDown())
-            {
-                mainMenuItems[currentSelection].Selected = false;
-                currentSelection++;
-            }
-
-            // Up
-            if (IsMenuUp())
-            {
-                mainMenuItems[currentSelection].Selected = false;
-                currentSelection--;
-            }
-
-            if (currentSelection >= mainMenuItems.Count)
-                currentSelection = 0;
-            else if (currentSelection < 0)
-                currentSelection = mainMenuItems.Count - 1;
-            
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            if (position == Vector2.Zero)
-            {
-                SetPostion();
-            }
             Vector2 curPos = position;
-            foreach (MenuItem mi in mainMenuItems)
+            foreach (MenuItem mi in mis)
             {
                 mi.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
                 InstanceManager.RenderSprite.DrawString(font,
@@ -281,6 +296,74 @@ namespace Duologue.Screens
                 }
                 curPos.Y += font.LineSpacing + extraLineSpacing;
             }
+
+        }
+
+        /// <summary>
+        /// Inner update
+        /// </summary>
+        private void InnerUpdate(List<MenuItem> mis)
+        {
+            mis[currentSelection].Selected = true;
+
+            // See if we have a button down to select
+            if (CheckButtonA())
+            {
+                ParseSelected();
+            }
+
+            // Determine if we've got a new selection
+            // Down
+            if (IsMenuDown())
+            {
+                mis[currentSelection].Selected = false;
+
+                currentSelection++;
+            }
+
+            // Up
+            if (IsMenuUp())
+            {
+                mis[currentSelection].Selected = false;
+                currentSelection--;
+            }
+
+            if (currentSelection >= mis.Count)
+                currentSelection = 0;
+            else if (currentSelection < 0)
+                currentSelection = mis.Count - 1;
+        }
+        #endregion
+
+        #region Public Methods
+        #endregion
+
+        #region Update / Draw
+        /// <summary>
+        /// Allows the game component to update itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        public override void Update(GameTime gameTime)
+        {
+            if (currentState == MainMenuState.MainMenu)
+                InnerUpdate(mainMenuItems);
+            else
+                InnerUpdate(gameSelectItems);
+            
+            base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            if (position == Vector2.Zero)
+            {
+                SetPostion();
+            }
+
+            if (currentState == MainMenuState.MainMenu)
+                DrawMenu(mainMenuItems, gameTime);
+            else
+                DrawMenu(gameSelectItems, gameTime);
             base.Draw(gameTime);
         }
         #endregion

@@ -106,6 +106,33 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back to main menu.
+        /// </summary>
+        internal static string MainMenu_GameSelect_Back {
+            get {
+                return ResourceManager.GetString("MainMenu_GameSelect_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play the campaign.
+        /// </summary>
+        internal static string MainMenu_GameSelect_Campaign {
+            get {
+                return ResourceManager.GetString("MainMenu_GameSelect_Campaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play infinite mode.
+        /// </summary>
+        internal static string MainMenu_GameSelect_Infinite {
+            get {
+                return ResourceManager.GetString("MainMenu_GameSelect_Infinite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leaderboards.
         /// </summary>
         internal static string MainMenu_Leaderboards {
