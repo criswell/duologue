@@ -122,6 +122,87 @@ namespace Duologue.Screens
                     break;
             }
         }
+
+        /// <summary>
+        /// Check to see if the A or select button is pressed
+        /// </summary>
+        /// <returns>True if it was</returns>
+        private bool CheckButtonA()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Enter) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Enter))
+                {
+                    pressed = true;
+                    break;
+                }
+                if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
+                   InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released)
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if the "menu down" controll was triggered
+        /// </summary>
+        private bool IsMenuDown()
+        {
+            bool pressed = false;
+            
+            for(int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if(InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Down) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Down))
+                {
+                    pressed = true;
+                    break;
+                }
+                if((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Down == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Down == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y < 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y >= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if the "menu up" control was triggered
+        /// </summary>
+        private bool IsMenuUp()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Up) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Up))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Up == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Up == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y > 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y <= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
         #endregion
 
         #region Public Methods
@@ -137,28 +218,21 @@ namespace Duologue.Screens
             mainMenuItems[currentSelection].Selected = true;
 
             // See if we have a button down to select
-            if (InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].Buttons.A == ButtonState.Pressed &&
-                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].Buttons.A == ButtonState.Released)
+            if (CheckButtonA())
             {
                 ParseSelected();
             }
 
             // Determine if we've got a new selection
             // Down -- Yeech, this be fugly
-            if ((InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].DPad.Down == ButtonState.Pressed &&
-                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].DPad.Down == ButtonState.Released) ||
-               (InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].ThumbSticks.Left.Y < 0 &&
-                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].ThumbSticks.Left.Y >= 0))
+            if (IsMenuDown())
             {
                 mainMenuItems[currentSelection].Selected = false;
                 currentSelection++;
             }
 
             // Up
-            if ((InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].DPad.Up == ButtonState.Pressed &&
-                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].DPad.Up == ButtonState.Released) ||
-                (InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].ThumbSticks.Left.Y > 0 &&
-                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].ThumbSticks.Left.Y <= 0))
+            if (IsMenuUp())
             {
                 mainMenuItems[currentSelection].Selected = false;
                 currentSelection--;
