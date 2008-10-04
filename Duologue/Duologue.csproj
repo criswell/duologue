@@ -81,6 +81,7 @@
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\MenuItem.cs" />
     <Compile Include="State\GameState.cs" />
+    <Compile Include="Tests\GamePlayScreenTest.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />
