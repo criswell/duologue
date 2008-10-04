@@ -88,6 +88,16 @@ namespace Duologue.Tests
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (mainGameLogo.PercentComplete < 1f)
+            {
+                mainMenu.Enabled = false;
+                mainMenu.Visible = false;
+            }
+            else
+            {
+                mainMenu.Enabled = true;
+                mainMenu.Visible = true;
+            }
             if (timeSinceStart < backgroundTimer)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
             else

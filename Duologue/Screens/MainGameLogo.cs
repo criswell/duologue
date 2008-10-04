@@ -43,6 +43,13 @@ namespace Duologue.Screens
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Tells the percente complete in the fade in
+        /// </summary>
+        public float PercentComplete
+        {
+            get { return Math.Min(timeSinceStart / fadeLifetime, 1f); }
+        }
         #endregion
 
         #region Constructor / Init / Load
