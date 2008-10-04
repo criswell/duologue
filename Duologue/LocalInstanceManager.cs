@@ -22,6 +22,7 @@ using Mimicware.Fx;
 using Duologue.ParticleEffects;
 using Duologue.PlayObjects;
 using Duologue.UI;
+using Duologue.State;
 using Duologue.AchievementSystem;
 #endregion
 
@@ -29,6 +30,11 @@ namespace Duologue
 {
     static class LocalInstanceManager
     {
+        #region Fields
+        private static GameState currentGameState;
+        private static GameState lastGameState;
+        #endregion
+
         #region Properties / Local Instances
         /// <summary>
         /// The local instance of the steam particle system.
@@ -63,7 +69,31 @@ namespace Duologue
         /// </summary>
         public static Background Background;
 
+        /// <summary>
+        /// The local achievement manager
+        /// </summary>
         public static AchievementManager AchievementManager;
+
+        /// <summary>
+        /// The current game state
+        /// </summary>
+        public static GameState CurrentGameState
+        {
+            get { return currentGameState; }
+            set
+            {
+                lastGameState = currentGameState;
+                currentGameState = value;
+            }
+        }
+
+        /// <summary>
+        /// The last game state
+        /// </summary>
+        public static GameState LastGameState
+        {
+            get { return lastGameState; }
+        }
         #endregion
 
         #region Public methods

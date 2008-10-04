@@ -19,6 +19,7 @@ using Mimicware.Graphics;
 // Duologue
 using Duologue;
 using Duologue.Properties;
+using Duologue.State;
 #endregion
 
 namespace Duologue.Screens
@@ -43,9 +44,6 @@ namespace Duologue.Screens
         private Vector2 position;
         private List<MenuItem> mainMenuItems;
         private int currentSelection;
-        // FIXME
-        // The following should be deleted, testing
-        private float timeSinceStart;
         #endregion
 
         #region Properties
@@ -58,9 +56,6 @@ namespace Duologue.Screens
             position = Vector2.Zero;
             currentSelection = 0;
             mainMenuItems = new List<MenuItem>();
-            // FIXME
-            // delete the following test
-            timeSinceStart = 0f;
         }
 
         /// <summary>
@@ -112,6 +107,21 @@ namespace Duologue.Screens
             }
             position = new Vector2(xOffset, yOffset);
         }
+
+        /// <summary>
+        /// When a menu item is selected, this is where we parse it
+        /// </summary>
+        private void ParseSelected()
+        {
+            switch (currentSelection)
+            {
+                case 5:
+                    LocalInstanceManager.CurrentGameState = GameState.Exit;
+                    break;
+                default:
+                    break;
+            }
+        }
         #endregion
 
         #region Public Methods
@@ -126,17 +136,38 @@ namespace Duologue.Screens
         {
             mainMenuItems[currentSelection].Selected = true;
 
-            // FIXME
-            // Delete the following test
-            timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (timeSinceStart > lifetime)
+            // See if we have a button down to select
+            if (InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].Buttons.A == ButtonState.Pressed &&
+                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].Buttons.A == ButtonState.Released)
             {
-                timeSinceStart = 0f;
+                ParseSelected();
+            }
+
+            // Determine if we've got a new selection
+            // Down -- Yeech, this be fugly
+            if ((InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].DPad.Down == ButtonState.Pressed &&
+                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].DPad.Down == ButtonState.Released) ||
+               (InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].ThumbSticks.Left.Y < 0 &&
+                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].ThumbSticks.Left.Y >= 0))
+            {
                 mainMenuItems[currentSelection].Selected = false;
                 currentSelection++;
-                if (currentSelection >= mainMenuItems.Count)
-                    currentSelection = 0;
             }
+
+            // Up
+            if ((InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].DPad.Up == ButtonState.Pressed &&
+                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].DPad.Up == ButtonState.Released) ||
+                (InstanceManager.InputManager.CurrentGamePadStates[(int)PlayerIndex.One].ThumbSticks.Left.Y > 0 &&
+                InstanceManager.InputManager.LastGamePadStates[(int)PlayerIndex.One].ThumbSticks.Left.Y <= 0))
+            {
+                mainMenuItems[currentSelection].Selected = false;
+                currentSelection--;
+            }
+
+            if (currentSelection >= mainMenuItems.Count)
+                currentSelection = 0;
+            else if (currentSelection < 0)
+                currentSelection = mainMenuItems.Count - 1;
             
             base.Update(gameTime);
         }
