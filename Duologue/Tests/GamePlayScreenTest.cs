@@ -21,6 +21,8 @@ using Duologue;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.UI;
+using Duologue.PlayObjects;
+using Duologue.Waves;
 #endregion
 
 namespace Duologue.Tests
@@ -32,8 +34,17 @@ namespace Duologue.Tests
 
         #region Fields
         private Game localGame;
+        // The background elements
+        private Background background;
         // The UI elements
-        private ScoreScroller scoreScroller;
+        private ScoreScroller[] scores;
+        // The Player Elements
+        private Player[] players;
+        private PlayerIndex[] playerIndex;
+        // The Enemies
+
+        // The GameWaves
+        private List<GameWave> gameWaves;
         #endregion
 
         #region Properties
@@ -44,6 +55,30 @@ namespace Duologue.Tests
             : base(game)
         {
             localGame = game;
+            // Initialize the players
+            LocalInstanceManager.InitializePlayers();
+            players = LocalInstanceManager.Players;
+            playerIndex = LocalInstanceManager.PlayersIndex;
+
+            // Initialize the scores
+            scores = new ScoreScroller[LocalInstanceManager.MaxNumberOfPlayers];
+            for(int i = 0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
+            {
+                scores[i] = new ScoreScroller(
+                    localGame,
+                    i,
+                    1f,
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    0,
+                    1f);
+                scores[i].Enabled = false;
+                scores[i].Visible = false;
+                localGame.Components.Add(scores[i]);
+            }
+
+            // Initialize the GameWaves
+            gameWaves = LocalInstanceManager.GameWaves;
         }
 
         protected override void InitializeConstants()

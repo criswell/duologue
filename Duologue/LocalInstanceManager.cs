@@ -24,6 +24,7 @@ using Duologue.PlayObjects;
 using Duologue.UI;
 using Duologue.State;
 using Duologue.AchievementSystem;
+using Duologue.Waves;
 #endregion
 
 namespace Duologue
@@ -94,6 +95,11 @@ namespace Duologue
         {
             get { return lastGameState; }
         }
+
+        /// <summary>
+        /// The currently set GameWaves
+        /// </summary>
+        public static List<GameWave> GameWaves;
         #endregion
 
         #region Public methods
