@@ -49,6 +49,11 @@ namespace Duologue.Waves
         /// The list of possible player shop types in this GameWave
         /// </summary>
         public PlayerShotType[] PossiblePlayerShotTypes;
+
+        /// <summary>
+        /// The background for this GameWave
+        /// </summary>
+        public int Background;
         #endregion
 
         #region Constructors
@@ -65,11 +70,13 @@ namespace Duologue.Waves
         /// <param name="name">The name of this wave</param>
         /// <param name="numWavelets">The maximum number of wavelets associated with this wave</param>
         /// <param name="numShotTypes">The maximum number of shots associated with this wave</param>
-        public GameWave(string name, int numWavelets, int numShotTypes)
+        /// <param name="background">The background for this wave</param>
+        public GameWave(string name, int numWavelets, int numShotTypes, int background)
         {
             Name = name;
             Wavelets = new Wavelet[numWavelets];
             PossiblePlayerShotTypes = new PlayerShotType[numShotTypes];
+            Background = background;
         }
         #endregion
     }
