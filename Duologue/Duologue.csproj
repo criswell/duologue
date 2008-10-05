@@ -100,6 +100,7 @@
     <Compile Include="UI\Pointlet.cs" />
     <Compile Include="UI\ScoreScroller.cs" />
     <Compile Include="Waves\GameWave.cs" />
+    <Compile Include="Waves\GameWaveManager.cs" />
     <Compile Include="Waves\Wavelet.cs" />
   </ItemGroup>
   <ItemGroup>
