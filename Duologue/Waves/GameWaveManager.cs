@@ -30,7 +30,7 @@ namespace Duologue.Waves
     /// <summary>
     /// The manager of the game waves
     /// </summary>
-    class GameWaveManager
+    public class GameWaveManager
     {
         #region Constants
         /// <summary>
@@ -62,12 +62,19 @@ namespace Duologue.Waves
             get { return currentWaveIndex; }
             set
             {
-                currentWaveIndex = Math.Max(0, Math.Min(value, MaxNumOfGameWaves));
+                currentWaveIndex = Math.Max(0, Math.Min(value, waves.Count-1));
             }
         }
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// Basic constructor
+        /// </summary>
+        /// <param name="maxNumOfGameWaves"></param>
+        public GameWaveManager(int? maxNumOfGameWaves)
+        {
+        }
         #endregion
 
         #region Private Methods
