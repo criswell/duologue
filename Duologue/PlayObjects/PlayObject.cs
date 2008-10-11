@@ -120,24 +120,24 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// This should will be called every update at the begining
         /// </summary>
-        public abstract void StartOffset();
+        public abstract bool StartOffset();
 
         /// <summary>
         /// Called for every play object this object might interact with
         /// </summary>
         /// <param name="pobj"></param>
-        public abstract void UpdateOffset(PlayObject pobj);
+        public abstract bool UpdateOffset(PlayObject pobj);
 
         /// <summary>
         /// Apply the offset
         /// </summary>
-        public abstract void ApplyOffset();
+        public abstract bool ApplyOffset();
 
         /// <summary>
         /// Triggers a hit between objects
         /// </summary>
         /// <param name="pobj"></param>
-        public abstract void TriggerHit(PlayObject pobj);
+        public abstract bool TriggerHit(PlayObject pobj);
         #endregion
     }
 }

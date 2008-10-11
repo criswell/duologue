@@ -130,13 +130,17 @@ namespace Duologue.PlayObjects
         /// </summary>
         /// <param name="currentColorState">The current color state of this player.</param>
         /// <param name="playerTint">The player's tint</param>
-        public Player(ColorState currentColorState, Color playerTint)
+        /// <param name="playerIndex">The player's associated player index</param>
+        public Player(ColorState currentColorState, Color playerTint, PlayerIndex playerIndex, Vector2 startPos)
             : base()
         {
             MyType = TypesOfPlayObjects.Player;
             colorState = currentColorState;
             lightIsNegative = true;
             PlayerTint = playerTint;
+            MyPlayerIndex = playerIndex;
+            Position = startPos;
+            lastPosition = startPos;
             Initialize();
         }
 
@@ -150,7 +154,7 @@ namespace Duologue.PlayObjects
             Orientation = Vector2.UnitX;
             Aim = Vector2.Negate(Orientation);
             CaclulateRotations();
-            lastPosition = Vector2.Zero;
+            //lastPosition = Vector2.Zero;
             treadTimer = 0;
             shineTimer = 0;
             beamArcMax = 0f;
@@ -161,7 +165,7 @@ namespace Duologue.PlayObjects
                 AssetManager = InstanceManager.AssetManager;
 
             #region Load player objects
-            Position = new Vector2(InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
+            //Position = new Vector2(InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
             playerBase = new SpriteObject(
                 AssetManager.LoadTexture2D("player-base"),
                 Position,
@@ -568,22 +572,22 @@ namespace Duologue.PlayObjects
             base.SetRenderSprite(render);
         }
 
-        public override void StartOffset()
+        public override bool StartOffset()
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override void UpdateOffset(PlayObject pobj)
+        public override bool UpdateOffset(PlayObject pobj)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override void ApplyOffset()
+        public override bool ApplyOffset()
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override void TriggerHit(PlayObject pobj)
+        public override bool TriggerHit(PlayObject pobj)
         {
             throw new Exception("The method or operation is not implemented.");
         }
