@@ -117,6 +117,11 @@ namespace Duologue.PlayObjects
         /// This player's tint (multiple players will have different tints)
         /// </summary>
         public Color PlayerTint;
+
+        /// <summary>
+        /// The player index associated with this player
+        /// </summary>
+        public PlayerIndex MyPlayerIndex;
         #endregion
 
         #region Constructor / Init
@@ -128,6 +133,7 @@ namespace Duologue.PlayObjects
         public Player(ColorState currentColorState, Color playerTint)
             : base()
         {
+            MyType = TypesOfPlayObjects.Player;
             colorState = currentColorState;
             lightIsNegative = true;
             PlayerTint = playerTint;
@@ -560,6 +566,21 @@ namespace Duologue.PlayObjects
         {
             Shot.SetRenderSprite(render);
             base.SetRenderSprite(render);
+        }
+
+        public override void StartOffset()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override void UpdateOffset(PlayObject pobj)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override void ApplyOffset()
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
         #endregion
     }

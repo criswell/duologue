@@ -1,3 +1,7 @@
+#region File description
+#endregion
+
+#region Using statements
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -9,15 +13,39 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
 using Mimicware.Graphics;
 using Mimicware.Manager;
+#endregion
 
 namespace Duologue.PlayObjects
 {
-    public class PlayObject
+    /// <summary>
+    /// The various types of play objects
+    /// </summary>
+    public enum TypesOfPlayObjects
+    {
+        Player,
+        PlayerBullet,
+        Buzzsaw,
+    }
+    /// <summary>
+    /// Defines the basic play object class all other play objects are derived
+    /// from.
+    /// </summary>
+    public abstract class PlayObject
     {
         #region Fields
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Determines if this play object is considered "firm" in the environment
+        /// </summary>
+        public bool IsFirm;
+
+        /// <summary>
+        /// The type of play object this play object is
+        /// </summary>
+        public TypesOfPlayObjects MyType;
+
         /// <summary>
         /// Write-only property for setting the current asset manager
         /// Must be set before component is added to the game.
@@ -86,6 +114,30 @@ namespace Duologue.PlayObjects
         {
             GraphicsDevice = device;
         }
+        #endregion
+
+        #region Abstract methods
+        /// <summary>
+        /// This should will be called every update at the begining
+        /// </summary>
+        public abstract void StartOffset();
+
+        /// <summary>
+        /// Called for every play object this object might interact with
+        /// </summary>
+        /// <param name="pobj"></param>
+        public abstract void UpdateOffset(PlayObject pobj);
+
+        /// <summary>
+        /// Apply the offset
+        /// </summary>
+        public abstract void ApplyOffset();
+
+        /// <summary>
+        /// Triggers a hit between objects
+        /// </summary>
+        /// <param name="pobj"></param>
+        public abstract void TriggerHit(PlayObject pobj);
         #endregion
     }
 }
