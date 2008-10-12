@@ -31,6 +31,7 @@ namespace Mimicware.Manager
         #endregion
 
         #region Fields
+        private PlayerIndex lastPlayerIndex;
         #endregion
 
         #region Properties
@@ -43,7 +44,10 @@ namespace Mimicware.Manager
         /// <summary>
         /// The last player index which was polled
         /// </summary>
-        public readonly PlayerIndex LastPlayerIndex;
+        public PlayerIndex LastPlayerIndex
+        {
+            get { return lastPlayerIndex; }
+        }
         #endregion
 
         #region Constructor / Init
@@ -73,7 +77,7 @@ namespace Mimicware.Manager
             {
                 if (NewKeyPressed(key, (PlayerIndex)i))
                 {
-                    LastPlayerIndex = (PlayerIndex)i;
+                    lastPlayerIndex = (PlayerIndex)i;
                     return true;
                 }
             }
@@ -88,7 +92,7 @@ namespace Mimicware.Manager
         /// </summary>
         public bool NewKeyPressed(Keys key, PlayerIndex playerIndex)
         {
-            LastPlayerIndex = playerIndex;
+            lastPlayerIndex = playerIndex;
             return (CurrentKeyboardStates[(int)playerIndex].IsKeyDown(key) &&
                     LastKeyboardStates[(int)playerIndex].IsKeyUp(key));
         }
@@ -104,7 +108,7 @@ namespace Mimicware.Manager
             {
                 if (NewButtonPressed(button, (PlayerIndex)i))
                 {
-                    LastPlayerIndex = (PlayerIndex)i;
+                    lastPlayerIndex = (PlayerIndex)i;
                     return true;
                 }
             }
@@ -119,7 +123,7 @@ namespace Mimicware.Manager
         /// </summary>
         public bool NewButtonPressed(Buttons button, PlayerIndex playerIndex)
         {
-            LastPlayerIndex = playerIndex;
+            lastPlayerIndex = playerIndex;
             return (CurrentGamePadStates[(int)playerIndex].IsButtonDown(button) &&
                     LastGamePadStates[(int)playerIndex].IsButtonUp(button));
         }
@@ -133,7 +137,7 @@ namespace Mimicware.Manager
             {
                 if (KeyPressed(key, (PlayerIndex)i))
                 {
-                    LastPlayerIndex = (PlayerIndex)i;
+                    lastPlayerIndex = (PlayerIndex)i;
                     return true;
                 }
             }
@@ -145,7 +149,7 @@ namespace Mimicware.Manager
         /// </summary>
         public bool KeyPressed(Keys key, PlayerIndex playerIndex)
         {
-            LastPlayerIndex = playerIndex;
+            lastPlayerIndex = playerIndex;
             return (CurrentKeyboardStates[(int)playerIndex].IsKeyDown(key));
         }
 
@@ -158,7 +162,7 @@ namespace Mimicware.Manager
             {
                 if (ButtonPressed(button, (PlayerIndex)i))
                 {
-                    LastPlayerIndex = (PlayerIndex)i;
+                    lastPlayerIndex = (PlayerIndex)i;
                     return true;
                 }
             }
@@ -170,7 +174,7 @@ namespace Mimicware.Manager
         /// </summary>
         public bool ButtonPressed(Buttons button, PlayerIndex playerIndex)
         {
-            LastPlayerIndex = playerIndex;
+            lastPlayerIndex = playerIndex;
             return (CurrentGamePadStates[(int)playerIndex].IsButtonDown(button));
         }
         #endregion
