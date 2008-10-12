@@ -70,6 +70,11 @@ namespace Duologue.Waves
         /// The background for this GameWave
         /// </summary>
         public int Background;
+
+        /// <summary>
+        /// The color state for this wave
+        /// </summary>
+        public ColorState ColorState;
         #endregion
 
         #region Constructors
