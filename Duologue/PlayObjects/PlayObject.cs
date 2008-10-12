@@ -26,6 +26,15 @@ namespace Duologue.PlayObjects
         PlayerBullet,
         Buzzsaw,
     }
+
+    /// <summary>
+    /// The various types of player shots available
+    /// </summary>
+    public enum PlayerShotType
+    {
+        Default,
+    }
+
     /// <summary>
     /// Defines the basic play object class all other play objects are derived
     /// from.

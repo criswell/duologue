@@ -20,15 +20,14 @@ using Mimicware.Graphics;
 using Duologue;
 using Duologue.Properties;
 using Duologue.State;
+using Duologue.PlayObjects;
 #endregion
 
 namespace Duologue.Waves
 {
-    public enum PlayerShotType
-    {
-        Default,
-    }
-
+    /// <summary>
+    /// The basic class defining a wave in the game
+    /// </summary>
     public class GameWave
     {
         #region Fields
@@ -39,11 +38,6 @@ namespace Duologue.Waves
         /// The name of the wave
         /// </summary>
         public string Name;
-
-        /// <summary>
-        /// The list of wavelets associated with this game wave
-        /// </summary>
-        public Wavelet[] Wavelets;
 
         /// <summary>
         /// The list of possible player shop types in this GameWave
@@ -67,14 +61,9 @@ namespace Duologue.Waves
         /// <summary>
         /// Constructs a Game Wave object
         /// </summary>
-        /// <param name="name">The name of this wave</param>
-        /// <param name="numWavelets">The maximum number of wavelets associated with this wave</param>
-        /// <param name="numShotTypes">The maximum number of shots associated with this wave</param>
-        /// <param name="background">The background for this wave</param>
-        public GameWave(string name, int numWavelets, int numShotTypes, int background)
+        public GameWave(string name, int numShotTypes, int background)
         {
             Name = name;
-            Wavelets = new Wavelet[numWavelets];
             PossiblePlayerShotTypes = new PlayerShotType[numShotTypes];
             Background = background;
         }
