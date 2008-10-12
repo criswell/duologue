@@ -30,10 +30,32 @@ namespace Duologue.Waves
     /// </summary>
     public class GameWave
     {
+        #region Constants
+        /// <summary>
+        /// Defines the maximum number of enemies in a given wave
+        /// </summary>
+        public const int maxEnemiesInWave = 200;
+
+        /// <summary>
+        /// The default max player shot types
+        /// </summary>
+        public const int maxPlayerShotTypes = 1;
+        #endregion
+
         #region Fields
         #endregion
 
         #region Properties
+        /// <summary>
+        /// The major wave number of this wave
+        /// </summary>
+        public int MajorWaveNumber;
+
+        /// <summary>
+        /// The minor wave number of this wave
+        /// </summary>
+        public int MinorWaveNumber;
+
         /// <summary>
         /// The name of the wave
         /// </summary>
@@ -61,11 +83,16 @@ namespace Duologue.Waves
         /// <summary>
         /// Constructs a Game Wave object
         /// </summary>
-        public GameWave(string name, int numShotTypes, int background)
+        public GameWave(string name, int? numShotTypes, int background, int majorWaveNo, int minorWaveNo)
         {
             Name = name;
-            PossiblePlayerShotTypes = new PlayerShotType[numShotTypes];
+            if (numShotTypes == null)
+                PossiblePlayerShotTypes = new PlayerShotType[maxPlayerShotTypes];
+            else
+                PossiblePlayerShotTypes = new PlayerShotType[(int)numShotTypes];
             Background = background;
+            MajorWaveNumber = majorWaveNo;
+            MinorWaveNumber = minorWaveNo;
         }
         #endregion
     }

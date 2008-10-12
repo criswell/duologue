@@ -126,6 +126,12 @@
   <data name="Achievement_Points_RolledScore" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="GameScreen_InfiniteWave" xml:space="preserve">
+    <value>Infinite Mode</value>
+  </data>
+  <data name="GameScreen_Wave" xml:space="preserve">
+    <value>Wave {0}</value>
+  </data>
   <data name="MainMenu_Achievements" xml:space="preserve">
     <value>Achievements</value>
   </data>

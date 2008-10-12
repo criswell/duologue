@@ -82,6 +82,11 @@ namespace Duologue.PlayObjects
         /// Determines if this playObject is alive
         /// </summary>
         public bool Alive;
+
+        /// <summary>
+        /// The radius of this playobject
+        /// </summary>
+        public float Radius;
         #endregion
 
         #region Constructor

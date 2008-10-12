@@ -37,6 +37,16 @@ namespace Duologue.Waves
         /// The maximum number of gamewaves
         /// </summary>
         public const int MaxNumOfGameWaves = 100;
+
+        /// <summary>
+        /// The maximum number for minor wave numbers
+        /// </summary>
+        public const int MaxMinorNumber = 10;
+
+        /// <summary>
+        /// The maxium number for major wave numbers
+        /// </summary>
+        public const int MaxMajorNumber = 999;
         #endregion
 
         #region Fields
@@ -49,6 +59,8 @@ namespace Duologue.Waves
         /// The current wave we are on
         /// </summary>
         private int currentWaveIndex;
+
+        private Random rand;
         #endregion
 
         #region Properties
@@ -74,6 +86,15 @@ namespace Duologue.Waves
         /// <param name="maxNumOfGameWaves"></param>
         public GameWaveManager(int? maxNumOfGameWaves)
         {
+            rand = new Random();
+            if (maxNumOfGameWaves == null)
+            {
+                waves = new List<GameWave>(MaxNumOfGameWaves);
+            }
+            else
+            {
+                waves = new List<GameWave>((int)maxNumOfGameWaves);
+            }
         }
         #endregion
 
@@ -81,6 +102,29 @@ namespace Duologue.Waves
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Generate a random wave
+        /// </summary>
+        /// <returns>A random game wave</returns>
+        public GameWave GenerateRandomWave(int lastMajorWaveNo, int lastMinorWaveNo)
+        {
+            lastMinorWaveNo++;
+            if (lastMinorWaveNo > MaxMinorNumber)
+            {
+                lastMinorWaveNo = 0;
+                lastMajorWaveNo++;
+                if (lastMajorWaveNo > MaxMajorNumber)
+                {
+                    lastMajorWaveNo = 0;
+                    // FIXME: Need an achievement here, I think
+                }
+            }
+            return new GameWave(Resources.GameScreen_InfiniteWave,
+                GameWave.maxPlayerShotTypes,
+                rand.Next(LocalInstanceManager.Background.NumBackgrounds),
+                lastMajorWaveNo,
+                lastMinorWaveNo);
+        }
         #endregion
     }
 }

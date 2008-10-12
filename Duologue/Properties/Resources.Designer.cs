@@ -88,6 +88,24 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Infinite Mode.
+        /// </summary>
+        internal static string GameScreen_InfiniteWave {
+            get {
+                return ResourceManager.GetString("GameScreen_InfiniteWave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wave {0}.
+        /// </summary>
+        internal static string GameScreen_Wave {
+            get {
+                return ResourceManager.GetString("GameScreen_Wave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Achievements.
         /// </summary>
         internal static string MainMenu_Achievements {
