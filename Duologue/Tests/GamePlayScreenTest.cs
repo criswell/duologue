@@ -78,7 +78,7 @@ namespace Duologue.Tests
             }
 
             // Initialize the GameWaves
-            gameWaves = LocalInstanceManager.GameWaves;
+            gameWaves = LocalInstanceManager.CurrentGameWave;
         }
 
         protected override void InitializeConstants()
