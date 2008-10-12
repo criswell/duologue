@@ -44,7 +44,7 @@ namespace Duologue.Tests
         // The Enemies
 
         // The GameWaves
-        private List<GameWave> gameWaves;
+        private GameWave gameWave;
         #endregion
 
         #region Properties
@@ -78,7 +78,7 @@ namespace Duologue.Tests
             }
 
             // Initialize the GameWaves
-            gameWaves = LocalInstanceManager.CurrentGameWave;
+            gameWave = LocalInstanceManager.CurrentGameWave;
         }
 
         protected override void InitializeConstants()
