@@ -9,7 +9,9 @@ namespace Duologue.State
     /// </summary>
     public enum GameState
     {
+        None,
         MainMenuSystem,
+        PlayerSelect,
         CampaignGame,
         InfinityGame,
         Exit,

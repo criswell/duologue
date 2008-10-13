@@ -97,6 +97,11 @@ namespace Duologue
         }
 
         /// <summary>
+        /// Set this to the next game state
+        /// </summary>
+        public static GameState NextGameState;
+
+        /// <summary>
         /// The currentl GameWave
         /// </summary>
         public static GameWave CurrentGameWave;
