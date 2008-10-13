@@ -22,12 +22,10 @@ using Duologue.Properties;
 using Duologue.Screens;
 #endregion
 
-namespace Duologue.Tests
+
+namespace Duologue.Screens
 {
-    /// <summary>
-    /// Tests the main menu subsystem
-    /// </summary>
-    public class MainMenuTest : GameScreen
+    public class MainMenuScreen : GameScreen
     {
         #region Constants
         private const float backgroundTimer = 8f;
@@ -44,7 +42,7 @@ namespace Duologue.Tests
         #endregion
 
         #region Constructor / Init / Load
-        public MainMenuTest(Game game)
+        public MainMenuScreen(Game game)
             : base(game)
         {
             timeSinceStart = 0f;

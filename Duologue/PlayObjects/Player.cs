@@ -106,7 +106,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The shot object
         /// </summary>
-        public PlayerShot Shot;
+        //public PlayerShot Shot;
 
         /// <summary>
         /// The current colorstate
@@ -117,6 +117,11 @@ namespace Duologue.PlayObjects
         /// This player's tint (multiple players will have different tints)
         /// </summary>
         public Color PlayerTint;
+
+        /// <summary>
+        /// The player index associated with this player
+        /// </summary>
+        public PlayerIndex MyPlayerIndex;
         #endregion
 
         #region Constructor / Init
@@ -125,12 +130,17 @@ namespace Duologue.PlayObjects
         /// </summary>
         /// <param name="currentColorState">The current color state of this player.</param>
         /// <param name="playerTint">The player's tint</param>
-        public Player(ColorState currentColorState, Color playerTint)
+        /// <param name="playerIndex">The player's associated player index</param>
+        public Player(ColorState currentColorState, Color playerTint, PlayerIndex playerIndex, Vector2 startPos)
             : base()
         {
+            MyType = TypesOfPlayObjects.Player;
             colorState = currentColorState;
             lightIsNegative = true;
             PlayerTint = playerTint;
+            MyPlayerIndex = playerIndex;
+            Position = startPos;
+            lastPosition = startPos;
             Initialize();
         }
 
@@ -140,11 +150,11 @@ namespace Duologue.PlayObjects
         private void Initialize()
         {
             // Gonna cause some errors me think
-            Shot = new PlayerShot();
+            //Shot = new PlayerShot();
             Orientation = Vector2.UnitX;
             Aim = Vector2.Negate(Orientation);
             CaclulateRotations();
-            lastPosition = Vector2.Zero;
+            //lastPosition = Vector2.Zero;
             treadTimer = 0;
             shineTimer = 0;
             beamArcMax = 0f;
@@ -155,7 +165,7 @@ namespace Duologue.PlayObjects
                 AssetManager = InstanceManager.AssetManager;
 
             #region Load player objects
-            Position = new Vector2(InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
+            //Position = new Vector2(InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
             playerBase = new SpriteObject(
                 AssetManager.LoadTexture2D("player-base"),
                 Position,
@@ -355,7 +365,7 @@ namespace Duologue.PlayObjects
         internal void Fire()
         {
             Vector2 startPos = Position; // FIXME
-            Shot.Fire(Aim, playerCannon.Tint, startPos);
+            //Shot.Fire(Aim, playerCannon.Tint, startPos);
         }
 
         /// <summary>
@@ -485,7 +495,7 @@ namespace Duologue.PlayObjects
                 1f,
                 0.5f);
 
-            Shot.Draw(gameTime);
+            //Shot.Draw(gameTime);
         }
 
         /// <summary>
@@ -527,7 +537,7 @@ namespace Duologue.PlayObjects
             }
             ComputeTreadOffset();
             lastPosition = Position;
-            Shot.Update(gameTime);
+            //Shot.Update(gameTime);
         }
         #endregion
 
@@ -538,7 +548,7 @@ namespace Duologue.PlayObjects
         /// <param name="manager">The AssetManager</param>
         public override void SetAssetManager(AssetManager manager)
         {
-            Shot.SetAssetManager(manager);
+            //Shot.SetAssetManager(manager);
             base.SetAssetManager(manager);
         }
 
@@ -548,7 +558,7 @@ namespace Duologue.PlayObjects
         /// <param name="device">The GraphicsDevice</param>
         public override void SetGraphicsDevice(GraphicsDevice device)
         {
-            Shot.SetGraphicsDevice(device);
+            //Shot.SetGraphicsDevice(device);
             base.SetGraphicsDevice(device);
         }
 
@@ -558,8 +568,28 @@ namespace Duologue.PlayObjects
         /// <param name="render">Do you really need to ask?</param>
         public override void SetRenderSprite(RenderSprite render)
         {
-            Shot.SetRenderSprite(render);
+            //Shot.SetRenderSprite(render);
             base.SetRenderSprite(render);
+        }
+
+        public override bool StartOffset()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override bool UpdateOffset(PlayObject pobj)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override bool ApplyOffset()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override bool TriggerHit(PlayObject pobj)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
         #endregion
     }

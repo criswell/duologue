@@ -20,7 +20,7 @@ namespace Duologue.Tests
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class GamePlayTest : Microsoft.Xna.Framework.DrawableGameComponent
+    /*public class GamePlayTest : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Fields
         private AssetManager assets;
@@ -30,7 +30,7 @@ namespace Duologue.Tests
         private GamePadState lastState;
         private Vector2 motionScaler;
         private Game1 localGame;
-        private EnemyBuzzsaw floater;
+        //private EnemyBuzzsaw floater;
         private Vector2 minMaxX;
         private Vector2 minMaxY;
         private ColorState[] colorStates;
@@ -194,7 +194,7 @@ namespace Duologue.Tests
                         player.Aim.Y = currentState.ThumbSticks.Right.Y * -1;
 
                         /*if (Log != null)
-                            Log.LogEntry("Fire requested");*/
+                            Log.LogEntry("Fire requested");*//*
                         player.Fire();
                     }
 
@@ -278,5 +278,5 @@ namespace Duologue.Tests
 
             base.Draw(gameTime);
         }
-    }
+    }*/
 }

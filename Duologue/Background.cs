@@ -55,6 +55,17 @@ namespace Duologue
         {
             get { return timeSinceTransitionRequest < TransitionTime; }
         }
+
+        /// <summary>
+        /// Details how many possible backgrounds there are
+        /// </summary>
+        public int NumBackgrounds
+        {
+            get
+            {
+                return numBackgrounds;
+            }
+        }
         #endregion
 
         #region Constructor / Init / Load

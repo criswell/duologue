@@ -21,6 +21,8 @@ using Mimicware.Debug;
 using Duologue.ParticleEffects;
 using Duologue.AchievementSystem;
 using Duologue.Tests;
+using Duologue.State;
+using Duologue.Screens;
 #endregion
 
 namespace Duologue
@@ -50,7 +52,14 @@ namespace Duologue
         public PlayerRing playerRing;
         public Background background;
         public AchievementManager achievements;
-        public MainMenuTest mainMenuTest;
+        //public MainMenuTest mainMenuTest;
+        public MainMenuScreen mainMenuScreen;
+        public ExitScreen exitScreen;
+
+        /// <summary>
+        /// The dispatch table for game state changes
+        /// </summary>
+        public Dictionary<GameState, GameScreen> dispatchTable;
         //public
 
         public Game1()
@@ -119,11 +128,10 @@ namespace Duologue
             achievements.Visible = true;*/
             this.Components.Add(achievements);
 
-
-
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
+            InstanceManager.InputManager = new InputManager();
 
             /*Log.LogEntry(currentMode.AspectRatio.ToString());
             Log.LogEntry(Graphics.PreferredBackBufferWidth.ToString() + "x" + Graphics.PreferredBackBufferHeight.ToString());*/
@@ -133,11 +141,25 @@ namespace Duologue
             LocalInstanceManager.PlayerRing = playerRing;
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;
-            mainMenuTest = new MainMenuTest(this);
-            this.Components.Add(mainMenuTest);
-            mainMenuTest.SetEnable(true);
-            mainMenuTest.SetVisible(true);
-            mainMenuTest.Enabled = true;
+            // A bit of trickery to ensure we have a lastGameState
+            LocalInstanceManager.CurrentGameState = GameState.Exit;
+            LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+
+            // Configure up the various GameScreens and dispatch
+            dispatchTable = new Dictionary<GameState, GameScreen>();
+
+            // Exit screen
+            exitScreen = new ExitScreen(this);
+            this.Components.Add(exitScreen);
+            dispatchTable.Add(GameState.Exit, exitScreen);
+
+            // Main menu
+            mainMenuScreen = new MainMenuScreen(this);
+            this.Components.Add(mainMenuScreen);
+            //mainMenuTest.SetEnable(true);
+            //mainMenuTest.SetVisible(true);
+            //mainMenuTest.Enabled = true;
+            dispatchTable.Add(GameState.MainMenuSystem, mainMenuScreen);
 
             //gamePlayTest.Log = Log;
             base.Initialize();
@@ -180,11 +202,25 @@ namespace Duologue
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                //this.Exit();
 
-            // TODO: Add your update logic here
+            // Update the input manager every update
+            InstanceManager.InputManager.Update();
 
+            // Determine which GameScreen should be running based upon the state
+            if (LocalInstanceManager.CurrentGameState != LocalInstanceManager.LastGameState)
+            {                
+                dispatchTable[LocalInstanceManager.LastGameState].SetEnable(false);
+                dispatchTable[LocalInstanceManager.LastGameState].SetVisible(false);
+                dispatchTable[LocalInstanceManager.LastGameState].Enabled = false;
+
+                dispatchTable[LocalInstanceManager.CurrentGameState].SetEnable(true);
+                dispatchTable[LocalInstanceManager.CurrentGameState].SetVisible(true);
+                dispatchTable[LocalInstanceManager.CurrentGameState].Enabled=true;
+            }
+            // Ensure that the last game state gets the current setting for next update
+            LocalInstanceManager.CurrentGameState = LocalInstanceManager.CurrentGameState;
             base.Update(gameTime);
         }
 

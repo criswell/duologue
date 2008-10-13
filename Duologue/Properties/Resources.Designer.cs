@@ -88,6 +88,105 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Infinite Mode.
+        /// </summary>
+        internal static string GameScreen_InfiniteWave {
+            get {
+                return ResourceManager.GetString("GameScreen_InfiniteWave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wave {0}.
+        /// </summary>
+        internal static string GameScreen_Wave {
+            get {
+                return ResourceManager.GetString("GameScreen_Wave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Achievements.
+        /// </summary>
+        internal static string MainMenu_Achievements {
+            get {
+                return ResourceManager.GetString("MainMenu_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credits.
+        /// </summary>
+        internal static string MainMenu_Credits {
+            get {
+                return ResourceManager.GetString("MainMenu_Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return to Arcade.
+        /// </summary>
+        internal static string MainMenu_Exit {
+            get {
+                return ResourceManager.GetString("MainMenu_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to main menu.
+        /// </summary>
+        internal static string MainMenu_GameSelect_Back {
+            get {
+                return ResourceManager.GetString("MainMenu_GameSelect_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play the campaign.
+        /// </summary>
+        internal static string MainMenu_GameSelect_Campaign {
+            get {
+                return ResourceManager.GetString("MainMenu_GameSelect_Campaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play infinite mode.
+        /// </summary>
+        internal static string MainMenu_GameSelect_Infinite {
+            get {
+                return ResourceManager.GetString("MainMenu_GameSelect_Infinite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leaderboards.
+        /// </summary>
+        internal static string MainMenu_Leaderboards {
+            get {
+                return ResourceManager.GetString("MainMenu_Leaderboards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiplayer.
+        /// </summary>
+        internal static string MainMenu_MultiPlayer {
+            get {
+                return ResourceManager.GetString("MainMenu_MultiPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Single Player.
+        /// </summary>
+        internal static string MainMenu_SinglePlayer {
+            get {
+                return ResourceManager.GetString("MainMenu_SinglePlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lives: {0}.
         /// </summary>
         internal static string ScoreUI_Lives {
