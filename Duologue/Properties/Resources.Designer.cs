@@ -169,20 +169,11 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiplayer.
+        ///   Looks up a localized string similar to Play Game.
         /// </summary>
-        internal static string MainMenu_MultiPlayer {
+        internal static string MainMenu_Play {
             get {
-                return ResourceManager.GetString("MainMenu_MultiPlayer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Single Player.
-        /// </summary>
-        internal static string MainMenu_SinglePlayer {
-            get {
-                return ResourceManager.GetString("MainMenu_SinglePlayer", resourceCulture);
+                return ResourceManager.GetString("MainMenu_Play", resourceCulture);
             }
         }
         
