@@ -183,6 +183,13 @@ namespace Duologue.Screens
                     currentSelection = 0;
                     ResetMenuItems();
                 }
+                else if (currentSelection == gameSelectInfinite)
+                {
+                    currentState = MainMenuState.MainMenu;
+                    currentSelection = 0;
+                    ResetMenuItems();
+                    LocalInstanceManager.CurrentGameState = GameState.InfinityGame;
+                }
             }
         }
 

@@ -52,9 +52,15 @@ namespace Duologue
         public PlayerRing playerRing;
         public Background background;
         public AchievementManager achievements;
+
+        // Screens
         //public MainMenuTest mainMenuTest;
         public MainMenuScreen mainMenuScreen;
         public ExitScreen exitScreen;
+        // ERE I AM JH
+        // We have a problem, sort of, multiple GameStates for gameplay
+        // but only one gameplay screen atm. do we need more?
+        public GamePlayScreenTest gamePlayScreenTest;
 
         /// <summary>
         /// The dispatch table for game state changes
@@ -132,9 +138,6 @@ namespace Duologue
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
             InstanceManager.InputManager = new InputManager();
-
-            /*Log.LogEntry(currentMode.AspectRatio.ToString());
-            Log.LogEntry(Graphics.PreferredBackBufferWidth.ToString() + "x" + Graphics.PreferredBackBufferHeight.ToString());*/
             
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;
@@ -156,12 +159,8 @@ namespace Duologue
             // Main menu
             mainMenuScreen = new MainMenuScreen(this);
             this.Components.Add(mainMenuScreen);
-            //mainMenuTest.SetEnable(true);
-            //mainMenuTest.SetVisible(true);
-            //mainMenuTest.Enabled = true;
             dispatchTable.Add(GameState.MainMenuSystem, mainMenuScreen);
 
-            //gamePlayTest.Log = Log;
             base.Initialize();
         }
 
