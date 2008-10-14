@@ -34,6 +34,7 @@ namespace Duologue.Screens
         private const float fadeInTime = 0.5f;
         private const float fadeOutTime = 0.2f;
         private const string tileFilename = "multiplayer-select-tile";
+        private const string fontFilename = "Fonts\\inero-28";
         #endregion
 
         #region Fields
@@ -43,11 +44,16 @@ namespace Duologue.Screens
         private Vector2[] center;
         private Vector2 position;
         private float[] rotation;
-        //private SpriteObject[] sobjs;
         private SpriteEffects[] seffects;
         // Time
         private float timeSinceStart;
         private bool begin;
+        // Font/Text
+        private SpriteFont font;
+        private Color fontMain;
+        private Color fontSub;
+        private Vector2 mainTextPos;
+        private string mainText;
         #endregion
 
         #region Properties
@@ -83,7 +89,6 @@ namespace Duologue.Screens
         {
             center = new Vector2[InputManager.MaxInputs];
             rotation = new float[InputManager.MaxInputs];
-            //sobjs = new SpriteObject[InputManager.MaxInputs];
             seffects = new SpriteEffects[InputManager.MaxInputs];
 
             base.Initialize();
@@ -119,6 +124,14 @@ namespace Duologue.Screens
             seffects[3] = SpriteEffects.None;
 
             playerColors = PlayerColors.GetPlayerColors();
+            position = Vector2.Zero;
+
+            // Text
+            font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
+            fontMain = Color.Wheat;
+            fontSub = Color.Black;
+            mainText = Resources.PlayerSelect_MainText;
+            mainTextPos = Vector2.Zero;
             base.LoadContent();
         }
         #endregion
@@ -146,6 +159,19 @@ namespace Duologue.Screens
                     InstanceManager.DefaultViewport.Height / 2f);
             }
 
+            if (mainTextPos == Vector2.Zero)
+            {
+                Vector2 titleSafe = new Vector2(
+                    InstanceManager.DefaultViewport.Width/2f,
+                    InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent);
+
+                Vector2 textSize = font.MeasureString(mainText);
+
+                mainTextPos = new Vector2(
+                    titleSafe.X - textSize.X / 2f,
+                    titleSafe.Y);
+            }
+
             base.Update(gameTime);
         }
 
@@ -168,6 +194,27 @@ namespace Duologue.Screens
                     0.9f,
                     RenderSpriteBlendMode.AlphaBlend,
                     seffects[i]);
+            }
+            if (Percentage >= 1f)
+            {
+                InstanceManager.RenderSprite.DrawString(
+                    font,
+                    mainText,
+                    mainTextPos,
+                    fontMain);
+
+                InstanceManager.RenderSprite.DrawString(
+                    font,
+                    mainText,
+                    mainTextPos + 2 * Vector2.One,
+                    fontMain);
+
+                InstanceManager.RenderSprite.DrawString(
+                    font,
+                    mainText,
+                    mainTextPos + Vector2.One,
+                    fontSub);
+
             }
             base.Draw(gameTime);
         }

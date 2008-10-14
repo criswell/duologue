@@ -178,6 +178,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Press &quot;A&quot; to join and &quot;Start&quot; to begin.
+        /// </summary>
+        internal static string PlayerSelect_MainText {
+            get {
+                return ResourceManager.GetString("PlayerSelect_MainText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lives: {0}.
         /// </summary>
         internal static string ScoreUI_Lives {

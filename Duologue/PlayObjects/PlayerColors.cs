@@ -87,7 +87,7 @@ namespace Duologue.PlayObjects
                 theColors[3] = new PlayerColors();
                 theColors[3].Name = "Yellow";
                 theColors[3].Colors[0] = Color.LightGoldenrodYellow;
-                theColors[3].Colors[1] = Color.BurlyWood;
+                theColors[3].Colors[1] = new Color(new Vector3(255f, 221f,62f));
             }
 
             return theColors;
