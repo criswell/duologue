@@ -20,19 +20,49 @@ using Mimicware.Graphics;
 using Duologue;
 using Duologue.Properties;
 using Duologue.Screens;
+using Duologue.PlayObjects;
 #endregion
 
 namespace Duologue.Screens
 {
+    /// <summary>
+    /// The player select game screen
+    /// </summary>
     class PlayerSelect : GameScreen
     {
+        #region Constants
+        #endregion
+
+        #region Fields
+        private Game localGame;
+        private PlayerColors playerColors;
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructor / Init
         public PlayerSelect(Game game)
             : base(game)
         {
+            localGame = game;
+            playerColors = PlayerColors.GetPlayerColors();
         }
+
         protected override void InitializeConstants()
         {
-            throw new Exception("The method or operation is not implemented.");
+            this.SetEnable(true);
+            this.SetVisible(true);
         }
+        #endregion
+
+        #region Private methods
+        #endregion
+
+        #region Public methods
+        #endregion
+
+        #region Update
+        #endregion
     }
 }
