@@ -42,6 +42,9 @@ namespace Duologue.Screens
         private PlayerColors[] playerColors;
         private Vector2[] center;
         private Vector2 position;
+        private float[] rotation;
+        //private SpriteObject[] sobjs;
+        private SpriteEffects[] seffects;
         // Time
         private float timeSinceStart;
         private bool begin;
@@ -79,6 +82,9 @@ namespace Duologue.Screens
         public override void Initialize()
         {
             center = new Vector2[InputManager.MaxInputs];
+            rotation = new float[InputManager.MaxInputs];
+            //sobjs = new SpriteObject[InputManager.MaxInputs];
+            seffects = new SpriteEffects[InputManager.MaxInputs];
 
             base.Initialize();
         }
@@ -100,8 +106,17 @@ namespace Duologue.Screens
                 0f);
 
             center[3] = new Vector2(
-                0f,
-                0f);
+                tile.Width,
+                tile.Height);
+
+            rotation[0] = 0f;
+            seffects[0] = SpriteEffects.None;
+            rotation[1] = 0f;
+            seffects[1] = SpriteEffects.FlipHorizontally;
+            rotation[2] = 0f;
+            seffects[2] = SpriteEffects.FlipVertically;
+            rotation[3] = MathHelper.ToRadians(180);
+            seffects[3] = SpriteEffects.None;
 
             playerColors = PlayerColors.GetPlayerColors();
             base.LoadContent();
@@ -124,10 +139,12 @@ namespace Duologue.Screens
             if (Percentage < 1f)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if(position == Vector2.Zero)
+            if (position == Vector2.Zero)
+            {
                 position = new Vector2(
                     InstanceManager.DefaultViewport.Width / 2f,
                     InstanceManager.DefaultViewport.Height / 2f);
+            }
 
             base.Update(gameTime);
         }
@@ -146,9 +163,11 @@ namespace Duologue.Screens
                         playerColors[i].Colors[1].G,
                         playerColors[i].Colors[1].B,
                         (byte)(255 * Percentage)),
-                    0f,
+                    rotation[i],
                     1f,
-                    0.9f);
+                    0.9f,
+                    RenderSpriteBlendMode.AlphaBlend,
+                    seffects[i]);
             }
             base.Draw(gameTime);
         }

@@ -100,7 +100,7 @@ namespace Mimicware.Graphics
                         sobj.Rotation,
                         sobj.Center,
                         sobj.Scale,
-                        SpriteEffects.None,
+                        sobj.SpriteEffects,
                         sobj.Layer);
                 else if (sobj.Text != null)
                     batch.DrawString(
@@ -351,6 +351,36 @@ namespace Mimicware.Graphics
                 this.AddMultiplicative(spriteObject);
             else
                 this.Add(spriteObject);
+        }
+
+        internal void Draw(
+            Texture2D texture,
+            Vector2 position,
+            Vector2 center,
+            Rectangle? source,
+            Color tint,
+            float rotation,
+            float scale,
+            float layer,
+            RenderSpriteBlendMode mode,
+            SpriteEffects spriteEffects)
+        {
+            SpriteObject sobj = new SpriteObject(
+                texture,
+                position,
+                center,
+                source,
+                tint,
+                rotation,
+                scale,
+                layer);
+            sobj.SpriteEffects = spriteEffects;
+            if (mode == RenderSpriteBlendMode.Addititive)
+                this.AddAdditive(sobj);
+            else if (mode == RenderSpriteBlendMode.Multiplicative)
+                this.AddMultiplicative(sobj);
+            else
+                this.Add(sobj);
         }
 
         /// <summary>
