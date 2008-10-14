@@ -51,16 +51,27 @@ namespace Duologue.Screens
         private SpriteFont font;
 
         // Player colors
-        private PlayerColors playerColors;
+        private PlayerColors[] playerColors;
 
         // Positions
         private Vector2 centerOfScreen;
         private Vector2 centerOfPlayer;
         private Vector2 selectOffset;
         private Vector2 centerOfButton;
+
+        // Players
+        private bool[] activePlayers;
+        private bool[] controllerPluggedIn;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Returns the current list of active players
+        /// </summary>
+        public bool[] ActivePlayers
+        {
+            get { return activePlayers; }
+        }
         #endregion
 
         #region Constructor/Init/load
@@ -68,6 +79,8 @@ namespace Duologue.Screens
             : base(game)
         {
             playerBases = new Texture2D[InputManager.MaxInputs];
+            activePlayers = new bool[InputManager.MaxInputs];
+            controllerPluggedIn = new bool[InputManager.MaxInputs];
         }
 
         /// <summary>
@@ -76,8 +89,13 @@ namespace Duologue.Screens
         /// </summary>
         public override void Initialize()
         {
-            // TODO: Add your initialization code here
+            playerColors = PlayerColors.GetPlayerColors();
 
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+            {
+                activePlayers[i] = false;
+                controllerPluggedIn[i] = false;
+            }
             base.Initialize();
         }
 
@@ -95,6 +113,11 @@ namespace Duologue.Screens
                 playerRoot.Width / 2f,
                 playerRoot.Height / 2f);
 
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+            {
+                playerBases[i] =
+                    InstanceManager.AssetManager.LoadTexture2D(String.Format(playerBaseFilename, i+1));
+            }
 
             base.LoadContent();
         }
@@ -113,7 +136,35 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            // Cycle through the inputs, seeing if their status has changed
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+            {
+                if (activePlayers[i])
+                {
+                    // Check for disconnect or cancel
+                    if (!InstanceManager.InputManager.CurrentGamePadStates[i].IsConnected &&
+                        InstanceManager.InputManager.LastGamePadStates[i].IsConnected)
+                    {
+                        activePlayers[i] = false;
+                        controllerPluggedIn[i] = false;
+                    }
+                }
+                else
+                {
+                    if (InstanceManager.InputManager.CurrentGamePadStates[i].IsConnected &&
+                        !InstanceManager.InputManager.LastGamePadStates[i].IsConnected)
+                    {
+                        controllerPluggedIn[i] = true;
+                    }
+
+                    if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
+                        InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released)
+                    {
+                        // CHECK FOR SIGN IN
+                        // ERE I AM JH
+                    }
+                }
+            }
 
             base.Update(gameTime);
         }
