@@ -34,7 +34,7 @@ namespace Duologue.Screens
         private const float fadeInTime = 0.5f;
         private const float fadeOutTime = 0.2f;
         private const string tileFilename = "multiplayer-select-tile";
-        private const string fontFilename = "Fonts\\inero-28";
+        private const string fontFilename = "Fonts\\inero-40";
         #endregion
 
         #region Fields
