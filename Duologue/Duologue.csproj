@@ -81,7 +81,7 @@
     <Compile Include="Screens\MainMenu.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\MenuItem.cs" />
-    <Compile Include="Screens\PlayerSelect.cs" />
+    <Compile Include="Screens\PlayerSelectScreen.cs" />
     <Compile Include="Screens\PlayerSelectBase.cs" />
     <Compile Include="State\GameState.cs" />
     <Compile Include="Tests\GamePlayScreenTest.cs" />

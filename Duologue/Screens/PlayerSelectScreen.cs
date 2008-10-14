@@ -28,31 +28,37 @@ namespace Duologue.Screens
     /// <summary>
     /// The player select game screen
     /// </summary>
-    class PlayerSelect : GameScreen
+    public class PlayerSelectScreen : GameScreen
     {
         #region Constants
         #endregion
 
         #region Fields
         private Game localGame;
-        private PlayerColors playerColors;
+        private PlayerColors[] playerColors;
+        private PlayerSelectBase playerSelectBase;
         #endregion
 
         #region Properties
         #endregion
 
         #region Constructor / Init
-        public PlayerSelect(Game game)
+        public PlayerSelectScreen(Game game)
             : base(game)
         {
             localGame = game;
             playerColors = PlayerColors.GetPlayerColors();
+
+            playerSelectBase = new PlayerSelectBase(localGame);
+            localGame.Components.Add(playerSelectBase);
         }
 
         protected override void InitializeConstants()
         {
-            this.SetEnable(true);
-            this.SetVisible(true);
+            MyComponents.Add(playerSelectBase);
+
+            this.SetEnable(false);
+            this.SetVisible(false);
         }
         #endregion
 
