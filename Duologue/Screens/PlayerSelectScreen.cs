@@ -31,12 +31,14 @@ namespace Duologue.Screens
     public class PlayerSelectScreen : GameScreen
     {
         #region Constants
+        private const float backgroundTimer = 8f;
         #endregion
 
         #region Fields
         private Game localGame;
         private PlayerColors[] playerColors;
         private PlayerSelectBase playerSelectBase;
+        private float timeSinceStart;
         #endregion
 
         #region Properties
@@ -46,6 +48,7 @@ namespace Duologue.Screens
         public PlayerSelectScreen(Game game)
             : base(game)
         {
+            timeSinceStart = 0f;
             localGame = game;
             playerColors = PlayerColors.GetPlayerColors();
 
@@ -69,6 +72,17 @@ namespace Duologue.Screens
         #endregion
 
         #region Update
+        public override void Update(GameTime gameTime)
+        {
+            if (timeSinceStart < backgroundTimer)
+                timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            else
+            {
+                timeSinceStart = 0f;
+                LocalInstanceManager.Background.NextBackground();
+            }
+            base.Update(gameTime);
+        }
         #endregion
     }
 }
