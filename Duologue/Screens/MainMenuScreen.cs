@@ -70,8 +70,8 @@ namespace Duologue.Screens
             MyComponents.Add(mainGameLogo);
             MyComponents.Add(mainMenu);
 
-            this.SetEnable(true);
-            this.SetVisible(true);
+            this.SetEnable(false);
+            this.SetVisible(false);
             //this.InitAll();
         }
         #endregion
