@@ -26,6 +26,10 @@ namespace Duologue.Screens
 {
     class PlayerSelect : GameScreen
     {
+        public PlayerSelect(Game game)
+            : base(game)
+        {
+        }
         protected override void InitializeConstants()
         {
             throw new Exception("The method or operation is not implemented.");
