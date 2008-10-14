@@ -31,7 +31,7 @@ namespace Duologue.Screens
     public class PlayerSelectBase : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
-        private const float fadeInTime = 1f;
+        private const float fadeInTime = 0.5f;
         private const float fadeOutTime = 0.2f;
         private const string tileFilename = "multiplayer-select-tile";
         #endregion
