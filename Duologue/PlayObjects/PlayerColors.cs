@@ -52,7 +52,7 @@ namespace Duologue.PlayObjects
         #region Constructor
         private PlayerColors()
         {
-            Colors = new Color(numColors);
+            Colors = new Color[numColors];
         }
         #endregion
 
