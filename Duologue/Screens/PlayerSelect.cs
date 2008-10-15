@@ -33,6 +33,8 @@ namespace Duologue.Screens
         #region Constants
         private const string fontFilename = "Fonts\\inero-28";
         private const string AbuttonFilename = "PlayerUI\\buttonA";
+        // FIXME
+        // Do we need these any more?
         private const string controllerButtonsFilename = "PlayerUI\\controller-buttons";
         private const string controllerFaceFilename = "PlayerUI\\controller-face";
         private const string playerRootFilename = "PlayerUI\\player-root";
@@ -64,6 +66,7 @@ namespace Duologue.Screens
         private bool[] activePlayers;
         private bool[] controllerPluggedIn;
         private SignedInGamer[] signedInGamers;
+        private GamerProfile[] profiles;
         #endregion
 
         #region Properties
@@ -89,6 +92,8 @@ namespace Duologue.Screens
             playerBases = new Texture2D[InputManager.MaxInputs];
             activePlayers = new bool[InputManager.MaxInputs];
             controllerPluggedIn = new bool[InputManager.MaxInputs];
+            signedInGamers = new SignedInGamer[InputManager.MaxInputs];
+            profiles = new GamerProfile[InputManager.MaxInputs];
             SignedInGamer.SignedIn += new EventHandler<SignedInEventArgs>(SignedInGamer_SignedIn);
             SignedInGamer.SignedOut += new EventHandler<SignedOutEventArgs>(SignedInGamer_SignedOut);
             offsetModifiers = new Vector2[InputManager.MaxInputs];
@@ -151,10 +156,14 @@ namespace Duologue.Screens
         {
             SignedInGamerCollection signedIn = Gamer.SignedInGamers;
 
-            signedInGamers = new SignedInGamer[InputManager.MaxInputs];
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
                 signedInGamers[i] = signedIn[(PlayerIndex)i];
+                if (signedInGamers[i] != null)
+                {
+                    // Yeah, probably bad if we ever do network multiplayer
+                    profiles[i] = signedInGamers[i].GetProfile();
+                }
             }
         }
 
@@ -217,7 +226,8 @@ namespace Duologue.Screens
             int i = (int)e.Gamer.PlayerIndex;
 
             signedInGamers[i] = null;
-            
+            profiles[i] = null;
+
             // I'm not certain if we should remove them from the game or not,
             // but for not I'm assuming we should
             activePlayers[i] = false;
@@ -231,6 +241,8 @@ namespace Duologue.Screens
             int i = (int)e.Gamer.PlayerIndex;
 
             signedInGamers[i] = e.Gamer;
+            // Yeah, sucky if networked multiplayer... I know
+            profiles[i] = signedInGamers[i].GetProfile();
         }
         #endregion
 
@@ -308,6 +320,38 @@ namespace Duologue.Screens
                     if (activePlayers[i])
                     {
                         // Player is active
+                        Vector2 size = font.MeasureString(Resources.PlayerSelect_PressStart);
+                        Vector2 gamertagSize = font.MeasureString(signedInGamers[i].Gamertag);
+                        Texture2D pic = profiles[i].GamerPicture;
+
+                        Vector2 boxCenter = new Vector2(
+                            (gamertagSize.X + pic.Width)/2f,
+                            MathHelper.Max(gamertagSize.Y, (float)pic.Height)/2f);
+
+                        DrawTexture(
+                            pic,
+                            centerOfScreen + offsetModifiers[i] * selectOffset - boxCenter,
+                            new Vector2(pic.Width/2f,pic.Height/2f),
+                            Color.White,
+                            Color.Black);
+
+                        DrawString(
+                            signedInGamers[i].Gamertag,
+                            centerOfScreen + offsetModifiers[i] * selectOffset - boxCenter +
+                            new Vector2(
+                                pic.Width,
+                                -1 * gamertagSize.Y / 2f),
+                            playerColors[i].Colors[0],
+                            Color.Black);
+
+                        DrawString(
+                            Resources.PlayerSelect_PressStart,
+                            centerOfScreen + offsetModifiers[i] * selectOffset -
+                            new Vector2(
+                                size.X / 2f,
+                                -1 * size.Y / 2f),
+                            playerColors[i].Colors[0],
+                            Color.Black);
                     }
                     else if (controllerPluggedIn[i])
                     {
