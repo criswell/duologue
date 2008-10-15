@@ -73,6 +73,7 @@ namespace Duologue
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.Components.Add(new GamerServicesComponent(this));
         }
 
         /// <summary>

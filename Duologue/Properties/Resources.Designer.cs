@@ -178,11 +178,38 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect controller.
+        /// </summary>
+        internal static string PlayerSelect_ConnectController {
+            get {
+                return ResourceManager.GetString("PlayerSelect_ConnectController", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Press &quot;A&quot; to join and &quot;Start&quot; to begin.
         /// </summary>
         internal static string PlayerSelect_MainText {
             get {
                 return ResourceManager.GetString("PlayerSelect_MainText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press &quot;A&quot; to join.
+        /// </summary>
+        internal static string PlayerSelect_PressA {
+            get {
+                return ResourceManager.GetString("PlayerSelect_PressA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press &quot;Start&quot; when ready.
+        /// </summary>
+        internal static string PlayerSelect_PressStart {
+            get {
+                return ResourceManager.GetString("PlayerSelect_PressStart", resourceCulture);
             }
         }
         

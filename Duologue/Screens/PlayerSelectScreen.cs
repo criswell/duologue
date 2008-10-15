@@ -38,6 +38,7 @@ namespace Duologue.Screens
         private Game localGame;
         private PlayerColors[] playerColors;
         private PlayerSelectBase playerSelectBase;
+        private PlayerSelect playerSelect;
         private float timeSinceStart;
         #endregion
 
@@ -54,11 +55,14 @@ namespace Duologue.Screens
 
             playerSelectBase = new PlayerSelectBase(localGame);
             localGame.Components.Add(playerSelectBase);
+            playerSelect = new PlayerSelect(localGame);
+            localGame.Components.Add(playerSelect);
         }
 
         protected override void InitializeConstants()
         {
             MyComponents.Add(playerSelectBase);
+            MyComponents.Add(playerSelect);
 
             this.SetEnable(false);
             this.SetVisible(false);
@@ -81,6 +85,8 @@ namespace Duologue.Screens
                 timeSinceStart = 0f;
                 LocalInstanceManager.Background.NextBackground();
             }
+            if (playerSelectBase.Percentage >= 1f)
+                playerSelect.Alive = true;
             base.Update(gameTime);
         }
         #endregion
