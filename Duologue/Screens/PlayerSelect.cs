@@ -21,6 +21,7 @@ using Duologue;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.PlayObjects;
+using Duologue.State;
 #endregion
 
 namespace Duologue.Screens
@@ -31,6 +32,9 @@ namespace Duologue.Screens
     public class PlayerSelect : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
+        private const int maxTimer = 5;
+        private const float timeCountdown = 1f;
+
         private const string fontFilename = "Fonts\\inero-28";
         private const string AbuttonFilename = "PlayerUI\\buttonA";
         // FIXME
@@ -67,6 +71,9 @@ namespace Duologue.Screens
         private bool[] controllerPluggedIn;
         private SignedInGamer[] signedInGamers;
         private GamerProfile[] profiles;
+
+        // Counters and misc
+        private float timeSinceStart;
         #endregion
 
         #region Properties
@@ -82,6 +89,14 @@ namespace Duologue.Screens
         /// Set when the screen is alive
         /// </summary>
         public bool Alive;
+
+        /// <summary>
+        /// The percentage of the countdown click
+        /// </summary>
+        public float Percentage
+        {
+            get { return MathHelper.Min(1f, timeSinceStart / timeCountdown); }
+        }
         #endregion
 
         #region Constructor/Init/load
@@ -253,6 +268,9 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (Percentage < 1f)
+                timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if (Alive & !Guide.IsVisible)
             {
                 // Get center of screen if we don't already have it
@@ -276,8 +294,16 @@ namespace Duologue.Screens
                     if (activePlayers[i])
                     {
                         // Check for disconnect or cancel
-                        if (!InstanceManager.InputManager.CurrentGamePadStates[i].IsConnected &&
-                            InstanceManager.InputManager.LastGamePadStates[i].IsConnected)
+                        // HOORAY C# & XNA!
+                        if ((!InstanceManager.InputManager.CurrentGamePadStates[i].IsConnected &&
+                            InstanceManager.InputManager.LastGamePadStates[i].IsConnected) ||
+                           (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
+                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released) ||
+                           (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Back == ButtonState.Pressed &&
+                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released) ||
+                           (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
+                            InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape)))
+                            // MEIN EYES! DEY BLEED!
                         {
                             activePlayers[i] = false;
                         }
@@ -303,7 +329,19 @@ namespace Duologue.Screens
                                 // We're not signed in, launch the interface
                                 Guide.ShowSignIn(1, false);
                             }
+                        } // Hot dang! More XNA & C# vomit!
+                        else if ((InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
+                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released) ||
+                           (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Back == ButtonState.Pressed &&
+                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released) ||
+                           (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
+                            InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape)))
+                        {
+                            // Cancel back to main menu
+                            LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+                            LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
                         }
+
                     }
                 }
             }
