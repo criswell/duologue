@@ -318,12 +318,6 @@ namespace Duologue.Screens
                     }
                     else
                     {
-                        if (InstanceManager.InputManager.CurrentGamePadStates[i].IsConnected &&
-                            !InstanceManager.InputManager.LastGamePadStates[i].IsConnected)
-                        {
-                            controllerPluggedIn[i] = true;
-                        }
-
                         if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
                             InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released)
                         {
@@ -341,6 +335,7 @@ namespace Duologue.Screens
                         else if (BackRequest(i))
                         {
                             // Cancel back to main menu
+                            // FIXME : Uh we should check to make sure no one else is  active
                             LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
                             LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
                         }
