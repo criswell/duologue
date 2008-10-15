@@ -227,6 +227,21 @@ namespace Duologue.Screens
                 1f,
                 0.5f);
         }
+
+        /// <summary>
+        /// Was there a back request?
+        /// </summary>
+        private bool BackRequest(int i)
+        {
+            // MEIN EYES! DEY BLEED!
+            return (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Back == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape));
+        }
+
         #endregion
 
         #region Public methods
@@ -294,16 +309,9 @@ namespace Duologue.Screens
                     if (activePlayers[i])
                     {
                         // Check for disconnect or cancel
-                        // HOORAY C# & XNA!
                         if ((!InstanceManager.InputManager.CurrentGamePadStates[i].IsConnected &&
                             InstanceManager.InputManager.LastGamePadStates[i].IsConnected) ||
-                           (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
-                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released) ||
-                           (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Back == ButtonState.Pressed &&
-                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released) ||
-                           (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
-                            InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape)))
-                            // MEIN EYES! DEY BLEED!
+                            BackRequest(i))
                         {
                             activePlayers[i] = false;
                         }
@@ -329,13 +337,8 @@ namespace Duologue.Screens
                                 // We're not signed in, launch the interface
                                 Guide.ShowSignIn(1, false);
                             }
-                        } // Hot dang! More XNA & C# vomit!
-                        else if ((InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
-                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released) ||
-                           (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Back == ButtonState.Pressed &&
-                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released) ||
-                           (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
-                            InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape)))
+                        }
+                        else if (BackRequest(i))
                         {
                             // Cancel back to main menu
                             LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
