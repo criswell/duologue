@@ -235,9 +235,11 @@ namespace Duologue.Screens
         {
             // MEIN EYES! DEY BLEED!
             return (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
-                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released) ||
+                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released)
+                    ||
                    (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Back == ButtonState.Pressed &&
-                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released) ||
+                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released)
+                    ||
                    (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
                     InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape));
         }
@@ -318,8 +320,10 @@ namespace Duologue.Screens
                     }
                     else
                     {
-                        if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
-                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released)
+                        if ((InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
+                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released) ||
+                            (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.A) &&
+                            InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.A)))
                         {
                             if (signedInGamers[i] != null)
                             {
@@ -330,6 +334,7 @@ namespace Duologue.Screens
                             {
                                 // We're not signed in, launch the interface
                                 Guide.ShowSignIn(1, false);
+                                break;
                             }
                         }
                         else if (BackRequest(i))
@@ -349,6 +354,8 @@ namespace Duologue.Screens
 
         public override void Draw(GameTime gameTime)
         {
+            if (InstanceManager.InputManager.CurrentKeyboardStates[0].IsKeyDown(Keys.Escape))
+                DrawTexture(aButton, Vector2.One, Vector2.Zero, Color.White, Color.White);
             if (Alive)
             {
                 for (int i = 0; i < InputManager.MaxInputs; i++)
