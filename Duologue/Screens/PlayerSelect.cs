@@ -39,19 +39,21 @@ namespace Duologue.Screens
         private const string AbuttonFilename = "PlayerUI\\buttonA";
         // FIXME
         // Do we need these any more?
+        /*
         private const string controllerButtonsFilename = "PlayerUI\\controller-buttons";
         private const string controllerFaceFilename = "PlayerUI\\controller-face";
         private const string playerRootFilename = "PlayerUI\\player-root";
-        private const string playerBaseFilename = "PlayerUI\\P{0}-base";
+        private const string playerBaseFilename = "PlayerUI\\P{0}-base";*/
         #endregion
 
         #region Fields
         // Textures
         private Texture2D aButton;
+        /*
         private Texture2D controllerButtons;
         private Texture2D controllerFace;
         private Texture2D playerRoot;
-        private Texture2D[] playerBases;
+        private Texture2D[] playerBases;*/
 
         // Fonts
         private SpriteFont font;
@@ -61,7 +63,7 @@ namespace Duologue.Screens
 
         // Positions
         private Vector2 centerOfScreen;
-        private Vector2 centerOfPlayer;
+        //private Vector2 centerOfPlayer;
         private Vector2 selectOffset;
         private Vector2[] offsetModifiers;
         private Vector2 centerOfButton;
@@ -104,7 +106,7 @@ namespace Duologue.Screens
             : base(game)
         {
             centerOfScreen = Vector2.Zero;
-            playerBases = new Texture2D[InputManager.MaxInputs];
+            //playerBases = new Texture2D[InputManager.MaxInputs];
             activePlayers = new bool[InputManager.MaxInputs];
             controllerPluggedIn = new bool[InputManager.MaxInputs];
             signedInGamers = new SignedInGamer[InputManager.MaxInputs];
@@ -146,7 +148,7 @@ namespace Duologue.Screens
                 aButton.Width / 2f,
                 aButton.Height / 2f);
 
-            controllerButtons = InstanceManager.AssetManager.LoadTexture2D(controllerButtonsFilename);
+            /*controllerButtons = InstanceManager.AssetManager.LoadTexture2D(controllerButtonsFilename);
             controllerFace = InstanceManager.AssetManager.LoadTexture2D(controllerFaceFilename);
             playerRoot = InstanceManager.AssetManager.LoadTexture2D(playerRootFilename);
             centerOfPlayer = new Vector2(
@@ -157,7 +159,7 @@ namespace Duologue.Screens
             {
                 playerBases[i] =
                     InstanceManager.AssetManager.LoadTexture2D(String.Format(playerBaseFilename, i+1));
-            }
+            }*/
 
             base.LoadContent();
         }
