@@ -77,8 +77,6 @@ namespace Duologue.Screens
         public PlayerSelectBase(Game game)
             : base(game)
         {
-            begin = true;
-            timeSinceStart = 0f;
         }
 
         /// <summary>
@@ -90,6 +88,8 @@ namespace Duologue.Screens
             center = new Vector2[InputManager.MaxInputs];
             rotation = new float[InputManager.MaxInputs];
             seffects = new SpriteEffects[InputManager.MaxInputs];
+            begin = true;
+            timeSinceStart = 0f;
 
             base.Initialize();
         }
