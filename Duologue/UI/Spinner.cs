@@ -55,6 +55,7 @@ namespace Duologue.UI
         private float rotation;
         private SpinnerState currentState;
         private Game localGame;
+        private Vector2[] offsetModifiers;
 
         // Timer stuff
         private float timeSinceTick;
@@ -98,6 +99,26 @@ namespace Duologue.UI
         /// The layer we should draw at
         /// </summary>
         public float Layer;
+
+        /// <summary>
+        /// Any text you want to have displayed over the spinner
+        /// </summary>
+        public string DisplayText;
+
+        /// <summary>
+        /// Font to use
+        /// </summary>
+        public SpriteFont DisplayFont;
+
+        /// <summary>
+        /// The font color
+        /// </summary>
+        public Color FontColor;
+
+        /// <summary>
+        /// The font's shadow color
+        /// </summary>
+        public Color FontShadowColor;
         #endregion
 
         #region Constructor / Init / Load
@@ -105,6 +126,12 @@ namespace Duologue.UI
             : base(game)
         {
             localGame = game;
+            offsetModifiers = new Vector2[InputManager.MaxInputs];
+            // Set up the offset modifiers
+            offsetModifiers[0] = new Vector2(-1f, -1f);
+            offsetModifiers[1] = new Vector2(1f, -1f);
+            offsetModifiers[2] = new Vector2(-1f, 1f);
+            offsetModifiers[3] = new Vector2(1f, 1f);
         }
 
         /// <summary>
@@ -123,6 +150,10 @@ namespace Duologue.UI
             currentState = SpinnerState.Normal;
             Scale = Vector2.One;
             Layer = defaultLayer;
+            DisplayText = null;
+            DisplayFont = null;
+            FontColor = Color.Black;
+            FontShadowColor = Color.Black;
 
             base.Initialize();
         }
@@ -164,6 +195,25 @@ namespace Duologue.UI
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Local drawstring for putting borders around our fonts
+        /// </summary>
+        private void DrawString(Vector2 vector2)
+        {
+            for (int i = 0; i < offsetModifiers.Length; i++)
+                InstanceManager.RenderSprite.DrawString(
+                    DisplayFont,
+                    DisplayText,
+                    vector2 - offsetModifiers[i] * Vector2.One,
+                    FontShadowColor);
+
+            InstanceManager.RenderSprite.DrawString(
+                DisplayFont,
+                DisplayText,
+                vector2,
+                FontColor);
         }
         #endregion
 
@@ -232,6 +282,13 @@ namespace Duologue.UI
                 Scale,
                 Layer);
             base.Draw(gameTime);
+
+            // Draw any text
+            if (DisplayText != null && DisplayFont != null)
+            {
+                Vector2 size = DisplayFont.MeasureString(DisplayText);
+                DrawString(Position - size / 2f);
+            }
         }
         #endregion
     }

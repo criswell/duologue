@@ -41,6 +41,7 @@ namespace Duologue.Screens
         private const float timeCountdown = 1f;
 
         private const string fontFilename = "Fonts\\inero-28";
+        private const string countdownFontFilename = "Fonts\\inero-50";
         private const string AbuttonFilename = "PlayerUI\\buttonA";
         #endregion
 
@@ -50,6 +51,7 @@ namespace Duologue.Screens
 
         // Fonts
         private SpriteFont font;
+        private SpriteFont countdownFont;
 
         // Player colors
         private PlayerColors[] playerColors;
@@ -70,6 +72,7 @@ namespace Duologue.Screens
         private float timeSinceStart;
         private int numActive;
         private PlayerSelectState currentState;
+        private int currentCountdown;
         #endregion
 
         #region Properties
@@ -132,12 +135,14 @@ namespace Duologue.Screens
             }
 
             currentState = PlayerSelectState.PlayerSelect;
+            currentCountdown = maxTimer;
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
+            countdownFont = InstanceManager.AssetManager.LoadSpriteFont(countdownFontFilename);
             aButton = InstanceManager.AssetManager.LoadTexture2D(AbuttonFilename);
             centerOfButton = new Vector2(
                 aButton.Width / 2f,
@@ -245,8 +250,13 @@ namespace Duologue.Screens
             LocalInstanceManager.Spinner.Position = centerOfScreen;
             LocalInstanceManager.Spinner.BaseColor = Color.Red;
             LocalInstanceManager.Spinner.TrackerColor = new Color(new Vector4(0f, 252f, 255f, 255f));
+            LocalInstanceManager.Spinner.DisplayFont = countdownFont;
+            LocalInstanceManager.Spinner.FontColor = Color.Violet;
+            LocalInstanceManager.Spinner.FontShadowColor = Color.DarkBlue;
             LocalInstanceManager.Spinner.Enabled = true;
             LocalInstanceManager.Spinner.Visible = true;
+            timeSinceStart = 0f;
+            currentCountdown = maxTimer;
         }
 
         /// <summary>
@@ -259,6 +269,35 @@ namespace Duologue.Screens
             LocalInstanceManager.Spinner.Enabled = false;
             LocalInstanceManager.Spinner.Visible = false;
             LocalInstanceManager.Spinner.Initialize();
+        }
+
+        /// <summary>
+        /// Triggers a tick
+        /// </summary>
+        private void TriggerTick()
+        {
+            timeSinceStart = 0f;
+            if (currentState == PlayerSelectState.Countdown)
+            {
+                currentCountdown--;
+
+                if (currentCountdown < 0)
+                {
+                    currentCountdown = 0;
+
+                    TriggerNext();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Trigger the next screen
+        /// </summary>
+        private void TriggerNext()
+        {
+            // ERE I AM JH
+            // For now, we just reset the countdown
+            VoidCountdown();
         }
         #endregion
 
@@ -303,6 +342,11 @@ namespace Duologue.Screens
         {
             if (Percentage < 1f)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            else
+                TriggerTick();
+
+            if (currentState == PlayerSelectState.Countdown)
+                LocalInstanceManager.Spinner.DisplayText = currentCountdown.ToString();
 
             if (Alive & !Guide.IsVisible)
             {
