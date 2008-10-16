@@ -35,6 +35,7 @@ namespace Duologue.UI
         #region Constants
         private const string baseFilename = "PlayerUI/spinner-base";
         private const string trackerFilename = "PlayerUI/spinner-tracker";
+        private const string shadowFilename = "PlayerUI/spinner-shadow";
 
         private const float defaultTickTime = 0.1f;
 
@@ -46,9 +47,11 @@ namespace Duologue.UI
         // Textures
         private Texture2D spinnerBase;
         private Texture2D spinnerTracker;
+        private Texture2D spinnerShadow;
 
         // housekeeping
         private Vector2 center;
+        private Vector2 shadowCenter;
         private float rotation;
         private SpinnerState currentState;
         private Game localGame;
@@ -131,6 +134,11 @@ namespace Duologue.UI
             center = new Vector2(
                 spinnerBase.Width / 2f,
                 spinnerBase.Height / 2f);
+
+            spinnerShadow = InstanceManager.AssetManager.LoadTexture2D(shadowFilename);
+            shadowCenter = new Vector2(
+                spinnerShadow.Width / 2f,
+                spinnerShadow.Height / 2f);
             base.LoadContent();
         }
         #endregion
@@ -178,6 +186,16 @@ namespace Duologue.UI
 
         public override void Draw(GameTime gameTime)
         {
+            InstanceManager.RenderSprite.Draw(
+                spinnerShadow,
+                Position,
+                shadowCenter,
+                null,
+                Color.White,
+                0f,
+                Scale,
+                Layer);
+
             InstanceManager.RenderSprite.Draw(
                 spinnerBase,
                 Position,
