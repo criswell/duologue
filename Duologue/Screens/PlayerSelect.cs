@@ -308,9 +308,12 @@ namespace Duologue.Screens
         /// </summary>
         private void TriggerNext()
         {
-            // ERE I AM JH
-            // For now, we just reset the countdown
+            // Reset the countdown
             VoidCountdown();
+            if (numActive > 0)
+            {
+                LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+            }
         }
         #endregion
 
