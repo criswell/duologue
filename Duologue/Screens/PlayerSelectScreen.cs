@@ -73,6 +73,12 @@ namespace Duologue.Screens
         #endregion
 
         #region Public methods
+        public override void SetVisible(bool t)
+        {
+            if (!t)
+                base.ReInitAll();
+            base.SetVisible(t);
+        }
         #endregion
 
         #region Update

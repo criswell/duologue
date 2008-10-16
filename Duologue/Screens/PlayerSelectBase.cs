@@ -77,6 +77,9 @@ namespace Duologue.Screens
         public PlayerSelectBase(Game game)
             : base(game)
         {
+            center = new Vector2[InputManager.MaxInputs];
+            rotation = new float[InputManager.MaxInputs];
+            seffects = new SpriteEffects[InputManager.MaxInputs];
         }
 
         /// <summary>
@@ -85,9 +88,6 @@ namespace Duologue.Screens
         /// </summary>
         public override void Initialize()
         {
-            center = new Vector2[InputManager.MaxInputs];
-            rotation = new float[InputManager.MaxInputs];
-            seffects = new SpriteEffects[InputManager.MaxInputs];
             begin = true;
             timeSinceStart = 0f;
 

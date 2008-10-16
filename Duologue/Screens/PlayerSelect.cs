@@ -101,8 +101,11 @@ namespace Duologue.Screens
             SignedInGamer.SignedIn += new EventHandler<SignedInEventArgs>(SignedInGamer_SignedIn);
             SignedInGamer.SignedOut += new EventHandler<SignedOutEventArgs>(SignedInGamer_SignedOut);
             offsetModifiers = new Vector2[InputManager.MaxInputs];
-            Alive = false;
-            numActive = 0;
+            // Set up the offset modifiers
+            offsetModifiers[0] = new Vector2(-1f, -1f);
+            offsetModifiers[1] = new Vector2(1f, -1f);
+            offsetModifiers[2] = new Vector2(-1f, 1f);
+            offsetModifiers[3] = new Vector2(1f, 1f);
         }
 
         /// <summary>
@@ -111,6 +114,9 @@ namespace Duologue.Screens
         /// </summary>
         public override void Initialize()
         {
+            Alive = false;
+            numActive = 0;
+
             playerColors = PlayerColors.GetPlayerColors();
 
             for (int i = 0; i < InputManager.MaxInputs; i++)
@@ -118,13 +124,6 @@ namespace Duologue.Screens
                 activePlayers[i] = false;
                 controllerPluggedIn[i] = false;
             }
-
-            // Set up the offset modifiers
-            offsetModifiers[0] = new Vector2(-1f, -1f);
-            offsetModifiers[1] = new Vector2(1f, -1f);
-            offsetModifiers[2] = new Vector2(-1f, 1f);
-            offsetModifiers[3] = new Vector2(1f, 1f);
-
             base.Initialize();
         }
 
