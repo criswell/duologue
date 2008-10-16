@@ -158,6 +158,7 @@ namespace Duologue.Waves
             {
                 // FIXME
                 // Need to handle campaign here
+                temp = new GameWave();
             }
             return temp;
         }

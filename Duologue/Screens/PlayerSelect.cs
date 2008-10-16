@@ -310,7 +310,7 @@ namespace Duologue.Screens
         {
             // Reset the countdown
             VoidCountdown();
-            if (numActive > 0)
+            if (numActive > 0 && LocalInstanceManager.CurrentGameState == GameState.PlayerSelect)
             {
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
             }

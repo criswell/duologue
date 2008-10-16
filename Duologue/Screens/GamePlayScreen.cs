@@ -28,11 +28,34 @@ namespace Duologue.Screens
     /// <summary>
     /// The main game play screen which coordinates the various game elements
     /// </summary>
-    class GamePlayScreen : GameScreen
+    public class GamePlayScreen : GameScreen
     {
+        #region Constants
+        #endregion
+
+        #region Fields
+        private Game localGame;
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructor / Init
+        public GamePlayScreen(Game game) : base(game)
+        {
+            localGame = game;
+        }
+
         protected override void InitializeConstants()
         {
             throw new Exception("The method or operation is not implemented.");
         }
+        #endregion
+
+        #region Private methods
+        #endregion
+
+        #region Public methods
+        #endregion
     }
 }

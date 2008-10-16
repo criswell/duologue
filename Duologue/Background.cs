@@ -128,6 +128,22 @@ namespace Duologue
             lastColor = Color.White;
             currentColor = new Color(Vector4.Zero);
         }
+
+        /// <summary>
+        /// Set the background and begin a new transition
+        /// </summary>
+        /// <param name="backgroundNum">The background number to use</param>
+        public void SetBackground(int backgroundNum)
+        {
+            lastBackground = currentBackground;
+            if (backgroundNum >= numBackgrounds)
+                backgroundNum = numBackgrounds - numBackgrounds % backgroundNum;
+
+            currentBackground = backgroundNum;
+            timeSinceTransitionRequest = 0f;
+            lastColor = Color.White;
+            currentColor = new Color(Vector4.Zero);
+        }
         #endregion
 
         #region Update / Draw
