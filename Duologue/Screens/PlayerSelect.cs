@@ -63,6 +63,7 @@ namespace Duologue.Screens
 
         // Counters and misc
         private float timeSinceStart;
+        private int numActive;
         #endregion
 
         #region Properties
@@ -101,6 +102,7 @@ namespace Duologue.Screens
             SignedInGamer.SignedOut += new EventHandler<SignedOutEventArgs>(SignedInGamer_SignedOut);
             offsetModifiers = new Vector2[InputManager.MaxInputs];
             Alive = false;
+            numActive = 0;
         }
 
         /// <summary>
@@ -216,6 +218,18 @@ namespace Duologue.Screens
                     InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released);
         }
 
+        /// <summary>
+        /// Trigger a move back to the main menu
+        /// </summary>
+        private void TriggerBack()
+        {
+            if (numActive < 1)
+            {
+                LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+                LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+            }
+
+        }
         #endregion
 
         #region Public methods
@@ -262,6 +276,8 @@ namespace Duologue.Screens
 
             if (Alive & !Guide.IsVisible)
             {
+                numActive = 0;
+
                 // Get center of screen if we don't already have it
                 if (centerOfScreen == Vector2.Zero)
                 {
@@ -289,6 +305,10 @@ namespace Duologue.Screens
                         {
                             activePlayers[i] = false;
                         }
+                        else
+                        {
+                            numActive++;
+                        }
                     }
                     else
                     {
@@ -299,6 +319,7 @@ namespace Duologue.Screens
                             {
                                 // We're signed in, make us active
                                 activePlayers[i] = true;
+                                numActive++;
                             }
                             else
                             {
@@ -310,13 +331,14 @@ namespace Duologue.Screens
                         else if (BackRequest(i))
                         {
                             // Cancel back to main menu
-                            // FIXME : Uh we should check to make sure no one else is  active
-                            LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
-                            LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+                            TriggerBack();
                         }
 
                     }
                 }
+
+                if (InstanceManager.InputManager.KeyPressed(Keys.Escape))
+                    TriggerBack();
             }
 
             base.Update(gameTime);
