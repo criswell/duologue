@@ -308,6 +308,25 @@ namespace Mimicware.Graphics
         /// <param name="p"></param>
         /// <param name="vector2"></param>
         /// <param name="color"></param>
+        /// <param name="scale"></param>
+        internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color, Vector2 scale)
+        {
+            SpriteObject sobj = new SpriteObject(
+                font,
+                p,
+                vector2,
+                color);
+            sobj.Scale = scale;
+            this.Add(sobj);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="vector2"></param>
+        /// <param name="color"></param>
         internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color, RenderSpriteBlendMode mode)
         {
             if (mode == RenderSpriteBlendMode.Addititive)

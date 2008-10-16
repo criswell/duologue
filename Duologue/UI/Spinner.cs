@@ -207,13 +207,15 @@ namespace Duologue.UI
                     DisplayFont,
                     DisplayText,
                     vector2 - offsetModifiers[i] * Vector2.One,
-                    FontShadowColor);
+                    FontShadowColor,
+                    Scale);
 
             InstanceManager.RenderSprite.DrawString(
                 DisplayFont,
                 DisplayText,
                 vector2,
-                FontColor);
+                FontColor,
+                Scale);
         }
         #endregion
 
