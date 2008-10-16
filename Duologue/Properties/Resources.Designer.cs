@@ -187,6 +187,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Press &quot;B&quot; to cancel.
+        /// </summary>
+        internal static string PlayerSelect_CountdownPressB {
+            get {
+                return ResourceManager.GetString("PlayerSelect_CountdownPressB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Press &quot;A&quot; to join and &quot;Start&quot; to begin.
         /// </summary>
         internal static string PlayerSelect_MainText {

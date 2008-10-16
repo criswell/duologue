@@ -388,7 +388,6 @@ namespace Duologue.Screens
                     if (activePlayers[i])
                     {
                         // Player is active
-                        Vector2 size = font.MeasureString(Resources.PlayerSelect_PressStart);
                         Vector2 gamertagSize = font.MeasureString(signedInGamers[i].Gamertag);
                         Texture2D pic = profiles[i].GamerPicture;
 
@@ -412,14 +411,30 @@ namespace Duologue.Screens
                             playerColors[i].Colors[0],
                             Color.Black);
 
-                        DrawString(
-                            Resources.PlayerSelect_PressStart,
-                            centerOfScreen + offsetModifiers[i] * selectOffset -
-                            new Vector2(
-                                size.X / 2f,
-                                -1 * size.Y / 2f),
-                            playerColors[i].Colors[0],
-                            Color.Black);
+                        if (currentState == PlayerSelectState.PlayerSelect)
+                        {
+                            Vector2 size = font.MeasureString(Resources.PlayerSelect_PressStart);
+                            DrawString(
+                                Resources.PlayerSelect_PressStart,
+                                centerOfScreen + offsetModifiers[i] * selectOffset -
+                                new Vector2(
+                                    size.X / 2f,
+                                    -1 * size.Y / 2f),
+                                playerColors[i].Colors[0],
+                                Color.Black);
+                        }
+                        else
+                        {
+                            Vector2 size = font.MeasureString(Resources.PlayerSelect_CountdownPressB);
+                            DrawString(
+                                Resources.PlayerSelect_CountdownPressB,
+                                centerOfScreen + offsetModifiers[i] * selectOffset -
+                                new Vector2(
+                                    size.X / 2f,
+                                    -1 * size.Y / 2f),
+                                playerColors[i].Colors[0],
+                                Color.Black);
+                        }
                     }
                     else if (controllerPluggedIn[i])
                     {
