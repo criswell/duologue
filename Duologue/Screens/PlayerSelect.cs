@@ -240,10 +240,7 @@ namespace Duologue.Screens
                     InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released)
                     ||
                    (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Back == ButtonState.Pressed &&
-                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released)
-                    ||
-                   (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
-                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape));
+                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released);
         }
 
         #endregion
@@ -323,9 +320,7 @@ namespace Duologue.Screens
                     else
                     {
                         if ((InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
-                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released) ||
-                            (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.A) &&
-                            InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.A)))
+                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released))
                         {
                             if (signedInGamers[i] != null)
                             {
@@ -356,8 +351,6 @@ namespace Duologue.Screens
 
         public override void Draw(GameTime gameTime)
         {
-            if (InstanceManager.InputManager.CurrentKeyboardStates[0].IsKeyDown(Keys.Escape))
-                DrawTexture(aButton, Vector2.One, Vector2.Zero, Color.White, Color.White);
             if (Alive)
             {
                 for (int i = 0; i < InputManager.MaxInputs; i++)
