@@ -438,7 +438,7 @@ namespace Duologue.Screens
                             playerColors[i].Colors[0],
                             Color.Black);
                     }
-                    else
+                    else if(currentState == PlayerSelectState.PlayerSelect)
                     {
                         // Display default sign in request
                         Vector2 size = font.MeasureString(Resources.PlayerSelect_ConnectController);
