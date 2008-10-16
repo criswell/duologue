@@ -304,6 +304,9 @@ namespace Duologue.Screens
                         }
                         else if(InstanceManager.InputManager.NewButtonPressed(Buttons.Start, (PlayerIndex)i))
                         {
+                            LocalInstanceManager.Spinner.Position = centerOfScreen;
+                            LocalInstanceManager.Spinner.Enabled = true;
+                            LocalInstanceManager.Spinner.Visible = true;
                         }
                         else
                         {
