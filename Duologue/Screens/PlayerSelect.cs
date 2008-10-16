@@ -26,6 +26,11 @@ using Duologue.State;
 
 namespace Duologue.Screens
 {
+    public enum PlayerSelectState
+    {
+        PlayerSelect,
+        Countdown,
+    }
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -64,6 +69,7 @@ namespace Duologue.Screens
         // Counters and misc
         private float timeSinceStart;
         private int numActive;
+        private PlayerSelectState currentState;
         #endregion
 
         #region Properties
@@ -124,6 +130,8 @@ namespace Duologue.Screens
                 activePlayers[i] = false;
                 controllerPluggedIn[i] = false;
             }
+
+            currentState = PlayerSelectState.PlayerSelect;
             base.Initialize();
         }
 
@@ -227,6 +235,31 @@ namespace Duologue.Screens
             }
 
         }
+
+        /// <summary>
+        /// Trigger the countdown
+        /// </summary>
+        private void TriggerCountdown()
+        {
+            currentState = PlayerSelectState.Countdown;
+            LocalInstanceManager.Spinner.Position = centerOfScreen;
+            LocalInstanceManager.Spinner.BaseColor = Color.Red;
+            LocalInstanceManager.Spinner.TrackerColor = new Color(new Vector4(0f, 252f, 255f, 255f));
+            LocalInstanceManager.Spinner.Enabled = true;
+            LocalInstanceManager.Spinner.Visible = true;
+        }
+
+        /// <summary>
+        /// Void any active countdown, or otherwise just ensure it's not
+        /// happening.
+        /// </summary>
+        private void VoidCountdown()
+        {
+            currentState = PlayerSelectState.PlayerSelect;
+            LocalInstanceManager.Spinner.Enabled = false;
+            LocalInstanceManager.Spinner.Visible = false;
+            LocalInstanceManager.Spinner.Initialize();
+        }
         #endregion
 
         #region Public methods
@@ -301,12 +334,11 @@ namespace Duologue.Screens
                             BackRequest(i))
                         {
                             activePlayers[i] = false;
+                            VoidCountdown();
                         }
                         else if(InstanceManager.InputManager.NewButtonPressed(Buttons.Start, (PlayerIndex)i))
                         {
-                            LocalInstanceManager.Spinner.Position = centerOfScreen;
-                            LocalInstanceManager.Spinner.Enabled = true;
-                            LocalInstanceManager.Spinner.Visible = true;
+                            TriggerCountdown();
                         }
                         else
                         {
@@ -333,6 +365,7 @@ namespace Duologue.Screens
                         else if (BackRequest(i))
                         {
                             // Cancel back to main menu
+                            VoidCountdown();
                             TriggerBack();
                         }
 
