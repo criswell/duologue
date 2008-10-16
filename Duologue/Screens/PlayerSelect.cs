@@ -210,11 +210,9 @@ namespace Duologue.Screens
         private bool BackRequest(int i)
         {
             // MEIN EYES! DEY BLEED!
-            return (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
-                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released)
+            return (InstanceManager.InputManager.NewButtonPressed(Buttons.B, (PlayerIndex)i)
                     ||
-                   (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Back == ButtonState.Pressed &&
-                    InstanceManager.InputManager.LastGamePadStates[i].Buttons.Back == ButtonState.Released);
+                   InstanceManager.InputManager.NewButtonPressed(Buttons.Back, (PlayerIndex)i));
         }
 
         /// <summary>
@@ -304,6 +302,9 @@ namespace Duologue.Screens
                         {
                             activePlayers[i] = false;
                         }
+                        else if(InstanceManager.InputManager.NewButtonPressed(Buttons.Start, (PlayerIndex)i))
+                        {
+                        }
                         else
                         {
                             numActive++;
@@ -311,8 +312,7 @@ namespace Duologue.Screens
                     }
                     else
                     {
-                        if ((InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
-                            InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released))
+                        if (InstanceManager.InputManager.NewButtonPressed(Buttons.A, (PlayerIndex)i))
                         {
                             if (signedInGamers[i] != null)
                             {
