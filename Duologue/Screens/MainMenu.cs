@@ -51,8 +51,7 @@ namespace Duologue.Screens
         private List<MenuItem> gameSelectItems;
         private int currentSelection;
         // The list of menu items
-        private int menuSinglePlayer;
-        private int menuMultiPlayer;
+        private int menuPlayGame;
         private int menuAchievements;
         private int menuLeaderboards;
         private int menuCredits;
@@ -75,18 +74,16 @@ namespace Duologue.Screens
             gameSelectItems = new List<MenuItem>();
 
             // Set up the main menu
-            mainMenuItems.Add(new MenuItem(Resources.MainMenu_SinglePlayer));
-            menuSinglePlayer = 0;
-            mainMenuItems.Add(new MenuItem(Resources.MainMenu_MultiPlayer));
-            menuMultiPlayer = 1;
+            mainMenuItems.Add(new MenuItem(Resources.MainMenu_Play));
+            menuPlayGame = 0;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Achievements));
-            menuAchievements = 2;
+            menuAchievements = 1;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Leaderboards));
-            menuLeaderboards = 3;
+            menuLeaderboards = 2;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Credits));
-            menuCredits = 4;
+            menuCredits = 3;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
-            menuExit = 5;
+            menuExit = 4;
 
             // Set up the game select menu
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
@@ -162,13 +159,7 @@ namespace Duologue.Screens
             {
                 if (currentSelection == menuExit)
                     LocalInstanceManager.CurrentGameState = GameState.Exit;
-                else if (currentSelection == menuSinglePlayer)
-                {
-                    currentState = MainMenuState.GameSelect;
-                    currentSelection = 0;
-                    ResetMenuItems();
-                }
-                else if (currentSelection == menuMultiPlayer)
+                else if (currentSelection == menuPlayGame)
                 {
                     currentState = MainMenuState.GameSelect;
                     currentSelection = 0;
@@ -182,6 +173,14 @@ namespace Duologue.Screens
                     currentState = MainMenuState.MainMenu;
                     currentSelection = 0;
                     ResetMenuItems();
+                }
+                else if (currentSelection == gameSelectInfinite)
+                {
+                    currentState = MainMenuState.MainMenu;
+                    currentSelection = 0;
+                    ResetMenuItems();
+                    LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
+                    LocalInstanceManager.NextGameState = GameState.InfinityGame;
                 }
             }
         }

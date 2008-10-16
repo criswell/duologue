@@ -20,82 +20,70 @@ using Mimicware.Graphics;
 using Duologue;
 using Duologue.Properties;
 using Duologue.Screens;
+using Duologue.PlayObjects;
 #endregion
-
 
 namespace Duologue.Screens
 {
-    public class MainMenuScreen : GameScreen
+    /// <summary>
+    /// The player select game screen
+    /// </summary>
+    public class PlayerSelectScreen : GameScreen
     {
         #region Constants
         private const float backgroundTimer = 8f;
         #endregion
 
         #region Fields
-        private MainGameLogo mainGameLogo;
-        private MainMenu mainMenu;
-        private float timeSinceStart;
         private Game localGame;
+        private PlayerColors[] playerColors;
+        private PlayerSelectBase playerSelectBase;
+        private PlayerSelect playerSelect;
+        private float timeSinceStart;
         #endregion
 
         #region Properties
         #endregion
 
-        #region Constructor / Init / Load
-        public MainMenuScreen(Game game)
+        #region Constructor / Init
+        public PlayerSelectScreen(Game game)
             : base(game)
         {
             timeSinceStart = 0f;
             localGame = game;
-            mainGameLogo = new MainGameLogo(localGame);
-            mainMenu = new MainMenu(localGame);
-            localGame.Components.Add(mainGameLogo);
-            localGame.Components.Add(mainMenu);
-            
+            playerColors = PlayerColors.GetPlayerColors();
+
+            playerSelectBase = new PlayerSelectBase(localGame);
+            localGame.Components.Add(playerSelectBase);
+            playerSelect = new PlayerSelect(localGame);
+            localGame.Components.Add(playerSelect);
         }
 
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-        #endregion
-
-        #region Initialize Constants
         protected override void InitializeConstants()
         {
-            MyComponents.Add(mainGameLogo);
-            MyComponents.Add(mainMenu);
+            MyComponents.Add(playerSelectBase);
+            MyComponents.Add(playerSelect);
 
             this.SetEnable(false);
             this.SetVisible(false);
-            //this.InitAll();
         }
         #endregion
 
         #region Private methods
         #endregion
 
+        #region Public methods
+        public override void SetVisible(bool t)
+        {
+            if (!t)
+                base.ReInitAll();
+            base.SetVisible(t);
+        }
+        #endregion
+
         #region Update
-        /// <summary>
-        /// Allows the game component to update itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            if (mainGameLogo.PercentComplete < 1f)
-            {
-                mainMenu.Enabled = false;
-                mainMenu.Visible = false;
-            }
-            else
-            {
-                mainMenu.Enabled = true;
-                mainMenu.Visible = true;
-            }
             if (timeSinceStart < backgroundTimer)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
             else
@@ -103,7 +91,8 @@ namespace Duologue.Screens
                 timeSinceStart = 0f;
                 LocalInstanceManager.Background.NextBackground();
             }
-
+            if (playerSelectBase.Percentage >= 1f)
+                playerSelect.Alive = true;
             base.Update(gameTime);
         }
         #endregion

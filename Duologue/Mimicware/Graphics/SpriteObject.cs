@@ -82,6 +82,11 @@ namespace Mimicware.Graphics
         /// The direction of this spriteobject
         /// </summary>
         public Vector2 Direction;
+
+        /// <summary>
+        /// The sprite object's sprite effects
+        /// </summary>
+        public SpriteEffects SpriteEffects;
         #endregion
 
         #region Constructor/Init/Destructor
@@ -113,6 +118,7 @@ namespace Mimicware.Graphics
             source = textureRect;
             layer = textureLayer;
             Text = null;
+            SpriteEffects = SpriteEffects.None;
         }
 
         public SpriteObject(
@@ -146,6 +152,7 @@ namespace Mimicware.Graphics
             source = textureRect;
             layer = textureLayer;
             Text = null;
+            SpriteEffects = SpriteEffects.None;
         }
 
         #endregion

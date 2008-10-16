@@ -169,20 +169,47 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiplayer.
+        ///   Looks up a localized string similar to Play Game.
         /// </summary>
-        internal static string MainMenu_MultiPlayer {
+        internal static string MainMenu_Play {
             get {
-                return ResourceManager.GetString("MainMenu_MultiPlayer", resourceCulture);
+                return ResourceManager.GetString("MainMenu_Play", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Single Player.
+        ///   Looks up a localized string similar to Connect controller.
         /// </summary>
-        internal static string MainMenu_SinglePlayer {
+        internal static string PlayerSelect_ConnectController {
             get {
-                return ResourceManager.GetString("MainMenu_SinglePlayer", resourceCulture);
+                return ResourceManager.GetString("PlayerSelect_ConnectController", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press &quot;A&quot; to join and &quot;Start&quot; to begin.
+        /// </summary>
+        internal static string PlayerSelect_MainText {
+            get {
+                return ResourceManager.GetString("PlayerSelect_MainText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press &quot;A&quot; to join.
+        /// </summary>
+        internal static string PlayerSelect_PressA {
+            get {
+                return ResourceManager.GetString("PlayerSelect_PressA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press &quot;Start&quot; when ready.
+        /// </summary>
+        internal static string PlayerSelect_PressStart {
+            get {
+                return ResourceManager.GetString("PlayerSelect_PressStart", resourceCulture);
             }
         }
         

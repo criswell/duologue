@@ -153,11 +153,20 @@
   <data name="MainMenu_Leaderboards" xml:space="preserve">
     <value>Leaderboards</value>
   </data>
-  <data name="MainMenu_MultiPlayer" xml:space="preserve">
-    <value>Multiplayer</value>
+  <data name="MainMenu_Play" xml:space="preserve">
+    <value>Play Game</value>
   </data>
-  <data name="MainMenu_SinglePlayer" xml:space="preserve">
-    <value>Single Player</value>
+  <data name="PlayerSelect_ConnectController" xml:space="preserve">
+    <value>Connect controller</value>
+  </data>
+  <data name="PlayerSelect_MainText" xml:space="preserve">
+    <value>Press "A" to join and "Start" to begin</value>
+  </data>
+  <data name="PlayerSelect_PressA" xml:space="preserve">
+    <value>Press "A" to join</value>
+  </data>
+  <data name="PlayerSelect_PressStart" xml:space="preserve">
+    <value>Press "Start" when ready</value>
   </data>
   <data name="ScoreUI_Lives" xml:space="preserve">
     <value>Lives: {0}</value>
