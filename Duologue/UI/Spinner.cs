@@ -200,7 +200,7 @@ namespace Duologue.UI
         /// <summary>
         /// Local drawstring for putting borders around our fonts
         /// </summary>
-        private void DrawString(Vector2 vector2)
+        private void DrawString(Vector2 vector2, Vector2 c)
         {
             for (int i = 0; i < offsetModifiers.Length; i++)
                 InstanceManager.RenderSprite.DrawString(
@@ -208,14 +208,16 @@ namespace Duologue.UI
                     DisplayText,
                     vector2 - offsetModifiers[i] * Vector2.One,
                     FontShadowColor,
-                    Scale);
+                    Scale,
+                    c);
 
             InstanceManager.RenderSprite.DrawString(
                 DisplayFont,
                 DisplayText,
                 vector2,
                 FontColor,
-                Scale);
+                Scale,
+                c);
         }
         #endregion
 
@@ -289,7 +291,7 @@ namespace Duologue.UI
             if (DisplayText != null && DisplayFont != null)
             {
                 Vector2 size = DisplayFont.MeasureString(DisplayText);
-                DrawString(Position - size / 2f);
+                DrawString(Position, size/2f);
             }
         }
         #endregion

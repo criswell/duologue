@@ -107,7 +107,12 @@ namespace Mimicware.Graphics
                         sobj.Font,
                         sobj.Text,
                         sobj.Position,
-                        sobj.Tint);
+                        sobj.Tint,
+                        sobj.Rotation,
+                        sobj.Center,
+                        sobj.Scale,
+                        sobj.SpriteEffects,
+                        sobj.Layer);
             }
         }
         #endregion
@@ -317,6 +322,27 @@ namespace Mimicware.Graphics
                 vector2,
                 color);
             sobj.Scale = scale;
+            this.Add(sobj);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="vector2"></param>
+        /// <param name="color"></param>
+        /// <param name="scale"></param>
+        /// <param name="cent"></param>
+        internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color, Vector2 scale, Vector2 cent)
+        {
+            SpriteObject sobj = new SpriteObject(
+                font,
+                p,
+                vector2,
+                color);
+            sobj.Scale = scale;
+            sobj.Center = cent;
             this.Add(sobj);
         }
 

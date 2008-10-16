@@ -132,6 +132,9 @@ namespace Mimicware.Graphics
             Text = text;
             texture = null;
             Position = textPosition;
+            Scale = Vector2.One;
+            rotation = 0f;
+            Center = Vector2.Zero;
         }
 
         public SpriteObject(

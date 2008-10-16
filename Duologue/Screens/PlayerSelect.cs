@@ -39,6 +39,8 @@ namespace Duologue.Screens
         #region Constants
         private const int maxTimer = 5;
         private const float timeCountdown = 1f;
+        private const float ScaleOffset = 1f;
+        private const float ScaleFactor = 0.25f;
 
         private const string fontFilename = "Fonts\\inero-28";
         private const string countdownFontFilename = "Fonts\\inero-50";
@@ -95,6 +97,17 @@ namespace Duologue.Screens
         public float Percentage
         {
             get { return MathHelper.Min(1f, timeSinceStart / timeCountdown); }
+        }
+
+        /// <summary>
+        /// Returns the current scaling factor based on percentage
+        /// </summary>
+        public float Scale
+        {
+            get
+            {
+                return ScaleOffset + ScaleFactor*(float)Math.Cos((double)(Percentage * MathHelper.TwoPi));
+            }
         }
         #endregion
 
@@ -346,7 +359,10 @@ namespace Duologue.Screens
                 TriggerTick();
 
             if (currentState == PlayerSelectState.Countdown)
+            {
                 LocalInstanceManager.Spinner.DisplayText = currentCountdown.ToString();
+                LocalInstanceManager.Spinner.Scale = new Vector2(Scale);
+            }
 
             if (Alive & !Guide.IsVisible)
             {
