@@ -23,6 +23,13 @@ using Duologue.Properties;
 
 namespace Duologue.UI
 {
+    public enum TextTransitionType
+    {
+        ZoomIn=0,
+        ZoomOut,
+        Fade,
+        MaxNum,
+    }
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -30,12 +37,16 @@ namespace Duologue.UI
     {
         #region Constants
         private const string fontFilename = "Content/inero-50";
+        private const float fadeLifetime = 1f;
         #endregion
 
         #region Fields
         private SpriteFont font;
         private Game localGame;
         private string[] theText;
+        private float timeSinceStart;
+        private TextTransitionType currentType;
+        private Random rand;
         #endregion
 
         #region Properties
@@ -46,10 +57,22 @@ namespace Duologue.UI
         {
             get
             {
+                return theText;
             }
             set
             {
+                theText = Text;
+                timeSinceStart = 0f;
+                GetNewTransitionType();
             }
+        }
+
+        /// <summary>
+        /// Tells the percente complete in the fade in
+        /// </summary>
+        public float PercentComplete
+        {
+            get { return Math.Min(timeSinceStart / fadeLifetime, 1f); }
         }
         #endregion
 
@@ -58,6 +81,7 @@ namespace Duologue.UI
             : base(game)
         {
             localGame = game;
+            rand = new Random();
         }
 
         /// <summary>
@@ -79,6 +103,13 @@ namespace Duologue.UI
         #endregion
 
         #region Private methods
+        /// <summary>
+        /// Get a new transition type
+        /// </summary>
+        private void GetNewTransitionType()
+        {
+            currentType = (TextTransitionType)rand.Next((int)TextTransitionType.MaxNum);
+        }
         #endregion
 
         #region Public methods
@@ -91,13 +122,25 @@ namespace Duologue.UI
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            if (timeSinceStart < fadeLifetime)
+                timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            if (PercentComplete < 1f)
+            {
+                switch (currentType)
+                {
+                    case TextTransitionType.ZoomIn:
+                        break;
+                    default:
+                        // Fade
+                        break;
+                }
+            }
             base.Draw(gameTime);
         }
         #endregion
