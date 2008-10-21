@@ -91,10 +91,7 @@ namespace Duologue
         public MainMenuScreen mainMenuScreen;
         public ExitScreen exitScreen;
         public PlayerSelectScreen playerSelectScreen;
-        // ERE I AM JH
-        // We have a problem, sort of, multiple GameStates for gameplay
-        // but only one gameplay screen atm. do we need more?
-        public GamePlayScreenTest gamePlayScreenTest;
+        public GamePlayScreenManager gamePlayScreenManager;
 
         /// <summary>
         /// The dispatch table for game state changes
@@ -207,6 +204,11 @@ namespace Duologue
             playerSelectScreen = new PlayerSelectScreen(this);
             this.Components.Add(playerSelectScreen);
             dispatchTable.Add(GameState.PlayerSelect, playerSelectScreen);
+
+            // Gameplay screen
+            gamePlayScreenManager = new GamePlayScreenManager(this);
+            this.Components.Add(gamePlayScreenManager);
+            dispatchTable.Add(GameState.InfinityGame, gamePlayScreenManager);
 
             base.Initialize();
         }
