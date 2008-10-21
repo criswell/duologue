@@ -152,10 +152,6 @@ namespace Duologue.UI
                 // We're fading out
                 fadePercent = 1f - timeSinceStart / fadeOutLifetime;
             }
-            Color mainC = MainColor;
-            Color shadC = ShadowColor;
-            mainC.A = (byte)(255 * fadePercent);
-            shadC.A = (byte)(255 * fadePercent);
 
             for (int i = 0; i < theText.Length; i++)
             {
@@ -164,8 +160,16 @@ namespace Duologue.UI
                     font,
                     theText[i],
                     pos,
-                    mainC,
-                    shadC,
+                    new Color(
+                        MainColor.R,
+                        MainColor.G,
+                        MainColor.B,
+                        (byte)(255 * fadePercent)),
+                    new Color(
+                        ShadowColor.R,
+                        ShadowColor.G,
+                        ShadowColor.B,
+                        (byte)(255 * fadePercent)),
                     shadowOffset,
                     RenderSpriteBlendMode.AlphaBlend);
             }
