@@ -33,6 +33,7 @@ namespace Duologue.Screens
         InitPlayerSpawn,
         Playing,
         LoadNextWave,
+        Delay,
         GameOver,
     }
     /// <summary>
@@ -41,6 +42,7 @@ namespace Duologue.Screens
     public class GamePlayScreenManager : GameScreen
     {
         #region Constants
+        private const float delayLifetime = 1f;
         #endregion
 
         #region Fields
@@ -48,10 +50,19 @@ namespace Duologue.Screens
         private GameWaveManager gameWaveManager;
         private GameWave currentWave;
         private GamePlayState currentState;
+        private GamePlayState nextState;
         private WaveDisplay waveDisplay;
+        private float timeSinceStart;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Percentage complete for a delay
+        /// </summary>
+        public float PercentComplete
+        {
+            get { return Math.Min(timeSinceStart / delayLifetime, 1f); }
+        }
         #endregion
 
         #region Constructor / Init
@@ -72,6 +83,7 @@ namespace Duologue.Screens
             gameWaveManager.CurrentMajorNumber = 1;
             gameWaveManager.CurrentMinorNumber = 1;
             currentWave = null;
+            timeSinceStart = 0f;
         }
 
         /*
@@ -98,6 +110,35 @@ namespace Duologue.Screens
         #region Update
         public override void Update(GameTime gameTime)
         {
+            if (timeSinceStart < delayLifetime)
+                timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (currentWave == null)
+            {
+                currentWave = gameWaveManager.GetNextWave();
+            }
+
+            switch (currentState)
+            {
+                case GamePlayState.WaveIntro:
+                    string[] text = new string[2];
+                    text[0] = String.Format(Resources.GameScreen_Wave,
+                        currentWave.MajorWaveNumber.ToString(),
+                        currentWave.MinorWaveNumber.ToString());
+                    text[1] = currentWave.Name;
+                    waveDisplay.Text = text;
+                    currentState = GamePlayState.Delay;
+                    timeSinceStart = 0f;
+                    nextState = GamePlayState.InitPlayerSpawn;
+                    break;
+                case GamePlayState.Delay:
+                    if (PercentComplete >= 1f)
+                        currentState = nextState;
+                    break;
+                default:
+                    // Play the game
+                    break;
+            }
             base.Update(gameTime);
         }
         #endregion

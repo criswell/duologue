@@ -130,7 +130,7 @@
     <value>Infinite Mode</value>
   </data>
   <data name="GameScreen_Wave" xml:space="preserve">
-    <value>Wave {0}</value>
+    <value>Wave {0}-{0}</value>
   </data>
   <data name="MainMenu_Achievements" xml:space="preserve">
     <value>Achievements</value>
