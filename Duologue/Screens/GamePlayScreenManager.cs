@@ -82,7 +82,10 @@ namespace Duologue.Screens
 
         protected override void InitializeConstants()
         {
-            throw new Exception("The method or operation is not implemented.");
+            MyComponents.Add(waveDisplay);
+
+            this.SetEnable(false);
+            this.SetVisible(false);
         }
         #endregion
 
@@ -90,6 +93,13 @@ namespace Duologue.Screens
         #endregion
 
         #region Public methods
+        #endregion
+
+        #region Update
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
         #endregion
     }
 }

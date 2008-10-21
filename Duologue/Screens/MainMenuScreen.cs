@@ -72,7 +72,6 @@ namespace Duologue.Screens
 
             this.SetEnable(false);
             this.SetVisible(false);
-            //this.InitAll();
         }
         #endregion
 
