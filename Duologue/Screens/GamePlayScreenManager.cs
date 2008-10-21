@@ -48,6 +48,7 @@ namespace Duologue.Screens
         private GameWaveManager gameWaveManager;
         private GameWave currentWave;
         private GamePlayState currentState;
+        private WaveDisplay waveDisplay;
         #endregion
 
         #region Properties
@@ -57,7 +58,27 @@ namespace Duologue.Screens
         public GamePlayScreenManager(Game game) : base(game)
         {
             localGame = game;
+            gameWaveManager = new GameWaveManager(null);
+            waveDisplay = new WaveDisplay(localGame);
+            Reset();
         }
+
+        /// <summary>
+        /// Reset everything
+        /// </summary>
+        private void Reset()
+        {
+            currentState = GamePlayState.WaveIntro;
+            gameWaveManager.CurrentMajorNumber = 1;
+            gameWaveManager.CurrentMinorNumber = 1;
+            currentWave = null;
+        }
+
+        /*
+        public override void Initialize()
+        {
+            base.Initialize();
+        }*/
 
         protected override void InitializeConstants()
         {
