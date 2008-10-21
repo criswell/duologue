@@ -210,6 +210,14 @@ namespace Duologue
             this.Components.Add(gamePlayScreenManager);
             dispatchTable.Add(GameState.InfinityGame, gamePlayScreenManager);
 
+            // Ensure that everything in the dispatch is disabled
+            foreach (GameScreen scr in dispatchTable.Values)
+            {
+                scr.SetEnable(false);
+                scr.SetVisible(false);
+                scr.Enabled = false;
+            }
+
             base.Initialize();
         }
 

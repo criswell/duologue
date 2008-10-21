@@ -105,6 +105,12 @@ namespace Duologue.Screens
         #endregion
 
         #region Public methods
+        public override void SetEnable(bool t)
+        {
+            if (t)
+                Reset();
+            base.SetEnable(t);
+        }
         #endregion
 
         #region Update
