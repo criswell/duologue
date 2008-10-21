@@ -88,7 +88,11 @@ namespace Duologue.Waves
         /// <summary>
         /// Constructs a Game Wave object
         /// </summary>
-        public GameWave(string name, int? numShotTypes, int background, int majorWaveNo, int minorWaveNo)
+        public GameWave(string name,
+            int? numShotTypes,
+            int background,
+            ColorState colorState,
+            int majorWaveNo, int minorWaveNo)
         {
             Name = name;
             if (numShotTypes == null)
@@ -98,6 +102,7 @@ namespace Duologue.Waves
             Background = background;
             MajorWaveNumber = majorWaveNo;
             MinorWaveNumber = minorWaveNo;
+            ColorState = colorState;
         }
         #endregion
     }

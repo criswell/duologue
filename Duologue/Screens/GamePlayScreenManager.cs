@@ -21,27 +21,40 @@ using Duologue;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.PlayObjects;
+using Duologue.Waves;
+using Duologue.UI;
 #endregion
 
 namespace Duologue.Screens
 {
+    public enum GamePlayState
+    {
+        WaveIntro,
+        InitPlayerSpawn,
+        Playing,
+        LoadNextWave,
+        GameOver,
+    }
     /// <summary>
     /// The main game play screen which coordinates the various game elements
     /// </summary>
-    public class GamePlayScreen : GameScreen
+    public class GamePlayScreenManager : GameScreen
     {
         #region Constants
         #endregion
 
         #region Fields
         private Game localGame;
+        private GameWaveManager gameWaveManager;
+        private GameWave currentWave;
+        private GamePlayState currentState;
         #endregion
 
         #region Properties
         #endregion
 
         #region Constructor / Init
-        public GamePlayScreen(Game game) : base(game)
+        public GamePlayScreenManager(Game game) : base(game)
         {
             localGame = game;
         }

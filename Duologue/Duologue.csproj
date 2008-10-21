@@ -76,7 +76,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Screens\ExitScreen.cs" />
-    <Compile Include="Screens\GamePlayScreen.cs" />
+    <Compile Include="Screens\GamePlayScreenManager.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\MainGameLogo.cs" />
     <Compile Include="Screens\MainMenu.cs" />

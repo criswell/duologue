@@ -23,6 +23,7 @@ using Duologue.Screens;
 using Duologue.UI;
 using Duologue.PlayObjects;
 using Duologue.Waves;
+using Duologue.State;
 #endregion
 
 namespace Duologue.Waves
@@ -134,9 +135,14 @@ namespace Duologue.Waves
                     // FIXME: Need an achievement here, I think
                 }
             }
+
+            // Get a random color state
+            ColorState[] theStates = ColorState.GetColorStates();
+
             return new GameWave(Resources.GameScreen_InfiniteWave,
                 GameWave.maxPlayerShotTypes,
                 rand.Next(LocalInstanceManager.Background.NumBackgrounds),
+                theStates[rand.Next(theStates.Length)],
                 lastMajorWaveNo,
                 lastMinorWaveNo);
         }

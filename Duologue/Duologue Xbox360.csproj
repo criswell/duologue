@@ -66,9 +66,7 @@
     <Compile Include="Mimicware\Graphics\SpriteObject.cs" />
     <Compile Include="Mimicware\Manager\AssetManager.cs" />
     <Compile Include="Mimicware\MWMathHelper.cs" />
-    <Compile Include="PlayObjects\EnemyBuzzsaw.cs" />
     <Compile Include="PlayObjects\Player.cs" />
-    <Compile Include="PlayObjects\PlayerShot.cs" />
     <Compile Include="PlayObjects\PlayObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
