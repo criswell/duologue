@@ -38,6 +38,8 @@ namespace Duologue.UI
         #region Constants
         private const string fontFilename = "Content/inero-50";
         private const float fadeLifetime = 1f;
+        private const float fadeInLifetime = 0.2f;
+        private const float fadeOutLifetime = 0.8f;
         #endregion
 
         #region Fields
@@ -47,6 +49,8 @@ namespace Duologue.UI
         private float timeSinceStart;
         private TextTransitionType currentType;
         private Random rand;
+        private Vector2 screenCenter;
+        private Vector2[] shadowOffset;
         #endregion
 
         #region Properties
@@ -61,7 +65,7 @@ namespace Duologue.UI
             }
             set
             {
-                theText = Text;
+                theText = value;
                 timeSinceStart = 0f;
                 GetNewTransitionType();
             }
@@ -74,6 +78,16 @@ namespace Duologue.UI
         {
             get { return Math.Min(timeSinceStart / fadeLifetime, 1f); }
         }
+
+        /// <summary>
+        /// The main color of the text
+        /// </summary>
+        public Color MainColor;
+
+        /// <summary>
+        /// The shadow color of the text
+        /// </summary>
+        public Color ShadowColor;
         #endregion
 
         #region Constructor / Init / Load
@@ -82,6 +96,12 @@ namespace Duologue.UI
         {
             localGame = game;
             rand = new Random();
+            screenCenter = Vector2.Zero;
+            shadowOffset = new Vector2[1];
+            shadowOffset[0] = Vector2.One;
+            // Sensible default colors
+            MainColor = Color.Azure;
+            ShadowColor = Color.Black;
         }
 
         /// <summary>
@@ -110,6 +130,63 @@ namespace Duologue.UI
         {
             currentType = (TextTransitionType)rand.Next((int)TextTransitionType.MaxNum);
         }
+
+        /// <summary>
+        /// The fade draw method
+        /// </summary>
+        private void DrawFade(GameTime gameTime)
+        {
+            // Get the position
+            Vector2 totalSize = GetTotalSize();
+            Vector2 pos = screenCenter - totalSize / 2f;
+
+            // Calculate the fade percent
+            float fadePercent = 1f;
+            if (timeSinceStart < fadeInLifetime)
+            {
+                // We're fading in
+                fadePercent = timeSinceStart / fadeInLifetime;
+            }
+            else if (timeSinceStart > fadeOutLifetime)
+            {
+                // We're fading out
+                fadePercent = 1f - timeSinceStart / fadeOutLifetime;
+            }
+            Color mainC = MainColor;
+            Color shadC = ShadowColor;
+            mainC.A = (byte)(255 * fadePercent);
+            shadC.A = (byte)(255 * fadePercent);
+
+            for (int i = 0; i < theText.Length; i++)
+            {
+                pos.X = screenCenter.X - font.MeasureString(theText[i]).X / 2f;
+                InstanceManager.RenderSprite.DrawString(
+                    font,
+                    theText[i],
+                    pos,
+                    mainC,
+                    shadC,
+                    shadowOffset,
+                    RenderSpriteBlendMode.AlphaBlend);
+            }
+        }
+
+        /// <summary>
+        /// Get the total size of theText
+        /// </summary>
+        private Vector2 GetTotalSize()
+        {
+            Vector2 theSize = Vector2.Zero;
+            for (int i = 0; i < theText.Length; i++)
+            {
+                Vector2 size = font.MeasureString(theText[i]);
+                if (size.X > theSize.X)
+                    theSize.X = size.X;
+
+                theSize.Y += size.Y;
+            }
+            return theSize;
+        }
         #endregion
 
         #region Public methods
@@ -130,6 +207,12 @@ namespace Duologue.UI
 
         public override void Draw(GameTime gameTime)
         {
+            if (screenCenter == Vector2.Zero)
+            {
+                screenCenter = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            }
             if (PercentComplete < 1f)
             {
                 switch (currentType)
@@ -138,6 +221,7 @@ namespace Duologue.UI
                         break;
                     default:
                         // Fade
+                        DrawFade(gameTime);
                         break;
                 }
             }

@@ -376,6 +376,43 @@ namespace Mimicware.Graphics
         }
 
         /// <summary>
+        /// Draws a string with a shadow
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="pos"></param>
+        /// <param name="mainColor"></param>
+        /// <param name="shadowColor"></param>
+        /// <param name="shadowOffset"></param>
+        /// <param name="mode"></param>
+        internal void DrawString(
+            SpriteFont font,
+            string p,
+            Vector2 pos,
+            Color mainColor,
+            Color shadowColor,
+            Vector2[] shadowOffset,
+            RenderSpriteBlendMode mode)
+        {
+            // Draw shadow first
+            for (int i = 0; i < shadowOffset.Length; i++)
+            {
+                this.DrawString(font,
+                    p,
+                    pos + shadowOffset[i],
+                    shadowColor,
+                    mode);
+            }
+
+            // Draw the main text
+            this.DrawString(font,
+                p,
+                pos,
+                mainColor,
+                mode);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="spriteObject"></param>
