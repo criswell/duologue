@@ -102,6 +102,8 @@ namespace Duologue.UI
             // Sensible default colors
             MainColor = Color.Azure;
             ShadowColor = Color.Black;
+            // start out off, we change when someone sets new text
+            timeSinceStart = fadeLifetime;
         }
 
         /// <summary>
