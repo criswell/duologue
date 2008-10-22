@@ -30,7 +30,6 @@ namespace Duologue.Screens
     {
         PlayerSelect,
         Countdown,
-        MovingOn,
     }
     /// <summary>
     /// This is a game component that implements IUpdateable.
