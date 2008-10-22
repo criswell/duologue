@@ -30,6 +30,7 @@ namespace Duologue.Screens
     {
         PlayerSelect,
         Countdown,
+        MovingOn,
     }
     /// <summary>
     /// This is a game component that implements IUpdateable.
@@ -259,24 +260,19 @@ namespace Duologue.Screens
         /// </summary>
         private void TriggerCountdown()
         {
-            if (currentState == PlayerSelectState.Countdown)
-                TriggerTick();
-            else
-            {
-                currentCountdown = maxTimer;
-                currentState = PlayerSelectState.Countdown;
-                LocalInstanceManager.Spinner.Position = centerOfScreen;
-                // FIXME
-                // These colors probably shouldn't be hardcoded
-                LocalInstanceManager.Spinner.BaseColor = Color.Red;
-                LocalInstanceManager.Spinner.TrackerColor = new Color(new Vector4(0f, 252f, 255f, 255f));
-                LocalInstanceManager.Spinner.DisplayFont = countdownFont;
-                LocalInstanceManager.Spinner.FontColor = Color.Violet;
-                LocalInstanceManager.Spinner.FontShadowColor = Color.DarkBlue;
-                LocalInstanceManager.Spinner.Enabled = true;
-                LocalInstanceManager.Spinner.Visible = true;
-                timeSinceStart = 0f;
-            }
+            currentCountdown = maxTimer;
+            currentState = PlayerSelectState.Countdown;
+            LocalInstanceManager.Spinner.Position = centerOfScreen;
+            // FIXME
+            // These colors probably shouldn't be hardcoded
+            LocalInstanceManager.Spinner.BaseColor = Color.Red;
+            LocalInstanceManager.Spinner.TrackerColor = new Color(new Vector4(0f, 252f, 255f, 255f));
+            LocalInstanceManager.Spinner.DisplayFont = countdownFont;
+            LocalInstanceManager.Spinner.FontColor = Color.Violet;
+            LocalInstanceManager.Spinner.FontShadowColor = Color.DarkBlue;
+            LocalInstanceManager.Spinner.Enabled = true;
+            LocalInstanceManager.Spinner.Visible = true;
+            timeSinceStart = 0f;
         }
 
         /// <summary>
@@ -408,7 +404,10 @@ namespace Duologue.Screens
                         }
                         else if(InstanceManager.InputManager.NewButtonPressed(Buttons.Start, (PlayerIndex)i))
                         {
-                            TriggerCountdown();
+                            if (currentState != PlayerSelectState.Countdown)
+                                TriggerCountdown();
+                            else
+                                TriggerTick();
                         }
                         else
                         {
