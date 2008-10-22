@@ -36,7 +36,7 @@ namespace Duologue.UI
     public class WaveDisplay : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
-        private const string fontFilename = "Content/inero-50";
+        private const string fontFilename = "Fonts/inero-50";
         private const float fadeLifetime = 1f;
         private const float fadeInLifetime = 0.2f;
         private const float fadeOutLifetime = 0.8f;

@@ -259,17 +259,22 @@ namespace Duologue.Screens
         /// </summary>
         private void TriggerCountdown()
         {
-            currentState = PlayerSelectState.Countdown;
-            LocalInstanceManager.Spinner.Position = centerOfScreen;
-            LocalInstanceManager.Spinner.BaseColor = Color.Red;
-            LocalInstanceManager.Spinner.TrackerColor = new Color(new Vector4(0f, 252f, 255f, 255f));
-            LocalInstanceManager.Spinner.DisplayFont = countdownFont;
-            LocalInstanceManager.Spinner.FontColor = Color.Violet;
-            LocalInstanceManager.Spinner.FontShadowColor = Color.DarkBlue;
-            LocalInstanceManager.Spinner.Enabled = true;
-            LocalInstanceManager.Spinner.Visible = true;
-            timeSinceStart = 0f;
-            currentCountdown = maxTimer;
+            if (currentState == PlayerSelectState.Countdown)
+                TriggerTick();
+            else
+            {
+                currentCountdown = maxTimer;
+                currentState = PlayerSelectState.Countdown;
+                LocalInstanceManager.Spinner.Position = centerOfScreen;
+                LocalInstanceManager.Spinner.BaseColor = Color.Red;
+                LocalInstanceManager.Spinner.TrackerColor = new Color(new Vector4(0f, 252f, 255f, 255f));
+                LocalInstanceManager.Spinner.DisplayFont = countdownFont;
+                LocalInstanceManager.Spinner.FontColor = Color.Violet;
+                LocalInstanceManager.Spinner.FontShadowColor = Color.DarkBlue;
+                LocalInstanceManager.Spinner.Enabled = true;
+                LocalInstanceManager.Spinner.Visible = true;
+                timeSinceStart = 0f;
+            }
         }
 
         /// <summary>

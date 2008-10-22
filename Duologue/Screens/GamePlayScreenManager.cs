@@ -71,7 +71,8 @@ namespace Duologue.Screens
             localGame = game;
             gameWaveManager = new GameWaveManager(null);
             waveDisplay = new WaveDisplay(localGame);
-            Reset();
+            localGame.Components.Add(waveDisplay);
+            //Reset();
         }
 
         /// <summary>
