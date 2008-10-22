@@ -30,6 +30,7 @@ namespace Duologue.UI
         Fade,
         MaxNum,
     }
+
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -37,9 +38,9 @@ namespace Duologue.UI
     {
         #region Constants
         private const string fontFilename = "Fonts/inero-50";
-        private const float fadeLifetime = 1f;
-        private const float fadeInLifetime = 0.2f;
-        private const float fadeOutLifetime = 0.8f;
+        private const float fadeLifetime = 1.5f;
+        private const float fadeInLifetime = 0.3f;
+        private const float fadeOutStartPercent = 0.8f;
         #endregion
 
         #region Fields
@@ -146,15 +147,15 @@ namespace Duologue.UI
 
             // Calculate the fade percent
             float fadePercent = 1f;
-            if (timeSinceStart < fadeInLifetime)
+            if (PercentComplete <= fadeInLifetime)
             {
                 // We're fading in
-                fadePercent = timeSinceStart / fadeInLifetime;
+                fadePercent = PercentComplete / fadeInLifetime;
             }
-            else if (timeSinceStart > fadeOutLifetime)
+            else if (PercentComplete >= fadeOutStartPercent)
             {
                 // We're fading out
-                fadePercent = 1f - timeSinceStart / fadeOutLifetime;
+                fadePercent = 1f - PercentComplete + fadeOutStartPercent;
             }
 
             for (int i = 0; i < theText.Length; i++)
