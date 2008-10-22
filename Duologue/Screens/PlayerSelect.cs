@@ -266,6 +266,8 @@ namespace Duologue.Screens
                 currentCountdown = maxTimer;
                 currentState = PlayerSelectState.Countdown;
                 LocalInstanceManager.Spinner.Position = centerOfScreen;
+                // FIXME
+                // These colors probably shouldn't be hardcoded
                 LocalInstanceManager.Spinner.BaseColor = Color.Red;
                 LocalInstanceManager.Spinner.TrackerColor = new Color(new Vector4(0f, 252f, 255f, 255f));
                 LocalInstanceManager.Spinner.DisplayFont = countdownFont;
