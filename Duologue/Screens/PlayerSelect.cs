@@ -394,12 +394,14 @@ namespace Duologue.Screens
                     controllerPluggedIn[i] = InstanceManager.InputManager.LastGamePadStates[i].IsConnected;
                     if (activePlayers[i])
                     {
+                        numActive++;
                         // Check for disconnect or cancel
                         if ((!InstanceManager.InputManager.CurrentGamePadStates[i].IsConnected &&
                             InstanceManager.InputManager.LastGamePadStates[i].IsConnected) ||
                             BackRequest(i))
                         {
                             activePlayers[i] = false;
+                            numActive--;
                             VoidCountdown();
                         }
                         else if(InstanceManager.InputManager.NewButtonPressed(Buttons.Start, (PlayerIndex)i))
@@ -408,10 +410,6 @@ namespace Duologue.Screens
                                 TriggerCountdown();
                             else
                                 TriggerTick();
-                        }
-                        else
-                        {
-                            numActive++;
                         }
                     }
                     else
