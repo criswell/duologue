@@ -130,7 +130,9 @@ namespace Duologue.UI
         /// </summary>
         private void GetNewTransitionType()
         {
-            currentType = (TextTransitionType)rand.Next((int)TextTransitionType.MaxNum);
+            //currentType = (TextTransitionType)rand.Next((int)TextTransitionType.MaxNum);
+            // For now, we just use this for testing
+            currentType = TextTransitionType.Fade;
         }
 
         /// <summary>
