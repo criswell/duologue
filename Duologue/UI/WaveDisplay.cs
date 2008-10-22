@@ -176,6 +176,7 @@ namespace Duologue.UI
                         (byte)(255 * fadePercent)),
                     shadowOffset,
                     RenderSpriteBlendMode.AlphaBlend);
+                pos.Y += font.LineSpacing;
             }
         }
 
