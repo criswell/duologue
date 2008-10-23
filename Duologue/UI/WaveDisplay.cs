@@ -125,17 +125,7 @@ namespace Duologue.UI
         }
         #endregion
 
-        #region Private methods
-        /// <summary>
-        /// Get a new transition type
-        /// </summary>
-        private void GetNewTransitionType()
-        {
-            //currentType = (TextTransitionType)rand.Next((int)TextTransitionType.MaxNum);
-            // For now, we just use this for testing
-            currentType = TextTransitionType.Fade;
-        }
-
+        #region Private draw methods
         /// <summary>
         /// The fade draw method
         /// </summary>
@@ -179,6 +169,58 @@ namespace Duologue.UI
                     RenderSpriteBlendMode.AlphaBlend);
                 pos.Y += font.LineSpacing;
             }
+        }
+
+        /// <summary>
+        /// The zoom in draw method
+        /// </summary>
+        private void DrawZoomIn(GameTime gameTime)
+        {
+            // Get the position
+            Vector2 totalSize = GetTotalSize();
+            Vector2 pos = screenCenter - totalSize / 2f;
+
+            // Calculate the fade percent
+            float scale = 1f;
+            if (PercentComplete <= fadeInLifetime)
+            {
+                // We're fading in
+                scale = PercentComplete / fadeInLifetime;
+            }
+            else if (PercentComplete >= fadeOutStartPercent)
+            {
+                // We're fading out
+                scale = 1f - PercentComplete + fadeOutStartPercent;
+            }
+
+            for (int i = 0; i < theText.Length; i++)
+            {
+                //pos.X = screenCenter.X - font.MeasureString(theText[i]).X / 2f;
+                InstanceManager.RenderSprite.DrawString(
+                    font,
+                    theText[i],
+                    pos,
+                    MainColor,
+                    ShadowColor,
+                    scale,
+                    font.MeasureString(theText[i])/2f,
+                    shadowOffset,
+                    RenderSpriteBlendMode.AlphaBlend);
+                pos.Y += font.LineSpacing;
+            }
+
+        }
+        #endregion
+
+        #region Private methods
+        /// <summary>
+        /// Get a new transition type
+        /// </summary>
+        private void GetNewTransitionType()
+        {
+            //currentType = (TextTransitionType)rand.Next((int)TextTransitionType.MaxNum);
+            // For now, we just use this for testing
+            currentType = TextTransitionType.ZoomIn;
         }
 
         /// <summary>
@@ -228,6 +270,7 @@ namespace Duologue.UI
                 switch (currentType)
                 {
                     case TextTransitionType.ZoomIn:
+                        DrawZoomIn(gameTime);
                         break;
                     default:
                         // Fade

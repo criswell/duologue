@@ -346,6 +346,30 @@ namespace Mimicware.Graphics
             this.Add(sobj);
         }
 
+        internal void DrawString(
+            SpriteFont font,
+            string p,
+            Vector2 vector2,
+            Color color,
+            Vector2 scale,
+            Vector2 cent,
+            RenderSpriteBlendMode mode)
+        {
+            SpriteObject sobj = new SpriteObject(
+                font,
+                p,
+                vector2,
+                color);
+            sobj.Scale = scale;
+            sobj.Center = cent;
+            if (mode == RenderSpriteBlendMode.Addititive)
+                this.AddAdditive(sobj);
+            else if (mode == RenderSpriteBlendMode.Multiplicative)
+                this.AddMultiplicative(sobj);
+            else
+                this.Add(sobj);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -409,6 +433,51 @@ namespace Mimicware.Graphics
                 p,
                 pos,
                 mainColor,
+                mode);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="pos"></param>
+        /// <param name="mainColor"></param>
+        /// <param name="shadowColor"></param>
+        /// <param name="scale"></param>
+        /// <param name="vector2"></param>
+        /// <param name="shadowOffset"></param>
+        /// <param name="renderSpriteBlendMode"></param>
+        internal void DrawString(
+            SpriteFont font,
+            string p,
+            Vector2 pos,
+            Color mainColor,
+            Color shadowColor,
+            float scale,
+            Vector2 vector2,
+            Vector2[] shadowOffset,
+            RenderSpriteBlendMode renderSpriteBlendMode)
+        {
+            // Draw shadow first
+            for (int i = 0; i < shadowOffset.Length; i++)
+            {
+                this.DrawString(font,
+                    p,
+                    pos + shadowOffset[i],
+                    shadowColor,
+                    new Vector2(scale),
+                    vector2,
+                    mode);
+            }
+
+            // Draw the main text
+            this.DrawString(font,
+                p,
+                pos,
+                mainColor,
+                new Vector2(scale),
+                vector2,
                 mode);
         }
 
