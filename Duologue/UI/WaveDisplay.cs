@@ -178,7 +178,7 @@ namespace Duologue.UI
         {
             // Get the position
             Vector2 totalSize = GetTotalSize();
-            Vector2 pos = screenCenter - totalSize / 2f;
+            //Vector2 pos = screenCenter - totalSize / 2f;
 
             // Calculate the fade percent
             float scale = 1f;
@@ -196,6 +196,9 @@ namespace Duologue.UI
             for (int i = 0; i < theText.Length; i++)
             {
                 //pos.X = screenCenter.X - font.MeasureString(theText[i]).X / 2f;
+                // FIXME
+                // Yeah, this is totally wrong and butchered... but don't want to figure it out now
+                Vector2 pos = screenCenter - font.MeasureString(theText[i]) + i * font.LineSpacing * Vector2.UnitY;
                 InstanceManager.RenderSprite.DrawString(
                     font,
                     theText[i],
@@ -206,7 +209,7 @@ namespace Duologue.UI
                     font.MeasureString(theText[i])/2f,
                     shadowOffset,
                     RenderSpriteBlendMode.AlphaBlend);
-                pos.Y += font.LineSpacing;
+                //pos.Y += font.LineSpacing;
             }
 
         }
@@ -220,7 +223,7 @@ namespace Duologue.UI
         {
             //currentType = (TextTransitionType)rand.Next((int)TextTransitionType.MaxNum);
             // For now, we just use this for testing
-            currentType = TextTransitionType.ZoomIn;
+            currentType = TextTransitionType.Fade;
         }
 
         /// <summary>

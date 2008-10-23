@@ -468,7 +468,7 @@ namespace Mimicware.Graphics
                     shadowColor,
                     new Vector2(scale),
                     vector2,
-                    mode);
+                    renderSpriteBlendMode);
             }
 
             // Draw the main text
@@ -478,7 +478,7 @@ namespace Mimicware.Graphics
                 mainColor,
                 new Vector2(scale),
                 vector2,
-                mode);
+                renderSpriteBlendMode);
         }
 
         /// <summary>
