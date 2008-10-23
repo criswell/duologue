@@ -136,6 +136,7 @@ namespace Duologue.Screens
                     waveDisplay.Text = text;
                     currentState = GamePlayState.Delay;
                     timeSinceStart = 0f;
+                    LocalInstanceManager.Background.SetBackground(currentWave.Background);
                     nextState = GamePlayState.InitPlayerSpawn;
                     break;
                 case GamePlayState.Delay:
