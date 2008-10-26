@@ -29,7 +29,7 @@ namespace Duologue.Tests
         //private Player player;
         private GamePadState lastState;
         private Vector2 motionScaler;
-        private Game1 localGame;
+        private DuologueGame localGame;
         //private EnemyBuzzsaw floater;
         private Vector2 minMaxX;
         private Vector2 minMaxY;
@@ -79,7 +79,7 @@ namespace Duologue.Tests
         public GamePlayTest(Game game)
             : base(game)
         {
-            localGame = (Game1)game;
+            localGame = (DuologueGame)game;
             render = null;
             assets = null;
             device = null;

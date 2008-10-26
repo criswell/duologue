@@ -62,7 +62,7 @@ namespace Duologue
     /// ...
     /// 100         -       Spinner
     /// </remarks>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class DuologueGame : Microsoft.Xna.Framework.Game
     {
         #region Constants
         public const int MaxSteamEffects = 20;
@@ -99,7 +99,7 @@ namespace Duologue
         public Dictionary<GameState, GameScreen> dispatchTable;
         //public
 
-        public Game1()
+        public DuologueGame()
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
