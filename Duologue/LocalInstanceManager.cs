@@ -48,11 +48,6 @@ namespace Duologue
         public static Player[] Players;
 
         /// <summary>
-        /// The local player index mapping
-        /// </summary>
-        public static PlayerIndex[] PlayersIndex;
-
-        /// <summary>
         /// The maximum number of players
         /// </summary>
         public static int MaxNumberOfPlayers
@@ -120,8 +115,6 @@ namespace Duologue
         {
             if (Players == null)
                 Players = new Player[MaxNumberOfPlayers];
-            if (PlayersIndex == null)
-                PlayersIndex = new PlayerIndex[MaxNumberOfPlayers];
         }
         #endregion
     }
