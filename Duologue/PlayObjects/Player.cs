@@ -122,6 +122,19 @@ namespace Duologue.PlayObjects
         /// The player index associated with this player
         /// </summary>
         public PlayerIndex MyPlayerIndex;
+
+        /// <summary>
+        /// The SignedInGamer associated with this player
+        /// </summary>
+        public SignedInGamer MyGamer;
+
+        /// <summary>
+        /// The GamerProfile associated with this player. We store this
+        /// separately from SignedInGamer because we reserve the right to
+        /// later on add in newtork gamer support, and if that ever happens
+        /// we need to have an instant way to get at the profile.
+        /// </summary>
+        public GamerProfile MyProfile;
         #endregion
 
         #region Constructor / Init
