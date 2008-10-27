@@ -189,6 +189,8 @@ namespace Duologue.Screens
         /// </summary>
         private void DrawString(string p, Vector2 vector2, Color color1, Color color2)
         {
+            // FIXME
+            // We now have an actual method for this in rendersprite we should use instead
             for(int i = 0; i < offsetModifiers.Length; i++)
                 InstanceManager.RenderSprite.DrawString(
                     font,
