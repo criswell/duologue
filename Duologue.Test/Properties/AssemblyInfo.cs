@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Duologue")]
-[assembly: AssemblyProduct("Duologue")]
+[assembly: AssemblyTitle("Duologue.Test")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("Hewlett-Packard Company")]
-
-[assembly: AssemblyCopyright("Copyright © Hewlett-Packard Company 2008")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Duologue.Test")]
+[assembly: AssemblyCopyright("Copyright ©  2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,10 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f56116c0-0df9-45b5-a1b6-8d42d2521bce")]
-
-// This allows our test assembly to access internal methods
-[assembly: InternalsVisibleTo("Duologue.Test")]
+[assembly: Guid("cd6bce2d-fdc5-425c-a1e5-4baf004c5a84")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,4 +29,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

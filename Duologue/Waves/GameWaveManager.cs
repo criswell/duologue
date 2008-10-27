@@ -23,6 +23,7 @@ using Duologue.Screens;
 using Duologue.UI;
 using Duologue.PlayObjects;
 using Duologue.Waves;
+using Duologue.State;
 #endregion
 
 namespace Duologue.Waves
@@ -77,6 +78,17 @@ namespace Duologue.Waves
                 currentWaveIndex = Math.Max(0, Math.Min(value, waves.Count-1));
             }
         }
+
+        /// <summary>
+        /// The current wave's Major Number
+        /// </summary>
+        public int CurrentMajorNumber;
+
+        /// <summary>
+        /// The current wave's Minor number
+        /// </summary>
+        public int CurrentMinorNumber;
+
         #endregion
 
         #region Constructor / Init
@@ -95,6 +107,10 @@ namespace Duologue.Waves
             {
                 waves = new List<GameWave>((int)maxNumOfGameWaves);
             }
+
+            // Sensible defaults
+            CurrentMajorNumber = 0;
+            CurrentMinorNumber = 0;
         }
         #endregion
 
@@ -119,11 +135,38 @@ namespace Duologue.Waves
                     // FIXME: Need an achievement here, I think
                 }
             }
+
+            // Get a random color state
+            ColorState[] theStates = ColorState.GetColorStates();
+
             return new GameWave(Resources.GameScreen_InfiniteWave,
                 GameWave.maxPlayerShotTypes,
                 rand.Next(LocalInstanceManager.Background.NumBackgrounds),
+                theStates[rand.Next(theStates.Length)],
                 lastMajorWaveNo,
                 lastMinorWaveNo);
+        }
+
+        /// <summary>
+        /// Get the next wave
+        /// </summary>
+        /// <returns></returns>
+        public GameWave GetNextWave()
+        {
+            GameWave temp;
+            if (LocalInstanceManager.CurrentGameState == Duologue.State.GameState.InfinityGame)
+            {
+                temp = GenerateRandomWave(CurrentMajorNumber, CurrentMinorNumber);
+                CurrentMajorNumber = temp.MajorWaveNumber;
+                CurrentMinorNumber = temp.MinorWaveNumber;
+            }
+            else
+            {
+                // FIXME
+                // Need to handle campaign here
+                temp = new GameWave();
+            }
+            return temp;
         }
         #endregion
     }

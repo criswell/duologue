@@ -6,3 +6,6 @@ syntax: glob
 Duologue\Content\obj\*
 Duologue\bin\*
 Duologue\obj\*
+Duologue.Test\Content\obj\*
+Duologue.Test\bin\*
+Duologue.Test\obj\*

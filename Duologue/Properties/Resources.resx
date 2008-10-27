@@ -130,7 +130,7 @@
     <value>Infinite Mode</value>
   </data>
   <data name="GameScreen_Wave" xml:space="preserve">
-    <value>Wave {0}</value>
+    <value>Wave {0}-{0}</value>
   </data>
   <data name="MainMenu_Achievements" xml:space="preserve">
     <value>Achievements</value>
@@ -158,6 +158,9 @@
   </data>
   <data name="PlayerSelect_ConnectController" xml:space="preserve">
     <value>Connect controller</value>
+  </data>
+  <data name="PlayerSelect_CountdownPressB" xml:space="preserve">
+    <value>Press "B" to cancel</value>
   </data>
   <data name="PlayerSelect_MainText" xml:space="preserve">
     <value>Press "A" to join and "Start" to begin</value>

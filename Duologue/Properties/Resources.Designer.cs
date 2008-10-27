@@ -97,7 +97,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wave {0}.
+        ///   Looks up a localized string similar to Wave {0}-{0}.
         /// </summary>
         internal static string GameScreen_Wave {
             get {
@@ -183,6 +183,15 @@ namespace Duologue.Properties {
         internal static string PlayerSelect_ConnectController {
             get {
                 return ResourceManager.GetString("PlayerSelect_ConnectController", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press &quot;B&quot; to cancel.
+        /// </summary>
+        internal static string PlayerSelect_CountdownPressB {
+            get {
+                return ResourceManager.GetString("PlayerSelect_CountdownPressB", resourceCulture);
             }
         }
         

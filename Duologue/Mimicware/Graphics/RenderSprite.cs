@@ -107,7 +107,12 @@ namespace Mimicware.Graphics
                         sobj.Font,
                         sobj.Text,
                         sobj.Position,
-                        sobj.Tint);
+                        sobj.Tint,
+                        sobj.Rotation,
+                        sobj.Center,
+                        sobj.Scale,
+                        sobj.SpriteEffects,
+                        sobj.Layer);
             }
         }
         #endregion
@@ -308,6 +313,70 @@ namespace Mimicware.Graphics
         /// <param name="p"></param>
         /// <param name="vector2"></param>
         /// <param name="color"></param>
+        /// <param name="scale"></param>
+        internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color, Vector2 scale)
+        {
+            SpriteObject sobj = new SpriteObject(
+                font,
+                p,
+                vector2,
+                color);
+            sobj.Scale = scale;
+            this.Add(sobj);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="vector2"></param>
+        /// <param name="color"></param>
+        /// <param name="scale"></param>
+        /// <param name="cent"></param>
+        internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color, Vector2 scale, Vector2 cent)
+        {
+            SpriteObject sobj = new SpriteObject(
+                font,
+                p,
+                vector2,
+                color);
+            sobj.Scale = scale;
+            sobj.Center = cent;
+            this.Add(sobj);
+        }
+
+        internal void DrawString(
+            SpriteFont font,
+            string p,
+            Vector2 vector2,
+            Color color,
+            Vector2 scale,
+            Vector2 cent,
+            RenderSpriteBlendMode mode)
+        {
+            SpriteObject sobj = new SpriteObject(
+                font,
+                p,
+                vector2,
+                color);
+            sobj.Scale = scale;
+            sobj.Center = cent;
+            if (mode == RenderSpriteBlendMode.Addititive)
+                this.AddAdditive(sobj);
+            else if (mode == RenderSpriteBlendMode.Multiplicative)
+                this.AddMultiplicative(sobj);
+            else
+                this.Add(sobj);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="vector2"></param>
+        /// <param name="color"></param>
         internal void DrawString(SpriteFont font, string p, Vector2 vector2, Color color, RenderSpriteBlendMode mode)
         {
             if (mode == RenderSpriteBlendMode.Addititive)
@@ -328,6 +397,88 @@ namespace Mimicware.Graphics
                     p,
                     vector2,
                     color));
+        }
+
+        /// <summary>
+        /// Draws a string with a shadow
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="pos"></param>
+        /// <param name="mainColor"></param>
+        /// <param name="shadowColor"></param>
+        /// <param name="shadowOffset"></param>
+        /// <param name="mode"></param>
+        internal void DrawString(
+            SpriteFont font,
+            string p,
+            Vector2 pos,
+            Color mainColor,
+            Color shadowColor,
+            Vector2[] shadowOffset,
+            RenderSpriteBlendMode mode)
+        {
+            // Draw shadow first
+            for (int i = 0; i < shadowOffset.Length; i++)
+            {
+                this.DrawString(font,
+                    p,
+                    pos + shadowOffset[i],
+                    shadowColor,
+                    mode);
+            }
+
+            // Draw the main text
+            this.DrawString(font,
+                p,
+                pos,
+                mainColor,
+                mode);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="p"></param>
+        /// <param name="pos"></param>
+        /// <param name="mainColor"></param>
+        /// <param name="shadowColor"></param>
+        /// <param name="scale"></param>
+        /// <param name="vector2"></param>
+        /// <param name="shadowOffset"></param>
+        /// <param name="renderSpriteBlendMode"></param>
+        internal void DrawString(
+            SpriteFont font,
+            string p,
+            Vector2 pos,
+            Color mainColor,
+            Color shadowColor,
+            float scale,
+            Vector2 vector2,
+            Vector2[] shadowOffset,
+            RenderSpriteBlendMode renderSpriteBlendMode)
+        {
+            // Draw shadow first
+            for (int i = 0; i < shadowOffset.Length; i++)
+            {
+                this.DrawString(font,
+                    p,
+                    pos + shadowOffset[i],
+                    shadowColor,
+                    new Vector2(scale),
+                    vector2,
+                    renderSpriteBlendMode);
+            }
+
+            // Draw the main text
+            this.DrawString(font,
+                p,
+                pos,
+                mainColor,
+                new Vector2(scale),
+                vector2,
+                renderSpriteBlendMode);
         }
 
         /// <summary>

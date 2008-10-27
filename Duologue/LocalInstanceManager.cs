@@ -29,7 +29,7 @@ using Duologue.Waves;
 
 namespace Duologue
 {
-    static class LocalInstanceManager
+    public static class LocalInstanceManager
     {
         #region Fields
         private static GameState currentGameState;
@@ -105,6 +105,11 @@ namespace Duologue
         /// The currentl GameWave
         /// </summary>
         public static GameWave CurrentGameWave;
+
+        /// <summary>
+        /// The current Spinner instance
+        /// </summary>
+        public static Spinner Spinner;
         #endregion
 
         #region Public methods

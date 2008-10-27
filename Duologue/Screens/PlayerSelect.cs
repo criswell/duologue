@@ -26,6 +26,11 @@ using Duologue.State;
 
 namespace Duologue.Screens
 {
+    public enum PlayerSelectState
+    {
+        PlayerSelect,
+        Countdown,
+    }
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -34,8 +39,11 @@ namespace Duologue.Screens
         #region Constants
         private const int maxTimer = 5;
         private const float timeCountdown = 1f;
+        private const float ScaleOffset = 1f;
+        private const float ScaleFactor = 0.25f;
 
         private const string fontFilename = "Fonts\\inero-28";
+        private const string countdownFontFilename = "Fonts\\inero-50";
         private const string AbuttonFilename = "PlayerUI\\buttonA";
         #endregion
 
@@ -45,6 +53,7 @@ namespace Duologue.Screens
 
         // Fonts
         private SpriteFont font;
+        private SpriteFont countdownFont;
 
         // Player colors
         private PlayerColors[] playerColors;
@@ -64,6 +73,8 @@ namespace Duologue.Screens
         // Counters and misc
         private float timeSinceStart;
         private int numActive;
+        private PlayerSelectState currentState;
+        private int currentCountdown;
         #endregion
 
         #region Properties
@@ -86,6 +97,17 @@ namespace Duologue.Screens
         public float Percentage
         {
             get { return MathHelper.Min(1f, timeSinceStart / timeCountdown); }
+        }
+
+        /// <summary>
+        /// Returns the current scaling factor based on percentage
+        /// </summary>
+        public float Scale
+        {
+            get
+            {
+                return ScaleOffset + ScaleFactor*(float)Math.Cos((double)(Percentage * MathHelper.TwoPi));
+            }
         }
         #endregion
 
@@ -124,12 +146,16 @@ namespace Duologue.Screens
                 activePlayers[i] = false;
                 controllerPluggedIn[i] = false;
             }
+
+            currentState = PlayerSelectState.PlayerSelect;
+            currentCountdown = maxTimer;
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
+            countdownFont = InstanceManager.AssetManager.LoadSpriteFont(countdownFontFilename);
             aButton = InstanceManager.AssetManager.LoadTexture2D(AbuttonFilename);
             centerOfButton = new Vector2(
                 aButton.Width / 2f,
@@ -227,6 +253,70 @@ namespace Duologue.Screens
             }
 
         }
+
+        /// <summary>
+        /// Trigger the countdown
+        /// </summary>
+        private void TriggerCountdown()
+        {
+            currentCountdown = maxTimer;
+            currentState = PlayerSelectState.Countdown;
+            LocalInstanceManager.Spinner.Position = centerOfScreen;
+            // FIXME
+            // These colors probably shouldn't be hardcoded
+            LocalInstanceManager.Spinner.BaseColor = Color.Red;
+            LocalInstanceManager.Spinner.TrackerColor = new Color(new Vector4(0f, 252f, 255f, 255f));
+            LocalInstanceManager.Spinner.DisplayFont = countdownFont;
+            LocalInstanceManager.Spinner.FontColor = Color.Violet;
+            LocalInstanceManager.Spinner.FontShadowColor = Color.DarkBlue;
+            LocalInstanceManager.Spinner.Enabled = true;
+            LocalInstanceManager.Spinner.Visible = true;
+            timeSinceStart = 0f;
+        }
+
+        /// <summary>
+        /// Void any active countdown, or otherwise just ensure it's not
+        /// happening.
+        /// </summary>
+        private void VoidCountdown()
+        {
+            currentState = PlayerSelectState.PlayerSelect;
+            LocalInstanceManager.Spinner.Enabled = false;
+            LocalInstanceManager.Spinner.Visible = false;
+            LocalInstanceManager.Spinner.Initialize();
+        }
+
+        /// <summary>
+        /// Triggers a tick
+        /// </summary>
+        private void TriggerTick()
+        {
+            timeSinceStart = 0f;
+            if (currentState == PlayerSelectState.Countdown)
+            {
+                currentCountdown--;
+
+                if (currentCountdown < 0)
+                {
+                    currentCountdown = 0;
+
+                    TriggerNext();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Trigger the next screen
+        /// </summary>
+        private void TriggerNext()
+        {
+            // Reset the countdown
+            VoidCountdown();
+            if (numActive > 0 && LocalInstanceManager.CurrentGameState == GameState.PlayerSelect)
+            {
+                LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+            }
+        }
         #endregion
 
         #region Public methods
@@ -270,6 +360,14 @@ namespace Duologue.Screens
         {
             if (Percentage < 1f)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            else
+                TriggerTick();
+
+            if (currentState == PlayerSelectState.Countdown)
+            {
+                LocalInstanceManager.Spinner.DisplayText = currentCountdown.ToString();
+                LocalInstanceManager.Spinner.Scale = new Vector2(Scale);
+            }
 
             if (Alive & !Guide.IsVisible)
             {
@@ -295,19 +393,22 @@ namespace Duologue.Screens
                     controllerPluggedIn[i] = InstanceManager.InputManager.LastGamePadStates[i].IsConnected;
                     if (activePlayers[i])
                     {
+                        numActive++;
                         // Check for disconnect or cancel
                         if ((!InstanceManager.InputManager.CurrentGamePadStates[i].IsConnected &&
                             InstanceManager.InputManager.LastGamePadStates[i].IsConnected) ||
                             BackRequest(i))
                         {
                             activePlayers[i] = false;
+                            numActive--;
+                            VoidCountdown();
                         }
                         else if(InstanceManager.InputManager.NewButtonPressed(Buttons.Start, (PlayerIndex)i))
                         {
-                        }
-                        else
-                        {
-                            numActive++;
+                            if (currentState != PlayerSelectState.Countdown)
+                                TriggerCountdown();
+                            else
+                                TriggerTick();
                         }
                     }
                     else
@@ -330,6 +431,7 @@ namespace Duologue.Screens
                         else if (BackRequest(i))
                         {
                             // Cancel back to main menu
+                            VoidCountdown();
                             TriggerBack();
                         }
 
@@ -352,7 +454,6 @@ namespace Duologue.Screens
                     if (activePlayers[i])
                     {
                         // Player is active
-                        Vector2 size = font.MeasureString(Resources.PlayerSelect_PressStart);
                         Vector2 gamertagSize = font.MeasureString(signedInGamers[i].Gamertag);
                         Texture2D pic = profiles[i].GamerPicture;
 
@@ -376,14 +477,30 @@ namespace Duologue.Screens
                             playerColors[i].Colors[0],
                             Color.Black);
 
-                        DrawString(
-                            Resources.PlayerSelect_PressStart,
-                            centerOfScreen + offsetModifiers[i] * selectOffset -
-                            new Vector2(
-                                size.X / 2f,
-                                -1 * size.Y / 2f),
-                            playerColors[i].Colors[0],
-                            Color.Black);
+                        if (currentState == PlayerSelectState.PlayerSelect)
+                        {
+                            Vector2 size = font.MeasureString(Resources.PlayerSelect_PressStart);
+                            DrawString(
+                                Resources.PlayerSelect_PressStart,
+                                centerOfScreen + offsetModifiers[i] * selectOffset -
+                                new Vector2(
+                                    size.X / 2f,
+                                    -1 * size.Y / 2f),
+                                playerColors[i].Colors[0],
+                                Color.Black);
+                        }
+                        else
+                        {
+                            Vector2 size = font.MeasureString(Resources.PlayerSelect_CountdownPressB);
+                            DrawString(
+                                Resources.PlayerSelect_CountdownPressB,
+                                centerOfScreen + offsetModifiers[i] * selectOffset -
+                                new Vector2(
+                                    size.X / 2f,
+                                    -1 * size.Y / 2f),
+                                playerColors[i].Colors[0],
+                                Color.Black);
+                        }
                     }
                     else if (controllerPluggedIn[i])
                     {
@@ -402,7 +519,7 @@ namespace Duologue.Screens
                             playerColors[i].Colors[0],
                             Color.Black);
                     }
-                    else
+                    else if(currentState == PlayerSelectState.PlayerSelect)
                     {
                         // Display default sign in request
                         Vector2 size = font.MeasureString(Resources.PlayerSelect_ConnectController);

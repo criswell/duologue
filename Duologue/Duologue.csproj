@@ -59,6 +59,8 @@
     <Compile Include="AchievementSystem\Achievement.cs" />
     <Compile Include="AchievementSystem\AchievementManager.cs" />
     <Compile Include="Background.cs" />
+    <Compile Include="CreatorsClub\GameScreen.cs" />
+    <Compile Include="CreatorsClub\InputState.cs" />
     <Compile Include="LocalInstanceManager.cs" />
     <Compile Include="Mimicware\Fx\Particle.cs" />
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
@@ -75,7 +77,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="CreatorsClub\ScreenManager.cs" />
     <Compile Include="Screens\ExitScreen.cs" />
+    <Compile Include="Screens\GamePlayScreenManager.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\MainGameLogo.cs" />
     <Compile Include="Screens\MainMenu.cs" />
@@ -85,7 +89,6 @@
     <Compile Include="Screens\PlayerSelectScreen.cs" />
     <Compile Include="Screens\PlayerSelectBase.cs" />
     <Compile Include="State\GameState.cs" />
-    <Compile Include="Tests\GamePlayScreenTest.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />
@@ -96,11 +99,13 @@
     <Compile Include="PlayObjects\PlayObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="DuologueGame.cs" />
     <Compile Include="State\ColorState.cs" />
     <Compile Include="Tests\MainMenuTest.cs" />
     <Compile Include="UI\Pointlet.cs" />
     <Compile Include="UI\ScoreScroller.cs" />
+    <Compile Include="UI\Spinner.cs" />
+    <Compile Include="UI\WaveDisplay.cs" />
     <Compile Include="Waves\GameWave.cs" />
     <Compile Include="Waves\GameWaveManager.cs" />
   </ItemGroup>
@@ -120,6 +125,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ScreenManager\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.Common.targets" />

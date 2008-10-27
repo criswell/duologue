@@ -23,6 +23,7 @@ using Duologue.AchievementSystem;
 using Duologue.Tests;
 using Duologue.State;
 using Duologue.Screens;
+using Duologue.UI;
 #endregion
 
 namespace Duologue
@@ -30,7 +31,38 @@ namespace Duologue
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    /// <remarks>
+    /// -----------
+    /// BLIT LAYERS
+    /// -----------
+    /// 1.0f        -       Background
+    /// 0.9f
+    /// 0.8f        -       Spinner (default)
+    /// 0.7f
+    /// 0.6f
+    /// 0.5f
+    /// 0.4f
+    /// 0.3f
+    /// 0.2f
+    /// 0.1f
+    /// 0.0f
+    /// 
+    /// ----------
+    /// DRAW ORDER
+    /// ----------
+    /// 1           -       Background
+    /// 2
+    /// 3
+    /// 4
+    /// 5
+    /// 6
+    /// 7
+    /// 8
+    /// 9
+    /// ...
+    /// 100         -       Spinner
+    /// </remarks>
+    public class DuologueGame : Microsoft.Xna.Framework.Game
     {
         #region Constants
         public const int MaxSteamEffects = 20;
@@ -52,16 +84,14 @@ namespace Duologue
         public PlayerRing playerRing;
         public Background background;
         public AchievementManager achievements;
+        public Spinner spinner;
 
         // Screens
         //public MainMenuTest mainMenuTest;
         public MainMenuScreen mainMenuScreen;
         public ExitScreen exitScreen;
         public PlayerSelectScreen playerSelectScreen;
-        // ERE I AM JH
-        // We have a problem, sort of, multiple GameStates for gameplay
-        // but only one gameplay screen atm. do we need more?
-        public GamePlayScreenTest gamePlayScreenTest;
+        public GamePlayScreenManager gamePlayScreenManager;
 
         /// <summary>
         /// The dispatch table for game state changes
@@ -69,7 +99,7 @@ namespace Duologue
         public Dictionary<GameState, GameScreen> dispatchTable;
         //public
 
-        public Game1()
+        public DuologueGame()
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -121,6 +151,12 @@ namespace Duologue
             Log.Visible = false;
             this.Components.Add(Log);
 
+            spinner = new Spinner(this);
+            spinner.Enabled = false;
+            spinner.Visible = false;
+            this.Components.Add(spinner);
+            spinner.DrawOrder = 100;
+
             steamSystem = new Steam(this, MaxSteamEffects);
             /*steamSystem.Enabled = true;
             steamSystem.Visible = true;*/
@@ -146,6 +182,7 @@ namespace Duologue
             LocalInstanceManager.PlayerRing = playerRing;
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;
+            LocalInstanceManager.Spinner = spinner;
             // A bit of trickery to ensure we have a lastGameState
             LocalInstanceManager.CurrentGameState = GameState.Exit;
             LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
@@ -167,6 +204,19 @@ namespace Duologue
             playerSelectScreen = new PlayerSelectScreen(this);
             this.Components.Add(playerSelectScreen);
             dispatchTable.Add(GameState.PlayerSelect, playerSelectScreen);
+
+            // Gameplay screen
+            gamePlayScreenManager = new GamePlayScreenManager(this);
+            this.Components.Add(gamePlayScreenManager);
+            dispatchTable.Add(GameState.InfinityGame, gamePlayScreenManager);
+
+            // Ensure that everything in the dispatch is disabled
+            foreach (GameScreen scr in dispatchTable.Values)
+            {
+                scr.SetEnable(false);
+                scr.SetVisible(false);
+                scr.Enabled = false;
+            }
 
             base.Initialize();
         }
