@@ -446,6 +446,14 @@ namespace Duologue.PlayObjects
 
             return retval;
         }
+
+        /// <summary>
+        /// Spawns the player
+        /// </summary>
+        public void Spawn()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
         #endregion
 
         #region Draw / Update

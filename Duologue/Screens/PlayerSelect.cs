@@ -340,8 +340,22 @@ namespace Duologue.Screens
                         signedInGamers[i],
                         profiles[i],
                         ColorState.GetColorStates()[0],
-                        Vector2.Zero);
+                        GetPlayerStartPos(i));
             }
+        }
+
+        /// <summary>
+        /// Gets the player start position
+        /// </summary>
+        /// <param name="i">The player's index</param>
+        /// <returns>A vector describing the current player's start position</returns>
+        private Vector2 GetPlayerStartPos(int i)
+        {
+            // FIXME
+            // Wow, fixme... bad hard-coded bullshit values
+            // just used to get the thing going
+            float offset = 40f;
+            return offset * offsetModifiers[i];
         }
         #endregion
 

@@ -143,6 +143,12 @@ namespace Duologue.Screens
                     if (PercentComplete >= 1f)
                         currentState = nextState;
                     break;
+                case GamePlayState.InitPlayerSpawn:
+                    for (int i = 0; i < InputManager.MaxInputs; i++)
+                    {
+                        LocalInstanceManager.Players[i].Spawn();
+                    }
+                    break;
                 default:
                     // Play the game
                     break;
