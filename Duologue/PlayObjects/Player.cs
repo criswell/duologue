@@ -154,6 +154,8 @@ namespace Duologue.PlayObjects
         public Player(ColorState currentColorState, Color playerTint, PlayerIndex playerIndex, Vector2 startPos)
             : base()
         {
+            // FIXME:
+            // A lot of this should be moved to Initialize()
             MyType = TypesOfPlayObjects.Player;
             colorState = currentColorState;
             lightIsNegative = true;
@@ -161,6 +163,21 @@ namespace Duologue.PlayObjects
             MyPlayerIndex = playerIndex;
             Position = startPos;
             lastPosition = startPos;
+            Initialize();
+        }
+
+        public Player(
+            PlayerColors playerColor,
+            PlayerIndex playerIndex,
+            SignedInGamer signedInGamer,
+            GamerProfile gamerProfile)
+            : base()
+        {
+            MyType = TypesOfPlayObjects.Player;
+            MyPlayerIndex = playerIndex;
+            PlayerColor = playerColor;
+            MyGamer = signedInGamer;
+            MyProfile = gamerProfile;
             Initialize();
         }
 
