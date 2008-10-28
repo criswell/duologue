@@ -29,6 +29,9 @@ namespace Duologue.PlayObjects
     public class Player : PlayObject
     {
         #region Fields
+        // Is this player object initalized?
+        private bool Initialized;
+
         // sprite objects defining the player
         private SpriteObject playerBase;
         private SpriteObject playerCannon;
@@ -119,7 +122,7 @@ namespace Duologue.PlayObjects
         /// PlayerColors
         /// ERE I AM JH, comment this badboy out and see what breaks...
         /// </summary>
-        public Color PlayerTint;
+        //public Color PlayerTint;
 
         /// <summary>
         /// The player color
@@ -145,73 +148,77 @@ namespace Duologue.PlayObjects
         public GamerProfile MyProfile;
         #endregion
 
-        #region Constructor / Init
+        #region Constructor / Init / Load
         /// <summary>
-        /// Constructs a player.
+        /// Default constructor
         /// </summary>
-        /// <param name="currentColorState">The current color state of this player.</param>
-        /// <param name="playerTint">The player's tint</param>
-        /// <param name="playerIndex">The player's associated player index</param>
-        public Player(ColorState currentColorState, Color playerTint, PlayerIndex playerIndex, Vector2 startPos)
+        public Player()
             : base()
         {
-            // FIXME:
-            // A lot of this should be moved to Initialize()
             MyType = TypesOfPlayObjects.Player;
-            colorState = currentColorState;
-            lightIsNegative = true;
-            PlayerTint = playerTint;
-            MyPlayerIndex = playerIndex;
-            Position = startPos;
-            lastPosition = startPos;
-            Initialize();
+            Initialized = false;
         }
 
-        public Player(
+        public void Initialize(
             PlayerColors playerColor,
             PlayerIndex playerIndex,
             SignedInGamer signedInGamer,
-            GamerProfile gamerProfile)
-            : base()
+            GamerProfile gamerProfile,
+            ColorState currentColorState,
+            Vector2 startPos)
         {
-            MyType = TypesOfPlayObjects.Player;
-            MyPlayerIndex = playerIndex;
+            // Set up the player data
             PlayerColor = playerColor;
+            MyPlayerIndex = playerIndex;
             MyGamer = signedInGamer;
             MyProfile = gamerProfile;
-            // FIXME
-            // Erm, we will need to re-write Init()
-            //Initialize();
-        }
+            Position = startPos;
+            lastPosition = startPos;
 
-        /// <summary>
-        /// Long and tedious initialize function
-        /// </summary>
-        private void Initialize()
-        {
-            // Gonna cause some errors me think
-            //Shot = new PlayerShot();
+            // Set up the orientation related items
+            lightIsNegative = true;
             Orientation = Vector2.UnitX;
             Aim = Vector2.Negate(Orientation);
             CaclulateRotations();
-            //lastPosition = Vector2.Zero;
+            treadOffset = Vector2.Zero;
+
+            // Set up the timers
             treadTimer = 0;
             shineTimer = 0;
             beamArcMax = 0f;
             beamArcMin = 0f;
-            treadOffset = Vector2.Zero;
+
+            LoadAndInitialize();
+        }
+        /// <summary>
+        /// Long and tedious initialize function
+        /// </summary>
+        private void LoadAndInitialize()
+        {
+            // Gonna cause some errors me think
+            //Shot = new PlayerShot();
+            /*Orientation = Vector2.UnitX;
+            Aim = Vector2.Negate(Orientation);
+            CaclulateRotations();*/
+            //lastPosition = Vector2.Zero;
+            /*treadTimer = 0;
+            shineTimer = 0;
+            beamArcMax = 0f;
+            beamArcMin = 0f;*/
+            //treadOffset = Vector2.Zero;
 
             if (AssetManager == null)
                 AssetManager = InstanceManager.AssetManager;
 
             #region Load player objects
-            //Position = new Vector2(InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
             playerBase = new SpriteObject(
                 AssetManager.LoadTexture2D("player-base"),
                 Position,
-                new Vector2(AssetManager.LoadTexture2D("player-base").Width / 2f, AssetManager.LoadTexture2D("player-base").Height / 2f),
+                new Vector2(
+                    AssetManager.LoadTexture2D("player-base").Width / 2f,
+                    AssetManager.LoadTexture2D("player-base").Height / 2f),
                 null,
-                PlayerTint,
+                PlayerColor.Colors[PlayerColors.Light],
                 0f,
                 1f,
                 0.5f);
@@ -219,7 +226,9 @@ namespace Duologue.PlayObjects
             playerCannon = new SpriteObject(
                 AssetManager.LoadTexture2D("player-cannon"),
                 Position,
-                new Vector2(AssetManager.LoadTexture2D("player-cannon").Width / 2f, AssetManager.LoadTexture2D("player-cannon").Height / 2f),
+                new Vector2(
+                    AssetManager.LoadTexture2D("player-cannon").Width / 2f,
+                    AssetManager.LoadTexture2D("player-cannon").Height / 2f),
                 null,
                 colorState.Positive[1],
                 0f,

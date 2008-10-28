@@ -31,6 +31,22 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const int numColors = 2;
+
+        /// <summary>
+        /// The light version of the color
+        /// </summary>
+        public const int Light = 0;
+
+        /// <summary>
+        /// The medium version of the color
+        /// </summary>
+        public const int Medium = 1;
+
+        /// <summary>
+        /// The dark version of the color
+        /// FIXME: Currently no one supports this really
+        /// </summary>
+        public const int Dark = 1;
         #endregion
 
         #region Fields

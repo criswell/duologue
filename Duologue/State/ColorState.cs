@@ -30,6 +30,22 @@ namespace Duologue.State
         #region Constants
         public const int numberColorsPerPolarity = 2;
         public const int numberOfColorStates = 3;
+
+        /// <summary>
+        /// Light version of the color
+        /// </summary>
+        public const int Light = 0;
+
+        /// <summary>
+        /// Medium version of the color
+        /// </summary>
+        public const int Medium = 1;
+
+        /// <summary>
+        /// Dark version of the color
+        /// FIXME: no one currently supports this
+        /// </summary>
+        public const int Dark = 1;
         #endregion
 
         #region Fields
