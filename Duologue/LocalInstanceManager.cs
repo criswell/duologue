@@ -115,6 +115,11 @@ namespace Duologue
         {
             if (Players == null)
                 Players = new Player[MaxNumberOfPlayers];
+
+            for (int i = 0; i < MaxNumberOfPlayers; i++)
+            {
+                Players[i] = new Player();
+            }
         }
         #endregion
     }

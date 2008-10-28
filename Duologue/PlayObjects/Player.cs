@@ -189,6 +189,8 @@ namespace Duologue.PlayObjects
             beamArcMin = 0f;
 
             LoadAndInitialize();
+
+            Initialized = true;
         }
         /// <summary>
         /// Long and tedious initialize function
