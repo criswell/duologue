@@ -115,8 +115,15 @@ namespace Duologue.PlayObjects
 
         /// <summary>
         /// This player's tint (multiple players will have different tints)
+        /// FIXME: The following needs to go away since we are now using
+        /// PlayerColors
         /// </summary>
         public Color PlayerTint;
+
+        /// <summary>
+        /// The player color
+        /// </summary>
+        public PlayerColors PlayerColor;
 
         /// <summary>
         /// The player index associated with this player
