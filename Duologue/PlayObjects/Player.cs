@@ -178,7 +178,9 @@ namespace Duologue.PlayObjects
             PlayerColor = playerColor;
             MyGamer = signedInGamer;
             MyProfile = gamerProfile;
-            Initialize();
+            // FIXME
+            // Erm, we will need to re-write Init()
+            //Initialize();
         }
 
         /// <summary>
