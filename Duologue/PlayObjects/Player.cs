@@ -117,6 +117,7 @@ namespace Duologue.PlayObjects
         /// This player's tint (multiple players will have different tints)
         /// FIXME: The following needs to go away since we are now using
         /// PlayerColors
+        /// ERE I AM JH, comment this badboy out and see what breaks...
         /// </summary>
         public Color PlayerTint;
 
