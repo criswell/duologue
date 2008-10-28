@@ -123,14 +123,6 @@ namespace Duologue.PlayObjects
         public ColorState colorState;
 
         /// <summary>
-        /// This player's tint (multiple players will have different tints)
-        /// FIXME: The following needs to go away since we are now using
-        /// PlayerColors
-        /// ERE I AM JH, comment this badboy out and see what breaks...
-        /// </summary>
-        //public Color PlayerTint;
-
-        /// <summary>
         /// The player color
         /// </summary>
         public PlayerColors PlayerColor;
@@ -213,18 +205,6 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void LoadAndInitialize()
         {
-            // Gonna cause some errors me think
-            //Shot = new PlayerShot();
-            /*Orientation = Vector2.UnitX;
-            Aim = Vector2.Negate(Orientation);
-            CaclulateRotations();*/
-            //lastPosition = Vector2.Zero;
-            /*treadTimer = 0;
-            shineTimer = 0;
-            beamArcMax = 0f;
-            beamArcMin = 0f;*/
-            //treadOffset = Vector2.Zero;
-
             if (AssetManager == null)
                 AssetManager = InstanceManager.AssetManager;
 
@@ -560,8 +540,6 @@ namespace Duologue.PlayObjects
                 CannonRotation,
                 1f,
                 0.5f);
-
-            //Shot.Draw(gameTime);
         }
 
         /// <summary>
@@ -603,7 +581,6 @@ namespace Duologue.PlayObjects
             }
             ComputeTreadOffset();
             lastPosition = Position;
-            //Shot.Update(gameTime);
         }
         #endregion
 
@@ -614,7 +591,6 @@ namespace Duologue.PlayObjects
         /// <param name="manager">The AssetManager</param>
         public override void SetAssetManager(AssetManager manager)
         {
-            //Shot.SetAssetManager(manager);
             base.SetAssetManager(manager);
         }
 
@@ -624,7 +600,6 @@ namespace Duologue.PlayObjects
         /// <param name="device">The GraphicsDevice</param>
         public override void SetGraphicsDevice(GraphicsDevice device)
         {
-            //Shot.SetGraphicsDevice(device);
             base.SetGraphicsDevice(device);
         }
 
@@ -634,7 +609,6 @@ namespace Duologue.PlayObjects
         /// <param name="render">Do you really need to ask?</param>
         public override void SetRenderSprite(RenderSprite render)
         {
-            //Shot.SetRenderSprite(render);
             base.SetRenderSprite(render);
         }
 
