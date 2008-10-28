@@ -230,7 +230,7 @@ namespace Duologue.PlayObjects
                     AssetManager.LoadTexture2D("player-cannon").Width / 2f,
                     AssetManager.LoadTexture2D("player-cannon").Height / 2f),
                 null,
-                colorState.Positive[1],
+                colorState.Positive[ColorState.Dark],
                 0f,
                 1f,
                 0.4f);
@@ -240,7 +240,7 @@ namespace Duologue.PlayObjects
                 Position,
                 new Vector2(AssetManager.LoadTexture2D("player-light").Width / 2f, AssetManager.LoadTexture2D("player-light").Height / 2f),
                 null,
-                colorState.Negative[1],
+                colorState.Negative[ColorState.Medium],
                 0f,
                 1f,
                 0.4f);
@@ -251,7 +251,7 @@ namespace Duologue.PlayObjects
                 Vector2.Zero,
                 new Vector2(AssetManager.LoadTexture2D("shot").Width / 2f, AssetManager.LoadTexture2D("shot").Height / 2f),
                 null,
-                colorState.Positive[0],
+                colorState.Positive[ColorState.Light],
                 0f,
                 1f,
                 1f);
@@ -265,7 +265,7 @@ namespace Duologue.PlayObjects
                 Position,
                 beamCenter,
                 null,
-                colorState.Negative[1],
+                colorState.Negative[ColorState.Dark],
                 0f,
                 1f,
                 1f);
@@ -275,7 +275,7 @@ namespace Duologue.PlayObjects
                 Position,
                 beamCenter,
                 null,
-                colorState.Negative[0],
+                colorState.Negative[ColorState.Light],
                 0f,
                 1f,
                 1f);
@@ -297,7 +297,6 @@ namespace Duologue.PlayObjects
             playerShines = new Texture2D[shineFrames];
             for (int i = 0; i < shineFrames; i++)
             {
-                //string temp = String.Format("shine{0:00}", i + 1);
                 playerShines[i] = AssetManager.LoadTexture2D(String.Format("shine{0:00}", i+1));
             }
             currentShine = 0;
@@ -362,21 +361,21 @@ namespace Duologue.PlayObjects
         {
             if (lightIsNegative)
             {
-                playerLight.Tint = colorState.Negative[1];
-                beam.Tint = colorState.Negative[1];
-                beamBase.Tint = colorState.Negative[0];
+                playerLight.Tint = colorState.Negative[ColorState.Medium];
+                beam.Tint = colorState.Negative[ColorState.Dark];
+                beamBase.Tint = colorState.Negative[ColorState.Light];
 
-                playerCannon.Tint = colorState.Positive[1];
-                shot.Tint = colorState.Positive[0];
+                playerCannon.Tint = colorState.Positive[ColorState.Dark];
+                shot.Tint = colorState.Positive[ColorState.Light];
             }
             else
             {
-                playerLight.Tint = colorState.Positive[1];
-                beam.Tint = colorState.Positive[1];
-                beamBase.Tint = colorState.Positive[0];
+                playerLight.Tint = colorState.Positive[ColorState.Medium];
+                beam.Tint = colorState.Positive[ColorState.Dark];
+                beamBase.Tint = colorState.Positive[ColorState.Light];
 
-                playerCannon.Tint = colorState.Negative[1];
-                shot.Tint = colorState.Negative[0];
+                playerCannon.Tint = colorState.Negative[ColorState.Dark];
+                shot.Tint = colorState.Negative[ColorState.Light];
             }
         }
 
