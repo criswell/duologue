@@ -317,6 +317,25 @@ namespace Duologue.Screens
             if (numActive > 0 && LocalInstanceManager.CurrentGameState == GameState.PlayerSelect)
             {
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+                // Set the players
+                SetPlayers();
+            }
+        }
+
+        /// <summary>
+        /// Called at the end after we're finished to set the players up
+        /// </summary>
+        private void SetPlayers()
+        {
+            if (LocalInstanceManager.Players == null)
+                LocalInstanceManager.InitializePlayers();
+
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+            {
+                LocalInstanceManager.Players[i].MyPlayerIndex = (PlayerIndex)i;
+                LocalInstanceManager.Players[i].MyProfile = profiles[i];
+                LocalInstanceManager.Players[i].MyGamer = signedInGamers[i];
+                LocalInstanceManager.Players[i].PlayerColor = playerColors[i];
             }
         }
         #endregion
