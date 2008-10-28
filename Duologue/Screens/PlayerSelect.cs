@@ -332,11 +332,15 @@ namespace Duologue.Screens
 
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
-                LocalInstanceManager.Players[i] = new Player(
-                    playerColors[i],
-                    (PlayerIndex)i,
-                    signedInGamers[i],
-                    profiles[i]);
+                LocalInstanceManager.Players[i].Active = activePlayers[i];
+                if (activePlayers[i])
+                    LocalInstanceManager.Players[i].Initialize(
+                        playerColors[i],
+                        (PlayerIndex)i,
+                        signedInGamers[i],
+                        profiles[i],
+                        ColorState.GetColorStates()[0],
+                        Vector2.Zero);
             }
         }
         #endregion

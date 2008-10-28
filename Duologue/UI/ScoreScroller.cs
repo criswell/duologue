@@ -226,9 +226,9 @@ namespace Duologue.UI
                 Pointlet p = freePointlets.Dequeue();
                 p.Initialize(pointPos,
                     new Color(
-                        associatedPlayer.PlayerTint.R,
-                        associatedPlayer.PlayerTint.G,
-                        associatedPlayer.PlayerTint.B,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light].R,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light].G,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light].B,
                         (byte)rand.Next(minPointletAlpha, maxPointletAlpha)),
                     points,
                     new Rectangle(
@@ -361,7 +361,7 @@ namespace Duologue.UI
                 smallFont,
                 scoreText,
                 position,
-                associatedPlayer.PlayerTint);
+                associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
 
             for (int i = 0; i < lengthOfMaxScore - length; i++)
             {
@@ -370,7 +370,7 @@ namespace Duologue.UI
                     font,
                     "0",
                     charPos,
-                    associatedPlayer.PlayerTint);
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
                 currentChar++;
             }
 
@@ -381,7 +381,7 @@ namespace Duologue.UI
                     font,
                     chars.Current.ToString(),
                     charPos,
-                    associatedPlayer.PlayerTint);
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
 
                 if(scrollingScore < score &&
                     diffLength > 0 &&
@@ -392,9 +392,9 @@ namespace Duologue.UI
                         rand.Next(9).ToString(),
                         charPos,
                         new Color(
-                            associatedPlayer.PlayerTint.R,
-                            associatedPlayer.PlayerTint.G,
-                            associatedPlayer.PlayerTint.B,
+                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].R,
+                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].G,
+                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].B,
                             (byte)100),
                         RenderSpriteBlendMode.Addititive);
                 }

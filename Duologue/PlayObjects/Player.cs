@@ -76,6 +76,12 @@ namespace Duologue.PlayObjects
 
         #region Properties
         /// <summary>
+        /// Determines if this player is active or not (e.g., if there is a controller
+        /// connected that controls this player)
+        /// </summary>
+        public bool Active;
+
+        /// <summary>
         /// The orientation of the player
         /// </summary>
         public Vector2 Orientation;
@@ -159,6 +165,15 @@ namespace Duologue.PlayObjects
             Initialized = false;
         }
 
+        /// <summary>
+        /// Initialize the player object. Called every time the player needs to be initializeds
+        /// </summary>
+        /// <param name="playerColor">Color of this player</param>
+        /// <param name="playerIndex">Player's index</param>
+        /// <param name="signedInGamer">Signed in gamer</param>
+        /// <param name="gamerProfile">Gamer profile associated with the player</param>
+        /// <param name="currentColorState">The current color state</param>
+        /// <param name="startPos">The starting position of the player</param>
         public void Initialize(
             PlayerColors playerColor,
             PlayerIndex playerIndex,
@@ -174,6 +189,7 @@ namespace Duologue.PlayObjects
             MyProfile = gamerProfile;
             Position = startPos;
             lastPosition = startPos;
+            colorState = currentColorState;
 
             // Set up the orientation related items
             lightIsNegative = true;
