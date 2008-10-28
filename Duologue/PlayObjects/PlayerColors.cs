@@ -27,7 +27,7 @@ namespace Duologue.PlayObjects
     /// <summary>
     /// The various player color schemes
     /// </summary>
-    class PlayerColors
+    public class PlayerColors
     {
         #region Constants
         private const int numColors = 2;
