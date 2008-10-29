@@ -28,6 +28,21 @@ namespace Duologue.PlayObjects
     /// </summary>
     public class Player : PlayObject
     {
+        #region Constants
+        // Filenames
+        private const string filename_playerBase = "player-base";
+        private const string filename_playerCannon = "player-cannon";
+        private const string filename_playerLight = "player-light";
+        private const string filename_shot = "shot";
+        private const string filename_playerUIbase = "PlayerUI/P{0}-base";
+        private const string filename_playerUIroot = "PlayerUI/player-root";
+        private const string filename_spawnCrosshairs = "ship-spawn";
+        private const string filename_beam = "beam";
+        private const string filename_beamBase = "beam-base";
+        private const string filename_tread = "{0:tread00}";
+        private const string filename_shine = "shine{0:00}";
+        #endregion
+
         #region Fields
         // Is this player object initalized?
         private bool Initialized;
@@ -59,6 +74,11 @@ namespace Duologue.PlayObjects
         private int currentShine;
         private int shineTimer;
         private const int maxShineTimer = 20;
+
+        // Relating to the player UI elements
+        private Texture2D spawnCrosshairs;
+        private Texture2D playerUIroot;
+        private Texture2D playerUIbase;
 
         // FIXME, dude, got me
         private bool lightIsNegative;
@@ -210,11 +230,11 @@ namespace Duologue.PlayObjects
 
             #region Load player objects
             playerBase = new SpriteObject(
-                AssetManager.LoadTexture2D("player-base"),
+                AssetManager.LoadTexture2D(filename_playerBase),
                 Position,
                 new Vector2(
-                    AssetManager.LoadTexture2D("player-base").Width / 2f,
-                    AssetManager.LoadTexture2D("player-base").Height / 2f),
+                    AssetManager.LoadTexture2D(filename_playerBase).Width / 2f,
+                    AssetManager.LoadTexture2D(filename_playerBase).Height / 2f),
                 null,
                 PlayerColor.Colors[PlayerColors.Light],
                 0f,
@@ -222,11 +242,11 @@ namespace Duologue.PlayObjects
                 0.5f);
 
             playerCannon = new SpriteObject(
-                AssetManager.LoadTexture2D("player-cannon"),
+                AssetManager.LoadTexture2D(filename_playerCannon),
                 Position,
                 new Vector2(
-                    AssetManager.LoadTexture2D("player-cannon").Width / 2f,
-                    AssetManager.LoadTexture2D("player-cannon").Height / 2f),
+                    AssetManager.LoadTexture2D(filename_playerCannon).Width / 2f,
+                    AssetManager.LoadTexture2D(filename_playerCannon).Height / 2f),
                 null,
                 colorState.Positive[ColorState.Dark],
                 0f,
@@ -234,9 +254,11 @@ namespace Duologue.PlayObjects
                 0.4f);
 
             playerLight = new SpriteObject(
-                AssetManager.LoadTexture2D("player-light"),
+                AssetManager.LoadTexture2D(filename_playerLight),
                 Position,
-                new Vector2(AssetManager.LoadTexture2D("player-light").Width / 2f, AssetManager.LoadTexture2D("player-light").Height / 2f),
+                new Vector2(
+                    AssetManager.LoadTexture2D(filename_playerLight).Width / 2f,
+                    AssetManager.LoadTexture2D(filename_playerLight).Height / 2f),
                 null,
                 colorState.Negative[ColorState.Medium],
                 0f,
@@ -245,9 +267,11 @@ namespace Duologue.PlayObjects
 
             // Load projectile object
             shot = new SpriteObject(
-                AssetManager.LoadTexture2D("shot"),
+                AssetManager.LoadTexture2D(filename_shot),
                 Vector2.Zero,
-                new Vector2(AssetManager.LoadTexture2D("shot").Width / 2f, AssetManager.LoadTexture2D("shot").Height / 2f),
+                new Vector2(
+                    AssetManager.LoadTexture2D(filename_shot).Width / 2f,
+                    AssetManager.LoadTexture2D(filename_shot).Height / 2f),
                 null,
                 colorState.Positive[ColorState.Light],
                 0f,
@@ -259,7 +283,7 @@ namespace Duologue.PlayObjects
             // Load beam object
             Vector2 beamCenter = new Vector2(747f, 197.5f);
             beam = new SpriteObject(
-                AssetManager.LoadTexture2D("beam"),
+                AssetManager.LoadTexture2D(filename_beam),
                 Position,
                 beamCenter,
                 null,
@@ -269,7 +293,7 @@ namespace Duologue.PlayObjects
                 1f);
 
             beamBase = new SpriteObject(
-                AssetManager.LoadTexture2D("beam-base"),
+                AssetManager.LoadTexture2D(filename_beamBase),
                 Position,
                 beamCenter,
                 null,
@@ -285,7 +309,7 @@ namespace Duologue.PlayObjects
             playerTreads = new Texture2D[treadFrames];
             for (int i = 0; i < treadFrames; i++)
             {
-                playerTreads[i] = AssetManager.LoadTexture2D(String.Format("{0:tread00}", treadFrames-i));
+                playerTreads[i] = AssetManager.LoadTexture2D(String.Format(filename_tread, treadFrames-i));
             }
             currentTread = 0;
             treadCenter = new Vector2(
@@ -295,7 +319,7 @@ namespace Duologue.PlayObjects
             playerShines = new Texture2D[shineFrames];
             for (int i = 0; i < shineFrames; i++)
             {
-                playerShines[i] = AssetManager.LoadTexture2D(String.Format("shine{0:00}", i+1));
+                playerShines[i] = AssetManager.LoadTexture2D(String.Format(filename_shine, i+1));
             }
             currentShine = 0;
             shineCenter = new Vector2(
