@@ -52,6 +52,7 @@ namespace Duologue.Screens
         private GamePlayState currentState;
         private GamePlayState nextState;
         private WaveDisplay waveDisplay;
+        private GamePlayLoop gamePlayLoop;
         private float timeSinceStart;
         #endregion
 
@@ -72,6 +73,8 @@ namespace Duologue.Screens
             gameWaveManager = new GameWaveManager(null);
             waveDisplay = new WaveDisplay(localGame);
             localGame.Components.Add(waveDisplay);
+            gamePlayLoop = new GamePlayLoop(localGame);
+            localGame.Components.Add(gamePlayLoop);
             //Reset();
         }
 
@@ -96,6 +99,7 @@ namespace Duologue.Screens
         protected override void InitializeConstants()
         {
             MyComponents.Add(waveDisplay);
+            MyComponents.Add(gamePlayLoop);
 
             this.SetEnable(false);
             this.SetVisible(false);

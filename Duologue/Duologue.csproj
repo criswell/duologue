@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="CreatorsClub\ScreenManager.cs" />
     <Compile Include="Screens\ExitScreen.cs" />
+    <Compile Include="Screens\GamePlayLoop.cs" />
     <Compile Include="Screens\GamePlayScreenManager.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\MainGameLogo.cs" />
