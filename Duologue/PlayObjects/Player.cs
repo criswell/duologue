@@ -23,6 +23,13 @@ using Duologue.State;
 
 namespace Duologue.PlayObjects
 {
+    public enum PlayerState
+    {
+        Spawning,
+        Alive,
+        Dying,
+        Dead,
+    }
     /// <summary>
     /// The play object defining the game player.
     /// </summary>
@@ -46,6 +53,7 @@ namespace Duologue.PlayObjects
         #region Fields
         // Is this player object initalized?
         private bool Initialized;
+        private PlayerState state;
 
         // sprite objects defining the player
         private SpriteObject playerBase;
@@ -100,6 +108,14 @@ namespace Duologue.PlayObjects
         /// connected that controls this player)
         /// </summary>
         public bool Active;
+
+        /// <summary>
+        /// The current state of this player
+        /// </summary>
+        public PlayerState State
+        {
+            get { return state; }
+        }
 
         /// <summary>
         /// The orientation of the player
@@ -217,6 +233,8 @@ namespace Duologue.PlayObjects
             beamArcMin = 0f;
 
             LoadAndInitialize();
+
+            state = PlayerState.Dead;
 
             Initialized = true;
         }
@@ -476,7 +494,7 @@ namespace Duologue.PlayObjects
         /// </summary>
         public void Spawn()
         {
-            throw new Exception("The method or operation is not implemented.");
+            state = PlayerState.Spawning;
         }
         #endregion
 
@@ -490,88 +508,16 @@ namespace Duologue.PlayObjects
             if (RenderSprite == null)
                 RenderSprite = InstanceManager.RenderSprite;
 
-            CaclulateRotations();
-            CheckScreenBoundary();
-
-            // Treads
-            RenderSprite.Draw(
-                playerTreads[currentTread],
-                Position + treadOffset,
-                treadCenter,
-                null,
-                playerBase.Tint,
-                TreadRotation,
-                1f,
-                0.5f);
-                
-
-            // Base
-            RenderSprite.Draw(
-                playerBase.Texture,
-                Position,
-                playerBase.Center,
-                null,
-                playerBase.Tint,
-                BaseRotation,
-                1f,
-                0.5f);
-
-            // Shine
-            RenderSprite.Draw(
-                playerShines[currentShine],
-                Position,
-                shineCenter,
-                null,
-                playerBase.Tint,
-                0f,
-                1f,
-                0.5f);
-
-            // Light
-            RenderSprite.Draw(
-                playerLight.Texture,
-                Position,
-                playerLight.Center,
-                null,
-                playerLight.Tint,
-                LightRotation,
-                1f,
-                0.5f,
-                RenderSpriteBlendMode.Addititive);
-
-            // Lightbeam
-            RenderSprite.Draw(
-                beam.Texture,
-                Position,
-                beam.Center,
-                null,
-                beam.Tint,
-                BeamRotation,
-                1f,
-                0.5f,
-                RenderSpriteBlendMode.Addititive);
-
-            RenderSprite.Draw(
-                beamBase.Texture,
-                Position,
-                beamBase.Center,
-                null,
-                beamBase.Tint,
-                BeamRotation,
-                1f,
-                0.5f,
-                RenderSpriteBlendMode.Addititive);
-
-            // Cannon
-            RenderSprite.Draw(
-                playerCannon.Texture,
-                Position,
-                playerCannon.Center,
-                null,
-                playerCannon.Tint,
-                CannonRotation,
-                1f,
-                0.5f);
+            switch (state)
+            {
+                case PlayerState.Spawning:
+                    DrawSpawning();
+                    break;
+                default:
+                    // Player is alive
+                    DrawAlive();
+                    break;
+            }
         }
 
         /// <summary>
@@ -660,6 +606,106 @@ namespace Duologue.PlayObjects
         }
 
         public override bool TriggerHit(PlayObject pobj)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+        #endregion
+
+        #region Private Draw Methods
+        /// <summary>
+        /// Draw the player when alive
+        /// </summary>
+        private void DrawAlive()
+        {
+            CaclulateRotations();
+            CheckScreenBoundary();
+
+            // Treads
+            RenderSprite.Draw(
+                playerTreads[currentTread],
+                Position + treadOffset,
+                treadCenter,
+                null,
+                playerBase.Tint,
+                TreadRotation,
+                1f,
+                0.5f);
+
+
+            // Base
+            RenderSprite.Draw(
+                playerBase.Texture,
+                Position,
+                playerBase.Center,
+                null,
+                playerBase.Tint,
+                BaseRotation,
+                1f,
+                0.5f);
+
+            // Shine
+            RenderSprite.Draw(
+                playerShines[currentShine],
+                Position,
+                shineCenter,
+                null,
+                playerBase.Tint,
+                0f,
+                1f,
+                0.5f);
+
+            // Light
+            RenderSprite.Draw(
+                playerLight.Texture,
+                Position,
+                playerLight.Center,
+                null,
+                playerLight.Tint,
+                LightRotation,
+                1f,
+                0.5f,
+                RenderSpriteBlendMode.Addititive);
+
+            // Lightbeam
+            RenderSprite.Draw(
+                beam.Texture,
+                Position,
+                beam.Center,
+                null,
+                beam.Tint,
+                BeamRotation,
+                1f,
+                0.5f,
+                RenderSpriteBlendMode.Addititive);
+
+            RenderSprite.Draw(
+                beamBase.Texture,
+                Position,
+                beamBase.Center,
+                null,
+                beamBase.Tint,
+                BeamRotation,
+                1f,
+                0.5f,
+                RenderSpriteBlendMode.Addititive);
+
+            // Cannon
+            RenderSprite.Draw(
+                playerCannon.Texture,
+                Position,
+                playerCannon.Center,
+                null,
+                playerCannon.Tint,
+                CannonRotation,
+                1f,
+                0.5f);
+
+        }
+
+        /// <summary>
+        /// Draw the player spawning
+        /// </summary>
+        private void DrawSpawning()
         {
             throw new Exception("The method or operation is not implemented.");
         }
