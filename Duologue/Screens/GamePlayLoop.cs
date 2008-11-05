@@ -86,6 +86,15 @@ namespace Duologue.Screens
 
         public override void Draw(GameTime gameTime)
         {
+            // First, run through the players
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+            {
+                Player p = LocalInstanceManager.Players[i];
+                if (p.Active)
+                {
+                    p.Draw(gameTime);
+                }
+            }
             base.Draw(gameTime);
         }
         #endregion

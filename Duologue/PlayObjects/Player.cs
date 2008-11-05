@@ -513,9 +513,11 @@ namespace Duologue.PlayObjects
                 case PlayerState.Spawning:
                     DrawSpawning();
                     break;
-                default:
-                    // Player is alive
+                case PlayerState.Alive:
                     DrawAlive();
+                    break;
+                default:
+                    // Player is dead, do nothing
                     break;
             }
         }
