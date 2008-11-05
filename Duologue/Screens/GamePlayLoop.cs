@@ -79,7 +79,15 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            // First, run through the players
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+            {
+                Player p = LocalInstanceManager.Players[i];
+                if (p.Active)
+                {
+                    p.Update(gameTime) ;
+                }
+            }
 
             base.Update(gameTime);
         }

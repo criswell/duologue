@@ -354,8 +354,11 @@ namespace Duologue.Screens
             // FIXME
             // Wow, fixme... bad hard-coded bullshit values
             // just used to get the thing going
-            float offset = 40f;
-            return offset * offsetModifiers[i];
+            Vector2 screenCenter = new Vector2(
+                InstanceManager.DefaultViewport.Width / 2f,
+                InstanceManager.DefaultViewport.Height / 2f);
+            float offset = 100f;
+            return screenCenter - offset * offsetModifiers[i];
         }
         #endregion
 

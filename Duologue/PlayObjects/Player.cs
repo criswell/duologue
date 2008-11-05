@@ -48,6 +48,12 @@ namespace Duologue.PlayObjects
         private const string filename_beamBase = "beam-base";
         private const string filename_tread = "{0:tread00}";
         private const string filename_shine = "shine{0:00}";
+
+        // PlayerUI items
+        private const float startSpawnScale = 2f;
+        private const float deltaSpawnScale = -0.1f;
+        private const float deltaSpawnRotation = 0.1f;
+        private const byte spawnTransparency = (byte)128;
         #endregion
 
         #region Fields
@@ -85,6 +91,9 @@ namespace Duologue.PlayObjects
 
         // Relating to the player UI elements
         private Texture2D spawnCrosshairs;
+        private float spawnScale;
+        private float spawnRotation;
+        private Vector2 spawnCenter;
         private Texture2D playerUIroot;
         private Texture2D playerUIbase;
 
@@ -235,6 +244,8 @@ namespace Duologue.PlayObjects
             LoadAndInitialize();
 
             state = PlayerState.Dead;
+            spawnScale = startSpawnScale;
+            spawnRotation = 0f;
 
             Initialized = true;
         }
@@ -343,6 +354,12 @@ namespace Duologue.PlayObjects
             shineCenter = new Vector2(
                 playerShines[currentShine].Width / 2f,
                 playerShines[currentShine].Height / 2f);
+
+            // Player UI items
+            spawnCrosshairs = AssetManager.LoadTexture2D(filename_spawnCrosshairs);
+            spawnCenter = new Vector2(spawnCrosshairs.Width / 2f, spawnCrosshairs.Height / 2f);
+            playerUIroot = AssetManager.LoadTexture2D(filename_playerUIroot);
+            playerUIbase = AssetManager.LoadTexture2D(String.Format(filename_playerUIbase, (int)MyPlayerIndex +1));
         }
         #endregion
 
@@ -528,39 +545,61 @@ namespace Duologue.PlayObjects
         /// <param name="gameTime"></param>
         internal void Update(GameTime gameTime)
         {
-            if (lastPosition != Position)
+            switch (state)
             {
-                treadTimer++;
-                if (treadTimer > maxTreadTimer)
-                {
-                    treadTimer = 0;
-                    currentTread++;
-                    if (currentTread >= treadFrames)
-                        currentTread = 0;
-                }
+                case PlayerState.Alive:
+                    if (lastPosition != Position)
+                    {
+                        treadTimer++;
+                        if (treadTimer > maxTreadTimer)
+                        {
+                            treadTimer = 0;
+                            currentTread++;
+                            if (currentTread >= treadFrames)
+                                currentTread = 0;
+                        }
+                    }
+                    if (lastPosition.X != Position.X)
+                    {
+                        shineTimer++;
+                        if (shineTimer > maxShineTimer)
+                        {
+                            shineTimer = 0;
+                            currentShine += (int)((lastPosition.X - Position.X) / Math.Abs(lastPosition.X - Position.X));
+                            if (currentShine >= shineFrames)
+                                currentShine = 0;
+                            else if (currentShine < 0)
+                                currentShine = shineFrames - 1;
+                        }
+                    }
+                    if (screenCenter == Vector2.Zero)
+                    {
+                        screenCenter = new Vector2(
+                            InstanceManager.GraphicsDevice.Viewport.Width / 2f,
+                            InstanceManager.GraphicsDevice.Viewport.Height / 2f);
+                        InstanceManager.Logger.LogEntry(screenCenter.ToString());
+                    }
+                    ComputeTreadOffset();
+                    lastPosition = Position;
+                    break;
+                case PlayerState.Spawning:
+                    spawnRotation += deltaSpawnRotation;
+                    if (spawnRotation > MathHelper.TwoPi)
+                        spawnRotation = 0f;
+                    else if (spawnRotation < 0f)
+                        spawnRotation = MathHelper.TwoPi;
+                    spawnScale += deltaSpawnScale;
+                    if (spawnScale < 1f)
+                    {
+                        // FIXME something wrong here
+                        state = PlayerState.Alive;
+                        spawnScale = deltaSpawnScale;
+                    }
+                    break;
+                default:
+                    // Player is dead
+                    break;
             }
-            if (lastPosition.X != Position.X)
-            {
-                shineTimer++;
-                if (shineTimer > maxShineTimer)
-                {
-                    shineTimer = 0;
-                    currentShine += (int)((lastPosition.X - Position.X) / Math.Abs(lastPosition.X - Position.X));
-                    if (currentShine >= shineFrames)
-                        currentShine = 0;
-                    else if (currentShine < 0)
-                        currentShine = shineFrames - 1;
-                }
-            }
-            if (screenCenter == Vector2.Zero)
-            {
-                screenCenter = new Vector2(
-                    InstanceManager.GraphicsDevice.Viewport.Width / 2f,
-                    InstanceManager.GraphicsDevice.Viewport.Height / 2f);
-                InstanceManager.Logger.LogEntry(screenCenter.ToString());
-            }
-            ComputeTreadOffset();
-            lastPosition = Position;
         }
         #endregion
 
@@ -709,7 +748,15 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void DrawSpawning()
         {
-            throw new Exception("The method or operation is not implemented.");
+            RenderSprite.Draw(
+                spawnCrosshairs,
+                Position,
+                spawnCenter,
+                null,
+                playerBase.Tint,
+                spawnRotation,
+                spawnScale,
+                0.5f);
         }
         #endregion
     }
