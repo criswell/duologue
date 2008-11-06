@@ -58,8 +58,8 @@ namespace Duologue.PlayObjects
         private const float maxOpacity = 255f;
         private const byte tankBlinkTransparency = (byte)128;
         private const byte playerUIBlinkTransparency = (byte)192;
-        private const int numTimesBlink = 10;
-        private const float maxBlinkTimer = 1f;
+        private const int numTimesBlink = 30;
+        private const float maxBlinkTimer = 0.1f;
         #endregion
 
         #region Fields
@@ -750,6 +750,7 @@ namespace Duologue.PlayObjects
 
             if (blinkOn)
             {
+                // Draw the player UI
                 Color c1 = new Color(
                     PlayerColor.Colors[PlayerColors.Dark].R,
                     PlayerColor.Colors[PlayerColors.Dark].G,
@@ -781,6 +782,12 @@ namespace Duologue.PlayObjects
                     1f,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
+                DrawPlayerLight(tankBlinkTransparency);
+            }
+            else
+            {
+                // Draw the light
+                DrawPlayerLight(playerUIBlinkTransparency);
             }
         }
 
@@ -854,14 +861,31 @@ namespace Duologue.PlayObjects
         }
 
         /// <summary>
-        /// Draw the player when alive
+        /// Draw the player light beam with optional transparency
         /// </summary>
-        private void DrawAlive(GameTime gameTime)
+        private void DrawPlayerLight(byte? transparency)
         {
-            CaclulateRotations();
-            CheckScreenBoundary();
-
-            DrawPlayerTank(null);
+            Color c1 = playerLight.Tint;
+            Color c2 = beam.Tint;
+            Color c3 = beamBase.Tint;
+            if (transparency != null)
+            {
+                c1 = new Color(
+                    c1.R,
+                    c1.G,
+                    c1.B,
+                    (byte)transparency);
+                c2 = new Color(
+                    c2.R,
+                    c2.G,
+                    c2.B,
+                    (byte)transparency);
+                c3 = new Color(
+                    c3.R,
+                    c3.G,
+                    c3.B,
+                    (byte)transparency);
+            }
 
             // Light
             RenderSprite.Draw(
@@ -869,7 +893,7 @@ namespace Duologue.PlayObjects
                 Position,
                 playerLight.Center,
                 null,
-                playerLight.Tint,
+                c1,
                 LightRotation,
                 1f,
                 0.5f,
@@ -881,7 +905,7 @@ namespace Duologue.PlayObjects
                 Position,
                 beam.Center,
                 null,
-                beam.Tint,
+                c2,
                 BeamRotation,
                 1f,
                 0.5f,
@@ -892,11 +916,24 @@ namespace Duologue.PlayObjects
                 Position,
                 beamBase.Center,
                 null,
-                beamBase.Tint,
+                c3,
                 BeamRotation,
                 1f,
                 0.5f,
                 RenderSpriteBlendMode.Addititive);
+        }
+
+        /// <summary>
+        /// Draw the player when alive
+        /// </summary>
+        private void DrawAlive(GameTime gameTime)
+        {
+            CaclulateRotations();
+            CheckScreenBoundary();
+
+            DrawPlayerTank(null);
+
+            DrawPlayerLight(null);
 
             DrawPlayerCannon(null);
 
