@@ -80,6 +80,7 @@ namespace Duologue.PlayObjects
                 theColors = new PlayerColors[InputManager.MaxInputs];
 
                 // Wahoo, more slop!
+                // FIXME: These colors are in dire need of refinement
 
                 // Melon for player #1
                 theColors[0] = new PlayerColors();
@@ -98,7 +99,7 @@ namespace Duologue.PlayObjects
                 // Bluish for player #3
                 theColors[2] = new PlayerColors();
                 theColors[2].Name = "Blue";
-                theColors[2].Colors[PlayerColors.Light] = Color.AliceBlue;
+                theColors[2].Colors[PlayerColors.Light] = Color.Azure;
                 theColors[2].Colors[PlayerColors.Medium] = Color.LightSkyBlue;
                 theColors[2].Colors[PlayerColors.Dark] = Color.LightSteelBlue;
 
