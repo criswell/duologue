@@ -152,6 +152,8 @@ namespace Duologue.Screens
                     {
                         LocalInstanceManager.Players[i].Spawn();
                     }
+                    currentState = GamePlayState.Delay;
+                    nextState = GamePlayState.Playing;
                     break;
                 default:
                     // Play the game

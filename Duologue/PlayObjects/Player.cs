@@ -612,7 +612,6 @@ namespace Duologue.PlayObjects
                     spawnScale += deltaSpawnScale;
                     if (spawnScale < endSpawnScale)
                     {
-                        // FIXME something wrong here
                         state = PlayerState.Alive;
                         spawnScale = endSpawnScale;
                     }
