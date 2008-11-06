@@ -95,7 +95,7 @@ namespace Duologue.PlayObjects
         private float spawnScale;
         private float spawnRotation;
         private float spawnCalc_m = 1f / (endSpawnScale - startSpawnScale);
-        private float spawnCalc_h = startSpawnScale / (endSpawnScale - startSpawnScale);
+        private float spawnCalc_h = -1f*startSpawnScale / (endSpawnScale - startSpawnScale);
         private Vector2 spawnCenter;
         private Texture2D playerUIroot;
         private Texture2D playerUIbase;
