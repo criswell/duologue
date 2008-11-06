@@ -33,6 +33,7 @@ namespace Mimicware.Graphics
         AlphaBlend,
         Addititive,
         Multiplicative,
+        AlphaBlendTop,
     }
     public class RenderSprite
     {
@@ -41,6 +42,7 @@ namespace Mimicware.Graphics
         private List<SpriteObject> sprites;
         private List<SpriteObject> additiveSprites;
         private List<SpriteObject> multiplicativeSprites;
+        private List<SpriteObject> spritesTop;
         #endregion
 
         #region Properties
@@ -51,6 +53,7 @@ namespace Mimicware.Graphics
         {
             batch = spriteBatch;
             sprites = new List<SpriteObject>();
+            spritesTop = new List<SpriteObject>();
             additiveSprites = new List<SpriteObject>();
             multiplicativeSprites = new List<SpriteObject>();
         }
@@ -64,6 +67,15 @@ namespace Mimicware.Graphics
         private void Add(SpriteObject sprite)
         {
             sprites.Add(sprite);
+        }
+
+        /// <summary>
+        /// Adds a sprite to the batch
+        /// </summary>
+        /// <param name="sprite">The sprite object to add</param>
+        private void AddTop(SpriteObject sprite)
+        {
+            spritesTop.Add(sprite);
         }
 
         /// <summary>
@@ -223,6 +235,17 @@ namespace Mimicware.Graphics
                         rotation,
                         scale,
                         layer));
+            else if (mode == RenderSpriteBlendMode.AlphaBlendTop)
+                this.AddTop(
+                    new SpriteObject(
+                        texture,
+                        position,
+                        center,
+                        source,
+                        tint,
+                        rotation,
+                        scale,
+                        layer));
             else
                 this.Add(new SpriteObject(
                     texture,
@@ -270,6 +293,17 @@ namespace Mimicware.Graphics
                         layer));
             else if (mode == RenderSpriteBlendMode.Multiplicative)
                 this.AddMultiplicative(
+                    new SpriteObject(
+                        texture,
+                        position,
+                        center,
+                        source,
+                        tint,
+                        rotation,
+                        scale,
+                        layer));
+            else if (mode == RenderSpriteBlendMode.AlphaBlendTop)
+                this.AddTop(
                     new SpriteObject(
                         texture,
                         position,
@@ -387,6 +421,12 @@ namespace Mimicware.Graphics
                     color));
             else if (mode == RenderSpriteBlendMode.Multiplicative)
                 this.AddMultiplicative(new SpriteObject(
+                    font,
+                    p,
+                    vector2,
+                    color));
+            else if (mode == RenderSpriteBlendMode.AlphaBlendTop)
+                this.AddTop(new SpriteObject(
                     font,
                     p,
                     vector2,
@@ -571,6 +611,14 @@ namespace Mimicware.Graphics
             additiveSprites.Clear();
 
             // Other renders as needed
+            // Render the top alphablend sprites
+            if (spritesTop.Count > 0)
+            {
+                batch.Begin(SpriteBlendMode.AlphaBlend);
+                RenderAllSprites(spritesTop);
+                batch.End();
+            }
+            spritesTop.Clear();
         }
         #endregion
     }

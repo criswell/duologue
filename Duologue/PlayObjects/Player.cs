@@ -104,9 +104,11 @@ namespace Duologue.PlayObjects
         private Vector2 spawnCenter;
         private Texture2D playerUIroot;
         private Texture2D playerUIbase;
+        private Vector2 playerUICenter;
         private bool blinkOn;
         private float blinkTimer;
         private int blinksSinceStart;
+        private Vector2 playerUIOffset;
 
         // FIXME, dude, got me
         private bool lightIsNegative;
@@ -391,6 +393,12 @@ namespace Duologue.PlayObjects
             spawnCenter = new Vector2(spawnCrosshairs.Width / 2f, spawnCrosshairs.Height / 2f);
             playerUIroot = AssetManager.LoadTexture2D(filename_playerUIroot);
             playerUIbase = AssetManager.LoadTexture2D(String.Format(filename_playerUIbase, (int)MyPlayerIndex +1));
+            playerUICenter = new Vector2(
+                playerUIbase.Width / 2f,
+                playerUIbase.Height / 2f);
+            playerUIOffset = new Vector2(
+                0f,
+                -1f * (playerUIroot.Height / 2f + playerBase.Texture.Height / 2f));
         }
         #endregion
 
@@ -656,7 +664,7 @@ namespace Duologue.PlayObjects
 
             if (blinkTimer > maxBlinkTimer)
             {
-                blinkOn != blinkOn;
+                blinkOn = !blinkOn;
                 blinksSinceStart++;
                 blinkTimer = 0f;
                 if (blinksSinceStart > numTimesBlink)
@@ -730,7 +738,7 @@ namespace Duologue.PlayObjects
 
         #region Private Draw Methods
         /// <summary>
-        /// Draw the player getting ready
+        /// Draw the player getting read
         /// </summary>
         private void DrawGettingReady(GameTime gameTime)
         {
@@ -739,6 +747,41 @@ namespace Duologue.PlayObjects
 
             DrawPlayerTank(tankBlinkTransparency);
             DrawPlayerCannon(tankBlinkTransparency);
+
+            if (blinkOn)
+            {
+                Color c1 = new Color(
+                    PlayerColor.Colors[PlayerColors.Dark].R,
+                    PlayerColor.Colors[PlayerColors.Dark].G,
+                    PlayerColor.Colors[PlayerColors.Dark].B,
+                    playerUIBlinkTransparency);
+                Color c2 = new Color(
+                    PlayerColor.Colors[PlayerColors.Light].R,
+                    PlayerColor.Colors[PlayerColors.Light].G,
+                    PlayerColor.Colors[PlayerColors.Light].B,
+                    playerUIBlinkTransparency);
+                Vector2 pos = Position + playerUIOffset;
+                RenderSprite.Draw(
+                    playerUIroot,
+                    pos,
+                    playerUICenter,
+                    null,
+                    c1,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                RenderSprite.Draw(
+                    playerUIbase,
+                    pos,
+                    playerUICenter,
+                    null,
+                    c2,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
         }
 
         private void DrawPlayerCannon(byte? tankTransparency)
