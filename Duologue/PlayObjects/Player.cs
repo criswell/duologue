@@ -232,13 +232,15 @@ namespace Duologue.PlayObjects
         /// <param name="gamerProfile">Gamer profile associated with the player</param>
         /// <param name="currentColorState">The current color state</param>
         /// <param name="startPos">The starting position of the player</param>
+        /// <param name="orientation">The starting orientation of the player</param>
         public void Initialize(
             PlayerColors playerColor,
             PlayerIndex playerIndex,
             SignedInGamer signedInGamer,
             GamerProfile gamerProfile,
             ColorState currentColorState,
-            Vector2 startPos)
+            Vector2 startPos,
+            Vector2 orientation)
         {
             // Set up the player data
             PlayerColor = playerColor;
@@ -251,7 +253,7 @@ namespace Duologue.PlayObjects
 
             // Set up the orientation related items
             lightIsNegative = true;
-            Orientation = Vector2.UnitX;
+            Orientation = orientation;
             Aim = Vector2.Negate(Orientation);
             CaclulateRotations();
             treadOffset = Vector2.Zero;
