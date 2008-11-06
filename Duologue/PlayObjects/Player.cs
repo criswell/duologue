@@ -26,6 +26,7 @@ namespace Duologue.PlayObjects
     public enum PlayerState
     {
         Spawning,
+        GettingReady,
         Alive,
         Dying,
         Dead,
@@ -54,7 +55,11 @@ namespace Duologue.PlayObjects
         private const float endSpawnScale = 1f;
         private const float deltaSpawnScale = -0.1f;
         private const float deltaSpawnRotation = 0.01f;
-        private const float maxSpawnTransparency = 255f;
+        private const float maxOpacity = 255f;
+        private const byte tankBlinkTransparency = (byte)128;
+        private const byte playerUIBlinkTransparency = (byte)192;
+        private const int numTimesBlink = 10;
+        private const float maxBlinkTimer = 1f;
         #endregion
 
         #region Fields
@@ -99,6 +104,9 @@ namespace Duologue.PlayObjects
         private Vector2 spawnCenter;
         private Texture2D playerUIroot;
         private Texture2D playerUIbase;
+        private bool blinkOn;
+        private float blinkTimer;
+        private int blinksSinceStart;
 
         // FIXME, dude, got me
         private bool lightIsNegative;
@@ -551,10 +559,13 @@ namespace Duologue.PlayObjects
             switch (state)
             {
                 case PlayerState.Spawning:
-                    DrawSpawning();
+                    DrawSpawning(gameTime);
                     break;
                 case PlayerState.Alive:
-                    DrawAlive();
+                    DrawAlive(gameTime);
+                    break;
+                case PlayerState.GettingReady:
+                    DrawGettingReady(gameTime);
                     break;
                 default:
                     // Player is dead, do nothing
@@ -571,52 +582,10 @@ namespace Duologue.PlayObjects
             switch (state)
             {
                 case PlayerState.Alive:
-                    if (lastPosition != Position)
-                    {
-                        treadTimer++;
-                        if (treadTimer > maxTreadTimer)
-                        {
-                            treadTimer = 0;
-                            currentTread++;
-                            if (currentTread >= treadFrames)
-                                currentTread = 0;
-                        }
-                    }
-                    if (lastPosition.X != Position.X)
-                    {
-                        shineTimer++;
-                        if (shineTimer > maxShineTimer)
-                        {
-                            shineTimer = 0;
-                            currentShine += (int)((lastPosition.X - Position.X) / Math.Abs(lastPosition.X - Position.X));
-                            if (currentShine >= shineFrames)
-                                currentShine = 0;
-                            else if (currentShine < 0)
-                                currentShine = shineFrames - 1;
-                        }
-                    }
-                    if (screenCenter == Vector2.Zero)
-                    {
-                        screenCenter = new Vector2(
-                            InstanceManager.GraphicsDevice.Viewport.Width / 2f,
-                            InstanceManager.GraphicsDevice.Viewport.Height / 2f);
-                        InstanceManager.Logger.LogEntry(screenCenter.ToString());
-                    }
-                    ComputeTreadOffset();
-                    lastPosition = Position;
+                    UpdateAlive(gameTime);
                     break;
                 case PlayerState.Spawning:
-                    spawnRotation += deltaSpawnRotation;
-                    if (spawnRotation > MathHelper.TwoPi)
-                        spawnRotation = 0f;
-                    else if (spawnRotation < 0f)
-                        spawnRotation = MathHelper.TwoPi;
-                    spawnScale += deltaSpawnScale;
-                    if (spawnScale < endSpawnScale)
-                    {
-                        state = PlayerState.Alive;
-                        spawnScale = endSpawnScale;
-                    }
+                    UpdateSpawning(gameTime);
                     break;
                 default:
                     // Player is dead
@@ -674,14 +643,112 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
+        #region Private Update Methods
+        /// <summary>
+        /// Update when the player is alive
+        /// </summary>
+        private void UpdateAlive(GameTime gameTime)
+        {
+            if (lastPosition != Position)
+            {
+                treadTimer++;
+                if (treadTimer > maxTreadTimer)
+                {
+                    treadTimer = 0;
+                    currentTread++;
+                    if (currentTread >= treadFrames)
+                        currentTread = 0;
+                }
+            }
+            if (lastPosition.X != Position.X)
+            {
+                shineTimer++;
+                if (shineTimer > maxShineTimer)
+                {
+                    shineTimer = 0;
+                    currentShine += (int)((lastPosition.X - Position.X) / Math.Abs(lastPosition.X - Position.X));
+                    if (currentShine >= shineFrames)
+                        currentShine = 0;
+                    else if (currentShine < 0)
+                        currentShine = shineFrames - 1;
+                }
+            }
+            if (screenCenter == Vector2.Zero)
+            {
+                screenCenter = new Vector2(
+                    InstanceManager.GraphicsDevice.Viewport.Width / 2f,
+                    InstanceManager.GraphicsDevice.Viewport.Height / 2f);
+                InstanceManager.Logger.LogEntry(screenCenter.ToString());
+            }
+            ComputeTreadOffset();
+            lastPosition = Position;
+        }
+
+        /// <summary>
+        /// Update when the player is spawning
+        /// </summary>
+        private void UpdateSpawning(GameTime gameTime)
+        {
+            spawnRotation += deltaSpawnRotation;
+            if (spawnRotation > MathHelper.TwoPi)
+                spawnRotation = 0f;
+            else if (spawnRotation < 0f)
+                spawnRotation = MathHelper.TwoPi;
+            spawnScale += deltaSpawnScale;
+            if (spawnScale < endSpawnScale)
+            {
+                state = PlayerState.GettingReady;
+                spawnScale = endSpawnScale;
+            }
+        }
+        #endregion
+
         #region Private Draw Methods
         /// <summary>
-        /// Draw the player when alive
+        /// Draw the player getting ready
         /// </summary>
-        private void DrawAlive()
+        private void DrawGettingReady(GameTime gameTime)
         {
             CaclulateRotations();
             CheckScreenBoundary();
+
+            DrawPlayerTank(tankBlinkTransparency);
+            DrawPlayerCannon(tankBlinkTransparency);
+        }
+
+        private void DrawPlayerCannon(byte? tankTransparency)
+        {
+            Color c = playerCannon.Tint;
+
+            if (tankTransparency != null)
+                c = new Color(
+                    playerCannon.Tint.R,
+                    playerCannon.Tint.G,
+                    playerCannon.Tint.B,
+                    (byte)tankTransparency);
+
+            // Cannon
+            RenderSprite.Draw(
+                playerCannon.Texture,
+                Position,
+                playerCannon.Center,
+                null,
+                c,
+                CannonRotation,
+                1f,
+                0.5f);
+        }
+
+        private void DrawPlayerTank(byte? tankTransparency)
+        {
+            Color c = playerBase.Tint;
+
+            if (tankTransparency != null)
+                c = new Color(
+                    playerBase.Tint.R,
+                    playerBase.Tint.G,
+                    playerBase.Tint.B,
+                    (byte)tankTransparency);
 
             // Treads
             RenderSprite.Draw(
@@ -689,7 +756,7 @@ namespace Duologue.PlayObjects
                 Position + treadOffset,
                 treadCenter,
                 null,
-                playerBase.Tint,
+                c,
                 TreadRotation,
                 1f,
                 0.5f);
@@ -701,7 +768,7 @@ namespace Duologue.PlayObjects
                 Position,
                 playerBase.Center,
                 null,
-                playerBase.Tint,
+                c,
                 BaseRotation,
                 1f,
                 0.5f);
@@ -712,10 +779,21 @@ namespace Duologue.PlayObjects
                 Position,
                 shineCenter,
                 null,
-                playerBase.Tint,
+                c,
                 0f,
                 1f,
                 0.5f);
+        }
+
+        /// <summary>
+        /// Draw the player when alive
+        /// </summary>
+        private void DrawAlive(GameTime gameTime)
+        {
+            CaclulateRotations();
+            CheckScreenBoundary();
+
+            DrawPlayerTank(null);
 
             // Light
             RenderSprite.Draw(
@@ -752,29 +830,20 @@ namespace Duologue.PlayObjects
                 0.5f,
                 RenderSpriteBlendMode.Addititive);
 
-            // Cannon
-            RenderSprite.Draw(
-                playerCannon.Texture,
-                Position,
-                playerCannon.Center,
-                null,
-                playerCannon.Tint,
-                CannonRotation,
-                1f,
-                0.5f);
+            DrawPlayerCannon(null);
 
         }
 
         /// <summary>
         /// Draw the player spawning
         /// </summary>
-        private void DrawSpawning()
+        private void DrawSpawning(GameTime gameTime)
         {
             Color c = new Color(
                 playerBase.Tint.R,
                 playerBase.Tint.G,
                 playerBase.Tint.B,
-                (byte)(SpawnCrosshairPercentage * maxSpawnTransparency));
+                (byte)(SpawnCrosshairPercentage * maxOpacity));
             RenderSprite.Draw(
                 spawnCrosshairs,
                 Position,
