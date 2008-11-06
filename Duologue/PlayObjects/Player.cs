@@ -53,8 +53,8 @@ namespace Duologue.PlayObjects
         private const float startSpawnScale = 5f;
         private const float endSpawnScale = 1f;
         private const float deltaSpawnScale = -0.1f;
-        private const float deltaSpawnRotation = 0.1f;
-        private const byte maxSpawnTransparency = (byte)128;
+        private const float deltaSpawnRotation = 0.01f;
+        private const float maxSpawnTransparency = 255f;
         #endregion
 
         #region Fields
@@ -94,6 +94,8 @@ namespace Duologue.PlayObjects
         private Texture2D spawnCrosshairs;
         private float spawnScale;
         private float spawnRotation;
+        private float spawnCalc_m = 1f / (endSpawnScale - startSpawnScale);
+        private float spawnCalc_h = startSpawnScale / (endSpawnScale - startSpawnScale);
         private Vector2 spawnCenter;
         private Texture2D playerUIroot;
         private Texture2D playerUIbase;
@@ -113,6 +115,23 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Returns a percentage complete for spawn crosshair
+        /// </summary>
+        public float SpawnCrosshairPercentage
+        {
+            get
+            {
+                float p = spawnCalc_m * spawnScale + spawnCalc_h;
+                if (p > 1f)
+                    return 1f;
+                else if (p < 0f)
+                    return 0f;
+                else
+                    return p;
+            }
+        }
+
         /// <summary>
         /// Determines if this player is active or not (e.g., if there is a controller
         /// connected that controls this player)
@@ -749,12 +768,17 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void DrawSpawning()
         {
+            Color c = new Color(
+                playerBase.Tint.R,
+                playerBase.Tint.G,
+                playerBase.Tint.B,
+                (byte)(SpawnCrosshairPercentage * maxSpawnTransparency));
             RenderSprite.Draw(
                 spawnCrosshairs,
                 Position,
                 spawnCenter,
                 null,
-                playerBase.Tint,
+                c,
                 spawnRotation,
                 spawnScale,
                 0.5f);
