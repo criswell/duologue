@@ -30,7 +30,7 @@ namespace Duologue.PlayObjects
     public class PlayerColors
     {
         #region Constants
-        private const int numColors = 2;
+        private const int numColors = 3;
 
         /// <summary>
         /// The light version of the color
@@ -46,7 +46,7 @@ namespace Duologue.PlayObjects
         /// The dark version of the color
         /// FIXME: Currently no one supports this really
         /// </summary>
-        public const int Dark = 1;
+        public const int Dark = 2;
         #endregion
 
         #region Fields
@@ -84,26 +84,30 @@ namespace Duologue.PlayObjects
                 // Melon for player #1
                 theColors[0] = new PlayerColors();
                 theColors[0].Name = "Melon";
-                theColors[0].Colors[0] = Color.Honeydew;
-                theColors[0].Colors[1] = Color.PaleGreen;
+                theColors[0].Colors[PlayerColors.Light] = Color.LightGreen;
+                theColors[0].Colors[PlayerColors.Medium] = Color.PaleGreen;
+                theColors[0].Colors[PlayerColors.Dark] = Color.Green;
 
                 // Reddish for player #2
                 theColors[1] = new PlayerColors();
                 theColors[1].Name = "Rose";
-                theColors[1].Colors[0] = Color.MistyRose;
-                theColors[1].Colors[1] = Color.PeachPuff;
+                theColors[1].Colors[PlayerColors.Light] = Color.Pink;
+                theColors[1].Colors[PlayerColors.Medium] = Color.PeachPuff;
+                theColors[1].Colors[PlayerColors.Dark] = Color.LightSalmon;
 
                 // Bluish for player #3
                 theColors[2] = new PlayerColors();
                 theColors[2].Name = "Blue";
-                theColors[2].Colors[0] = Color.AliceBlue;
-                theColors[2].Colors[1] = Color.LightSkyBlue;
+                theColors[2].Colors[PlayerColors.Light] = Color.AliceBlue;
+                theColors[2].Colors[PlayerColors.Medium] = Color.LightSkyBlue;
+                theColors[2].Colors[PlayerColors.Dark] = Color.LightSteelBlue;
 
                 // Yellow for player #4
                 theColors[3] = new PlayerColors();
                 theColors[3].Name = "Yellow";
-                theColors[3].Colors[0] = Color.LightGoldenrodYellow;
-                theColors[3].Colors[1] = new Color(new Vector3(255f, 221f,62f));
+                theColors[3].Colors[PlayerColors.Light] = Color.LightGoldenrodYellow;
+                theColors[3].Colors[PlayerColors.Medium] = new Color(new Vector3(255f, 221f,62f));
+                theColors[3].Colors[PlayerColors.Dark] = Color.Yellow;
             }
 
             return theColors;
