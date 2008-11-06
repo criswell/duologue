@@ -358,7 +358,7 @@ namespace Duologue.Screens
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
             float offset = 100f;
-            return screenCenter - offset * offsetModifiers[i];
+            return screenCenter + offset * offsetModifiers[i];
         }
         #endregion
 

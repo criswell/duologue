@@ -50,10 +50,11 @@ namespace Duologue.PlayObjects
         private const string filename_shine = "shine{0:00}";
 
         // PlayerUI items
-        private const float startSpawnScale = 2f;
+        private const float startSpawnScale = 5f;
+        private const float endSpawnScale = 1f;
         private const float deltaSpawnScale = -0.1f;
         private const float deltaSpawnRotation = 0.1f;
-        private const byte spawnTransparency = (byte)128;
+        private const byte maxSpawnTransparency = (byte)128;
         #endregion
 
         #region Fields
