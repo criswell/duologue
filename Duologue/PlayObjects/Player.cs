@@ -123,6 +123,7 @@ namespace Duologue.PlayObjects
             get
             {
                 float p = spawnCalc_m * spawnScale + spawnCalc_h;
+                Console.WriteLine(p);
                 if (p > 1f)
                     return 1f;
                 else if (p < 0f)
@@ -609,11 +610,11 @@ namespace Duologue.PlayObjects
                     else if (spawnRotation < 0f)
                         spawnRotation = MathHelper.TwoPi;
                     spawnScale += deltaSpawnScale;
-                    if (spawnScale < 1f)
+                    if (spawnScale < endSpawnScale)
                     {
                         // FIXME something wrong here
                         state = PlayerState.Alive;
-                        spawnScale = deltaSpawnScale;
+                        spawnScale = endSpawnScale;
                     }
                     break;
                 default:
