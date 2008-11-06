@@ -587,6 +587,9 @@ namespace Duologue.PlayObjects
                 case PlayerState.Spawning:
                     UpdateSpawning(gameTime);
                     break;
+                case PlayerState.GettingReady:
+                    UpdateGettingReady(gameTime);
+                    break;
                 default:
                     // Player is dead
                     break;
@@ -645,6 +648,25 @@ namespace Duologue.PlayObjects
 
         #region Private Update Methods
         /// <summary>
+        /// Update when the player is getting ready to play
+        /// </summary>
+        private void UpdateGettingReady(GameTime gameTime)
+        {
+            blinkTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (blinkTimer > maxBlinkTimer)
+            {
+                blinkOn != blinkOn;
+                blinksSinceStart++;
+                blinkTimer = 0f;
+                if (blinksSinceStart > numTimesBlink)
+                {
+                    state = PlayerState.Alive;
+                }
+            }
+        }
+
+        /// <summary>
         /// Update when the player is alive
         /// </summary>
         private void UpdateAlive(GameTime gameTime)
@@ -699,6 +721,9 @@ namespace Duologue.PlayObjects
             {
                 state = PlayerState.GettingReady;
                 spawnScale = endSpawnScale;
+                blinkOn = true;
+                blinksSinceStart = 0;
+                blinkTimer = 0f;
             }
         }
         #endregion
