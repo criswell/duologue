@@ -114,9 +114,10 @@ namespace Duologue.PlayObjects
         // FIXME, dude, got me
         private bool lightIsNegative;
 
-        // The last position, and screen center
+        // The last position, offset and screen center
         private Vector2 lastPosition;
         private Vector2 screenCenter;
+        private Vector2 offset;
 
         // The beam arc and radius
         private const float beamRadius = 400f;
@@ -636,17 +637,23 @@ namespace Duologue.PlayObjects
 
         public override bool StartOffset()
         {
-            throw new Exception("The method or operation is not implemented.");
+            offset = Vector2.Zero;
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new Exception("The method or operation is not implemented.");
+            if (pobj.MyType == TypesOfPlayObjects.Player)
+            {
+                // ERE I AM JH
+            }
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new Exception("The method or operation is not implemented.");
+            Position += offset;
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)

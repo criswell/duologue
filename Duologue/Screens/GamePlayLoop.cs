@@ -118,6 +118,22 @@ namespace Duologue.Screens
                                 InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Right.Y;
                             p.Fire();
                         }
+
+                        // Now, make sure no one is stepping on eachother
+                        bool dumb;
+                        dumb = p.StartOffset();
+                        // Yeah, not efficient... but we have very low n in O(n^2)
+                        for (int j = 0; j < InputManager.MaxInputs; j++)
+                        {
+                            if (j != i)
+                            {
+                                if (LocalInstanceManager.Players[j].Active)
+                                {
+                                    dumb = p.UpdateOffset(LocalInstanceManager.Players[i]);
+                                }
+                            }
+                        }
+                        dumb = p.ApplyOffset();
                     }
                         
                     p.Update(gameTime);
