@@ -116,6 +116,7 @@ namespace Duologue.Screens
                                 InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Right.X;
                             p.Aim.Y = -1f *
                                 InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Right.Y;
+                            p.Fire();
                         }
                     }
                         
