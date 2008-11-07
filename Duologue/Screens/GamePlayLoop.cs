@@ -33,6 +33,8 @@ namespace Duologue.Screens
     public class GamePlayLoop : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
+        private const float playerMovementModifier_X = 2f;
+        private const float playerMovementModifier_Y = -2f;
         #endregion
 
         #region Fields
@@ -79,13 +81,45 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // First, run through the players
+            // First, run through the players, doing their stuff
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
                 Player p = LocalInstanceManager.Players[i];
                 if (p.Active)
                 {
-                    p.Update(gameTime) ;
+                    if (p.State == PlayerState.Alive ||
+                       p.State == PlayerState.GettingReady)
+                    {
+                        // Update player position
+                        p.Position.X += 
+                            InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.X
+                            * playerMovementModifier_X;
+                        p.Position.Y +=
+                            InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.Y
+                            * playerMovementModifier_Y;
+
+                        // Update player's orientation
+                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.X != 0 ||
+                           InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.Y != 0)
+                        {
+                            p.Orientation.X =
+                                InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.X;
+                            p.Orientation.Y = -1f *
+                                InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.Y;
+                        }
+
+                        // Update player's aim
+                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Right.X != 0 ||
+                            InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Right.Y != 0)
+                        {
+                            p.Aim.X =
+                                InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Right.X;
+                            p.Aim.Y = -1f *
+                                InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Right.Y;
+                        }
+                    }
+                        
+                    p.Update(gameTime);
                 }
             }
 
