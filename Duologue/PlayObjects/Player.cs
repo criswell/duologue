@@ -73,7 +73,7 @@ namespace Duologue.PlayObjects
 
         #region Fields
         // Is this player object initalized?
-        private bool Initialized;
+        //private bool Initialized;
         private PlayerState state;
 
         // sprite objects defining the player

@@ -36,6 +36,7 @@ namespace Duologue.PlayObjects
             : base()
         {
             MyType = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Initialized = false;
         }
         #endregion
 

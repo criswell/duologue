@@ -46,6 +46,10 @@ namespace Duologue.PlayObjects
 
         #region Properties
         /// <summary>
+        /// Is this player object initialized?
+        /// </summary>
+        public bool Initialized;
+        /// <summary>
         /// Determines if this play object is considered "firm" in the environment
         /// </summary>
         public bool IsFirm;
