@@ -664,7 +664,7 @@ namespace Duologue.PlayObjects
                 {
                     // Too close, BTFO
                     vToOtherPlayer.Normalize();
-                    offset += vToOtherPlayer * repulsionFromOtherPlayers;
+                    offset += repulsionFromOtherPlayers * Vector2.Negate(vToOtherPlayer);
                 }
             }
             return true;
