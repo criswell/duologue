@@ -61,6 +61,14 @@ namespace Duologue.PlayObjects
         private const float maxUITransparency = 192f;
         private const int numTimesBlink = 10;
         private const float maxBlinkTimer = 0.25f;
+
+        // Attraction/Repulsion force strengths
+        private const float repulsionFromOtherPlayers = 5f;
+
+        /// <summary>
+        /// The minimum distance a player must move for an offset to register
+        /// </summary>
+        private const float minPlayerOffsetMovement = 3f;
         #endregion
 
         #region Fields
@@ -651,14 +659,21 @@ namespace Duologue.PlayObjects
         {
             if (pobj.MyType == TypesOfPlayObjects.Player)
             {
-                // ERE I AM JH
+                Vector2 vToOtherPlayer = this.Position - pobj.Position;
+                if (vToOtherPlayer.Length() < pobj.Radius + this.Radius)
+                {
+                    // Too close, BTFO
+                    vToOtherPlayer.Normalize();
+                    offset += vToOtherPlayer * repulsionFromOtherPlayers;
+                }
             }
             return true;
         }
 
         public override bool ApplyOffset()
         {
-            Position += offset;
+            if(offset.Length() > minPlayerOffsetMovement)
+                Position += offset;
             return true;
         }
 
