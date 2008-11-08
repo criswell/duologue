@@ -401,6 +401,12 @@ namespace Duologue.PlayObjects
             playerUIOffset = new Vector2(
                 0f,
                 -1f * (playerUIroot.Height / 2f + playerBase.Texture.Height / 2f));
+
+            // Set the radius
+            Radius = playerBase.Texture.Height / 2f;
+            if (playerBase.Texture.Width > playerBase.Texture.Height)
+                Radius = playerBase.Texture.Width / 2f;
+
         }
         #endregion
 
