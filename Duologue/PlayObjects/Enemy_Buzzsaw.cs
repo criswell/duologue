@@ -26,6 +26,11 @@ namespace Duologue.PlayObjects
     public class Enemy_Buzzsaw : PlayObject
     {
         #region Constants
+        // Filenames
+        private const string filename_baseAgg = "Enemies/buzzsaw-agg";
+        private const string filename_baseFlee = "Enemies/buzzsaw-flee";
+        private const string filename_faceAgg = "Enemies/buzzsaw-face-agg";
+        private const string filename_faceFlee = "Enemies/buzzsaw-face-flee";
         #endregion
 
         #region Fields
