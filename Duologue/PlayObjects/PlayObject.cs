@@ -24,7 +24,7 @@ namespace Duologue.PlayObjects
     {
         Player,
         PlayerBullet,
-        Buzzsaw,
+        Enemy_Buzzsaw,
     }
 
     /// <summary>

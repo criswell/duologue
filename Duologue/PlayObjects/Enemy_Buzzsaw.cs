@@ -23,7 +23,7 @@ using Duologue.State;
 
 namespace Duologue.PlayObjects
 {
-    class Enemy_Buzzsaw : PlayObject
+    public class Enemy_Buzzsaw : PlayObject
     {
         #region Constants
         #endregion
@@ -32,6 +32,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init / Load
+        public Enemy_Buzzsaw()
+            : base()
+        {
+            MyType = TypesOfPlayObjects.Enemy_Buzzsaw;
+        }
         #endregion
 
         #region Private methods
