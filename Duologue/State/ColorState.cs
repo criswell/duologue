@@ -13,6 +13,20 @@ using Mimicware.Manager;
 namespace Duologue.State
 {
     /// <summary>
+    /// The color polarity
+    /// </summary>
+    public enum ColorPolarity
+    {
+        /// <summary>
+        /// The positive color polarity
+        /// </summary>
+        Positive,
+        /// <summary>
+        /// The negative color polarity
+        /// </summary>
+        Negative
+    }
+    /// <summary>
     /// The color state defines which colors are in use in a given wave/level. It defines the following
     /// things:
     /// 1) The positive color

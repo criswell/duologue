@@ -23,7 +23,7 @@ using Duologue.State;
 
 namespace Duologue.PlayObjects
 {
-    public class Enemy_Buzzsaw : PlayObject
+    public class Enemy_Buzzsaw : Enemy
     {
         #region Constants
         // Filenames
@@ -42,6 +42,11 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Buzzsaw;
             Initialized = false;
+        }
+
+        public override void Initialize(Vector2 startPos, Vector2 startOrientation, ColorState currentColorState, ColorPolarity startColorPolarity)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
         #endregion
 
