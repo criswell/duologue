@@ -130,7 +130,7 @@ namespace Duologue.PlayObjects
                     center,
                     null,
                     c,
-                    Orientation,
+                    MWMathHelper.ComputeAngleAgainstX(Orientation),
                     1f,
                     baseLayer);
                 InstanceManager.RenderSprite.Draw(
@@ -151,14 +151,15 @@ namespace Duologue.PlayObjects
                     center,
                     null,
                     c,
-                    Orientation,
+                    MWMathHelper.ComputeAngleAgainstX(Orientation),
                     1f,
                     baseLayer);
                 InstanceManager.RenderSprite.Draw(
                     faceAgg,
                     Position,
                     center,
-                    c,
+                    null,
+                    Color.White,
                     0f,
                     1f,
                     faceLayer);
