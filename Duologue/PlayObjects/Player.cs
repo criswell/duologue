@@ -240,6 +240,7 @@ namespace Duologue.PlayObjects
             : base()
         {
             MyType = TypesOfPlayObjects.Player;
+            MajorType = MajorPlayObjectType.Player;
             Initialized = false;
         }
 

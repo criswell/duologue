@@ -18,6 +18,15 @@ using Mimicware.Manager;
 namespace Duologue.PlayObjects
 {
     /// <summary>
+    /// The major play object types
+    /// </summary>
+    public enum MajorPlayObjectType
+    {
+        Player,
+        Enemy,
+        Other,
+    }
+    /// <summary>
     /// The various types of play objects
     /// </summary>
     public enum TypesOfPlayObjects
@@ -58,6 +67,11 @@ namespace Duologue.PlayObjects
         /// The type of play object this play object is
         /// </summary>
         public TypesOfPlayObjects MyType;
+
+        /// <summary>
+        /// The major type of play object we are
+        /// </summary>
+        public MajorPlayObjectType MajorType;
 
         /// <summary>
         /// Write-only property for setting the current asset manager

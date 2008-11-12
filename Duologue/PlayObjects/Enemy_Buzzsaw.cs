@@ -41,10 +41,15 @@ namespace Duologue.PlayObjects
             : base()
         {
             MyType = TypesOfPlayObjects.Enemy_Buzzsaw;
+            MajorType = MajorPlayObjectType.Enemy;
             Initialized = false;
         }
 
-        public override void Initialize(Vector2 startPos, Vector2 startOrientation, ColorState currentColorState, ColorPolarity startColorPolarity)
+        public override void Initialize(
+            Vector2 startPos,
+            Vector2 startOrientation,
+            ColorState currentColorState,
+            ColorPolarity startColorPolarity)
         {
             throw new Exception("The method or operation is not implemented.");
         }
