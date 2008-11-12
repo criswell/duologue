@@ -170,6 +170,10 @@ namespace Duologue.PlayObjects
         /// </summary>
         /// <param name="pobj"></param>
         public abstract bool TriggerHit(PlayObject pobj);
+
+        public abstract void Draw(GameTime gameTime);
+
+        public abstract void Update(GameTime gameTime);
         #endregion
     }
 }

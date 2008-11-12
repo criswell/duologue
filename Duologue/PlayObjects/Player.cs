@@ -576,7 +576,7 @@ namespace Duologue.PlayObjects
         /// Draw the player object
         /// </summary>
         /// <param name="gameTime">Gametime</param>
-        internal void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             if (RenderSprite == null)
                 RenderSprite = InstanceManager.RenderSprite;
@@ -602,7 +602,7 @@ namespace Duologue.PlayObjects
         /// Called once per frame
         /// </summary>
         /// <param name="gameTime"></param>
-        internal void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             switch (state)
             {

@@ -34,6 +34,15 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Fields
+        // The textures for this enemy
+        private Texture2D baseAgg;
+        private Texture2D baseFlee;
+        private Texture2D faceAgg;
+        private Texture2D faceFlee;
+
+        // What state we're in
+        private bool isFleeing;
+
         #endregion
 
         #region Constructor / Init / Load
@@ -55,6 +64,24 @@ namespace Duologue.PlayObjects
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            LoadAndInitialize();
+        }
+
+        /// <summary>
+        /// Load and initialize this enemy
+        /// </summary>
+        private void LoadAndInitialize()
+        {
+            // Load the textures
+            baseAgg = InstanceManager.AssetManager.LoadTexture2D(filename_baseAgg);
+            baseFlee = InstanceManager.AssetManager.LoadTexture2D(filename_baseFlee);
+            faceAgg = InstanceManager.AssetManager.LoadTexture2D(filename_faceAgg);
+            faceFlee = InstanceManager.AssetManager.LoadTexture2D(filename_faceFlee);
+
+            isFleeing = false;
+
+            Initialized = true;
+            Alive = true;
         }
         #endregion
 
@@ -65,6 +92,15 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Draw / Update
+        public override void Draw(GameTime gameTime)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
         #endregion
 
         #region Public overrides
