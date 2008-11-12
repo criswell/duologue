@@ -43,6 +43,10 @@ namespace Duologue.PlayObjects
         // What state we're in
         private bool isFleeing;
 
+        // Housekeeping graphical doo-dads
+        private Vector2 center;
+        private float baseLayer;
+        private float faceLayer;
         #endregion
 
         #region Constructor / Init / Load
@@ -78,6 +82,17 @@ namespace Duologue.PlayObjects
             faceAgg = InstanceManager.AssetManager.LoadTexture2D(filename_faceAgg);
             faceFlee = InstanceManager.AssetManager.LoadTexture2D(filename_faceFlee);
 
+            center = new Vector2(
+                baseAgg.Width / 2f,
+                baseAgg.Height / 2f);
+
+            Radius = baseAgg.Width / 2f;
+            if (baseAgg.Height / 2f > Radius)
+                Radius = baseAgg.Height / 2f;
+
+            baseLayer = 0.3f;
+            faceLayer = 0.2f;
+
             isFleeing = false;
 
             Initialized = true;
@@ -94,7 +109,57 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new Exception("The method or operation is not implemented.");
+            Color c;
+            switch (ColorPolarity)
+            {
+                case ColorPolarity.Negative:
+                    c = ColorState.Negative[ColorState.Light];
+                    break;
+                default:
+                    c = ColorState.Positive[ColorState.Light];
+                    break;
+            }
+            if (isFleeing)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    baseFlee,
+                    Position,
+                    center,
+                    null,
+                    c,
+                    Orientation,
+                    1f,
+                    baseLayer);
+                InstanceManager.RenderSprite.Draw(
+                    faceFlee,
+                    Position,
+                    center,
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    faceLayer);
+            }
+            else
+            {
+                InstanceManager.RenderSprite.Draw(
+                    baseAgg,
+                    Position,
+                    center,
+                    null,
+                    c,
+                    Orientation,
+                    1f,
+                    baseLayer);
+                InstanceManager.RenderSprite.Draw(
+                    faceAgg,
+                    Position,
+                    center,
+                    c,
+                    0f,
+                    1f,
+                    faceLayer);
+            }
         }
 
         public override void Update(GameTime gameTime)

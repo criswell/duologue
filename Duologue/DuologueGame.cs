@@ -43,8 +43,8 @@ namespace Duologue
     /// 0.6f
     /// 0.5f        -       Players (default)
     /// 0.4f        -       Players (additional elements, tracks, etc)
-    /// 0.3f
-    /// 0.2f
+    /// 0.3f        -       Enemies (default)
+    /// 0.2f        -       Enemies (additional elements)
     /// 0.1f
     /// 0.0f
     /// 
