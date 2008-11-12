@@ -31,6 +31,9 @@ namespace Duologue.PlayObjects
         private const string filename_baseFlee = "Enemies/buzzsaw-flee";
         private const string filename_faceAgg = "Enemies/buzzsaw-face-agg";
         private const string filename_faceFlee = "Enemies/buzzsaw-face-flee";
+
+        // Deltas
+        private const float delta_Rotation = 0.1f;
         #endregion
 
         #region Fields
@@ -164,7 +167,16 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            throw new Exception("The method or operation is not implemented.");
+            if (isFleeing)
+            {
+                // We only spin wildly when we're running the fuck away
+                Orientation += delta_Rotation;
+
+                if (Orientation > MathHelper.TwoPi)
+                    Orientation = 0f;
+                else if (Orientation < 0f)
+                    Orientation = MathHelper.TwoPi;
+            }
         }
         #endregion
 
