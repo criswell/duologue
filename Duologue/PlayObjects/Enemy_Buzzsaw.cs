@@ -51,7 +51,10 @@ namespace Duologue.PlayObjects
             ColorState currentColorState,
             ColorPolarity startColorPolarity)
         {
-            throw new Exception("The method or operation is not implemented.");
+            Position = startPos;
+            Orientation = startOrientation;
+            ColorState = currentColorState;
+            ColorPolarity = startColorPolarity;
         }
         #endregion
 
