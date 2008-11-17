@@ -50,6 +50,7 @@ namespace Duologue.PlayObjects
         private Vector2 center;
         private float baseLayer;
         private float faceLayer;
+        private float rotation;
         #endregion
 
         #region Constructor / Init / Load
@@ -69,6 +70,7 @@ namespace Duologue.PlayObjects
         {
             Position = startPos;
             Orientation = startOrientation;
+            rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             LoadAndInitialize();
@@ -130,7 +132,7 @@ namespace Duologue.PlayObjects
                     center,
                     null,
                     c,
-                    MWMathHelper.ComputeAngleAgainstX(Orientation),
+                    rotation,
                     1f,
                     baseLayer);
                 InstanceManager.RenderSprite.Draw(
@@ -171,12 +173,12 @@ namespace Duologue.PlayObjects
             if (isFleeing)
             {
                 // We only spin wildly when we're running the fuck away
-                Orientation += delta_Rotation;
+                rotation += delta_Rotation;
 
-                if (Orientation > MathHelper.TwoPi)
-                    Orientation = 0f;
-                else if (Orientation < 0f)
-                    Orientation = MathHelper.TwoPi;
+                if (rotation > MathHelper.TwoPi)
+                    rotation = 0f;
+                else if (rotation < 0f)
+                    rotation = MathHelper.TwoPi;
             }
         }
         #endregion
