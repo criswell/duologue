@@ -469,7 +469,7 @@ namespace Duologue.Screens
                             {
                                 // We're not signed in, launch the interface
                                 Guide.ShowSignIn(1, false);
-                                break;
+                                break;// Why is this here, do we need it? Seems to do nothing
                             }
                         }
                         else if (BackRequest(i))

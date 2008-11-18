@@ -18,13 +18,22 @@ using Mimicware.Manager;
 namespace Duologue.PlayObjects
 {
     /// <summary>
+    /// The major play object types
+    /// </summary>
+    public enum MajorPlayObjectType
+    {
+        Player,
+        Enemy,
+        Other,
+    }
+    /// <summary>
     /// The various types of play objects
     /// </summary>
     public enum TypesOfPlayObjects
     {
         Player,
         PlayerBullet,
-        Buzzsaw,
+        Enemy_Buzzsaw,
     }
 
     /// <summary>
@@ -46,6 +55,10 @@ namespace Duologue.PlayObjects
 
         #region Properties
         /// <summary>
+        /// Is this player object initialized?
+        /// </summary>
+        public bool Initialized;
+        /// <summary>
         /// Determines if this play object is considered "firm" in the environment
         /// </summary>
         public bool IsFirm;
@@ -54,6 +67,11 @@ namespace Duologue.PlayObjects
         /// The type of play object this play object is
         /// </summary>
         public TypesOfPlayObjects MyType;
+
+        /// <summary>
+        /// The major type of play object we are
+        /// </summary>
+        public MajorPlayObjectType MajorType;
 
         /// <summary>
         /// Write-only property for setting the current asset manager
@@ -152,6 +170,10 @@ namespace Duologue.PlayObjects
         /// </summary>
         /// <param name="pobj"></param>
         public abstract bool TriggerHit(PlayObject pobj);
+
+        public abstract void Draw(GameTime gameTime);
+
+        public abstract void Update(GameTime gameTime);
         #endregion
     }
 }

@@ -61,11 +61,19 @@ namespace Duologue.PlayObjects
         private const float maxUITransparency = 192f;
         private const int numTimesBlink = 10;
         private const float maxBlinkTimer = 0.25f;
+
+        // Attraction/Repulsion force strengths
+        private const float repulsionFromOtherPlayers = 5f;
+
+        /// <summary>
+        /// The minimum distance a player must move for an offset to register
+        /// </summary>
+        private const float minPlayerOffsetMovement = 3f;
         #endregion
 
         #region Fields
         // Is this player object initalized?
-        private bool Initialized;
+        //private bool Initialized;
         private PlayerState state;
 
         // sprite objects defining the player
@@ -232,6 +240,7 @@ namespace Duologue.PlayObjects
             : base()
         {
             MyType = TypesOfPlayObjects.Player;
+            MajorType = MajorPlayObjectType.Player;
             Initialized = false;
         }
 
@@ -401,6 +410,12 @@ namespace Duologue.PlayObjects
             playerUIOffset = new Vector2(
                 0f,
                 -1f * (playerUIroot.Height / 2f + playerBase.Texture.Height / 2f));
+
+            // Set the radius
+            Radius = playerBase.Texture.Height / 2f;
+            if (playerBase.Texture.Width > playerBase.Texture.Height)
+                Radius = playerBase.Texture.Width / 2f;
+
         }
         #endregion
 
@@ -561,7 +576,7 @@ namespace Duologue.PlayObjects
         /// Draw the player object
         /// </summary>
         /// <param name="gameTime">Gametime</param>
-        internal void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             if (RenderSprite == null)
                 RenderSprite = InstanceManager.RenderSprite;
@@ -587,7 +602,7 @@ namespace Duologue.PlayObjects
         /// Called once per frame
         /// </summary>
         /// <param name="gameTime"></param>
-        internal void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             switch (state)
             {
@@ -645,14 +660,21 @@ namespace Duologue.PlayObjects
         {
             if (pobj.MyType == TypesOfPlayObjects.Player)
             {
-                // ERE I AM JH
+                Vector2 vToOtherPlayer = this.Position - pobj.Position;
+                if (vToOtherPlayer.Length() < pobj.Radius + this.Radius)
+                {
+                    // Too close, BTFO
+                    vToOtherPlayer.Normalize();
+                    offset += repulsionFromOtherPlayers * Vector2.Negate(vToOtherPlayer);
+                }
             }
             return true;
         }
 
         public override bool ApplyOffset()
         {
-            Position += offset;
+            if(offset.Length() > minPlayerOffsetMovement)
+                Position += offset;
             return true;
         }
 
