@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Duologue">
+</Property><Property Name="Solution File" Value="C:\Users\Sam\Documents\Visual Studio 2008\Projects\Duologue\Duologue.sln">
+</Property><Property Name="Date" Value="Thursday, December 04, 2008">
+</Property><Property Name="Time" Value="16:24 PM">
+</Property></Properties><Event ErrorLevel="0" Project="Duologue" Source="Duologue\Duologue.csproj" Description="Upgraded XNA Game Studio nested content projects.">
+</Event><Event ErrorLevel="0" Project="Duologue" Source="Duologue\Duologue.csproj" Description="Upgraded XNA Game Studio project.">
+</Event><Event ErrorLevel="0" Project="Duologue" Source="Duologue\Duologue.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Duologue" Source="Duologue\Duologue.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Duologue Xbox360" Source="Duologue\Duologue Xbox360.csproj" Description="Upgraded XNA Game Studio project.">
+</Event><Event ErrorLevel="0" Project="Duologue Xbox360" Source="Duologue\Duologue Xbox360.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Duologue Xbox360" Source="Duologue\Duologue Xbox360.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Duologue.Test" Source="Duologue.Test\Duologue.Test.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Duologue.Test" Source="Duologue.Test\Duologue.Test.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="Duologue.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Duologue.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Duologue" Source="Duologue\Duologue.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Duologue" Source="Duologue\Duologue.csproj" Description="Upgraded XNA Framework References.">
+</Event><Event ErrorLevel="0" Project="Duologue Xbox360" Source="Duologue\Duologue Xbox360.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Duologue Xbox360" Source="Duologue\Duologue Xbox360.csproj" Description="Upgraded XNA Framework References.">
+</Event><Event ErrorLevel="0" Project="Duologue.Test" Source="Duologue.Test\Duologue.Test.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
