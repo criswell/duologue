@@ -27,10 +27,9 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         // Filenames
-        private const string filename_baseAgg = "Enemies/buzzsaw-agg";
-        private const string filename_baseFlee = "Enemies/buzzsaw-flee";
-        private const string filename_faceAgg = "Enemies/buzzsaw-face-agg";
-        private const string filename_faceFlee = "Enemies/buzzsaw-face-flee";
+        private const string filename_base = "Enemies/buzzsaw-base";
+        private const string filename_outline = "Enemies/buzzsaw-outline";
+        private const string filename_blades = "Enemies/buzzsaw-blades";
 
         // Deltas
         private const float delta_Rotation = 0.1f;
@@ -38,10 +37,9 @@ namespace Duologue.PlayObjects
 
         #region Fields
         // The textures for this enemy
-        private Texture2D baseAgg;
-        private Texture2D baseFlee;
-        private Texture2D faceAgg;
-        private Texture2D faceFlee;
+        private Texture2D buzzBase;
+        private Texture2D buzzOutline;
+        private Texture2D buzzBlades;
 
         // What state we're in
         private bool isFleeing;
@@ -82,18 +80,17 @@ namespace Duologue.PlayObjects
         private void LoadAndInitialize()
         {
             // Load the textures
-            baseAgg = InstanceManager.AssetManager.LoadTexture2D(filename_baseAgg);
-            baseFlee = InstanceManager.AssetManager.LoadTexture2D(filename_baseFlee);
-            faceAgg = InstanceManager.AssetManager.LoadTexture2D(filename_faceAgg);
-            faceFlee = InstanceManager.AssetManager.LoadTexture2D(filename_faceFlee);
+            buzzBase = InstanceManager.AssetManager.LoadTexture2D(filename_base);
+            buzzOutline = InstanceManager.AssetManager.LoadTexture2D(filename_outline);
+            buzzBlades = InstanceManager.AssetManager.LoadTexture2D(filename_blades);
 
             center = new Vector2(
-                baseAgg.Width / 2f,
-                baseAgg.Height / 2f);
+                buzzBase.Width / 2f,
+                buzzBase.Height / 2f);
 
-            Radius = baseAgg.Width / 2f;
-            if (baseAgg.Height / 2f > Radius)
-                Radius = baseAgg.Height / 2f;
+            Radius = buzzBase.Width / 2f;
+            if (buzzBase.Height / 2f > Radius)
+                Radius = buzzBase.Height / 2f;
 
             baseLayer = 0.3f;
             faceLayer = 0.2f;
@@ -127,7 +124,7 @@ namespace Duologue.PlayObjects
             if (isFleeing)
             {
                 InstanceManager.RenderSprite.Draw(
-                    baseFlee,
+                    buzzOutline,
                     Position,
                     center,
                     null,
@@ -135,20 +132,11 @@ namespace Duologue.PlayObjects
                     rotation,
                     1f,
                     baseLayer);
-                InstanceManager.RenderSprite.Draw(
-                    faceFlee,
-                    Position,
-                    center,
-                    null,
-                    Color.White,
-                    0f,
-                    1f,
-                    faceLayer);
             }
             else
             {
                 InstanceManager.RenderSprite.Draw(
-                    baseAgg,
+                    buzzBase,
                     Position,
                     center,
                     null,
@@ -157,7 +145,7 @@ namespace Duologue.PlayObjects
                     1f,
                     baseLayer);
                 InstanceManager.RenderSprite.Draw(
-                    faceAgg,
+                    buzzBlades,
                     Position,
                     center,
                     null,
