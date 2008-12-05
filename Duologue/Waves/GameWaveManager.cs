@@ -160,12 +160,11 @@ namespace Duologue.Waves
             thisWave.NumEnemies = 25;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
-            thisWave.Wavelet[thisWave.CurrentWavelet].Enemies = new TypesOfPlayObjects[thisWave.NumEnemies];
-            thisWave.Wavelet[thisWave.CurrentWavelet].StartHitPoints = 0;
+            thisWave.Wavelet[thisWave.CurrentWavelet] = new Wavelet(thisWave.NumEnemies, 0);
             for (int i = 0; i < thisWave.NumEnemies; i++)
             {
                 // For now, we're just spawning all buzzsaws
-                thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = (int)TypesOfPlayObjects.Enemy_Buzzsaw;
             }
 
             return thisWave;
