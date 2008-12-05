@@ -75,6 +75,24 @@ namespace Duologue.Waves
         /// The color state for this wave
         /// </summary>
         public ColorState ColorState;
+
+        /// <summary>
+        /// The number of enemies this wave
+        /// </summary>
+        public int NumEnemies;
+
+        /// <summary>
+        /// The number of enemies on screen at a time
+        /// if this is larger than the number the engine can
+        /// display on screen at a time, it will just be truncated
+        /// to that.
+        /// </summary>
+        public int NumEnemiesOnScreen;
+
+        /// <summary>
+        /// The array of enemies we're fighting
+        /// </summary>
+        public Enemy[] Enemies;
         #endregion
 
         #region Constructors

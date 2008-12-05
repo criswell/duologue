@@ -45,6 +45,11 @@ namespace Duologue.PlayObjects
         /// This enemy's current color polarity
         /// </summary>
         public ColorPolarity ColorPolarity;
+
+        /// <summary>
+        /// How many hit points we currently have
+        /// </summary>
+        public int CurrentHitPoints;
         #endregion
 
         #region Load / Init
@@ -59,7 +64,8 @@ namespace Duologue.PlayObjects
             Vector2 startPos,
             Vector2 startOrientation,
             ColorState currentColorState,
-            ColorPolarity startColorPolarity);
+            ColorPolarity startColorPolarity,
+            int? hitPoints);
         #endregion
     }
 }

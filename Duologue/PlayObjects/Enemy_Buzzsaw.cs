@@ -64,13 +64,19 @@ namespace Duologue.PlayObjects
             Vector2 startPos,
             Vector2 startOrientation,
             ColorState currentColorState,
-            ColorPolarity startColorPolarity)
+            ColorPolarity startColorPolarity,
+            int? hitPoints)
         {
             Position = startPos;
             Orientation = startOrientation;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            if (hitPoints == null)
+            {
+                hitPoints = 1;
+            }
+            CurrentHitPoints = hitPoints;
             LoadAndInitialize();
         }
 

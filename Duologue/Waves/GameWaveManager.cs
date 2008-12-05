@@ -139,12 +139,23 @@ namespace Duologue.Waves
             // Get a random color state
             ColorState[] theStates = ColorState.GetColorStates();
 
-            return new GameWave(Resources.GameScreen_InfiniteWave,
+            GameWave thisWave = new GameWave(Resources.GameScreen_InfiniteWave,
                 GameWave.maxPlayerShotTypes,
                 rand.Next(LocalInstanceManager.Background.NumBackgrounds),
                 theStates[rand.Next(theStates.Length)],
                 lastMajorWaveNo,
                 lastMinorWaveNo);
+
+            // Okay, this is gonna get fugly... sorry folks
+            // FIXME: If you feel adventurous enough
+            // .
+            // Okay, we'll divide up every ten levels, beyond 100 they just repeat
+            /*if (lastMajorWaveNo < 10)
+            {
+
+            }*/
+
+            return thisWave;
         }
 
         /// <summary>
