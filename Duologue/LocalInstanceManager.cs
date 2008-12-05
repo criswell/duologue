@@ -56,6 +56,19 @@ namespace Duologue
         }
 
         /// <summary>
+        /// The local enemies
+        /// </summary>
+        public static Enemy[] Enemies;
+
+        /// <summary>
+        /// The maximum number of on screen enemies
+        /// </summary>
+        public static int MaxNumberOfEnemiesOnScreen
+        {
+            get { return 100; }
+        }
+
+        /// <summary>
         /// The local instance of the player explosion ring system
         /// </summary>
         public static PlayerRing PlayerRing;
