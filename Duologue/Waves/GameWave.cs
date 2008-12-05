@@ -37,6 +37,11 @@ namespace Duologue.Waves
         /// The enemies in this wavelet
         /// </summary>
         public TypesOfPlayObjects[] Enemies;
+
+        /// <summary>
+        /// The starting hit points for each enemy in this wavelet
+        /// </summary>
+        public int StartHitPoints;
         #endregion
     }
     /// <summary>

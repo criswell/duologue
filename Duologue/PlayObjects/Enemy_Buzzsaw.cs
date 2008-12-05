@@ -74,9 +74,9 @@ namespace Duologue.PlayObjects
             ColorPolarity = startColorPolarity;
             if (hitPoints == null)
             {
-                hitPoints = 1;
+                hitPoints = 0;
             }
-            CurrentHitPoints = hitPoints;
+            CurrentHitPoints = (int)hitPoints;
             LoadAndInitialize();
         }
 

@@ -161,6 +161,7 @@ namespace Duologue.Waves
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
             thisWave.Wavelet[thisWave.CurrentWavelet].Enemies = new TypesOfPlayObjects[thisWave.NumEnemies];
+            thisWave.Wavelet[thisWave.CurrentWavelet].StartHitPoints = 0;
             for (int i = 0; i < thisWave.NumEnemies; i++)
             {
                 // For now, we're just spawning all buzzsaws
