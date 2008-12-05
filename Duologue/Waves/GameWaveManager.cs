@@ -155,6 +155,18 @@ namespace Duologue.Waves
 
             }*/
 
+            // ERE I AM JH
+            thisWave.NumWavelets = 1;
+            thisWave.NumEnemies = 25;
+            thisWave.CurrentWavelet = 0;
+            thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
+            thisWave.Wavelet[thisWave.CurrentWavelet].Enemies = new TypesOfPlayObjects[thisWave.NumEnemies];
+            for (int i = 0; i < thisWave.NumEnemies; i++)
+            {
+                // For now, we're just spawning all buzzsaws
+                thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            }
+
             return thisWave;
         }
 

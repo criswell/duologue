@@ -26,6 +26,20 @@ using Duologue.PlayObjects;
 namespace Duologue.Waves
 {
     /// <summary>
+    /// A Wavelet is a segment of a larger wave which contains distinct enemies that
+    /// must be destroyed before moving on to the next wavelet.
+    /// All enemies in the wavelet will spawn and be on screen at the same time.
+    /// </summary>
+    public class Wavelet
+    {
+        #region Properties
+        /// <summary>
+        /// The enemies in this wavelet
+        /// </summary>
+        public TypesOfPlayObjects[] Enemies;
+        #endregion
+    }
+    /// <summary>
     /// The basic class defining a wave in the game
     /// </summary>
     public class GameWave
@@ -77,22 +91,24 @@ namespace Duologue.Waves
         public ColorState ColorState;
 
         /// <summary>
-        /// The number of enemies this wave
+        /// The number of enemies each wavelet
         /// </summary>
         public int NumEnemies;
 
         /// <summary>
-        /// The number of enemies on screen at a time
-        /// if this is larger than the number the engine can
-        /// display on screen at a time, it will just be truncated
-        /// to that.
+        /// The number of wavelets we have
         /// </summary>
-        public int NumEnemiesOnScreen;
+        public int NumWavelets;
 
         /// <summary>
-        /// The array of enemies we're fighting
+        /// The current wavelet
         /// </summary>
-        public Enemy[] Enemies;
+        public int CurrentWavelet;
+
+        /// <summary>
+        /// The wavelets of enemies we'll be fighting this wave
+        /// </summary>
+        public Wavelet[] Wavelet;
         #endregion
 
         #region Constructors
