@@ -119,6 +119,14 @@ namespace Duologue.Screens
                             p.Fire();
                         }
 
+                        // Button handling
+                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].Triggers.Left > 0 &&
+                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].Triggers.Left == 0)
+                        {
+                            // Swap color
+                            p.SwapColors();
+                        }
+
                         // Now, make sure no one is stepping on eachother
                         bool dumb;
                         dumb = p.StartOffset();
