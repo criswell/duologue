@@ -81,6 +81,7 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            #region Player stuff
             // First, run through the players, doing their stuff
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
@@ -147,6 +148,11 @@ namespace Duologue.Screens
                     p.Update(gameTime);
                 }
             }
+            #endregion Player Stuff
+
+            #region Enemy Stuff
+
+            #endregion Enemy Stuff
 
             base.Update(gameTime);
         }

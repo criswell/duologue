@@ -69,6 +69,12 @@ namespace Duologue
         }
 
         /// <summary>
+        /// The current number of enemies
+        /// NOTE: This needs to be less than MaxNumberOfEnemiesOnScreen!
+        /// </summary>
+        public static int CurrentNumberEnemies;
+
+        /// <summary>
         /// The local instance of the player explosion ring system
         /// </summary>
         public static PlayerRing PlayerRing;
