@@ -81,6 +81,7 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            int livingPlayers = 0;
             #region Player stuff
             // First, run through the players, doing their stuff
             for (int i = 0; i < InputManager.MaxInputs; i++)
@@ -91,6 +92,7 @@ namespace Duologue.Screens
                     if (p.State == PlayerState.Alive ||
                        p.State == PlayerState.GettingReady)
                     {
+                        livingPlayers++;
                         // Update player position
                         p.Position.X += 
                             InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.X
@@ -151,6 +153,17 @@ namespace Duologue.Screens
             #endregion Player Stuff
 
             #region Enemy Stuff
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                if (LocalInstanceManager.Enemies[i] == null)
+                {
+                    // Enemy hasn't spawned yet
+                }
+                // We really only want to spawn new enemies if we have players alive
+                if (livingPlayers > 0)
+                {
+                }
+            }
 
             #endregion Enemy Stuff
 
