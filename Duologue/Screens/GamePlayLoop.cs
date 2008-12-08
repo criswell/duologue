@@ -166,6 +166,7 @@ namespace Duologue.Screens
                             LocalInstanceManager.GenerateEnemyStartPos(LocalInstanceManager.Enemies[i].Radius),
                             Vector2.One,
                             LocalInstanceManager.CurrentGameWave.ColorState,
+                            // ERE I AM JH
                             
                     }
                 }
