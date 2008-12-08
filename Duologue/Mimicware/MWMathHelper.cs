@@ -54,6 +54,17 @@ namespace Mimicware
         }
 
         /// <summary>
+        /// Given a vector and an origin, computes the angle between them
+        /// </summary>
+        /// <param name="vector">The vector</param>
+        /// <param name="origin">The origin</param>
+        /// <returns>Float, angle in radians</returns>
+        public static float ComputeAngleAgainstX(Vector2 vector, Vector2 origin)
+        {
+            return ComputeAngleAgainstX(vector - origin);
+        }
+
+        /// <summary>
         /// Given a range, return a random double in that range
         /// </summary>
         /// <param name="lower">Lower bounds</param>

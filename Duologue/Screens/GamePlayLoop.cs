@@ -155,13 +155,14 @@ namespace Duologue.Screens
             #region Enemy Stuff
             for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
             {
-                if (LocalInstanceManager.Enemies[i] == null)
-                {
-                    // Enemy hasn't spawned yet
-                }
                 // We really only want to spawn new enemies if we have players alive
                 if (livingPlayers > 0)
                 {
+                    if (LocalInstanceManager.Enemies[i] == null ||
+                        !LocalInstanceManager.Enemies[i].Alive)
+                    {
+                        LocalInstanceManager.Enemies[i].Initialize( // ERE I AM JH
+                    }
                 }
             }
 

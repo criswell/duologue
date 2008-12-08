@@ -34,6 +34,8 @@ namespace Duologue
         #region Fields
         private static GameState currentGameState;
         private static GameState lastGameState;
+        private static Vector2 centerOfScreen;
+        private static float screenRadius = 0f;
         #endregion
 
         #region Properties / Local Instances
@@ -139,6 +141,59 @@ namespace Duologue
             {
                 Players[i] = new Player();
             }
+        }
+
+        /// <summary>
+        /// Will generate a starting position for an enemy
+        /// </summary>
+        /// <param name="radius">The radius of the enemy</param>
+        /// <returns>Starting position</returns>
+        internal static Vector2 GenerateEnemyStartPos(float radius)
+        {
+            Vector2 startPos;
+
+            int numAngles = 0;
+
+            float angleRad = 0f;
+
+            // Get centerOfScreen if we don't have it yet
+            if(centerOfScreen == null)
+            {
+                centerOfScreen = new Vector2(
+                    InstanceManager.DefaultViewport.Width/2f,
+                    InstanceManager.DefaultViewport.Height/2f);
+            }
+
+            // Get the screenRadius if we dont have it yet
+            if (screenRadius == 0f)
+                screenRadius = (float)Math.Sqrt((double)(centerOfScreen.X * centerOfScreen.X + centerOfScreen.Y * centerOfScreen.Y));
+
+            // Get the average angle of all the players
+            for (int i = 0; i < MaxNumberOfPlayers; i++)
+            {
+                if (LocalInstanceManager.Players[i].Active && LocalInstanceManager.Players[i].Alive)
+                {
+                    numAngles++;
+                    angleRad += MWMathHelper.ComputeAngleAgainstX(
+                        LocalInstanceManager.Players[i].Position,
+                        centerOfScreen);
+
+                }
+            }
+
+            if (numAngles > 0)
+            {
+                angleRad = angleRad / numAngles;
+            }
+            
+            // Now, make that a vector pointing in the opposite direction at the screenRadius distance
+            startPos = new Vector2(
+                screenRadius * (float)Math.Cos((double)angleRad),
+                screenRadius * (float)Math.Sin((double)angleRad));
+
+            startPos = Vector2.Negate(startPos);
+
+            return startPos;
         }
         #endregion
     }
