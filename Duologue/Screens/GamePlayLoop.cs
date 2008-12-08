@@ -23,6 +23,7 @@ using Duologue.Screens;
 using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
+using Duologue.State;
 #endregion
 
 namespace Duologue.Screens
@@ -159,9 +160,13 @@ namespace Duologue.Screens
                 if (livingPlayers > 0)
                 {
                     if (LocalInstanceManager.Enemies[i] == null ||
-                        !LocalInstanceManager.Enemies[i].Alive)
+                        !LocalInstanceManager.Enemies[i].Initialized)
                     {
-                        LocalInstanceManager.Enemies[i].Initialize( // ERE I AM JH
+                        LocalInstanceManager.Enemies[i].Initialize(
+                            LocalInstanceManager.GenerateEnemyStartPos(LocalInstanceManager.Enemies[i].Radius),
+                            Vector2.One,
+                            LocalInstanceManager.CurrentGameWave.ColorState,
+                            
                     }
                 }
             }

@@ -339,7 +339,7 @@ namespace Duologue.Screens
                         (PlayerIndex)i,
                         signedInGamers[i],
                         profiles[i],
-                        ColorState.GetColorStates()[0],
+                        LocalInstanceManager.CurrentGameWave.ColorState,
                         GetPlayerStartPos(i),
                         offsetModifiers[i]);
             }
