@@ -48,7 +48,7 @@ namespace Duologue.Screens
         #region Fields
         private Game localGame;
         private GameWaveManager gameWaveManager;
-        private GameWave currentWave;
+        //private GameWave currentWave;
         private GamePlayState currentState;
         private GamePlayState nextState;
         private WaveDisplay waveDisplay;
@@ -86,7 +86,7 @@ namespace Duologue.Screens
             currentState = GamePlayState.WaveIntro;
             gameWaveManager.CurrentMajorNumber = 1;
             gameWaveManager.CurrentMinorNumber = 1;
-            currentWave = null;
+            LocalInstanceManager.CurrentGameWave = null;
             timeSinceStart = 0f;
         }
 
@@ -124,9 +124,9 @@ namespace Duologue.Screens
             if (timeSinceStart < delayLifetime)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (currentWave == null)
+            if (LocalInstanceManager.CurrentGameWave == null)
             {
-                currentWave = gameWaveManager.GetNextWave();
+                LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
             }
 
             switch (currentState)
@@ -134,13 +134,13 @@ namespace Duologue.Screens
                 case GamePlayState.WaveIntro:
                     string[] text = new string[2];
                     text[0] = String.Format(Resources.GameScreen_Wave,
-                        currentWave.MajorWaveNumber.ToString(),
-                        currentWave.MinorWaveNumber.ToString());
-                    text[1] = currentWave.Name;
+                        LocalInstanceManager.CurrentGameWave.MajorWaveNumber.ToString(),
+                        LocalInstanceManager.CurrentGameWave.MinorWaveNumber.ToString());
+                    text[1] = LocalInstanceManager.CurrentGameWave.Name;
                     waveDisplay.Text = text;
                     currentState = GamePlayState.Delay;
                     timeSinceStart = 0f;
-                    LocalInstanceManager.Background.SetBackground(currentWave.Background);
+                    LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
                     nextState = GamePlayState.InitPlayerSpawn;
                     break;
                 case GamePlayState.Delay:
@@ -150,6 +150,7 @@ namespace Duologue.Screens
                 case GamePlayState.InitPlayerSpawn:
                     for (int i = 0; i < InputManager.MaxInputs; i++)
                     {
+                        LocalInstanceManager.Players[i].colorState = LocalInstanceManager.CurrentGameWave.ColorState;
                         LocalInstanceManager.Players[i].Spawn();
                     }
                     currentState = GamePlayState.Delay;
