@@ -166,7 +166,8 @@ namespace Duologue.Screens
                             LocalInstanceManager.GenerateEnemyStartPos(LocalInstanceManager.Enemies[i].Radius),
                             Vector2.One,
                             LocalInstanceManager.CurrentGameWave.ColorState,
-                            // ERE I AM JH
+                            ColorState.RandomPolarity(),
+                            null); // FIXME : We need to determine the HP from the GameWave
                             
                     }
                 }

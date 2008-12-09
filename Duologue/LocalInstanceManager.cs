@@ -191,6 +191,8 @@ namespace Duologue
                 screenRadius * (float)Math.Cos((double)angleRad),
                 screenRadius * (float)Math.Sin((double)angleRad));
 
+            // FIXME
+            // This actually needs to be re-centered, in wrong coord system
             startPos = Vector2.Negate(startPos);
 
             return startPos;
