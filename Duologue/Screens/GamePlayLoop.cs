@@ -74,7 +74,6 @@ namespace Duologue.Screens
         #region Public Methods
         #endregion
 
-
         #region Update / Draw
         /// <summary>
         /// Allows the game component to update itself.
@@ -83,6 +82,7 @@ namespace Duologue.Screens
         public override void Update(GameTime gameTime)
         {
             int livingPlayers = 0;
+
             #region Player stuff
             // First, run through the players, doing their stuff
             for (int i = 0; i < InputManager.MaxInputs; i++)
