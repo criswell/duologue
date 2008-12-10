@@ -54,7 +54,7 @@ namespace Duologue
         /// </summary>
         public static int MaxNumberOfPlayers
         {
-            get { return 4; }
+            get { return InputManager.MaxInputs; }
         }
 
         /// <summary>
