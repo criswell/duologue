@@ -158,7 +158,7 @@ namespace Duologue.Screens
             #region Enemy Stuff
             for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
             {
-                // We really only want to spawn new enemies if we have players alive
+                // We really only want to spawn new enemies if we have active/living players
                 if (livingPlayers > 0)
                 {
                     if (LocalInstanceManager.Enemies[i] == null ||
@@ -178,7 +178,8 @@ namespace Duologue.Screens
                         // Update each enemy with player objects
                         for (int j = 0; j < InputManager.MaxInputs; j++)
                         {
-                            if (LocalInstanceManager.Players[j].Active)
+                            if (LocalInstanceManager.Players[j].Active &&
+                                LocalInstanceManager.Players[j].State == PlayerState.Alive)
                             {
                                 dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Players[j]);
                             }
