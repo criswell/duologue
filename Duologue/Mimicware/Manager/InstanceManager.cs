@@ -68,6 +68,11 @@ namespace Mimicware.Manager
         /// The game-wide input manager
         /// </summary>
         public static InputManager InputManager;
+
+        /// <summary>
+        /// The game-wide random instance
+        /// </summary>
+        public static Random Random = new Random();
         #endregion
 
         #region Private Methods

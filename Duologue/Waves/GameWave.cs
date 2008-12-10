@@ -26,6 +26,44 @@ using Duologue.PlayObjects;
 namespace Duologue.Waves
 {
     /// <summary>
+    /// A Wavelet is a segment of a larger wave which contains distinct enemies that
+    /// must be destroyed before moving on to the next wavelet.
+    /// All enemies in the wavelet will spawn and be on screen at the same time.
+    /// </summary>
+    public class Wavelet
+    {
+        #region Properties
+        /// <summary>
+        /// The enemies in this wavelet
+        /// </summary>
+        public int[] Enemies;
+
+        /// <summary>
+        /// The starting hit points for each enemy in this wavelet
+        /// </summary>
+        public int StartHitPoints;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
+        public Wavelet()
+        {
+        }
+        /// <summary>
+        /// Basic constructor
+        /// </summary>
+        /// <param name="NumEnemies">The Number of enemies to initialize</param>
+        /// <param name="StartHP">The starting HP for said enemies</param>
+        public Wavelet(int NumEnemies, int StartHP)
+        {
+            Enemies = new int[NumEnemies];
+            StartHitPoints = StartHP;
+        }
+        #endregion
+    }
+    /// <summary>
     /// The basic class defining a wave in the game
     /// </summary>
     public class GameWave
@@ -75,6 +113,26 @@ namespace Duologue.Waves
         /// The color state for this wave
         /// </summary>
         public ColorState ColorState;
+
+        /// <summary>
+        /// The number of enemies each wavelet
+        /// </summary>
+        public int NumEnemies;
+
+        /// <summary>
+        /// The number of wavelets we have
+        /// </summary>
+        public int NumWavelets;
+
+        /// <summary>
+        /// The current wavelet
+        /// </summary>
+        public int CurrentWavelet;
+
+        /// <summary>
+        /// The wavelets of enemies we'll be fighting this wave
+        /// </summary>
+        public Wavelet[] Wavelet;
         #endregion
 
         #region Constructors

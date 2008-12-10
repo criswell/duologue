@@ -23,6 +23,7 @@ using Duologue.Screens;
 using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
+using Duologue.State;
 #endregion
 
 namespace Duologue.Screens
@@ -73,7 +74,6 @@ namespace Duologue.Screens
         #region Public Methods
         #endregion
 
-
         #region Update / Draw
         /// <summary>
         /// Allows the game component to update itself.
@@ -81,6 +81,10 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            int livingPlayers = 0;
+            bool dumb;
+
+            #region Player stuff
             // First, run through the players, doing their stuff
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
@@ -90,6 +94,7 @@ namespace Duologue.Screens
                     if (p.State == PlayerState.Alive ||
                        p.State == PlayerState.GettingReady)
                     {
+                        livingPlayers++;
                         // Update player position
                         p.Position.X += 
                             InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.X
@@ -119,8 +124,16 @@ namespace Duologue.Screens
                             p.Fire();
                         }
 
+                        // Button handling
+                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].Triggers.Left > 0 &&
+                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].Triggers.Left == 0)
+                        {
+                            // Swap color
+                            p.SwapColors();
+                        }
+
                         // Now, make sure no one is stepping on eachother
-                        bool dumb;
+                        //bool dumb;
                         dumb = p.StartOffset();
                         // Yeah, not efficient... but we have very low n in O(n^2)
                         for (int j = 0; j < InputManager.MaxInputs; j++)
@@ -139,6 +152,53 @@ namespace Duologue.Screens
                     p.Update(gameTime);
                 }
             }
+            #endregion Player Stuff
+
+            #region Enemy Stuff
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                // We really only want to spawn new enemies if we have players alive
+                if (livingPlayers > 0)
+                {
+                    if (LocalInstanceManager.Enemies[i] == null ||
+                        !LocalInstanceManager.Enemies[i].Initialized)
+                    {
+                        LocalInstanceManager.Enemies[i].Initialize(
+                            LocalInstanceManager.GenerateEnemyStartPos(LocalInstanceManager.Enemies[i].Radius),
+                            Vector2.One,
+                            LocalInstanceManager.CurrentGameWave.ColorState,
+                            ColorState.RandomPolarity(),
+                            null); // FIXME : We need to determine the HP from the GameWave
+
+                    }
+                    else
+                    {
+                        dumb = LocalInstanceManager.Enemies[i].StartOffset();
+                        // Update each enemy with player objects
+                        for (int j = 0; j < InputManager.MaxInputs; j++)
+                        {
+                            if (LocalInstanceManager.Players[j].Active)
+                            {
+                                dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Players[j]);
+                            }
+                        }
+                        // Update the enemy with remaining enemy objects
+
+                        for (int j = i; j < LocalInstanceManager.CurrentNumberEnemies; j++)
+                        {
+                            if (LocalInstanceManager.Enemies[j] != null &&
+                                LocalInstanceManager.Enemies[j].Initialized &&
+                                LocalInstanceManager.Enemies[j].Alive)
+                            {
+                                dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Enemies[j]);
+                            }
+                        }
+                        dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
+                    }
+                }
+            }
+
+            #endregion Enemy Stuff
 
             base.Update(gameTime);
         }

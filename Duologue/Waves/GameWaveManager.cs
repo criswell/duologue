@@ -139,12 +139,35 @@ namespace Duologue.Waves
             // Get a random color state
             ColorState[] theStates = ColorState.GetColorStates();
 
-            return new GameWave(Resources.GameScreen_InfiniteWave,
+            GameWave thisWave = new GameWave(Resources.GameScreen_InfiniteWave,
                 GameWave.maxPlayerShotTypes,
                 rand.Next(LocalInstanceManager.Background.NumBackgrounds),
                 theStates[rand.Next(theStates.Length)],
                 lastMajorWaveNo,
                 lastMinorWaveNo);
+
+            // Okay, this is gonna get fugly... sorry folks
+            // FIXME: If you feel adventurous enough
+            // .
+            // Okay, we'll divide up every ten levels, beyond 100 they just repeat
+            /*if (lastMajorWaveNo < 10)
+            {
+
+            }*/
+
+            // ERE I AM JH
+            thisWave.NumWavelets = 1;
+            thisWave.NumEnemies = 25;
+            thisWave.CurrentWavelet = 0;
+            thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
+            thisWave.Wavelet[thisWave.CurrentWavelet] = new Wavelet(thisWave.NumEnemies, 0);
+            for (int i = 0; i < thisWave.NumEnemies; i++)
+            {
+                // For now, we're just spawning all buzzsaws
+                thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = (int)TypesOfPlayObjects.Enemy_Buzzsaw;
+            }
+
+            return thisWave;
         }
 
         /// <summary>

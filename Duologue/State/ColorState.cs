@@ -150,6 +150,19 @@ namespace Duologue.State
                 ((color == Negative[0] || color == Negative[1]) &&
                 (color_2 == Negative[0] || color_2 == Negative[1]));
         }
+
+        /// <summary>
+        /// Returns a random color polarity
+        /// </summary>
+        /// <returns>The random color polarity</returns>
+        internal static ColorPolarity RandomPolarity()
+        {
+            if (InstanceManager.Random.Next(2) == 0)
+            {
+                return ColorPolarity.Negative;
+            }
+            return ColorPolarity.Positive;
+        }
         #endregion
     }
 }

@@ -27,21 +27,38 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         // Filenames
-        private const string filename_baseAgg = "Enemies/buzzsaw-agg";
-        private const string filename_baseFlee = "Enemies/buzzsaw-flee";
-        private const string filename_faceAgg = "Enemies/buzzsaw-face-agg";
-        private const string filename_faceFlee = "Enemies/buzzsaw-face-flee";
+        private const string filename_base = "Enemies/buzzsaw-base";
+        private const string filename_outline = "Enemies/buzzsaw-outline";
+        private const string filename_blades = "Enemies/buzzsaw-blades";
 
         // Deltas
         private const float delta_Rotation = 0.1f;
+
+        #region Force attractions / Repulsions
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float playerAttract = 5f;
+
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 3f;
+        #endregion
+
         #endregion
 
         #region Fields
         // The textures for this enemy
-        private Texture2D baseAgg;
-        private Texture2D baseFlee;
-        private Texture2D faceAgg;
-        private Texture2D faceFlee;
+        private Texture2D buzzBase;
+        private Texture2D buzzOutline;
+        private Texture2D buzzBlades;
 
         // What state we're in
         private bool isFleeing;
@@ -51,6 +68,11 @@ namespace Duologue.PlayObjects
         private float baseLayer;
         private float faceLayer;
         private float rotation;
+
+        // Movement
+        private Vector2 offset;
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
         #endregion
 
         #region Constructor / Init / Load
@@ -66,13 +88,19 @@ namespace Duologue.PlayObjects
             Vector2 startPos,
             Vector2 startOrientation,
             ColorState currentColorState,
-            ColorPolarity startColorPolarity)
+            ColorPolarity startColorPolarity,
+            int? hitPoints)
         {
             Position = startPos;
             Orientation = startOrientation;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            if (hitPoints == null)
+            {
+                hitPoints = 0;
+            }
+            CurrentHitPoints = (int)hitPoints;
             LoadAndInitialize();
         }
 
@@ -82,18 +110,17 @@ namespace Duologue.PlayObjects
         private void LoadAndInitialize()
         {
             // Load the textures
-            baseAgg = InstanceManager.AssetManager.LoadTexture2D(filename_baseAgg);
-            baseFlee = InstanceManager.AssetManager.LoadTexture2D(filename_baseFlee);
-            faceAgg = InstanceManager.AssetManager.LoadTexture2D(filename_faceAgg);
-            faceFlee = InstanceManager.AssetManager.LoadTexture2D(filename_faceFlee);
+            buzzBase = InstanceManager.AssetManager.LoadTexture2D(filename_base);
+            buzzOutline = InstanceManager.AssetManager.LoadTexture2D(filename_outline);
+            buzzBlades = InstanceManager.AssetManager.LoadTexture2D(filename_blades);
 
             center = new Vector2(
-                baseAgg.Width / 2f,
-                baseAgg.Height / 2f);
+                buzzBase.Width / 2f,
+                buzzBase.Height / 2f);
 
-            Radius = baseAgg.Width / 2f;
-            if (baseAgg.Height / 2f > Radius)
-                Radius = baseAgg.Height / 2f;
+            Radius = buzzBase.Width / 2f;
+            if (buzzBase.Height / 2f > Radius)
+                Radius = buzzBase.Height / 2f;
 
             baseLayer = 0.3f;
             faceLayer = 0.2f;
@@ -127,7 +154,7 @@ namespace Duologue.PlayObjects
             if (isFleeing)
             {
                 InstanceManager.RenderSprite.Draw(
-                    baseFlee,
+                    buzzOutline,
                     Position,
                     center,
                     null,
@@ -135,20 +162,11 @@ namespace Duologue.PlayObjects
                     rotation,
                     1f,
                     baseLayer);
-                InstanceManager.RenderSprite.Draw(
-                    faceFlee,
-                    Position,
-                    center,
-                    null,
-                    Color.White,
-                    0f,
-                    1f,
-                    faceLayer);
             }
             else
             {
                 InstanceManager.RenderSprite.Draw(
-                    baseAgg,
+                    buzzBase,
                     Position,
                     center,
                     null,
@@ -157,7 +175,7 @@ namespace Duologue.PlayObjects
                     1f,
                     baseLayer);
                 InstanceManager.RenderSprite.Draw(
-                    faceAgg,
+                    buzzBlades,
                     Position,
                     center,
                     null,
@@ -186,17 +204,56 @@ namespace Duologue.PlayObjects
         #region Public overrides
         public override bool StartOffset()
         {
-            throw new Exception("The method or operation is not implemented.");
+            offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new Exception("The method or operation is not implemented.");
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                if (vToPlayer.Length() < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = vToPlayer.Length();
+                    nearestPlayer = vToPlayer;
+                }
+                return true;
+            }
+            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                // Enemy
+                Vector2 vToEnemy = this.Position - pobj.Position;
+                if (vToEnemy.Length() < this.Radius + pobj.Radius)
+                {
+                    // Too close, BTFO
+                    vToEnemy.Normalize();
+                    offset += standardEnemyRepulse * Vector2.Negate(vToEnemy);
+                }
+
+                return true;
+            }
+            else
+            {
+                // Other
+
+                return true;
+            }
         }
 
         public override bool ApplyOffset()
         {
-            throw new Exception("The method or operation is not implemented.");
+            // First, apply the player offset
+            nearestPlayer.Normalize();
+            offset += playerAttract * Vector2.Negate(nearestPlayer);
+
+            // Next apply the offset permanently
+            if (offset.Length() >= minMovement)
+                this.Position += offset;
+
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
