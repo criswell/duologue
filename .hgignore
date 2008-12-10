@@ -9,3 +9,4 @@ Duologue\obj\*
 Duologue.Test\Content\obj\*
 Duologue.Test\bin\*
 Duologue.Test\obj\*
+*.cachefile
