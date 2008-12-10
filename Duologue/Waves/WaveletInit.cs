@@ -33,8 +33,47 @@ namespace Duologue.Waves
     /// </summary>
     public static class WaveletInit
     {
-        public static void Initialize()
+        #region Initialize
+        /// <summary>
+        /// Initialize the wavelet
+        /// </summary>
+        public static bool Initialize()
         {
+            if (LocalInstanceManager.CurrentGameWave.CurrentWavelet < LocalInstanceManager.CurrentGameWave.NumWavelets)
+            {
+                LocalInstanceManager.Enemies = new Enemy[LocalInstanceManager.CurrentGameWave.NumEnemies];
+                LocalInstanceManager.CurrentNumberEnemies = LocalInstanceManager.CurrentGameWave.NumEnemies;
+                for (int i = 0; i < LocalInstanceManager.CurrentGameWave.NumEnemies; i++)
+                {
+                    switch (LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].Enemies[i])
+                    {
+                        case TypesOfPlayObjects.Enemy_Buzzsaw:
+                            Init_Buzzsaw(i);
+                            break;
+                        default:
+                            // Squat, for now
+                            break;
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+        #endregion
+
+        #region Enemy inits
+
+        #region Buzzsaw
+        private static void Init_Buzzsaw(int i)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Buzzsaw();
+        }
+        #endregion
+
+        #endregion
     }
 }

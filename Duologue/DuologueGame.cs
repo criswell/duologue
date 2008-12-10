@@ -148,8 +148,8 @@ namespace Duologue
             gamePlayTest.Visible = true;
             this.Components.Add(gamePlayTest);*/
             Log = new Logger(this);
-            Log.Enabled = false;
-            Log.Visible = false;
+            Log.Enabled = true; // false;
+            Log.Visible = true; // false;
             this.Components.Add(Log);
 
             spinner = new Spinner(this);

@@ -199,18 +199,22 @@ namespace Duologue.Screens
                     livingEnemies++;
                 }
             }
+
+            if (livingEnemies > 0)
+            {
+                InstanceManager.Logger.LogEntry(String.Format("{0}-{0}",
+                    LocalInstanceManager.Enemies[0].Position.X.ToString(),
+                    LocalInstanceManager.Enemies[0].Position.Y.ToString()));
+            }
             // If we have no living enemies, it means we need to get them from the next wavelet,
             // or move to next wave
-            if (livingEnemies < 1)
+            if (livingEnemies < 1 && livingPlayers > 0)
             {
                 // FIXME, uh, we might want some sort of loading bar here....
-                if (LocalInstanceManager.CurrentGameWave.CurrentWavelet < LocalInstanceManager.CurrentGameWave.NumWavelets)
+                if (!WaveletInit.Initialize())
                 {
-                    LocalInstanceManager.Enemies = new Enemy[LocalInstanceManager.CurrentGameWave.NumEnemies];
-                    for (int i = 0; i < LocalInstanceManager.CurrentGameWave.NumEnemies; i++)
-                    {
-                        // ERE AM JH
-                    }
+                    // No further wavelets, move up to next wave
+                    // ERE I AM JH
                 }
             }
 
@@ -228,6 +232,16 @@ namespace Duologue.Screens
                 if (p.Active)
                 {
                     p.Draw(gameTime);
+                }
+            }
+
+            // Next, run through the enemies
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                Enemy e = LocalInstanceManager.Enemies[i];
+                if (e.Alive)
+                {
+                    e.Draw(gameTime);
                 }
             }
             base.Draw(gameTime);
