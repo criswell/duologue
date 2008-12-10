@@ -193,7 +193,7 @@ namespace Duologue
 
             // FIXME
             // This actually needs to be re-centered, in wrong coord system
-            startPos = Vector2.Negate(startPos);
+            startPos = Vector2.Negate(startPos) + centerOfScreen;
 
             return startPos;
         }

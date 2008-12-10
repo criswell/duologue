@@ -33,6 +33,25 @@ namespace Duologue.PlayObjects
 
         // Deltas
         private const float delta_Rotation = 0.1f;
+
+        #region Force attractions / Repulsions
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float playerAttract = 5f;
+
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 3f;
+        #endregion
+
         #endregion
 
         #region Fields
@@ -49,6 +68,11 @@ namespace Duologue.PlayObjects
         private float baseLayer;
         private float faceLayer;
         private float rotation;
+
+        // Movement
+        private Vector2 offset;
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
         #endregion
 
         #region Constructor / Init / Load
@@ -180,17 +204,56 @@ namespace Duologue.PlayObjects
         #region Public overrides
         public override bool StartOffset()
         {
-            throw new Exception("The method or operation is not implemented.");
+            offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new Exception("The method or operation is not implemented.");
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                if (vToPlayer.Length() < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = vToPlayer.Length();
+                    nearestPlayer = vToPlayer;
+                }
+                return true;
+            }
+            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                // Enemy
+                Vector2 vToEnemy = this.Position - pobj.Position;
+                if (vToEnemy.Length() < this.Radius + pobj.Radius)
+                {
+                    // Too close, BTFO
+                    vToEnemy.Normalize();
+                    offset += standardEnemyRepulse * Vector2.Negate(vToEnemy);
+                }
+
+                return true;
+            }
+            else
+            {
+                // Other
+
+                return true;
+            }
         }
 
         public override bool ApplyOffset()
         {
-            throw new Exception("The method or operation is not implemented.");
+            // First, apply the player offset
+            nearestPlayer.Normalize();
+            offset += playerAttract * Vector2.Negate(nearestPlayer);
+
+            // Next apply the offset permanently
+            if (offset.Length() >= minMovement)
+                this.Position += offset;
+
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
