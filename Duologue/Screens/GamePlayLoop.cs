@@ -82,6 +82,7 @@ namespace Duologue.Screens
         public override void Update(GameTime gameTime)
         {
             int livingPlayers = 0;
+            int livingEnemies = 0;
             bool dumb;
 
             #region Player stuff
@@ -194,6 +195,21 @@ namespace Duologue.Screens
                             }
                         }
                         dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
+                    }
+                    livingEnemies++;
+                }
+            }
+            // If we have no living enemies, it means we need to get them from the next wavelet,
+            // or move to next wave
+            if (livingEnemies < 1)
+            {
+                // FIXME, uh, we might want some sort of loading bar here....
+                if (LocalInstanceManager.CurrentGameWave.CurrentWavelet < LocalInstanceManager.CurrentGameWave.NumWavelets)
+                {
+                    LocalInstanceManager.Enemies = new Enemy[LocalInstanceManager.CurrentGameWave.NumEnemies];
+                    for (int i = 0; i < LocalInstanceManager.CurrentGameWave.NumEnemies; i++)
+                    {
+                        // ERE AM JH
                     }
                 }
             }
