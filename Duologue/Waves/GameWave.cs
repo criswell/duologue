@@ -36,7 +36,7 @@ namespace Duologue.Waves
         /// <summary>
         /// The enemies in this wavelet
         /// </summary>
-        public int[] Enemies;
+        public TypesOfPlayObjects[] Enemies;
 
         /// <summary>
         /// The starting hit points for each enemy in this wavelet
@@ -58,7 +58,7 @@ namespace Duologue.Waves
         /// <param name="StartHP">The starting HP for said enemies</param>
         public Wavelet(int NumEnemies, int StartHP)
         {
-            Enemies = new int[NumEnemies];
+            Enemies = new TypesOfPlayObjects[NumEnemies];
             StartHitPoints = StartHP;
         }
         #endregion

@@ -157,7 +157,7 @@ namespace Duologue
             float angleRad = 0f;
 
             // Get centerOfScreen if we don't have it yet
-            if(centerOfScreen == null)
+            if(centerOfScreen == Vector2.Zero)
             {
                 centerOfScreen = new Vector2(
                     InstanceManager.DefaultViewport.Width/2f,
@@ -165,7 +165,7 @@ namespace Duologue
             }
 
             // Get the screenRadius if we dont have it yet
-            if (screenRadius == 0f)
+            if (screenRadius < 1f)
                 screenRadius = (float)Math.Sqrt((double)(centerOfScreen.X * centerOfScreen.X + centerOfScreen.Y * centerOfScreen.Y));
 
             // Get the average angle of all the players
@@ -193,7 +193,10 @@ namespace Duologue
 
             // FIXME
             // This actually needs to be re-centered, in wrong coord system
-            startPos = Vector2.Negate(startPos) + centerOfScreen;
+            startPos = Vector2.Reflect(Vector2.Negate(startPos),Vector2.UnitX)+ centerOfScreen;
+
+            //InstanceManager.Logger.LogEntry(String.Format("Start pos {0}-{0}", startPos.X.ToString(), startPos.Y.ToString()));
+            //InstanceManager.Logger.LogEntry(String.Format("Cent {0}", centerOfScreen.ToString()));
 
             return startPos;
         }

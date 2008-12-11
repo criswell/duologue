@@ -124,23 +124,30 @@ namespace Duologue.Screens
             if (timeSinceStart < delayLifetime)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (LocalInstanceManager.CurrentGameWave == null)
+            /*if (LocalInstanceManager.CurrentGameWave == null)
             {
                 LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
-            }
+            }*/
 
             switch (currentState)
             {
                 case GamePlayState.WaveIntro:
+                    // Get the next wave
+                    LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
+
+                    // Display the wave intro
                     string[] text = new string[2];
                     text[0] = String.Format(Resources.GameScreen_Wave,
                         LocalInstanceManager.CurrentGameWave.MajorWaveNumber.ToString(),
                         LocalInstanceManager.CurrentGameWave.MinorWaveNumber.ToString());
                     text[1] = LocalInstanceManager.CurrentGameWave.Name;
                     waveDisplay.Text = text;
+                    // Set up the background and enemies
+                    LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
+
+                    // Set up the exit stuff
                     currentState = GamePlayState.Delay;
                     timeSinceStart = 0f;
-                    LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
                     nextState = GamePlayState.InitPlayerSpawn;
                     break;
                 case GamePlayState.Delay:

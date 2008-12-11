@@ -82,6 +82,7 @@ namespace Duologue.Screens
         public override void Update(GameTime gameTime)
         {
             int livingPlayers = 0;
+            int livingEnemies = 0;
             bool dumb;
 
             #region Player stuff
@@ -157,7 +158,7 @@ namespace Duologue.Screens
             #region Enemy Stuff
             for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
             {
-                // We really only want to spawn new enemies if we have players alive
+                // We really only want to spawn new enemies if we have active/living players
                 if (livingPlayers > 0)
                 {
                     if (LocalInstanceManager.Enemies[i] == null ||
@@ -177,7 +178,8 @@ namespace Duologue.Screens
                         // Update each enemy with player objects
                         for (int j = 0; j < InputManager.MaxInputs; j++)
                         {
-                            if (LocalInstanceManager.Players[j].Active)
+                            if (LocalInstanceManager.Players[j].Active &&
+                                LocalInstanceManager.Players[j].State == PlayerState.Alive)
                             {
                                 dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Players[j]);
                             }
@@ -195,6 +197,25 @@ namespace Duologue.Screens
                         }
                         dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
                     }
+                    livingEnemies++;
+                }
+            }
+
+            if (livingEnemies > 0)
+            {
+                InstanceManager.Logger.LogEntry(String.Format("{0}-{0}",
+                    LocalInstanceManager.Enemies[0].Position.X.ToString(),
+                    LocalInstanceManager.Enemies[0].Position.Y.ToString()));
+            }
+            // If we have no living enemies, it means we need to get them from the next wavelet,
+            // or move to next wave
+            if (livingEnemies < 1 && livingPlayers > 0)
+            {
+                // FIXME, uh, we might want some sort of loading bar here....
+                if (!WaveletInit.Initialize())
+                {
+                    // No further wavelets, move up to next wave
+                    // ERE I AM JH
                 }
             }
 
@@ -212,6 +233,16 @@ namespace Duologue.Screens
                 if (p.Active)
                 {
                     p.Draw(gameTime);
+                }
+            }
+
+            // Next, run through the enemies
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                Enemy e = LocalInstanceManager.Enemies[i];
+                if (e.Alive)
+                {
+                    e.Draw(gameTime);
                 }
             }
             base.Draw(gameTime);

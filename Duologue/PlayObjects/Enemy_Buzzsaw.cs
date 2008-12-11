@@ -151,7 +151,7 @@ namespace Duologue.PlayObjects
                     c = ColorState.Positive[ColorState.Light];
                     break;
             }
-            if (isFleeing)
+            /*if (isFleeing)
             {
                 InstanceManager.RenderSprite.Draw(
                     buzzOutline,
@@ -183,7 +183,16 @@ namespace Duologue.PlayObjects
                     0f,
                     1f,
                     faceLayer);
-            }
+            }*/
+            InstanceManager.RenderSprite.Draw(
+                buzzBase,
+                Position,
+                center,
+                null,
+                c,
+                0f,
+                1f,
+                baseLayer);
         }
 
         public override void Update(GameTime gameTime)
@@ -229,8 +238,17 @@ namespace Duologue.PlayObjects
                 if (vToEnemy.Length() < this.Radius + pobj.Radius)
                 {
                     // Too close, BTFO
+                    if (vToEnemy.Length() == 0f)
+                    {
+                        // Well, bah, we're on top of each other!
+                        vToEnemy = new Vector2(
+                            (float)InstanceManager.Random.NextDouble() - 0.5f,
+                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                    }
                     vToEnemy.Normalize();
+                    //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
                     offset += standardEnemyRepulse * Vector2.Negate(vToEnemy);
+                    //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
                 }
 
                 return true;
