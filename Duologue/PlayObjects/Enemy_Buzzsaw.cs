@@ -49,7 +49,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The minimum movement required before we register motion
         /// </summary>
-        private const float minMovement = 3f;
+        private const float minMovement = 5f;
         #endregion
 
         #endregion
