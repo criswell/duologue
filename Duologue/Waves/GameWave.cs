@@ -42,6 +42,11 @@ namespace Duologue.Waves
         /// The starting hit points for each enemy in this wavelet
         /// </summary>
         public int StartHitPoints;
+
+        /// <summary>
+        /// the starting angle for each enemy
+        /// </summary>
+        public float[] StartAngle;
         #endregion
 
         #region Constructor
@@ -59,6 +64,7 @@ namespace Duologue.Waves
         public Wavelet(int NumEnemies, int StartHP)
         {
             Enemies = new TypesOfPlayObjects[NumEnemies];
+            StartAngle = new float[NumEnemies];
             StartHitPoints = StartHP;
         }
         #endregion
