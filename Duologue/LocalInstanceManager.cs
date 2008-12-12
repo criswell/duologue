@@ -168,8 +168,8 @@ namespace Duologue
             
             // Now, make that a vector pointing in the opposite direction at the screenRadius distance
             startPos = new Vector2(
-                screenRadius * (float)Math.Cos((double)angleRad),
-                screenRadius * (float)Math.Sin((double)angleRad));
+                (screenRadius + radius) * (float)Math.Cos((double)angleRad),
+                (screenRadius + radius) * (float)Math.Sin((double)angleRad));
 
             startPos = Vector2.Reflect(Vector2.Negate(startPos),Vector2.UnitX)+ centerOfScreen;
 
