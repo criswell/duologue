@@ -153,10 +153,6 @@ namespace Duologue
         {
             Vector2 startPos;
 
-            //int numAngles = 0;
-
-            //float angleRad = 0f;
-
             // Get centerOfScreen if we don't have it yet
             if(centerOfScreen == Vector2.Zero)
             {
@@ -169,37 +165,16 @@ namespace Duologue
             if (screenRadius < 1f)
                 screenRadius = (float)Math.Sqrt((double)(centerOfScreen.X * centerOfScreen.X + centerOfScreen.Y * centerOfScreen.Y));
 
-            // Get the average angle of all the players
-            /*for (int i = 0; i < MaxNumberOfPlayers; i++)
-            {
-                if (LocalInstanceManager.Players[i].Active && LocalInstanceManager.Players[i].Alive)
-                {
-                    numAngles++;
-                    angleRad += MWMathHelper.ComputeAngleAgainstX(
-                        LocalInstanceManager.Players[i].Position,
-                        centerOfScreen);
-
-                }
-            }
-
-            if (numAngles > 0)
-            {
-                angleRad = angleRad / numAngles;
-            }*/
             
             // Now, make that a vector pointing in the opposite direction at the screenRadius distance
             startPos = new Vector2(
                 screenRadius * (float)Math.Cos((double)angleRad),
                 screenRadius * (float)Math.Sin((double)angleRad));
 
-            // FIXME
-            // This actually needs to be re-centered, in wrong coord system
             startPos = Vector2.Reflect(Vector2.Negate(startPos),Vector2.UnitX)+ centerOfScreen;
 
             //InstanceManager.Logger.LogEntry(String.Format("Start pos {0}-{0}", startPos.X.ToString(), startPos.Y.ToString()));
             //InstanceManager.Logger.LogEntry(String.Format("Cent {0}", centerOfScreen.ToString()));
-
-            
 
             return startPos;
         }
