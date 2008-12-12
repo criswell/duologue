@@ -167,6 +167,7 @@ namespace Duologue
 
             
             // Now, make that a vector pointing in the opposite direction at the screenRadius distance
+            // FIXME - We're still spawning the enemies in visible screen
             startPos = new Vector2(
                 (screenRadius + radius) * (float)Math.Cos((double)angleRad),
                 (screenRadius + radius) * (float)Math.Sin((double)angleRad));
