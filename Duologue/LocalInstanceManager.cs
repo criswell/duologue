@@ -146,15 +146,16 @@ namespace Duologue
         /// <summary>
         /// Will generate a starting position for an enemy
         /// </summary>
+        /// <param name="angleRad">The angle (in radians) of the start pos</param>
         /// <param name="radius">The radius of the enemy</param>
         /// <returns>Starting position</returns>
-        internal static Vector2 GenerateEnemyStartPos(float radius)
+        internal static Vector2 GenerateEnemyStartPos(float angleRad, float radius)
         {
             Vector2 startPos;
 
-            int numAngles = 0;
+            //int numAngles = 0;
 
-            float angleRad = 0f;
+            //float angleRad = 0f;
 
             // Get centerOfScreen if we don't have it yet
             if(centerOfScreen == Vector2.Zero)
@@ -169,7 +170,7 @@ namespace Duologue
                 screenRadius = (float)Math.Sqrt((double)(centerOfScreen.X * centerOfScreen.X + centerOfScreen.Y * centerOfScreen.Y));
 
             // Get the average angle of all the players
-            for (int i = 0; i < MaxNumberOfPlayers; i++)
+            /*for (int i = 0; i < MaxNumberOfPlayers; i++)
             {
                 if (LocalInstanceManager.Players[i].Active && LocalInstanceManager.Players[i].Alive)
                 {
@@ -184,7 +185,7 @@ namespace Duologue
             if (numAngles > 0)
             {
                 angleRad = angleRad / numAngles;
-            }
+            }*/
             
             // Now, make that a vector pointing in the opposite direction at the screenRadius distance
             startPos = new Vector2(
@@ -197,6 +198,8 @@ namespace Duologue
 
             //InstanceManager.Logger.LogEntry(String.Format("Start pos {0}-{0}", startPos.X.ToString(), startPos.Y.ToString()));
             //InstanceManager.Logger.LogEntry(String.Format("Cent {0}", centerOfScreen.ToString()));
+
+            
 
             return startPos;
         }

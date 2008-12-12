@@ -165,7 +165,9 @@ namespace Duologue.Screens
                         !LocalInstanceManager.Enemies[i].Initialized)
                     {
                         LocalInstanceManager.Enemies[i].Initialize(
-                            LocalInstanceManager.GenerateEnemyStartPos(LocalInstanceManager.Enemies[i].Radius),
+                            LocalInstanceManager.GenerateEnemyStartPos(
+                            LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartAngle[i],
+                            LocalInstanceManager.Enemies[i].Radius),
                             Vector2.One,
                             LocalInstanceManager.CurrentGameWave.ColorState,
                             ColorState.RandomPolarity(),
