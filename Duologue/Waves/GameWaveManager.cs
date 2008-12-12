@@ -165,6 +165,7 @@ namespace Duologue.Waves
             {
                 // For now, we're just spawning all buzzsaws
                 thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
             }
 
             return thisWave;
