@@ -64,10 +64,14 @@ namespace Duologue.PlayObjects
         private bool isFleeing;
 
         // Housekeeping graphical doo-dads
-        private Vector2 center;
+        private Vector2 baseCenter;
+        private Vector2 outlineCenter;
+        private Vector2 bladesCenter;
         private float baseLayer;
-        private float faceLayer;
+        private float bladesLayer;
+        private float outlineLayer;
         private float rotation;
+        private float bladesRotation;
 
         // Movement
         private Vector2 offset;
@@ -94,6 +98,7 @@ namespace Duologue.PlayObjects
             Position = startPos;
             Orientation = startOrientation;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
+            bladesRotation = 0f;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             if (hitPoints == null)
@@ -114,16 +119,25 @@ namespace Duologue.PlayObjects
             buzzOutline = InstanceManager.AssetManager.LoadTexture2D(filename_outline);
             buzzBlades = InstanceManager.AssetManager.LoadTexture2D(filename_blades);
 
-            center = new Vector2(
+            baseCenter = new Vector2(
                 buzzBase.Width / 2f,
                 buzzBase.Height / 2f);
+
+            outlineCenter = new Vector2(
+                buzzOutline.Width / 2f,
+                buzzOutline.Height / 2f);
+
+            bladesCenter = new Vector2(
+                buzzBlades.Width / 2f,
+                buzzBlades.Height / 2f);
 
             Radius = buzzBase.Width / 2f;
             if (buzzBase.Height / 2f > Radius)
                 Radius = buzzBase.Height / 2f;
 
             baseLayer = 0.3f;
-            faceLayer = 0.2f;
+            bladesLayer = 0.4f;
+            outlineLayer = 0.2f;
 
             isFleeing = false;
 
@@ -184,20 +198,40 @@ namespace Duologue.PlayObjects
                     1f,
                     faceLayer);
             }*/
+
+            InstanceManager.RenderSprite.Draw(
+                buzzBlades,
+                Position,
+                bladesCenter,
+                null,
+                Color.White,
+                bladesRotation,
+                1f,
+                bladesLayer);
             InstanceManager.RenderSprite.Draw(
                 buzzBase,
                 Position,
-                center,
+                baseCenter,
                 null,
                 c,
-                0f,
+                rotation,
                 1f,
                 baseLayer);
+            InstanceManager.RenderSprite.Draw(
+                buzzOutline,
+                Position,
+                outlineCenter,
+                null,
+                Color.White,
+                rotation,
+                1f,
+                outlineLayer);
+
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (isFleeing)
+            /*if (isFleeing)
             {
                 // We only spin wildly when we're running the fuck away
                 rotation += delta_Rotation;
@@ -206,7 +240,15 @@ namespace Duologue.PlayObjects
                     rotation = 0f;
                 else if (rotation < 0f)
                     rotation = MathHelper.TwoPi;
-            }
+            }*/
+
+            rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
+
+            bladesRotation += delta_Rotation;
+            if (bladesRotation > MathHelper.TwoPi)
+                bladesRotation = 0f;
+            else if (bladesRotation < 0f)
+                bladesRotation = MathHelper.TwoPi;
         }
         #endregion
 
@@ -271,6 +313,7 @@ namespace Duologue.PlayObjects
             if (nearestPlayer.Length() > 0f)
             {
                 nearestPlayer = Vector2.Negate(nearestPlayer);
+                Orientation = nearestPlayer;
                 nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                 nearestPlayer.Normalize();
 
@@ -280,7 +323,6 @@ namespace Duologue.PlayObjects
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
                 this.Position += offset;
-
             return true;
         }
 

@@ -200,6 +200,8 @@ namespace Duologue.Screens
                         dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
                     }
                     livingEnemies++;
+
+                    LocalInstanceManager.Enemies[i].Update(gameTime);
                 }
             }
 
