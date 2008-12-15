@@ -267,8 +267,6 @@ namespace Duologue.PlayObjects
         public override bool ApplyOffset()
         {
             // First, apply the player offset
-            //nearestPlayer.Normalize();
-            //offset += playerAttract * Vector2.Negate(nearestPlayer);
             if (nearestPlayer.Length() > 0f)
             {
                 nearestPlayer = Vector2.Negate(nearestPlayer);
