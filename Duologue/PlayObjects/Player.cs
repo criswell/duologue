@@ -132,6 +132,7 @@ namespace Duologue.PlayObjects
         private float beamArcMin;
         private float beamArcMax;
         private float piOver6 = MathHelper.Pi / 6f;
+        private ColorState colorState;
         #endregion
 
         #region Properties
@@ -206,7 +207,19 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The current colorstate
         /// </summary>
-        public ColorState colorState;
+        public ColorState ColorState
+        {
+            get { return colorState; }
+            set
+            {
+                colorState = value;
+                /*playerCannon.Tint = ColorState.Positive[ColorState.Dark];
+                playerLight.Tint = ColorState.Negative[ColorState.Medium];
+                shot.Tint = ColorState.Positive[ColorState.Light];
+                beam.Tint = ColorState.Negative[ColorState.Dark];*/
+                SetColors();
+            }
+        }
 
         /// <summary>
         /// The player color
@@ -321,7 +334,7 @@ namespace Duologue.PlayObjects
                     AssetManager.LoadTexture2D(filename_playerCannon).Width / 2f,
                     AssetManager.LoadTexture2D(filename_playerCannon).Height / 2f),
                 null,
-                colorState.Positive[ColorState.Dark],
+                ColorState.Positive[ColorState.Dark],
                 0f,
                 1f,
                 0.4f);
@@ -333,7 +346,7 @@ namespace Duologue.PlayObjects
                     AssetManager.LoadTexture2D(filename_playerLight).Width / 2f,
                     AssetManager.LoadTexture2D(filename_playerLight).Height / 2f),
                 null,
-                colorState.Negative[ColorState.Medium],
+                ColorState.Negative[ColorState.Medium],
                 0f,
                 1f,
                 0.4f);
@@ -346,7 +359,7 @@ namespace Duologue.PlayObjects
                     AssetManager.LoadTexture2D(filename_shot).Width / 2f,
                     AssetManager.LoadTexture2D(filename_shot).Height / 2f),
                 null,
-                colorState.Positive[ColorState.Light],
+                ColorState.Positive[ColorState.Light],
                 0f,
                 1f,
                 1f);
@@ -360,7 +373,7 @@ namespace Duologue.PlayObjects
                 Position,
                 beamCenter,
                 null,
-                colorState.Negative[ColorState.Dark],
+                ColorState.Negative[ColorState.Dark],
                 0f,
                 1f,
                 1f);
@@ -370,7 +383,7 @@ namespace Duologue.PlayObjects
                 Position,
                 beamCenter,
                 null,
-                colorState.Negative[ColorState.Light],
+                ColorState.Negative[ColorState.Light],
                 0f,
                 1f,
                 1f);
@@ -548,7 +561,7 @@ namespace Duologue.PlayObjects
                 {
                     // In the beam
                     // Check if complimentary color
-                    if (colorState.SameColor(color, playerLight.Tint))
+                    if (ColorState.SameColor(color, playerLight.Tint))
                     {
                         retval = 1;
                     }

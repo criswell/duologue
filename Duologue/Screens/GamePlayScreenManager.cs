@@ -157,8 +157,11 @@ namespace Duologue.Screens
                 case GamePlayState.InitPlayerSpawn:
                     for (int i = 0; i < InputManager.MaxInputs; i++)
                     {
-                        LocalInstanceManager.Players[i].colorState = LocalInstanceManager.CurrentGameWave.ColorState;
-                        LocalInstanceManager.Players[i].Spawn();
+                        if (LocalInstanceManager.Players[i].Active)
+                        {
+                            LocalInstanceManager.Players[i].ColorState = LocalInstanceManager.CurrentGameWave.ColorState;
+                            LocalInstanceManager.Players[i].Spawn();
+                        }
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
