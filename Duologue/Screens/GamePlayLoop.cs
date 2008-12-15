@@ -34,8 +34,8 @@ namespace Duologue.Screens
     public class GamePlayLoop : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
-        private const float playerMovementModifier_X = 2f;
-        private const float playerMovementModifier_Y = -2f;
+        private const float playerMovementModifier_X = 4f;
+        private const float playerMovementModifier_Y = -4f;
         #endregion
 
         #region Fields
@@ -203,12 +203,6 @@ namespace Duologue.Screens
                 }
             }
 
-            if (livingEnemies > 0)
-            {
-                InstanceManager.Logger.LogEntry(String.Format("{0}-{0}",
-                    LocalInstanceManager.Enemies[0].Position.X.ToString(),
-                    LocalInstanceManager.Enemies[0].Position.Y.ToString()));
-            }
             // If we have no living enemies, it means we need to get them from the next wavelet,
             // or move to next wave
             if (livingEnemies < 1 && livingPlayers > 0)

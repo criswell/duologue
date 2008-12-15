@@ -236,7 +236,7 @@ namespace Duologue.PlayObjects
             else if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
                 // Enemy
-                Vector2 vToEnemy = this.Position - pobj.Position;
+                Vector2 vToEnemy = pobj.Position - this.Position;
                 float len = vToEnemy.Length();
                 if (len < this.Radius + pobj.Radius)
                 {
@@ -248,9 +248,10 @@ namespace Duologue.PlayObjects
                             (float)InstanceManager.Random.NextDouble() - 0.5f,
                             (float)InstanceManager.Random.NextDouble() - 0.5f);
                     }
+                    vToEnemy = Vector2.Negate(vToEnemy);
                     vToEnemy.Normalize();
                     //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
-                    offset += standardEnemyRepulse * Vector2.Negate(vToEnemy);
+                    offset += standardEnemyRepulse * vToEnemy;
                     //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
                 }
 
