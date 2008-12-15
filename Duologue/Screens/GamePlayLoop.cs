@@ -188,7 +188,7 @@ namespace Duologue.Screens
                         }
                         // Update the enemy with remaining enemy objects
 
-                        for (int j = i; j < LocalInstanceManager.CurrentNumberEnemies; j++)
+                        for (int j = i+1; j < LocalInstanceManager.CurrentNumberEnemies; j++)
                         {
                             if (LocalInstanceManager.Enemies[j] != null &&
                                 LocalInstanceManager.Enemies[j].Initialized &&

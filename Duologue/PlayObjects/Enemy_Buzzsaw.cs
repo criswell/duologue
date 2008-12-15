@@ -39,7 +39,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The player attract modifier
         /// </summary>
-        private const float playerAttract = 5f;
+        private const float playerAttract = 2.5f;
 
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
@@ -49,7 +49,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The minimum movement required before we register motion
         /// </summary>
-        private const float minMovement = 5f;
+        private const float minMovement = 2f;
         #endregion
 
         #endregion
@@ -215,6 +215,7 @@ namespace Duologue.PlayObjects
         {
             offset = Vector2.Zero;
             nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestPlayer = Vector2.Zero;
             return true;
         }
 
@@ -224,9 +225,10 @@ namespace Duologue.PlayObjects
             {
                 // Player
                 Vector2 vToPlayer = this.Position - pobj.Position;
-                if (vToPlayer.Length() < nearestPlayerRadius)
+                float len = vToPlayer.Length();
+                if (len < nearestPlayerRadius)
                 {
-                    nearestPlayerRadius = vToPlayer.Length();
+                    nearestPlayerRadius = len;
                     nearestPlayer = vToPlayer;
                 }
                 return true;
@@ -235,10 +237,11 @@ namespace Duologue.PlayObjects
             {
                 // Enemy
                 Vector2 vToEnemy = this.Position - pobj.Position;
-                if (vToEnemy.Length() < this.Radius + pobj.Radius)
+                float len = vToEnemy.Length();
+                if (len < this.Radius + pobj.Radius)
                 {
                     // Too close, BTFO
-                    if (vToEnemy.Length() == 0f)
+                    if (len == 0f)
                     {
                         // Well, bah, we're on top of each other!
                         vToEnemy = new Vector2(
@@ -264,8 +267,14 @@ namespace Duologue.PlayObjects
         public override bool ApplyOffset()
         {
             // First, apply the player offset
-            nearestPlayer.Normalize();
-            offset += playerAttract * Vector2.Negate(nearestPlayer);
+            //nearestPlayer.Normalize();
+            //offset += playerAttract * Vector2.Negate(nearestPlayer);
+            if (nearestPlayer.Length() > 0f)
+            {
+                nearestPlayer = Vector2.Negate(nearestPlayer);
+                nearestPlayer.Normalize();
+                offset += playerAttract * nearestPlayer;
+            }
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
