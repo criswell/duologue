@@ -271,7 +271,9 @@ namespace Duologue.PlayObjects
             if (nearestPlayer.Length() > 0f)
             {
                 nearestPlayer = Vector2.Negate(nearestPlayer);
+                nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                 nearestPlayer.Normalize();
+
                 offset += playerAttract * nearestPlayer;
             }
 

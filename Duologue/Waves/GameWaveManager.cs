@@ -157,7 +157,7 @@ namespace Duologue.Waves
 
             // ERE I AM JH
             thisWave.NumWavelets = 1;
-            thisWave.NumEnemies = 25;
+            thisWave.NumEnemies = 100;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
             thisWave.Wavelet[thisWave.CurrentWavelet] = new Wavelet(thisWave.NumEnemies, 0);
