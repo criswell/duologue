@@ -30,10 +30,12 @@ namespace Duologue.PlayObjects
         private const string filename_base = "Enemies/buzzsaw-base";
         private const string filename_outline = "Enemies/buzzsaw-outline";
         private const string filename_blades = "Enemies/buzzsaw-blades";
+        private const string filename_shine = "Enemies/buzzsaw-shine";
 
         // Deltas
         private const float delta_Rotation = 0.1f;
-
+        private const float delta_ShineOffsetX = -1f;
+        private const float delta_ShineOffsetY = -4f;
         #region Force attractions / Repulsions
 
         /// <summary>
@@ -59,6 +61,7 @@ namespace Duologue.PlayObjects
         private Texture2D buzzBase;
         private Texture2D buzzOutline;
         private Texture2D buzzBlades;
+        private Texture2D buzzShine;
 
         // What state we're in
         private bool isFleeing;
@@ -67,6 +70,8 @@ namespace Duologue.PlayObjects
         private Vector2 baseCenter;
         private Vector2 outlineCenter;
         private Vector2 bladesCenter;
+        private Vector2 shineCenter;
+        private Vector2 shineOffset;
         private float baseLayer;
         private float bladesLayer;
         private float outlineLayer;
@@ -86,6 +91,7 @@ namespace Duologue.PlayObjects
             MyType = TypesOfPlayObjects.Enemy_Buzzsaw;
             MajorType = MajorPlayObjectType.Enemy;
             Initialized = false;
+            shineOffset = new Vector2(delta_ShineOffsetX, delta_ShineOffsetY);
         }
 
         public override void Initialize(
@@ -118,6 +124,7 @@ namespace Duologue.PlayObjects
             buzzBase = InstanceManager.AssetManager.LoadTexture2D(filename_base);
             buzzOutline = InstanceManager.AssetManager.LoadTexture2D(filename_outline);
             buzzBlades = InstanceManager.AssetManager.LoadTexture2D(filename_blades);
+            buzzShine = InstanceManager.AssetManager.LoadTexture2D(filename_shine);
 
             baseCenter = new Vector2(
                 buzzBase.Width / 2f,
@@ -130,6 +137,10 @@ namespace Duologue.PlayObjects
             bladesCenter = new Vector2(
                 buzzBlades.Width / 2f,
                 buzzBlades.Height / 2f);
+
+            shineCenter = new Vector2(
+                buzzShine.Width / 2f,
+                buzzShine.Height / 2f);
 
             Radius = buzzBase.Width / 2f;
             if (buzzBase.Height / 2f > Radius)
@@ -212,6 +223,15 @@ namespace Duologue.PlayObjects
                 buzzBase,
                 Position,
                 baseCenter,
+                null,
+                c,
+                rotation,
+                1f,
+                baseLayer);
+            InstanceManager.RenderSprite.Draw(
+                buzzShine,
+                Position + shineOffset,
+                shineCenter,
                 null,
                 c,
                 rotation,
