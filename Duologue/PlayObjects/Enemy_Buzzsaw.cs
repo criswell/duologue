@@ -41,6 +41,16 @@ namespace Duologue.PlayObjects
         /// enemy given the radius of the base
         /// </summary>
         private const float radiusDivisor = 1.5f;
+
+        /// <summary>
+        /// The maximum number of hitpoints
+        /// </summary>
+        private const int maxHitPoints = 5;
+
+        /// <summary>
+        /// The hit point array
+        /// </summary>
+        static readonly byte[] hitPointArray = new byte[] {(byte)128, (byte)160, (byte)192, (byte)224, (byte)255};
         #region Force attractions / Repulsions
 
         /// <summary>
@@ -163,6 +173,7 @@ namespace Duologue.PlayObjects
         public override void Draw(GameTime gameTime)
         {
             Color c;
+            Color s;
             switch (ColorPolarity)
             {
                 case ColorPolarity.Negative:
@@ -172,6 +183,12 @@ namespace Duologue.PlayObjects
                     c = ColorState.Positive[ColorState.Light];
                     break;
             }
+
+            s = c;
+            if (CurrentHitPoints < maxHitPoints)
+                s.A = hitPointArray[CurrentHitPoints];
+            else
+                s.A = hitPointArray[0];
             /*if (isFleeing)
             {
                 InstanceManager.RenderSprite.Draw(
@@ -229,7 +246,7 @@ namespace Duologue.PlayObjects
                 Position + shineOffset,
                 shineCenter,
                 null,
-                c,
+                s,
                 0f,
                 1f,
                 baseLayer);
