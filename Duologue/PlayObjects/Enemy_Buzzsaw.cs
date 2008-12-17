@@ -28,7 +28,6 @@ namespace Duologue.PlayObjects
         #region Constants
         // Filenames
         private const string filename_base = "Enemies/buzzsaw-base";
-        //private const string filename_outline = "Enemies/buzzsaw-outline";
         private const string filename_blades = "Enemies/buzzsaw-blades";
         private const string filename_shine = "Enemies/buzzsaw-shine";
 
@@ -65,7 +64,6 @@ namespace Duologue.PlayObjects
         #region Fields
         // The textures for this enemy
         private Texture2D buzzBase;
-        //private Texture2D buzzOutline;
         private Texture2D buzzBlades;
         private Texture2D buzzShine;
 
@@ -74,13 +72,11 @@ namespace Duologue.PlayObjects
 
         // Housekeeping graphical doo-dads
         private Vector2 baseCenter;
-        //private Vector2 outlineCenter;
         private Vector2 bladesCenter;
         private Vector2 shineCenter;
         private Vector2 shineOffset;
         private float baseLayer;
         private float bladesLayer;
-        private float outlineLayer;
         private float rotation;
         private float bladesRotation;
 
@@ -128,17 +124,12 @@ namespace Duologue.PlayObjects
         {
             // Load the textures
             buzzBase = InstanceManager.AssetManager.LoadTexture2D(filename_base);
-            //buzzOutline = InstanceManager.AssetManager.LoadTexture2D(filename_outline);
             buzzBlades = InstanceManager.AssetManager.LoadTexture2D(filename_blades);
             buzzShine = InstanceManager.AssetManager.LoadTexture2D(filename_shine);
 
             baseCenter = new Vector2(
                 buzzBase.Width / 2f,
                 buzzBase.Height / 2f);
-
-            //outlineCenter = new Vector2(
-            //    buzzOutline.Width / 2f,
-            //    buzzOutline.Height / 2f);
 
             bladesCenter = new Vector2(
                 buzzBlades.Width / 2f,
@@ -154,7 +145,6 @@ namespace Duologue.PlayObjects
 
             baseLayer = 0.3f;
             bladesLayer = 0.4f;
-            outlineLayer = 0.2f;
 
             isFleeing = false;
 
@@ -243,15 +233,6 @@ namespace Duologue.PlayObjects
                 0f,
                 1f,
                 baseLayer);
-            /*InstanceManager.RenderSprite.Draw(
-                buzzOutline,
-                Position,
-                outlineCenter,
-                null,
-                Color.White,
-                rotation,
-                1f,
-                outlineLayer);*/
 
         }
 
