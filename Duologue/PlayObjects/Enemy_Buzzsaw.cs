@@ -28,13 +28,13 @@ namespace Duologue.PlayObjects
         #region Constants
         // Filenames
         private const string filename_base = "Enemies/buzzsaw-base";
-        private const string filename_outline = "Enemies/buzzsaw-outline";
+        //private const string filename_outline = "Enemies/buzzsaw-outline";
         private const string filename_blades = "Enemies/buzzsaw-blades";
         private const string filename_shine = "Enemies/buzzsaw-shine";
 
         // Deltas
         private const float delta_Rotation = 0.1f;
-        private const float delta_ShineOffsetX = -1f;
+        private const float delta_ShineOffsetX = -0f;
         private const float delta_ShineOffsetY = -4f;
         #region Force attractions / Repulsions
 
@@ -59,7 +59,7 @@ namespace Duologue.PlayObjects
         #region Fields
         // The textures for this enemy
         private Texture2D buzzBase;
-        private Texture2D buzzOutline;
+        //private Texture2D buzzOutline;
         private Texture2D buzzBlades;
         private Texture2D buzzShine;
 
@@ -68,7 +68,7 @@ namespace Duologue.PlayObjects
 
         // Housekeeping graphical doo-dads
         private Vector2 baseCenter;
-        private Vector2 outlineCenter;
+        //private Vector2 outlineCenter;
         private Vector2 bladesCenter;
         private Vector2 shineCenter;
         private Vector2 shineOffset;
@@ -122,7 +122,7 @@ namespace Duologue.PlayObjects
         {
             // Load the textures
             buzzBase = InstanceManager.AssetManager.LoadTexture2D(filename_base);
-            buzzOutline = InstanceManager.AssetManager.LoadTexture2D(filename_outline);
+            //buzzOutline = InstanceManager.AssetManager.LoadTexture2D(filename_outline);
             buzzBlades = InstanceManager.AssetManager.LoadTexture2D(filename_blades);
             buzzShine = InstanceManager.AssetManager.LoadTexture2D(filename_shine);
 
@@ -130,9 +130,9 @@ namespace Duologue.PlayObjects
                 buzzBase.Width / 2f,
                 buzzBase.Height / 2f);
 
-            outlineCenter = new Vector2(
-                buzzOutline.Width / 2f,
-                buzzOutline.Height / 2f);
+            //outlineCenter = new Vector2(
+            //    buzzOutline.Width / 2f,
+            //    buzzOutline.Height / 2f);
 
             bladesCenter = new Vector2(
                 buzzBlades.Width / 2f,
@@ -234,10 +234,10 @@ namespace Duologue.PlayObjects
                 shineCenter,
                 null,
                 c,
-                rotation,
+                0f,
                 1f,
                 baseLayer);
-            InstanceManager.RenderSprite.Draw(
+            /*InstanceManager.RenderSprite.Draw(
                 buzzOutline,
                 Position,
                 outlineCenter,
@@ -245,7 +245,7 @@ namespace Duologue.PlayObjects
                 Color.White,
                 rotation,
                 1f,
-                outlineLayer);
+                outlineLayer);*/
 
         }
 
