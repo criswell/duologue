@@ -36,6 +36,12 @@ namespace Duologue.PlayObjects
         private const float delta_Rotation = 0.1f;
         private const float delta_ShineOffsetX = -0f;
         private const float delta_ShineOffsetY = -4f;
+
+        /// <summary>
+        /// The divisor that determines the radius of the entire
+        /// enemy given the radius of the base
+        /// </summary>
+        private const float radiusDivisor = 1.5f;
         #region Force attractions / Repulsions
 
         /// <summary>
@@ -142,9 +148,9 @@ namespace Duologue.PlayObjects
                 buzzShine.Width / 2f,
                 buzzShine.Height / 2f);
 
-            Radius = buzzBase.Width / 2f;
-            if (buzzBase.Height / 2f > Radius)
-                Radius = buzzBase.Height / 2f;
+            Radius = buzzBase.Width/radiusDivisor;
+            if (buzzBase.Height/radiusDivisor > Radius)
+                Radius = buzzBase.Height/radiusDivisor;
 
             baseLayer = 0.3f;
             bladesLayer = 0.4f;
