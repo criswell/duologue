@@ -363,7 +363,7 @@ namespace Duologue.PlayObjects
                     modifier = playerAttractAccel;
 
                 nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
-                Orientation = new Vector2(-nearestPlayer.Y, nearestPlayer.X);
+                //Orientation = nearestPlayer;
                 nearestPlayer.Normalize();
 
                 if (!isFleeing)
@@ -374,7 +374,10 @@ namespace Duologue.PlayObjects
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
+            {
                 this.Position += offset;
+                Orientation = new Vector2(-offset.Y, offset.X);
+            }
             return true;
         }
 
