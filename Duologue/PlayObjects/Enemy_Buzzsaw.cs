@@ -358,17 +358,19 @@ namespace Duologue.PlayObjects
             // First, apply the player offset
             if (nearestPlayer.Length() > 0f)
             {
-                if(!inBeam)
-                    nearestPlayer = Vector2.Negate(nearestPlayer);
-
                 nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                 Orientation = new Vector2(-nearestPlayer.Y, nearestPlayer.X);
                 nearestPlayer.Normalize();
 
                 if (isFleeing)
+                {
                     offset += playerRepulse * nearestPlayer;
+                }
                 else
+                {
+                    nearestPlayer = Vector2.Negate(nearestPlayer);
                     offset += playerAttract * nearestPlayer;
+                }
             }
 
             // Next apply the offset permanently
