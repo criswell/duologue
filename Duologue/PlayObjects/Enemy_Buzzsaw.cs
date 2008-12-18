@@ -59,6 +59,11 @@ namespace Duologue.PlayObjects
         private const float playerAttract = 2.5f;
 
         /// <summary>
+        /// The repulsion to the player's light
+        /// </summary>
+        private const float playerRepulse = 3.5f;
+
+        /// <summary>
         /// Standard repulsion of the enemy ships when too close
         /// </summary>
         private const float standardEnemyRepulse = 5f;
@@ -79,6 +84,7 @@ namespace Duologue.PlayObjects
 
         // What state we're in
         private bool isFleeing;
+        private bool inBeam;
 
         // Housekeeping graphical doo-dads
         private Vector2 baseCenter;
@@ -297,6 +303,22 @@ namespace Duologue.PlayObjects
                     nearestPlayerRadius = len;
                     nearestPlayer = vToPlayer;
                 }
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    pobj.TriggerHit(this);
+                }
+
+                // Beam handling
+                int temp = ((Player)pobj).IsInBeam(this);
+                inBeam = false;
+                isFleeing = false;
+                if (temp != 0)
+                {
+                    inBeam = true;
+                    if (temp == -1)
+                        isFleeing = true;
+                }
                 return true;
             }
             else if (pobj.MajorType == MajorPlayObjectType.Enemy)
@@ -336,12 +358,17 @@ namespace Duologue.PlayObjects
             // First, apply the player offset
             if (nearestPlayer.Length() > 0f)
             {
-                nearestPlayer = Vector2.Negate(nearestPlayer);
+                if(!inBeam)
+                    nearestPlayer = Vector2.Negate(nearestPlayer);
+
                 nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                 Orientation = new Vector2(-nearestPlayer.Y, nearestPlayer.X);
                 nearestPlayer.Normalize();
 
-                offset += playerAttract * nearestPlayer;
+                if (isFleeing)
+                    offset += playerRepulse * nearestPlayer;
+                else
+                    offset += playerAttract * nearestPlayer;
             }
 
             // Next apply the offset permanently

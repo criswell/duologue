@@ -545,14 +545,13 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// Given a position and color, will determine if it is in the beam, and if it is complementary or opposite
         /// </summary>
-        /// <param name="vector2">Position vector</param>
-        /// <param name="color">Color of the itme</param>
+        /// <param name="eobj">The player object in question</param>
         /// <returns>Returns 0 if not in beam. -1 if in beam and opposite colors. +1 if in beam and complimentary colors.</returns>
-        internal int IsInBeam(Vector2 vector2, Color color)
+        internal int IsInBeam(Enemy eobj)
         {
             int retval = 0;
             // Check if in-beam
-            Vector2 distance = vector2 - Position;
+            Vector2 distance = eobj.Position - Position;
             if (Math.Abs(distance.Length()) < beamRadius)
             {
                 // We're close enough... inside the arc?
@@ -561,6 +560,16 @@ namespace Duologue.PlayObjects
                 {
                     // In the beam
                     // Check if complimentary color
+                    Color color;
+                    switch (eobj.ColorPolarity)
+                    {
+                        case ColorPolarity.Positive:
+                            color = eobj.ColorState.Positive[ColorState.Light];
+                            break;
+                        default:
+                            color = eobj.ColorState.Negative[ColorState.Light];
+                            break;
+                    }
                     if (ColorState.SameColor(color, playerLight.Tint))
                     {
                         retval = 1;
