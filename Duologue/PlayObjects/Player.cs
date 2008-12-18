@@ -705,6 +705,9 @@ namespace Duologue.PlayObjects
             //throw new Exception("The method or operation is not implemented.");
             // FIXME for now we do nothing
             // ERE I AM JH
+
+            // Trigger a player explosion ring
+            LocalInstanceManager.PlayerRing.AddRing(this.Position, this.PlayerColor.Colors[PlayerColors.Light]);
             return true;
         }
         #endregion

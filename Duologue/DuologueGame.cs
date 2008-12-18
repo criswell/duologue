@@ -57,7 +57,7 @@ namespace Duologue
     /// 4
     /// 5
     /// 6
-    /// 7
+    /// 7           -       Explosion and steam elements
     /// 8
     /// 9
     /// ...
@@ -162,11 +162,13 @@ namespace Duologue
             /*steamSystem.Enabled = true;
             steamSystem.Visible = true;*/
             this.Components.Add(steamSystem);
+            steamSystem.DrawOrder = 7;
 
             playerRing = new PlayerRing(this, MaxExplosionEffects);
             /*playerRing.Enabled = true;
             playerRing.Visible = true;*/
             this.Components.Add(playerRing);
+            playerRing.DrawOrder = 7;
 
             achievements = new AchievementManager(this);
             /*achievements.Enabled = true;

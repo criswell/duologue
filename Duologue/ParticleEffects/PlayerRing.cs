@@ -55,7 +55,7 @@ namespace Duologue.ParticleEffects
             minRotationSpeed = -MathHelper.PiOver4 / 2.0f;
             maxRotationSpeed = MathHelper.PiOver4 / 2.0f;
 
-            spriteBlendMode = RenderSpriteBlendMode.AlphaBlend;
+            spriteBlendMode = RenderSpriteBlendMode.Multiplicative;
 
         }
     }
