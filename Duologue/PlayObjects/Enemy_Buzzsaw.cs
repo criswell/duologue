@@ -59,9 +59,9 @@ namespace Duologue.PlayObjects
         private const float playerAttract = 2.5f;
 
         /// <summary>
-        /// The repulsion to the player's light
+        /// The player attract modifier for when we're accelerated
         /// </summary>
-        private const float playerRepulse = 4f;
+        private const float playerAttractAccel = 4f;
 
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
@@ -358,19 +358,18 @@ namespace Duologue.PlayObjects
             // First, apply the player offset
             if (nearestPlayer.Length() > 0f)
             {
+                float modifier = playerAttract;
+                if (inBeam)
+                    modifier = playerAttractAccel;
+
                 nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                 Orientation = new Vector2(-nearestPlayer.Y, nearestPlayer.X);
                 nearestPlayer.Normalize();
 
-                if (isFleeing)
-                {
-                    offset += playerRepulse * nearestPlayer;
-                }
-                else
-                {
+                if (!isFleeing)
                     nearestPlayer = Vector2.Negate(nearestPlayer);
-                    offset += playerAttract * nearestPlayer;
-                }
+
+                offset += modifier * nearestPlayer;
             }
 
             // Next apply the offset permanently
