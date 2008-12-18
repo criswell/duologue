@@ -702,7 +702,10 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new Exception("The method or operation is not implemented.");
+            //throw new Exception("The method or operation is not implemented.");
+            // FIXME for now we do nothing
+            // ERE I AM JH
+            return true;
         }
         #endregion
 

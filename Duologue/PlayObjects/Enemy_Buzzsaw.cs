@@ -61,7 +61,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The repulsion to the player's light
         /// </summary>
-        private const float playerRepulse = 3.5f;
+        private const float playerRepulse = 4f;
 
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
