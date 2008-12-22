@@ -368,7 +368,7 @@ namespace Duologue.Screens
         /// <returns>A vector describing the player's score start position</returns>
         private Vector2 GetScoreStartPos(int i)
         {
-            Vector2 startPos = new Vector2(
+            Vector2 middleTitleSafe = new Vector2(
                 InstanceManager.DefaultViewport.TitleSafeArea.Width / 2f,
                 InstanceManager.DefaultViewport.TitleSafeArea.Height / 2f);
 
@@ -377,7 +377,7 @@ namespace Duologue.Screens
                 InstanceManager.DefaultViewport.Height / 2f);
 
 
-            return screenCenter + offsetModifiers[i] * startPos;
+            return screenCenter + offsetModifiers[i] * middleTitleSafe;
         }
         #endregion
 
