@@ -55,9 +55,9 @@ namespace Duologue.Audio
         public BeatEngine(Game game)
             : base(game)
         {
-            engine = new AudioEngine("Content\\sound\\myFirstXACTProject.xgs");
-            waveBank = new WaveBank(engine, "Content\\sound\\Wave Bank.xwb");
-            soundBank = new SoundBank(engine, "Content\\sound\\Sound Bank.xsb");
+            engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
+            waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
+            soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
         }
 
         /// <summary>
