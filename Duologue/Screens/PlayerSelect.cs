@@ -354,14 +354,11 @@ namespace Duologue.Screens
         /// <returns>A vector describing the current player's start position</returns>
         private Vector2 GetPlayerStartPos(int i)
         {
-            // FIXME
-            // Wow, fixme... bad hard-coded bullshit values
-            // just used to get the thing going
             Vector2 screenCenter = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
-            float offset = playerPosOffset;
-            return screenCenter + offset * offsetModifiers[i];
+
+            return screenCenter + playerPosOffset * offsetModifiers[i];
         }
 
         /// <summary>
@@ -371,9 +368,16 @@ namespace Duologue.Screens
         /// <returns>A vector describing the player's score start position</returns>
         private Vector2 GetScoreStartPos(int i)
         {
-            Vector2 startPos = Vector2.Zero;
+            Vector2 startPos = new Vector2(
+                InstanceManager.DefaultViewport.TitleSafeArea.Width / 2f,
+                InstanceManager.DefaultViewport.TitleSafeArea.Height / 2f);
 
-            return startPos;
+            Vector2 screenCenter = new Vector2(
+                InstanceManager.DefaultViewport.Width / 2f,
+                InstanceManager.DefaultViewport.Height / 2f);
+
+
+            return screenCenter + offsetModifiers[i] * startPos;
         }
         #endregion
 
