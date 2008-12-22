@@ -61,13 +61,28 @@ namespace Duologue
     /// 8
     /// 9
     /// ...
+    /// 99          -       Score scroller
     /// 100         -       Spinner
     /// </remarks>
     public class DuologueGame : Microsoft.Xna.Framework.Game
     {
         #region Constants
+        /// <summary>
+        /// FIXME
+        /// </summary>
         public const int MaxSteamEffects = 20;
+        /// <summary>
+        /// FIXME
+        /// </summary>
         public const int MaxExplosionEffects = 5;
+        /// <summary>
+        /// FIXME - We want this zero?
+        /// </summary>
+        public const float scoreMoveTime = 0f;
+        /// <summary>
+        /// FIXME
+        /// </summary>
+        public const float scoreScrollTime = 0f;
         #endregion
 
         #region Fields
@@ -186,6 +201,24 @@ namespace Duologue
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;
             LocalInstanceManager.Spinner = spinner;
+
+            LocalInstanceManager.Scores = new ScoreScroller[LocalInstanceManager.MaxNumberOfPlayers];
+            for (int i = 0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
+            {
+                LocalInstanceManager.Scores[i] = new ScoreScroller(
+                    this,
+                    i,
+                    scoreMoveTime,
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    0,
+                    scoreScrollTime);
+                this.Components.Add(LocalInstanceManager.Scores[i]);
+                LocalInstanceManager.Scores[i].DrawOrder = 99;
+                LocalInstanceManager.Scores[i].Enabled = false;
+                LocalInstanceManager.Scores[i].Visible = false;
+            }
+
             // A bit of trickery to ensure we have a lastGameState
             LocalInstanceManager.CurrentGameState = GameState.Exit;
             LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
