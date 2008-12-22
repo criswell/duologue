@@ -45,6 +45,8 @@ namespace Duologue.Screens
         private const string fontFilename = "Fonts\\inero-28";
         private const string countdownFontFilename = "Fonts\\inero-50";
         private const string AbuttonFilename = "PlayerUI\\buttonA";
+
+        private const float playerPosOffset = 100f;
         #endregion
 
         #region Fields
@@ -346,7 +348,7 @@ namespace Duologue.Screens
         }
 
         /// <summary>
-        /// Gets the player start position
+        /// Get the player start position
         /// </summary>
         /// <param name="i">The player's index</param>
         /// <returns>A vector describing the current player's start position</returns>
@@ -358,8 +360,20 @@ namespace Duologue.Screens
             Vector2 screenCenter = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
-            float offset = 100f;
+            float offset = playerPosOffset;
             return screenCenter + offset * offsetModifiers[i];
+        }
+
+        /// <summary>
+        /// Get the start position for a player's score
+        /// </summary>
+        /// <param name="i">The player's index</param>
+        /// <returns>A vector describing the player's score start position</returns>
+        private Vector2 GetScoreStartPos(int i)
+        {
+            Vector2 startPos = Vector2.Zero;
+
+            return startPos;
         }
         #endregion
 
