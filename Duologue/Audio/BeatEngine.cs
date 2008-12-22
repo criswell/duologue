@@ -1,9 +1,9 @@
-﻿#region File Description
-#endregion
-
-#region Using statements
 using System;
 using System.Collections.Generic;
+
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Net;
+
 // XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -12,16 +12,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
-// Mimicware
-using Mimicware;
-using Mimicware.Graphics;
-using Mimicware.Manager;
-using Mimicware.Debug;
-#endregion
 
-namespace Duologue.Mimicware.Audio
+namespace Duologue.Audio
 {
-    class BeatEngine
+
+
+    /// <summary>
+    /// This is a game component that implements IUpdateable.
+    /// </summary>
+    public class BeatEngine : Microsoft.Xna.Framework.GameComponent
     {
 
         #region Properties
@@ -53,38 +52,34 @@ namespace Duologue.Mimicware.Audio
         }
         #endregion
 
-        public BeatEngine()
+        public BeatEngine(Game game)
+            : base(game)
         {
             engine = new AudioEngine("Content\\sound\\myFirstXACTProject.xgs");
             waveBank = new WaveBank(engine, "Content\\sound\\Wave Bank.xwb");
             soundBank = new SoundBank(engine, "Content\\sound\\Sound Bank.xsb");
-
-
         }
 
         /// <summary>
-        /// Allows the BeatEngine to run logic such playing audio.
+        /// Allows the game component to perform any initialization it needs to before starting
+        /// to run.  This is where it can query for any required services and load content.
         /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected void Update()
+        public override void Initialize()
         {
-            // Update the input manager every update
-            InstanceManager.InputManager.Update();
+            // TODO: Add your initialization code here
 
-            // This should be a timer check
-            if (LocalInstanceManager.CurrentGameState != LocalInstanceManager.LastGameState)
-            {
-            }
-            else
-            {
-                if (!soundBank.IsInUse)
-                    soundBank.PlayCue("Rhodes_96");
-            }
-            // Ensure that the last game state gets the current setting for next update
-            LocalInstanceManager.CurrentGameState = LocalInstanceManager.CurrentGameState;
-            engine.Update();
+            base.Initialize();
         }
 
-    
+        /// <summary>
+        /// Allows the game component to update itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        public override void Update(GameTime gameTime)
+        {
+            // TODO: Add your update code here
+
+            base.Update(gameTime);
+        }
     }
 }
