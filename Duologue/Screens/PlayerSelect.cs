@@ -376,7 +376,6 @@ namespace Duologue.Screens
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
 
-
             return screenCenter + offsetModifiers[i] * middleTitleSafe;
         }
         #endregion
