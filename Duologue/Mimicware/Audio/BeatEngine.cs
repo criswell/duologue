@@ -17,13 +17,6 @@ using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Mimicware.Debug;
-// Duologue
-using Duologue.ParticleEffects;
-using Duologue.AchievementSystem;
-using Duologue.Tests;
-using Duologue.State;
-using Duologue.Screens;
-using Duologue.UI;
 #endregion
 
 namespace Duologue.Mimicware.Audio
