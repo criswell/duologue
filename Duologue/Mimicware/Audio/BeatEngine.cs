@@ -38,6 +38,26 @@ namespace Duologue.Mimicware.Audio
         public AudioEngine engine;
         public WaveBank waveBank;
         public SoundBank soundBank;
+
+        public float PercentFromTarget()
+        {
+            return 0;
+        }
+
+        public float MillisecondsFromTarget()
+        {
+            return 0;
+        }
+
+        public float TargetLengthInMilliseconds()
+        {
+            return 0;
+        }
+
+        public float BeatPeriodInMilliseconds()
+        {
+            return 0;
+        }
         #endregion
 
         public BeatEngine()
@@ -53,7 +73,7 @@ namespace Duologue.Mimicware.Audio
         /// Allows the BeatEngine to run logic such playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
+        protected void Update()
         {
             // Update the input manager every update
             InstanceManager.InputManager.Update();
@@ -70,7 +90,6 @@ namespace Duologue.Mimicware.Audio
             // Ensure that the last game state gets the current setting for next update
             LocalInstanceManager.CurrentGameState = LocalInstanceManager.CurrentGameState;
             engine.Update();
-            base.Update(gameTime);
         }
 
     
