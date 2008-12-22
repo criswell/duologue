@@ -68,6 +68,7 @@
     <Compile Include="Background.cs" />
     <Compile Include="DuologueGame.cs" />
     <Compile Include="LocalInstanceManager.cs" />
+    <Compile Include="Mimicware\Audio\BeatEngine.cs" />
     <Compile Include="Mimicware\Fx\Particle.cs" />
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
