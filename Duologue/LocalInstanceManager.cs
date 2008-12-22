@@ -50,6 +50,11 @@ namespace Duologue
         public static Player[] Players;
 
         /// <summary>
+        /// The local score scrollers
+        /// </summary>
+        public static ScoreScroller[] Scores;
+
+        /// <summary>
         /// The maximum number of players
         /// </summary>
         public static int MaxNumberOfPlayers
