@@ -82,7 +82,7 @@ namespace Duologue
         /// <summary>
         /// FIXME
         /// </summary>
-        public const float scoreScrollTime = 0f;
+        public const float scoreScrollTime = 1f;
         #endregion
 
         #region Fields
