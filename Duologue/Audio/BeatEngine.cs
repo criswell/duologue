@@ -31,6 +31,8 @@ namespace Duologue.Audio
         private Cue beatSound = null;
         #endregion
 
+        #region Public Fields
+        #endregion
 
         #region Properties
         /// <summary>
@@ -70,6 +72,7 @@ namespace Duologue.Audio
         public override void Initialize()
         {
             // TODO: Add your initialization code here
+            this.Enabled = false;
             engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
             waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
             soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
@@ -82,7 +85,7 @@ namespace Duologue.Audio
         /// </summary>
         public void PlayBeat()
         {
-            if (beatSound == null)
+            if (beatSound == null || beatSound.IsStopped)
             {
                 beatSound = soundBank.GetCue("click");
                 beatSound.Play();
@@ -100,15 +103,17 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
-            beatInterval += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (beatTimer > beatInterval)
             {
-                // Do Something
-                PlayBeat();
-                beatTimer = 0f;
+                // TODO: Add your update code here
+                beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (beatTimer > beatInterval)
+                {
+                    // Do Something
+                    PlayBeat();
+                    beatTimer = 0f;
+                }
+                base.Update(gameTime);
             }
-            base.Update(gameTime);
         }
     }
 }

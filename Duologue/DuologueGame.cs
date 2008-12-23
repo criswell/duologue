@@ -24,6 +24,7 @@ using Duologue.Tests;
 using Duologue.State;
 using Duologue.Screens;
 using Duologue.UI;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue
@@ -101,6 +102,7 @@ namespace Duologue
         public Background background;
         public AchievementManager achievements;
         public Spinner spinner;
+        public BeatEngine beatEngine;
 
         // Screens
         //public MainMenuTest mainMenuTest;
@@ -189,6 +191,9 @@ namespace Duologue
             /*achievements.Enabled = true;
             achievements.Visible = true;*/
             this.Components.Add(achievements);
+
+            beatEngine = new BeatEngine(this);
+            this.Components.Add(beatEngine);
 
             // Set the instance manager
             InstanceManager.AssetManager = Assets;

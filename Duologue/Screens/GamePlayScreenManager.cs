@@ -165,6 +165,7 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
+                    ((DuologueGame)localGame).beatEngine.Enabled = true;
                     break;
                 default:
                     // Play the game
