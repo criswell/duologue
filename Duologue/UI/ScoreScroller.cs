@@ -75,8 +75,6 @@ namespace Duologue.UI
         private int deltaScore;
         private string playerText;
         private Vector2 playerTextSize;
-        private string livesText;
-        private Vector2 livesTextSize;
         // Pointlets
         private Pointlet[] pointlets;
         private Queue<Pointlet> freePointlets;
@@ -206,7 +204,6 @@ namespace Duologue.UI
 
             // Set the score text
             playerText = String.Format(Resources.ScoreUI_Player, myPlayerNumber+1);
-            livesText = Resources.ScoreUI_Lives;
             base.Initialize();
         }
 
@@ -238,7 +235,6 @@ namespace Duologue.UI
             scoreSize.Y += playerTextSize.Y;
 
             life = Assets.LoadTexture2D(livesDot);
-            livesTextSize = playerFont.MeasureString(livesText);
             base.LoadContent();
         }
         #endregion
@@ -439,6 +435,21 @@ namespace Duologue.UI
                 origin,
                 associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
 
+            // Lives
+            for (int i = 1; i <= lives; i++)
+            {
+                Render.Draw(
+                    life,
+                    origin + new Vector2(scoreSize.X  - (float)(i * life.Width), 0f),
+                    Vector2.Zero,
+                    null,
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    0f,
+                    1f,
+                    0f);
+            }
+
+
             // The score itself
             for (int i = 0; i < lengthOfMaxScore - length; i++)
             {
@@ -477,27 +488,6 @@ namespace Duologue.UI
                 }
 
                 currentChar++;
-            }
-
-            // Lives
-            offsetPos += new Vector2(0f, scoreFontCharSize.Y);
-            Render.DrawString(
-                playerFont,
-                livesText,
-                offsetPos,
-                associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
-
-            for (int i = 0; i < lives; i++)
-            {
-                Render.Draw(
-                    life,
-                    offsetPos + new Vector2((float)(i * life.Width) + playerFontCharSize.X + livesTextSize.X, 0f),
-                    Vector2.Zero,
-                    null,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    0f,
-                    1f,
-                    0f);
             }
 
             base.Draw(gameTime);
