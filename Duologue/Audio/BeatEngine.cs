@@ -22,25 +22,38 @@ namespace Duologue.Audio
     /// </summary>
     public class BeatEngine : Microsoft.Xna.Framework.GameComponent
     {
+        #region Private Fields
+        private float beatTimer = 0f;
+        private float beatInterval = 1000.0f;
+        private AudioEngine engine;
+        private WaveBank waveBank;
+        private SoundBank soundBank;
+        private Cue beatSound = null;
+        #endregion
+
+        #region Public Fields
+        #endregion
 
         #region Properties
         /// <summary>
         /// Hmmmm. There should somehow be singleton access to the audio device
         /// </summary>
-        public AudioEngine engine;
-        public WaveBank waveBank;
-        public SoundBank soundBank;
 
         public float PercentFromTarget()
         {
-            return 0;
+            return (MillisecondsFromTarget() - beatInterval)*100.0f;
         }
 
         public float MillisecondsFromTarget()
         {
-            return 0;
+            float halfPeriod = beatInterval/2.0f;
+            return beatTimer < halfPeriod ? beatTimer : beatInterval - beatTimer;
         }
 
+        /// <summary>
+        /// If we decide to implement, this will return the audible length of the beat
+        /// </summary>
+        /// <returns></returns>
         public float TargetLengthInMilliseconds()
         {
             return 0;
@@ -48,16 +61,13 @@ namespace Duologue.Audio
 
         public float BeatPeriodInMilliseconds()
         {
-            return 0;
+            return beatInterval;
         }
         #endregion
 
         public BeatEngine(Game game)
             : base(game)
         {
-            engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
-            waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
-            soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
         }
 
         /// <summary>
@@ -67,8 +77,29 @@ namespace Duologue.Audio
         public override void Initialize()
         {
             // TODO: Add your initialization code here
+            this.Enabled = false;
+            engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
+            waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
+            soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
 
             base.Initialize();
+        }
+
+        /// <summary>
+        /// Click, click, man, danged ol' Hank, I'll tell ya what.
+        /// </summary>
+        public void PlayBeat()
+        {
+            if (beatSound == null || beatSound.IsStopped)
+            {
+                beatSound = soundBank.GetCue("bambooclick");
+                beatSound.Play();
+            }
+            else if (beatSound.IsPaused)
+            {
+                beatSound.Resume();
+            }
+
         }
 
         /// <summary>
@@ -77,9 +108,17 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
-
-            base.Update(gameTime);
+            {
+                // TODO: Add your update code here
+                beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (beatTimer > beatInterval)
+                {
+                    // Do Something
+                    PlayBeat();
+                    beatTimer = 0f;
+                }
+                base.Update(gameTime);
+            }
         }
     }
 }
