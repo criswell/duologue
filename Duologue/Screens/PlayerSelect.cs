@@ -347,6 +347,9 @@ namespace Duologue.Screens
                         offsetModifiers[i]);
 
                     LocalInstanceManager.Scores[i].SetScore(0);
+                    LocalInstanceManager.Scores[i].SetPositions(
+                        GetScoreStartPos(i),
+                        GetScoreStartPos(i));
                 }
             }
         }

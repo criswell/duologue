@@ -168,6 +168,9 @@ namespace Duologue.Screens
                         {
                             LocalInstanceManager.Players[i].ColorState = LocalInstanceManager.CurrentGameWave.ColorState;
                             LocalInstanceManager.Players[i].Spawn();
+
+                            LocalInstanceManager.Scores[i].Enabled = true;
+                            LocalInstanceManager.Scores[i].Visible = true;
                         }
                     }
                     currentState = GamePlayState.Delay;
