@@ -286,6 +286,17 @@ namespace Duologue.UI
                     position = endPosition;
             }
         }
+
+        /// <summary>
+        /// Call to reset the score to some number.
+        /// <remarks>Note that this will reset the score outright, it wont animate the change</remarks>
+        /// </summary>
+        /// <param name="p">Score to reset to</param>
+        public void SetScore(int p)
+        {
+            score = p;
+            scrollingScore = p;
+        }
         #endregion
 
         #region Update / Draw

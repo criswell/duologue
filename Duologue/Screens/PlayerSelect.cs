@@ -336,6 +336,7 @@ namespace Duologue.Screens
             {
                 LocalInstanceManager.Players[i].Active = activePlayers[i];
                 if (activePlayers[i])
+                {
                     LocalInstanceManager.Players[i].Initialize(
                         playerColors[i],
                         (PlayerIndex)i,
@@ -344,6 +345,9 @@ namespace Duologue.Screens
                         ColorState.GetColorStates()[0],
                         GetPlayerStartPos(i),
                         offsetModifiers[i]);
+
+                    LocalInstanceManager.Scores[i].SetScore(0);
+                }
             }
         }
 
