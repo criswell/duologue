@@ -72,7 +72,7 @@ namespace Duologue.UI
         private float timeSinceScrollStart;
         private int lengthOfMaxScore;
         private int deltaScore;
-        private string scoreText;
+        private string playerText;
         // Pointlets
         private Pointlet[] pointlets;
         private Queue<Pointlet> freePointlets;
@@ -136,7 +136,7 @@ namespace Duologue.UI
         /// </summary>
         public string ScoreText
         {
-            get { return scoreText;}
+            get { return playerText;}
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Duologue.UI
             }
 
             // Set the score text
-            scoreText = String.Format(Resources.ScoreUI_Player, myPlayerNumber+1);
+            playerText = String.Format(Resources.ScoreUI_Player, myPlayerNumber+1);
             base.Initialize();
         }
 
@@ -410,7 +410,7 @@ namespace Duologue.UI
             // Next do the scoreText
             Render.DrawString(
                 playerFont,
-                scoreText,
+                playerText,
                 position,
                 associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
 
