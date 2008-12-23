@@ -383,6 +383,10 @@ namespace Duologue.Screens
                 InstanceManager.DefaultViewport.TitleSafeArea.Width / 2f,
                 InstanceManager.DefaultViewport.TitleSafeArea.Height / 2f);
 
+            InstanceManager.Logger.LogEntry(String.Format("GetScoreStartPos() TSA: {0},{0}",
+                InstanceManager.DefaultViewport.Width.ToString(),
+                InstanceManager.DefaultViewport.Height.ToString()));
+
             Vector2 screenCenter = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
