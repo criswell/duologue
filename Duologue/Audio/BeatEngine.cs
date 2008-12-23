@@ -41,14 +41,19 @@ namespace Duologue.Audio
 
         public float PercentFromTarget()
         {
-            return 0;
+            return (MillisecondsFromTarget() - beatInterval)*100.0f;
         }
 
         public float MillisecondsFromTarget()
         {
-            return 0;
+            float halfPeriod = beatInterval/2.0f;
+            return beatTimer < halfPeriod ? beatTimer : beatInterval - beatTimer;
         }
 
+        /// <summary>
+        /// If we decide to implement, this will return the audible length of the beat
+        /// </summary>
+        /// <returns></returns>
         public float TargetLengthInMilliseconds()
         {
             return 0;
