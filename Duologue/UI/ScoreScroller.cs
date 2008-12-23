@@ -437,6 +437,7 @@ namespace Duologue.UI
 
                 currentChar++;
             }
+
             offsetPos += new Vector2(0f, fontCharSize.Y);
             for (int i = 0; i < lives; i++)
             {
