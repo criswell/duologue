@@ -35,11 +35,15 @@ namespace Mimicware.Debug
         #region Fields
         private Game localGame;
         private SpriteFont font;
+        private Vector2 startingPos;
+        private Vector2 fontSize;
         #endregion
 
         #region Constants
         private const int maxLogLength = 30;
         private const string fontFilename = "Mimicware\\djv-10";
+        private const float leftPos = 40f;
+        private const float upperPos = 30f;
         #endregion
 
         #region Constructor / Init / Load
@@ -54,6 +58,7 @@ namespace Mimicware.Debug
             AssetManager = null;
             RenderSprite = null;
             localGame = game;
+            startingPos = new Vector2(leftPos, upperPos);
         }
 
         /// <summary>
@@ -75,6 +80,8 @@ namespace Mimicware.Debug
                 throw new NullReferenceException("AssetManager not set before LoadContent() call!");
 
             font = AssetManager.LoadSpriteFont(fontFilename);
+
+            fontSize = font.MeasureString("8");
             base.LoadContent();
         }
         #endregion
@@ -98,7 +105,7 @@ namespace Mimicware.Debug
             this.RenderSprite.DrawString(
                 font,
                 "Log:",
-                new Vector2(20f, 20f),
+                startingPos,
                 Color.Bisque);
 
             for (int i = 0; i < Log.Length; i++)
@@ -106,7 +113,7 @@ namespace Mimicware.Debug
                 this.RenderSprite.DrawString(
                     font,
                     Log[i],
-                    new Vector2(20f, 15f * i + 35f),
+                    startingPos + new Vector2(0f, fontSize.Y * i + 1),
                     Color.White);
             }
             base.Draw(gameTime);
