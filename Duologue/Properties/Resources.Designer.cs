@@ -223,7 +223,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lives: {0}.
+        ///   Looks up a localized string similar to Lives .
         /// </summary>
         internal static string ScoreUI_Lives {
             get {

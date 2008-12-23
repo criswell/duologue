@@ -74,6 +74,9 @@ namespace Duologue.UI
         private int lengthOfMaxScore;
         private int deltaScore;
         private string playerText;
+        private Vector2 playerTextSize;
+        private string livesText;
+        private Vector2 livesTextSize;
         // Pointlets
         private Pointlet[] pointlets;
         private Queue<Pointlet> freePointlets;
@@ -203,6 +206,7 @@ namespace Duologue.UI
 
             // Set the score text
             playerText = String.Format(Resources.ScoreUI_Player, myPlayerNumber+1);
+            livesText = Resources.ScoreUI_Lives;
             base.Initialize();
         }
 
@@ -228,13 +232,13 @@ namespace Duologue.UI
                     scoreFontCharSize = w;
             }
 
-            scoreSize = playerFont.MeasureString(playerText);
-            Vector2 temp = scoreFont.MeasureString(maxScore.ToString());
+            playerTextSize = playerFont.MeasureString(playerText);
+            scoreSize = scoreFont.MeasureString(maxScore.ToString());
 
-            scoreSize.Y += temp.Y;
-            scoreSize.X = temp.X;
+            scoreSize.Y += playerTextSize.Y;
 
             life = Assets.LoadTexture2D(livesDot);
+            livesTextSize = playerFont.MeasureString(livesText);
             base.LoadContent();
         }
         #endregion
@@ -435,6 +439,7 @@ namespace Duologue.UI
                 origin,
                 associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
 
+            // The score itself
             for (int i = 0; i < lengthOfMaxScore - length; i++)
             {
                 charPos = offsetPos + new Vector2((float)(currentChar * scoreFontCharSize.X), 0f);
@@ -474,12 +479,19 @@ namespace Duologue.UI
                 currentChar++;
             }
 
+            // Lives
             offsetPos += new Vector2(0f, scoreFontCharSize.Y);
+            Render.DrawString(
+                playerFont,
+                livesText,
+                offsetPos,
+                associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
+
             for (int i = 0; i < lives; i++)
             {
                 Render.Draw(
                     life,
-                    offsetPos + new Vector2((float)(i * life.Width), 0f),
+                    offsetPos + new Vector2((float)(i * life.Width) + playerFontCharSize.X + livesTextSize.X, 0f),
                     Vector2.Zero,
                     null,
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
@@ -487,6 +499,7 @@ namespace Duologue.UI
                     1f,
                     0f);
             }
+
             base.Draw(gameTime);
         }
         #endregion
