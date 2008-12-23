@@ -58,6 +58,13 @@ namespace Duologue.Screens
 
         #region Properties
         /// <summary>
+        /// Returns the current state of the gameplay
+        /// </summary>
+        public GamePlayState CurrentState
+        {
+            get { return currentState; }
+        }
+        /// <summary>
         /// Percentage complete for a delay
         /// </summary>
         public float PercentComplete
@@ -73,7 +80,7 @@ namespace Duologue.Screens
             gameWaveManager = new GameWaveManager(null);
             waveDisplay = new WaveDisplay(localGame);
             localGame.Components.Add(waveDisplay);
-            gamePlayLoop = new GamePlayLoop(localGame);
+            gamePlayLoop = new GamePlayLoop(localGame, this);
             localGame.Components.Add(gamePlayLoop);
             //Reset();
         }

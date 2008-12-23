@@ -39,16 +39,22 @@ namespace Duologue.Screens
         #endregion
 
         #region Fields
+        private GamePlayScreenManager myManager;
         #endregion
 
         #region Properties
         #endregion
 
         #region Constructor / Init / Load
-        public GamePlayLoop(Game game)
+        /// <summary>
+        /// Constructs the Game Play Loop class instance
+        /// </summary>
+        /// <param name="game">My game</param>
+        /// <param name="manager">My manager</param>
+        public GamePlayLoop(Game game, GamePlayScreenManager manager)
             : base(game)
         {
-            // TODO: Construct any child components here
+            myManager = manager;
         }
 
         /// <summary>
