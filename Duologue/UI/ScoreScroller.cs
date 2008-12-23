@@ -61,6 +61,7 @@ namespace Duologue.UI
         private Vector2 finalPosition;
         private float timeToMove;
         private float timeSinceStart;
+        private Vector2 alignment;
         //private ColorState colorState;
         // Score stuff
         private int score;
@@ -174,6 +175,7 @@ namespace Duologue.UI
             position = startPosition;
             finalPosition = endPosition;
             lives = defaultLives;
+            alignment = -1f * Vector2.One;
         }
 
         /// <summary>
@@ -321,6 +323,16 @@ namespace Duologue.UI
         public void SetLives(int p)
         {
             lives = p;
+        }
+
+        /// <summary>
+        /// Call to set the alignment of the score
+        /// </summary>
+        /// <param name="p">The X direction sets left-right alignment (-1,1).
+        /// The Y direction sets up-down alignment (-1,1).</param>
+        public void SetAlignment(Vector2 p)
+        {
+            alignment = p;
         }
         #endregion
 

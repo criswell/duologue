@@ -39,6 +39,7 @@ namespace Mimicware.Debug
 
         #region Constants
         private const int maxLogLength = 30;
+        private const string fontFilename = "Mimicware\\djv-10";
         #endregion
 
         #region Constructor / Init / Load
@@ -73,7 +74,7 @@ namespace Mimicware.Debug
             if (AssetManager == null)
                 throw new NullReferenceException("AssetManager not set before LoadContent() call!");
 
-            font = AssetManager.LoadSpriteFont("Mimicware\\Arial12");
+            font = AssetManager.LoadSpriteFont(fontFilename);
             base.LoadContent();
         }
         #endregion

@@ -64,6 +64,7 @@ namespace Duologue
     /// ...
     /// 99          -       Score scroller
     /// 100         -       Spinner
+    /// 200         -       Logger
     /// </remarks>
     public class DuologueGame : Microsoft.Xna.Framework.Game
     {
@@ -168,6 +169,7 @@ namespace Duologue
             Log.Enabled = true; // false;
             Log.Visible = true; // false;
             this.Components.Add(Log);
+            Log.DrawOrder = 200;
 
             spinner = new Spinner(this);
             spinner.Enabled = false;
