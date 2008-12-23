@@ -59,6 +59,7 @@ namespace Duologue.UI
         // Position, moving and timing
         private Vector2 position;
         private Vector2 finalPosition;
+        private Vector2 origin;
         private float timeToMove;
         private float timeSinceStart;
         private Vector2 alignment;
@@ -227,7 +228,11 @@ namespace Duologue.UI
                     scoreFontCharSize = w;
             }
 
+            scoreSize = playerFont.MeasureString(playerText);
+            Vector2 temp = scoreFont.MeasureString(maxScore.ToString());
 
+            scoreSize.Y += temp.Y;
+            scoreSize.X = temp.X;
 
             life = Assets.LoadTexture2D(livesDot);
             base.LoadContent();
@@ -259,6 +264,20 @@ namespace Duologue.UI
                         (int)(scoreFontCharSize.Y)),
                         timeToMovePointlet);
             }
+        }
+
+        /// <summary>
+        /// Called when we need to update the origin
+        /// </summary>
+        private void UpdateOrigin()
+        {
+            // Default is the upper left corner
+            origin = position;
+
+            if (alignment.X > 0)
+                origin.X = position.X - scoreSize.X;
+            if (alignment.Y > 0)
+                origin.Y = position.Y - scoreSize.Y;
         }
         #endregion
 
@@ -306,6 +325,7 @@ namespace Duologue.UI
                 else
                     position = endPosition;
             }
+            UpdateOrigin();
         }
 
         /// <summary>
@@ -336,6 +356,7 @@ namespace Duologue.UI
         public void SetAlignment(Vector2 p)
         {
             alignment = p;
+            UpdateOrigin();
         }
         #endregion
 
@@ -402,7 +423,7 @@ namespace Duologue.UI
             int length = scrollingScore.ToString().Length;
             CharEnumerator chars = scrollingScore.ToString().GetEnumerator();
             int currentChar = 0;
-            Vector2 offsetPos = position + new Vector2(0f, playerFontCharSize.Y/2f);
+            Vector2 offsetPos = origin + new Vector2(0f, playerFontCharSize.Y/2f);
             Vector2 charPos = offsetPos;
             int difference = score - scrollingScore;
             int diffLength = difference.ToString().Length;
@@ -411,7 +432,7 @@ namespace Duologue.UI
             Render.DrawString(
                 playerFont,
                 playerText,
-                position,
+                origin,
                 associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
 
             for (int i = 0; i < lengthOfMaxScore - length; i++)
