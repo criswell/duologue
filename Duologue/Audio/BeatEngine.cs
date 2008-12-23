@@ -92,7 +92,7 @@ namespace Duologue.Audio
         {
             if (beatSound == null || beatSound.IsStopped)
             {
-                beatSound = soundBank.GetCue("click");
+                beatSound = soundBank.GetCue("bambooclick");
                 beatSound.Play();
             }
             else if (beatSound.IsPaused)
