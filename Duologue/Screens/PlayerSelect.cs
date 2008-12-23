@@ -350,6 +350,7 @@ namespace Duologue.Screens
                     LocalInstanceManager.Scores[i].SetPositions(
                         GetScoreStartPos(i),
                         GetScoreStartPos(i));
+                    LocalInstanceManager.Scores[i].SetLives(4);
                 }
             }
         }

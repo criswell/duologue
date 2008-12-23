@@ -37,6 +37,8 @@ namespace Duologue.UI
         /// </summary>
         private const string fontFilename = "Fonts/inero-40";
         private const string smallFontFilename = "Fonts/inero-28";
+        private const string livesDot = "PlayerUI\\live-dot";
+        private const int defaultLives = 4;
         private const int maxScore = 9999999;
         private const int defaultDeltaScore = 5;
         private const int numPointlets = 10;
@@ -51,6 +53,9 @@ namespace Duologue.UI
         private SpriteFont smallFont;
         private Vector2 fontCharSize;
         private Vector2 smallFontCharSize;
+        // Lives stuff
+        private Texture2D life;
+        private int lives;
         // Position, moving and timing
         private Vector2 position;
         private Vector2 finalPosition;
@@ -131,6 +136,14 @@ namespace Duologue.UI
         {
             get { return scoreText;}
         }
+
+        /// <summary>
+        /// Read-only access to the number of lives left
+        /// </summary>
+        public int Lives
+        {
+            get { return lives; }
+        }
         #endregion
 
         #region Constructor / Init / Load
@@ -160,6 +173,7 @@ namespace Duologue.UI
             timeToMove = moveTime;
             position = startPosition;
             finalPosition = endPosition;
+            lives = defaultLives;
         }
 
         /// <summary>
@@ -209,6 +223,8 @@ namespace Duologue.UI
                 if(w.X > fontCharSize.X)
                     fontCharSize = w;
             }
+
+            life = Assets.LoadTexture2D(livesDot);
             base.LoadContent();
         }
         #endregion
@@ -296,6 +312,15 @@ namespace Duologue.UI
         {
             score = p;
             scrollingScore = p;
+        }
+
+        /// <summary>
+        /// Call to set the lives
+        /// </summary>
+        /// <param name="p">Number of lives</param>
+        public void SetLives(int p)
+        {
+            lives = p;
         }
         #endregion
 
@@ -411,6 +436,19 @@ namespace Duologue.UI
                 }
 
                 currentChar++;
+            }
+            offsetPos += new Vector2(0f, fontCharSize.Y);
+            for (int i = 0; i < lives; i++)
+            {
+                Render.Draw(
+                    life,
+                    offsetPos + new Vector2((float)(i * life.Width), 0f),
+                    Vector2.Zero,
+                    null,
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    0f,
+                    1f,
+                    0f);
             }
             base.Draw(gameTime);
         }
