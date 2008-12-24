@@ -258,7 +258,7 @@ namespace Duologue.PlayObjects
         }
 
         /// <summary>
-        /// Initialize the player object. Called every time the player needs to be initializeds
+        /// Initialize the player object. Called every time the player needs to be initialized
         /// </summary>
         /// <param name="playerColor">Color of this player</param>
         /// <param name="playerIndex">Player's index</param>
