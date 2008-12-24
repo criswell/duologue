@@ -78,6 +78,8 @@
     <Compile Include="ParticleEffects\ExplodeRing.cs" />
     <Compile Include="ParticleEffects\PlayerRing.cs" />
     <Compile Include="ParticleEffects\Steam.cs" />
+    <Compile Include="PlayObjects\Enemy.cs" />
+    <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />
     <Compile Include="PlayObjects\PlayerColors.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -64,6 +64,7 @@ namespace Duologue
     /// ...
     /// 99          -       Score scroller
     /// 100         -       Spinner
+    /// 200         -       Logger
     /// </remarks>
     public class DuologueGame : Microsoft.Xna.Framework.Game
     {
@@ -87,6 +88,7 @@ namespace Duologue
         #endregion
 
         #region Fields
+        private bool debug;
         #endregion
 
         #region Properties
@@ -115,13 +117,27 @@ namespace Duologue
         /// The dispatch table for game state changes
         /// </summary>
         public Dictionary<GameState, GameScreen> dispatchTable;
-        //public
+
+        /// <summary>
+        /// Determines whether we are in debugging mode or not
+        /// </summary>
+        public bool Debug
+        {
+            get { return debug; }
+            set
+            {
+                debug = value;
+                Log.Enabled = value;
+                Log.Visible = value;
+            }
+        }
 
         public DuologueGame()
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.Components.Add(new GamerServicesComponent(this));
+            debug = false;
         }
 
         /// <summary>
@@ -165,9 +181,10 @@ namespace Duologue
             gamePlayTest.Visible = true;
             this.Components.Add(gamePlayTest);*/
             Log = new Logger(this);
-            Log.Enabled = true; // false;
-            Log.Visible = true; // false;
+            Log.Enabled = false;
+            Log.Visible = false;
             this.Components.Add(Log);
+            Log.DrawOrder = 200;
 
             spinner = new Spinner(this);
             spinner.Enabled = false;

@@ -60,6 +60,12 @@ namespace Duologue.Screens
         private int gameSelectInfinite;
         private int gameSelectBack;
         private MainMenuState currentState;
+        /// <summary>
+        /// Used for the debug sequence
+        /// </summary>
+        private int debugSequence;
+
+        private Game myGame;
         #endregion
 
         #region Properties
@@ -72,6 +78,8 @@ namespace Duologue.Screens
             position = Vector2.Zero;
             mainMenuItems = new List<MenuItem>();
             gameSelectItems = new List<MenuItem>();
+
+            myGame = game;
 
             // Set up the main menu
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Play));
@@ -92,6 +100,8 @@ namespace Duologue.Screens
             gameSelectInfinite = 1;
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Back));
             gameSelectBack = 2;
+
+            debugSequence = 0;
         }
 
         /// <summary>
@@ -388,6 +398,35 @@ namespace Duologue.Screens
                     currentState = MainMenuState.MainMenu;
                 else
                     InnerUpdate(gameSelectItems);
+            }
+
+            // Our debug sequence can happen in any menu
+            switch (debugSequence)
+            {
+                case 3:
+                    // the fourth and final button is X
+                    if (InstanceManager.InputManager.ButtonPressed(Buttons.X))
+                    {
+                        debugSequence = 0;
+                        ((DuologueGame)myGame).Debug = !((DuologueGame)myGame).Debug;
+                        InstanceManager.Logger.LogEntry("MainMenu.Update() - Debugging toggle");
+                    }
+                    break;
+                case 2:
+                    // the third button is Y
+                    if (InstanceManager.InputManager.ButtonPressed(Buttons.Y))
+                        debugSequence = 3;
+                    break;
+                case 1:
+                    // the second button is RB
+                    if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
+                        debugSequence = 2;
+                    break;
+                default:
+                    // the first button is LB
+                    if (InstanceManager.InputManager.ButtonPressed(Buttons.LeftShoulder))
+                        debugSequence = 1;
+                    break;
             }
             
             base.Update(gameTime);
