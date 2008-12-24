@@ -358,6 +358,17 @@ namespace Duologue.UI
             alignment = p;
             UpdateOrigin();
         }
+
+        /// <summary>
+        /// Call when the player loses a life
+        /// </summary>
+        /// <returns>True if they have another life, false if not</returns>
+        public bool LoseLife()
+        {
+            if (lives > 0)
+                lives--;
+            return lives > 0;
+        }
         #endregion
 
         #region Update / Draw
