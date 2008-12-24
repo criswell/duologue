@@ -97,7 +97,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wave {0}-{0}.
+        ///   Looks up a localized string similar to Wave {0}-{1}.
         /// </summary>
         internal static string GameScreen_Wave {
             get {

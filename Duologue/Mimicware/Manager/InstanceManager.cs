@@ -73,6 +73,11 @@ namespace Mimicware.Manager
         /// The game-wide random instance
         /// </summary>
         public static Random Random = new Random();
+
+        /// <summary>
+        /// The Mimicware defined Title Safe Region
+        /// </summary>
+        public static Rectangle TitleSafeRegion;
         #endregion
 
         #region Private Methods
@@ -120,6 +125,11 @@ namespace Mimicware.Manager
         public static void SetLogger(Logger logger)
         {
             Logger = logger;
+        }
+
+        public static void ComputeTitleSafe()
+        {
+            
         }
         #endregion
     }
