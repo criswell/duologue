@@ -24,10 +24,6 @@ namespace Mimicware.Manager
     static class InstanceManager
     {
         #region Constants
-        /// <summary>
-        /// The percentage of the screen we consider titlesafe
-        /// </summary>
-        public const float TitleSafePercent = 0.90f;
         #endregion
 
         #region Fields
@@ -73,11 +69,6 @@ namespace Mimicware.Manager
         /// The game-wide random instance
         /// </summary>
         public static Random Random = new Random();
-
-        /// <summary>
-        /// The Mimicware defined Title Safe Region
-        /// </summary>
-        public static Rectangle TitleSafeRegion;
         #endregion
 
         #region Private Methods
@@ -125,11 +116,6 @@ namespace Mimicware.Manager
         public static void SetLogger(Logger logger)
         {
             Logger = logger;
-        }
-
-        public static void ComputeTitleSafe()
-        {
-            
         }
         #endregion
     }
