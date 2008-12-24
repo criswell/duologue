@@ -700,14 +700,26 @@ namespace Duologue.PlayObjects
             return true;
         }
 
+        /// <summary>
+        /// Called when we collide with a play object
+        /// </summary>
+        /// <param name="pobj">The playobject we've collided with</param>
+        /// <returns>True if we've got more lives, or false if we're out of lives</returns>
         public override bool TriggerHit(PlayObject pobj)
         {
             //throw new Exception("The method or operation is not implemented.");
             // FIXME for now we do nothing
             // ERE I AM JH
 
-            // Trigger a player explosion ring
-            LocalInstanceManager.PlayerRing.AddRing(this.Position, this.PlayerColor.Colors[PlayerColors.Light]);
+            if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                // Trigger a player explosion ring
+                LocalInstanceManager.PlayerRing.AddRing(this.Position, this.PlayerColor.Colors[PlayerColors.Light]);
+
+                // Should trigger other explosions here
+                state = PlayerState.Dying;
+                return LocalInstanceManager.Scores[(int)MyPlayerIndex].LoseLife();
+            }
             return true;
         }
         #endregion

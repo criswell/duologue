@@ -306,7 +306,7 @@ namespace Duologue.PlayObjects
                 if (len < this.Radius + pobj.Radius)
                 {
                     // We're on them, kill em
-                    pobj.TriggerHit(this);
+                    return pobj.TriggerHit(this);
                 }
 
                 // Beam handling
