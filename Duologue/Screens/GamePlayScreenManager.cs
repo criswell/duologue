@@ -92,7 +92,7 @@ namespace Duologue.Screens
         {
             currentState = GamePlayState.WaveIntro;
             gameWaveManager.CurrentMajorNumber = 1;
-            gameWaveManager.CurrentMinorNumber = 1;
+            gameWaveManager.CurrentMinorNumber = 0;
             LocalInstanceManager.CurrentGameWave = null;
             timeSinceStart = 0f;
         }
