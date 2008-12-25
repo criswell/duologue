@@ -19,6 +19,7 @@ using Mimicware.Graphics;
 using Mimicware.Manager;
 // Duologue
 using Duologue.State;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.PlayObjects
@@ -752,6 +753,12 @@ namespace Duologue.PlayObjects
                 LocalInstanceManager.PlayerRing.AddRing(this.Position, this.PlayerColor.Colors[PlayerColors.Light]);
 
                 // Should trigger other explosions here
+                AudioEngine engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
+                WaveBank waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
+                SoundBank soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
+                Cue playerCollision = soundBank.GetCue("player-explosion");
+                playerCollision.Play();
+                
                 state = PlayerState.Dying;
                 currentTread = 0;
                 return LocalInstanceManager.Scores[(int)MyPlayerIndex].LoseLife();

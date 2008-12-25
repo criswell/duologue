@@ -105,6 +105,7 @@ namespace Duologue
         public AchievementManager achievements;
         public Spinner spinner;
         public BeatEngine beatEngine;
+        public SoundEffectsEngine soundEffectsEngine;
 
         // Screens
         //public MainMenuTest mainMenuTest;
@@ -211,6 +212,9 @@ namespace Duologue
 
             beatEngine = new BeatEngine(this);
             this.Components.Add(beatEngine);
+
+            soundEffectsEngine = new SoundEffectsEngine(this);
+            this.Components.Add(soundEffectsEngine);
 
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
