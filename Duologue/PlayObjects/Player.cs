@@ -49,6 +49,9 @@ namespace Duologue.PlayObjects
         private const string filename_beamBase = "beam-base";
         private const string filename_tread = "{0:tread00}";
         private const string filename_shine = "shine{0:00}";
+        private const string filename_treadDestroy = "{0:tread-destroy00}";
+        private const string filename_playerDestroy = "player-destroy";
+        private const int treadDestroyFrames = 2;
 
         // PlayerUI items
         private const float startSpawnScale = 5f;
@@ -80,6 +83,7 @@ namespace Duologue.PlayObjects
         private SpriteObject playerBase;
         private SpriteObject playerCannon;
         private SpriteObject playerLight;
+        private SpriteObject playerDestroy;
 
         // The beam and shot
         private SpriteObject beam;
@@ -89,7 +93,9 @@ namespace Duologue.PlayObjects
         // Tread items
         private const int treadFrames = 2;
         private Texture2D[] playerTreads;
+        private Texture2D[] treadDestroy;
         private Vector2 treadCenter;
+        private Vector2 treadDestroyCenter;
         private int currentTread;
         private int treadTimer;
         private const int maxTreadTimer = 50;
@@ -387,6 +393,19 @@ namespace Duologue.PlayObjects
                 0f,
                 1f,
                 1f);
+
+            // Load the destroy items
+            playerDestroy = new SpriteObject(
+                AssetManager.LoadTexture2D(filename_playerDestroy),
+                Vector2.Zero,
+                new Vector2(
+                    AssetManager.LoadTexture2D(filename_playerDestroy).Width/2f,
+                    AssetManager.LoadTexture2D(filename_playerDestroy).Height/2f),
+                null,
+                PlayerColor.Colors[PlayerColors.Light],
+                0f,
+                1f,
+                0.5f);
             #endregion Wow, that was a lot, wasn't it?
 
             SetColors();
@@ -401,6 +420,15 @@ namespace Duologue.PlayObjects
             treadCenter = new Vector2(
                 playerTreads[currentTread].Width / 2f,
                 playerTreads[currentTread].Height / 2f);
+
+            treadDestroy = new Texture2D[treadDestroyFrames];
+            for (int i = 0; i < treadDestroyFrames; i++)
+            {
+                treadDestroy[i] = AssetManager.LoadTexture2D(String.Format(filename_treadDestroy, treadDestroyFrames - i));
+            }
+            treadDestroyCenter = new Vector2(
+                treadDestroy[currentTread].Width / 2f,
+                treadDestroy[currentTread].Height / 2f);
 
             playerShines = new Texture2D[shineFrames];
             for (int i = 0; i < shineFrames; i++)
@@ -614,11 +642,15 @@ namespace Duologue.PlayObjects
                 case PlayerState.GettingReady:
                     DrawGettingReady(gameTime);
                     break;
+                case PlayerState.Dying:
+                    DrawDying(gameTime);
+                    break;
                 default:
                     // Player is dead, do nothing
                     break;
             }
         }
+
 
         /// <summary>
         /// Called once per frame
@@ -636,6 +668,9 @@ namespace Duologue.PlayObjects
                     break;
                 case PlayerState.GettingReady:
                     UpdateGettingReady(gameTime);
+                    break;
+                case PlayerState.Dying:
+                    UpdateDying(gameTime);
                     break;
                 default:
                     // Player is dead
@@ -718,6 +753,7 @@ namespace Duologue.PlayObjects
 
                 // Should trigger other explosions here
                 state = PlayerState.Dying;
+                currentTread = 0;
                 return LocalInstanceManager.Scores[(int)MyPlayerIndex].LoseLife();
             }
             return true;
@@ -725,6 +761,15 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private Update Methods
+        /// <summary>
+        /// Update called when dying
+        /// </summary>
+        private void UpdateDying(GameTime gameTime)
+        {
+            // ERE I AM JH
+            // should fade out as well as cycle treads
+        }
+
         /// <summary>
         /// Update when the player is getting ready to play
         /// </summary>
@@ -807,6 +852,40 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private Draw Methods
+        /// <summary>
+        /// Draw the player dying
+        /// </summary>
+        private void DrawDying(GameTime gameTime)
+        {
+            CaclulateRotations();
+            CheckScreenBoundary();
+
+            Color c = playerBase.Tint;
+
+            // Treads
+            RenderSprite.Draw(
+                treadDestroy[currentTread],
+                Position + treadOffset,
+                treadDestroyCenter,
+                null,
+                c,
+                TreadRotation,
+                1f,
+                0.5f);
+
+
+            // Base
+            RenderSprite.Draw(
+                playerDestroy.Texture,
+                Position,
+                playerDestroy.Center,
+                null,
+                c,
+                BaseRotation,
+                1f,
+                0.5f);
+        }
+
         /// <summary>
         /// Draw the player getting read
         /// </summary>
