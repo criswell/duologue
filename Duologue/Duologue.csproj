@@ -83,6 +83,7 @@
     <Compile Include="AchievementSystem\Achievement.cs" />
     <Compile Include="AchievementSystem\AchievementManager.cs" />
     <Compile Include="Audio\BeatEngine.cs" />
+    <Compile Include="Audio\SoundEffectsEngine.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="CreatorsClub\GameScreen.cs" />
     <Compile Include="CreatorsClub\InputState.cs" />
