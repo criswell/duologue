@@ -37,6 +37,11 @@ namespace Duologue.PlayObjects
         private const float delta_ShineOffsetY = -4f;
 
         /// <summary>
+        /// How far we can go outside the screen before we should stop
+        /// </summary>
+        private const float outsideScreenMultiplier = 3;
+
+        /// <summary>
         /// The divisor that determines the radius of the entire
         /// enemy given the radius of the base
         /// </summary>
@@ -95,6 +100,7 @@ namespace Duologue.PlayObjects
         private float bladesLayer;
         private float rotation;
         private float bladesRotation;
+        private Vector2 realSize;
 
         // Movement
         private Vector2 offset;
@@ -160,6 +166,13 @@ namespace Duologue.PlayObjects
             Radius = buzzBase.Width/radiusDivisor;
             if (buzzBase.Height/radiusDivisor > Radius)
                 Radius = buzzBase.Height/radiusDivisor;
+
+            // FIXME
+            // To be safe, we shouldn't assume that the blades
+            // are the largest part of the image
+            realSize = new Vector2(
+                buzzBlades.Width,
+                buzzBlades.Height);
 
             baseLayer = 0.3f;
             bladesLayer = 0.4f;
@@ -391,6 +404,18 @@ namespace Duologue.PlayObjects
                 lastDirection = offset;
                 Orientation = new Vector2(-offset.Y, offset.X);
             }
+
+            // Check boundaries
+            if (this.Position.X < -1 * realSize.X * outsideScreenMultiplier)
+                this.Position.X = -1 * realSize.X * outsideScreenMultiplier;
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + realSize.X * outsideScreenMultiplier)
+                this.Position.X = InstanceManager.DefaultViewport.Width + realSize.X * outsideScreenMultiplier;
+
+            if (this.Position.Y < -1 * realSize.Y * outsideScreenMultiplier)
+                this.Position.Y = -1 * realSize.Y * outsideScreenMultiplier;
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + realSize.Y * outsideScreenMultiplier)
+                this.Position.Y = InstanceManager.DefaultViewport.Height + realSize.Y * outsideScreenMultiplier;
+
             return true;
         }
 
