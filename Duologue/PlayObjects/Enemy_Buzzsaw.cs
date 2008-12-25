@@ -100,6 +100,7 @@ namespace Duologue.PlayObjects
         private Vector2 offset;
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
+        private Vector2 lastDirection;
         #endregion
 
         #region Constructor / Init / Load
@@ -121,6 +122,7 @@ namespace Duologue.PlayObjects
         {
             Position = startPos;
             Orientation = startOrientation;
+            lastDirection = Vector2.Zero;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
             bladesRotation = 0f;
             ColorState = currentColorState;
@@ -371,11 +373,22 @@ namespace Duologue.PlayObjects
 
                 offset += modifier * nearestPlayer;
             }
+            else
+            {
+                // If no near player, move in previous direction
+                nearestPlayer = lastDirection;
+
+                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                nearestPlayer.Normalize();
+
+                offset += playerAttract * nearestPlayer;
+            }
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
             {
                 this.Position += offset;
+                lastDirection = offset;
                 Orientation = new Vector2(-offset.Y, offset.X);
             }
             return true;
