@@ -213,8 +213,7 @@ namespace Duologue
             beatEngine = new BeatEngine(this);
             this.Components.Add(beatEngine);
 
-            soundEffectsEngine = new SoundEffectsEngine(this);
-            this.Components.Add(soundEffectsEngine);
+            soundEffectsEngine = new SoundEffectsEngine();
 
             // Set the instance manager
             InstanceManager.AssetManager = Assets;

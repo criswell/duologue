@@ -137,6 +137,7 @@ namespace Duologue.Screens
                         {
                             // Swap color
                             p.SwapColors();
+                            p.SwapBeamSounds();
                         }
 
                         // Now, make sure no one is stepping on eachother
