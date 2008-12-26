@@ -35,7 +35,7 @@ namespace Duologue.ParticleEffects
 
             // less initial speed than the explosion itself
             minInitialSpeed = 20;
-            maxInitialSpeed = 200;
+            maxInitialSpeed = 80;
 
             // acceleration is negative, so particles will accelerate away from the
             // initial velocity.  this will make them slow down, as if from wind

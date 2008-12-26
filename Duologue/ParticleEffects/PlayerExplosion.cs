@@ -36,7 +36,7 @@ namespace Duologue.ParticleEffects
             // high initial speed with lots of variance.  make the values closer
             // together to have more consistently circular explosions.
             minInitialSpeed = 40;
-            maxInitialSpeed = 500;
+            maxInitialSpeed = 50;
 
             // doesn't matter what these values are set to, acceleration is tweaked in
             // the override of InitializeParticle.
