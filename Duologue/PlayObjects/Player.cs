@@ -794,8 +794,10 @@ namespace Duologue.PlayObjects
 
             if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
-                // Trigger a player explosion ring
+                // Trigger a player explosion ring & explosion effects
                 LocalInstanceManager.PlayerRing.AddRing(this.Position, this.PlayerColor.Colors[PlayerColors.Light]);
+                LocalInstanceManager.PlayerExplosion.AddParticles(this.Position, this.PlayerColor.Colors[PlayerColors.Light]);
+                LocalInstanceManager.PlayerSmoke.AddParticles(this.Position, Color.White);
 
                 StopBeamSounds();
 

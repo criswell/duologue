@@ -87,6 +87,16 @@ namespace Duologue
         public static PlayerRing PlayerRing;
 
         /// <summary>
+        /// The local instance of the player explosion system
+        /// </summary>
+        public static PlayerExplosion PlayerExplosion;
+
+        /// <summary>
+        /// The local instance of the player smoke system
+        /// </summary>
+        public static PlayerSmoke PlayerSmoke;
+
+        /// <summary>
         /// The local instance of the background object
         /// </summary>
         public static Background Background;

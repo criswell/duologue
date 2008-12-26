@@ -22,7 +22,7 @@ using Mimicware.Fx;
 
 namespace Duologue.ParticleEffects
 {
-    class PlayerSmoke : ParticleSystem
+    public class PlayerSmoke : ParticleSystem
     {
         public PlayerSmoke(Game game, int howManyEffects)
             : base(game, howManyEffects)

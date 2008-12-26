@@ -85,6 +85,14 @@ namespace Duologue
         /// FIXME
         /// </summary>
         public const float scoreScrollTime = 1f;
+        /// <summary>
+        /// We will only ever have 4 players
+        /// </summary>
+        public const int MaxPlayerExplosionEffects = 4;
+        /// <summary>
+        /// Maximum smoke effects for player explosions
+        /// </summary>
+        public const int MaxPlayerSmokeEffects = 8;
         #endregion
 
         #region Fields
@@ -101,6 +109,8 @@ namespace Duologue
         public Logger Log;
         public Steam steamSystem;
         public PlayerRing playerRing;
+        public PlayerExplosion playerExplosion;
+        public PlayerSmoke playerSmoke;
         public Background background;
         public AchievementManager achievements;
         public Spinner spinner;
@@ -205,6 +215,14 @@ namespace Duologue
             this.Components.Add(playerRing);
             playerRing.DrawOrder = 7;
 
+            playerExplosion = new PlayerExplosion(this, MaxPlayerExplosionEffects);
+            this.Components.Add(playerExplosion);
+            playerExplosion.DrawOrder = 7;
+
+            playerSmoke = new PlayerSmoke(this, MaxPlayerSmokeEffects);
+            this.Components.Add(playerSmoke);
+            playerSmoke.DrawOrder = 7;
+
             achievements = new AchievementManager(this);
             /*achievements.Enabled = true;
             achievements.Visible = true;*/
@@ -223,6 +241,8 @@ namespace Duologue
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;
             LocalInstanceManager.PlayerRing = playerRing;
+            LocalInstanceManager.PlayerSmoke = playerSmoke;
+            LocalInstanceManager.PlayerExplosion = playerExplosion;
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;
             LocalInstanceManager.Spinner = spinner;
