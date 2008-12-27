@@ -66,6 +66,11 @@ namespace Duologue.PlayObjects
         private const int numTimesBlink = 10;
         private const float maxBlinkTimer = 0.25f;
 
+        /// <summary>
+        /// The time it takes to finish death sequence
+        /// </summary>
+        private const float deathTime = 4f;
+
         // Attraction/Repulsion force strengths
         private const float repulsionFromOtherPlayers = 5f;
 
@@ -124,6 +129,7 @@ namespace Duologue.PlayObjects
         //private bool blinkOn;
         private float blinkTimer;
         private int blinksSinceStart;
+        private float deathTimer;
         private Vector2 playerUIOffset;
 
         // FIXME, dude, got me
@@ -808,8 +814,10 @@ namespace Duologue.PlayObjects
                 Cue playerCollision = soundBank.GetCue("player-explosion");
                 playerCollision.Play();
                 
+                // Set the graphical items
                 state = PlayerState.Dying;
                 currentTread = 0;
+                deathTimer = 0f;
                 return LocalInstanceManager.Scores[(int)MyPlayerIndex].LoseLife();
             }
             return true;
@@ -822,8 +830,15 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void UpdateDying(GameTime gameTime)
         {
-            // ERE I AM JH
-            // should fade out as well as cycle treads
+            deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            // FIXME should check for new spawn
+            if (deathTimer > deathTime)
+                deathTimer = deathTime;
+            // FIXME
+            // Should probably do something more dynamic here in case we
+            // ever add more frames
+            if (deathTimer / deathTime > 0.5f)
+                currentTread = 1;
         }
 
         /// <summary>
@@ -916,7 +931,11 @@ namespace Duologue.PlayObjects
             CaclulateRotations();
             CheckScreenBoundary();
 
-            Color c = playerBase.Tint;
+            float alpha = 1f - deathTimer / deathTime;
+            //InstanceManager.Logger.LogEntry(String.Format("fade alpha: {0}", alpha.ToString()));
+            Color c = new Color(
+                playerBase.Tint,
+                alpha);
 
             // Treads
             RenderSprite.Draw(
