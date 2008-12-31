@@ -816,7 +816,7 @@ namespace Duologue.PlayObjects
                 
                 // Set the graphical items
                 state = PlayerState.Dying;
-                currentTread = 0;
+                currentTread = InstanceManager.Random.Next(treadDestroyFrames);
                 deathTimer = 0f;
                 return LocalInstanceManager.Scores[(int)MyPlayerIndex].LoseLife();
             }
@@ -834,11 +834,6 @@ namespace Duologue.PlayObjects
             // FIXME should check for new spawn
             if (deathTimer > deathTime)
                 deathTimer = deathTime;
-            // FIXME
-            // Should probably do something more dynamic here in case we
-            // ever add more frames
-            if (deathTimer / deathTime > 0.5f)
-                currentTread = 1;
         }
 
         /// <summary>
@@ -931,11 +926,18 @@ namespace Duologue.PlayObjects
             CaclulateRotations();
             CheckScreenBoundary();
 
-            float alpha = 1f - deathTimer / deathTime;
-            //InstanceManager.Logger.LogEntry(String.Format("fade alpha: {0}", alpha.ToString()));
-            Color c = new Color(
-                playerBase.Tint,
-                alpha);
+            Color c = playerBase.Tint;
+
+            if (deathTimer > deathTime * 0.5f)
+            {
+                // We only fade out past halfway point
+                float alpha = 1f - deathTimer / deathTime;
+                //InstanceManager.Logger.LogEntry(String.Format("fade alpha: {0}", alpha.ToString()));
+                c = new Color(
+                    playerBase.Tint,
+                    alpha);
+
+            }
 
             // Treads
             RenderSprite.Draw(
