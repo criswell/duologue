@@ -171,7 +171,10 @@
   <data name="PlayerSelect_PressStart" xml:space="preserve">
     <value>Press "Start" when ready</value>
   </data>
-  <data name="ScoreUI_Player" xml:space="preserve">
-    <value>P{0}</value>
+  <data name="ScoreUI_GameOver" xml:space="preserve">
+    <value>Game Over</value>
+  </data>
+  <data name="ScoreUI_Lives" xml:space="preserve">
+    <value>Lives:</value>
   </data>
 </root>

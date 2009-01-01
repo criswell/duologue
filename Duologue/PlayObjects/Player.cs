@@ -754,10 +754,6 @@ namespace Duologue.PlayObjects
         /// <returns>True if we've got more lives, or false if we're out of lives</returns>
         public override bool TriggerHit(PlayObject pobj)
         {
-            //throw new Exception("The method or operation is not implemented.");
-            // FIXME for now we do nothing
-            // ERE I AM JH
-
             if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
                 // Trigger a player explosion ring & explosion effects
@@ -776,7 +772,10 @@ namespace Duologue.PlayObjects
                 state = PlayerState.Dying;
                 currentTread = InstanceManager.Random.Next(treadDestroyFrames);
                 deathTimer = 0f;
-                return LocalInstanceManager.Scores[(int)MyPlayerIndex].LoseLife();
+                // FIXME?
+                // May not be the best way to kill off a player when there are no more lives
+                this.Active = LocalInstanceManager.Scores[(int)MyPlayerIndex].LoseLife();
+                return this.Active;
             }
             return true;
         }
@@ -789,9 +788,12 @@ namespace Duologue.PlayObjects
         private void UpdateDying(GameTime gameTime)
         {
             deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            // FIXME should check for new spawn
+            
             if (deathTimer > deathTime)
+            {
                 deathTimer = deathTime;
+                state = PlayerState.Dead;
+            }
         }
 
         /// <summary>

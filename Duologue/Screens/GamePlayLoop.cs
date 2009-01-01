@@ -155,6 +155,10 @@ namespace Duologue.Screens
                         }
                         dumb = p.ApplyOffset();
                     }
+                    else if (p.State == PlayerState.Dead)
+                    {
+                        p.Spawn();
+                    }
                         
                     p.Update(gameTime);
                 }
