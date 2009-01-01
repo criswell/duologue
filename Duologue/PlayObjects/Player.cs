@@ -830,9 +830,12 @@ namespace Duologue.PlayObjects
         private void UpdateDying(GameTime gameTime)
         {
             deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            // FIXME should check for new spawn
+            
             if (deathTimer > deathTime)
+            {
                 deathTimer = deathTime;
+                state = PlayerState.Dead;
+            }
         }
 
         /// <summary>
