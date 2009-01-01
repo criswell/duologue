@@ -203,7 +203,7 @@ namespace Duologue.UI
             }
 
             // Set the score text
-            playerText = String.Format(Resources.ScoreUI_Player, myPlayerNumber+1);
+            playerText = Resources.ScoreUI_Lives;
             base.Initialize();
         }
 

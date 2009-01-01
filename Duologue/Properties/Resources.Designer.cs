@@ -223,11 +223,11 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to P{0}.
+        ///   Looks up a localized string similar to Lives:.
         /// </summary>
-        internal static string ScoreUI_Player {
+        internal static string ScoreUI_Lives {
             get {
-                return ResourceManager.GetString("ScoreUI_Player", resourceCulture);
+                return ResourceManager.GetString("ScoreUI_Lives", resourceCulture);
             }
         }
     }
