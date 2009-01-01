@@ -75,6 +75,7 @@ namespace Duologue.UI
         private int deltaScore;
         private string playerText;
         private Vector2 playerTextSize;
+        private string gameOverText;
         // Pointlets
         private Pointlet[] pointlets;
         private Queue<Pointlet> freePointlets;
@@ -204,6 +205,7 @@ namespace Duologue.UI
 
             // Set the score text
             playerText = Resources.ScoreUI_Lives;
+            gameOverText = Resources.ScoreUI_GameOver;
             base.Initialize();
         }
 
@@ -440,11 +442,22 @@ namespace Duologue.UI
             int diffLength = difference.ToString().Length;
 
             // Next do the scoreText
-            Render.DrawString(
-                playerFont,
-                playerText,
-                origin,
-                associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
+            if (lives > 0)
+            {
+                Render.DrawString(
+                    playerFont,
+                    playerText,
+                    origin,
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
+            }
+            else
+            {
+                Render.DrawString(
+                    playerFont,
+                    gameOverText,
+                    origin,
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
+            }
 
             // Lives
             for (int i = 1; i <= lives; i++)
@@ -482,7 +495,7 @@ namespace Duologue.UI
                     charPos,
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
 
-                if(scrollingScore < score &&
+                if (scrollingScore < score &&
                     diffLength > 0 &&
                     currentChar >= lengthOfMaxScore - diffLength)
                 {
