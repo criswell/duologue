@@ -134,7 +134,6 @@ namespace Duologue.PlayObjects
 
         // FIXME, dude, got me
         private bool lightIsNegative;
-        private bool soundIsNegative;
 
         // The last position, offset and screen center
         private Vector2 lastPosition;
@@ -322,11 +321,6 @@ namespace Duologue.PlayObjects
             spawnRotation = 0f;
 
             fxngine = new SoundEffectsEngine();
-
-            // Initialize the beam sound effects
-            fxngine.PlayerLightPurple.Play();
-            fxngine.PlayerLightGreen.Play();
-            fxngine.PlayerLightGreen.Pause();
 
             Initialized = true;
         }
@@ -578,40 +572,6 @@ namespace Duologue.PlayObjects
             SetColors();
         }
 
-        /// <summary>
-        /// Call when the light beam sound effects need to be swapped
-        /// Expect that one will be playing, the other will be paused
-        /// </summary>
-        internal void SwapBeamSounds()
-        {
-            if (fxngine.PlayerLightGreen.IsPaused)
-            {
-                fxngine.PlayerLightGreen.Resume();
-            }
-            else
-            {
-                fxngine.PlayerLightGreen.Pause();
-            }
-            if (fxngine.PlayerLightPurple.IsPaused)
-            {
-                fxngine.PlayerLightPurple.Resume();
-            }
-            else
-            {
-                fxngine.PlayerLightPurple.Pause();
-            }
-        }
-
-
-
-        /// <summary>
-        /// Stop the beam sound effects
-        /// </summary>
-        internal void StopBeamSounds()
-        {
-            fxngine.PlayerLightGreen.Stop(AudioStopOptions.Immediate);
-            fxngine.PlayerLightPurple.Stop(AudioStopOptions.Immediate);
-        }
 
         /// <summary>
         /// Call when a fire request is made
@@ -804,8 +764,6 @@ namespace Duologue.PlayObjects
                 LocalInstanceManager.PlayerRing.AddRing(this.Position, this.PlayerColor.Colors[PlayerColors.Light]);
                 LocalInstanceManager.PlayerExplosion.AddParticles(this.Position, this.PlayerColor.Colors[PlayerColors.Light]);
                 LocalInstanceManager.PlayerSmoke.AddParticles(this.Position, Color.White);
-
-                StopBeamSounds();
 
                 // Should trigger other explosions here
                 AudioEngine engine = new AudioEngine("Content\\Audio\\Duologue.xgs");

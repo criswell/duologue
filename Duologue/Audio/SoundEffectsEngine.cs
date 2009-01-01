@@ -68,7 +68,7 @@ namespace Duologue.Audio
         }
 
         /// <summary>
-        /// Click, click, man, danged ol' Hank, I'll tell ya what.
+        /// Big badaboom
         /// </summary>
         public void PlayerExplosion()
         {

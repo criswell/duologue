@@ -29,6 +29,13 @@ namespace Duologue.Audio
         private WaveBank waveBank;
         private SoundBank soundBank;
         private Cue beatSound = null;
+        private WaveBank danceWaveBank;
+        private SoundBank danceSoundBank;
+        private Cue danceBass = null;
+        private Cue danceBassplus = null;
+        private Cue danceBeat = null;
+        private Cue danceGuitar = null;
+        private Cue danceOrgan = null;
         #endregion
 
         #region Public Fields
@@ -81,6 +88,13 @@ namespace Duologue.Audio
             engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
             waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
             soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
+            danceWaveBank = new WaveBank(engine, "Content\\Audio\\Flick3r_Dance.xwb");
+            danceSoundBank = new SoundBank(engine, "Content\\Audio\\Flick3r_Dance.xsb");
+            danceBeat = danceSoundBank.GetCue("beat");
+            danceBass = danceSoundBank.GetCue("bass");
+            danceBassplus = danceSoundBank.GetCue("bassplus");
+            danceGuitar = danceSoundBank.GetCue("guitar");
+            danceOrgan = danceSoundBank.GetCue("organ");
 
             base.Initialize();
         }
@@ -103,22 +117,33 @@ namespace Duologue.Audio
         }
 
         /// <summary>
+        /// Techno. Sounds like Keeper's Pub up in here!
+        /// </summary>
+        public void PlayDance()
+        {
+            danceGuitar.SetVariable("Volume", 0.0f);
+            danceBass.Play();
+            danceBassplus.Play();
+            danceBeat.Play();
+            danceGuitar.Play();
+            danceOrgan.Play();
+        }
+
+        /// <summary>
         /// Allows the game component to update itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            {
-                // TODO: Add your update code here
-                beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (beatTimer > beatInterval)
-                {
-                    // Do Something
-                    PlayBeat();
-                    beatTimer = 0f;
-                }
-                base.Update(gameTime);
-            }
+            // TODO: Add your update code here
+            //beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            //if (beatTimer > beatInterval)
+            //{
+                // Do Something
+              //  PlayBeat();
+              //  beatTimer = 0f;
+            //}
+            base.Update(gameTime);
         }
     }
 }
