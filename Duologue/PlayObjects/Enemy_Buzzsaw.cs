@@ -37,6 +37,11 @@ namespace Duologue.PlayObjects
         private const float delta_ShineOffsetY = -4f;
 
         /// <summary>
+        /// How far we can go outside the screen before we should stop
+        /// </summary>
+        private const float outsideScreenMultiplier = 3;
+
+        /// <summary>
         /// The divisor that determines the radius of the entire
         /// enemy given the radius of the base
         /// </summary>
@@ -95,11 +100,13 @@ namespace Duologue.PlayObjects
         private float bladesLayer;
         private float rotation;
         private float bladesRotation;
+        private Vector2 realSize;
 
         // Movement
         private Vector2 offset;
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
+        private Vector2 lastDirection;
         #endregion
 
         #region Constructor / Init / Load
@@ -121,6 +128,7 @@ namespace Duologue.PlayObjects
         {
             Position = startPos;
             Orientation = startOrientation;
+            lastDirection = Vector2.Zero;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
             bladesRotation = 0f;
             ColorState = currentColorState;
@@ -158,6 +166,13 @@ namespace Duologue.PlayObjects
             Radius = buzzBase.Width/radiusDivisor;
             if (buzzBase.Height/radiusDivisor > Radius)
                 Radius = buzzBase.Height/radiusDivisor;
+
+            // FIXME
+            // To be safe, we shouldn't assume that the blades
+            // are the largest part of the image
+            realSize = new Vector2(
+                buzzBlades.Width,
+                buzzBlades.Height);
 
             baseLayer = 0.3f;
             bladesLayer = 0.4f;
@@ -306,7 +321,7 @@ namespace Duologue.PlayObjects
                 if (len < this.Radius + pobj.Radius)
                 {
                     // We're on them, kill em
-                    pobj.TriggerHit(this);
+                    return pobj.TriggerHit(this);
                 }
 
                 // Beam handling
@@ -371,13 +386,36 @@ namespace Duologue.PlayObjects
 
                 offset += modifier * nearestPlayer;
             }
+            else
+            {
+                // If no near player, move in previous direction
+                nearestPlayer = lastDirection;
+
+                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                nearestPlayer.Normalize();
+
+                offset += playerAttract * nearestPlayer;
+            }
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
             {
                 this.Position += offset;
+                lastDirection = offset;
                 Orientation = new Vector2(-offset.Y, offset.X);
             }
+
+            // Check boundaries
+            if (this.Position.X < -1 * realSize.X * outsideScreenMultiplier)
+                this.Position.X = -1 * realSize.X * outsideScreenMultiplier;
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + realSize.X * outsideScreenMultiplier)
+                this.Position.X = InstanceManager.DefaultViewport.Width + realSize.X * outsideScreenMultiplier;
+
+            if (this.Position.Y < -1 * realSize.Y * outsideScreenMultiplier)
+                this.Position.Y = -1 * realSize.Y * outsideScreenMultiplier;
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + realSize.Y * outsideScreenMultiplier)
+                this.Position.Y = InstanceManager.DefaultViewport.Height + realSize.Y * outsideScreenMultiplier;
+
             return true;
         }
 

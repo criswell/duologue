@@ -89,6 +89,7 @@ namespace Duologue.Screens
         {
             int livingPlayers = 0;
             int livingEnemies = 0;
+            int activePlayers = 0;
             bool dumb;
 
             #region Player stuff
@@ -98,6 +99,7 @@ namespace Duologue.Screens
                 Player p = LocalInstanceManager.Players[i];
                 if (p.Active)
                 {
+                    activePlayers++;
                     if (p.State == PlayerState.Alive ||
                        p.State == PlayerState.GettingReady)
                     {
@@ -155,6 +157,10 @@ namespace Duologue.Screens
                         }
                         dumb = p.ApplyOffset();
                     }
+                    else if (p.State == PlayerState.Dead)
+                    {
+                        p.Spawn();
+                    }
                         
                     p.Update(gameTime);
                 }
@@ -168,8 +174,8 @@ namespace Duologue.Screens
                 for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
                 {
                     // We really only want to spawn new enemies if we have active/living players
-                    if (livingPlayers > 0)
-                    {
+                    //if (livingPlayers > 0)
+                    //{
                         if (LocalInstanceManager.Enemies[i] == null ||
                             !LocalInstanceManager.Enemies[i].Initialized)
                         {
@@ -177,7 +183,7 @@ namespace Duologue.Screens
                                 LocalInstanceManager.GenerateEnemyStartPos(
                                 LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartAngle[i],
                                 LocalInstanceManager.Enemies[i].Radius),
-                                Vector2.One,
+                                Vector2.Zero,
                                 LocalInstanceManager.CurrentGameWave.ColorState,
                                 ColorState.RandomPolarity(),
                                 null); // FIXME : We need to determine the HP from the GameWave
@@ -211,8 +217,14 @@ namespace Duologue.Screens
                         livingEnemies++;
 
                         LocalInstanceManager.Enemies[i].Update(gameTime);
-                    }
+                    //}
                 }
+            }
+
+            if (activePlayers < 1)
+            {
+                // Game Over
+                throw new Exception("Game Over");
             }
 
             // If we have no living enemies, it means we need to get them from the next wavelet,
