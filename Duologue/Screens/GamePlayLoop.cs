@@ -224,7 +224,7 @@ namespace Duologue.Screens
             if (activePlayers < 1)
             {
                 // Game Over
-                throw new Exception("Game Over");
+                myManager.GameOver(true);
             }
 
             // If we have no living enemies, it means we need to get them from the next wavelet,

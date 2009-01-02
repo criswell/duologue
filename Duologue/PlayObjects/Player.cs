@@ -42,7 +42,7 @@ namespace Duologue.PlayObjects
         private const string filename_playerBase = "player-base";
         private const string filename_playerCannon = "player-cannon";
         private const string filename_playerLight = "player-light";
-        private const string filename_shot = "shot";
+        //private const string filename_shot = "shot";
         private const string filename_playerUIbase = "PlayerUI/P{0}-base";
         private const string filename_playerUIroot = "PlayerUI/player-root";
         private const string filename_spawnCrosshairs = "ship-spawn";
@@ -91,10 +91,10 @@ namespace Duologue.PlayObjects
         private SpriteObject playerLight;
         private SpriteObject playerDestroy;
 
-        // The beam and shot
+        // The beam
         private SpriteObject beam;
         private SpriteObject beamBase;
-        private SpriteObject shot;
+        //private SpriteObject shot;
 
         // Tread items
         private const int treadFrames = 2;
@@ -370,7 +370,7 @@ namespace Duologue.PlayObjects
                 0.4f);
 
             // Load projectile object
-            shot = new SpriteObject(
+            /*shot = new SpriteObject(
                 AssetManager.LoadTexture2D(filename_shot),
                 Vector2.Zero,
                 new Vector2(
@@ -382,7 +382,7 @@ namespace Duologue.PlayObjects
                 1f,
                 1f);
 
-            shot.Alive = false;
+            shot.Alive = false;*/
 
             // Load beam object
             Vector2 beamCenter = new Vector2(747f, 197.5f);
@@ -531,7 +531,7 @@ namespace Duologue.PlayObjects
                 beamBase.Tint = colorState.Negative[ColorState.Light];
 
                 playerCannon.Tint = colorState.Positive[ColorState.Dark];
-                shot.Tint = colorState.Positive[ColorState.Light];
+                //shot.Tint = colorState.Positive[ColorState.Light];
             }
             else
             {
@@ -540,7 +540,7 @@ namespace Duologue.PlayObjects
                 beamBase.Tint = colorState.Positive[ColorState.Light];
 
                 playerCannon.Tint = colorState.Negative[ColorState.Dark];
-                shot.Tint = colorState.Negative[ColorState.Light];
+                //shot.Tint = colorState.Negative[ColorState.Light];
             }
         }
 

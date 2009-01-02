@@ -18,6 +18,7 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.State;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.PlayObjects;
@@ -54,6 +55,7 @@ namespace Duologue.Screens
         private WaveDisplay waveDisplay;
         private GamePlayLoop gamePlayLoop;
         private float timeSinceStart;
+        private GameOver gameOver;
         #endregion
 
         #region Properties
@@ -82,6 +84,12 @@ namespace Duologue.Screens
             localGame.Components.Add(waveDisplay);
             gamePlayLoop = new GamePlayLoop(localGame, this);
             localGame.Components.Add(gamePlayLoop);
+
+            // Game over screen starts out invisble
+            gameOver = new GameOver(localGame, this);
+            gameOver.Enabled = false;
+            gameOver.Visible = false;
+            localGame.Components.Add(gameOver);
             //Reset();
         }
 
@@ -122,6 +130,27 @@ namespace Duologue.Screens
             if (t)
                 Reset();
             base.SetEnable(t);
+        }
+
+        /// <summary>
+        /// Set the Game Over sequence
+        /// </summary>
+        /// <param name="t">True to begin gameover, false to end it</param>
+        public void GameOver(bool t)
+        {
+            if (t)
+            {
+                gameOver.Reset();
+                gameOver.Visible = true;
+                gameOver.Enabled = true;
+                currentState = GamePlayState.GameOver;
+            }
+            else
+            {
+                gameOver.Visible = false;
+                gameOver.Enabled = false;
+                LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+            }
         }
         #endregion
 
@@ -179,7 +208,7 @@ namespace Duologue.Screens
                     ((DuologueGame)localGame).beatEngine.PlayDance();
                     break;
                 default:
-                    // Play the game
+                    // Play the game or game over
                     break;
             }
             base.Update(gameTime);
