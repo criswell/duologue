@@ -88,6 +88,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PlayerUI/game-over_en_US.
+        /// </summary>
+        internal static string Filename_GameOver {
+            get {
+                return ResourceManager.GetString("Filename_GameOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Infinite Mode.
         /// </summary>
         internal static string GameScreen_InfiniteWave {

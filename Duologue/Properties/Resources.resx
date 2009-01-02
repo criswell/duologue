@@ -126,6 +126,9 @@
   <data name="Achievement_Points_RolledScore" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="Filename_GameOver" xml:space="preserve">
+    <value>PlayerUI/game-over_en_US</value>
+  </data>
   <data name="GameScreen_InfiniteWave" xml:space="preserve">
     <value>Infinite Mode</value>
   </data>

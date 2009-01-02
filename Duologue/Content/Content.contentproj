@@ -57,8 +57,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="shot.png">
-      <Name>shot</Name>
+    <Compile Include="shot-base.png">
+      <Name>shot-base</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -419,6 +419,35 @@
     </Compile>
     <Compile Include="player-smoke.png">
       <Name>player-smoke</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="shot-highlight-01.png">
+      <Name>shot-highlight-01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="shot-highlight-02.png">
+      <Name>shot-highlight-02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="shot-highlight-03.png">
+      <Name>shot-highlight-03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="shot-highlight-04.png">
+      <Name>shot-highlight-04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PlayerUI\game-over_en_US.png">
+      <Name>game-over_en_US</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
