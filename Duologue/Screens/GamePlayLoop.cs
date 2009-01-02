@@ -89,6 +89,7 @@ namespace Duologue.Screens
         {
             int livingPlayers = 0;
             int livingEnemies = 0;
+            int activePlayers = 0;
             bool dumb;
 
             #region Player stuff
@@ -98,6 +99,7 @@ namespace Duologue.Screens
                 Player p = LocalInstanceManager.Players[i];
                 if (p.Active)
                 {
+                    activePlayers++;
                     if (p.State == PlayerState.Alive ||
                        p.State == PlayerState.GettingReady)
                     {
@@ -217,6 +219,12 @@ namespace Duologue.Screens
                         LocalInstanceManager.Enemies[i].Update(gameTime);
                     //}
                 }
+            }
+
+            if (activePlayers < 1)
+            {
+                // Game Over
+                throw new Exception("Game Over");
             }
 
             // If we have no living enemies, it means we need to get them from the next wavelet,
