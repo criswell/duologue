@@ -138,14 +138,14 @@ namespace Duologue.Screens
         /// <param name="t">True to begin gameover, false to end it</param>
         public void GameOver(bool t)
         {
-            if (t)
+            if (t && currentState != GamePlayState.GameOver)
             {
                 gameOver.Reset();
                 gameOver.Visible = true;
                 gameOver.Enabled = true;
                 currentState = GamePlayState.GameOver;
             }
-            else
+            else if (!t && currentState == GamePlayState.GameOver)
             {
                 gameOver.Visible = false;
                 gameOver.Enabled = false;

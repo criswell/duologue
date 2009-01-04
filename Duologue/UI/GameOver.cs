@@ -35,6 +35,7 @@ namespace Duologue.UI
     {
         #region Constants
         private const float scaleTime = 3f;
+        private const float totalScreenTime = 6f; // Should be higher than scaleTime
         private const float startScale = 100f;
         private const float endScale = 1f;
         #endregion
@@ -105,7 +106,17 @@ namespace Duologue.UI
         {
             timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            gameOverScale = startScale * (timeSinceStart / scaleTime) + endScale;
+            if (timeSinceStart < scaleTime)
+            {
+                gameOverScale = startScale * (1f - timeSinceStart / scaleTime) + endScale;
+            } else {
+                gameOverScale = 1f;
+            }
+
+            if (timeSinceStart > totalScreenTime)
+            {
+                myManager.GameOver(false);
+            }
             base.Update(gameTime);
         }
 

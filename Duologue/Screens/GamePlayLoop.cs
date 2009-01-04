@@ -221,7 +221,7 @@ namespace Duologue.Screens
                 }
             }
 
-            if (activePlayers < 1)
+            if (activePlayers < 1 && myManager.CurrentState != GamePlayState.GameOver)
             {
                 // Game Over
                 myManager.GameOver(true);
