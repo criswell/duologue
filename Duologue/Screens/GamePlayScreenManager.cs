@@ -149,6 +149,8 @@ namespace Duologue.Screens
             {
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
+                // FIXME
+                // Should probably reset things here, like the music, etc
                 LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
             }
         }

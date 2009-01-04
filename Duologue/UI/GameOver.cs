@@ -34,8 +34,8 @@ namespace Duologue.UI
     public class GameOver : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
-        private const float scaleTime = 3f;
-        private const float totalScreenTime = 6f; // Should be higher than scaleTime
+        private const float scaleTime = 0.75f;
+        private const float totalScreenTime = 5f; // Should be higher than scaleTime
         private const float startScale = 100f;
         private const float endScale = 1f;
         #endregion
