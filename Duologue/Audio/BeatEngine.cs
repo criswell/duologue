@@ -34,8 +34,11 @@ namespace Duologue.Audio
         private Cue danceBass = null;
         private Cue danceBassplus = null;
         private Cue danceBeat = null;
-        private Cue danceGuitar = null;
         private Cue danceOrgan = null;
+        private Cue danceGuitar = null;
+        private int intensity;
+        private float mute = 0.0f;
+        private float loud = 999.0f;
         #endregion
 
         #region Public Fields
@@ -75,6 +78,7 @@ namespace Duologue.Audio
         public BeatEngine(Game game)
             : base(game)
         {
+            intensity = 1;
         }
 
         /// <summary>
@@ -95,8 +99,78 @@ namespace Duologue.Audio
             danceBassplus = danceSoundBank.GetCue("bassplus");
             danceGuitar = danceSoundBank.GetCue("guitar");
             danceOrgan = danceSoundBank.GetCue("organ");
+            danceBeat.SetVariable("Volume", loud);
+            danceBass.SetVariable("Volume", mute);
+            danceBassplus.SetVariable("Volume", mute);
+            danceGuitar.SetVariable("Volume", mute);
+            danceOrgan.SetVariable("Volume", mute);
 
             base.Initialize();
+        }
+
+
+        /// <summary>
+        /// Increase musical excitement!
+        /// </summary>
+        public void IncreaseIntensity()
+        {
+            switch (intensity)
+            {
+                case 1:
+                    danceBass.SetVariable("Volume", loud);
+                    intensity++;
+                    break;
+                case 2:
+                    danceBassplus.SetVariable("Volume", loud);
+                    intensity++;
+                    break;
+                case 3:
+                    danceOrgan.SetVariable("Volume", loud);
+                    intensity++;
+                    break;
+                case 4:
+                    danceGuitar.SetVariable("Volume", loud);
+                    intensity++;
+                    break;
+                case 5:
+                    break;
+                default:
+                    intensity = 1;
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        /// Reduce musical excitement!
+        /// </summary>
+        public void DecreaseIntensity()
+        {
+            switch (intensity)
+            {
+                case 1:
+                    intensity--;
+                    break;
+                case 2:
+                    danceBass.SetVariable("Volume", mute);
+                    intensity--;
+                    break;
+                case 3:
+                    danceBassplus.SetVariable("Volume", mute);
+                    intensity--;
+                    break;
+                case 4:
+                    danceOrgan.SetVariable("Volume", mute);
+                    intensity--;
+                    break;
+                case 5:
+                    danceGuitar.SetVariable("Volume", mute);
+                    intensity--;
+                    break;
+                default:
+                    intensity = 1;
+                    break;
+            }
         }
 
         /// <summary>
@@ -121,7 +195,6 @@ namespace Duologue.Audio
         /// </summary>
         public void PlayDance()
         {
-            danceGuitar.SetVariable("Volume", 0.0f);
             danceBass.Play();
             danceBassplus.Play();
             danceBeat.Play();

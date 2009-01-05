@@ -140,6 +140,16 @@ namespace Duologue.Screens
                             // Swap color
                             p.SwapColors();
                         }
+                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].DPad.Up > 0 &&
+                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].DPad.Up == 0)
+                        {
+                            ((DuologueGame)Game).beatEngine.IncreaseIntensity();
+                        }
+                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].DPad.Down > 0 &&
+                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].DPad.Down == 0)
+                        {
+                            ((DuologueGame)Game).beatEngine.DecreaseIntensity();
+                        }
 
                         // Now, make sure no one is stepping on eachother
                         //bool dumb;
