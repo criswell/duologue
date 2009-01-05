@@ -141,6 +141,8 @@ namespace Duologue.Screens
             if (t && currentState != GamePlayState.GameOver)
             {
                 gameOver.Reset();
+                // FIXME
+                // Should probably do some gameover music here
                 gameOver.Visible = true;
                 gameOver.Enabled = true;
                 currentState = GamePlayState.GameOver;

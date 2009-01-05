@@ -38,6 +38,7 @@ namespace Duologue.PlayObjects
 
     /// <summary>
     /// The various types of player shots available
+    /// FIXME - Do we still need this?
     /// </summary>
     public enum PlayerShotType
     {
