@@ -44,6 +44,11 @@ namespace Duologue.PlayObjects
         /// The rate of change for the bullet
         /// </summary>
         private const float delta_BulletSpeed = 10f;
+
+        /// <summary>
+        /// The draw layer depth
+        /// </summary>
+        private const float layerDepth = 1.0f;
         #endregion
 
         #region Fields
@@ -70,6 +75,24 @@ namespace Duologue.PlayObjects
         /// My associate player index
         /// </summary>
         private PlayerIndex myPlayerIndex;
+
+        /// <summary>
+        /// The orientation (or aim) of the bullet
+        /// </summary>
+        private Vector2 orientation;
+
+        /// <summary>
+        /// My current color state
+        /// </summary>
+        private ColorState currentColorState;
+
+        /// <summary>
+        /// True if our color state is positive
+        /// </summary>
+        private bool isPositive;
+
+        private Color baseColor;
+        private Color highlightColor;
         #endregion
 
         #region Properties
@@ -104,6 +127,9 @@ namespace Duologue.PlayObjects
                 shotBaseCenter = new Vector2(
                     shotBase.Width / 2f,
                     shotBase.Height / 2f);
+                Radius = shotBaseCenter.X;
+                if (shotBaseCenter.Y > Radius)
+                    Radius = shotBaseCenter.Y;
 
                 shotHighlights = new Texture2D[numberOfShotHighlights];
                 highlightAlphas = new byte[numberOfShotHighlights];
@@ -141,15 +167,98 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
+        #region Public Methods
+        /// <summary>
+        /// Called when this bullet has been fired
+        /// </summary>
+        /// <param name="Aim">The direction we're firing in (doesn't need to be normalized)</param>
+        /// <param name="StartPos">The starting position</param>
+        public void Fire(Vector2 Aim, Vector2 StartPos)
+        {
+            Position = StartPos;
+            orientation = Aim;
+            orientation.Normalize();
+            Alive = true;
+            for (int i = 0; i < numberOfShotHighlights; i++)
+            {
+                highlightAlphas[i] = (byte)InstanceManager.Random.Next(255);
+                if (InstanceManager.Random.Next(2) == 0)
+                    alphaMultipliers[i] = -1;
+                else
+                    alphaMultipliers[i] = 1;
+            }
+
+            // Get the color stuff
+            currentColorState = myPlayer.ColorState;
+            isPositive = myPlayer.LightIsNegative;
+            if (isPositive)
+            {
+                baseColor = currentColorState.Positive[ColorState.Dark];
+                highlightColor = currentColorState.Positive[ColorState.Light];
+            }
+            else
+            {
+                baseColor = currentColorState.Negative[ColorState.Dark];
+                highlightColor = currentColorState.Negative[ColorState.Light];
+            }
+        }
+        #endregion
+
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            RenderSprite.Draw(
+                shotBase,
+                Position,
+                shotBaseCenter,
+                null,
+                baseColor,
+                0f,
+                1f,
+                layerDepth);
+
+            Color c;
+            for (int i = 0; i < numberOfShotHighlights; i++)
+            {
+                c = new Color(highlightColor, highlightAlphas[i]);
+                RenderSprite.Draw(
+                    shotHighlights[i],
+                    Position,
+                    shotBaseCenter,
+                    null,
+                    c,
+                    0f,
+                    1f,
+                    layerDepth);
+            }
+
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Update the position
+            Position += delta_BulletSpeed * orientation;
+
+            // If we're offscreen, we're gone
+            if (Position.X < 0 - Radius || Position.X > InstanceManager.DefaultViewport.Width + Radius ||
+                Position.Y < 0 - Radius || Position.Y > InstanceManager.DefaultViewport.Height + Radius)
+                Alive = false;
+
+            if (Alive)
+            {
+                for (int i = 0; i < numberOfShotHighlights; i++)
+                {
+                    if (highlightAlphas[i] > 254 - delta_Alpha)
+                    {
+                        alphaMultipliers[i] = -1;
+                    }
+                    else if (highlightAlphas[i] < 1 + delta_Alpha)
+                    {
+                        alphaMultipliers[i] = 1;
+                    }
+                    highlightAlphas[i] = (byte)(highlightAlphas[i] + delta_Alpha * alphaMultipliers[i]);
+                }
+            }
         }
         #endregion
     }
