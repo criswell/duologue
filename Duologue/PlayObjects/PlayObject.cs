@@ -23,6 +23,7 @@ namespace Duologue.PlayObjects
     public enum MajorPlayObjectType
     {
         Player,
+        PlayerBullet,
         Enemy,
         Other,
     }
@@ -34,15 +35,6 @@ namespace Duologue.PlayObjects
         Player,
         PlayerBullet,
         Enemy_Buzzsaw,
-    }
-
-    /// <summary>
-    /// The various types of player shots available
-    /// FIXME - Do we still need this?
-    /// </summary>
-    public enum PlayerShotType
-    {
-        Default,
     }
 
     /// <summary>

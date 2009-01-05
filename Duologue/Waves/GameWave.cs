@@ -79,11 +79,6 @@ namespace Duologue.Waves
         /// Defines the maximum number of enemies in a given wave
         /// </summary>
         public const int maxEnemiesInWave = 200;
-
-        /// <summary>
-        /// The default max player shot types
-        /// </summary>
-        public const int maxPlayerShotTypes = 1;
         #endregion
 
         #region Fields
@@ -104,11 +99,6 @@ namespace Duologue.Waves
         /// The name of the wave
         /// </summary>
         public string Name;
-
-        /// <summary>
-        /// The list of possible player shop types in this GameWave
-        /// </summary>
-        public PlayerShotType[] PossiblePlayerShotTypes;
 
         /// <summary>
         /// The background for this GameWave
@@ -153,16 +143,11 @@ namespace Duologue.Waves
         /// Constructs a Game Wave object
         /// </summary>
         public GameWave(string name,
-            int? numShotTypes,
             int background,
             ColorState colorState,
             int majorWaveNo, int minorWaveNo)
         {
             Name = name;
-            if (numShotTypes == null)
-                PossiblePlayerShotTypes = new PlayerShotType[maxPlayerShotTypes];
-            else
-                PossiblePlayerShotTypes = new PlayerShotType[(int)numShotTypes];
             Background = background;
             MajorWaveNumber = majorWaveNo;
             MinorWaveNumber = minorWaveNo;

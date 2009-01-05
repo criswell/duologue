@@ -102,6 +102,7 @@
     <Compile Include="ParticleEffects\Steam.cs" />
     <Compile Include="PlayObjects\Enemy.cs" />
     <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />
+    <Compile Include="PlayObjects\PlayerBullet.cs" />
     <Compile Include="PlayObjects\PlayerColors.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -140,7 +140,6 @@ namespace Duologue.Waves
             ColorState[] theStates = ColorState.GetColorStates();
 
             GameWave thisWave = new GameWave(Resources.GameScreen_InfiniteWave,
-                GameWave.maxPlayerShotTypes,
                 rand.Next(LocalInstanceManager.Background.NumBackgrounds),
                 theStates[rand.Next(theStates.Length)],
                 lastMajorWaveNo,
@@ -157,7 +156,7 @@ namespace Duologue.Waves
 
             // ERE I AM JH
             thisWave.NumWavelets = 1;
-            thisWave.NumEnemies = 5;
+            thisWave.NumEnemies = 50;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
             thisWave.Wavelet[thisWave.CurrentWavelet] = new Wavelet(thisWave.NumEnemies, 0);
