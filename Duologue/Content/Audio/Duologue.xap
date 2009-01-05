@@ -16,8 +16,8 @@ Global Settings
     Header File = Duologue.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 3105936580;
-    Last Modified High = 29976895;
+    Last Modified Low = 753717124;
+    Last Modified High = 29978356;
 
     Category
     {
@@ -238,7 +238,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::ed6d21a2-38cf-4cae-ac4c-0833c912b3ef;
+            Name = 1::f4667adc-b398-4310-9d08-4d6d6d9f2216;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -436,6 +436,8 @@ Wave Bank
     Xbox Bank Last Modified High = 0;
     PC Bank Last Modified Low = 3536336232;
     PC Bank Last Modified High = 29976783;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 3536023732;
     Bank Last Revised High = 29976783;
 
@@ -562,8 +564,8 @@ Sound Bank
     Windows File = Win\Sound Bank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 2121550620;
-    Bank Last Modified High = 29976780;
+    Bank Last Modified Low = 754185874;
+    Bank Last Modified High = 29978356;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -974,6 +976,8 @@ Sound Bank
     Windows File = Win\Flick3r_Dance.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Bank Last Modified Low = 754185874;
+    Bank Last Modified High = 29978356;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -987,6 +991,11 @@ Sound Bank
         Category Entry
         {
             Name = Music;
+        }
+
+        RPC Entry
+        {
+            RPC Name = RPC Cue Volume;
         }
 
         Track
@@ -1021,6 +1030,12 @@ Sound Bank
                     Weight Min = 0;
                 }
             }
+
+            RPC Curve Entry
+            {
+                RPC Name = RPC Cue Volume;
+                RPC Curve Name = 1::f4667adc-b398-4310-9d08-4d6d6d9f2216;
+            }
         }
     }
 
@@ -1034,6 +1049,11 @@ Sound Bank
         Category Entry
         {
             Name = Music;
+        }
+
+        RPC Entry
+        {
+            RPC Name = RPC Cue Volume;
         }
 
         Track
@@ -1068,6 +1088,12 @@ Sound Bank
                     Weight Min = 0;
                 }
             }
+
+            RPC Curve Entry
+            {
+                RPC Name = RPC Cue Volume;
+                RPC Curve Name = 1::f4667adc-b398-4310-9d08-4d6d6d9f2216;
+            }
         }
     }
 
@@ -1081,6 +1107,11 @@ Sound Bank
         Category Entry
         {
             Name = Music;
+        }
+
+        RPC Entry
+        {
+            RPC Name = RPC Cue Volume;
         }
 
         Track
@@ -1115,6 +1146,12 @@ Sound Bank
                     Weight Min = 0;
                 }
             }
+
+            RPC Curve Entry
+            {
+                RPC Name = RPC Cue Volume;
+                RPC Curve Name = 1::f4667adc-b398-4310-9d08-4d6d6d9f2216;
+            }
         }
     }
 
@@ -1128,6 +1165,11 @@ Sound Bank
         Category Entry
         {
             Name = Music;
+        }
+
+        RPC Entry
+        {
+            RPC Name = RPC Cue Volume;
         }
 
         Track
@@ -1161,6 +1203,12 @@ Sound Bank
                     Weight = 255;
                     Weight Min = 0;
                 }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = RPC Cue Volume;
+                RPC Curve Name = 1::f4667adc-b398-4310-9d08-4d6d6d9f2216;
             }
         }
     }
@@ -1218,7 +1266,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::ed6d21a2-38cf-4cae-ac4c-0833c912b3ef;
+                RPC Curve Name = 1::f4667adc-b398-4310-9d08-4d6d6d9f2216;
             }
         }
     }
@@ -1309,59 +1357,17 @@ Sound Bank
 
         Variation
         {
-            Variation Type = 3;
-            Variation Table Type = 3;
+            Variation Type = 2;
+            Variation Table Type = 1;
             New Variation on Loop = 0;
-
-            Variable Entry
-            {
-                Name = Volume;
-            }
         }
 
         Sound Entry
         {
             Name = guitar;
             Index = 4;
-            Variable Min = 0.000000;
-            Variable Max = 0.000000;
-            Linger = 1;
-        }
-
-        Transition Entry
-        {
-            Source Marker Min = 0;
-            Source Marker Max = 0;
-            Destination Marker Min = 0;
-            Destination Marker Max = 0;
-            Transition Type = 0;
-            Transition Source = 0;
-            Transition Destination = 0;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 0;
-            }
-        }
-
-        Transition Entry
-        {
-            Source Marker Min = 0;
-            Source Marker Max = 0;
-            Destination Marker Min = 0;
-            Destination Marker Max = 0;
-            Transition Type = 0;
-            Transition Source = 0;
-            Transition Destination = 0;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 0;
-            }
+            Weight Min = 0;
+            Weight Max = 255;
         }
     }
 }
