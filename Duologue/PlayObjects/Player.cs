@@ -146,12 +146,19 @@ namespace Duologue.PlayObjects
         private float beamArcMax;
         private float piOver6 = MathHelper.Pi / 6f;
         private ColorState colorState;
-        #endregion
 
         // Sound effects
         private SoundEffectsEngine fxngine;
+        #endregion
 
         #region Properties
+        /// <summary>
+        /// Read only property that tells whether or not the light beam is negative
+        /// </summary>
+        public bool LightIsNegative
+        {
+            get { return lightIsNegative; }
+        }
         /// <summary>
         /// Returns a percentage complete for spawn crosshair
         /// </summary>
