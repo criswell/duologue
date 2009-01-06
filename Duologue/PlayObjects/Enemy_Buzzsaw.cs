@@ -421,7 +421,17 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new Exception("The method or operation is not implemented.");
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                CurrentHitPoints--;
+                // FIXME trigger some minor explosion
+                if (CurrentHitPoints <= 0)
+                {
+                    Alive = false;
+                    return false;
+                }
+            }
+            return true;
         }
         #endregion
     }
