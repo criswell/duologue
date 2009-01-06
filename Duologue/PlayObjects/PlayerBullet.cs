@@ -241,7 +241,6 @@ namespace Duologue.PlayObjects
                     1f,
                     layerDepth);
             }
-
         }
 
         public override void Update(GameTime gameTime)
