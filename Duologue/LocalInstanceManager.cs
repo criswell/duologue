@@ -97,6 +97,11 @@ namespace Duologue
         public static PlayerSmoke PlayerSmoke;
 
         /// <summary>
+        /// The local instance of the bullet particle system
+        /// </summary>
+        public static BulletParticle BulletParticle;
+
+        /// <summary>
         /// The local instance of the background object
         /// </summary>
         public static Background Background;

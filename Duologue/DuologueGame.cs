@@ -59,7 +59,7 @@ namespace Duologue
     /// 5
     /// 6
     /// 7           -       Explosion and steam elements
-    /// 8
+    /// 8           -       Bullet particle effects
     /// 9
     /// ...
     /// 99          -       Score scroller
@@ -93,6 +93,10 @@ namespace Duologue
         /// Maximum smoke effects for player explosions
         /// </summary>
         public const int MaxPlayerSmokeEffects = 8;
+        /// <summary>
+        /// Maximum number of bullet particle effects
+        /// </summary>
+        public const int MaxBulletParticles = 30;
         #endregion
 
         #region Fields
@@ -111,6 +115,7 @@ namespace Duologue
         public PlayerRing playerRing;
         public PlayerExplosion playerExplosion;
         public PlayerSmoke playerSmoke;
+        public BulletParticle bulletParticle;
         public Background background;
         public AchievementManager achievements;
         public Spinner spinner;
@@ -222,6 +227,12 @@ namespace Duologue
             playerSmoke = new PlayerSmoke(this, MaxPlayerSmokeEffects);
             this.Components.Add(playerSmoke);
             playerSmoke.DrawOrder = 7;
+
+            bulletParticle = new BulletParticle(this, MaxBulletParticles);
+            bulletParticle.Enabled = true;
+            bulletParticle.Visible = true;
+            this.Components.Add(bulletParticle);
+            bulletParticle.DrawOrder = 8;
 
             achievements = new AchievementManager(this);
             /*achievements.Enabled = true;
