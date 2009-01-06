@@ -206,7 +206,6 @@ namespace Duologue
             if (screenRadius < 1f)
                 screenRadius = (float)Math.Sqrt((double)(centerOfScreen.X * centerOfScreen.X + centerOfScreen.Y * centerOfScreen.Y));
 
-            
             // Now, make that a vector pointing in the opposite direction at the screenRadius distance
             // FIXME - We're still spawning the enemies in visible screen
             startPos = new Vector2(
@@ -214,9 +213,6 @@ namespace Duologue
                 (screenRadius + radius) * (float)Math.Sin((double)angleRad));
 
             startPos = Vector2.Reflect(Vector2.Negate(startPos),Vector2.UnitX)+ centerOfScreen;
-
-            //InstanceManager.Logger.LogEntry(String.Format("Start pos {0}-{0}", startPos.X.ToString(), startPos.Y.ToString()));
-            //InstanceManager.Logger.LogEntry(String.Format("Cent {0}", centerOfScreen.ToString()));
 
             return startPos;
         }
