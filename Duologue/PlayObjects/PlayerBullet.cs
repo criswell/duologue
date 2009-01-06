@@ -154,17 +154,34 @@ namespace Duologue.PlayObjects
         #region Public Overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            // For now, this does nothing (might always do nothing)
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                Vector2 vToEnemy = this.Position - pobj.Position;
+                float len = vToEnemy.Length();
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, trigger a hit?
+                    Color c = ((Enemy)pobj).ColorState.Positive[ColorState.Light];
+                    if(((Enemy)pobj).ColorPolarity == ColorPolarity.Negative)
+                        c = ((Enemy)pobj).ColorState.Negative[ColorState.Light];
+                    if (currentColorState.SameColor(baseColor, c))
+                        return TriggerHit(pobj);
+                    return true;
+                }
+            }
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            // For now, this does nothing (might always do nothing)
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
@@ -174,7 +191,7 @@ namespace Duologue.PlayObjects
                 Alive = false;
                 pobj.TriggerHit(this);
             }
-            return true;
+            return Alive;
         }
         #endregion
 
@@ -206,13 +223,13 @@ namespace Duologue.PlayObjects
             isPositive = myPlayer.LightIsNegative;
             if (isPositive)
             {
-                baseColor = currentColorState.Positive[ColorState.Dark];
-                highlightColor = currentColorState.Positive[ColorState.Light];
+                baseColor = currentColorState.Positive[ColorState.Light];
+                highlightColor = currentColorState.Positive[ColorState.Dark];
             }
             else
             {
-                baseColor = currentColorState.Negative[ColorState.Dark];
-                highlightColor = currentColorState.Negative[ColorState.Light];
+                baseColor = currentColorState.Negative[ColorState.Light];
+                highlightColor = currentColorState.Negative[ColorState.Dark];
             }
         }
         #endregion
@@ -228,7 +245,8 @@ namespace Duologue.PlayObjects
                 baseColor,
                 0f,
                 1f,
-                layerDepth);
+                layerDepth,
+                RenderSpriteBlendMode.Addititive);
 
             Color c;
             for (int i = 0; i < numberOfShotHighlights; i++)
@@ -242,7 +260,8 @@ namespace Duologue.PlayObjects
                     c,
                     0f,
                     1f,
-                    layerDepth);
+                    layerDepth,
+                    RenderSpriteBlendMode.Addititive);
             }
         }
 
@@ -251,7 +270,7 @@ namespace Duologue.PlayObjects
             timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (timeSinceStart > currentHighlightLimit)
             {
-                LocalInstanceManager.BulletParticle.AddParticles(Position, baseColor);
+                LocalInstanceManager.BulletParticle.AddParticles(Position, highlightColor);
                 currentHighlightLimit = (float)MWMathHelper.GetRandomInRange(minTimeBetweenParticles, maxtimeBetweenParticles);
                 timeSinceStart = 0f;
             }

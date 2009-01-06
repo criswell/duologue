@@ -115,6 +115,11 @@ namespace Duologue
         public static BulletParticle BulletParticle;
 
         /// <summary>
+        /// The local instance of the enemy explosion system
+        /// </summary>
+        public static EnemyExplodeSystem EnemyExplodeSystem;
+
+        /// <summary>
         /// The local instance of the background object
         /// </summary>
         public static Background Background;

@@ -97,6 +97,11 @@ namespace Duologue
         /// Maximum number of bullet particle effects
         /// </summary>
         public const int MaxBulletParticles = 30;
+
+        /// <summary>
+        /// Maximum number of enemy explosion effects
+        /// </summary>
+        public const int MaxEnemyExplosions = 20;
         #endregion
 
         #region Fields
@@ -114,6 +119,7 @@ namespace Duologue
         public Steam steamSystem;
         public PlayerRing playerRing;
         public PlayerExplosion playerExplosion;
+        public EnemyExplodeSystem enemyExplodeSystem;
         public PlayerSmoke playerSmoke;
         public BulletParticle bulletParticle;
         public Background background;
@@ -225,6 +231,10 @@ namespace Duologue
             this.Components.Add(playerExplosion);
             playerExplosion.DrawOrder = 7;
 
+            enemyExplodeSystem = new EnemyExplodeSystem(this, MaxEnemyExplosions);
+            this.Components.Add(enemyExplodeSystem);
+            enemyExplodeSystem.DrawOrder = 7;
+
             playerSmoke = new PlayerSmoke(this, MaxPlayerSmokeEffects);
             this.Components.Add(playerSmoke);
             playerSmoke.DrawOrder = 7;
@@ -255,6 +265,7 @@ namespace Duologue
             LocalInstanceManager.PlayerRing = playerRing;
             LocalInstanceManager.PlayerSmoke = playerSmoke;
             LocalInstanceManager.PlayerExplosion = playerExplosion;
+            LocalInstanceManager.EnemyExplodeSystem = enemyExplodeSystem;
             LocalInstanceManager.BulletParticle = bulletParticle;
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;

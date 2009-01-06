@@ -427,7 +427,12 @@ namespace Duologue.PlayObjects
                 // FIXME trigger some minor explosion
                 if (CurrentHitPoints <= 0)
                 {
+                    Color c = ColorState.Negative[ColorState.Light];
+                    if(ColorPolarity == ColorPolarity.Positive)
+                        c = ColorState.Positive[ColorState.Light];
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
                     Alive = false;
+                    // FIXME add to score
                     return false;
                 }
             }

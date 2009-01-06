@@ -596,7 +596,7 @@ namespace Duologue.PlayObjects
         {
             if (state == PlayerState.Alive && shotTimer >= timeBetwenShots)
             {
-                Vector2 startPos = Position;
+                Vector2 startPos = Position + Vector2.Normalize(Aim) * Radius;
                 shotTimer = 0f;
 
                 for (int i = 0; i < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; i++)
