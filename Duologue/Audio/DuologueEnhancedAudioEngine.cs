@@ -47,5 +47,12 @@ namespace Duologue.Audio
             return danceSoundBank;
         }
 
+        /// <summary>
+        /// Return access to the default sound bank
+        /// </summary>
+        static public SoundBank SoundBank()
+        {
+            return soundBank;
+        }
     }
 }
