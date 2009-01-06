@@ -42,7 +42,7 @@ namespace Duologue.State
     public class ColorState
     {
         #region Constants
-        public const int numberColorsPerPolarity = 2;
+        public const int numberColorsPerPolarity = 3;
         public const int numberOfColorStates = 3;
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Duologue.State
         /// Dark version of the color
         /// FIXME: no one currently supports this
         /// </summary>
-        public const int Dark = 1;
+        public const int Dark = 2;
         #endregion
 
         #region Fields
@@ -110,29 +110,38 @@ namespace Duologue.State
                 // Blue/Orange
                 theStates[0] = new ColorState();
                 theStates[0].PositiveName = "Blue";
-                theStates[0].Positive[0] = new Color((byte)0, (byte)123, (byte)215);
-                theStates[0].Positive[1] = new Color((byte)95, (byte)0, (byte)228);
+                theStates[0].Positive[Light] = new Color(0, 204, 255); // 100
+                theStates[0].Positive[Medium] = new Color(0, 168, 210); // 85
+                theStates[0].Positive[Dark] = new Color(0, 124, 156); // 75
+
                 theStates[0].NegativeName = "Orange";
-                theStates[0].Negative[0] = new Color((byte)255, (byte)7, (byte)0);
-                theStates[0].Negative[1] = new Color((byte)253, (byte)128, (byte)0);
+                theStates[0].Negative[Light] = new Color(255, 174, 0);
+                theStates[0].Negative[Medium] = new Color(217, 148, 0);
+                theStates[0].Negative[Dark] = new Color(191, 130, 0);
 
                 // Green/Red
                 theStates[1] = new ColorState();
                 theStates[1].PositiveName = "Green";
-                theStates[1].Positive[0] = new Color((byte)63, (byte)185, (byte)0);
-                theStates[1].Positive[1] = new Color((byte)0, (byte)64, (byte)110);
+                theStates[1].Positive[Light] = new Color(0, 255, 186);
+                theStates[1].Positive[Medium] = new Color(0, 217, 158);
+                theStates[1].Positive[Dark] = new Color(0, 191, 140);
+
                 theStates[1].NegativeName = "Red";
-                theStates[1].Negative[0] = new Color((byte)88, (byte)21, (byte)64);
-                theStates[1].Negative[1] = new Color((byte)255, (byte)7, (byte)0);
+                theStates[1].Negative[Light] = new Color(255, 0, 66);
+                theStates[1].Negative[Medium] = new Color(217, 0, 56);
+                theStates[1].Negative[Dark] = new Color(191, 0, 49);
 
                 // Yellow/Violet
                 theStates[2] = new ColorState();
                 theStates[2].PositiveName = "Yellow";
-                theStates[2].Positive[0] = new Color((byte)254, (byte)249, (byte)0);
-                theStates[2].Positive[1] = new Color((byte)63, (byte)185, (byte)0);
+                theStates[2].Positive[Light] = new Color(234, 255, 0);
+                theStates[2].Positive[Medium] = new Color(199, 217, 0);
+                theStates[2].Positive[Dark] = new Color(175, 191, 0);
+
                 theStates[2].NegativeName = "Violet";
-                theStates[2].Negative[0] = new Color((byte)111, (byte)0, (byte)128);
-                theStates[2].Negative[1] = new Color((byte)88, (byte)21, (byte)64);
+                theStates[2].Negative[Light] = new Color(138, 0, 255);
+                theStates[2].Negative[Medium] = new Color(117, 0, 217);
+                theStates[2].Negative[Dark] = new Color(103, 0, 191);
             }
             return theStates;
         }
