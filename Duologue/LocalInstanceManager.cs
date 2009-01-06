@@ -55,6 +55,19 @@ namespace Duologue
         public static ScoreScroller[] Scores;
 
         /// <summary>
+        /// The local bullet arrays
+        /// </summary>
+        public static PlayerBullet[][] Bullets;
+
+        /// <summary>
+        /// The number of bullets per player
+        /// </summary>
+        public static int MaxNumberOfBulletsPerPlayer
+        {
+            get { return 10; }
+        }
+
+        /// <summary>
         /// The maximum number of players
         /// </summary>
         public static int MaxNumberOfPlayers
@@ -157,9 +170,17 @@ namespace Duologue
             if (Players == null)
                 Players = new Player[MaxNumberOfPlayers];
 
+            if (Bullets == null)
+                Bullets = new PlayerBullet[MaxNumberOfPlayers][];
+
             for (int i = 0; i < MaxNumberOfPlayers; i++)
             {
                 Players[i] = new Player();
+                Bullets[i] = new PlayerBullet[MaxNumberOfBulletsPerPlayer];
+                for (int t = 0; t < MaxNumberOfBulletsPerPlayer; t++)
+                {
+                    Bullets[i][t] = new PlayerBullet();
+                }
             }
         }
 
