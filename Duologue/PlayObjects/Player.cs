@@ -131,6 +131,7 @@ namespace Duologue.PlayObjects
         private int blinksSinceStart;
         private float deathTimer;
         private Vector2 playerUIOffset;
+        private int myPlayerIndexNum;
 
         // FIXME, dude, got me
         private bool lightIsNegative;
@@ -302,6 +303,7 @@ namespace Duologue.PlayObjects
             // Set up the player data
             PlayerColor = playerColor;
             MyPlayerIndex = playerIndex;
+            myPlayerIndexNum = (int)MyPlayerIndex;
             MyGamer = signedInGamer;
             MyProfile = gamerProfile;
             Position = startPos;
@@ -585,8 +587,16 @@ namespace Duologue.PlayObjects
         /// </summary>
         internal void Fire()
         {
-            Vector2 startPos = Position; // FIXME
-            //Shot.Fire(Aim, playerCannon.Tint, startPos);
+            Vector2 startPos = Position;
+
+            for (int i = 0; i < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; i++)
+            {
+                if (!LocalInstanceManager.Bullets[myPlayerIndexNum][i].Alive)
+                {
+                    LocalInstanceManager.Bullets[myPlayerIndexNum][i].Fire(Aim, startPos);
+                    break;
+                }
+            }
         }
 
         /// <summary>
