@@ -129,6 +129,17 @@ namespace Duologue.Screens
         {
             if (t)
                 Reset();
+            else
+            {
+                // Here is where we want to turn everything off
+
+                // First, turn off the score
+                for (int i = 0; i < InputManager.MaxInputs; i++)
+                {
+                    LocalInstanceManager.Scores[i].Enabled = false;
+                    LocalInstanceManager.Scores[i].Visible = false;   
+                }
+            }
             base.SetEnable(t);
         }
 
