@@ -163,7 +163,12 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                Alive = false;
+                // FIXME, how do we do this? likely call the pobj's trigger hit
+            }
+            return true;
         }
         #endregion
 
