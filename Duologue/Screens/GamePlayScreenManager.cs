@@ -149,6 +149,7 @@ namespace Duologue.Screens
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {
+                ((DuologueGame)localGame).beatEngine.StopDance();
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
                 // FIXME

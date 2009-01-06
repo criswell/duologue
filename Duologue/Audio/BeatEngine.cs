@@ -81,6 +81,20 @@ namespace Duologue.Audio
             intensity = 1;
         }
 
+        protected void initCues()
+        {
+            danceBeat = danceSoundBank.GetCue("beat");
+            danceBass = danceSoundBank.GetCue("bass");
+            danceBassplus = danceSoundBank.GetCue("bassplus");
+            danceGuitar = danceSoundBank.GetCue("guitar");
+            danceOrgan = danceSoundBank.GetCue("organ");
+            danceBeat.SetVariable("Volume", loud);
+            danceBass.SetVariable("Volume", mute);
+            danceBassplus.SetVariable("Volume", mute);
+            danceGuitar.SetVariable("Volume", mute);
+            danceOrgan.SetVariable("Volume", mute);
+        }
+
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
         /// to run.  This is where it can query for any required services and load content.
@@ -94,16 +108,7 @@ namespace Duologue.Audio
             soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
             danceWaveBank = new WaveBank(engine, "Content\\Audio\\Flick3r_Dance.xwb");
             danceSoundBank = new SoundBank(engine, "Content\\Audio\\Flick3r_Dance.xsb");
-            danceBeat = danceSoundBank.GetCue("beat");
-            danceBass = danceSoundBank.GetCue("bass");
-            danceBassplus = danceSoundBank.GetCue("bassplus");
-            danceGuitar = danceSoundBank.GetCue("guitar");
-            danceOrgan = danceSoundBank.GetCue("organ");
-            danceBeat.SetVariable("Volume", loud);
-            danceBass.SetVariable("Volume", mute);
-            danceBassplus.SetVariable("Volume", mute);
-            danceGuitar.SetVariable("Volume", mute);
-            danceOrgan.SetVariable("Volume", mute);
+            initCues();
 
             base.Initialize();
         }
@@ -200,6 +205,19 @@ namespace Duologue.Audio
             danceBeat.Play();
             danceGuitar.Play();
             danceOrgan.Play();
+        }
+
+        /// <summary>
+        /// Stop that. Just stop it.
+        /// </summary>
+        public void StopDance()
+        {
+            danceBass.Stop(AudioStopOptions.AsAuthored);
+            danceBassplus.Stop(AudioStopOptions.AsAuthored);
+            danceBeat.Stop(AudioStopOptions.AsAuthored);
+            danceGuitar.Stop(AudioStopOptions.AsAuthored);
+            danceOrgan.Stop(AudioStopOptions.AsAuthored);
+            initCues();
         }
 
         /// <summary>
