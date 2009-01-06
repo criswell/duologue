@@ -354,6 +354,12 @@ namespace Duologue.Screens
                         GetScoreStartPos(i));
                     LocalInstanceManager.Scores[i].SetLives(startingLives);
                     LocalInstanceManager.Scores[i].SetAlignment(offsetModifiers[i]);
+
+                    for (int t = 0; t < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; t++)
+                    {
+                        LocalInstanceManager.Bullets[i][t].Initialize(
+                            LocalInstanceManager.Players[i]);
+                    }
                 }
             }
         }
