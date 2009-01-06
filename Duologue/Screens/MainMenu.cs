@@ -18,6 +18,7 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.Audio;
 using Duologue.Properties;
 using Duologue.State;
 #endregion
@@ -60,6 +61,7 @@ namespace Duologue.Screens
         private int gameSelectInfinite;
         private int gameSelectBack;
         private MainMenuState currentState;
+        private MainMenuMusic music;
         /// <summary>
         /// Used for the debug sequence
         /// </summary>
@@ -93,6 +95,9 @@ namespace Duologue.Screens
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
             menuExit = 4;
 
+            // Set up background music
+            music = new MainMenuMusic();
+
             // Set up the game select menu
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
             gameSelectCampaign = 0;
@@ -124,6 +129,8 @@ namespace Duologue.Screens
 
             currentState = MainMenuState.MainMenu;
             currentSelection = 0;
+
+            music.Play();
 
             base.Initialize();
         }
