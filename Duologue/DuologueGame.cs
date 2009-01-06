@@ -254,6 +254,7 @@ namespace Duologue
             LocalInstanceManager.PlayerRing = playerRing;
             LocalInstanceManager.PlayerSmoke = playerSmoke;
             LocalInstanceManager.PlayerExplosion = playerExplosion;
+            LocalInstanceManager.BulletParticle = bulletParticle;
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;
             LocalInstanceManager.Spinner = spinner;

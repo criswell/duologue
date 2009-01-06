@@ -171,8 +171,15 @@ namespace Duologue.Screens
                     {
                         p.Spawn();
                     }
-                        
+
                     p.Update(gameTime);
+                    #region Bullet updates
+                    for (int j = 0; j < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; j++)
+                    {
+                        if (LocalInstanceManager.Bullets[i][j].Alive)
+                            LocalInstanceManager.Bullets[i][j].Update(gameTime);
+                    }
+                    #endregion
                 }
             }
             #endregion Player Stuff
@@ -264,6 +271,11 @@ namespace Duologue.Screens
                 {
                     p.Draw(gameTime);
                 }
+                for (int j = 0; j < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; j++)
+                {
+                    if (LocalInstanceManager.Bullets[i][j].Alive)
+                        LocalInstanceManager.Bullets[i][j].Draw(gameTime);
+                }
             }
 
             // Next, run through the enemies
@@ -275,6 +287,7 @@ namespace Duologue.Screens
                     e.Draw(gameTime);
                 }
             }
+
             base.Draw(gameTime);
         }
         #endregion
