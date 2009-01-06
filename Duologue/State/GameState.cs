@@ -14,6 +14,7 @@ namespace Duologue.State
         PlayerSelect,
         CampaignGame,
         InfinityGame,
+        ColorStateTest,
         Exit,
     }
 }

@@ -411,12 +411,18 @@ namespace Duologue.Screens
             switch (debugSequence)
             {
                 case 3:
-                    // the fourth and final button is X
+                    // the fourth and final button is X for logger
                     if (InstanceManager.InputManager.ButtonPressed(Buttons.X))
                     {
                         debugSequence = 0;
                         ((DuologueGame)myGame).Debug = !((DuologueGame)myGame).Debug;
                         InstanceManager.Logger.LogEntry("MainMenu.Update() - Debugging toggle");
+                    }
+                    else if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
+                    {
+                        // Or RB if we want the color state test
+                        debugSequence = 0;
+                        LocalInstanceManager.CurrentGameState = GameState.ColorStateTest;
                     }
                     break;
                 case 2:

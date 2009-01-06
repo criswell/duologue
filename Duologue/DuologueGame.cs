@@ -119,6 +119,7 @@ namespace Duologue
         public Background background;
         public AchievementManager achievements;
         public Spinner spinner;
+        public ColorStateTestScreen colorStateTest;
         public BeatEngine beatEngine;
         public SoundEffectsEngine soundEffectsEngine;
 
@@ -302,6 +303,11 @@ namespace Duologue
             gamePlayScreenManager = new GamePlayScreenManager(this);
             this.Components.Add(gamePlayScreenManager);
             dispatchTable.Add(GameState.InfinityGame, gamePlayScreenManager);
+
+            // Color State Test screen
+            colorStateTest = new ColorStateTestScreen(this);
+            this.Components.Add(colorStateTest);
+            dispatchTable.Add(GameState.ColorStateTest, colorStateTest);
 
             // Ensure that everything in the dispatch is disabled
             foreach (GameScreen scr in dispatchTable.Values)
