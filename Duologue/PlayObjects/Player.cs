@@ -78,6 +78,11 @@ namespace Duologue.PlayObjects
         /// The minimum distance a player must move for an offset to register
         /// </summary>
         private const float minPlayerOffsetMovement = 3f;
+
+        /// <summary>
+        /// The time between bullet shots
+        /// </summary>
+        private const float timeBetwenShots = 0.15f;
         #endregion
 
         #region Fields
@@ -132,6 +137,7 @@ namespace Duologue.PlayObjects
         private float deathTimer;
         private Vector2 playerUIOffset;
         private int myPlayerIndexNum;
+        private float shotTimer;
 
         // FIXME, dude, got me
         private bool lightIsNegative;
@@ -320,6 +326,7 @@ namespace Duologue.PlayObjects
             // Set up the timers
             treadTimer = 0;
             shineTimer = 0;
+            shotTimer = 0f;
             beamArcMax = 0f;
             beamArcMin = 0f;
 
@@ -587,14 +594,18 @@ namespace Duologue.PlayObjects
         /// </summary>
         internal void Fire()
         {
-            Vector2 startPos = Position;
-
-            for (int i = 0; i < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; i++)
+            if (state == PlayerState.Alive && shotTimer >= timeBetwenShots)
             {
-                if (!LocalInstanceManager.Bullets[myPlayerIndexNum][i].Alive)
+                Vector2 startPos = Position;
+                shotTimer = 0f;
+
+                for (int i = 0; i < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; i++)
                 {
-                    LocalInstanceManager.Bullets[myPlayerIndexNum][i].Fire(Aim, startPos);
-                    break;
+                    if (!LocalInstanceManager.Bullets[myPlayerIndexNum][i].Alive)
+                    {
+                        LocalInstanceManager.Bullets[myPlayerIndexNum][i].Fire(Aim, startPos);
+                        break;
+                    }
                 }
             }
         }
@@ -687,6 +698,9 @@ namespace Duologue.PlayObjects
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            shotTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (shotTimer >= timeBetwenShots)
+                shotTimer = timeBetwenShots;
             switch (state)
             {
                 case PlayerState.Alive:
