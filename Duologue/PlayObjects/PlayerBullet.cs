@@ -30,6 +30,8 @@ namespace Duologue.PlayObjects
         private const string filename_ShotBase = "shot-base";
         private const string filename_ShotHighlight = "shot-highlight-0{0}"; // FIXME, will need to fix this if more are added
 
+        private const float timeBetweenParticles = 0.2f;
+
         /// <summary>
         /// The number of shot highlight frames
         /// </summary>
@@ -93,6 +95,8 @@ namespace Duologue.PlayObjects
 
         private Color baseColor;
         private Color highlightColor;
+
+        private float timeSinceStart;
         #endregion
 
         #region Properties
@@ -184,6 +188,7 @@ namespace Duologue.PlayObjects
             orientation = Aim;
             orientation.Normalize();
             Alive = true;
+            timeSinceStart = 0f;
             for (int i = 0; i < numberOfShotHighlights; i++)
             {
                 highlightAlphas[i] = (byte)InstanceManager.Random.Next(255);
@@ -241,6 +246,13 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
+            timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeSinceStart > timeBetweenParticles)
+            {
+                LocalInstanceManager.BulletParticle.AddParticles(Position, highlightColor);
+                timeSinceStart = 0f;
+            }
+
             // Update the position
             Position += delta_BulletSpeed * orientation;
 
