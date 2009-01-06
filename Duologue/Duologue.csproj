@@ -94,6 +94,7 @@
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
     <Compile Include="Mimicware\Manager\InputManager.cs" />
     <Compile Include="Mimicware\Manager\InstanceManager.cs" />
+    <Compile Include="ParticleEffects\BulletParticle.cs" />
     <Compile Include="ParticleEffects\ExplodeRingSystem.cs" />
     <Compile Include="ParticleEffects\ExplodeRing.cs" />
     <Compile Include="ParticleEffects\PlayerExplosion.cs" />
