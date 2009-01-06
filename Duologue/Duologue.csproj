@@ -84,6 +84,8 @@
     <Compile Include="AchievementSystem\AchievementManager.cs" />
     <Compile Include="Audio\BeatEffectsSong.cs" />
     <Compile Include="Audio\BeatEngine.cs" />
+    <Compile Include="Audio\DuologueEnhancedAudioEngine.cs" />
+    <Compile Include="Audio\MainMenuMusic.cs" />
     <Compile Include="Audio\SoundEffectsEngine.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="CreatorsClub\GameScreen.cs" />

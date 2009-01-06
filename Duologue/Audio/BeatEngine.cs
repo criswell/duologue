@@ -15,8 +15,6 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Duologue.Audio
 {
-
-
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -25,17 +23,20 @@ namespace Duologue.Audio
         #region Private Fields
         private float beatTimer = 0f;
         private float beatInterval = 1000.0f;
-        private AudioEngine engine;
-        private WaveBank waveBank;
-        private SoundBank soundBank;
+
         private Cue beatSound = null;
-        private WaveBank danceWaveBank;
-        private SoundBank danceSoundBank;
+        private static SoundBank danceSoundBank;
         private Cue danceBass = null;
         private Cue danceBassplus = null;
         private Cue danceBeat = null;
         private Cue danceOrgan = null;
         private Cue danceGuitar = null;
+        private string beatName = "beat";
+        private string bassName = "bass";
+        private string bassplusName = "bassplus";
+        private string guitarName = "guitar";
+        private string organName = "organ";
+        private string volumeName = "Volume";
         private int intensity;
         private float mute = 0.0f;
         private float loud = 999.0f;
@@ -78,21 +79,21 @@ namespace Duologue.Audio
         public BeatEngine(Game game)
             : base(game)
         {
-            intensity = 1;
         }
 
         protected void initCues()
         {
-            danceBeat = danceSoundBank.GetCue("beat");
-            danceBass = danceSoundBank.GetCue("bass");
-            danceBassplus = danceSoundBank.GetCue("bassplus");
-            danceGuitar = danceSoundBank.GetCue("guitar");
-            danceOrgan = danceSoundBank.GetCue("organ");
-            danceBeat.SetVariable("Volume", loud);
-            danceBass.SetVariable("Volume", mute);
-            danceBassplus.SetVariable("Volume", mute);
-            danceGuitar.SetVariable("Volume", mute);
-            danceOrgan.SetVariable("Volume", mute);
+            intensity = 1;
+            danceBeat = danceSoundBank.GetCue(beatName);
+            danceBass = danceSoundBank.GetCue(bassName);
+            danceBassplus = danceSoundBank.GetCue(bassplusName);
+            danceGuitar = danceSoundBank.GetCue(guitarName);
+            danceOrgan = danceSoundBank.GetCue(organName);
+            danceBeat.SetVariable(volumeName, loud);
+            danceBass.SetVariable(volumeName, mute);
+            danceBassplus.SetVariable(volumeName, mute);
+            danceGuitar.SetVariable(volumeName, mute);
+            danceOrgan.SetVariable(volumeName, mute);
         }
 
         /// <summary>
@@ -103,11 +104,7 @@ namespace Duologue.Audio
         {
             // TODO: Add your initialization code here
             this.Enabled = false;
-            engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
-            waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
-            soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
-            danceWaveBank = new WaveBank(engine, "Content\\Audio\\Flick3r_Dance.xwb");
-            danceSoundBank = new SoundBank(engine, "Content\\Audio\\Flick3r_Dance.xsb");
+            danceSoundBank = DuologueEnhancedAudioEngine.BeatEffectsSoundBank();
             initCues();
 
             base.Initialize();
