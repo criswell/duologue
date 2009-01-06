@@ -26,6 +26,7 @@ namespace Duologue.Audio
 
         private Cue beatSound = null;
         private static SoundBank danceSoundBank;
+        private static SoundBank soundBank;
         private Cue danceBass = null;
         private Cue danceBassplus = null;
         private Cue danceBeat = null;
@@ -105,6 +106,7 @@ namespace Duologue.Audio
             // TODO: Add your initialization code here
             this.Enabled = false;
             danceSoundBank = DuologueEnhancedAudioEngine.BeatEffectsSoundBank();
+            soundBank = DuologueEnhancedAudioEngine.SoundBank();
             initCues();
 
             base.Initialize();
