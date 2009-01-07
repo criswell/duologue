@@ -127,7 +127,7 @@ namespace Duologue
         public Spinner spinner;
         public ColorStateTestScreen colorStateTest;
         public BeatEngine beatEngine;
-        public SoundEffectsEngine soundEffectsEngine;
+        public SoundEffects soundEffects;
 
         // Screens
         //public MainMenuTest mainMenuTest;
@@ -253,7 +253,7 @@ namespace Duologue
             beatEngine = new BeatEngine(this);
             this.Components.Add(beatEngine);
 
-            soundEffectsEngine = new SoundEffectsEngine();
+            soundEffects = new SoundEffects();
 
             // Set the instance manager
             InstanceManager.AssetManager = Assets;

@@ -9,8 +9,8 @@ namespace Duologue.Audio
     static class DuologueEnhancedAudioEngine
     {
         static private AudioEngine engine;
-        static private WaveBank waveBank;
-        static private SoundBank soundBank;
+        static private WaveBank playerEffectsWaveBank;
+        static private SoundBank playerEffectsSoundBank;
         static private WaveBank danceWaveBank;
         static private SoundBank danceSoundBank;
         static private WaveBank oneFileMusicWaveBank;
@@ -22,8 +22,8 @@ namespace Duologue.Audio
         static DuologueEnhancedAudioEngine()
         {
             engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
-            waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
-            soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
+            playerEffectsWaveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
+            playerEffectsSoundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
             danceWaveBank = new WaveBank(engine, "Content\\Audio\\Flick3r_Dance.xwb");
             danceSoundBank = new SoundBank(engine, "Content\\Audio\\Flick3r_Dance.xsb");
             oneFileMusicWaveBank = new WaveBank(engine, "Content\\Audio\\OneFileMusic.xwb");
@@ -50,9 +50,9 @@ namespace Duologue.Audio
         /// <summary>
         /// Return access to the default sound bank
         /// </summary>
-        static public SoundBank SoundBank()
+        static public SoundBank PlayerEffectsSoundBank()
         {
-            return soundBank;
+            return playerEffectsSoundBank;
         }
     }
 }

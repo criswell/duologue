@@ -106,7 +106,7 @@ namespace Duologue.Audio
             // TODO: Add your initialization code here
             this.Enabled = false;
             danceSoundBank = DuologueEnhancedAudioEngine.BeatEffectsSoundBank();
-            soundBank = DuologueEnhancedAudioEngine.SoundBank();
+            soundBank = DuologueEnhancedAudioEngine.PlayerEffectsSoundBank();
             initCues();
 
             base.Initialize();

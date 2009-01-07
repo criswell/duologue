@@ -5,10 +5,10 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Duologue.Audio
 {
-    class MainMenuMusic
+    public class MainMenuMusic
     {
         private static Cue music;
-        private string musicName = "nicStage_gso";
+        private const string musicName = "nicStage_gso";
 
         public MainMenuMusic()
         {

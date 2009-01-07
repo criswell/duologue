@@ -155,7 +155,7 @@ namespace Duologue.PlayObjects
         private ColorState colorState;
 
         // Sound effects
-        private SoundEffectsEngine fxngine;
+        private SoundEffects fx;
         #endregion
 
         #region Properties
@@ -336,7 +336,7 @@ namespace Duologue.PlayObjects
             spawnScale = startSpawnScale;
             spawnRotation = 0f;
 
-            fxngine = new SoundEffectsEngine();
+            fx = new SoundEffects();
 
             Initialized = true;
         }
@@ -793,11 +793,7 @@ namespace Duologue.PlayObjects
                 LocalInstanceManager.PlayerSmoke.AddParticles(this.Position, Color.White);
 
                 // Should trigger other explosions here
-                AudioEngine engine = new AudioEngine("Content\\Audio\\Duologue.xgs");
-                WaveBank waveBank = new WaveBank(engine, "Content\\Audio\\Wave Bank.xwb");
-                SoundBank soundBank = new SoundBank(engine, "Content\\Audio\\Sound Bank.xsb");
-                Cue playerCollision = soundBank.GetCue("player-explosion");
-                playerCollision.Play();
+                fx.PlayerExplosion();
                 
                 // Set the graphical items
                 state = PlayerState.Dying;
