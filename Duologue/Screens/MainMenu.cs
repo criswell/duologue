@@ -198,6 +198,8 @@ namespace Duologue.Screens
                     ResetMenuItems();
                     LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
                     LocalInstanceManager.NextGameState = GameState.InfinityGame;
+                    music.Stop();
+                    //music.Mute();
                 }
             }
         }

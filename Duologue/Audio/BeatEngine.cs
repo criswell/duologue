@@ -23,33 +23,10 @@ namespace Duologue.Audio
         #region Private Fields
         private float beatTimer = 0f;
         private float beatInterval = 1000.0f;
-
-        private Cue beatSound = null;
-        private static SoundBank danceSoundBank;
-        private static SoundBank soundBank;
-        private Cue danceBass = null;
-        private Cue danceBassplus = null;
-        private Cue danceBeat = null;
-        private Cue danceOrgan = null;
-        private Cue danceGuitar = null;
-        private string beatName = "beat";
-        private string bassName = "bass";
-        private string bassplusName = "bassplus";
-        private string guitarName = "guitar";
-        private string organName = "organ";
-        private string volumeName = "Volume";
-        private int intensity;
-        private float mute = 0.0f;
-        private float loud = 999.0f;
-        #endregion
-
-        #region Public Fields
+        private Cue beatSound;
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Hmmmm. There should somehow be singleton access to the audio device
-        /// </summary>
 
         public float PercentFromTarget()
         {
@@ -82,20 +59,6 @@ namespace Duologue.Audio
         {
         }
 
-        protected void initCues()
-        {
-            intensity = 1;
-            danceBeat = danceSoundBank.GetCue(beatName);
-            danceBass = danceSoundBank.GetCue(bassName);
-            danceBassplus = danceSoundBank.GetCue(bassplusName);
-            danceGuitar = danceSoundBank.GetCue(guitarName);
-            danceOrgan = danceSoundBank.GetCue(organName);
-            danceBeat.SetVariable(volumeName, loud);
-            danceBass.SetVariable(volumeName, mute);
-            danceBassplus.SetVariable(volumeName, mute);
-            danceGuitar.SetVariable(volumeName, mute);
-            danceOrgan.SetVariable(volumeName, mute);
-        }
 
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
@@ -105,76 +68,7 @@ namespace Duologue.Audio
         {
             // TODO: Add your initialization code here
             this.Enabled = false;
-            danceSoundBank = DuologueEnhancedAudioEngine.BeatEffectsSoundBank();
-            soundBank = DuologueEnhancedAudioEngine.PlayerEffectsSoundBank();
-            initCues();
-
             base.Initialize();
-        }
-
-
-        /// <summary>
-        /// Increase musical excitement!
-        /// </summary>
-        public void IncreaseIntensity()
-        {
-            switch (intensity)
-            {
-                case 1:
-                    danceBass.SetVariable("Volume", loud);
-                    intensity++;
-                    break;
-                case 2:
-                    danceBassplus.SetVariable("Volume", loud);
-                    intensity++;
-                    break;
-                case 3:
-                    danceOrgan.SetVariable("Volume", loud);
-                    intensity++;
-                    break;
-                case 4:
-                    danceGuitar.SetVariable("Volume", loud);
-                    intensity++;
-                    break;
-                case 5:
-                    break;
-                default:
-                    intensity = 1;
-                    break;
-            }
-        }
-
-
-        /// <summary>
-        /// Reduce musical excitement!
-        /// </summary>
-        public void DecreaseIntensity()
-        {
-            switch (intensity)
-            {
-                case 1:
-                    intensity--;
-                    break;
-                case 2:
-                    danceBass.SetVariable("Volume", mute);
-                    intensity--;
-                    break;
-                case 3:
-                    danceBassplus.SetVariable("Volume", mute);
-                    intensity--;
-                    break;
-                case 4:
-                    danceOrgan.SetVariable("Volume", mute);
-                    intensity--;
-                    break;
-                case 5:
-                    danceGuitar.SetVariable("Volume", mute);
-                    intensity--;
-                    break;
-                default:
-                    intensity = 1;
-                    break;
-            }
         }
 
         /// <summary>
@@ -182,41 +76,9 @@ namespace Duologue.Audio
         /// </summary>
         public void PlayBeat()
         {
-            if (beatSound == null || beatSound.IsStopped)
-            {
-                beatSound = soundBank.GetCue("bambooclick");
-                beatSound.Play();
-            }
-            else if (beatSound.IsPaused)
-            {
-                beatSound.Resume();
-            }
-
-        }
-
-        /// <summary>
-        /// Techno. Sounds like Keeper's Pub up in here!
-        /// </summary>
-        public void PlayDance()
-        {
-            danceBass.Play();
-            danceBassplus.Play();
-            danceBeat.Play();
-            danceGuitar.Play();
-            danceOrgan.Play();
-        }
-
-        /// <summary>
-        /// Stop that. Just stop it.
-        /// </summary>
-        public void StopDance()
-        {
-            danceBass.Stop(AudioStopOptions.AsAuthored);
-            danceBassplus.Stop(AudioStopOptions.AsAuthored);
-            danceBeat.Stop(AudioStopOptions.AsAuthored);
-            danceGuitar.Stop(AudioStopOptions.AsAuthored);
-            danceOrgan.Stop(AudioStopOptions.AsAuthored);
-            initCues();
+            beatSound.Play();
+            beatSound =
+                DuologueEnhancedAudioEngine.PlayerEffectsSoundBank().GetCue("bambooclick");
         }
 
         /// <summary>
@@ -226,13 +88,12 @@ namespace Duologue.Audio
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            //beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            //if (beatTimer > beatInterval)
-            //{
-                // Do Something
-              //  PlayBeat();
-              //  beatTimer = 0f;
-            //}
+            beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (beatTimer > beatInterval)
+            {
+                PlayBeat();
+                beatTimer = 0f;
+            }
             base.Update(gameTime);
         }
     }

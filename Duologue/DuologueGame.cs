@@ -126,7 +126,6 @@ namespace Duologue
         public AchievementManager achievements;
         public Spinner spinner;
         public ColorStateTestScreen colorStateTest;
-        public BeatEngine beatEngine;
         public SoundEffects soundEffects;
 
         // Screens
@@ -249,9 +248,6 @@ namespace Duologue
             /*achievements.Enabled = true;
             achievements.Visible = true;*/
             this.Components.Add(achievements);
-
-            beatEngine = new BeatEngine(this);
-            this.Components.Add(beatEngine);
 
             soundEffects = new SoundEffects();
 

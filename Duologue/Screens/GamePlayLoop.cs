@@ -18,6 +18,7 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.Audio;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.PlayObjects;
@@ -143,12 +144,12 @@ namespace Duologue.Screens
                         if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].DPad.Up > 0 &&
                             InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].DPad.Up == 0)
                         {
-                            ((DuologueGame)Game).beatEngine.IncreaseIntensity();
+                            new BeatEffectsSong().IncreaseIntensity();
                         }
                         if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].DPad.Down > 0 &&
                             InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].DPad.Down == 0)
                         {
-                            ((DuologueGame)Game).beatEngine.DecreaseIntensity();
+                            new BeatEffectsSong().DecreaseIntensity();
                         }
 
                         // Now, make sure no one is stepping on eachother

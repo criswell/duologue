@@ -6,7 +6,15 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Duologue.Audio
 {
-    static class DuologueEnhancedAudioEngine
+    //keep from having to tweak floats and add levels in many places
+    public struct Loudness
+    {
+        public const float Silent = 0.0f;
+        public const float Full = 999.0f;
+        public const string param = "Volume";
+    }
+
+    public static class DuologueEnhancedAudioEngine
     {
         static private AudioEngine engine;
         static private WaveBank playerEffectsWaveBank;

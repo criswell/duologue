@@ -18,6 +18,7 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.Audio;
 using Duologue.State;
 using Duologue.Properties;
 using Duologue.Screens;
@@ -160,7 +161,8 @@ namespace Duologue.Screens
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {
-                ((DuologueGame)localGame).beatEngine.StopDance();
+                new BeatEffectsSong().StopDance();
+                //((DuologueGame)localGame).beatEngine.StopDance();
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
                 // FIXME
@@ -220,8 +222,7 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    ((DuologueGame)localGame).beatEngine.Enabled = true;
-                    ((DuologueGame)localGame).beatEngine.PlayDance();
+                    new BeatEffectsSong().PlayDance();
                     break;
                 default:
                     // Play the game or game over
