@@ -37,6 +37,16 @@ namespace Duologue.PlayObjects
         private const float delta_ShineOffsetY = -4f;
 
         /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 25;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 3;
+
+        /// <summary>
         /// How far we can go outside the screen before we should stop
         /// </summary>
         private const float outsideScreenMultiplier = 3;
@@ -137,6 +147,7 @@ namespace Duologue.PlayObjects
             {
                 hitPoints = 0;
             }
+            StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
             LoadAndInitialize();
         }
@@ -433,6 +444,8 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
                     Alive = false;
                     // FIXME add to score
+                    //float score = (myPointValue + StartHitPoints * hitPointMultiplier) * // ERE I AM JH
+                    // FIXME add audio
                     return false;
                 }
             }

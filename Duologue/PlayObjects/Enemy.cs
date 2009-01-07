@@ -50,6 +50,11 @@ namespace Duologue.PlayObjects
         /// How many hit points we currently have
         /// </summary>
         public int CurrentHitPoints;
+
+        /// <summary>
+        /// The starting hit points we had when we spawned
+        /// </summary>
+        public int StartHitPoints;
         #endregion
 
         #region Load / Init
