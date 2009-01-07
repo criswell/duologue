@@ -222,7 +222,7 @@ namespace Duologue.Screens
                                 null); // FIXME : We need to determine the HP from the GameWave
 
                         }
-                        else
+                        else if(LocalInstanceManager.Enemies[i].Alive)
                         {
                             dumb = LocalInstanceManager.Enemies[i].StartOffset();
                             // Update each enemy with player objects

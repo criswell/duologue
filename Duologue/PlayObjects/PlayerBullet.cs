@@ -108,6 +108,9 @@ namespace Duologue.PlayObjects
         public PlayerBullet()
             : base()
         {
+            MyType = TypesOfPlayObjects.PlayerBullet;
+            MajorType = MajorPlayObjectType.PlayerBullet;
+            Initialized = false;
         }
 
         /// <summary>
@@ -170,8 +173,15 @@ namespace Duologue.PlayObjects
                     Color c = ((Enemy)pobj).ColorState.Positive[ColorState.Light];
                     if(((Enemy)pobj).ColorPolarity == ColorPolarity.Negative)
                         c = ((Enemy)pobj).ColorState.Negative[ColorState.Light];
-                    if (currentColorState.SameColor(baseColor, c))
+                    if (!currentColorState.SameColor(baseColor, c))
+                    {
                         return TriggerHit(pobj);
+                    }
+                    else
+                    {
+                        // We just get absorbed
+                        Alive = false;
+                    }
                     return true;
                 }
             }

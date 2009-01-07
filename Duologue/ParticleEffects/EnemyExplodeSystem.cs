@@ -47,11 +47,11 @@ namespace Duologue.ParticleEffects
             minLifetime = .5f;
             maxLifetime = 1.0f;
 
-            minScale = .3f;
-            maxScale = 1.0f;
+            minScale = 1f;
+            maxScale = 2.0f;
 
-            minNumParticles = 2;
-            maxNumParticles = 4;
+            minNumParticles = 10;
+            maxNumParticles = 15;
 
             minRotationSpeed = -MathHelper.PiOver4;
             maxRotationSpeed = MathHelper.PiOver4;
