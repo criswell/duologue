@@ -265,7 +265,7 @@ namespace Duologue.Screens
             if (livingEnemies < 1 && livingPlayers > 0)
             {
                 // FIXME, uh, we might want some sort of loading bar here....
-                if (!WaveletInit.Initialize())
+                if (!WaveletInit.Initialize(myManager))
                 {
                     // No further wavelets, move up to next wave
                     // ERE I AM JH

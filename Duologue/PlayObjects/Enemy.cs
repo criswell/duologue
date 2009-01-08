@@ -19,6 +19,7 @@ using Mimicware.Graphics;
 using Mimicware.Manager;
 // Duologue
 using Duologue.State;
+using Duologue.Screens;
 #endregion
 
 namespace Duologue.PlayObjects
@@ -55,6 +56,23 @@ namespace Duologue.PlayObjects
         /// The starting hit points we had when we spawned
         /// </summary>
         public int StartHitPoints;
+
+        /// <summary>
+        /// The GamePlay Screen Manager parent instance
+        /// </summary>
+        public GamePlayScreenManager MyManager;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructs a new Enemy instance (abstract class)
+        /// </summary>
+        /// <param name="manager">The parent GamePlay Screen manager</param>
+        public Enemy(GamePlayScreenManager manager)
+            : base()
+        {
+            MyManager = manager;
+        }
         #endregion
 
         #region Load / Init

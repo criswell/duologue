@@ -19,6 +19,7 @@ using Mimicware.Graphics;
 using Mimicware.Manager;
 // Duologue
 using Duologue.State;
+using Duologue.Screens;
 #endregion
 
 namespace Duologue.PlayObjects
@@ -120,8 +121,8 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init / Load
-        public Enemy_Buzzsaw()
-            : base()
+        public Enemy_Buzzsaw(GamePlayScreenManager manager)
+            : base(manager)
         {
             MyType = TypesOfPlayObjects.Enemy_Buzzsaw;
             MajorType = MajorPlayObjectType.Enemy;

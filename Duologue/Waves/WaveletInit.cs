@@ -19,7 +19,7 @@ using Microsoft.Xna.Framework.Content;
 // Duologue
 using Duologue;
 //using Duologue.Properties;
-//using Duologue.Screens;
+using Duologue.Screens;
 //using Duologue.UI;
 using Duologue.PlayObjects;
 using Duologue.Waves;
@@ -37,7 +37,7 @@ namespace Duologue.Waves
         /// <summary>
         /// Initialize the wavelet
         /// </summary>
-        public static bool Initialize()
+        public static bool Initialize(GamePlayScreenManager manager)
         {
             if (LocalInstanceManager.CurrentGameWave.CurrentWavelet < LocalInstanceManager.CurrentGameWave.NumWavelets)
             {
@@ -48,7 +48,7 @@ namespace Duologue.Waves
                     switch (LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].Enemies[i])
                     {
                         case TypesOfPlayObjects.Enemy_Buzzsaw:
-                            Init_Buzzsaw(i);
+                            Init_Buzzsaw(i, manager);
                             break;
                         default:
                             // Squat, for now
@@ -68,9 +68,9 @@ namespace Duologue.Waves
         #region Enemy inits
 
         #region Buzzsaw
-        private static void Init_Buzzsaw(int i)
+        private static void Init_Buzzsaw(int i, GamePlayScreenManager manager)
         {
-            LocalInstanceManager.Enemies[i] = new Enemy_Buzzsaw();
+            LocalInstanceManager.Enemies[i] = new Enemy_Buzzsaw(manager);
         }
         #endregion
 
