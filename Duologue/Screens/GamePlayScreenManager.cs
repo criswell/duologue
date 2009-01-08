@@ -45,6 +45,16 @@ namespace Duologue.Screens
     {
         #region Constants
         private const float delayLifetime = 1f;
+
+        /// <summary>
+        /// When the counter reaches this limit, we increase the intensity
+        /// </summary>
+        private const int intensityIncreaseLimit = 3;
+
+        /// <summary>
+        /// As time goes by, we decrease the intensity counter by this delta, every frame
+        /// </summary>
+        private const float intensityDecreaseDelta = 0.5f;
         #endregion
 
         #region Fields
@@ -57,6 +67,12 @@ namespace Duologue.Screens
         private GamePlayLoop gamePlayLoop;
         private float timeSinceStart;
         private GameOver gameOver;
+
+        /// <summary>
+        /// When this reaches intensityIncreaseLimit, we bump the intensity up
+        /// Over time, we bump it by intensityDecreaseDelta, when it reaches zero, we decrease intensity
+        /// </summary>
+        private float intensityCounter;
         #endregion
 
         #region Properties
@@ -104,6 +120,7 @@ namespace Duologue.Screens
             gameWaveManager.CurrentMinorNumber = 0;
             LocalInstanceManager.CurrentGameWave = null;
             timeSinceStart = 0f;
+            intensityCounter = 0f;
         }
 
         /*
@@ -170,6 +187,17 @@ namespace Duologue.Screens
                 LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
             }
         }
+
+        /// <summary>
+        /// Called when an enemy has been destroyed, will spawn pointlets as well
+        /// as possibly increase the intensity of the music
+        /// </summary>
+        /// <param name="pindex">The PlayerIndex of the player who gets the points</param>
+        /// <param name="pointValue">The "best" point value (if the beat hit was perfect)</param>
+        /// <param name="startPos">The starting position of the pointlet</param>
+        public void TriggerPoints(PlayerIndex pindex, int pointValue, Vector2 startPos)
+        {
+        }
         #endregion
 
         #region Update
@@ -177,6 +205,8 @@ namespace Duologue.Screens
         {
             if (timeSinceStart < delayLifetime)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            
 
             /*if (LocalInstanceManager.CurrentGameWave == null)
             {
