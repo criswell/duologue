@@ -444,8 +444,7 @@ namespace Duologue.PlayObjects
                         c = ColorState.Positive[ColorState.Light];
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
                     Alive = false;
-                    // FIXME add to score
-                    //float score = (myPointValue + StartHitPoints * hitPointMultiplier) * // ERE I AM JH
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     // FIXME add audio
                     return false;
                 }

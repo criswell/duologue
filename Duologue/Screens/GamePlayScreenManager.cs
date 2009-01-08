@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Content;
 // Mimicware
 using Mimicware.Manager;
 using Mimicware.Graphics;
+using Mimicware;
 // Duologue
 using Duologue;
 using Duologue.Audio;
@@ -197,6 +198,17 @@ namespace Duologue.Screens
         /// <param name="startPos">The starting position of the pointlet</param>
         public void TriggerPoints(PlayerIndex pindex, int pointValue, Vector2 startPos)
         {
+            // Get the beat percentage
+            // FIXME for now it's just random
+            double bp = MWMathHelper.GetRandomInRange(0.5, 1);
+
+            // Update the score based on that
+            pointValue = (int)(bp * pointValue);
+
+            // Spawn a pointlet
+            LocalInstanceManager.Scores[(int)pindex].AddScore(pointValue, startPos);
+
+            // FIXME somehow update intensity
         }
         #endregion
 

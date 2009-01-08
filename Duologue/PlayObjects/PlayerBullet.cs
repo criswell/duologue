@@ -77,7 +77,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// My associate player index
         /// </summary>
-        private PlayerIndex myPlayerIndex;
+        public PlayerIndex MyPlayerIndex;
 
         /// <summary>
         /// The orientation (or aim) of the bullet
@@ -119,7 +119,7 @@ namespace Duologue.PlayObjects
         public void Initialize(Player MyPlayer)
         {
             myPlayer = MyPlayer;
-            myPlayerIndex = MyPlayer.MyPlayerIndex;
+            MyPlayerIndex = MyPlayer.MyPlayerIndex;
             Alive = false;
             if(!Initialized)
                 LoadAndInitialize();
