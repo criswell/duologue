@@ -363,10 +363,6 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                //this.Exit();
-
             // Update the input manager every update
             InstanceManager.InputManager.Update();
 
@@ -392,9 +388,6 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            //Graphics.GraphicsDevice.Clear(Color.Black);
-
-            // TODO: Add your drawing code here
             Render.Run();
             base.Draw(gameTime);
         }
