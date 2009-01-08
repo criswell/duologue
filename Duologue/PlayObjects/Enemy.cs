@@ -28,11 +28,6 @@ namespace Duologue.PlayObjects
     {
         #region Properties
         /// <summary>
-        /// Set if this enemy object has been initialized
-        /// </summary>
-        public bool Initialized;
-
-        /// <summary>
         /// The orientation of this enemy
         /// </summary>
         public Vector2 Orientation;
