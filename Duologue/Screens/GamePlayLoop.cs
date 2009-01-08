@@ -220,7 +220,7 @@ namespace Duologue.Screens
                                 LocalInstanceManager.CurrentGameWave.ColorState,
                                 ColorState.RandomPolarity(),
                                 null); // FIXME : We need to determine the HP from the GameWave
-
+                            livingEnemies++;
                         }
                         else if(LocalInstanceManager.Enemies[i].Alive)
                         {
@@ -246,8 +246,8 @@ namespace Duologue.Screens
                                 }
                             }
                             dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
+                            livingEnemies++;
                         }
-                        livingEnemies++;
 
                         LocalInstanceManager.Enemies[i].Update(gameTime);
                     //}
