@@ -140,7 +140,7 @@ namespace Duologue.PlayObjects
         public void InnerUpdate(GameTime gameTime)
         {
             // Update the bullet explosion
-            if (currentFrame < maxNumBulletFrames - 1)
+            if (currentFrame < maxNumBulletFrames)
             {
                 bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (bulletTimer > bulletLifetime)
