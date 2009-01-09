@@ -31,6 +31,7 @@ namespace Duologue.PlayObjects
         private const int maxNumBulletFrames = 6;
         private const float bulletLifetime = 0.05f;
         private const float shieldLifetime = 1.5f;
+        private const byte bulletAlpha = 200;
         #endregion
 
         #region Fields
@@ -129,7 +130,7 @@ namespace Duologue.PlayObjects
         public void TriggerBulletExplosion(Vector2 pos, Color c)
         {
             bulletPos = pos;
-            bulletColor = c;
+            bulletColor = new Color(c, bulletAlpha);
             currentFrame = 0;
             bulletTimer = 0f;
             bulletRotation = (float)MWMathHelper.GetRandomInRange(MathHelper.PiOver2, MathHelper.TwoPi);
