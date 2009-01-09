@@ -141,6 +141,7 @@ namespace Duologue.Screens
                             // Swap color
                             p.SwapColors();
                         }
+                        /*
                         if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].DPad.Up > 0 &&
                             InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].DPad.Up == 0)
                         {
@@ -151,7 +152,7 @@ namespace Duologue.Screens
                         {
                             new BeatEffectsSong().DecreaseIntensity();
                         }
-
+                        */
                         // Now, make sure no one is stepping on eachother
                         //bool dumb;
                         dumb = p.StartOffset();

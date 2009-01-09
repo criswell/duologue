@@ -50,12 +50,22 @@ namespace Duologue.Screens
         /// <summary>
         /// When the counter reaches this limit, we increase the intensity
         /// </summary>
-        private const int intensityIncreaseLimit = 3;
+        private const int intensityIncreaseLimit = 2;
 
         /// <summary>
-        /// As time goes by, we decrease the intensity counter by this delta, every frame
+        /// The rate of increase for the intensity counter
         /// </summary>
-        private const float intensityDecreaseDelta = 0.5f;
+        //private const float intensityIncreaseDelta = 0.5f;
+
+        /// <summary>
+        /// How long it takes for nothing happening to decrease intensity
+        /// </summary>
+        private const float intensityLifetime = 4f;
+
+        /// <summary>
+        /// The min beat percent to bump up the intensity
+        /// </summary>
+        private const float minBeatPercent = 0.75f;
         #endregion
 
         #region Fields
@@ -74,6 +84,11 @@ namespace Duologue.Screens
         /// Over time, we bump it by intensityDecreaseDelta, when it reaches zero, we decrease intensity
         /// </summary>
         private float intensityCounter;
+
+        /// <summary>
+        /// Countdown timer for intensity
+        /// </summary>
+        private float intensityTimer;
         #endregion
 
         #region Properties
@@ -122,6 +137,7 @@ namespace Duologue.Screens
             LocalInstanceManager.CurrentGameWave = null;
             timeSinceStart = 0f;
             intensityCounter = 0f;
+            intensityTimer = 0f;
         }
 
         /*
@@ -203,12 +219,31 @@ namespace Duologue.Screens
             double bp = MWMathHelper.GetRandomInRange(0.5, 1);
 
             // Update the score based on that
-            pointValue = (int)(bp * pointValue);
+            int pointValueM = (int)(bp * (double)pointValue);
 
             // Spawn a pointlet
-            LocalInstanceManager.Scores[(int)pindex].AddScore(pointValue, startPos);
+            LocalInstanceManager.Scores[(int)pindex].AddScore(pointValueM, startPos);
 
-            // FIXME somehow update intensity
+            InstanceManager.Logger.LogEntry(String.Format(
+                "P{0} enemy hit- MP{1}, BP{2}, SC{3}- INT{4}",
+                ((int)pindex).ToString(),
+                pointValue.ToString(),
+                bp.ToString(),
+                pointValueM.ToString(),
+                intensityCounter.ToString()));
+
+            // update intensity
+            if (bp > minBeatPercent)
+            {
+                intensityTimer = 0f;
+                intensityCounter += (float)bp; // intensityIncreaseDelta;
+                if (intensityCounter > intensityIncreaseLimit)
+                {
+                    InstanceManager.Logger.LogEntry("INTENSITY++");
+                    new BeatEffectsSong().IncreaseIntensity();
+                    intensityCounter = 0f;
+                }
+            }
         }
         #endregion
 
@@ -218,7 +253,14 @@ namespace Duologue.Screens
             if (timeSinceStart < delayLifetime)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            
+            intensityTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (intensityTimer > intensityLifetime)
+            {
+                intensityTimer = 0f;
+                intensityCounter = 0f;
+                InstanceManager.Logger.LogEntry("INTENSITY--");
+                new BeatEffectsSong().DecreaseIntensity();
+            }
 
             /*if (LocalInstanceManager.CurrentGameWave == null)
             {
