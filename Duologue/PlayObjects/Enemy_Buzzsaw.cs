@@ -442,11 +442,10 @@ namespace Duologue.PlayObjects
             if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
             {
                 CurrentHitPoints--;
-                // FIXME trigger some minor explosion
                 if (CurrentHitPoints <= 0)
                 {
                     Color c = ColorState.Negative[ColorState.Light];
-                    if(ColorPolarity == ColorPolarity.Positive)
+                    if (ColorPolarity == ColorPolarity.Positive)
                         c = ColorState.Positive[ColorState.Light];
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
                     Alive = false;

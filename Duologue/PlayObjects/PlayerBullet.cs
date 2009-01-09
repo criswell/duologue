@@ -173,6 +173,10 @@ namespace Duologue.PlayObjects
                     Color c = ((Enemy)pobj).ColorState.Positive[ColorState.Light];
                     if(((Enemy)pobj).ColorPolarity == ColorPolarity.Negative)
                         c = ((Enemy)pobj).ColorState.Negative[ColorState.Light];
+
+                    // Trigger a bullet explosion first
+                    ((Enemy)pobj).TriggerBulletExplosion(Position, c);
+
                     if (!currentColorState.SameColor(baseColor, c))
                     {
                         return TriggerHit(pobj);

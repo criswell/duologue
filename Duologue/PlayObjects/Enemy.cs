@@ -29,7 +29,7 @@ namespace Duologue.PlayObjects
         #region Constants
         private const string filename_bulletHit = "bullet-hit-0{0}"; // FIXME, silliness
         private const int maxNumBulletFrames = 6;
-        private const float bulletLifetime = 1f;
+        private const float bulletLifetime = 0.05f;
         private const float shieldLifetime = 1.5f;
         #endregion
 
@@ -37,8 +37,11 @@ namespace Duologue.PlayObjects
         // Bullet stuff
         private Texture2D[] bulletFrames;
         private Vector2 bulletPos;
+        private Vector2 bulletCenter;
         private Color bulletColor;
         private float bulletTimer;
+        private int currentFrame;
+        private float bulletRotation;
 
         // Shield stuff
         private Texture2D shield;
@@ -89,13 +92,17 @@ namespace Duologue.PlayObjects
         {
             MyManager = manager;
             bulletFrames = new Texture2D[maxNumBulletFrames];
-            for (int i = 0; i < maxNumBulletFrames; i++)
+            for (int i = 1; i <= maxNumBulletFrames; i++)
             {
-                bulletFrames[i] = InstanceManager.AssetManager.LoadTexture2D(
+                bulletFrames[i-1] = InstanceManager.AssetManager.LoadTexture2D(
                     String.Format(filename_bulletHit, i.ToString()));
             }
-            bulletTimer = bulletLifetime;
-            shieldTimer = shieldLifetime;
+            bulletTimer = 0f;
+            shieldTimer = 0f;
+            bulletCenter = new Vector2(
+                bulletFrames[0].Width / 2f,
+                bulletFrames[0].Height / 2f);
+            currentFrame = maxNumBulletFrames;
         }
         #endregion
 
@@ -115,13 +122,51 @@ namespace Duologue.PlayObjects
             int? hitPoints);
         #endregion
 
+        #region Public methods
+        /// <summary>
+        /// Call when we wish to trigger a bullet explosion
+        /// </summary>
+        public void TriggerBulletExplosion(Vector2 pos, Color c)
+        {
+            bulletPos = pos;
+            bulletColor = c;
+            currentFrame = 0;
+            bulletTimer = 0f;
+            bulletRotation = (float)MWMathHelper.GetRandomInRange(MathHelper.PiOver2, MathHelper.TwoPi);
+        }
+        #endregion
+
         #region Inner Update
         public void InnerUpdate(GameTime gameTime)
         {
+            // Update the bullet explosion
+            if (currentFrame < maxNumBulletFrames - 1)
+            {
+                bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (bulletTimer > bulletLifetime)
+                {
+                    currentFrame++;
+                    bulletTimer = 0f;
+                }
+            }
+
+            // Update the shield
         }
 
         public void InnerDraw(GameTime gameTime)
         {
+            // Bullet
+            if(currentFrame < maxNumBulletFrames)
+                InstanceManager.RenderSprite.Draw(
+                    bulletFrames[currentFrame],
+                    bulletPos,
+                    bulletCenter,
+                    null,
+                    bulletColor,
+                    bulletRotation,
+                    1f,
+                    1f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
         }
         #endregion
     }

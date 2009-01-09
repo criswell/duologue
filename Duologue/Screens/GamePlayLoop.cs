@@ -210,47 +210,48 @@ namespace Duologue.Screens
                     // We really only want to spawn new enemies if we have active/living players
                     //if (livingPlayers > 0)
                     //{
-                        if (LocalInstanceManager.Enemies[i] == null ||
-                            !LocalInstanceManager.Enemies[i].Initialized)
+                    if (LocalInstanceManager.Enemies[i] == null ||
+                        !LocalInstanceManager.Enemies[i].Initialized)
+                    {
+                        LocalInstanceManager.Enemies[i].Initialize(
+                            LocalInstanceManager.GenerateEnemyStartPos(
+                            LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartAngle[i],
+                            LocalInstanceManager.Enemies[i].Radius),
+                            Vector2.Zero,
+                            LocalInstanceManager.CurrentGameWave.ColorState,
+                            ColorState.RandomPolarity(),
+                            null); // FIXME : We need to determine the HP from the GameWave
+                        livingEnemies++;
+                    }
+                    else if(LocalInstanceManager.Enemies[i].Alive)
+                    {
+                        dumb = LocalInstanceManager.Enemies[i].StartOffset();
+                        // Update each enemy with player objects
+                        for (int j = 0; j < InputManager.MaxInputs; j++)
                         {
-                            LocalInstanceManager.Enemies[i].Initialize(
-                                LocalInstanceManager.GenerateEnemyStartPos(
-                                LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartAngle[i],
-                                LocalInstanceManager.Enemies[i].Radius),
-                                Vector2.Zero,
-                                LocalInstanceManager.CurrentGameWave.ColorState,
-                                ColorState.RandomPolarity(),
-                                null); // FIXME : We need to determine the HP from the GameWave
-                            livingEnemies++;
+                            if (LocalInstanceManager.Players[j].Active &&
+                                LocalInstanceManager.Players[j].State == PlayerState.Alive)
+                            {
+                                dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Players[j]);
+                            }
                         }
-                        else if(LocalInstanceManager.Enemies[i].Alive)
+                        // Update the enemy with remaining enemy objects
+
+                        for (int j = i + 1; j < LocalInstanceManager.CurrentNumberEnemies; j++)
                         {
-                            dumb = LocalInstanceManager.Enemies[i].StartOffset();
-                            // Update each enemy with player objects
-                            for (int j = 0; j < InputManager.MaxInputs; j++)
+                            if (LocalInstanceManager.Enemies[j] != null &&
+                                LocalInstanceManager.Enemies[j].Initialized &&
+                                LocalInstanceManager.Enemies[j].Alive)
                             {
-                                if (LocalInstanceManager.Players[j].Active &&
-                                    LocalInstanceManager.Players[j].State == PlayerState.Alive)
-                                {
-                                    dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Players[j]);
-                                }
+                                dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Enemies[j]);
                             }
-                            // Update the enemy with remaining enemy objects
-
-                            for (int j = i + 1; j < LocalInstanceManager.CurrentNumberEnemies; j++)
-                            {
-                                if (LocalInstanceManager.Enemies[j] != null &&
-                                    LocalInstanceManager.Enemies[j].Initialized &&
-                                    LocalInstanceManager.Enemies[j].Alive)
-                                {
-                                    dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Enemies[j]);
-                                }
-                            }
-                            dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
-                            livingEnemies++;
                         }
+                        dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
+                        livingEnemies++;
+                    }
 
-                        LocalInstanceManager.Enemies[i].Update(gameTime);
+                    LocalInstanceManager.Enemies[i].Update(gameTime);
+                    LocalInstanceManager.Enemies[i].InnerUpdate(gameTime);
                     //}
                 }
             }
@@ -302,6 +303,7 @@ namespace Duologue.Screens
                 if (e.Alive)
                 {
                     e.Draw(gameTime);
+                    e.InnerDraw(gameTime);
                 }
             }
 
