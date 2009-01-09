@@ -72,7 +72,7 @@ namespace Duologue
         /// <summary>
         /// FIXME
         /// </summary>
-        public const int MaxSteamEffects = 20;
+        public const int MaxSteamEffects = 4;
         /// <summary>
         /// FIXME
         /// </summary>

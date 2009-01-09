@@ -40,28 +40,28 @@ namespace Duologue.ParticleEffects
             textureFilename = "steam";
 
             minInitialSpeed = 20;
-            maxInitialSpeed = 100;
+            maxInitialSpeed = 40;
 
             // No accelleration, just rises
-            minAcceleration = 0;
-            maxAcceleration = 0;
+            minAcceleration = -10;
+            maxAcceleration = -50;
 
             // long lifetime, this can be changed to create thinner or thicker smoke.
             // tweak minNumParticles and maxNumParticles to complement the effect.
-            minLifetime = 1.0f;
-            maxLifetime = 2.0f;
+            minLifetime = 0.5f;
+            maxLifetime = 1.0f;
 
             minScale = .5f;
             maxScale = 1.0f;
 
-            minNumParticles = 7;
-            maxNumParticles = 15;
+            minNumParticles = 1;
+            maxNumParticles = 5;
 
             // rotate slowly, we want a fairly relaxed effect
             minRotationSpeed = -MathHelper.PiOver4 / 2.0f;
             maxRotationSpeed = MathHelper.PiOver4 / 2.0f;
 
-            spriteBlendMode = RenderSpriteBlendMode.AlphaBlend;
+            spriteBlendMode = RenderSpriteBlendMode.Addititive;
 
 //            DrawOrder = AlphaBlendDrawOrder;
         }

@@ -344,7 +344,13 @@ namespace Duologue.PlayObjects
                 {
                     inBeam = true;
                     if (temp == -1)
+                    {
                         isFleeing = true;
+                        Color c = ColorState.Negative[ColorState.Light];
+                        if(ColorPolarity == ColorPolarity.Positive)
+                            c = ColorState.Positive[ColorState.Light];
+                        LocalInstanceManager.Steam.AddParticles(Position, c);
+                    }
                 }
                 return true;
             }
