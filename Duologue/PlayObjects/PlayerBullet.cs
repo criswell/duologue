@@ -185,6 +185,7 @@ namespace Duologue.PlayObjects
                     {
                         // We just get absorbed
                         Alive = false;
+                        // FIXME_SFX - need some sort of a bonk sound
                     }
                     return true;
                 }

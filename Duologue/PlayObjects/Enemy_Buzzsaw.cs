@@ -450,7 +450,7 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    // FIXME add audio
+                    // FIXME_SFX need enemy explosion here (or maybe in GPSM)
                     return false;
                 }
             }
