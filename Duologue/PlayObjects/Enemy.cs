@@ -26,6 +26,27 @@ namespace Duologue.PlayObjects
 {
     public abstract class Enemy : PlayObject
     {
+        #region Constants
+        private const string filename_bulletHit = "bullet-hit-0{0}"; // FIXME, silliness
+        private const int maxNumBulletFrames = 6;
+        private const float bulletLifetime = 1f;
+        private const float shieldLifetime = 1.5f;
+        #endregion
+
+        #region Fields
+        // Bullet stuff
+        private Texture2D[] bulletFrames;
+        private Vector2 bulletPos;
+        private Color bulletColor;
+        private float bulletTimer;
+
+        // Shield stuff
+        private Texture2D shield;
+        private Vector2 shieldPos;
+        private Color shieldColor;
+        private float shieldTimer;
+        #endregion
+
         #region Properties
         /// <summary>
         /// The orientation of this enemy
@@ -67,6 +88,14 @@ namespace Duologue.PlayObjects
             : base()
         {
             MyManager = manager;
+            bulletFrames = new Texture2D[maxNumBulletFrames];
+            for (int i = 0; i < maxNumBulletFrames; i++)
+            {
+                bulletFrames[i] = InstanceManager.AssetManager.LoadTexture2D(
+                    String.Format(filename_bulletHit, i.ToString()));
+            }
+            bulletTimer = bulletLifetime;
+            shieldTimer = shieldLifetime;
         }
         #endregion
 
@@ -84,6 +113,16 @@ namespace Duologue.PlayObjects
             ColorState currentColorState,
             ColorPolarity startColorPolarity,
             int? hitPoints);
+        #endregion
+
+        #region Inner Update
+        public void InnerUpdate(GameTime gameTime)
+        {
+        }
+
+        public void InnerDraw(GameTime gameTime)
+        {
+        }
         #endregion
     }
 }
