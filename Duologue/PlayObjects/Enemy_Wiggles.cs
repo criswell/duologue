@@ -36,6 +36,14 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        public Enemy_Wiggles(GamePlayScreenManager manager)
+            : base(manager)
+        {
+            MyType = TypesOfPlayObjects.Enemy_Wiggles;
+            MajorType = MajorPlayObjectType.Enemy;
+            Initialized = false;
+        }
+
         public override void Initialize(Vector2 startPos, Vector2 startOrientation, ColorState currentColorState, ColorPolarity startColorPolarity, int? hitPoints)
         {
             throw new NotImplementedException();
