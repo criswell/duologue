@@ -220,7 +220,7 @@ namespace Duologue.Screens
                             Vector2.Zero,
                             LocalInstanceManager.CurrentGameWave.ColorState,
                             ColorState.RandomPolarity(),
-                            null); // FIXME : We need to determine the HP from the GameWave
+                            LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints);
                         livingEnemies++;
                     }
                     else if(LocalInstanceManager.Enemies[i].Alive)

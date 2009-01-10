@@ -30,8 +30,16 @@ namespace Duologue.PlayObjects
         private const string filename_bulletHit = "bullet-hit-0{0}"; // FIXME, silliness
         private const int maxNumBulletFrames = 6;
         private const float bulletLifetime = 0.05f;
-        private const float shieldLifetime = 1.5f;
         private const byte bulletAlpha = 200;
+
+        private const float shieldLifetime = 0.7f;
+        private const double minShieldRotationDelta = 0.04;
+        private const double maxShieldRotationDelta = 0.08;
+        private const double minShieldSpeed = 0.1;
+        private const double maxShieldSpeed = 0.5;
+        private const double minEndShieldSizeMultiplier = 0.2;
+        private const double maxEndShieldSizeMultiplier = 0.7;
+        private const byte maxShieldAlpha = 255;
         #endregion
 
         #region Fields
@@ -46,9 +54,16 @@ namespace Duologue.PlayObjects
 
         // Shield stuff
         private Texture2D shield;
+        private Vector2 shieldCenter;
         private Vector2 shieldPos;
         private Color shieldColor;
         private float shieldTimer;
+        private float shieldRotation;
+        private float shieldRotationDelta;
+        private Vector2 shieldDirection;
+        private float shieldSpeed;
+        private float shieldSize;
+        private float shieldEndSize;
         #endregion
 
         #region Properties
@@ -99,7 +114,8 @@ namespace Duologue.PlayObjects
                     String.Format(filename_bulletHit, i.ToString()));
             }
             bulletTimer = 0f;
-            shieldTimer = 0f;
+            shieldTimer = shieldLifetime;
+            shieldRotation = 0f;
             bulletCenter = new Vector2(
                 bulletFrames[0].Width / 2f,
                 bulletFrames[0].Height / 2f);
@@ -135,6 +151,29 @@ namespace Duologue.PlayObjects
             bulletTimer = 0f;
             bulletRotation = (float)MWMathHelper.GetRandomInRange(MathHelper.PiOver2, MathHelper.TwoPi);
         }
+
+        /// <summary>
+        /// Call when we wish to trigger the disintegration of an enemy's shield
+        /// </summary>
+        public void TriggerShieldDisintegration(Texture2D t, Color c, Vector2 pos, float startRotation)
+        {
+            shield = t;
+            shieldColor = c;
+            shieldPos = pos;
+            shieldRotation = startRotation;
+            shieldCenter = new Vector2(shield.Width / 2f, shield.Height / 2f);
+            shieldTimer = 0f;
+            shieldRotationDelta = (float)MWMathHelper.GetRandomInRange(
+                minShieldRotationDelta,
+                maxShieldRotationDelta);
+            shieldDirection = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-1, 1),
+                (float)MWMathHelper.GetRandomInRange(-1, 1));
+            shieldSpeed = (float)MWMathHelper.GetRandomInRange(
+                minShieldSpeed, maxShieldSpeed);
+            shieldEndSize = (float)MWMathHelper.GetRandomInRange(
+                minEndShieldSizeMultiplier, maxEndShieldSizeMultiplier);
+        }
         #endregion
 
         #region Inner Update
@@ -152,6 +191,13 @@ namespace Duologue.PlayObjects
             }
 
             // Update the shield
+            if (shieldTimer < shieldLifetime)
+            {
+                shieldTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                shieldRotation += shieldRotationDelta;
+                shieldSize = 1f + (shieldTimer / shieldLifetime) * shieldEndSize;
+                shieldPos += shieldSpeed * shieldDirection;
+            }
         }
 
         public void InnerDraw(GameTime gameTime)
@@ -168,6 +214,25 @@ namespace Duologue.PlayObjects
                     1f,
                     1f,
                     RenderSpriteBlendMode.AlphaBlendTop);
+
+            // Shield
+            if (shieldTimer < shieldLifetime)
+            {
+                float p = shieldTimer / shieldLifetime;
+                Color c = new Color(
+                    shieldColor,
+                    (byte)(maxShieldAlpha - p * maxShieldAlpha));
+                InstanceManager.RenderSprite.Draw(
+                    shield,
+                    shieldPos,
+                    shieldCenter,
+                    null,
+                    c,
+                    shieldRotation,
+                    shieldSize,
+                    1f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
         }
         #endregion
     }

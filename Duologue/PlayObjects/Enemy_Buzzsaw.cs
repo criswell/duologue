@@ -441,17 +441,24 @@ namespace Duologue.PlayObjects
         {
             if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
             {
+                Color c = ColorState.Negative[ColorState.Light];
+                if (ColorPolarity == ColorPolarity.Positive)
+                    c = ColorState.Positive[ColorState.Light];
+
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
-                    Color c = ColorState.Negative[ColorState.Light];
-                    if (ColorPolarity == ColorPolarity.Positive)
-                        c = ColorState.Positive[ColorState.Light];
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     // FIXME_SFX need enemy explosion here (or maybe in GPSM)
                     return false;
+                }
+                else
+                {
+                    // FIXME_SFX need some sort of "bonk" sound signifying we shattered a layer of the shield
+                    TriggerShieldDisintegration(buzzShine, c, Position, 0f);
+                    return true;
                 }
             }
             return true;
