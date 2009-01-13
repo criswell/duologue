@@ -4,8 +4,6 @@
 #region Using statements
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
 // XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;

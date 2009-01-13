@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Duologue", "Duologue\Duologue.csproj", "{621206CB-22FA-49D1-A045-B89B1DA68907}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Duologue_360", "Duologue\Duologue_360.csproj", "{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -29,6 +31,20 @@ Global
 		{AF64C3B5-09AD-46A3-969B-48DB06DFB063}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{AF64C3B5-09AD-46A3-969B-48DB06DFB063}.Release|x86.ActiveCfg = Release|x86
 		{AF64C3B5-09AD-46A3-969B-48DB06DFB063}.Release|Xbox 360.ActiveCfg = Release|x86
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Debug|Mixed Platforms.ActiveCfg = Debug|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Debug|Mixed Platforms.Build.0 = Debug|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Debug|Mixed Platforms.Deploy.0 = Debug|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Debug|x86.ActiveCfg = Debug|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Debug|Xbox 360.Deploy.0 = Debug|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Release|Mixed Platforms.ActiveCfg = Release|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Release|Mixed Platforms.Build.0 = Release|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Release|Mixed Platforms.Deploy.0 = Release|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Release|x86.ActiveCfg = Release|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Release|Xbox 360.Build.0 = Release|Xbox 360
+		{78D9F3AB-BFA4-498E-AE7E-F6CDF2A84A94}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
