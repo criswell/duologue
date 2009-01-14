@@ -35,13 +35,40 @@ namespace Duologue.PlayObjects
         #region Constants
         private const string filename_base = "Enemies/wiggles/0{0}-base"; // FIXME, silliness
         private const string filename_outline = "Enemies/wiggles/0{0}-outline"; // FIXME, silliness
+        private const string filename_invertOutline = "Enemies/wiggles/0{0}-invert-outline"; // Bah, who cares
 
         private const int numberOfWalkingFrames = 8;
+
+        /// <summary>
+        /// The time per frame while we're walking
+        /// </summary>
+        private const double timePerFrameWalking = 0.25;
+
+        /// <summary>
+        /// The time per frame while we're running
+        /// </summary>
+        private const double timePerFrameRunning = 0.1;
+
+        /// <summary>
+        /// Our speed when we're just randomly walking around
+        /// </summary>
+        private const float walkingSpeed = 1.5f;
+
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 1.5f;
         #endregion
 
         #region Fields
         private Texture2D[] baseFrames;
         private Texture2D[] outlineFrames;
+        private Texture2D[] invertOutlineFrames;
         private Vector2[] walkingCenters;
         private int currentFrame;
 
@@ -49,6 +76,8 @@ namespace Duologue.PlayObjects
 
         private float baseLayer;
         private float outlineLayer;
+
+        private double timeSinceStart;
         #endregion
 
         #region Properties
@@ -78,7 +107,11 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             Position = startPos;
-            Orientation = startOrientation;
+            //Orientation = startOrientation;
+            // We want to start out in a random direction
+            Orientation = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-1, 1),
+                (float)MWMathHelper.GetRandomInRange(-1, 1));
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
@@ -97,6 +130,7 @@ namespace Duologue.PlayObjects
             baseFrames = new Texture2D[numberOfWalkingFrames];
             outlineFrames = new Texture2D[numberOfWalkingFrames];
             walkingCenters = new Vector2[numberOfWalkingFrames];
+            invertOutlineFrames = new Texture2D[numberOfWalkingFrames];
 
             // load the base frames
             for (int i = 1; i <= numberOfWalkingFrames; i++)
@@ -105,6 +139,8 @@ namespace Duologue.PlayObjects
                     String.Format(filename_base, i.ToString()));
                 outlineFrames[i - 1] = InstanceManager.AssetManager.LoadTexture2D(
                     String.Format(filename_outline, i.ToString()));
+                invertOutlineFrames[i - 1] = InstanceManager.AssetManager.LoadTexture2D(
+                    String.Format(filename_invertOutline, i.ToString()));
 
                 walkingCenters[i - 1] = new Vector2(
                     baseFrames[i - 1].Width / 2f,
@@ -117,6 +153,8 @@ namespace Duologue.PlayObjects
             currentFrame = MWMathHelper.GetRandomInRange(0, numberOfWalkingFrames);
 
             CurrentState = WigglesState.Walking;
+
+            timeSinceStart = 0;
 
             Initialized = true;
             Alive = true;
@@ -132,16 +170,9 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            Color c;
-            switch (ColorPolarity)
-            {
-                case ColorPolarity.Negative:
-                    c = ColorState.Negative[ColorState.Light];
-                    break;
-                default:
-                    c = ColorState.Positive[ColorState.Light];
-                    break;
-            }
+            Color c = ColorState.Negative[ColorState.Light];
+            if(ColorPolarity == ColorPolarity.Positive)
+                c = ColorState.Positive[ColorState.Light];
             
             // Draw base
             InstanceManager.RenderSprite.Draw(
@@ -152,13 +183,46 @@ namespace Duologue.PlayObjects
                 c,
                 rotation,
                 1f,
-                );
+                baseLayer);
 
+            // Draw Outline
+            InstanceManager.RenderSprite.Draw(
+                outlineFrames[currentFrame],
+                Position,
+                walkingCenters[currentFrame],
+                null,
+                Color.White,
+                rotation,
+                1f,
+                outlineLayer);
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+
+            switch(CurrentState)
+            {
+                case WigglesState.Walking:
+                    if (timeSinceStart > timePerFrameWalking)
+                    {
+                        currentFrame++;
+                        timeSinceStart = 0;
+                    }
+                    break;
+                case WigglesState.Running:
+                    if (timeSinceStart > timePerFrameRunning)
+                    {
+                        currentFrame++;
+                        timeSinceStart = 0;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            if (currentFrame >= numberOfWalkingFrames)
+                currentFrame = 0;
+
         }
         #endregion
 
