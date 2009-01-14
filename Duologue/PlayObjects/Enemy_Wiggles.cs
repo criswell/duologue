@@ -220,9 +220,10 @@ namespace Duologue.PlayObjects
             // Handle the rotation accel
             rotationAccel = (float)MWMathHelper.GetRandomInRange(minRotationAccel, maxRotationAccel);
             rotationAccelSign = -1;
-            if (MWMathHelper.GetRandomInRange(0, 1) == 0)
+            if (MWMathHelper.GetRandomInRange(0, 2) == 1)
                 rotationAccelSign = 1;
-            
+
+            rotationChangeTimer = MWMathHelper.GetRandomInRange(0.0, timePerRotationChange);
 
             timeSinceStart = 0;
             rotationChangeTimer = 0;
