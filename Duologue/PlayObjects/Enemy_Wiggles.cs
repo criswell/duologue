@@ -57,6 +57,11 @@ namespace Duologue.PlayObjects
         private const double maxWalkingSpeed = 1.8;
 
         /// <summary>
+        /// The speed we move when there's no players and we're just trying to get off the screen
+        /// </summary>
+        private const float egressSpeed = 2.3f;
+
+        /// <summary>
         /// How far we can go outside the screen before we should stop
         /// </summary>
         private const float outsideScreenMultiplier = 3;
@@ -365,12 +370,12 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            if (playersDetected < 1)
+            /*if (playersDetected < 1)
             {
                 Vector2 temp = Vector2.Negate(GetVectorPointingAtOrigin());
                 temp.Normalize();
-                offset += temp * walkingSpeed;
-            }
+                offset += temp * egressSpeed;
+            }*/
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
