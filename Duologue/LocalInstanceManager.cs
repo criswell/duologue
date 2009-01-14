@@ -222,5 +222,46 @@ namespace Duologue
             return startPos;
         }
         #endregion
+
+        #region Layer and Draw Order information
+        /// <remarks>
+        /// -----------
+        /// BLIT LAYERS
+        /// -----------
+        /// 1.0f        -       Background
+        ///             -       Beam, shot items
+        /// 0.9f
+        /// 0.8f        -       Spinner (default)
+        /// 0.7f
+        /// 0.6f
+        /// 0.5f        -       Players (default)
+        /// 0.4f        -       Players (additional elements, tracks, etc)
+        /// 0.3f        -       Enemies (default)
+        /// 0.2f        -       Enemies (additional elements)
+        /// 0.1f
+        /// 0.0f
+        /// </remarks>
+
+        public const float BlitLayer_EnemyBase = 0.3f;
+
+        /// <remarks>
+        /// ----------
+        /// DRAW ORDER
+        /// ----------
+        /// 1           -       Background
+        /// 2
+        /// 3
+        /// 4
+        /// 5
+        /// 6
+        /// 7           -       Explosion and steam elements
+        /// 8           -       Bullet particle effects
+        /// 9
+        /// ...
+        /// 99          -       Score scroller
+        /// 100         -       Spinner
+        /// 200         -       Logger
+        /// </remarks>
+        #endregion
     }
 }

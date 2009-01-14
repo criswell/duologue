@@ -46,6 +46,9 @@ namespace Duologue.PlayObjects
         private int currentFrame;
 
         private float rotation;
+
+        private float baseLayer;
+        private float outlineLayer;
         #endregion
 
         #region Properties
@@ -61,6 +64,8 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Wiggles;
             MajorType = MajorPlayObjectType.Enemy;
+            baseLayer = LocalInstanceManager.BlitLayer_EnemyBase;
+            outlineLayer = LocalInstanceManager.BlitLayer_EnemyBase - 0.1f;
             Initialized = false;
             Alive = false;
         }
@@ -147,7 +152,7 @@ namespace Duologue.PlayObjects
                 c,
                 rotation,
                 1f,
-                1f); // FIXME ERE I AM JH, should be determined elsewhere
+                );
 
         }
 

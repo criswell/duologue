@@ -186,8 +186,8 @@ namespace Duologue.PlayObjects
                 buzzBlades.Width,
                 buzzBlades.Height);
 
-            baseLayer = 0.3f;
-            bladesLayer = 0.4f;
+            baseLayer = LocalInstanceManager.BlitLayer_EnemyBase;
+            bladesLayer = LocalInstanceManager.BlitLayer_EnemyBase + 0.1f;
 
             isFleeing = false;
 
