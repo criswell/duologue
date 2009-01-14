@@ -57,6 +57,14 @@ namespace Duologue.PlayObjects
         private const double maxWalkingSpeed = 1.8;
 
         /// <summary>
+        /// The acceleration of the rotation
+        /// </summary>
+        private const float minRotationAccel = 0.001f;
+        private const float maxRotationAccel = 0.009f;
+
+        private const double timePerRotationChange = 1.5;
+
+        /// <summary>
         /// The speed we move when there's no players and we're just trying to get off the screen
         /// </summary>
         private const float egressSpeed = 2.3f;
@@ -110,6 +118,8 @@ namespace Duologue.PlayObjects
 
         private double timeSinceStart;
 
+        private double rotationChangeTimer;
+
         // Movement
         private Vector2 offset;
         private Vector2 nearestPlayer;
@@ -117,6 +127,8 @@ namespace Duologue.PlayObjects
         private Vector2 lastDirection;
         private float walkingSpeed;
         private bool startedMoving;
+        private int rotationAccelSign;
+        private float rotationAccel;
         #endregion
 
         #region Properties
@@ -205,7 +217,15 @@ namespace Duologue.PlayObjects
 
             CurrentState = WigglesState.Walking;
 
+            // Handle the rotation accel
+            rotationAccel = (float)MWMathHelper.GetRandomInRange(minRotationAccel, maxRotationAccel);
+            rotationAccelSign = -1;
+            if (MWMathHelper.GetRandomInRange(0, 1) == 0)
+                rotationAccelSign = 1;
+            
+
             timeSinceStart = 0;
+            rotationChangeTimer = 0;
 
             Initialized = true;
             Alive = true;
@@ -263,6 +283,13 @@ namespace Duologue.PlayObjects
         public override void Update(GameTime gameTime)
         {
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+            rotationChangeTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (rotationChangeTimer > timePerRotationChange)
+            {
+                rotationAccelSign *= -1;
+                rotationChangeTimer = 0;
+            }
 
             //Orientation.Normalize();
 
@@ -386,7 +413,7 @@ namespace Duologue.PlayObjects
                 this.Position += offset;
                 offset.Normalize();
                 lastDirection = offset;
-                Orientation = offset;
+                Orientation = MWMathHelper.RotateVectorByRadians(offset, rotationAccel * rotationAccelSign);
             }
 
             // Check boundaries

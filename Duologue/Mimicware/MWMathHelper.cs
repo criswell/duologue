@@ -89,6 +89,24 @@ namespace Mimicware
                 rand = new Random();
             return rand.Next(lower, upper);
         }
+
+        /// <summary>
+        /// Rotate a vector by an angle
+        /// </summary>
+        /// <param name="offset">The vector to rotate</param>
+        /// <param name="p">The angle in radians</param>
+        /// <returns>the rotated vector</returns>
+        internal static Vector2 RotateVectorByRadians(Vector2 offset, float p)
+        {
+            float rot = ComputeAngleAgainstX(offset);
+            float len = offset.Length();
+
+            offset = new Vector2(
+                len * (float)Math.Cos((double)(rot + p)),
+                len * (float)Math.Sin((double)(rot + p)));
+
+            return offset;
+        }
         #endregion
     }
 }
