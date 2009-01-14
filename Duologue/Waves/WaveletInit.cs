@@ -50,6 +50,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_Buzzsaw:
                             Init_Buzzsaw(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_Wiggles:
+                            Init_Wiggles(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -71,6 +74,11 @@ namespace Duologue.Waves
         private static void Init_Buzzsaw(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_Buzzsaw(manager);
+        }
+
+        private static void Init_Wiggles(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Wiggles(manager);
         }
         #endregion
 

@@ -138,6 +138,7 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             Position = startPos;
+            InstanceManager.Logger.LogEntry(String.Format("startPos: {0},{1}", Position.X.ToString(), Position.Y.ToString()));
             Orientation = startOrientation;
             lastDirection = Vector2.Zero;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
