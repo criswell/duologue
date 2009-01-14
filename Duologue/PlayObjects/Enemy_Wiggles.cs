@@ -116,6 +116,7 @@ namespace Duologue.PlayObjects
         private float nearestPlayerRadius;
         private Vector2 lastDirection;
         private float walkingSpeed;
+        private bool startedMoving;
         #endregion
 
         #region Properties
@@ -134,6 +135,7 @@ namespace Duologue.PlayObjects
             baseLayer = LocalInstanceManager.BlitLayer_EnemyBase;
             outlineLayer = LocalInstanceManager.BlitLayer_EnemyBase - 0.1f;
             RealSize = new Vector2(82, 90);
+            startedMoving = false;
             Initialized = false;
             Alive = false;
         }
@@ -309,6 +311,7 @@ namespace Duologue.PlayObjects
             if (pobj.MajorType == MajorPlayObjectType.Player)
             {
                 playersDetected++;
+                startedMoving = true;
                 // Player
                 Vector2 vToPlayer = this.Position - pobj.Position;
                 float len = vToPlayer.Length();
@@ -370,12 +373,12 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            /*if (playersDetected < 1)
+            if (playersDetected < 1 && !startedMoving)
             {
                 Vector2 temp = Vector2.Negate(GetVectorPointingAtOrigin());
                 temp.Normalize();
                 offset += temp * egressSpeed;
-            }*/
+            }
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
