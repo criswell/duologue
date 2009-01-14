@@ -42,17 +42,19 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The time per frame while we're walking
         /// </summary>
-        private const double timePerFrameWalking = 0.25;
+        private const double timePerFrameWalking = 0.15;
 
         /// <summary>
         /// The time per frame while we're running
         /// </summary>
-        private const double timePerFrameRunning = 0.1;
+        private const double timePerFrameRunning = 0.05;
 
         /// <summary>
         /// Our speed when we're just randomly walking around
         /// </summary>
-        private const float walkingSpeed = 1.5f;
+        private const double minWalkingSpeed = 1.4;
+
+        private const double maxWalkingSpeed = 1.8;
 
         /// <summary>
         /// How far we can go outside the screen before we should stop
@@ -62,19 +64,29 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The radius multiplier for determining radius from size
         /// </summary>
-        private const float radiusMultiplier = 0.75f;
+        private const float radiusMultiplier = 0.2f;
 
         #region Forces
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
         /// </summary>
         private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float playerAttract = 2.5f;
+
+        /// <summary>
+        /// The player attract modifier for when we're accelerated
+        /// </summary>
+        private const float playerAttractAccel = 4f;
         #endregion
 
         /// <summary>
         /// The minimum movement required before we register motion
         /// </summary>
-        private const float minMovement = 1.5f;
+        private const float minMovement = 1.25f;
         #endregion
 
         #region Fields
@@ -84,7 +96,7 @@ namespace Duologue.PlayObjects
         private Vector2[] walkingCenters;
         private int currentFrame;
 
-        private Vector2 realSize;
+        private int playersDetected;
 
         private float rotation;
 
@@ -98,6 +110,7 @@ namespace Duologue.PlayObjects
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
         private Vector2 lastDirection;
+        private float walkingSpeed;
         #endregion
 
         #region Properties
@@ -115,6 +128,7 @@ namespace Duologue.PlayObjects
             MajorType = MajorPlayObjectType.Enemy;
             baseLayer = LocalInstanceManager.BlitLayer_EnemyBase;
             outlineLayer = LocalInstanceManager.BlitLayer_EnemyBase - 0.1f;
+            RealSize = new Vector2(82, 90);
             Initialized = false;
             Alive = false;
         }
@@ -127,13 +141,7 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             Position = startPos;
-            InstanceManager.Logger.LogEntry(String.Format("startPos: {0},{1}", Position.X.ToString(), Position.Y.ToString()));
-            //Orientation = startOrientation;
-            // We want to start out in a random direction
-            Orientation = new Vector2(
-                (float)MWMathHelper.GetRandomInRange(-1, 1),
-                (float)MWMathHelper.GetRandomInRange(-1, 1));
-            Orientation.Normalize();
+            Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
@@ -143,6 +151,18 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
+
+            if (Orientation == Vector2.Zero)
+            {
+                // Just aim at the center of screen for now
+                Orientation = GetVectorPointingAtOrigin() +  new Vector2(
+                    (float)MWMathHelper.GetRandomInRange(-.5,.5),
+                    (float)MWMathHelper.GetRandomInRange(-.5,.5));
+                Orientation.Normalize();
+            }
+
+            walkingSpeed = (float)MWMathHelper.GetRandomInRange(minWalkingSpeed, maxWalkingSpeed);
+
             LoadAndInitialize();
         }
 
@@ -154,9 +174,6 @@ namespace Duologue.PlayObjects
             walkingCenters = new Vector2[numberOfWalkingFrames];
             invertOutlineFrames = new Texture2D[numberOfWalkingFrames];
 
-            realSize = Vector2.Zero;
-            Vector2 temp;
-
             // load the base frames
             for (int i = 1; i <= numberOfWalkingFrames; i++)
             {
@@ -167,18 +184,12 @@ namespace Duologue.PlayObjects
                 invertOutlineFrames[i - 1] = InstanceManager.AssetManager.LoadTexture2D(
                     String.Format(filename_invertOutline, i.ToString()));
 
-                temp = new Vector2(
-                    (float)invertOutlineFrames[i - 1].Width,
-                    (float)invertOutlineFrames[i - 1].Height);
-                if (temp.X > realSize.X || temp.Y > realSize.Y)
-                    realSize = temp;
-
                 walkingCenters[i - 1] = new Vector2(
                     baseFrames[i - 1].Width / 2f,
                     baseFrames[i - 1].Height / 2f);
             }
 
-            Radius = realSize.Length() * radiusMultiplier;
+            Radius = RealSize.Length() * radiusMultiplier;
 
             // load the death frames FIXME TODO
 
@@ -195,6 +206,16 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Returns a vector pointing to the origin
+        /// </summary>
+        private Vector2 GetVectorPointingAtOrigin()
+        {
+            Vector2 sc = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            return sc - Position;
+        }
         #endregion
 
         #region Public Methods
@@ -207,7 +228,7 @@ namespace Duologue.PlayObjects
             if(ColorPolarity == ColorPolarity.Positive)
                 c = ColorState.Positive[ColorState.Light];
 
-            rotation = MWMathHelper.ComputeAngleAgainstX(Orientation) + MathHelper.Pi;
+            rotation = MWMathHelper.ComputeAngleAgainstX(Orientation) + MathHelper.Pi + MathHelper.PiOver2;
 
             // Draw base
             InstanceManager.RenderSprite.Draw(
@@ -227,7 +248,7 @@ namespace Duologue.PlayObjects
                 walkingCenters[currentFrame],
                 null,
                 Color.White,
-                rotation,
+                rotation,// + MathHelper.PiOver2,
                 1f,
                 outlineLayer);
         }
@@ -236,7 +257,7 @@ namespace Duologue.PlayObjects
         {
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
 
-            Orientation.Normalize();
+            //Orientation.Normalize();
 
             switch(CurrentState)
             {
@@ -274,6 +295,7 @@ namespace Duologue.PlayObjects
                 nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
                 nearestPlayer = Vector2.Zero;
             }
+            playersDetected = 0;
             return true;
         }
 
@@ -281,7 +303,8 @@ namespace Duologue.PlayObjects
         {
             if (pobj.MajorType == MajorPlayObjectType.Player)
             {
-                /*// Player
+                playersDetected++;
+                // Player
                 Vector2 vToPlayer = this.Position - pobj.Position;
                 float len = vToPlayer.Length();
                 if (len < nearestPlayerRadius)
@@ -295,6 +318,7 @@ namespace Duologue.PlayObjects
                     return pobj.TriggerHit(this);
                 }
 
+                /*
                 // Beam handling
                 int temp = ((Player)pobj).IsInBeam(this);
                 inBeam = false;
@@ -341,35 +365,43 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
+            if (playersDetected < 1)
+            {
+                Vector2 temp = Vector2.Negate(GetVectorPointingAtOrigin());
+                temp.Normalize();
+                offset += temp * walkingSpeed;
+            }
+
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
             {
                 this.Position += offset;
+                offset.Normalize();
                 lastDirection = offset;
-                Orientation = new Vector2(-offset.Y, offset.X);
+                Orientation = offset;
             }
 
             // Check boundaries
-            if (this.Position.X < -1 * realSize.X * outsideScreenMultiplier)
+            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
             {
-                this.Position.X = -1 * realSize.X * outsideScreenMultiplier;
+                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
                 Orientation.X = Math.Abs(Orientation.X);
             }
-            else if (this.Position.X > InstanceManager.DefaultViewport.Width + realSize.X * outsideScreenMultiplier)
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
             {
-                this.Position.X = InstanceManager.DefaultViewport.Width + realSize.X * outsideScreenMultiplier;
-                Orientation.X *= -1 * Math.Abs(Orientation.X);
+                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
+                Orientation.X = -1 * Math.Abs(Orientation.X);
             }
 
-            if (this.Position.Y < -1 * realSize.Y * outsideScreenMultiplier)
+            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
             {
-                this.Position.Y = -1 * realSize.Y * outsideScreenMultiplier;
-                Orientation.Y *= Math.Abs(Orientation.Y);
+                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
+                Orientation.Y = Math.Abs(Orientation.Y);
             }
-            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + realSize.Y * outsideScreenMultiplier)
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
             {
-                this.Position.Y = InstanceManager.DefaultViewport.Height + realSize.Y * outsideScreenMultiplier;
-                Orientation.Y *= -1 * Math.Abs(Orientation.Y) ;
+                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
+                Orientation.Y = -1 * Math.Abs(Orientation.Y) ;
             }
 
             return true;

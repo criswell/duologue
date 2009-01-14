@@ -160,10 +160,16 @@ namespace Duologue.Waves
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
             thisWave.Wavelet[thisWave.CurrentWavelet] = new Wavelet(thisWave.NumEnemies, 1);
+            
+            /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
+            thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;
+
+            thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[1] = MathHelper.Pi;*/
             for (int i = 0; i < thisWave.NumEnemies; i++)
             {
                 // For now, we're just spawning all buzzsaws
-                thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
             }
 

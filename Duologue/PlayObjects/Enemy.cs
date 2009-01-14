@@ -96,6 +96,11 @@ namespace Duologue.PlayObjects
         /// The GamePlay Screen Manager parent instance
         /// </summary>
         public GamePlayScreenManager MyManager;
+
+        /// <summary>
+        /// The real size of this enemy
+        /// </summary>
+        public Vector2 RealSize;
         #endregion
 
         #region Constructor

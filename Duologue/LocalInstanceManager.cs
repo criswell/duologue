@@ -207,17 +207,31 @@ namespace Duologue
                     InstanceManager.DefaultViewport.Height/2f);
             }
 
+            //InstanceManager.Logger.LogEntry(String.Format("centerOfScreen: {0} radius: {1}", centerOfScreen.ToString(), radius.ToString()));
+
             // Get the screenRadius if we dont have it yet
             if (screenRadius < 1f)
-                screenRadius = (float)Math.Sqrt((double)(centerOfScreen.X * centerOfScreen.X + centerOfScreen.Y * centerOfScreen.Y));
+            {
+                //screenRadius = (float)Math.Sqrt((double)(centerOfScreen.X * centerOfScreen.X + centerOfScreen.Y * centerOfScreen.Y));
+                screenRadius = centerOfScreen.Length();
+            }
+
+            //InstanceManager.Logger.LogEntry(String.Format("screenRadius: {0}", screenRadius.ToString()));
 
             // Now, make that a vector pointing in the opposite direction at the screenRadius distance
             // FIXME - We're still spawning the enemies in visible screen
             startPos = new Vector2(
                 (screenRadius + radius) * (float)Math.Cos((double)angleRad),
-                (screenRadius + radius) * (float)Math.Sin((double)angleRad));
+                (screenRadius + radius) * -1 * (float)Math.Sin((double)angleRad));
 
-            startPos = Vector2.Reflect(Vector2.Negate(startPos),Vector2.UnitX)+ centerOfScreen;
+            //InstanceManager.Logger.LogEntry(String.Format("startPos(pre): {0}", startPos.ToString()));
+
+            //startPos = Vector2.Reflect(Vector2.Negate(startPos),Vector2.UnitX)+ centerOfScreen;
+            startPos = startPos + centerOfScreen;
+
+            //InstanceManager.Logger.LogEntry(String.Format("startPos: {0}", startPos.ToString()));
+            //InstanceManager.Logger.LogEntry("-------");
+
 
             return startPos;
         }

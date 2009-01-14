@@ -111,7 +111,7 @@ namespace Duologue.PlayObjects
         private float bladesLayer;
         private float rotation;
         private float bladesRotation;
-        private Vector2 realSize;
+        //private Vector2 RealSize;
 
         // Movement
         private Vector2 offset;
@@ -128,6 +128,9 @@ namespace Duologue.PlayObjects
             MajorType = MajorPlayObjectType.Enemy;
             Initialized = false;
             shineOffset = new Vector2(delta_ShineOffsetX, delta_ShineOffsetY);
+
+            // Set the RealSize by hand
+            RealSize = new Vector2(85, 87);
         }
 
         public override void Initialize(
@@ -138,7 +141,7 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             Position = startPos;
-            InstanceManager.Logger.LogEntry(String.Format("startPos: {0},{1}", Position.X.ToString(), Position.Y.ToString()));
+            //InstanceManager.Logger.LogEntry(String.Format("startPos: {0},{1}", Position.X.ToString(), Position.Y.ToString()));
             Orientation = startOrientation;
             lastDirection = Vector2.Zero;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
@@ -179,13 +182,6 @@ namespace Duologue.PlayObjects
             Radius = buzzBase.Width/radiusDivisor;
             if (buzzBase.Height/radiusDivisor > Radius)
                 Radius = buzzBase.Height/radiusDivisor;
-
-            // FIXME
-            // To be safe, we shouldn't assume that the blades
-            // are the largest part of the image
-            realSize = new Vector2(
-                buzzBlades.Width,
-                buzzBlades.Height);
 
             baseLayer = LocalInstanceManager.BlitLayer_EnemyBase;
             bladesLayer = LocalInstanceManager.BlitLayer_EnemyBase + 0.1f;
@@ -425,15 +421,15 @@ namespace Duologue.PlayObjects
             }
 
             // Check boundaries
-            if (this.Position.X < -1 * realSize.X * outsideScreenMultiplier)
-                this.Position.X = -1 * realSize.X * outsideScreenMultiplier;
-            else if (this.Position.X > InstanceManager.DefaultViewport.Width + realSize.X * outsideScreenMultiplier)
-                this.Position.X = InstanceManager.DefaultViewport.Width + realSize.X * outsideScreenMultiplier;
+            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
+                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
 
-            if (this.Position.Y < -1 * realSize.Y * outsideScreenMultiplier)
-                this.Position.Y = -1 * realSize.Y * outsideScreenMultiplier;
-            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + realSize.Y * outsideScreenMultiplier)
-                this.Position.Y = InstanceManager.DefaultViewport.Height + realSize.Y * outsideScreenMultiplier;
+            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
 
             return true;
         }
