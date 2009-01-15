@@ -79,6 +79,11 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const float radiusMultiplier = 0.2f;
 
+        /// <summary>
+        /// The minimum distance a player needs to be before I notice them
+        /// </summary>
+        private const float minPlayerDistanceMultiplier = 3f;
+
         #region Forces
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
@@ -122,6 +127,7 @@ namespace Duologue.PlayObjects
 
         // Movement
         private Vector2 offset;
+        private Vector2 playerOffset;
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
         private Vector2 lastDirection;
@@ -129,6 +135,9 @@ namespace Duologue.PlayObjects
         private bool startedMoving;
         private int rotationAccelSign;
         private float rotationAccel;
+
+        private bool isFleeing;
+        private bool inBeam;
         #endregion
 
         #region Properties
@@ -331,6 +340,7 @@ namespace Duologue.PlayObjects
                 nearestPlayer = Vector2.Zero;
             }
             playersDetected = 0;
+            playerOffset = Vector2.Zero;
             return true;
         }
 
@@ -343,18 +353,21 @@ namespace Duologue.PlayObjects
                 // Player
                 Vector2 vToPlayer = this.Position - pobj.Position;
                 float len = vToPlayer.Length();
-                if (len < nearestPlayerRadius)
-                {
-                    nearestPlayerRadius = len;
-                    nearestPlayer = vToPlayer;
-                }
+
                 if (len < this.Radius + pobj.Radius)
                 {
                     // We're on them, kill em
                     return pobj.TriggerHit(this);
                 }
 
-                /*
+                // Figure out if we need to attack them
+                if (len < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = len;
+                    nearestPlayer = vToPlayer;
+                }
+
+                
                 // Beam handling
                 int temp = ((Player)pobj).IsInBeam(this);
                 inBeam = false;
@@ -370,7 +383,7 @@ namespace Duologue.PlayObjects
                             c = ColorState.Positive[ColorState.Light];
                         LocalInstanceManager.Steam.AddParticles(Position, c);
                     }
-                }*/
+                }
                 return true;
             }
             else if (pobj.MajorType == MajorPlayObjectType.Enemy)
@@ -401,12 +414,16 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
+            // First, no motion if no players have ever been detected
             if (playersDetected < 1 && !startedMoving)
             {
                 Vector2 temp = Vector2.Negate(GetVectorPointingAtOrigin());
                 temp.Normalize();
                 offset += temp * egressSpeed;
             }
+
+            // Next do any player offset
+            
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
