@@ -37,6 +37,8 @@ namespace Duologue.PlayObjects
         private const string filename_outline = "Enemies/wiggles/0{0}-outline"; // FIXME, silliness
         private const string filename_invertOutline = "Enemies/wiggles/0{0}-invert-outline"; // Bah, who cares
 
+        private const float maxShadowOffset = 10f;
+
         private const int numberOfWalkingFrames = 8;
 
         /// <summary>
@@ -113,6 +115,10 @@ namespace Duologue.PlayObjects
         private Texture2D[] invertOutlineFrames;
         private Vector2[] walkingCenters;
         private int currentFrame;
+        private Vector2 shadowOffset;
+        private Color shadowColor;
+
+        private Vector2 screenCenter;
 
         private int playersDetected;
 
@@ -238,6 +244,8 @@ namespace Duologue.PlayObjects
             timeSinceStart = 0;
             rotationChangeTimer = 0;
 
+            shadowColor = new Color(Color.Black, 200);
+
             Initialized = true;
             Alive = true;
         }
@@ -254,6 +262,32 @@ namespace Duologue.PlayObjects
                     InstanceManager.DefaultViewport.Height / 2f);
             return sc - Position;
         }
+
+        /// <summary>
+        /// Figure out the current treadoffset
+        /// </summary>
+        private void ComputeShadowOffset()
+        {
+            if (screenCenter == Vector2.Zero)
+            {
+                screenCenter = new Vector2(
+                    InstanceManager.GraphicsDevice.Viewport.Width / 2f,
+                    InstanceManager.GraphicsDevice.Viewport.Height / 2f);
+                InstanceManager.Logger.LogEntry(screenCenter.ToString());
+            }
+
+            // Get distance
+            float distance = Vector2.Subtract(screenCenter, Position).Length();
+
+            // Compute the size of the offset based on distance
+            float size = maxShadowOffset * (distance / screenCenter.Length());
+
+            // Aim at center of screen
+            shadowOffset = Vector2.Add(screenCenter, Position);
+            shadowOffset.Normalize();
+            //shadowOffset = Vector2.Negate(shadowOffset);
+            shadowOffset *= size;
+        }
         #endregion
 
         #region Public Methods
@@ -267,6 +301,17 @@ namespace Duologue.PlayObjects
                 c = ColorState.Positive[ColorState.Light];
 
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation) + MathHelper.Pi + MathHelper.PiOver2;
+
+            // Draw shadow
+            InstanceManager.RenderSprite.Draw(
+                baseFrames[currentFrame],
+                Position + shadowOffset,
+                walkingCenters[currentFrame],
+                null,
+                shadowColor,
+                rotation,
+                1f,
+                baseLayer);
 
             // Draw base
             InstanceManager.RenderSprite.Draw(
@@ -326,6 +371,8 @@ namespace Duologue.PlayObjects
             }
             if (currentFrame >= numberOfWalkingFrames)
                 currentFrame = 0;
+
+            ComputeShadowOffset();
         }
         #endregion
 
