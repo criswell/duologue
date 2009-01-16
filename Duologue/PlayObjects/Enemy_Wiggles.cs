@@ -415,7 +415,6 @@ namespace Duologue.PlayObjects
                     nearestPlayer = vToPlayer;
                     nearestPlayerObject = (Player)pobj;
                 }
-
                 
                 // Beam handling
                 int temp = ((Player)pobj).IsInBeam(this);
