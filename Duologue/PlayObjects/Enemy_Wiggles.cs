@@ -82,7 +82,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The minimum distance a player needs to be before I notice them
         /// </summary>
-        private const float minPlayerDistanceMultiplier = 3f;
+        private const float minPlayerDistanceMultiplier = 5f;
 
         #region Forces
         /// <summary>
@@ -130,6 +130,7 @@ namespace Duologue.PlayObjects
         private Vector2 playerOffset;
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
+        private Player nearestPlayerObject;
         private Vector2 lastDirection;
         private float walkingSpeed;
         private bool startedMoving;
@@ -365,6 +366,7 @@ namespace Duologue.PlayObjects
                 {
                     nearestPlayerRadius = len;
                     nearestPlayer = vToPlayer;
+                    nearestPlayerObject = (Player)pobj;
                 }
 
                 
@@ -421,9 +423,29 @@ namespace Duologue.PlayObjects
                 temp.Normalize();
                 offset += temp * egressSpeed;
             }
+            else
+            {
 
-            // Next do any player offset
-            
+                // Next do any player offset
+                if (nearestPlayerRadius < minPlayerDistanceMultiplier * (this.Radius + nearestPlayerObject.Radius))
+                {
+                    float modifier = playerAttract;
+                    if (inBeam)
+                        modifier = playerAttractAccel;
+
+                    nearestPlayer.Normalize();
+
+                    if (!isFleeing)
+                        nearestPlayer = Vector2.Negate(nearestPlayer);
+
+                    offset += modifier * nearestPlayer;
+                    CurrentState = WigglesState.Running;
+                }
+                else
+                {
+                    CurrentState = WigglesState.Walking;
+                }
+            }
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
