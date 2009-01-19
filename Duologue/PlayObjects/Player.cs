@@ -935,7 +935,7 @@ namespace Duologue.PlayObjects
                 c,
                 TreadRotation,
                 1f,
-                0.5f);
+                LocalInstanceManager.BlitLayer_PlayerBase);
 
 
             // Base
@@ -947,7 +947,7 @@ namespace Duologue.PlayObjects
                 c,
                 BaseRotation,
                 1f,
-                0.5f);
+                LocalInstanceManager.BlitLayer_PlayerBase);
         }
 
         /// <summary>
@@ -1023,7 +1023,8 @@ namespace Duologue.PlayObjects
                 c,
                 CannonRotation,
                 1f,
-                0.5f);
+                LocalInstanceManager.BlitLayer_PlayerBase,
+                RenderSpriteBlendMode.AlphaBlendTop);
         }
 
         private void DrawPlayerTank(byte? tankTransparency)
@@ -1046,7 +1047,8 @@ namespace Duologue.PlayObjects
                 c,
                 TreadRotation,
                 1f,
-                0.5f);
+                LocalInstanceManager.BlitLayer_PlayerBase,
+                RenderSpriteBlendMode.AlphaBlendTop);
 
 
             // Base
@@ -1058,7 +1060,8 @@ namespace Duologue.PlayObjects
                 c,
                 BaseRotation,
                 1f,
-                0.5f);
+                LocalInstanceManager.BlitLayer_PlayerBase,
+                RenderSpriteBlendMode.AlphaBlendTop);
 
             // Shine
             RenderSprite.Draw(
@@ -1069,7 +1072,8 @@ namespace Duologue.PlayObjects
                 c,
                 0f,
                 1f,
-                0.5f);
+                LocalInstanceManager.BlitLayer_PlayerBase,
+                RenderSpriteBlendMode.AlphaBlendTop);
         }
 
         /// <summary>
