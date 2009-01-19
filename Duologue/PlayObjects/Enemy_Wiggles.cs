@@ -65,7 +65,8 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const double timePerFrameRunning = 0.05;
 
-        private const double timePerFrameDying = 0.2;
+        private const double deltaTimePerFrameDying = 0.05;
+        private const double startTimePerFrameDying = 0.05;
 
         /// <summary>
         /// Our speed when we're just randomly walking around
@@ -147,6 +148,7 @@ namespace Duologue.PlayObjects
         private float outlineLayer;
 
         private double timeSinceStart;
+        private double currentTimePerFrameDying;
 
         private double rotationChangeTimer;
 
@@ -416,10 +418,11 @@ namespace Duologue.PlayObjects
                 case WigglesState.Fading:
                     break;
                 default:
-                    if (timeSinceStart > timePerFrameDying)
+                    if (timeSinceStart > currentTimePerFrameDying)
                     {
                         currentFrame++;
                         timeSinceStart = 0;
+                        currentTimePerFrameDying += deltaTimePerFrameDying;
                         if (currentFrame >= numberOfDeathFrames)
                         {
                             currentFrame = 0;
@@ -592,7 +595,7 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet && CurrentState != WigglesState.Dying && CurrentState != WigglesState.Fading)
             {
                 Color c = ColorState.Negative[ColorState.Light];
                 if (ColorPolarity == ColorPolarity.Positive)
@@ -604,6 +607,7 @@ namespace Duologue.PlayObjects
                     CurrentState = WigglesState.Dying;
                     currentFrame = 0;
                     timeSinceStart = 0;
+                    currentTimePerFrameDying = startTimePerFrameDying;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     // FIXME_SFX need enemy explosion here (or maybe in GPSM)
                     return false;
