@@ -448,7 +448,8 @@ namespace Duologue.UI
                     playerFont,
                     playerText,
                     origin,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    RenderSpriteBlendMode.AlphaBlendTop);
             }
             else
             {
@@ -456,7 +457,8 @@ namespace Duologue.UI
                     playerFont,
                     gameOverText,
                     origin,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    RenderSpriteBlendMode.AlphaBlendTop);
             }
 
             // Lives
@@ -470,7 +472,8 @@ namespace Duologue.UI
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
                     0f,
                     1f,
-                    0f);
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
             }
 
 
@@ -482,7 +485,8 @@ namespace Duologue.UI
                     scoreFont,
                     "0",
                     charPos,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    RenderSpriteBlendMode.AlphaBlendTop);
                 currentChar++;
             }
 
@@ -493,7 +497,8 @@ namespace Duologue.UI
                     scoreFont,
                     chars.Current.ToString(),
                     charPos,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light]);
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    RenderSpriteBlendMode.AlphaBlendTop);
 
                 if (scrollingScore < score &&
                     diffLength > 0 &&
@@ -508,7 +513,7 @@ namespace Duologue.UI
                             associatedPlayer.PlayerColor.Colors[PlayerColors.Light].G,
                             associatedPlayer.PlayerColor.Colors[PlayerColors.Light].B,
                             (byte)100),
-                        RenderSpriteBlendMode.Addititive);
+                        RenderSpriteBlendMode.AddititiveTop);
                 }
 
                 currentChar++;
