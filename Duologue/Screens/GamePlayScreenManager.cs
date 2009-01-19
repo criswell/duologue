@@ -116,6 +116,7 @@ namespace Duologue.Screens
             waveDisplay = new WaveDisplay(localGame);
             localGame.Components.Add(waveDisplay);
             gamePlayLoop = new GamePlayLoop(localGame, this);
+            gamePlayLoop.DrawOrder = 4;
             localGame.Components.Add(gamePlayLoop);
 
             // Game over screen starts out invisble

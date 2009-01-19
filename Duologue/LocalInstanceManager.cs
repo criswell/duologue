@@ -266,7 +266,7 @@ namespace Duologue
         /// 1           -       Background
         /// 2
         /// 3
-        /// 4
+        /// 4           -       GamePlayItems
         /// 5
         /// 6
         /// 7           -       Explosion and steam elements
