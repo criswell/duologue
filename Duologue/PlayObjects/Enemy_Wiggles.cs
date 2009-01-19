@@ -36,10 +36,13 @@ namespace Duologue.PlayObjects
         private const string filename_base = "Enemies/wiggles/0{0}-base"; // FIXME, silliness
         private const string filename_outline = "Enemies/wiggles/0{0}-outline"; // FIXME, silliness
         private const string filename_invertOutline = "Enemies/wiggles/0{0}-invert-outline"; // Bah, who cares
+        private const string filename_deathOutline = "Enemies/wiggles/death-0{0}-outline";
+        private const string filename_deathBase = "Enemies/wiggles/death-0{0}-base";
 
         private const float maxShadowOffset = 10f;
 
         private const int numberOfWalkingFrames = 8;
+        private const int numberOfDeathFrames = 7;
 
         /// <summary>
         /// The time per frame while we're walking
@@ -114,6 +117,9 @@ namespace Duologue.PlayObjects
         private Texture2D[] outlineFrames;
         private Texture2D[] invertOutlineFrames;
         private Vector2[] walkingCenters;
+        private Texture2D[] deathBaseFrames;
+        private Texture2D[] deathOutlineFrames;
+        private Vector2[] deathCenters;
         private int currentFrame;
         private Vector2 shadowOffset;
         private Color shadowColor;
@@ -208,6 +214,9 @@ namespace Duologue.PlayObjects
             outlineFrames = new Texture2D[numberOfWalkingFrames];
             walkingCenters = new Vector2[numberOfWalkingFrames];
             invertOutlineFrames = new Texture2D[numberOfWalkingFrames];
+            deathBaseFrames = new Texture2D[numberOfDeathFrames];
+            deathOutlineFrames = new Texture2D[numberOfDeathFrames];
+            deathCenters = new Vector2[numberOfDeathFrames];
 
             // load the base frames
             for (int i = 1; i <= numberOfWalkingFrames; i++)
@@ -226,7 +235,18 @@ namespace Duologue.PlayObjects
 
             Radius = RealSize.Length() * radiusMultiplier;
 
-            // load the death frames FIXME TODO
+            // load the death frames
+            for (int i = 1; i <= numberOfDeathFrames; i++)
+            {
+                deathBaseFrames[i - 1] = InstanceManager.AssetManager.LoadTexture2D(
+                    String.Format(filename_deathBase, i.ToString()));
+                deathOutlineFrames[i - 1] = InstanceManager.AssetManager.LoadTexture2D(
+                    String.Format(filename_deathOutline, i.ToString()));
+
+                deathCenters[i - 1] = new Vector2(
+                    deathBaseFrames[i - 1].Width / 2f,
+                    deathBaseFrames[i - 1].Height / 2f);
+            }
 
             // We want a random starting frame, otherwise everyone will look "the same"
             currentFrame = MWMathHelper.GetRandomInRange(0, numberOfWalkingFrames);
