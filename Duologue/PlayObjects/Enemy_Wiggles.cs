@@ -30,7 +30,8 @@ namespace Duologue.PlayObjects
         {
             Walking,
             Running,
-            Dying
+            Dying,
+            Fading
         }
         #region Constants
         private const string filename_base = "Enemies/wiggles/0{0}-base"; // FIXME, silliness
@@ -45,6 +46,16 @@ namespace Duologue.PlayObjects
         private const int numberOfDeathFrames = 7;
 
         /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 50;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 2;
+
+        /// <summary>
         /// The time per frame while we're walking
         /// </summary>
         private const double timePerFrameWalking = 0.15;
@@ -53,6 +64,8 @@ namespace Duologue.PlayObjects
         /// The time per frame while we're running
         /// </summary>
         private const double timePerFrameRunning = 0.05;
+
+        private const double timePerFrameDying = 0.2;
 
         /// <summary>
         /// Our speed when we're just randomly walking around
@@ -321,12 +334,22 @@ namespace Duologue.PlayObjects
                 c = ColorState.Positive[ColorState.Light];
 
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation) + MathHelper.Pi + MathHelper.PiOver2;
+            Texture2D baseImg = baseFrames[currentFrame];
+            Texture2D outlineImg = outlineFrames[currentFrame];
+            Vector2 cent = walkingCenters[currentFrame];
+
+            if (CurrentState == WigglesState.Dying)
+            {
+                baseImg = deathBaseFrames[currentFrame];
+                outlineImg = deathOutlineFrames[currentFrame];
+                cent = deathCenters[currentFrame];
+            }
 
             // Draw shadow
             InstanceManager.RenderSprite.Draw(
-                baseFrames[currentFrame],
+                baseImg,
                 Position + shadowOffset,
-                walkingCenters[currentFrame],
+                cent,
                 null,
                 shadowColor,
                 rotation,
@@ -335,9 +358,9 @@ namespace Duologue.PlayObjects
 
             // Draw base
             InstanceManager.RenderSprite.Draw(
-                baseFrames[currentFrame],
+                baseImg,
                 Position,
-                walkingCenters[currentFrame],
+                cent,
                 null,
                 c,
                 rotation,
@@ -346,14 +369,15 @@ namespace Duologue.PlayObjects
 
             // Draw Outline
             InstanceManager.RenderSprite.Draw(
-                outlineFrames[currentFrame],
+                outlineImg,
                 Position,
-                walkingCenters[currentFrame],
+                cent,
                 null,
                 Color.White,
                 rotation,// + MathHelper.PiOver2,
                 1f,
                 outlineLayer);
+
         }
 
         public override void Update(GameTime gameTime)
@@ -376,6 +400,8 @@ namespace Duologue.PlayObjects
                     {
                         currentFrame++;
                         timeSinceStart = 0;
+                        if (currentFrame >= numberOfWalkingFrames)
+                            currentFrame = 0;
                     }
                     break;
                 case WigglesState.Running:
@@ -383,14 +409,25 @@ namespace Duologue.PlayObjects
                     {
                         currentFrame++;
                         timeSinceStart = 0;
+                        if (currentFrame >= numberOfWalkingFrames)
+                            currentFrame = 0;
                     }
                     break;
+                case WigglesState.Fading:
+                    break;
                 default:
-                    // We're dying
+                    if (timeSinceStart > timePerFrameDying)
+                    {
+                        currentFrame++;
+                        timeSinceStart = 0;
+                        if (currentFrame >= numberOfDeathFrames)
+                        {
+                            currentFrame = 0;
+                            CurrentState = WigglesState.Fading;
+                        }
+                    }
                     break;
             }
-            if (currentFrame >= numberOfWalkingFrames)
-                currentFrame = 0;
 
             ComputeShadowOffset();
         }
@@ -399,7 +436,7 @@ namespace Duologue.PlayObjects
         #region Public overrides
         public override bool StartOffset()
         {
-            if (CurrentState != WigglesState.Dying)
+            if (CurrentState != WigglesState.Dying && CurrentState != WigglesState.Fading)
             {
                 offset = Orientation * walkingSpeed;
                 if (CurrentState == WigglesState.Running)
@@ -414,42 +451,44 @@ namespace Duologue.PlayObjects
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            if (pobj.MajorType == MajorPlayObjectType.Player)
-            {
-                playersDetected++;
-                startedMoving = true;
-                // Player
-                Vector2 vToPlayer = this.Position - pobj.Position;
-                float len = vToPlayer.Length();
+            if(CurrentState != WigglesState.Dying && CurrentState != WigglesState.Fading) {
+                if (pobj.MajorType == MajorPlayObjectType.Player)
+                {
+                    playersDetected++;
+                    startedMoving = true;
+                    // Player
+                    Vector2 vToPlayer = this.Position - pobj.Position;
+                    float len = vToPlayer.Length();
 
-                if (len < this.Radius + pobj.Radius)
-                {
-                    // We're on them, kill em
-                    return pobj.TriggerHit(this);
-                }
-
-                // Figure out if we need to attack them
-                if (len < nearestPlayerRadius)
-                {
-                    nearestPlayerRadius = len;
-                    nearestPlayer = vToPlayer;
-                    nearestPlayerObject = (Player)pobj;
-                }
-                
-                // Beam handling
-                int temp = ((Player)pobj).IsInBeam(this);
-                inBeam = false;
-                isFleeing = false;
-                if (temp != 0)
-                {
-                    inBeam = true;
-                    if (temp == -1)
+                    if (len < this.Radius + pobj.Radius)
                     {
-                        isFleeing = true;
-                        Color c = ColorState.Negative[ColorState.Light];
-                        if(ColorPolarity == ColorPolarity.Positive)
-                            c = ColorState.Positive[ColorState.Light];
-                        LocalInstanceManager.Steam.AddParticles(Position, c);
+                        // We're on them, kill em
+                        return pobj.TriggerHit(this);
+                    }
+
+                    // Figure out if we need to attack them
+                    if (len < nearestPlayerRadius)
+                    {
+                        nearestPlayerRadius = len;
+                        nearestPlayer = vToPlayer;
+                        nearestPlayerObject = (Player)pobj;
+                    }
+
+                    // Beam handling
+                    int temp = ((Player)pobj).IsInBeam(this);
+                    inBeam = false;
+                    isFleeing = false;
+                    if (temp != 0)
+                    {
+                        inBeam = true;
+                        if (temp == -1)
+                        {
+                            isFleeing = true;
+                            Color c = ColorState.Negative[ColorState.Light];
+                            if (ColorPolarity == ColorPolarity.Positive)
+                                c = ColorState.Positive[ColorState.Light];
+                            LocalInstanceManager.Steam.AddParticles(Position, c);
+                        }
                     }
                 }
                 return true;
@@ -482,67 +521,70 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            // First, no motion if no players have ever been detected
-            if (playersDetected < 1 && !startedMoving)
+            if (CurrentState != WigglesState.Fading && CurrentState != WigglesState.Dying)
             {
-                Vector2 temp = Vector2.Negate(GetVectorPointingAtOrigin());
-                temp.Normalize();
-                offset += temp * egressSpeed;
-            }
-            else
-            {
-
-                // Next do any player offset
-                if (nearestPlayerRadius < minPlayerDistanceMultiplier * (this.Radius + nearestPlayerObject.Radius))
+                // First, no motion if no players have ever been detected
+                if (playersDetected < 1 && !startedMoving)
                 {
-                    float modifier = playerAttract;
-                    if (inBeam)
-                        modifier = playerAttractAccel;
-
-                    nearestPlayer.Normalize();
-
-                    if (!isFleeing)
-                        nearestPlayer = Vector2.Negate(nearestPlayer);
-
-                    offset += modifier * nearestPlayer;
-                    CurrentState = WigglesState.Running;
+                    Vector2 temp = Vector2.Negate(GetVectorPointingAtOrigin());
+                    temp.Normalize();
+                    offset += temp * egressSpeed;
                 }
                 else
                 {
-                    CurrentState = WigglesState.Walking;
+
+                    // Next do any player offset
+                    if (nearestPlayerRadius < minPlayerDistanceMultiplier * (this.Radius + nearestPlayerObject.Radius))
+                    {
+                        float modifier = playerAttract;
+                        if (inBeam)
+                            modifier = playerAttractAccel;
+
+                        nearestPlayer.Normalize();
+
+                        if (!isFleeing)
+                            nearestPlayer = Vector2.Negate(nearestPlayer);
+
+                        offset += modifier * nearestPlayer;
+                        CurrentState = WigglesState.Running;
+                    }
+                    else
+                    {
+                        CurrentState = WigglesState.Walking;
+                    }
                 }
-            }
 
-            // Next apply the offset permanently
-            if (offset.Length() >= minMovement)
-            {
-                this.Position += offset;
-                offset.Normalize();
-                lastDirection = offset;
-                Orientation = MWMathHelper.RotateVectorByRadians(offset, rotationAccel * rotationAccelSign);
-            }
+                // Next apply the offset permanently
+                if (offset.Length() >= minMovement)
+                {
+                    this.Position += offset;
+                    offset.Normalize();
+                    lastDirection = offset;
+                    Orientation = MWMathHelper.RotateVectorByRadians(offset, rotationAccel * rotationAccelSign);
+                }
 
-            // Check boundaries
-            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
-            {
-                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
-                Orientation.X = Math.Abs(Orientation.X);
-            }
-            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
-            {
-                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
-                Orientation.X = -1 * Math.Abs(Orientation.X);
-            }
+                // Check boundaries
+                if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
+                {
+                    this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
+                    Orientation.X = Math.Abs(Orientation.X);
+                }
+                else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+                {
+                    this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
+                    Orientation.X = -1 * Math.Abs(Orientation.X);
+                }
 
-            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
-            {
-                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
-                Orientation.Y = Math.Abs(Orientation.Y);
-            }
-            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
-            {
-                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
-                Orientation.Y = -1 * Math.Abs(Orientation.Y) ;
+                if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
+                {
+                    this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
+                    Orientation.Y = Math.Abs(Orientation.Y);
+                }
+                else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
+                {
+                    this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
+                    Orientation.Y = -1 * Math.Abs(Orientation.Y);
+                }
             }
 
             return true;
@@ -550,7 +592,30 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            return true; // FIXME
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                Color c = ColorState.Negative[ColorState.Light];
+                if (ColorPolarity == ColorPolarity.Positive)
+                    c = ColorState.Positive[ColorState.Light];
+
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    CurrentState = WigglesState.Dying;
+                    currentFrame = 0;
+                    timeSinceStart = 0;
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
+                    // FIXME_SFX need enemy explosion here (or maybe in GPSM)
+                    return false;
+                }
+                else
+                {
+                    // FIXME_SFX need some sort of "bonk" sound signifying we shattered a layer of the shield
+                    TriggerShieldDisintegration(invertOutlineFrames[currentFrame], c, Position, 0f);
+                    return true;
+                }
+            }
+            return true;
         }
         #endregion
     }
