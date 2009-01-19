@@ -68,6 +68,8 @@ namespace Duologue.PlayObjects
         private const double deltaTimePerFrameDying = 0.05;
         private const double startTimePerFrameDying = 0.05;
 
+        private const double totalFadeOutTime = 1.0;
+
         /// <summary>
         /// Our speed when we're just randomly walking around
         /// </summary>
@@ -335,6 +337,8 @@ namespace Duologue.PlayObjects
             if(ColorPolarity == ColorPolarity.Positive)
                 c = ColorState.Positive[ColorState.Light];
 
+            Color outlineC = Color.White;
+
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation) + MathHelper.Pi + MathHelper.PiOver2;
             Texture2D baseImg = baseFrames[currentFrame];
             Texture2D outlineImg = outlineFrames[currentFrame];
@@ -345,6 +349,14 @@ namespace Duologue.PlayObjects
                 baseImg = deathBaseFrames[currentFrame];
                 outlineImg = deathOutlineFrames[currentFrame];
                 cent = deathCenters[currentFrame];
+            }
+            else if (CurrentState == WigglesState.Fading)
+            {
+                baseImg = deathBaseFrames[numberOfDeathFrames - 1];
+                outlineImg = deathOutlineFrames[numberOfDeathFrames - 1];
+                cent = deathCenters[numberOfDeathFrames - 1];
+                c = new Color(c, (float)(totalFadeOutTime - timeSinceStart / totalFadeOutTime));
+                outlineC = new Color(outlineC, (float)(totalFadeOutTime - timeSinceStart / totalFadeOutTime));
             }
 
             // Draw shadow
@@ -375,7 +387,7 @@ namespace Duologue.PlayObjects
                 Position,
                 cent,
                 null,
-                Color.White,
+                outlineC,
                 rotation,// + MathHelper.PiOver2,
                 1f,
                 outlineLayer);
@@ -416,6 +428,10 @@ namespace Duologue.PlayObjects
                     }
                     break;
                 case WigglesState.Fading:
+                    if (timeSinceStart > totalFadeOutTime)
+                    {
+                        Alive = false;
+                    }
                     break;
                 default:
                     if (timeSinceStart > currentTimePerFrameDying)
@@ -427,6 +443,7 @@ namespace Duologue.PlayObjects
                         {
                             currentFrame = 0;
                             CurrentState = WigglesState.Fading;
+                            timeSinceStart = 0;
                         }
                     }
                     break;
