@@ -90,6 +90,15 @@ namespace Mimicware
             return rand.Next(lower, upper);
         }
 
+        public static float LimitToRange(float value, float min, float max)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+            return value;
+        }
+
         /// <summary>
         /// Rotate a vector by an angle
         /// </summary>

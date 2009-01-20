@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 // XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -195,8 +194,7 @@ namespace Duologue.Screens
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {
-                new BeatEffectsSong().StopDance();
-                //((DuologueGame)localGame).beatEngine.StopDance();
+                Music.StopSong(SongID.Buzzsaw);
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
                 // FIXME
@@ -240,6 +238,7 @@ namespace Duologue.Screens
                 if (intensityCounter > intensityIncreaseLimit)
                 {
                     InstanceManager.Logger.LogEntry("INTENSITY++");
+                    //FIXME this will crash eventually
                     new BeatEffectsSong().IncreaseIntensity();
                     intensityCounter = 0f;
                 }
@@ -259,6 +258,7 @@ namespace Duologue.Screens
                 intensityTimer = 0f;
                 intensityCounter = 0f;
                 InstanceManager.Logger.LogEntry("INTENSITY--");
+                //FIXME this will crash eventually
                 new BeatEffectsSong().DecreaseIntensity();
             }
 
@@ -306,7 +306,7 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    new BeatEffectsSong().PlayDance();
+                    Music.PlaySong(SongID.Buzzsaw);
                     break;
                 default:
                     // Play the game or game over

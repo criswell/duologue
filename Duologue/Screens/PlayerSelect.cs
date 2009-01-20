@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 // XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +17,7 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.Audio;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.PlayObjects;
@@ -320,6 +320,7 @@ namespace Duologue.Screens
             VoidCountdown();
             if (numActive > 0 && LocalInstanceManager.CurrentGameState == GameState.PlayerSelect)
             {
+                Music.StopSong(SongID.Intro);
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
                 // Set the players
                 SetPlayers();

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 // XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -92,7 +91,6 @@ namespace Duologue
         public AchievementManager achievements;
         public Spinner spinner;
         public ColorStateTestScreen colorStateTest;
-        public SoundEffects soundEffects;
 
         // Screens
         //public MainMenuTest mainMenuTest;
@@ -215,8 +213,6 @@ namespace Duologue
             achievements.Visible = true;*/
             this.Components.Add(achievements);
 
-            soundEffects = new SoundEffects();
-
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
@@ -289,6 +285,8 @@ namespace Duologue
                 scr.SetVisible(false);
                 scr.Enabled = false;
             }
+
+            DuologueAudioNames.LoadAudio(this);
 
             base.Initialize();
         }

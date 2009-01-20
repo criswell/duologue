@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 // XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -793,7 +792,7 @@ namespace Duologue.PlayObjects
                 LocalInstanceManager.PlayerSmoke.AddParticles(this.Position, Color.White);
 
                 // Should trigger other explosions here
-                fx.PlayerExplosion();
+                SoundEffects.PlayerExplosion();
                 
                 // Set the graphical items
                 state = PlayerState.Dying;

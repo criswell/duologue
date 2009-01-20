@@ -12,43 +12,41 @@ namespace Duologue.Audio
     public class BeatEffectsSong
     {
 
+        static private Dictionary<string, Cue> cues;
+
         static private Cue beatSound = null;
         static private Cue danceBass = null;
         static private Cue danceBassplus = null;
         static private Cue danceBeat = null;
         static private Cue danceOrgan = null;
         static private Cue danceGuitar = null;
-        private const string beatName = "beat";
-        private const string bassName = "bass";
-        private const string bassplusName = "bassplus";
-        private const string guitarName = "guitar";
-        private const string organName = "organ";
         static private int intensity = -1;
 
         public BeatEffectsSong()
         {
+            cues = new Dictionary<string, Cue>();
             if(intensity<0)
                 initCues();
         }
 
         protected void initCues()
-        {
+        {/*
             intensity = 1;
             danceBeat =
-                DuologueEnhancedAudioEngine.BeatEffectsSoundBank().GetCue(beatName);
+                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.beatName);
             danceBass =
-                DuologueEnhancedAudioEngine.BeatEffectsSoundBank().GetCue(bassName);
+                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.bassName);
             danceBassplus =
-                DuologueEnhancedAudioEngine.BeatEffectsSoundBank().GetCue(bassplusName);
-            danceGuitar =
-                DuologueEnhancedAudioEngine.BeatEffectsSoundBank().GetCue(guitarName);
+                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.bassplusName);
             danceOrgan =
-                DuologueEnhancedAudioEngine.BeatEffectsSoundBank().GetCue(organName);
+                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.organName);
+            danceGuitar =
+                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.guitarName);
             danceBeat.SetVariable(Loudness.param, Loudness.Full);
             danceBass.SetVariable(Loudness.param, Loudness.Silent);
             danceBassplus.SetVariable(Loudness.param, Loudness.Silent);
             danceGuitar.SetVariable(Loudness.param, Loudness.Silent);
-            danceOrgan.SetVariable(Loudness.param, Loudness.Silent);
+            danceOrgan.SetVariable(Loudness.param, Loudness.Silent);*/
         }
 
         /// <summary>
@@ -114,31 +112,5 @@ namespace Duologue.Audio
                     break;
             }
         }
-
-        /// <summary>
-        /// Techno. Sounds like Keeper's Pub up in here!
-        /// </summary>
-        public void PlayDance()
-        {
-            danceBass.Play();
-            danceBassplus.Play();
-            danceBeat.Play();
-            danceGuitar.Play();
-            danceOrgan.Play();
-        }
-
-        /// <summary>
-        /// Stop that. Just stop it.
-        /// </summary>
-        public void StopDance()
-        {
-            danceBass.Stop(AudioStopOptions.AsAuthored);
-            danceBassplus.Stop(AudioStopOptions.AsAuthored);
-            danceBeat.Stop(AudioStopOptions.AsAuthored);
-            danceGuitar.Stop(AudioStopOptions.AsAuthored);
-            danceOrgan.Stop(AudioStopOptions.AsAuthored);
-            initCues();
-        }
-
     }
 }

@@ -18,6 +18,7 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.Audio;
 using Duologue.Properties;
 using Duologue.Screens;
 #endregion
@@ -36,6 +37,8 @@ namespace Duologue.Screens
         private MainMenu mainMenu;
         private float timeSinceStart;
         private Game localGame;
+        //needed to create a hook to start the background music exactly once
+        private bool startedMusic = false;
         #endregion
 
         #region Properties
@@ -85,6 +88,11 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (!startedMusic)
+            {
+                startedMusic = true;
+                Music.PlaySong(SongID.Intro);
+            }
             if (mainGameLogo.PercentComplete < 1f)
             {
                 mainMenu.Enabled = false;

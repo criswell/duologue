@@ -16,8 +16,8 @@ Global Settings
     Header File = Duologue.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 4046169968;
-    Last Modified High = 29978517;
+    Last Modified Low = 29978517;
+    Last Modified High = 4046169968;
 
     Category
     {
@@ -238,7 +238,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::7108f672-fef6-4b10-9716-ab6e0e726f37;
+            Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -570,6 +570,8 @@ Wave Bank
     Xbox Bank Last Modified High = 0;
     PC Bank Last Modified Low = 4046638718;
     PC Bank Last Modified High = 29978517;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 4046638718;
     Bank Last Revised High = 29978517;
 
@@ -604,8 +606,6 @@ Sound Bank
     Windows File = Win\Sound Bank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 4047263718;
-    Bank Last Modified High = 29978517;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -1016,8 +1016,6 @@ Sound Bank
     Windows File = Win\Flick3r_Dance.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 4047263718;
-    Bank Last Modified High = 29978517;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -1074,7 +1072,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7108f672-fef6-4b10-9716-ab6e0e726f37;
+                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
             }
         }
     }
@@ -1132,7 +1130,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7108f672-fef6-4b10-9716-ab6e0e726f37;
+                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
             }
         }
     }
@@ -1190,7 +1188,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7108f672-fef6-4b10-9716-ab6e0e726f37;
+                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
             }
         }
     }
@@ -1248,7 +1246,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7108f672-fef6-4b10-9716-ab6e0e726f37;
+                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
             }
         }
     }
@@ -1306,7 +1304,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7108f672-fef6-4b10-9716-ab6e0e726f37;
+                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
             }
         }
     }
@@ -1419,8 +1417,6 @@ Sound Bank
     Windows File = Win\OneFileMusic.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 4047263718;
-    Bank Last Modified High = 29978517;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 

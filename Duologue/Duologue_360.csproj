@@ -65,10 +65,14 @@
   <ItemGroup>
     <Compile Include="AchievementSystem\Achievement.cs" />
     <Compile Include="AchievementSystem\AchievementManager.cs" />
+    <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Audio\BeatEffectsSong.cs" />
     <Compile Include="Audio\BeatEngine.cs" />
-    <Compile Include="Audio\DuologueEnhancedAudioEngine.cs" />
-    <Compile Include="Audio\MainMenuMusic.cs" />
+    <Compile Include="Audio\DuologueAudioNames.cs" />
+    <Compile Include="Audio\IIntensitySong.cs" />
+    <Compile Include="Audio\IntensityController.cs" />
+    <Compile Include="Audio\ISong.cs" />
+    <Compile Include="Audio\Music.cs" />
     <Compile Include="Audio\SoundEffects.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="CreatorsClub\GameScreen.cs" />
