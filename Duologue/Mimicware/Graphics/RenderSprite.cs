@@ -34,6 +34,7 @@ namespace Mimicware.Graphics
         Addititive,
         Multiplicative,
         AlphaBlendTop,
+        AddititiveTop,
     }
     public class RenderSprite
     {
@@ -43,6 +44,7 @@ namespace Mimicware.Graphics
         private List<SpriteObject> additiveSprites;
         private List<SpriteObject> multiplicativeSprites;
         private List<SpriteObject> spritesTop;
+        private List<SpriteObject> additiveSpritesTop;
         #endregion
 
         #region Properties
@@ -56,6 +58,7 @@ namespace Mimicware.Graphics
             spritesTop = new List<SpriteObject>();
             additiveSprites = new List<SpriteObject>();
             multiplicativeSprites = new List<SpriteObject>();
+            additiveSpritesTop = new List<SpriteObject>();
         }
         #endregion
 
@@ -86,6 +89,16 @@ namespace Mimicware.Graphics
         {
             additiveSprites.Add(spriteObject);
         }
+
+        /// <summary>
+        /// Adds a sprite to the additive top batch
+        /// </summary>
+        /// <param name="spriteObject">The sprite object to add</param>
+        private void AddAdditiveTop(SpriteObject spriteObject)
+        {
+            additiveSpritesTop.Add(spriteObject);
+        }
+
 
         /// <summary>
         /// Adds a sprite to the multiplicative batch
@@ -237,6 +250,17 @@ namespace Mimicware.Graphics
                         layer));
             else if (mode == RenderSpriteBlendMode.AlphaBlendTop)
                 this.AddTop(
+                    new SpriteObject(
+                        texture,
+                        position,
+                        center,
+                        source,
+                        tint,
+                        rotation,
+                        scale,
+                        layer));
+            else if (mode == RenderSpriteBlendMode.AddititiveTop)
+                this.AddAdditiveTop(
                     new SpriteObject(
                         texture,
                         position,
@@ -619,6 +643,17 @@ namespace Mimicware.Graphics
                 batch.End();
             }
             spritesTop.Clear();
+
+            // Render the top additive
+            if (additiveSpritesTop.Count > 0)
+            {
+                batch.Begin(SpriteBlendMode.Additive);
+
+                RenderAllSprites(additiveSpritesTop);
+
+                batch.End();
+            }
+            additiveSpritesTop.Clear();
         }
         #endregion
     }
