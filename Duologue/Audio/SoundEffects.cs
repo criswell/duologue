@@ -9,8 +9,8 @@ namespace Duologue.Audio
     /// </summary>
     public class SoundEffects
     {
-        public const string PlayerWaveBank = "Content\\Audio\\Wave Bank.xwb";
-        public const string PlayerSoundBank = "Content\\Audio\\Sound Bank.xsb";
+        public const string PlayerEffectsWB = "Content\\Audio\\PlayerEffects.xwb";
+        public const string PlayerEffectsSB = "Content\\Audio\\PlayerEffects.xsb";
         
         public const string Bamboo = "bambooclick";
         public const string Explosion = "player-explosion";
@@ -28,7 +28,7 @@ namespace Duologue.Audio
         /// </summary>
         public static void PlayerExplosion()
         {
-            AudioHelper.PlayCue(PlayerSoundBank, Explosion, PlayType.Single);
+            AudioHelper.PlayCue(PlayerEffectsSB, Explosion, PlayType.Single);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Duologue.Audio
         /// </summary>
         public static void BambooClick()
         {
-            AudioHelper.PlayCue(PlayerSoundBank, Bamboo, PlayType.Single);
+            AudioHelper.PlayCue(PlayerEffectsSB, Bamboo, PlayType.Single);
         }
 
         public static void init(Game param_game)
@@ -44,13 +44,13 @@ namespace Duologue.Audio
             List<string> effectNames = new List<string> {
                 Bamboo, Explosion, LightColorA, LightColorB
             };
-            AudioHelper.AddBank(PlayerSoundBank, PlayerWaveBank, effectNames);
+            AudioHelper.AddBank(PlayerEffectsSB, PlayerEffectsWB, effectNames);
 
             /* What's all this good for?
 
             SoundEffectsGroup playerFX = new SoundEffectsGroup();
-            playerFX.SoundBankName = PlayerSoundBank;
-            playerFX.WaveBankName = PlayerWaveBank;
+            playerFX.SoundBankName = PlayerEffectsSB;
+            playerFX.WaveBankName = PlayerEffectsWB;
             SoundEffect effect1 = new SoundEffect(Bamboo);
             SoundEffect effect2 = new SoundEffect(Explosion);
             SoundEffect effect3 = new SoundEffect(LightColorA);

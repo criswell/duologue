@@ -16,8 +16,8 @@ Global Settings
     Header File = Duologue.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 29978517;
-    Last Modified High = 4046169968;
+    Last Modified Low = 2853064760;
+    Last Modified High = 29981690;
 
     Category
     {
@@ -238,7 +238,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
+            Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -268,28 +268,28 @@ Global Settings
 
 Wave Bank
 {
-    Name = Wave Bank;
-    Xbox File = Xbox\Wave Bank.xwb;
-    Windows File = Win\Wave Bank.xwb;
+    Name = PlayerEffects;
+    Xbox File = Xbox\PlayerEffects.xwb;
+    Windows File = Win\PlayerEffects.xwb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 2630442330;
-    PC Bank Last Modified High = 29976770;
+    PC Bank Last Modified Low = 2939125806;
+    PC Bank Last Modified High = 29981689;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
-    Bank Last Revised Low = 3084163030;
-    Bank Last Revised High = 29976320;
+    Bank Last Revised Low = 2873344556;
+    Bank Last Revised High = 29981689;
 
     Wave
     {
         Name = click;
-        File = click.wav;
-        Build Settings Last Modified Low = 1536491910;
-        Build Settings Last Modified High = 29975665;
+        File = PlayerEffects\click.wav;
+        Build Settings Last Modified Low = 2116625806;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -310,9 +310,9 @@ Wave Bank
     Wave
     {
         Name = bambooclick;
-        File = bambooclick.wav;
-        Build Settings Last Modified Low = 390612592;
-        Build Settings Last Modified High = 29975748;
+        File = PlayerEffects\bambooclick.wav;
+        Build Settings Last Modified Low = 2321313306;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -333,9 +333,9 @@ Wave Bank
     Wave
     {
         Name = player-explosion;
-        File = Sfx\player-explosion.wav;
-        Build Settings Last Modified Low = 3683592500;
-        Build Settings Last Modified High = 29976250;
+        File = PlayerEffects\player-explosion.wav;
+        Build Settings Last Modified Low = 2468500806;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -356,9 +356,9 @@ Wave Bank
     Wave
     {
         Name = Saxmachine-high;
-        File = Sfx\Saxmachine-high.wav;
-        Build Settings Last Modified Low = 1666608516;
-        Build Settings Last Modified High = 29976304;
+        File = PlayerEffects\Saxmachine-high.wav;
+        Build Settings Last Modified Low = 2602563306;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -379,9 +379,9 @@ Wave Bank
     Wave
     {
         Name = Saxmachine-high2;
-        File = Sfx\Saxmachine-high2.wav;
-        Build Settings Last Modified Low = 1666608516;
-        Build Settings Last Modified High = 29976304;
+        File = PlayerEffects\Saxmachine-high2.wav;
+        Build Settings Last Modified Low = 1677250806;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -402,9 +402,9 @@ Wave Bank
     Wave
     {
         Name = Saxdual;
-        File = Sfx\Saxdual.wav;
-        Build Settings Last Modified Low = 2984631780;
-        Build Settings Last Modified High = 29976320;
+        File = PlayerEffects\Saxdual.wav;
+        Build Settings Last Modified Low = 2873344556;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -425,28 +425,28 @@ Wave Bank
 
 Wave Bank
 {
-    Name = Flick3r_Dance;
-    Xbox File = Xbox\Flick3r_Dance.xwb;
-    Windows File = Win\Flick3r_Dance.xwb;
+    Name = Intensity;
+    Xbox File = Xbox\Intensity.xwb;
+    Windows File = Win\Intensity.xwb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 3536336232;
-    PC Bank Last Modified High = 29976783;
+    PC Bank Last Modified Low = 3824125806;
+    PC Bank Last Modified High = 29981689;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
-    Bank Last Revised Low = 3536023732;
-    Bank Last Revised High = 29976783;
+    Bank Last Revised Low = 3771625806;
+    Bank Last Revised High = 29981689;
 
     Wave
     {
         Name = organ;
-        File = Music\Flick3r_Dance\organ.wav;
-        Build Settings Last Modified Low = 754413988;
-        Build Settings Last Modified High = 29976772;
+        File = Intensity\organ.wav;
+        Build Settings Last Modified Low = 3195844556;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -467,9 +467,9 @@ Wave Bank
     Wave
     {
         Name = bass;
-        File = Music\Flick3r_Dance\bass.wav;
-        Build Settings Last Modified Low = 755038988;
-        Build Settings Last Modified High = 29976772;
+        File = Intensity\bass.wav;
+        Build Settings Last Modified Low = 3281782056;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -490,9 +490,9 @@ Wave Bank
     Wave
     {
         Name = bassplus;
-        File = Music\Flick3r_Dance\bassplus.wav;
-        Build Settings Last Modified Low = 755351488;
-        Build Settings Last Modified High = 29976772;
+        File = Intensity\bassplus.wav;
+        Build Settings Last Modified Low = 3380532056;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -513,9 +513,9 @@ Wave Bank
     Wave
     {
         Name = beat;
-        File = Music\Flick3r_Dance\beat.wav;
-        Build Settings Last Modified Low = 755663988;
-        Build Settings Last Modified High = 29976772;
+        File = Intensity\beat.wav;
+        Build Settings Last Modified Low = 3507719556;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -536,9 +536,9 @@ Wave Bank
     Wave
     {
         Name = guitar;
-        File = Music\Flick3r_Dance\guitar.wav;
-        Build Settings Last Modified Low = 755820238;
-        Build Settings Last Modified High = 29976772;
+        File = Intensity\guitar.wav;
+        Build Settings Last Modified Low = 3771625806;
+        Build Settings Last Modified High = 29981689;
 
         Cache
         {
@@ -559,28 +559,28 @@ Wave Bank
 
 Wave Bank
 {
-    Name = OneFileMusic;
-    Xbox File = Xbox\OneFileMusic.xwb;
-    Windows File = Win\OneFileMusic.xwb;
+    Name = SelectMenu;
+    Xbox File = Xbox\SelectMenu.xwb;
+    Windows File = Win\SelectMenu.xwb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 4046638718;
-    PC Bank Last Modified High = 29978517;
+    PC Bank Last Modified Low = 2231593102;
+    PC Bank Last Modified High = 29981688;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
-    Bank Last Revised Low = 4046638718;
-    Bank Last Revised High = 29978517;
+    Bank Last Revised Low = 2108936852;
+    Bank Last Revised High = 29981688;
 
     Wave
     {
-        Name = nicStage_gso;
-        File = Music\nicStage_gso.wav;
-        Build Settings Last Modified Low = 2696951218;
-        Build Settings Last Modified High = 29978517;
+        Name = SelectMenu;
+        File = SelectMenu.wav;
+        Build Settings Last Modified Low = 2108936852;
+        Build Settings Last Modified High = 29981688;
 
         Cache
         {
@@ -601,11 +601,13 @@ Wave Bank
 
 Sound Bank
 {
-    Name = Sound Bank;
-    Xbox File = Xbox\Sound Bank.xsb;
-    Windows File = Win\Sound Bank.xsb;
+    Name = PlayerEffects;
+    Xbox File = Xbox\PlayerEffects.xsb;
+    Windows File = Win\PlayerEffects.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Bank Last Modified Low = 2853064760;
+    Bank Last Modified High = 29981690;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -644,7 +646,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = click;
                     Entry Index = 0;
@@ -690,7 +692,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = bambooclick;
                     Entry Index = 1;
@@ -736,7 +738,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = player-explosion;
                     Entry Index = 2;
@@ -783,7 +785,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = Saxmachine-high;
                     Entry Index = 3;
@@ -830,7 +832,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = Saxmachine-high2;
                     Entry Index = 4;
@@ -877,7 +879,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = Saxdual;
                     Entry Index = 5;
@@ -1011,11 +1013,13 @@ Sound Bank
 
 Sound Bank
 {
-    Name = Flick3r_Dance;
-    Xbox File = Xbox\Flick3r_Dance.xsb;
-    Windows File = Win\Flick3r_Dance.xsb;
+    Name = Intensity;
+    Xbox File = Xbox\Intensity.xsb;
+    Windows File = Win\Intensity.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Bank Last Modified Low = 2853064760;
+    Bank Last Modified High = 29981690;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -1060,7 +1064,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Flick3r_Dance;
+                    Bank Name = Intensity;
                     Bank Index = 1;
                     Entry Name = organ;
                     Entry Index = 0;
@@ -1072,7 +1076,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
+                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
             }
         }
     }
@@ -1118,7 +1122,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Flick3r_Dance;
+                    Bank Name = Intensity;
                     Bank Index = 1;
                     Entry Name = bass;
                     Entry Index = 1;
@@ -1130,7 +1134,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
+                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
             }
         }
     }
@@ -1176,7 +1180,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Flick3r_Dance;
+                    Bank Name = Intensity;
                     Bank Index = 1;
                     Entry Name = bassplus;
                     Entry Index = 2;
@@ -1188,7 +1192,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
+                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
             }
         }
     }
@@ -1234,7 +1238,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Flick3r_Dance;
+                    Bank Name = Intensity;
                     Bank Index = 1;
                     Entry Name = beat;
                     Entry Index = 3;
@@ -1246,7 +1250,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
+                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
             }
         }
     }
@@ -1292,7 +1296,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Flick3r_Dance;
+                    Bank Name = Intensity;
                     Bank Index = 1;
                     Entry Name = guitar;
                     Entry Index = 4;
@@ -1304,7 +1308,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::b0b9dbfc-f171-4aa3-ad80-0b91f92f7625;
+                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
             }
         }
     }
@@ -1412,11 +1416,13 @@ Sound Bank
 
 Sound Bank
 {
-    Name = OneFileMusic;
-    Xbox File = Xbox\OneFileMusic.xsb;
-    Windows File = Win\OneFileMusic.xsb;
+    Name = SelectMenu;
+    Xbox File = Xbox\SelectMenu.xsb;
+    Windows File = Win\SelectMenu.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Bank Last Modified Low = 2853064760;
+    Bank Last Modified High = 29981690;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -1456,9 +1462,9 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = OneFileMusic;
+                    Bank Name = SelectMenu;
                     Bank Index = 2;
-                    Entry Name = nicStage_gso;
+                    Entry Name = SelectMenu;
                     Entry Index = 0;
                     Weight = 255;
                     Weight Min = 0;

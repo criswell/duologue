@@ -18,17 +18,17 @@ namespace Duologue.Audio
     class Music
     {
 
-        public const string IntroWaveBank = "Content\\Audio\\OneFileMusic.xwb";
-        public const string IntroSoundBank = "Content\\Audio\\OneFileMusic.xsb";
-        public const string IntroCue = "nicStage_gso";
+        public const string SelectMenuWB = "Content\\Audio\\SelectMenu.xwb";
+        public const string SelectMenuSB = "Content\\Audio\\SelectMenu.xsb";
+        public const string SelectMenuCue = "nicStage_gso";
 
-        public const string FirstWaveBank = "Content\\Audio\\Flick3r_Dance.xwb";
-        public const string FirstSoundBank = "Content\\Audio\\Flick3r_Dance.xsb";
-        public const string First1 = "beat";
-        public const string First2 = "bass";
-        public const string First3 = "bassplus";
-        public const string First4 = "organ";
-        public const string First5 = "guitar";
+        public const string IntensityWB = "Content\\Audio\\Intensity.xwb";
+        public const string IntensitySB = "Content\\Audio\\Intensity.xsb";
+        public const string Intensity1 = "beat";
+        public const string Intensity2 = "bass";
+        public const string Intensity3 = "bassplus";
+        public const string Intensity4 = "organ";
+        public const string Intensity5 = "guitar";
 
         public const string WigglesSoundBank = "You gonna get an exception!";
 
@@ -42,23 +42,23 @@ namespace Duologue.Audio
         {
             List<string> introCues = new List<string> 
             {
-                IntroCue
+                SelectMenuCue
             };
-            AudioHelper.AddBank(IntroSoundBank, IntroWaveBank, introCues);
+            AudioHelper.AddBank(SelectMenuSB, SelectMenuWB, introCues);
 
             List<string> firstCues = new List<string>
             {
-                First1, First2, First3, First4, First5
+                Intensity1, Intensity2, Intensity3, Intensity4, Intensity5
             };
-            AudioHelper.AddBank(FirstSoundBank, FirstWaveBank, firstCues);
+            AudioHelper.AddBank(IntensitySB, IntensityWB, firstCues);
 
-            soundBankMap.Add(SongID.First, FirstSoundBank);
-            soundBankMap.Add(SongID.Intro, IntroSoundBank);
+            soundBankMap.Add(SongID.First, IntensitySB);
+            soundBankMap.Add(SongID.Intro, SelectMenuSB);
             soundBankMap.Add(SongID.Wiggles, WigglesSoundBank);
 
             soundBankMap = new Dictionary<SongID, string> {
-                {SongID.Intro, IntroSoundBank}, 
-                {SongID.First, FirstSoundBank}, 
+                {SongID.Intro, SelectMenuSB}, 
+                {SongID.First, IntensitySB}, 
                 {SongID.Wiggles, WigglesSoundBank}
             };
             /*
