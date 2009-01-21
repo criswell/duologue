@@ -13,7 +13,7 @@ namespace Duologue.Audio
         public const string engine = "Content\\Audio\\Duologue.xgs";
         public static void LoadAudio(Game param_game)
         {
-            AudioManager am = new AudioManager(param_game, engine);
+            AudioHelper am = new AudioHelper(param_game, engine);
             Music.init(param_game);
             SoundEffects.init(param_game);
             am.Initialize();

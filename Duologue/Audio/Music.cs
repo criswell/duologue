@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 /// <summary>
 /// Every song used in the game must have its assets identified and initialized here.
-/// Also a convenience class. Provides no-arg methods that invoke AudioManager generics
+/// Also a convenience class. Provides no-arg methods that invoke AudioHelper generics
 /// </summary>
 namespace Duologue.Audio
 {
@@ -44,13 +44,13 @@ namespace Duologue.Audio
             {
                 IntroCue
             };
-            AudioManager.AddBank(IntroSoundBank, IntroWaveBank, introCues);
+            AudioHelper.AddBank(IntroSoundBank, IntroWaveBank, introCues);
 
             List<string> firstCues = new List<string>
             {
                 First1, First2, First3, First4, First5
             };
-            AudioManager.AddBank(FirstSoundBank, FirstWaveBank, firstCues);
+            AudioHelper.AddBank(FirstSoundBank, FirstWaveBank, firstCues);
 
             soundBankMap.Add(SongID.First, FirstSoundBank);
             soundBankMap.Add(SongID.Intro, IntroSoundBank);
@@ -67,7 +67,7 @@ namespace Duologue.Audio
             introSong.SoundBankName = introSoundBankName;
             introSong.WaveBankName = introWaveBankName;
             introSong.Tracks = new List<Track> { { new Track(introCue, 1.0f) } };
-            AudioManager.AddSong(SongID.Intro, introSong);
+            AudioHelper.AddSong(SongID.Intro, introSong);
 
             Song buzzsawSong = new Song();
             buzzsawSong.SoundBankName = buzzsawSoundBank;
@@ -84,12 +84,12 @@ namespace Duologue.Audio
 
         public static void PlaySong(SongID ID)
         {
-            AudioManager.PlayCues(soundBankMap[ID], PlayType.Nonstop);
+            AudioHelper.PlayCues(soundBankMap[ID], PlayType.Nonstop);
         }
 
         public static void StopSong(SongID ID)
         {
-            AudioManager.StopCues(soundBankMap[ID]);
+            AudioHelper.StopCues(soundBankMap[ID]);
         }
     }
 }

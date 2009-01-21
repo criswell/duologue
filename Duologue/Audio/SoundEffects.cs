@@ -1,19 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-//using Microsoft.Xna.Framework.Content;
-//using Microsoft.Xna.Framework.GamerServices;
-//using Microsoft.Xna.Framework.Graphics;
-//using Microsoft.Xna.Framework.Input;
-////using Microsoft.Xna.Framework.Media;
-//using Microsoft.Xna.Framework.Net;
-//using Microsoft.Xna.Framework.Storage;
-
 
 namespace Duologue.Audio
 {
     /// <summary>
-    /// Convenience class. Provides no-arg methods that invoke AudioManager generics
+    /// Convenience class. Provides no-arg methods that invoke AudioHelper generics
     /// </summary>
     public class SoundEffects
     {
@@ -32,19 +24,19 @@ namespace Duologue.Audio
         }
 
         /// <summary>
-        /// Passes the proper name parameters to the AudioManager
+        /// Passes the proper name parameters to the AudioHelper
         /// </summary>
         public static void PlayerExplosion()
         {
-            AudioManager.PlayCue(PlayerSoundBank, Explosion, PlayType.Single);
+            AudioHelper.PlayCue(PlayerSoundBank, Explosion, PlayType.Single);
         }
 
         /// <summary>
-        /// Passes the proper name parameters to the AudioManager
+        /// Passes the proper name parameters to the AudioHelper
         /// </summary>
         public static void BambooClick()
         {
-            AudioManager.PlayCue(PlayerSoundBank, Bamboo, PlayType.Single);
+            AudioHelper.PlayCue(PlayerSoundBank, Bamboo, PlayType.Single);
         }
 
         public static void init(Game param_game)
@@ -52,7 +44,7 @@ namespace Duologue.Audio
             List<string> effectNames = new List<string> {
                 Bamboo, Explosion, LightColorA, LightColorB
             };
-            AudioManager.AddBank(PlayerSoundBank, PlayerWaveBank, effectNames);
+            AudioHelper.AddBank(PlayerSoundBank, PlayerWaveBank, effectNames);
 
             /* What's all this good for?
 

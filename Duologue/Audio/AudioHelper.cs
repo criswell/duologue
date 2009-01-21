@@ -24,7 +24,7 @@ namespace Duologue.Audio
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class AudioManager : Microsoft.Xna.Framework.GameComponent
+    public class AudioHelper : Microsoft.Xna.Framework.GameComponent
     {
         // A game-specific configurator will pass the appropriate string values
         // to the contructor, so that initialize can load the audio files
@@ -33,7 +33,7 @@ namespace Duologue.Audio
         // However, the IIntensitySong is an immediate example of a specialized need
         // of a game for songs to have a particular type of behavior.
         // Those songs would be able to be put in the songs dictionary,
-        // and this AudioManager could still handle the ISong update tasks (fade in, out)
+        // and this AudioHelper could still handle the ISong update tasks (fade in, out)
         // on them.
         // But something may need to handle ISpecializedSong update tasks on an ad hoc
         // basis in the future, without continually adding specialized dictionaries and
@@ -50,7 +50,7 @@ namespace Duologue.Audio
             new Dictionary<string, Dictionary<string, Cue>>();
         private static List<Cue> usedCues = new List<Cue>();
 
-        public AudioManager(Game game, string engineName) : base(game)
+        public AudioHelper(Game game, string engineName) : base(game)
         {
             game.Components.Add(this);//FIXME I hope this is right...
             engineFileName = engineName;
@@ -196,8 +196,10 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            engine.Update();
             ProcessDynamicCues();
             ProcessPlayedCues();
+            //need something to process "nonstop" play.
             // TODO: Add your update code here
             base.Update(gameTime);
         }
