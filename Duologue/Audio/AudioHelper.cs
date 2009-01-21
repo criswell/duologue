@@ -196,8 +196,10 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            engine.Update();
             ProcessDynamicCues();
             ProcessPlayedCues();
+            //need something to process "nonstop" play.
             // TODO: Add your update code here
             base.Update(gameTime);
         }
