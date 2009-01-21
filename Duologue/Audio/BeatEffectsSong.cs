@@ -6,6 +6,14 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Duologue.Audio
 {
+    //keep from having to tweak floats and add levels in many places
+    public struct Loudness
+    {
+        public const float Silent = 0.0f;
+        public const float Full = 999.0f;
+        public const string param = "Volume";
+    }
+
     /// <summary>
     /// 
     /// </summary>
