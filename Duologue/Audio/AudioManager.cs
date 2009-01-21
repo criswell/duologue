@@ -15,34 +15,10 @@ using Microsoft.Xna.Framework.Storage;
 namespace Duologue.Audio
 {
 
-    //keep from having to tweak floats and add levels in many places
-    public struct Loudness
+    public enum PlayType
     {
-        public const float Silent = 0.0f;
-        public const float Full = 1.0f;
-        public const string param = "Volume";
-    }
-
-    public partial class Track
-    {
-        public Cue CueObj;
-    }
-
-    public partial class Song
-    {
-        public SoundBank SoundBankObj;
-        public WaveBank WaveBankObj;
-    }
-
-    public partial class SoundEffect
-    {
-        public Cue CueObj;
-    }
-
-    public partial class SoundEffectsGroup
-    {
-        public SoundBank SoundBankObj;
-        public WaveBank WaveBankObj;
+        Single,
+        Nonstop
     }
 
     /// <summary>
@@ -63,21 +39,16 @@ namespace Duologue.Audio
         // basis in the future, without continually adding specialized dictionaries and
         // specialized update code to this class. How should we do that?
 
+        private const string volumeName = "Volume";
+
         private static string engineFileName;
         private static AudioEngine engine;
 
-        // Dictionary mapping a string name to a song object
-        private static Dictionary<string, Song> songDict = 
-            new Dictionary<string, Song>();
-
-        private static Dictionary<string, SoundEffectsGroup> effectsDict =
-            new Dictionary<string, SoundEffectsGroup>();
-
-        private static Dictionary<string, SoundBank> soundBanks =
-            new Dictionary<string, SoundBank>();
-
-        public static Dictionary<string, Dictionary<string, Cue>> soundCueMap =
+        private static Dictionary<string, SoundBank> soundBanks = new Dictionary<string, SoundBank>();
+        private static Dictionary<string, WaveBank> waveBanks = new Dictionary<string, WaveBank>();
+        private static Dictionary<string, Dictionary<string, Cue>> cues =
             new Dictionary<string, Dictionary<string, Cue>>();
+        private static List<Cue> usedCues = new List<Cue>();
 
         public AudioManager(Game game, string engineName) : base(game)
         {
@@ -86,89 +57,128 @@ namespace Duologue.Audio
             engine = new AudioEngine(engineFileName);
         }
 
-        /// <summary>
-        /// Add a song to the collection
-        /// </summary>
-        /// <param name="newSong"></param>
-        public static void AddSong(SongID ID, Song newSong)
+        private static void ProcessPlayedCues()
         {
-            // load the sound bank for this song into memory
-            newSong.SoundBankObj = new SoundBank(engine, newSong.SoundBankName);
-            newSong.WaveBankObj = new WaveBank(engine, newSong.WaveBankName);
-            // and each of the cues
-            newSong.Tracks.ForEach(delegate(Track track)
+            usedCues.ForEach(delegate(Cue cue)
             {
-                track.CueObj = newSong.SoundBankObj.GetCue(track.CueName);
+                if (cue.IsStopped)
+                {
+                    cue.Dispose();
+                    usedCues.Remove(cue);
+                }
             });
-            //stick it in the list
-            songDict.Add(ID.ToString(), newSong);
+            //Look for any volume profile adjustments needed (if we are handling that on this side)
         }
 
-        /// <summary>
-        /// Add a group of sound effects, which share a single sound bank,
-        /// to the collection of such groups
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <param name="newGroup"></param>
-        public static void AddSoundEffectsGroup(EffectsGroupID ID,
-            SoundEffectsGroup newGroup)
+        private static void ProcessDynamicCues()
         {
-            newGroup.SoundBankObj = new SoundBank(engine, newGroup.SoundBankName);
-            newGroup.WaveBankObj = new WaveBank(engine, newGroup.WaveBankName);
-            newGroup.Effects.Values.ToList().ForEach(delegate(SoundEffect effect)
+        }
+
+        private static void RecycleCue(string sbname, string cueName)
+        {
+            if (null != cues[sbname][cueName])
             {
-                effect.CueObj = newGroup.SoundBankObj.GetCue(effect.CueName);
+                //don't want to end up with an ever growing list of cues that never played!
+                if (cues[sbname][cueName].IsPlaying ||
+                    cues[sbname][cueName].IsStopping)
+                {
+                    usedCues.Add(cues[sbname][cueName]);
+                }
+                else if (!cues[sbname][cueName].IsDisposed)
+                {
+                    cues[sbname][cueName].Dispose();
+                }
+            }
+            cues[sbname][cueName] = soundBanks[sbname].GetCue(cueName);
+        }
+
+        public static void AddBank(string soundBankName, string waveBankName, List<string> cueNames)
+        {
+            SoundBank tmpSB = new SoundBank(engine, soundBankName);
+            soundBanks.Add(soundBankName, tmpSB);
+            waveBanks.Add(waveBankName, new WaveBank(engine, waveBankName));
+
+            cues.Add(soundBankName, new Dictionary<string, Cue>());
+
+            cueNames.ForEach(delegate(string cueName)
+            {
+                cues[soundBankName].Add(cueName, tmpSB.GetCue(cueName));
             });
-            effectsDict.Add(ID.ToString(), newGroup);
         }
 
-        /// <summary>
-        /// PlayTrack is for single-play sounds, like effects
-        /// </summary>
-        /// <param name="soundBankName">soundBankName</param>
-        /// <param name="cueName">cueName</param>
-        public static void PlayTrack(string soundBankName, string cueName)
+        public static void PlayCue(string sbname, string cueName, PlayType type)
         {
-            RefreshTrack(soundBankName, cueName);
-            soundCueMap[soundBankName][cueName].Play();
+            //FIXME need a volume param. Need to handle repeating.
+            if (type == PlayType.Single)
+            {
+                // no fuss, no muss, no watch for finish, no Dispose()
+                soundBanks[sbname].PlayCue(cueName);
+            }
+            else
+            {
+                RecycleCue(sbname, cueName);
+                cues[sbname][cueName].SetVariable(volumeName, 999.0f); //FIXME
+                cues[sbname][cueName].Play();
+            }
         }
 
-        public static void PlaySoundEffect(EffectsGroupID ID, string effectName)
-        {
-            string groupName = effectsDict[ID.ToString()].SoundBankName;
-            effectsDict[ID.ToString()].Effects[effectName].CueObj.Dispose();
-            effectsDict[ID.ToString()].Effects[effectName].CueObj =
-                effectsDict[ID.ToString()].SoundBankObj.GetCue(effectName);
-            effectsDict[ID.ToString()].Effects[effectName].CueObj.Play();
-        }
 
-        private static void RefreshTrack(string soundBank, string cue)
-        {
-            soundCueMap[soundBank][cue].Dispose();
-            soundCueMap[soundBank][cue] = soundBanks[soundBank].GetCue(cue);
-        }
-
-        public static void PlaySong(SongID ID)
+        public static void PlayCues(string sbname, List<string> cueNames, PlayType type)
         {
             //FIXME at some point, will need to allow for this manager
             //to control repeating loop play, with different cues being
             //different lengths.
-            songDict[ID.ToString()].Tracks.ForEach(delegate(Track track)
+            bool SYNCSTART = false;
+
+            if (SYNCSTART)
             {
-                track.CueObj.Play();
-                track.CueObj.SetVariable(Loudness.param, track.Volume);
+                cueNames.ForEach(delegate(string cueName)
+                {
+                    RecycleCue(sbname, cueName);
+                    cues[sbname][cueName].SetVariable(volumeName, 999.0f); //FIXME
+                });
+                cueNames.ForEach(delegate(string cueName)
+                {
+                    cues[sbname][cueName].Play();
+                });
+            }
+            else
+            {
+                cueNames.ForEach(delegate(string cueName)
+                {
+                    PlayCue(sbname, cueName, type);
+                });
+            }
+        }
+
+        /// <summary>
+        /// This will fire up every cue in the soundbank at the same time.
+        /// </summary>
+        /// <param name="sbname"></param>
+        /// <param name="type"></param>
+        public static void PlayCues(string sbname, PlayType type)
+        {
+            PlayCues(sbname, cues[sbname].Keys.ToList(), type);
+        }
+
+
+        public static void StopCues(string sbname, List<string> cuenames)
+        {
+            cuenames.ForEach(delegate(string cueName)
+            {
+                cues[sbname][cueName].Stop(AudioStopOptions.AsAuthored);
+                RecycleCue(sbname, cueName);
             });
         }
 
-        public static void StopSong(SongID ID)
+
+        /// <summary>
+        /// Stop every cue in the parameter sound bank. Handy for songs.
+        /// </summary>
+        /// <param name="sbname"></param>
+        public static void StopCues(string sbname)
         {
-            Song song = songDict[ID.ToString()];
-            song.Tracks.ForEach(delegate(Track track)
-            {
-                track.CueObj.Stop(AudioStopOptions.AsAuthored);
-                track.CueObj.Dispose();
-                track.CueObj = song.SoundBankObj.GetCue(track.CueName);
-            });
+            StopCues(sbname, cues[sbname].Keys.ToList());
         }
 
         /// <summary>
@@ -186,8 +196,9 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            ProcessDynamicCues();
+            ProcessPlayedCues();
             // TODO: Add your update code here
-
             base.Update(gameTime);
         }
     }

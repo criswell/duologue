@@ -195,7 +195,7 @@ namespace Duologue.Screens
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {
-                Music.StopSong(SongID.Buzzsaw);
+                Music.StopSong(SongID.First);
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
                 // FIXME
@@ -307,7 +307,7 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    Music.PlaySong(SongID.Buzzsaw);
+                    Music.PlaySong(SongID.First);
                     break;
                 default:
                     // Play the game or game over
