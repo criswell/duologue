@@ -82,7 +82,7 @@
   <ItemGroup>
     <Compile Include="AchievementSystem\Achievement.cs" />
     <Compile Include="AchievementSystem\AchievementManager.cs" />
-    <Compile Include="Audio\AudioManager.cs" />
+    <Compile Include="Audio\AudioHelper.cs" />
     <Compile Include="Audio\BeatEffectsSong.cs" />
     <Compile Include="Audio\BeatEngine.cs" />
     <Compile Include="Audio\DuologueAudioNames.cs" />

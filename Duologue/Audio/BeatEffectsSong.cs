@@ -41,15 +41,15 @@ namespace Duologue.Audio
         {/*
             intensity = 1;
             danceBeat =
-                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.beatName);
+                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.beatName);
             danceBass =
-                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.bassName);
+                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.bassName);
             danceBassplus =
-                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.bassplusName);
+                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.bassplusName);
             danceOrgan =
-                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.organName);
+                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.organName);
             danceGuitar =
-                AudioManager.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.guitarName);
+                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.guitarName);
             danceBeat.SetVariable(Loudness.param, Loudness.Full);
             danceBass.SetVariable(Loudness.param, Loudness.Silent);
             danceBassplus.SetVariable(Loudness.param, Loudness.Silent);
