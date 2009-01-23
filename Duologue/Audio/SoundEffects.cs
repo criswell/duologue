@@ -17,8 +17,6 @@ namespace Duologue.Audio
         public const string LightColorA = "Saxdual";
         public const string LightColorB = "Saxmachine-high";
 
-        //am I going to need static containers of sounds here? We will see!
-
         public SoundEffects()
         {
         }

@@ -68,7 +68,7 @@ namespace Duologue.Screens
         #endregion
 
         #region Fields
-        private Game localGame;
+        private DuologueGame localGame;
         private GameWaveManager gameWaveManager;
         //private GameWave currentWave;
         private GamePlayState currentState;
@@ -110,7 +110,7 @@ namespace Duologue.Screens
         #region Constructor / Init
         public GamePlayScreenManager(Game game) : base(game)
         {
-            localGame = game;
+            localGame = (DuologueGame)game;
             gameWaveManager = new GameWaveManager(null);
             waveDisplay = new WaveDisplay(localGame);
             localGame.Components.Add(waveDisplay);
@@ -195,7 +195,7 @@ namespace Duologue.Screens
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {
-                Music.StopSong(SongID.First);
+                Music.StopSong(SongID.Intensity);
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
                 // FIXME
@@ -240,7 +240,8 @@ namespace Duologue.Screens
                 {
                     InstanceManager.Logger.LogEntry("INTENSITY++");
                     //FIXME this will crash eventually
-                    new BeatEffectsSong().IncreaseIntensity();
+                    //new BeatEffectsSong().IncreaseIntensity();
+                    localGame.Audio.Intensity += 0.2f;
                     intensityCounter = 0f;
                 }
             }
@@ -260,7 +261,8 @@ namespace Duologue.Screens
                 intensityCounter = 0f;
                 InstanceManager.Logger.LogEntry("INTENSITY--");
                 //FIXME this will crash eventually
-                new BeatEffectsSong().DecreaseIntensity();
+                //new BeatEffectsSong(localGame.Audio).DecreaseIntensity();
+                localGame.Audio.Intensity -= 0.2f;
             }
 
             /*if (LocalInstanceManager.CurrentGameWave == null)
@@ -307,7 +309,7 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    Music.PlaySong(SongID.First);
+                    Music.PlaySong(SongID.Intensity);
                     break;
                 default:
                     // Play the game or game over

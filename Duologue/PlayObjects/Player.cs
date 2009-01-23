@@ -508,7 +508,7 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void CaclulateRotations()
         {
-            // The base is easy because we can fuck it up- the base is a circle with
+            // The base is easy because we can arg it up- the base is a circle with
             // no real orientation.
             BaseRotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
 

@@ -91,7 +91,7 @@ namespace Duologue.Screens
             if (!startedMusic)
             {
                 startedMusic = true;
-                Music.PlaySong(SongID.Intro);
+                Music.PlaySong(SongID.SelectMenu);
             }
             if (mainGameLogo.PercentComplete < 1f)
             {

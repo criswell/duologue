@@ -21,18 +21,18 @@ namespace Duologue.Audio
     public class AudioContentBase
     {
         public string CueName;
-        public Cue CueObj;
+        //public Cue CueObj;
         public float Volume;
-        public float FadeInSecs;
-        public float FadeOutSecs;
+        //public float FadeInSecs;
+        //public float FadeOutSecs;
     }
 
     public class AudioCollectionBase
     {
         public string SoundBankName;
-        public SoundBank SoundBankObj;
+        //public SoundBank SoundBankObj;
         public string WaveBankName;
-        public WaveBank WaveBankObj;
+        //public WaveBank WaveBankObj;
     }
 
     public class Track : AudioContentBase

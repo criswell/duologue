@@ -76,6 +76,7 @@ namespace Duologue
         #region Properties
         #endregion
         public GraphicsDeviceManager Graphics;
+        public AudioManager Audio;
         SpriteBatch spriteBatch;
         //GamePlayTest gamePlayTest;
         public AssetManager Assets;
@@ -286,7 +287,8 @@ namespace Duologue
                 scr.Enabled = false;
             }
 
-            DuologueAudioNames.LoadAudio(this);
+            Audio = new AudioManager(this);
+            this.Components.Add(Audio);
 
             base.Initialize();
         }

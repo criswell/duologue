@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Mimicware;
 
 namespace Duologue.Audio
 {
@@ -11,114 +12,81 @@ namespace Duologue.Audio
     {
         public const float Silent = 0.0f;
         public const float Full = 999.0f;
-        public const string param = "Volume";
     }
+
 
     /// <summary>
     /// 
     /// </summary>
-    public class BeatEffectsSong
+    public class BeatEffectsSong : Song
     {
+        private const int NUMBER_OF_TRACKS = 5;
+        private AudioManager notifier;
+        private int intensityStep = 1;
 
-        static private Dictionary<string, Cue> cues;
+        // This is the place where we keep the per intensity, per track volume targets
+        static private Dictionary<int, Dictionary<string, float>> volumeMatrix =
+            new Dictionary<int, Dictionary<string, float>>();
 
-        static private Cue beatSound = null;
-        static private Cue danceBass = null;
-        static private Cue danceBassplus = null;
-        static private Cue danceBeat = null;
-        static private Cue danceOrgan = null;
-        static private Cue danceGuitar = null;
-        static private int intensity = -1;
-
-        public BeatEffectsSong()
+        public BeatEffectsSong(AudioManager arg) : base()
         {
-            cues = new Dictionary<string, Cue>();
-            if(intensity<0)
-                initCues();
+            notifier = arg;
+            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+
+            Dictionary<string, float> one = new Dictionary<string, float> {
+                { Music.Intensity1, Loudness.Full },
+                { Music.Intensity2, Loudness.Silent },
+                { Music.Intensity3, Loudness.Silent },
+                { Music.Intensity4, Loudness.Silent },
+                { Music.Intensity5, Loudness.Silent }
+            };
+            Dictionary<string, float> two = new Dictionary<string, float> {
+                { Music.Intensity1, Loudness.Full },
+                { Music.Intensity2, Loudness.Full },
+                { Music.Intensity3, Loudness.Silent },
+                { Music.Intensity4, Loudness.Silent },
+                { Music.Intensity5, Loudness.Silent }
+            };
+            Dictionary<string, float> three = new Dictionary<string, float> {
+                { Music.Intensity1, Loudness.Full },
+                { Music.Intensity2, Loudness.Full },
+                { Music.Intensity3, Loudness.Full },
+                { Music.Intensity4, Loudness.Silent },
+                { Music.Intensity5, Loudness.Silent }
+            };
+            Dictionary<string, float> four = new Dictionary<string, float> {
+                { Music.Intensity1, Loudness.Full },
+                { Music.Intensity2, Loudness.Full },
+                { Music.Intensity3, Loudness.Full },
+                { Music.Intensity4, Loudness.Full },
+                { Music.Intensity5, Loudness.Silent }
+            };
+            Dictionary<string, float> five = new Dictionary<string, float> {
+                { Music.Intensity1, Loudness.Full },
+                { Music.Intensity2, Loudness.Full },
+                { Music.Intensity3, Loudness.Full },
+                { Music.Intensity4, Loudness.Full },
+                { Music.Intensity5, Loudness.Full }
+            };
+            volumeMatrix.Add(1, one);
+            volumeMatrix.Add(2, two);
+            volumeMatrix.Add(3, three);
+            volumeMatrix.Add(4, four);
+            volumeMatrix.Add(5, five);
         }
 
-        protected void initCues()
-        {/*
-            intensity = 1;
-            danceBeat =
-                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.beatName);
-            danceBass =
-                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.bassName);
-            danceBassplus =
-                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.bassplusName);
-            danceOrgan =
-                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.organName);
-            danceGuitar =
-                AudioHelper.getCue(DuologueAudioNames.danceSoundBank, DuologueAudioNames.guitarName);
-            danceBeat.SetVariable(Loudness.param, Loudness.Full);
-            danceBass.SetVariable(Loudness.param, Loudness.Silent);
-            danceBassplus.SetVariable(Loudness.param, Loudness.Silent);
-            danceGuitar.SetVariable(Loudness.param, Loudness.Silent);
-            danceOrgan.SetVariable(Loudness.param, Loudness.Silent);*/
-        }
-
-        /// <summary>
-        /// Increase musical excitement!
-        /// </summary>
-        public void IncreaseIntensity()
+        public void UpdateIntensity(object sender, EventArgs e)
         {
-            switch (intensity)
-            {
-                case 1:
-                    danceBass.SetVariable(Loudness.param, Loudness.Full);
-                    intensity++;
-                    break;
-                case 2:
-                    danceBassplus.SetVariable(Loudness.param, Loudness.Full);
-                    intensity++;
-                    break;
-                case 3:
-                    danceOrgan.SetVariable(Loudness.param, Loudness.Full);
-                    intensity++;
-                    break;
-                case 4:
-                    danceGuitar.SetVariable(Loudness.param, Loudness.Full);
-                    intensity++;
-                    break;
-                case 5:
-                    break;
-                default:
-                    intensity = 1;
-                    break;
-            }
+            intensityStep = Convert.ToInt32((notifier.Intensity * 4.0f) + 0.5f);//FIXME - right int type?
+            AudioHelper.UpdateCues(Music.IntensitySB, volumeMatrix[intensityStep]);
         }
 
-
-        /// <summary>
-        /// Reduce musical excitement!
-        /// </summary>
-        public void DecreaseIntensity()
+        public void Detach()
         {
-            switch (intensity)
-            {
-                case 1:
-                    intensity--;
-                    break;
-                case 2:
-                    danceBass.SetVariable("Volume", Loudness.Silent);
-                    intensity--;
-                    break;
-                case 3:
-                    danceBassplus.SetVariable("Volume", Loudness.Silent);
-                    intensity--;
-                    break;
-                case 4:
-                    danceOrgan.SetVariable("Volume", Loudness.Silent);
-                    intensity--;
-                    break;
-                case 5:
-                    danceGuitar.SetVariable("Volume", Loudness.Silent);
-                    intensity--;
-                    break;
-                default:
-                    intensity = 1;
-                    break;
-            }
+            notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
+            notifier = null;
         }
+
+
     }
 }

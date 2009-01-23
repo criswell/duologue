@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 namespace Duologue.Audio
 {
     //the rule is: one sound bank = one song = one SongID
-    public enum SongID { Intro, First, Wiggles }
+    public enum SongID { SelectMenu, Intensity, Wiggles }
     //the rule is: one sound bank = one group of effects = one EffectsGroupID
     //public enum EffectsGroupID { Player }
 
@@ -36,55 +36,36 @@ namespace Duologue.Audio
 
         public Music()
         {
-        }
-
-        public static void init(Game param_game)
-        {
-            List<string> introCues = new List<string> 
+            List<string> selectMenuCues = new List<string> 
             {
                 SelectMenuCue
             };
-            AudioHelper.AddBank(SelectMenuSB, SelectMenuWB, introCues);
+            AudioHelper.AddBank(SelectMenuSB, SelectMenuWB, selectMenuCues);
 
-            List<string> firstCues = new List<string>
+            List<string> intensityCues = new List<string>
             {
                 Intensity1, Intensity2, Intensity3, Intensity4, Intensity5
             };
-            AudioHelper.AddBank(IntensitySB, IntensityWB, firstCues);
+            AudioHelper.AddBank(IntensitySB, IntensityWB, intensityCues);
 
-            soundBankMap.Add(SongID.First, IntensitySB);
-            soundBankMap.Add(SongID.Intro, SelectMenuSB);
+            soundBankMap.Add(SongID.Intensity, IntensitySB);
+            soundBankMap.Add(SongID.SelectMenu, SelectMenuSB);
             soundBankMap.Add(SongID.Wiggles, WigglesSoundBank);
 
             soundBankMap = new Dictionary<SongID, string> {
-                {SongID.Intro, SelectMenuSB}, 
-                {SongID.First, IntensitySB}, 
+                {SongID.SelectMenu, SelectMenuSB}, 
+                {SongID.Intensity, IntensitySB}, 
                 {SongID.Wiggles, WigglesSoundBank}
             };
-            /*
-             * hmmmmmmmm
-            Song introSong = new Song();
-            introSong.SoundBankName = introSoundBankName;
-            introSong.WaveBankName = introWaveBankName;
-            introSong.Tracks = new List<Track> { { new Track(introCue, 1.0f) } };
-            AudioHelper.AddSong(SongID.Intro, introSong);
-
-            Song buzzsawSong = new Song();
-            buzzsawSong.SoundBankName = buzzsawSoundBank;
-            buzzsawSong.WaveBankName = buzzsawWaveBank;
-            Track track1 = new Track(beatName, 999.0f);
-            Track track2 = new Track(bassName, 0.0f);
-            Track track3 = new Track(bassplusName, 0.0f);
-            Track track4 = new Track(organName, 0.0f);
-            Track track5 = new Track(guitarName, 0.0f);
-            buzzsawSong.Tracks = new List<Track> { 
-            { track1 }, { track2 }, { track3 }, { track4 }, { track5 } };
-             */
         }
 
         public static void PlaySong(SongID ID)
         {
             AudioHelper.PlayCues(soundBankMap[ID], PlayType.Nonstop);
+        }
+
+        public static void UpdateSong(SongID ID)
+        {
         }
 
         public static void StopSong(SongID ID)

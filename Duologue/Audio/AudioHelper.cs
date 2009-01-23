@@ -44,15 +44,26 @@ namespace Duologue.Audio
         private static string engineFileName;
         private static AudioEngine engine;
 
+        // These SoundBanks are where we pull new copies of Cues. We don't play them there.
         private static Dictionary<string, SoundBank> soundBanks = new Dictionary<string, SoundBank>();
+
+        // These WaveBanks are where the audio data actually resides
+        // Although we don't interact with the WaveBank objects, we have to load them or nothing works
         private static Dictionary<string, WaveBank> waveBanks = new Dictionary<string, WaveBank>();
+
+        // These Cues are the ones we will actually call Play on.
+        // They stay in this structure until they either:
+        // - stop playing
+        // - are bumped by a new instance
         private static Dictionary<string, Dictionary<string, Cue>> cues =
             new Dictionary<string, Dictionary<string, Cue>>();
+
+        // This List of Cues is where Cues go after they leave the "cues" structure.
+        // During updates, this List is checked for Cues that can be disposed.
         private static List<Cue> usedCues = new List<Cue>();
 
         public AudioHelper(Game game, string engineName) : base(game)
         {
-            game.Components.Add(this);//FIXME I hope this is right...
             engineFileName = engineName;
             engine = new AudioEngine(engineFileName);
         }
@@ -159,6 +170,14 @@ namespace Duologue.Audio
         public static void PlayCues(string sbname, PlayType type)
         {
             PlayCues(sbname, cues[sbname].Keys.ToList(), type);
+        }
+
+        public static void UpdateCues(string sbname, Dictionary<string, float> cueVolumes)
+        {
+            cueVolumes.Keys.ToList().ForEach( name =>
+                {
+                    cues[sbname][name].SetVariable(volumeName, cueVolumes[name]);
+                });
         }
 
 

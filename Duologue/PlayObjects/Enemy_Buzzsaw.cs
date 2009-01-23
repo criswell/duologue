@@ -287,7 +287,7 @@ namespace Duologue.PlayObjects
         {
             /*if (isFleeing)
             {
-                // We only spin wildly when we're running the fuck away
+                // We only spin wildly when we're running the arg away
                 rotation += delta_Rotation;
 
                 if (rotation > MathHelper.TwoPi)
