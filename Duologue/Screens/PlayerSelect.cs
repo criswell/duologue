@@ -320,7 +320,8 @@ namespace Duologue.Screens
             VoidCountdown();
             if (numActive > 0 && LocalInstanceManager.CurrentGameState == GameState.PlayerSelect)
             {
-                Music.StopSong(SongID.SelectMenu);
+                ((DuologueGame)Game).Audio.music.StopSong(SongID.SelectMenu);
+                //Music.StopSong(SongID.SelectMenu);
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
                 // Set the players
                 SetPlayers();

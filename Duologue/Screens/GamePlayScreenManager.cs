@@ -195,7 +195,8 @@ namespace Duologue.Screens
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {
-                Music.StopSong(SongID.Intensity);
+                ((DuologueGame)localGame).Audio.music.StopSong(SongID.Intensity);
+                //Music.StopSong(SongID.Intensity);
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
                 // FIXME
@@ -239,8 +240,6 @@ namespace Duologue.Screens
                 if (intensityCounter > intensityIncreaseLimit)
                 {
                     InstanceManager.Logger.LogEntry("INTENSITY++");
-                    //FIXME this will crash eventually
-                    //new BeatEffectsSong().IncreaseIntensity();
                     localGame.Audio.Intensity += 0.2f;
                     intensityCounter = 0f;
                 }
@@ -260,8 +259,6 @@ namespace Duologue.Screens
                 intensityTimer = 0f;
                 intensityCounter = 0f;
                 InstanceManager.Logger.LogEntry("INTENSITY--");
-                //FIXME this will crash eventually
-                //new BeatEffectsSong(localGame.Audio).DecreaseIntensity();
                 localGame.Audio.Intensity -= 0.2f;
             }
 
@@ -309,7 +306,8 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    Music.PlaySong(SongID.Intensity);
+                    ((DuologueGame)localGame).Audio.music.PlaySong(SongID.Intensity);
+                    //Music.PlaySong(SongID.Intensity);
                     break;
                 default:
                     // Play the game or game over

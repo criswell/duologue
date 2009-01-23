@@ -15,8 +15,17 @@ namespace Duologue.Audio
     //the rule is: one sound bank = one group of effects = one EffectsGroupID
     //public enum EffectsGroupID { Player }
 
-    class Music
+    //keep from having to tweak floats and add levels in many places
+    public struct Loudness
     {
+        public const float Silent = 0.0f;
+        public const float Full = 999.0f;
+    }
+
+
+    public class Music
+    {
+        private AudioManager notifier;
 
         public const string SelectMenuWB = "Content\\Audio\\SelectMenu.xwb";
         public const string SelectMenuSB = "Content\\Audio\\SelectMenu.xsb";
@@ -34,8 +43,22 @@ namespace Duologue.Audio
 
         private static Dictionary<SongID, string> soundBankMap = new Dictionary<SongID, string>();
 
-        public Music()
+        private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
+
+        private BeatEffectsSong beatSong;
+        private SelectMenuSong selectSong;
+
+        public Music(AudioManager arg)
         {
+            notifier = arg;
+            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+
+            beatSong = new BeatEffectsSong();
+            selectSong = new SelectMenuSong();
+
+            songMap.Add(SongID.Intensity, beatSong);
+            songMap.Add(SongID.SelectMenu, selectSong);
+
             List<string> selectMenuCues = new List<string> 
             {
                 SelectMenuCue
@@ -59,18 +82,31 @@ namespace Duologue.Audio
             };
         }
 
-        public static void PlaySong(SongID ID)
+        public void PlaySong(SongID ID)
         {
-            AudioHelper.PlayCues(soundBankMap[ID], PlayType.Nonstop);
+            songMap[ID].Play();
         }
 
-        public static void UpdateSong(SongID ID)
+        public void UpdateSong(SongID ID)
         {
         }
 
-        public static void StopSong(SongID ID)
+        public void StopSong(SongID ID)
         {
-            AudioHelper.StopCues(soundBankMap[ID]);
+            songMap[ID].Stop();
         }
+
+        public void UpdateIntensity(object sender, EventArgs e)
+        {
+            beatSong.SetIntensity(notifier.Intensity);
+            //walk through a list of playing intensity songs and notify them!
+        }
+
+        public void Detach()
+        {
+            notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
+            notifier = null;
+        }
+
     }
 }

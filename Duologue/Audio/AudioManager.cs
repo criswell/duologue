@@ -37,9 +37,9 @@ namespace Duologue.Audio
     {
         private Game localgame;
         private AudioHelper helper;
-        private float intensity = -1.0f;
-        private Music music;
-        private SoundEffects soundEffects;
+        private float intensity = 0.0f;
+        public Music music;
+        public SoundEffects soundEffects;
 
         public const string engine = "Content\\Audio\\Duologue.xgs";
 
@@ -54,9 +54,6 @@ namespace Duologue.Audio
             : base(game)
         {
             localgame = game;
-            helper = new AudioHelper(localgame, engine);
-            music = new Music();
-            soundEffects = new SoundEffects();
         }
 
         /// <summary>
@@ -65,6 +62,9 @@ namespace Duologue.Audio
         /// </summary>
         public override void Initialize()
         {
+            helper = new AudioHelper(localgame, engine);
+            music = new Music(this);
+            soundEffects = new SoundEffects();
             SoundEffects.init(localgame);
             localgame.Components.Add(helper);
 

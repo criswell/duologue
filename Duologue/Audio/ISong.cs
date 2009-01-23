@@ -9,19 +9,18 @@ namespace Duologue.Audio
     public interface ISong
     {
         void Play();
-        void Play(float percentVolume);
-        void Play(float percentVolume, float fadeinTime);
-        void Pause();
+        //void Play(float percentVolume);
+        //void Play(float percentVolume, float fadeinTime);
+        //void Pause();
         void Stop();
-        void Stop(float fadeoutTime);
-        void SetVolume(float percent);
-        float GetVolume();
+        //void Stop(float fadeoutTime);
+        //void SetVolume(float percent);
+        //float GetVolume();
     }
 
     public class AudioContentBase
     {
-        public string CueName;
-        //public Cue CueObj;
+        public static string CueName;
         public float Volume;
         //public float FadeInSecs;
         //public float FadeOutSecs;
@@ -29,10 +28,8 @@ namespace Duologue.Audio
 
     public class AudioCollectionBase
     {
-        public string SoundBankName;
-        //public SoundBank SoundBankObj;
-        public string WaveBankName;
-        //public WaveBank WaveBankObj;
+        public static string SoundBankName;
+        public static string WaveBankName;
     }
 
     public class Track : AudioContentBase
@@ -40,7 +37,7 @@ namespace Duologue.Audio
         public Track() { }
         public Track(string cue, float vol)
         {
-            this.CueName = cue;
+            CueName = cue;
             this.Volume = vol;
         }
     }
@@ -49,6 +46,8 @@ namespace Duologue.Audio
     {
         public List<Track> Tracks = new List<Track>();
         public Song() { }
+        public virtual void Play(){}
+        public virtual void Stop() { }
     }
 
     public class SoundEffect : AudioContentBase
@@ -56,12 +55,12 @@ namespace Duologue.Audio
         public SoundEffect() { }
         public SoundEffect(string cue)
         {
-            this.CueName = cue;
+            CueName = cue;
             this.Volume = 999.0f;
         }
         public SoundEffect(string cue, float vol)
         {
-            this.CueName = cue;
+            CueName = cue;
             this.Volume = vol;
         }
     }

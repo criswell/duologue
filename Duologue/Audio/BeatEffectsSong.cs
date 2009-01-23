@@ -7,31 +7,23 @@ using Mimicware;
 
 namespace Duologue.Audio
 {
-    //keep from having to tweak floats and add levels in many places
-    public struct Loudness
-    {
-        public const float Silent = 0.0f;
-        public const float Full = 999.0f;
-    }
-
-
     /// <summary>
     /// 
     /// </summary>
-    public class BeatEffectsSong : Song
+    public class BeatEffectsSong : Song, IIntensitySong
     {
         private const int NUMBER_OF_TRACKS = 5;
-        private AudioManager notifier;
         private int intensityStep = 1;
 
         // This is the place where we keep the per intensity, per track volume targets
         static private Dictionary<int, Dictionary<string, float>> volumeMatrix =
             new Dictionary<int, Dictionary<string, float>>();
 
-        public BeatEffectsSong(AudioManager arg) : base()
+        public BeatEffectsSong() : base()
         {
-            notifier = arg;
-            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+            this.intensityStep = 1;
+            WaveBankName = Music.IntensityWB;
+            SoundBankName = Music.IntensitySB;
 
             Dictionary<string, float> one = new Dictionary<string, float> {
                 { Music.Intensity1, Loudness.Full },
@@ -75,18 +67,32 @@ namespace Duologue.Audio
             volumeMatrix.Add(5, five);
         }
 
-        public void UpdateIntensity(object sender, EventArgs e)
+        public override void Play()
         {
-            intensityStep = Convert.ToInt32((notifier.Intensity * 4.0f) + 0.5f);//FIXME - right int type?
+            AudioHelper.PlayCues(Music.IntensitySB, PlayType.Nonstop);
+            SetIntensity(0.0f);
+        }
+
+        public override void Stop()
+        {
+            AudioHelper.StopCues(SoundBankName);
+        }
+
+        public void SetIntensity(float intensity)
+        {
+            //fuckin' thing sucks. Do it live!
+            if (intensity >= 1.0f)
+                intensityStep = 5;
+            else if (intensity >= 0.8f)
+                intensityStep = 4;
+            else if (intensity >= 0.6f)
+                intensityStep = 3;
+            else if (intensity >= 0.4f)
+                intensityStep = 2;
+            else
+                intensityStep = 1;
             AudioHelper.UpdateCues(Music.IntensitySB, volumeMatrix[intensityStep]);
         }
-
-        public void Detach()
-        {
-            notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
-            notifier = null;
-        }
-
 
     }
 }

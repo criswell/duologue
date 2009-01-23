@@ -90,6 +90,7 @@
     <Compile Include="Audio\IntensityController.cs" />
     <Compile Include="Audio\ISong.cs" />
     <Compile Include="Audio\Music.cs" />
+    <Compile Include="Audio\SelectMenuSong.cs" />
     <Compile Include="Audio\SoundEffects.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="CreatorsClub\GameScreen.cs" />
