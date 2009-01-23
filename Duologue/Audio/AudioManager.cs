@@ -2,32 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-//using Microsoft.Xna.Framework.Audio;
-//using Microsoft.Xna.Framework.Content;
-//using Microsoft.Xna.Framework.GamerServices;
-//using Microsoft.Xna.Framework.Graphics;
-//using Microsoft.Xna.Framework.Input;
-//using Microsoft.Xna.Framework.Media;
-//using Microsoft.Xna.Framework.Net;
-//using Microsoft.Xna.Framework.Storage;
 using Mimicware;
 
 
 namespace Duologue.Audio
 {
-
-    /*
-    class Test
-    {
-        public static void penis() 
-        {
-            AudioManager notifier = new AudioManager(new Game());
-            BeatEffectsSong listener = new BeatEffectsSong(notifier);
-            notifier.Intensity = 0.22f;
-            listener.Detach();
-        }
-    }
-    */
 
     public delegate void IntensityEventHandler(object sender, EventArgs e);
     /// <summary>
@@ -76,7 +55,8 @@ namespace Duologue.Audio
             get { return intensity; }
             set
             {
-                MWMathHelper.LimitToRange(value, 0.0f, 1.0f);
+                intensity = value;
+                MWMathHelper.LimitToRange(intensity, 0.0f, 1.0f);
                 OnChanged(EventArgs.Empty);
             }
         }

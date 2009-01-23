@@ -20,7 +20,7 @@ namespace Duologue.Audio
 
     public class AudioContentBase
     {
-        public static string CueName;
+        public string CueName;
         public float Volume;
         //public float FadeInSecs;
         //public float FadeOutSecs;
@@ -28,8 +28,8 @@ namespace Duologue.Audio
 
     public class AudioCollectionBase
     {
-        public static string SoundBankName;
-        public static string WaveBankName;
+        public string SoundBankName;
+        public string WaveBankName;
     }
 
     public class Track : AudioContentBase
@@ -37,7 +37,7 @@ namespace Duologue.Audio
         public Track() { }
         public Track(string cue, float vol)
         {
-            CueName = cue;
+            this.CueName = cue;
             this.Volume = vol;
         }
     }
