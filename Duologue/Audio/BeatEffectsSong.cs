@@ -12,7 +12,7 @@ namespace Duologue.Audio
     /// </summary>
     public class BeatEffectsSong : Song, IIntensitySong
     {
-        private const int NUMBER_OF_TRACKS = 5;
+        private const int MAX_INTENSITY = 5;
         private int intensityStep = 1;
 
         public const string waveBank = "Content\\Audio\\Intensity.xwb";
@@ -24,6 +24,7 @@ namespace Duologue.Audio
         public const string Intensity4 = "organ";
         public const string Intensity5 = "guitar";
 
+        //private BeatEngine clickclickclick;
 
         // This is the place where we keep the per intensity, per track volume targets
         static private Dictionary<int, Dictionary<string, float>> volumeMatrix =
@@ -92,7 +93,7 @@ namespace Duologue.Audio
         public override void Play()
         {
             AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
-            SetIntensity(0.0f);
+            AudioHelper.UpdateCues(SoundBankName, volumeMatrix[intensityStep]);
         }
 
         public override void Stop()
@@ -100,20 +101,32 @@ namespace Duologue.Audio
             AudioHelper.StopCues(SoundBankName);
         }
 
-        public void SetIntensity(float intensity)
+        public void ChangeIntensity(int amount)
         {
-            //fuckin' thing sucks. Do it live!
-            if (intensity >= 1.0f)
+            intensityStep = 
+                MWMathHelper.LimitToRange(intensityStep + amount, 1, MAX_INTENSITY);
+            AudioHelper.UpdateCues(SoundBankName, volumeMatrix[intensityStep]);
+        }
+
+
+        public float GetIntensityPercentage()
+        {
+            return (float)intensityStep/(float)MAX_INTENSITY;
+        }
+
+        public void SetIntensityPercentage(float percentage)
+        {
+            MWMathHelper.LimitToRange(percentage, 0f, 1f);
+            if (percentage > 0.8f)
                 intensityStep = 5;
-            else if (intensity >= 0.8f)
+            else if (percentage > 0.6f)
                 intensityStep = 4;
-            else if (intensity >= 0.6f)
+            else if (percentage >= 0.4f)
                 intensityStep = 3;
-            else if (intensity >= 0.4f)
+            else if (percentage >= 0.2f)
                 intensityStep = 2;
             else
                 intensityStep = 1;
-            AudioHelper.UpdateCues(SoundBankName, volumeMatrix[intensityStep]);
         }
 
     }

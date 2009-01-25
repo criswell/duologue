@@ -99,6 +99,15 @@ namespace Mimicware
             return value;
         }
 
+        public static int LimitToRange(int value, int min, int max)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+            return value;
+        }
+
         /// <summary>
         /// Rotate a vector by an angle
         /// </summary>

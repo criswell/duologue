@@ -195,7 +195,7 @@ namespace Duologue.Screens
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {
-                ((DuologueGame)localGame).Audio.music.StopSong(SongID.Intensity);
+                localGame.Audio.music.StopSong(SongID.Intensity);
                 //Music.StopSong(SongID.Intensity);
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
@@ -240,7 +240,7 @@ namespace Duologue.Screens
                 if (intensityCounter > intensityIncreaseLimit)
                 {
                     InstanceManager.Logger.LogEntry("INTENSITY++");
-                    localGame.Audio.Intensity += 0.2f;
+                    localGame.Audio.Intensify();
                     intensityCounter = 0f;
                 }
             }
@@ -259,7 +259,7 @@ namespace Duologue.Screens
                 intensityTimer = 0f;
                 intensityCounter = 0f;
                 InstanceManager.Logger.LogEntry("INTENSITY--");
-                localGame.Audio.Intensity -= 0.2f;
+                localGame.Audio.Detensify();
             }
 
             /*if (LocalInstanceManager.CurrentGameWave == null)
@@ -306,8 +306,7 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    ((DuologueGame)localGame).Audio.music.PlaySong(SongID.Intensity);
-                    //Music.PlaySong(SongID.Intensity);
+                    localGame.Audio.music.PlaySong(SongID.Intensity);
                     break;
                 default:
                     // Play the game or game over

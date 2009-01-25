@@ -8,7 +8,6 @@ namespace Duologue.Audio
 {
     class IntensityController
     {
-
         private static float intensity = 0.0f;
         public static float Intensity
         {

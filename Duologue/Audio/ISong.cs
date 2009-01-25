@@ -9,21 +9,13 @@ namespace Duologue.Audio
     public interface ISong
     {
         void Play();
-        //void Play(float percentVolume);
-        //void Play(float percentVolume, float fadeinTime);
-        //void Pause();
         void Stop();
-        //void Stop(float fadeoutTime);
-        //void SetVolume(float percent);
-        //float GetVolume();
     }
 
     public class AudioContentBase
     {
         public string CueName;
         public float Volume;
-        //public float FadeInSecs;
-        //public float FadeOutSecs;
     }
 
     public class AudioCollectionBase
@@ -49,6 +41,7 @@ namespace Duologue.Audio
         public virtual void Play(){}
         public virtual void Stop() { }
     }
+
 
     public class SoundEffect : AudioContentBase
     {
