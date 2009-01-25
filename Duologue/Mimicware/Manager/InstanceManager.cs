@@ -24,6 +24,11 @@ namespace Mimicware.Manager
     static class InstanceManager
     {
         #region Constants
+
+        /// <summary>
+        /// The percentage of the screen we consider titlesafe
+        /// </summary>
+        public const float TitleSafePercent = 0.90f;
         #endregion
 
         #region Fields

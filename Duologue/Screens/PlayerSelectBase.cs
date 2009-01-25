@@ -163,8 +163,9 @@ namespace Duologue.Screens
             {
                 Vector2 titleSafe = new Vector2(
                     InstanceManager.DefaultViewport.Width / 2f,
-                    InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.TitleSafeArea.Height);
-                    // InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent);
+                    InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent);
+                    //InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.TitleSafeArea.Height);
+                    //InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent);
 
                 Vector2 textSize = font.MeasureString(mainText);
 
