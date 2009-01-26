@@ -93,7 +93,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// How far we can go outside the screen before we should stop
         /// </summary>
-        private const float outsideScreenMultiplier = 1.5f;
+        private const float outsideScreenMultiplier = 1.1f;
 
         /// <summary>
         /// The radius multiplier for determining radius from size
@@ -213,10 +213,7 @@ namespace Duologue.PlayObjects
             if (Orientation == Vector2.Zero)
             {
                 // Just aim at the center of screen for now
-                Orientation = GetVectorPointingAtOrigin() +  new Vector2(
-                    (float)MWMathHelper.GetRandomInRange(-.5,.5),
-                    (float)MWMathHelper.GetRandomInRange(-.5,.5));
-                Orientation.Normalize();
+                Orientation = GetStartingVector();
             }
 
             walkingSpeed = (float)MWMathHelper.GetRandomInRange(minWalkingSpeed, maxWalkingSpeed);
@@ -298,6 +295,19 @@ namespace Duologue.PlayObjects
                     InstanceManager.DefaultViewport.Width / 2f,
                     InstanceManager.DefaultViewport.Height / 2f);
             return sc - Position;
+        }
+
+        /// <summary>
+        /// Get a starting vector for this dude
+        /// </summary>
+        private Vector2 GetStartingVector()
+        {
+            // Just aim at the center of screen for now
+            Vector2 temp = GetVectorPointingAtOrigin() + new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-.5, .5),
+                (float)MWMathHelper.GetRandomInRange(-.5, .5));
+            temp.Normalize();
+            return temp;
         }
 
         /// <summary>
@@ -586,28 +596,24 @@ namespace Duologue.PlayObjects
                 // Check boundaries
                 if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
                 {
-                    //this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
                     this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
-                    Orientation.X = Math.Abs(Orientation.X);
+                    Orientation = GetStartingVector();
                 }
                 else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
                 {
-                    //this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
                     this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
-                    Orientation.X = -1 * Math.Abs(Orientation.X);
+                    Orientation = GetStartingVector();
                 }
 
                 if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
                 {
-                    //this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
                     this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
-                    Orientation.Y = Math.Abs(Orientation.Y);
+                    Orientation = GetStartingVector();
                 }
                 else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
                 {
-                    //this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
                     this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
-                    Orientation.Y = -1 * Math.Abs(Orientation.Y);
+                    Orientation = GetStartingVector();
                 }
             }
 
