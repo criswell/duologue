@@ -521,30 +521,29 @@ namespace Duologue.PlayObjects
                         }
                     }
                 }
-                return true;
-            }
-            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
-            {
-                // Enemy
-                Vector2 vToEnemy = pobj.Position - this.Position;
-                float len = vToEnemy.Length();
-                if (len < this.Radius + pobj.Radius)
+                else if (pobj.MajorType == MajorPlayObjectType.Enemy)
                 {
-                    // Too close, BTFO
-                    if (len == 0f)
+                    // Enemy
+                    Vector2 vToEnemy = pobj.Position - this.Position;
+                    float len = vToEnemy.Length();
+                    if (len < this.Radius + pobj.Radius)
                     {
-                        // Well, bah, we're on top of each other!
-                        vToEnemy = new Vector2(
-                            (float)InstanceManager.Random.NextDouble() - 0.5f,
-                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        // Too close, BTFO
+                        if (len == 0f)
+                        {
+                            // Well, bah, we're on top of each other!
+                            vToEnemy = new Vector2(
+                                (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        }
+                        vToEnemy = Vector2.Negate(vToEnemy);
+                        vToEnemy.Normalize();
+                        //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
+                        offset += standardEnemyRepulse * vToEnemy;
+                        //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
                     }
-                    vToEnemy = Vector2.Negate(vToEnemy);
-                    vToEnemy.Normalize();
-                    //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
-                    offset += standardEnemyRepulse * vToEnemy;
-                    //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
+                    return true;
                 }
-                return true;
             }
             return true;
         }
