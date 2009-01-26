@@ -175,29 +175,29 @@ namespace Duologue.Screens
                     }
 
                     p.Update(gameTime);
-                    #region Bullet updates
-                    for (int j = 0; j < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; j++)
-                    {
-                        if (LocalInstanceManager.Bullets[i][j].Alive)
-                        {
-                            LocalInstanceManager.Bullets[i][j].Update(gameTime);
-                            LocalInstanceManager.Bullets[i][j].StartOffset();
-                            // Run through active enemies
-                            // FIXME- Blech, is there a more efficient way?
-                            for (int k = 0; k < LocalInstanceManager.CurrentNumberEnemies; k++)
-                            {
-                                if (LocalInstanceManager.Enemies[k] != null &&
-                                    LocalInstanceManager.Enemies[k].Alive)
-                                {
-                                    LocalInstanceManager.Bullets[i][j].UpdateOffset(
-                                        LocalInstanceManager.Enemies[k]);
-                                }
-                            }
-                            LocalInstanceManager.Bullets[i][j].ApplyOffset();
-                        }
-                    }
-                    #endregion
                 }
+                #region Bullet updates
+                for (int j = 0; j < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; j++)
+                {
+                    if (LocalInstanceManager.Bullets[i][j].Alive)
+                    {
+                        LocalInstanceManager.Bullets[i][j].Update(gameTime);
+                        LocalInstanceManager.Bullets[i][j].StartOffset();
+                        // Run through active enemies
+                        // FIXME- Blech, is there a more efficient way?
+                        for (int k = 0; k < LocalInstanceManager.CurrentNumberEnemies; k++)
+                        {
+                            if (LocalInstanceManager.Enemies[k] != null &&
+                                LocalInstanceManager.Enemies[k].Alive)
+                            {
+                                LocalInstanceManager.Bullets[i][j].UpdateOffset(
+                                    LocalInstanceManager.Enemies[k]);
+                            }
+                        }
+                        LocalInstanceManager.Bullets[i][j].ApplyOffset();
+                    }
+                }
+                #endregion
             }
             #endregion Player Stuff
 
