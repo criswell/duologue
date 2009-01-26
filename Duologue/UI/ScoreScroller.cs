@@ -195,13 +195,15 @@ namespace Duologue.UI
             deltaScore = defaultDeltaScore;
             pointlets = new Pointlet[numPointlets];
             freePointlets = new Queue<Pointlet>(numPointlets);
-            for (int i = 0; i < numPointlets; i++)
+            /*for (int i = 0; i < numPointlets; i++)
             {
                 pointlets[i] = new Pointlet(
                     position,
                     Color.White);
                 freePointlets.Enqueue(pointlets[i]);
-            }
+            }*/
+
+            PurgePointlets();
 
             // Set the score text
             playerText = Resources.ScoreUI_Lives;
@@ -370,6 +372,20 @@ namespace Duologue.UI
             if (lives > 0)
                 lives--;
             return lives > 0;
+        }
+
+        /// <summary>
+        /// Called at the end of a game to purge all active pointlets
+        /// </summary>
+        public void PurgePointlets()
+        {
+            for (int i = 0; i < numPointlets; i++)
+            {
+                pointlets[i] = new Pointlet(
+                    position,
+                    Color.White);
+                freePointlets.Enqueue(pointlets[i]);
+            }
         }
         #endregion
 
