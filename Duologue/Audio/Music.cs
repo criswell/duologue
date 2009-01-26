@@ -29,14 +29,17 @@ namespace Duologue.Audio
         private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         private BeatEffectsSong beatSong;
         private SelectMenuSong selectSong;
+        private BeatEngine beatEngine;
 
-        public Music(AudioManager arg)
+        public Music(AudioManager manager)
         {
-            notifier = arg;
+            notifier = manager;
             notifier.Changed += new IntensityEventHandler(UpdateIntensity);
 
             beatSong = new BeatEffectsSong();
             selectSong = new SelectMenuSong();
+            beatEngine = new BeatEngine(manager.Game);
+            manager.Game.Components.Add(beatEngine);
 
             songMap.Add(SongID.Intensity, beatSong);
             songMap.Add(SongID.SelectMenu, selectSong);
@@ -45,16 +48,20 @@ namespace Duologue.Audio
         public void PlaySong(SongID ID)
         {
             songMap[ID].Play();
+            if (ID == SongID.Intensity)
+                beatEngine.Enabled = true;
         }
 
         public void StopSong(SongID ID)
         {
+            if (ID == SongID.Intensity)
+                beatEngine.Enabled = false;
             songMap[ID].Stop();
         }
 
-        public void UpdateIntensity(object sender, EventArgs e)
+        public void UpdateIntensity(IntensityEventArgs e)
         {
-            beatSong.SetIntensity(notifier.Intensity);
+            beatSong.ChangeIntensity(e.ChangeAmount);
             //songMap.Keys.ToList().ForEach(delegate(SongID ID)
             //{
             //    if (songMap[ID].GetType() == IIntensitySong)

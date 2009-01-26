@@ -7,9 +7,8 @@ namespace Duologue.Audio
 {
     public interface IIntensitySong : ISong
     {
-        //void Play(float percentVolume, float fadeinTime, float percentIntensity);
-        void SetIntensity(float percentage);
-        //float GetIntensity();
-        //void ChangeIntensity(float percentage);
+        void ChangeIntensity(int amount);
+        void SetIntensityPercentage(float percentage);
+        float GetIntensityPercentage();
     }
 }

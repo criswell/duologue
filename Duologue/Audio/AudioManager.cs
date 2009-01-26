@@ -7,32 +7,33 @@ using Mimicware;
 
 namespace Duologue.Audio
 {
+    public class IntensityEventArgs : EventArgs
+    {
+        public int ChangeAmount;
+    }
 
-    public delegate void IntensityEventHandler(object sender, EventArgs e);
+    public delegate void IntensityEventHandler(IntensityEventArgs e);
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
     public class AudioManager : Microsoft.Xna.Framework.GameComponent
     {
-        private Game localgame;
+        private DuologueGame localgame;
         private AudioHelper helper;
-        private float intensity = 0.0f;
         public Music music;
         public SoundEffects soundEffects;
 
         public const string engine = "Content\\Audio\\Duologue.xgs";
-
         public event IntensityEventHandler Changed;
-        protected virtual void OnChanged(EventArgs e)
+        protected virtual void OnChanged(IntensityEventArgs e)
         {
             if (Changed != null)
-                Changed(this, e);
+                Changed(e);
         }
 
-        public AudioManager(Game game)
-            : base(game)
+        public AudioManager(Game game) : base(game)
         {
-            localgame = game;
+            localgame = ((DuologueGame)game);
         }
 
         /// <summary>
@@ -50,15 +51,21 @@ namespace Duologue.Audio
             base.Initialize();
         }
 
-        public float Intensity
+        public void Intensify()
         {
-            get { return intensity; }
-            set
-            {
-                intensity = value;
-                MWMathHelper.LimitToRange(intensity, 0.0f, 1.0f);
-                OnChanged(EventArgs.Empty);
-            }
+            ChangeIntensity(1);
+        }
+
+        public void ChangeIntensity(int amount)
+        {
+            IntensityEventArgs e = new IntensityEventArgs();
+            e.ChangeAmount = amount;
+            OnChanged(e);
+        }
+
+        public void Detensify()
+        {
+            ChangeIntensity(-1);
         }
 
         /// <summary>
@@ -68,7 +75,6 @@ namespace Duologue.Audio
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-
             base.Update(gameTime);
         }
     }

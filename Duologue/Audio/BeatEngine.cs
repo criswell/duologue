@@ -22,19 +22,20 @@ namespace Duologue.Audio
     {
         #region Private Fields
         private float beatTimer = 0f;
-        private float beatInterval = 1000.0f;
+        private float beatInterval = 3433f;
+        private DuologueGame localGame;
         #endregion
 
         #region Properties
 
         public float PercentFromTarget()
         {
-            return (MillisecondsFromTarget() - beatInterval)*100.0f;
+            return (MillisecondsFromTarget() - beatInterval)*100f;
         }
 
         public float MillisecondsFromTarget()
         {
-            float halfPeriod = beatInterval/2.0f;
+            float halfPeriod = beatInterval/2f;
             return beatTimer < halfPeriod ? beatTimer : beatInterval - beatTimer;
         }
 
@@ -56,6 +57,7 @@ namespace Duologue.Audio
         public BeatEngine(Game game)
             : base(game)
         {
+            localGame = (DuologueGame)game;
         }
 
 
