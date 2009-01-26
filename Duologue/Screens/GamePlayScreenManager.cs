@@ -216,10 +216,13 @@ namespace Duologue.Screens
                 }
 
                 // Run through and clean enemies
-                for (int i = 0; i < LocalInstanceManager.MaxNumberOfEnemiesOnScreen; i++)
+                /*
+                for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
                 {
                     LocalInstanceManager.Enemies[i] = null;
-                }
+                }*/
+                LocalInstanceManager.Enemies = null;
+                LocalInstanceManager.CurrentNumberEnemies = 0;
 
                 LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
             }
