@@ -36,6 +36,7 @@ namespace Duologue.PlayObjects
         PlayerBullet,
         Enemy_Buzzsaw,
         Enemy_Wiggles,
+        Enemy_Spitter,
     }
 
     /// <summary>

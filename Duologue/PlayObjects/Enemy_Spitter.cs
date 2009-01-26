@@ -44,7 +44,22 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
-        public override void Initialize(Vector2 startPos, Vector2 startOrientation, ColorState currentColorState, ColorPolarity startColorPolarity, int? hitPoints)
+        public Enemy_Spitter(GamePlayScreenManager manager)
+            : base(manager)
+        {
+            MyType = TypesOfPlayObjects.Enemy_Spitter;
+            MajorType = MajorPlayObjectType.Enemy;
+            RealSize = new Vector2(82, 90);
+            Initialized = false;
+            Alive = false;
+        }
+
+        public override void Initialize(
+            Vector2 startPos,
+            Vector2 startOrientation,
+            ColorState currentColorState,
+            ColorPolarity startColorPolarity,
+            int? hitPoints)
         {
             throw new NotImplementedException();
         }
