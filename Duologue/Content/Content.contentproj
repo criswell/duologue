@@ -381,13 +381,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PlayerUI\live-dot.png">
-      <Name>live-dot</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Mimicware\djv-10.bmp">
       <Name>djv-10</Name>
       <Importer>TextureImporter</Importer>
