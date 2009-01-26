@@ -93,7 +93,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// How far we can go outside the screen before we should stop
         /// </summary>
-        private const float outsideScreenMultiplier = 3;
+        private const float outsideScreenMultiplier = 1.5f;
 
         /// <summary>
         /// The radius multiplier for determining radius from size
@@ -586,22 +586,26 @@ namespace Duologue.PlayObjects
                 // Check boundaries
                 if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
                 {
+                    //this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
                     this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
                     Orientation.X = Math.Abs(Orientation.X);
                 }
                 else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
                 {
+                    //this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
                     this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
                     Orientation.X = -1 * Math.Abs(Orientation.X);
                 }
 
                 if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
                 {
+                    //this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
                     this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
                     Orientation.Y = Math.Abs(Orientation.Y);
                 }
                 else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
                 {
+                    //this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
                     this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
                     Orientation.Y = -1 * Math.Abs(Orientation.Y);
                 }
