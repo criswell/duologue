@@ -16,8 +16,8 @@ Global Settings
     Header File = Duologue.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 2853064760;
-    Last Modified High = 29981690;
+    Last Modified Low = 3216600812;
+    Last Modified High = 29982553;
 
     Category
     {
@@ -238,7 +238,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
+            Name = 1::53b218d5-229f-40e5-b4ab-d71c22951c61;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -277,12 +277,10 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 2939125806;
-    PC Bank Last Modified High = 29981689;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 2873344556;
-    Bank Last Revised High = 29981689;
+    PC Bank Last Modified Low = 3216600812;
+    PC Bank Last Modified High = 29982553;
+    Bank Last Revised Low = 3216600812;
+    Bank Last Revised High = 29982553;
 
     Wave
     {
@@ -421,6 +419,98 @@ Wave Bank
             Last Modified High = 29976320;
         }
     }
+
+    Wave
+    {
+        Name = 3240_edwin_p_manchester_20;
+        File = PlayerEffects\3240_edwin_p_manchester_20.wav;
+        Build Settings Last Modified Low = 593239614;
+        Build Settings Last Modified High = 29982541;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 116748;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 132640048;
+            Last Modified High = 29982537;
+        }
+    }
+
+    Wave
+    {
+        Name = 3228_edwin_p_manchester_08;
+        File = PlayerEffects\3228_edwin_p_manchester_08.wav;
+        Build Settings Last Modified Low = 593239614;
+        Build Settings Last Modified High = 29982541;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 61304;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 129671298;
+            Last Modified High = 29982537;
+        }
+    }
+
+    Wave
+    {
+        Name = 3237_edwin_p_manchester_17;
+        File = PlayerEffects\3237_edwin_p_manchester_17.wav;
+        Build Settings Last Modified Low = 593239614;
+        Build Settings Last Modified High = 29982541;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 61828;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 132015048;
+            Last Modified High = 29982537;
+        }
+    }
+
+    Wave
+    {
+        Name = 3238_edwin_p_manchester_18;
+        File = PlayerEffects\3238_edwin_p_manchester_18.wav;
+        Build Settings Last Modified Low = 593239614;
+        Build Settings Last Modified High = 29982541;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 69256;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 132171298;
+            Last Modified High = 29982537;
+        }
+    }
 }
 
 Wave Bank
@@ -434,8 +524,8 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 3824125806;
-    PC Bank Last Modified High = 29981689;
+    PC Bank Last Modified Low = 981833364;
+    PC Bank Last Modified High = 29982541;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
     Bank Last Revised Low = 3771625806;
@@ -528,8 +618,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 1173469218;
-            Last Modified High = 29976767;
+            Last Modified Low = 737051310;
+            Last Modified High = 29982390;
         }
     }
 
@@ -568,8 +658,8 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 2231593102;
-    PC Bank Last Modified High = 29981688;
+    PC Bank Last Modified Low = 986208364;
+    PC Bank Last Modified High = 29982541;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
     Bank Last Revised Low = 2108936852;
@@ -606,8 +696,8 @@ Sound Bank
     Windows File = Win\PlayerEffects.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 2853064760;
-    Bank Last Modified High = 29981690;
+    Bank Last Modified Low = 3220507062;
+    Bank Last Modified High = 29982553;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -890,6 +980,89 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = edwin_p_manchester;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Variation
+                {
+                    Variation Type = 3;
+                    Variation Table Type = 0;
+                    New Variation on Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = PlayerEffects;
+                    Bank Index = 0;
+                    Entry Name = 3240_edwin_p_manchester_20;
+                    Entry Index = 6;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = PlayerEffects;
+                    Bank Index = 0;
+                    Entry Name = 3228_edwin_p_manchester_08;
+                    Entry Index = 7;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = PlayerEffects;
+                    Bank Index = 0;
+                    Entry Name = 3237_edwin_p_manchester_17;
+                    Entry Index = 8;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = PlayerEffects;
+                    Bank Index = 0;
+                    Entry Name = 3238_edwin_p_manchester_18;
+                    Entry Index = 9;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = click;
@@ -1009,6 +1182,26 @@ Sound Bank
             Weight Max = 255;
         }
     }
+
+    Cue
+    {
+        Name = edwin_p_manchester;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = edwin_p_manchester;
+            Index = 6;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
 }
 
 Sound Bank
@@ -1018,8 +1211,8 @@ Sound Bank
     Windows File = Win\Intensity.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 2853064760;
-    Bank Last Modified High = 29981690;
+    Bank Last Modified Low = 3220507062;
+    Bank Last Modified High = 29982553;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -1076,7 +1269,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
+                RPC Curve Name = 1::53b218d5-229f-40e5-b4ab-d71c22951c61;
             }
         }
     }
@@ -1134,7 +1327,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
+                RPC Curve Name = 1::53b218d5-229f-40e5-b4ab-d71c22951c61;
             }
         }
     }
@@ -1192,7 +1385,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
+                RPC Curve Name = 1::53b218d5-229f-40e5-b4ab-d71c22951c61;
             }
         }
     }
@@ -1250,7 +1443,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
+                RPC Curve Name = 1::53b218d5-229f-40e5-b4ab-d71c22951c61;
             }
         }
     }
@@ -1308,7 +1501,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::f3ca1534-8a42-47c3-ada2-51b4f6afa4fd;
+                RPC Curve Name = 1::53b218d5-229f-40e5-b4ab-d71c22951c61;
             }
         }
     }
@@ -1421,8 +1614,8 @@ Sound Bank
     Windows File = Win\SelectMenu.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 2853064760;
-    Bank Last Modified High = 29981690;
+    Bank Last Modified Low = 3220507062;
+    Bank Last Modified High = 29982553;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 

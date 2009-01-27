@@ -99,6 +99,7 @@ namespace Duologue.PlayObjects
 
         private float timeSinceStart;
         private float currentHighlightLimit;
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -123,6 +124,7 @@ namespace Duologue.PlayObjects
             Alive = false;
             if(!Initialized)
                 LoadAndInitialize();
+            audio = ServiceLocator.GetService<AudioManager>();
         }
 
         /// <summary>
@@ -185,7 +187,7 @@ namespace Duologue.PlayObjects
                     {
                         // We just get absorbed
                         Alive = false;
-                        // FIXME_SFX - need some sort of a bonk sound
+                        audio.soundEffects.PlayEffect(EffectID.Clock);
                     }
                     return true;
                 }

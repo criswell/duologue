@@ -4,6 +4,18 @@ using Microsoft.Xna.Framework;
 
 namespace Duologue.Audio
 {
+
+    //the rule is: one sound bank = one group of effects = one EffectsGroupID
+    public enum EffectsBankID { Player }
+    public enum EffectID
+    {
+        Clock,
+        PlayerExplosion,
+        PlayerBeamA,
+        PlayerBeamB,
+        CokeBottle//, YourNewEffectID
+    }
+
     /// <summary>
     /// Convenience class. Provides no-arg methods that invoke AudioHelper generics
     /// </summary>
@@ -16,50 +28,76 @@ namespace Duologue.Audio
         public const string Explosion = "player-explosion";
         public const string LightColorA = "Saxdual";
         public const string LightColorB = "Saxmachine-high";
+        public const string CokeBottle = "edwin_p_manchester";
+        //public const string YourNewCueName = "Cue as named in XACT";
 
-        public SoundEffects()
-        {
-        }
+        private AudioManager notifier;
 
-        /// <summary>
-        /// Passes the proper name parameters to the AudioHelper
-        /// </summary>
-        public static void PlayerExplosion()
-        {
-            AudioHelper.PlayCue(PlayerEffectsSB, Explosion, PlayType.Single);
-        }
-
-        /// <summary>
-        /// Passes the proper name parameters to the AudioHelper
-        /// </summary>
-        public static void BambooClick()
-        {
-            AudioHelper.PlayCue(PlayerEffectsSB, Bamboo, PlayType.Single);
-        }
-
-        public static void init(Game param_game)
-        {
-            List<string> effectNames = new List<string> {
-                Bamboo, Explosion, LightColorA, LightColorB
+        private static Dictionary<EffectID, string> IDNameMap = 
+            new Dictionary<EffectID, string>
+            {
+                {EffectID.Clock, Bamboo},
+                {EffectID.PlayerExplosion, Explosion},
+                {EffectID.PlayerBeamA, LightColorA},
+                {EffectID.PlayerBeamB, LightColorB},
+                {EffectID.CokeBottle, CokeBottle}
+                //,EffectID.YourNewEffectID, YourNewCueName
             };
+        private EffectsBank playerBank = new EffectsBank();
+
+        public SoundEffects(AudioManager manager)
+        {
+            playerBank.SoundBankName = PlayerEffectsSB;
+            playerBank.WaveBankName = PlayerEffectsWB;
+
+            List<string> effectNames = new List<string>();
+            foreach (string name in IDNameMap.Values)
+            {
+                effectNames.Add(name);
+                playerBank.Effects.Add(name, new SoundEffect(name));
+            }
+
             AudioHelper.AddBank(PlayerEffectsSB, PlayerEffectsWB, effectNames);
 
-            /* What's all this good for?
-
-            SoundEffectsGroup playerFX = new SoundEffectsGroup();
-            playerFX.SoundBankName = PlayerEffectsSB;
-            playerFX.WaveBankName = PlayerEffectsWB;
-            SoundEffect effect1 = new SoundEffect(Bamboo);
-            SoundEffect effect2 = new SoundEffect(Explosion);
-            SoundEffect effect3 = new SoundEffect(LightColorA);
-            SoundEffect effect4 = new SoundEffect(LightColorB);
-            playerFX.Effects = new Dictionary<string, SoundEffect> {
-                {Bamboo, effect1},
-                {Explosion, effect2},
-                {LightColorA, effect3},
-                {LightColorB, effect4}
-            };
-             */
+            notifier = manager;
+            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
         }
+
+        public void PlayEffect(EffectID ID)
+        {
+            AudioHelper.PlayCue(PlayerEffectsSB, IDNameMap[ID], PlayType.Single);
+        }
+
+        public void StopEffect(EffectID ID)
+        {
+            AudioHelper.StopCue(PlayerEffectsSB, IDNameMap[ID]);
+        }
+
+        public void UpdateIntensity(IntensityEventArgs e)
+        {
+        }
+
+        public void Detach()
+        {
+            notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
+            notifier = null;
+        }
+
+        /// <summary>
+        /// Passes the proper name parameters to the AudioHelper
+        /// </summary>
+        public void PlayerExplosion()
+        {
+            PlayEffect(EffectID.PlayerExplosion);
+        }
+
+        /// <summary>
+        /// Passes the proper name parameters to the AudioHelper
+        /// </summary>
+        public void BambooClick()
+        {
+            PlayEffect(EffectID.Clock);
+        }
+
     }
 }

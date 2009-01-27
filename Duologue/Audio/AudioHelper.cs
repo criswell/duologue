@@ -181,12 +181,18 @@ namespace Duologue.Audio
         }
 
 
+        public static void StopCue(string sbname, string cueName)
+        {
+            cues[sbname][cueName].Stop(AudioStopOptions.AsAuthored);
+            RecycleCue(sbname, cueName);
+        }
+
+
         public static void StopCues(string sbname, List<string> cuenames)
         {
             cuenames.ForEach(delegate(string cueName)
             {
-                cues[sbname][cueName].Stop(AudioStopOptions.AsAuthored);
-                RecycleCue(sbname, cueName);
+                StopCue(sbname, cueName);
             });
         }
 

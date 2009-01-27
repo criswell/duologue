@@ -16,7 +16,7 @@ namespace Duologue.Audio
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class AudioManager : Microsoft.Xna.Framework.GameComponent
+    public class AudioManager : Microsoft.Xna.Framework.GameComponent, IService
     {
         private DuologueGame localgame;
         private AudioHelper helper;
@@ -44,8 +44,7 @@ namespace Duologue.Audio
         {
             helper = new AudioHelper(localgame, engine);
             music = new Music(this);
-            soundEffects = new SoundEffects();
-            SoundEffects.init(localgame);
+            soundEffects = new SoundEffects(this);
             localgame.Components.Add(helper);
 
             base.Initialize();
