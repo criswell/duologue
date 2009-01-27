@@ -37,7 +37,7 @@ namespace Duologue.UI
         /// </summary>
         private const string fontFilename = "Fonts/inero-40";
         private const string smallFontFilename = "Fonts/inero-28";
-        private const string livesDot = "PlayerUI\\live-dot";
+        //private const string livesDot = "PlayerUI\\live-dot";
         private const int defaultLives = 4;
         private const int maxScore = 9999999;
         private const int defaultDeltaScore = 5;
@@ -54,7 +54,7 @@ namespace Duologue.UI
         private Vector2 scoreFontCharSize;
         private Vector2 playerFontCharSize;
         // Lives stuff
-        private Texture2D life;
+        //private Texture2D life;
         private int lives;
         // Position, moving and timing
         private Vector2 position;
@@ -195,13 +195,15 @@ namespace Duologue.UI
             deltaScore = defaultDeltaScore;
             pointlets = new Pointlet[numPointlets];
             freePointlets = new Queue<Pointlet>(numPointlets);
-            for (int i = 0; i < numPointlets; i++)
+            /*for (int i = 0; i < numPointlets; i++)
             {
                 pointlets[i] = new Pointlet(
                     position,
                     Color.White);
                 freePointlets.Enqueue(pointlets[i]);
-            }
+            }*/
+
+            PurgePointlets();
 
             // Set the score text
             playerText = Resources.ScoreUI_Lives;
@@ -236,7 +238,7 @@ namespace Duologue.UI
 
             scoreSize.Y += playerTextSize.Y;
 
-            life = Assets.LoadTexture2D(livesDot);
+            //life = Assets.LoadTexture2D(livesDot);
             base.LoadContent();
         }
         #endregion
@@ -371,6 +373,20 @@ namespace Duologue.UI
                 lives--;
             return lives > 0;
         }
+
+        /// <summary>
+        /// Called at the end of a game to purge all active pointlets
+        /// </summary>
+        public void PurgePointlets()
+        {
+            for (int i = 0; i < numPointlets; i++)
+            {
+                pointlets[i] = new Pointlet(
+                    position,
+                    Color.White);
+                freePointlets.Enqueue(pointlets[i]);
+            }
+        }
         #endregion
 
         #region Update / Draw
@@ -450,6 +466,12 @@ namespace Duologue.UI
                     origin,
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
                     RenderSpriteBlendMode.AlphaBlendTop);
+                Render.DrawString(
+                    playerFont,
+                    (lives-1).ToString(),
+                    origin + new Vector2(playerTextSize.X, 0f),
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    RenderSpriteBlendMode.AlphaBlendTop);
             }
             else
             {
@@ -462,7 +484,7 @@ namespace Duologue.UI
             }
 
             // Lives
-            for (int i = 1; i <= lives; i++)
+            /*for (int i = 1; i <= lives; i++)
             {
                 Render.Draw(
                     life,
@@ -474,7 +496,7 @@ namespace Duologue.UI
                     1f,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
-            }
+            }*/
 
 
             // The score itself

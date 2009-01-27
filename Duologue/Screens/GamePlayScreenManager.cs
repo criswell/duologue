@@ -201,6 +201,24 @@ namespace Duologue.Screens
                 gameOver.Enabled = false;
                 // FIXME
                 // Should probably reset things here, like the music, etc
+                // Run through and clean players, scores and bullets
+                for (int i = 0; i < InputManager.MaxInputs; i++)
+                {
+                    LocalInstanceManager.Players[i].Active = false;
+                    LocalInstanceManager.Scores[i].PurgePointlets();
+                    LocalInstanceManager.Scores[i].Enabled = false;
+                    LocalInstanceManager.Scores[i].Visible = false;
+                    LocalInstanceManager.Scores[i].SetScore(0);
+                    for (int j = 0; j < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; j++)
+                    {
+                        LocalInstanceManager.Bullets[i][j].Alive = false;
+                    }
+                }
+
+                // Run through and clean enemies
+                LocalInstanceManager.Enemies = null;
+                LocalInstanceManager.CurrentNumberEnemies = 0;
+
                 LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
             }
         }
