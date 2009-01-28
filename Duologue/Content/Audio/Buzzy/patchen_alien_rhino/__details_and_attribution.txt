@@ -1,0 +1,376 @@
+
+=================== FREESOUND ATTRIBUTION FORM =======================
+
+This form below lists all the samples in this pack with their descriptions and tags.
+You can use this form to attribute samples to users when you use them.
+
+=========================== CUT HERE =================================
+
+File:
+	Name: "Rhino-01.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3376
+	Date of upload: 2005-07-04 18:40:46
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : THROBBING, SCREECHING SWISH. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound 
+======================================================================
+
+File:
+	Name: "Rhino-02.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3377
+	Date of upload: 2005-07-04 18:41:02
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : MULTIPLE FLY-BY\'S. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-03.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3378
+	Date of upload: 2005-07-04 18:41:05
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : THIS IS THE ALIEN RHINO! Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-04.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3379
+	Date of upload: 2005-07-04 18:41:08
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : BLASTING, FLABBY, SPACE, FLY-BY. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-05.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3380
+	Date of upload: 2005-07-04 18:41:10
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : PUT ON THE BRAKES-2 !. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-06.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3381
+	Date of upload: 2005-07-04 18:41:15
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : SPACESHIP NOISE. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-07.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3382
+	Date of upload: 2005-07-04 18:41:17
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : PERCUSSIVE SCREECH. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-09.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3383
+	Date of upload: 2005-07-04 18:41:20
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : sLOGIING bASS dROP. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-10.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3384
+	Date of upload: 2005-07-04 18:41:22
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : SPACE SHIP FLY-BY. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-11.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3385
+	Date of upload: 2005-07-04 18:41:24
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : BASS DRUM BECOMES ALIEN. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-14.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3386
+	Date of upload: 2005-07-04 18:41:25
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : BOOMY, SWISHING FLY-BY. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-15.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3387
+	Date of upload: 2005-07-04 18:41:28
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : QUIET PANNER. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-16.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3388
+	Date of upload: 2005-07-04 18:41:30
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : PHASY, METALIC FLY-BY. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-17.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3389
+	Date of upload: 2005-07-04 18:41:32
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : HI, GRAINY SWISH. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-18.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3390
+	Date of upload: 2005-07-04 18:41:35
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : LOW SHOT, PANING BACK AND FORTH. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-20.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3391
+	Date of upload: 2005-07-04 18:41:37
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : PAINFULLY SCREECHING FLY-BY. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-21.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3392
+	Date of upload: 2005-07-04 18:41:39
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : STING, HI TO LOW. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-22.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3393
+	Date of upload: 2005-07-04 18:41:42
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : RUDE FLY-BY. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-23.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3394
+	Date of upload: 2005-07-04 18:41:44
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : TURN A QUARK INSIDE-OUT! Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-24.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3395
+	Date of upload: 2005-07-04 18:41:46
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : MUFFLED SCREECHING FLY-BY. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-25.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3396
+	Date of upload: 2005-07-04 18:41:48
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : PUT ON THE BRAKES! Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino-26.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3397
+	Date of upload: 2005-07-04 18:41:50
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : HI FLY-BY WITH SUB BASS. Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+
+File:
+	Name: "Rhino.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3398
+	Date of upload: 2005-07-04 18:44:57
+	
+Designer / Creator / Uploader:
+	Name: "patchen"
+	Url: http://www.freesound.org/usersViewSingle.php?id=6997
+	
+Description:
+	By "patchen" : SCREECHING SWISH Outer world sound effect produced using the excellent \'KtGranulator\' vst effect by Koen of smartelectronix.
+
+Tags:
+	effect fx horror processed sci-fi sound sound-effect 
+======================================================================
+

@@ -16,7 +16,10 @@ namespace Duologue.Audio
         CokeBottle,
         WigglesDeath,
         CLONK,
-        Ricochet//, YourNewEffectID
+        Ricochet,
+        Sploosh,
+        BuzzDeath
+        //,newname
     }
 
     /// <summary>
@@ -35,6 +38,8 @@ namespace Duologue.Audio
         public const string WigglesDeath = "WigglesDeath";
         public const string CLONK = "CLONK";
         public const string Ricochet = "ricochet";
+        public const string Sploosh = "Sploosh";
+        public const string BuzzDeath = "BuzzDeath";
         //public const string YourNewCueName = "Cue as named in XACT";
 
         private AudioManager notifier;
@@ -49,7 +54,9 @@ namespace Duologue.Audio
                 {EffectID.CokeBottle, CokeBottle},
                 {EffectID.WigglesDeath, WigglesDeath},
                 {EffectID.CLONK, CLONK},
-                {EffectID.Ricochet, Ricochet}
+                {EffectID.Ricochet, Ricochet},
+                {EffectID.Sploosh, Sploosh},
+                {EffectID.BuzzDeath, BuzzDeath}
 
                 //,EffectID.YourNewEffectID, YourNewCueName
             };

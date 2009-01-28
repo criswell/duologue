@@ -1,0 +1,189 @@
+
+=================== FREESOUND ATTRIBUTION FORM =======================
+
+This form below lists all the samples in this pack with their descriptions and tags.
+You can use this form to attribute samples to users when you use them.
+
+=========================== CUT HERE =================================
+
+File:
+	Name: "Kraan_keuken_24s_zacht_hard.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=587
+	Date of upload: 2005-04-12 21:51:00
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Water at the kitchen sink. Recorded with portaDAT.
+
+Tags:
+	kitchen sink water 
+======================================================================
+
+File:
+	Name: "toilet1_14s.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=588
+	Date of upload: 2005-04-12 21:51:00
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Toilet Flush recorded with portaDAT
+
+Tags:
+	environmental-sounds-research flush toilet water 
+======================================================================
+
+File:
+	Name: "wasbak1.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=589
+	Date of upload: 2005-04-12 21:51:00
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : gurgling from sink.
+
+Tags:
+	running-water sink water 
+======================================================================
+
+File:
+	Name: "washinghands.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=590
+	Date of upload: 2005-04-12 21:51:00
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Person cleaning his hands in a bathroom.
+
+Tags:
+	hands water 
+======================================================================
+
+File:
+	Name: "wsabak2_gorgeleinde.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=591
+	Date of upload: 2005-04-12 21:51:00
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Sink with a nice sucking sound at the end.
+
+Tags:
+	rumble running-water slurp water 
+======================================================================
+
+File:
+	Name: "regen_Straat2.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=19271
+	Date of upload: 2006-05-26 21:59:11
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Rainy street ambiance recorded 26Th of may 2006. Soundelux SMK-H8K -&gt; Sound Devices 722 recorder.  No processing other then raising the gain a little bit. 
+
+Tags:
+	drips field-recording rain street 
+======================================================================
+
+File:
+	Name: "dakraam_regen_II.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=21704
+	Date of upload: 2006-08-10 14:25:06
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Recording of a roofwindow during a bit of a rain storm. Sennheiser MKH-415T -&gt; Sound Devices 722 -&gt; light eq and normalisation in Adobe Audition. 
+Setup: http://ad2004.hku.nl/freesound_picture/rainonroof.jpg
+
+Tags:
+	drip field-recording rain water weather window 
+======================================================================
+
+File:
+	Name: "drip_kraan_els.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=21888
+	Date of upload: 2006-08-17 12:28:30
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Kitchen water tap dripping into sink. Sennheiser MKH-60 -&gt; Sound Devices 722.
+
+Tags:
+	drip field-recording sink tap water 
+======================================================================
+
+File:
+	Name: "drip_kraan_els_2_loop.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=21889
+	Date of upload: 2006-08-17 12:28:27
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Kitchen water tap dripping into sink. Sennheiser MKH-60 -&gt; Sound Devices 722.
+
+Tags:
+	drip field-recording sink tap water 
+======================================================================
+
+File:
+	Name: "plons1.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=22035
+	Date of upload: 2006-08-20 00:13:38
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Object falls into a plastic bucket filled with water. Classic attack and release gesture. 
+Object valt in een plastic emmer die gevult is met water. Simpel attack geluid ontstaat. 
+Recorded using Sennheiser MKH-60 &amp; Sound Devices 722
+
+Tags:
+	bucket drip emmer plons plunge water 
+======================================================================
+
+File:
+	Name: "plons2.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=22036
+	Date of upload: 2006-08-20 00:13:43
+	
+Designer / Creator / Uploader:
+	Name: "Anton"
+	Url: http://www.freesound.org/usersViewSingle.php?id=58
+	
+Description:
+	By "Anton" : Object falls into a plastic bucket filled with water. Classic attack and release gesture. 
+Object valt in een plastic emmer die gevult is met water. Simpel attack geluid ontstaat. 
+Recorded using Sennheiser MKH-60 &amp; Sound Devices 722
+
+Tags:
+	bucket drip emmer plons plunge water 
+======================================================================
+

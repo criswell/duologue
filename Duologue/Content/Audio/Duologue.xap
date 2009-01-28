@@ -238,7 +238,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::7221a71c-b6d7-41e4-b6d1-d0eefad84dfb;
+            Name = 1::4bc06755-25ce-4628-b163-a9d42ca8a030;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -275,8 +275,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 1371364834;
-    Bank Last Revised High = 29982971;
+    Bank Last Revised Low = 2159173776;
+    Bank Last Revised High = 29983119;
 
     Wave
     {
@@ -781,6 +781,98 @@ Wave Bank
             File Type = 1;
             Last Modified Low = 3933454222;
             Last Modified High = 29982968;
+        }
+    }
+
+    Wave
+    {
+        Name = 22036_Anton_plons2editedsploosh;
+        File = Wiggles\anton\22036_Anton_plons2editedsploosh.wav;
+        Build Settings Last Modified Low = 1362131610;
+        Build Settings Last Modified High = 29983090;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 96000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 166456;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 113661406;
+            Last Modified High = 29983089;
+        }
+    }
+
+    Wave
+    {
+        Name = brake3;
+        File = Buzzy\patchen_alien_rhino\brake3.wav;
+        Build Settings Last Modified Low = 850267526;
+        Build Settings Last Modified High = 29983119;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 247136;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 176517526;
+            Last Modified High = 29983119;
+        }
+    }
+
+    Wave
+    {
+        Name = brake1;
+        File = Buzzy\patchen_alien_rhino\brake1.wav;
+        Build Settings Last Modified Low = 850267526;
+        Build Settings Last Modified High = 29983119;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 190440;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2905547322;
+            Last Modified High = 29983118;
+        }
+    }
+
+    Wave
+    {
+        Name = brake2;
+        File = Buzzy\patchen_alien_rhino\brake2.wav;
+        Build Settings Last Modified Low = 850423776;
+        Build Settings Last Modified High = 29983119;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 401472;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 4051016072;
+            Last Modified High = 29983118;
         }
     }
 }
@@ -1580,6 +1672,125 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = Sploosh;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = PlayerEffects;
+                    Bank Index = 0;
+                    Entry Name = 22036_Anton_plons2editedsploosh;
+                    Entry Index = 22;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = BuzzDeath;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Variation
+                {
+                    Variation Type = 3;
+                    Variation Table Type = 0;
+                    New Variation on Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = PlayerEffects;
+                    Bank Index = 0;
+                    Entry Name = brake3;
+                    Entry Index = 23;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = PlayerEffects;
+                    Bank Index = 0;
+                    Entry Name = brake1;
+                    Entry Index = 24;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = PlayerEffects;
+                    Bank Index = 0;
+                    Entry Name = brake2;
+                    Entry Index = 25;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = click;
@@ -1779,6 +1990,46 @@ Sound Bank
             Weight Max = 255;
         }
     }
+
+    Cue
+    {
+        Name = Sploosh;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Sploosh;
+            Index = 10;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = BuzzDeath;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = BuzzDeath;
+            Index = 11;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
 }
 
 Sound Bank
@@ -1844,7 +2095,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7221a71c-b6d7-41e4-b6d1-d0eefad84dfb;
+                RPC Curve Name = 1::4bc06755-25ce-4628-b163-a9d42ca8a030;
             }
         }
     }
@@ -1902,7 +2153,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7221a71c-b6d7-41e4-b6d1-d0eefad84dfb;
+                RPC Curve Name = 1::4bc06755-25ce-4628-b163-a9d42ca8a030;
             }
         }
     }
@@ -1960,7 +2211,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7221a71c-b6d7-41e4-b6d1-d0eefad84dfb;
+                RPC Curve Name = 1::4bc06755-25ce-4628-b163-a9d42ca8a030;
             }
         }
     }
@@ -2018,7 +2269,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7221a71c-b6d7-41e4-b6d1-d0eefad84dfb;
+                RPC Curve Name = 1::4bc06755-25ce-4628-b163-a9d42ca8a030;
             }
         }
     }
@@ -2076,7 +2327,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = RPC Cue Volume;
-                RPC Curve Name = 1::7221a71c-b6d7-41e4-b6d1-d0eefad84dfb;
+                RPC Curve Name = 1::4bc06755-25ce-4628-b163-a9d42ca8a030;
             }
         }
     }

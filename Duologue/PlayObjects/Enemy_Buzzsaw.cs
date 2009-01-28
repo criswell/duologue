@@ -451,13 +451,13 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    audio.soundEffects.PlayEffect(EffectID.PlayerExplosion);
+                    audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
                     return false;
                 }
                 else
                 {
                     TriggerShieldDisintegration(buzzShine, c, Position, 0f);
-                    audio.soundEffects.PlayEffect(EffectID.Ricochet);
+                    audio.soundEffects.PlayEffect(EffectID.CokeBottle);
                     return true;
                 }
             }
