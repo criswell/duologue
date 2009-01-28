@@ -51,8 +51,13 @@ namespace Duologue.PlayObjects
         #region Fields
         private Texture2D[] textureBase;
         private Texture2D[] textureOutline;
+        private Vector2[] frameCenters;
         private Texture2D[] textureSpit;
+        private Vector2[] spitCenters;
         private Texture2D textureSpawnExplode;
+        private Vector2 spawnExplodeCenter;
+
+        private Vector2 screenCenter;
 
         private int currentFrame;
         private byte[] currentSpitAlphas;
@@ -102,27 +107,48 @@ namespace Duologue.PlayObjects
         {
             textureBase = new Texture2D[maxAnimationFrames];
             textureOutline = new Texture2D[maxAnimationFrames];
+            frameCenters = new Vector2[maxAnimationFrames];
             textureSpit = new Texture2D[maxSpitFrames];
+            spitCenters = new Vector2[maxSpitFrames];
+
 
             for (int i = 0; i < maxAnimationFrames; i++)
             {
                 textureBase[i] = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_base, (i + 1).ToString()));
                 textureOutline[i] = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_outline, (i + 1).ToString()));
+                frameCenters[i] = new Vector2(textureOutline[i].Width / 2f, textureOutline[i].Height / 2f);
             }
 
             for (int i = 0; i < maxSpitFrames; i++)
             {
                 textureSpit[i] = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_spit, (i + 1).ToString()));
+                spitCenters[i] = new Vector2(textureSpit[i].Width / 2f, textureSpit[i].Height / 2f);
             }
 
             textureSpawnExplode = InstanceManager.AssetManager.LoadTexture2D(filename_spawnExplode);
+            spawnExplodeCenter = new Vector2(textureSpawnExplode.Width / 2f, textureSpawnExplode.Height / 2f);
 
             Orientation = GetStartingVector();
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
 
+            currentFrame = 1;
+            screenCenter = new Vector2(
+                InstanceManager.DefaultViewport.Width / 2f,
+                InstanceManager.DefaultViewport.Height / 2f);
+
+            SetAtMaxPosition();
+
             MyState = SpitterState.Spawning;
 
             Initialized = true;
+        }
+
+        /// <summary>
+        /// Sets us at the maximum position away from center based upon our rotation around the center of screen
+        /// </summary>
+        private void SetAtMaxPosition()
+        {
+            float angle = MWMathHelper.ComputeAngleAgainstX(Position, screenCenter);
         }
 
         /// <summary>
@@ -183,7 +209,19 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            if (Position.X < frameCenters[currentFrame].X)
+            {
+            }
+            else if (Position.X > InstanceManager.DefaultViewport.Width - frameCenters[currentFrame].X)
+            {
+            }
+
+            if (Position.Y < frameCenters[currentFrame].Y)
+            {
+            }
+            else if (Position.Y > InstanceManager.DefaultViewport.Height - frameCenters[currentFrame].Y)
+            {
+            }
         }
         #endregion
     }
