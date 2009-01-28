@@ -18,7 +18,6 @@ namespace Duologue.Audio
     /// </summary>
     public class AudioManager : Microsoft.Xna.Framework.GameComponent, IService
     {
-        private DuologueGame localgame;
         private AudioHelper helper;
         public Music music;
         public SoundEffects soundEffects;
@@ -33,7 +32,6 @@ namespace Duologue.Audio
 
         public AudioManager(Game game) : base(game)
         {
-            localgame = ((DuologueGame)game);
         }
 
         /// <summary>
@@ -42,10 +40,10 @@ namespace Duologue.Audio
         /// </summary>
         public override void Initialize()
         {
-            helper = new AudioHelper(localgame, engine);
+            helper = new AudioHelper(Game, engine);
             music = new Music(this);
             soundEffects = new SoundEffects(this);
-            localgame.Components.Add(helper);
+            Game.Components.Add(helper);
 
             base.Initialize();
         }

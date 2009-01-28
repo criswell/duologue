@@ -451,15 +451,13 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    // FIXME_SFX need enemy explosion here (or maybe in GPSM)
                     audio.soundEffects.PlayEffect(EffectID.PlayerExplosion);
                     return false;
                 }
                 else
                 {
-                    // FIXME_SFX need some sort of "bonk" sound signifying we shattered a layer of the shield
                     TriggerShieldDisintegration(buzzShine, c, Position, 0f);
-                    audio.soundEffects.PlayEffect(EffectID.CokeBottle);
+                    audio.soundEffects.PlayEffect(EffectID.Ricochet);
                     return true;
                 }
             }

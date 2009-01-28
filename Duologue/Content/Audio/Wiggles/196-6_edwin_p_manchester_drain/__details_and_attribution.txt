@@ -1,0 +1,107 @@
+
+=================== FREESOUND ATTRIBUTION FORM =======================
+
+This form below lists all the samples in this pack with their descriptions and tags.
+You can use this form to attribute samples to users when you use them.
+
+=========================== CUT HERE =================================
+
+File:
+	Name: "01.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3213
+	Date of upload: 2005-07-01 21:25:36
+	
+Designer / Creator / Uploader:
+	Name: "edwin_p_manchester"
+	Url: http://www.freesound.org/usersViewSingle.php?id=1978
+	
+Description:
+	By "edwin_p_manchester" : field recording made by lowering a stereo mic into a sewer drain. recorded to minidisc and edited for percussive effect.
+short low hum.
+
+Tags:
+	bass field-recording rumble sewer-drain 
+======================================================================
+
+File:
+	Name: "02.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3214
+	Date of upload: 2005-07-01 21:25:46
+	
+Designer / Creator / Uploader:
+	Name: "edwin_p_manchester"
+	Url: http://www.freesound.org/usersViewSingle.php?id=1978
+	
+Description:
+	By "edwin_p_manchester" : field recording made by lowering a stereo mic into a sewer drain. recorded to minidisc and edited for percussive effect. short low hum (higher than #1).
+
+Tags:
+	bass field-recording hum sewer-drain 
+======================================================================
+
+File:
+	Name: "03.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3215
+	Date of upload: 2005-07-01 21:25:53
+	
+Designer / Creator / Uploader:
+	Name: "edwin_p_manchester"
+	Url: http://www.freesound.org/usersViewSingle.php?id=1978
+	
+Description:
+	By "edwin_p_manchester" : field recording made by lowering a stereo mic into a sewer drain. recorded to minidisc and edited for percussive effect. sounds kind of like a low snare.
+
+Tags:
+	field-recording hit mid sewer-drain 
+======================================================================
+
+File:
+	Name: "04.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3216
+	Date of upload: 2005-07-01 21:26:00
+	
+Designer / Creator / Uploader:
+	Name: "edwin_p_manchester"
+	Url: http://www.freesound.org/usersViewSingle.php?id=1978
+	
+Description:
+	By "edwin_p_manchester" : field recording made by lowering a stereo mic into a sewer drain. recorded to minidisc and edited for percussive effect.
+clanking metal, multiple sounds.
+
+Tags:
+	clank field-recording metal sewer-drain 
+======================================================================
+
+File:
+	Name: "05.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3217
+	Date of upload: 2005-07-01 21:26:12
+	
+Designer / Creator / Uploader:
+	Name: "edwin_p_manchester"
+	Url: http://www.freesound.org/usersViewSingle.php?id=1978
+	
+Description:
+	By "edwin_p_manchester" : field recording made by lowering a stereo mic into a sewer drain. recorded to minidisc and edited for percussive effect. one distinct hit followed by a short scrape.
+
+Tags:
+	field-recording gravel scrape sewer-drain 
+======================================================================
+
+File:
+	Name: "06.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=3218
+	Date of upload: 2005-07-01 21:26:17
+	
+Designer / Creator / Uploader:
+	Name: "edwin_p_manchester"
+	Url: http://www.freesound.org/usersViewSingle.php?id=1978
+	
+Description:
+	By "edwin_p_manchester" : field recording made by lowering a stereo mic into a sewer drain. recorded to minidisc and edited for percussive effect.
+two distinct scrapes.
+
+Tags:
+	field-recording gravel scrape sewer-drain 
+======================================================================
+

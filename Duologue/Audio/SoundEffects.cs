@@ -6,14 +6,17 @@ namespace Duologue.Audio
 {
 
     //the rule is: one sound bank = one group of effects = one EffectsGroupID
-    public enum EffectsBankID { Player }
+    public enum EffectsBankID { Player, Wiggles }
     public enum EffectID
     {
         Clock,
         PlayerExplosion,
         PlayerBeamA,
         PlayerBeamB,
-        CokeBottle//, YourNewEffectID
+        CokeBottle,
+        WigglesDeath,
+        CLONK,
+        Ricochet//, YourNewEffectID
     }
 
     /// <summary>
@@ -29,6 +32,9 @@ namespace Duologue.Audio
         public const string LightColorA = "Saxdual";
         public const string LightColorB = "Saxmachine-high";
         public const string CokeBottle = "edwin_p_manchester";
+        public const string WigglesDeath = "WigglesDeath";
+        public const string CLONK = "CLONK";
+        public const string Ricochet = "ricochet";
         //public const string YourNewCueName = "Cue as named in XACT";
 
         private AudioManager notifier;
@@ -40,7 +46,11 @@ namespace Duologue.Audio
                 {EffectID.PlayerExplosion, Explosion},
                 {EffectID.PlayerBeamA, LightColorA},
                 {EffectID.PlayerBeamB, LightColorB},
-                {EffectID.CokeBottle, CokeBottle}
+                {EffectID.CokeBottle, CokeBottle},
+                {EffectID.WigglesDeath, WigglesDeath},
+                {EffectID.CLONK, CLONK},
+                {EffectID.Ricochet, Ricochet}
+
                 //,EffectID.YourNewEffectID, YourNewCueName
             };
         private EffectsBank playerBank = new EffectsBank();
