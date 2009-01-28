@@ -348,6 +348,7 @@ namespace Duologue.PlayObjects
                 c = ColorState.Positive[ColorState.Light];
 
             Color outlineC = Color.White;
+            Color shadC = shadowColor;
 
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation) + MathHelper.Pi + MathHelper.PiOver2;
             Texture2D baseImg = baseFrames[currentFrame];
@@ -367,6 +368,7 @@ namespace Duologue.PlayObjects
                 cent = deathCenters[numberOfDeathFrames - 1];
                 c = new Color(c, (float)(totalFadeOutTime - timeSinceStart / totalFadeOutTime));
                 outlineC = new Color(outlineC, (float)(totalFadeOutTime - timeSinceStart / totalFadeOutTime));
+                shadC = new Color(shadC, (float)(totalFadeOutTime - timeSinceStart / totalFadeOutTime));
             }
 
             // Draw shadow
@@ -375,7 +377,7 @@ namespace Duologue.PlayObjects
                 Position + shadowOffset,
                 cent,
                 null,
-                shadowColor,
+                shadC,
                 rotation,
                 1f,
                 baseLayer);
