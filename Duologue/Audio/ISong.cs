@@ -36,6 +36,7 @@ namespace Duologue.Audio
 
     public class Song : AudioCollectionBase, ISong
     {
+        public bool IsPlaying;
         public List<Track> Tracks = new List<Track>();
         public Song() { }
         public virtual void Play(){}

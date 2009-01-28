@@ -30,12 +30,14 @@ namespace Duologue.Audio
 
         public override void Play()
         {
+            IsPlaying = true;
             AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
         }
 
         public override void Stop()
         {
             AudioHelper.StopCues(SoundBankName);
+            IsPlaying = false;
         }
 
     }

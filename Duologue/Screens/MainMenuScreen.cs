@@ -36,9 +36,6 @@ namespace Duologue.Screens
         private MainGameLogo mainGameLogo;
         private MainMenu mainMenu;
         private float timeSinceStart;
-        private Game localGame;
-        //needed to create a hook to start the background music exactly once
-        private bool startedMusic = false;
         #endregion
 
         #region Properties
@@ -49,11 +46,10 @@ namespace Duologue.Screens
             : base(game)
         {
             timeSinceStart = 0f;
-            localGame = game;
-            mainGameLogo = new MainGameLogo(localGame);
-            mainMenu = new MainMenu(localGame);
-            localGame.Components.Add(mainGameLogo);
-            localGame.Components.Add(mainMenu);
+            mainGameLogo = new MainGameLogo(Game);
+            mainMenu = new MainMenu(Game);
+            Game.Components.Add(mainGameLogo);
+            Game.Components.Add(mainMenu);
             
         }
 
@@ -88,11 +84,9 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            if (!startedMusic)
+            if (!ServiceLocator.GetService<AudioManager>().music.SongIsPlaying(SongID.SelectMenu))
             {
-                startedMusic = true;
-                ((DuologueGame)localGame).Audio.music.PlaySong(SongID.SelectMenu);
-                //Music.PlaySong(SongID.SelectMenu);
+                ServiceLocator.GetService<AudioManager>().music.PlaySong(SongID.SelectMenu);
             }
             if (mainGameLogo.PercentComplete < 1f)
             {

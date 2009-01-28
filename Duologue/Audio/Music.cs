@@ -57,6 +57,11 @@ namespace Duologue.Audio
             songMap[ID].Stop();
         }
 
+        public bool SongIsPlaying(SongID ID)
+        {
+            return songMap[ID].IsPlaying;
+        }
+
         public void UpdateIntensity(IntensityEventArgs e)
         {
             beatSong.ChangeIntensity(e.ChangeAmount);
