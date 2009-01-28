@@ -125,6 +125,14 @@ namespace Mimicware
 
             return offset;
         }
+
+        /// <summary>
+        /// Basic coin toss, returns either true for false
+        /// </summary>
+        internal static bool CoinToss()
+        {
+            return rand.Next(0, 2) == 0;
+        }
         #endregion
     }
 }

@@ -46,6 +46,14 @@ namespace Duologue.PlayObjects
         /// Max number of frames for the spit
         /// </summary>
         private const int maxSpitFrames = 3;
+
+        /// <summary>
+        /// The delta size per frame
+        /// </summary>
+        private const int spitDeltaDefaultSize = 4;
+
+        private const int lowerSpitAlpha = 50;
+        private const int upperSpitAlpha = 200;
         #endregion
 
         #region Fields
@@ -61,6 +69,12 @@ namespace Duologue.PlayObjects
 
         private int currentFrame;
         private byte[] currentSpitAlphas;
+        private int[] spitAlphaDeltas;
+
+        private float upperLeftAngle;
+        private float upperRightAngle;
+        private float lowerRightAngle;
+        private float lowerLeftAngle;
 
         private float rotation;
         #endregion
@@ -110,8 +124,10 @@ namespace Duologue.PlayObjects
             frameCenters = new Vector2[maxAnimationFrames];
             textureSpit = new Texture2D[maxSpitFrames];
             spitCenters = new Vector2[maxSpitFrames];
+            currentSpitAlphas = new byte[maxSpitFrames];
+            spitAlphaDeltas = new int[maxSpitFrames];
 
-
+            // Load the animation frames
             for (int i = 0; i < maxAnimationFrames; i++)
             {
                 textureBase[i] = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_base, (i + 1).ToString()));
@@ -119,15 +135,18 @@ namespace Duologue.PlayObjects
                 frameCenters[i] = new Vector2(textureOutline[i].Width / 2f, textureOutline[i].Height / 2f);
             }
 
+            // Load the spit frames
             for (int i = 0; i < maxSpitFrames; i++)
             {
                 textureSpit[i] = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_spit, (i + 1).ToString()));
                 spitCenters[i] = new Vector2(textureSpit[i].Width / 2f, textureSpit[i].Height / 2f);
             }
 
+            // Texture for the spawn/explode image
             textureSpawnExplode = InstanceManager.AssetManager.LoadTexture2D(filename_spawnExplode);
             spawnExplodeCenter = new Vector2(textureSpawnExplode.Width / 2f, textureSpawnExplode.Height / 2f);
 
+            // Compute orientation
             Orientation = GetStartingVector();
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
 
@@ -136,11 +155,27 @@ namespace Duologue.PlayObjects
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
 
+            // Place us at the max position
             SetAtMaxPosition();
 
             MyState = SpitterState.Spawning;
 
             Initialized = true;
+        }
+
+        /// <summary>
+        /// Generate the spit alphas (should be called before each firing)
+        /// </summary>
+        private void GenerateSpitAlphas()
+        {
+            for (int i = 0; i < maxSpitFrames; i++)
+            {
+                currentSpitAlphas[i] = (byte)MWMathHelper.GetRandomInRange(lowerSpitAlpha, upperSpitAlpha);
+                if (MWMathHelper.CoinToss())
+                    spitAlphaDeltas[i] = -1 * spitDeltaDefaultSize;
+                else
+                    spitAlphaDeltas[i] = spitDeltaDefaultSize;
+            }
         }
 
         /// <summary>
