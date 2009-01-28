@@ -1,0 +1,120 @@
+
+=================== FREESOUND ATTRIBUTION FORM =======================
+
+This form below lists all the samples in this pack with their descriptions and tags.
+You can use this form to attribute samples to users when you use them.
+
+=========================== CUT HERE =================================
+
+File:
+	Name: "00820 liar voice.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=66131
+	Date of upload: 2009-01-10 19:43:10
+	
+Designer / Creator / Uploader:
+	Name: "Robinhood76"
+	Url: http://www.freesound.org/usersViewSingle.php?id=321967
+	
+Description:
+	By "Robinhood76" : Male whispering voice liar sth in Tolkien style :) rec by Neumann TLM 103 and Tl Audio C1
+
+Tags:
+	demon growl horror liar scary spell talk voice 
+======================================================================
+
+File:
+	Name: "00822 monster 2 voice.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=66132
+	Date of upload: 2009-01-10 19:43:11
+	
+Designer / Creator / Uploader:
+	Name: "Robinhood76"
+	Url: http://www.freesound.org/usersViewSingle.php?id=321967
+	
+Description:
+	By "Robinhood76" : Monster growl, processed from human voice rec by Neumann TLM 103 and Tl Audio C1
+
+Tags:
+	bad dragon evil growl monster snarl whirr 
+======================================================================
+
+File:
+	Name: "00825 monster 4 voice.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=66133
+	Date of upload: 2009-01-10 19:43:11
+	
+Designer / Creator / Uploader:
+	Name: "Robinhood76"
+	Url: http://www.freesound.org/usersViewSingle.php?id=321967
+	
+Description:
+	By "Robinhood76" : Monster growl, processed from human voice rec by Neumann TLM 103 and Tl Audio C1
+
+Tags:
+	bad dragon evil growl monster snarl whirr 
+======================================================================
+
+File:
+	Name: "00826 zombie hit 1.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=66134
+	Date of upload: 2009-01-10 19:43:12
+	
+Designer / Creator / Uploader:
+	Name: "Robinhood76"
+	Url: http://www.freesound.org/usersViewSingle.php?id=321967
+	
+Description:
+	By "Robinhood76" : Fight howl like monster or zombie in games rec by Neumann TLM 103 and Tl Audio C1
+
+Tags:
+	beat fight groan hit howl man monster shout zombie 
+======================================================================
+
+File:
+	Name: "00831 monster in face 3.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=66494
+	Date of upload: 2009-01-21 17:27:13
+	
+Designer / Creator / Uploader:
+	Name: "Robinhood76"
+	Url: http://www.freesound.org/usersViewSingle.php?id=321967
+	
+Description:
+	By "Robinhood76" : Monster close sound processed from human voice rec by Meumann TLM 103 and TLAudio C1
+
+Tags:
+	close dinosaurus dragon growl monster voice whirr 
+======================================================================
+
+File:
+	Name: "00840 witch hit 5.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=66539
+	Date of upload: 2009-01-23 12:59:32
+	
+Designer / Creator / Uploader:
+	Name: "Robinhood76"
+	Url: http://www.freesound.org/usersViewSingle.php?id=321967
+	
+Description:
+	By "Robinhood76" : voice like old witch processed from human voice, rec by Neumann TLM 103
+
+Tags:
+	groan growl hit horror whirr witch 
+======================================================================
+
+File:
+	Name: "00834 monster in face5.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=66574
+	Date of upload: 2009-01-24 11:16:19
+	
+Designer / Creator / Uploader:
+	Name: "Robinhood76"
+	Url: http://www.freesound.org/usersViewSingle.php?id=321967
+	
+Description:
+	By "Robinhood76" : Sound of wounded monster processed from human voice rec by Neumann TLM 103
+
+Tags:
+	dinosaur dinosaurus growl hit monster whirr 
+======================================================================
+

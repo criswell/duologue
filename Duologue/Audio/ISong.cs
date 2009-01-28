@@ -34,7 +34,7 @@ namespace Duologue.Audio
         }
     }
 
-    public class Song : AudioCollectionBase
+    public class Song : AudioCollectionBase, ISong
     {
         public List<Track> Tracks = new List<Track>();
         public Song() { }
@@ -58,13 +58,13 @@ namespace Duologue.Audio
         }
     }
 
-    public class SoundEffectsGroup : AudioCollectionBase
+    public class EffectsBank : AudioCollectionBase
     {
         //the dictionary key is the cue name...which we also need in
         //each of the sound effects. Crap.
         public Dictionary<string, SoundEffect> Effects =
             new Dictionary<string, SoundEffect>();
-        public SoundEffectsGroup() { }
+        public EffectsBank() { }
     }
 
 }

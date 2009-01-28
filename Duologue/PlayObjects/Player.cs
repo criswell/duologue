@@ -153,8 +153,8 @@ namespace Duologue.PlayObjects
         private float piOver6 = MathHelper.Pi / 6f;
         private ColorState colorState;
 
-        // Sound effects
-        private SoundEffects fx;
+        // Audio
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -335,7 +335,7 @@ namespace Duologue.PlayObjects
             spawnScale = startSpawnScale;
             spawnRotation = 0f;
 
-            fx = new SoundEffects();
+            audio = ServiceLocator.GetService<AudioManager>();
 
             Initialized = true;
         }
@@ -792,7 +792,8 @@ namespace Duologue.PlayObjects
                 LocalInstanceManager.PlayerSmoke.AddParticles(this.Position, Color.White);
 
                 // Should trigger other explosions here
-                SoundEffects.PlayerExplosion();
+                
+                audio.soundEffects.PlayerExplosion();
                 
                 // Set the graphical items
                 state = PlayerState.Dying;

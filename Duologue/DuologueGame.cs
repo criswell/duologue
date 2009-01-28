@@ -288,6 +288,7 @@ namespace Duologue
             }
 
             Audio = new AudioManager(this);
+            ServiceLocator.RegisterService(Audio);
             this.Components.Add(Audio);
 
             base.Initialize();

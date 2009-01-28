@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 // XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +17,7 @@ using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 // Duologue
+using Duologue.Audio;
 using Duologue.State;
 using Duologue.Screens;
 #endregion
@@ -635,12 +635,15 @@ namespace Duologue.PlayObjects
                     timeSinceStart = 0;
                     currentTimePerFrameDying = startTimePerFrameDying;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    // FIXME_SFX need enemy explosion here (or maybe in GPSM)
+                    //WigglesDeath
+                    AudioManager am = ServiceLocator.GetService<AudioManager>();
+                    am.soundEffects.PlayEffect(EffectID.WigglesDeath);
                     return false;
                 }
                 else
                 {
-                    // FIXME_SFX need some sort of "bonk" sound signifying we shattered a layer of the shield
+                    AudioManager am = ServiceLocator.GetService<AudioManager>();
+                    am.soundEffects.PlayEffect(EffectID.CLONK);
                     TriggerShieldDisintegration(invertOutlineFrames[currentFrame], c, Position, 0f);
                     return true;
                 }

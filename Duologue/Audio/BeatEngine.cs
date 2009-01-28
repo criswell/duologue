@@ -24,6 +24,7 @@ namespace Duologue.Audio
         private float beatTimer = 0f;
         private float beatInterval = 3433f;
         private DuologueGame localGame;
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -69,6 +70,7 @@ namespace Duologue.Audio
         {
             // TODO: Add your initialization code here
             this.Enabled = false;
+            audio = ServiceLocator.GetService<AudioManager>();
             base.Initialize();
         }
 
@@ -81,7 +83,7 @@ namespace Duologue.Audio
             beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (beatTimer > beatInterval)
             {
-                SoundEffects.BambooClick();
+                audio.soundEffects.BambooClick();
                 beatTimer = 0f;
             }
             base.Update(gameTime);

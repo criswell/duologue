@@ -12,8 +12,6 @@ namespace Duologue.Audio
 {
     //the rule is: one sound bank = one song = one SongID
     public enum SongID { SelectMenu, Intensity}
-    //the rule is: one sound bank = one group of effects = one EffectsGroupID
-    //public enum EffectsGroupID { Player }
 
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
