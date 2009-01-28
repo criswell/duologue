@@ -643,7 +643,7 @@ namespace Duologue.PlayObjects
                 else
                 {
                     AudioManager am = ServiceLocator.GetService<AudioManager>();
-                    am.soundEffects.PlayEffect(EffectID.CLONK);
+                    am.soundEffects.PlayEffect(EffectID.Sploosh);
                     TriggerShieldDisintegration(invertOutlineFrames[currentFrame], c, Position, 0f);
                     return true;
                 }

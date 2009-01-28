@@ -159,7 +159,9 @@ namespace Duologue.Waves
             thisWave.NumEnemies = 10;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
-            thisWave.Wavelet[thisWave.CurrentWavelet] = new Wavelet(thisWave.NumEnemies, 1);
+            int hitsToKillEnemy = 2;
+            thisWave.Wavelet[thisWave.CurrentWavelet] = 
+                new Wavelet(thisWave.NumEnemies, hitsToKillEnemy);
             
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;
