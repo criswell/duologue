@@ -313,18 +313,12 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            if (Position.X < frameCenters[currentFrame].X)
+            if (Position.X < frameCenters[currentFrame].X
+                || Position.X > InstanceManager.DefaultViewport.Width - frameCenters[currentFrame].X
+                || Position.Y < frameCenters[currentFrame].Y
+                || Position.Y > InstanceManager.DefaultViewport.Height - frameCenters[currentFrame].Y)
             {
-            }
-            else if (Position.X > InstanceManager.DefaultViewport.Width - frameCenters[currentFrame].X)
-            {
-            }
-
-            if (Position.Y < frameCenters[currentFrame].Y)
-            {
-            }
-            else if (Position.Y > InstanceManager.DefaultViewport.Height - frameCenters[currentFrame].Y)
-            {
+                SetAtMaxPosition();
             }
         }
         #endregion
