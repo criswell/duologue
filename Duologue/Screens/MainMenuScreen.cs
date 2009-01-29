@@ -87,6 +87,7 @@ namespace Duologue.Screens
             if (!ServiceLocator.GetService<AudioManager>().music.SongIsPlaying(SongID.SelectMenu))
             {
                 ServiceLocator.GetService<AudioManager>().music.PlaySong(SongID.SelectMenu);
+
             }
             if (mainGameLogo.PercentComplete < 1f)
             {

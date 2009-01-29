@@ -28,6 +28,19 @@ namespace Duologue.Audio
             AudioHelper.AddBank(SoundBankName, WaveBankName, cues);
         }
 
+        public override bool IsPlaying
+        {
+            get
+            {
+                isPlaying = AudioHelper.CueIsPlaying(SoundBankName, SelectMenuCue);
+                return isPlaying;
+            }
+            set
+            {
+                isPlaying = value;
+            }
+        }
+
         public override void Play()
         {
             IsPlaying = true;
@@ -38,6 +51,14 @@ namespace Duologue.Audio
         {
             AudioHelper.StopCues(SoundBankName);
             IsPlaying = false;
+        }
+
+        public override void Fade()
+        {
+            float fadeoutTime = 10000f; //milliseconds
+            int steps = 100;
+            AudioHelper.FadeCues(SoundBankName, fadeoutTime, steps, 
+                Loudness.Full, Loudness.Quiet, true);
         }
 
     }

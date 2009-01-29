@@ -21,6 +21,13 @@ namespace Duologue.Audio
         Nonstop
     }
 
+    public struct CueFadeInfo
+    {
+        public Cue CueObj;
+        public List<float> Volumes;
+        public List<float> Times;
+        public bool Stop;
+    }
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -44,6 +51,11 @@ namespace Duologue.Audio
         private static string engineFileName;
         private static AudioEngine engine;
 
+        private static float fadeTimer = 0f;
+
+        //hack hack hack
+        private static int fadeIndex;
+        private static int maxFadeIndex;
         // These SoundBanks are where we pull new copies of Cues. We don't play them there.
         private static Dictionary<string, SoundBank> soundBanks = new Dictionary<string, SoundBank>();
 
@@ -57,6 +69,12 @@ namespace Duologue.Audio
         // - are bumped by a new instance
         private static Dictionary<string, Dictionary<string, Cue>> cues =
             new Dictionary<string, Dictionary<string, Cue>>();
+
+        // This is the structure that shows cues that are being faded
+        // Since there is a volume parameter sent for each cue, it's
+        // most straightforward to keep a parallel structure of fade info.
+        private static Dictionary<string, Dictionary<string, CueFadeInfo>> cueFades =
+            new Dictionary<string, Dictionary<string, CueFadeInfo>>();
 
         // This List of Cues is where Cues go after they leave the "cues" structure.
         // During updates, this List is checked for Cues that can be disposed.
@@ -117,6 +135,12 @@ namespace Duologue.Audio
             });
         }
 
+        public static bool CueIsPlaying(string sbname, string cuename)
+        {
+            return cues[sbname][cuename].IsPlaying;
+        }
+
+
         public static void PlayCue(string sbname, string cueName, PlayType type)
         {
             //FIXME need a volume param. Need to handle repeating.
@@ -128,7 +152,7 @@ namespace Duologue.Audio
             else
             {
                 RecycleCue(sbname, cueName);
-                cues[sbname][cueName].SetVariable(volumeName, 999.0f); //FIXME
+                cues[sbname][cueName].SetVariable(volumeName, 100f); //FIXME
                 cues[sbname][cueName].Play();
             }
         }
@@ -180,6 +204,68 @@ namespace Duologue.Audio
                 });
         }
 
+        public static void FadeCues(string sbname, float mS, int steps,
+            float startV, float endV, bool stop)
+        {
+            fadeIndex = 0;
+            maxFadeIndex = steps - 1;
+            float fadeInterval = mS / (float)steps;
+            float deltaV = (startV - endV) / (float)steps;
+
+            CueFadeInfo fader = new CueFadeInfo();
+            fader.Volumes = new List<float>();
+            fader.Times = new List<float>();
+            
+            fader.Stop = stop;
+            float nextV = startV;
+            float nextT = fadeInterval;
+            for (int i = 0; i < steps; i++)
+            {
+                fader.Volumes.Add(nextV);
+                fader.Times.Add(nextT);
+                nextV = nextV - deltaV;
+                nextT = nextT + fadeInterval;
+            }
+            cueFades.Add(sbname, new Dictionary<string, CueFadeInfo>());
+            cues[sbname].Keys.ToList().ForEach( cuename =>
+                {
+                    cueFades[sbname].Add(cuename, fader);
+                });
+            fadeTimer = 0f;
+        }
+
+
+        private static void UpdateFadingCues(GameTime gameTime)
+        {
+            fadeTimer += (float)gameTime.ElapsedRealTime.TotalMilliseconds;
+            bool doneFading = false;
+            cueFades.Keys.ToList().ForEach(delegate(string sbname)
+            {
+                cueFades[sbname].Keys.ToList().ForEach(delegate(string cuename)
+                {
+                    if (fadeTimer > cueFades[sbname][cuename].Times[fadeIndex])
+                    {
+                        cues[sbname][cuename].SetVariable(volumeName,
+                            cueFades[sbname][cuename].Volumes[fadeIndex]);
+                        //this is going to break when multiple songs are fading
+                        fadeIndex++;
+                        if (fadeIndex > maxFadeIndex)
+                        {
+                            fadeIndex = maxFadeIndex;
+                            StopCues(sbname);
+                            doneFading = true;
+                        }
+                    }
+
+                });
+            
+            });
+            if (doneFading)
+            {
+                cueFades = new Dictionary<string, Dictionary<string, CueFadeInfo>>();
+            }
+        }
+
 
         public static void StopCue(string sbname, string cueName)
         {
@@ -224,6 +310,7 @@ namespace Duologue.Audio
             engine.Update();
             ProcessDynamicCues();
             ProcessPlayedCues();
+            UpdateFadingCues(gameTime);
             //need something to process "nonstop" play.
             // TODO: Add your update code here
             base.Update(gameTime);
