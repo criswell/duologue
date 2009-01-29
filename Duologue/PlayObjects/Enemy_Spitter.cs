@@ -169,8 +169,9 @@ namespace Duologue.PlayObjects
                 InstanceManager.DefaultViewport.Height / 2f);
 
             // Determine the corners and their angles
-            // One thing to remember here is we're actually flipped upside down
-            // (which means the upper become lower and visa versa)
+            // One thing to remember here is we're actually flipped upside down due to
+            // graphic conventions of y increasing from top to bottom (messes things up for
+            // the trig functions, which assume otherwise)
             lowerBoundaryX = InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent;
             lowerBoundaryY = InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
 
