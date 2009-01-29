@@ -10,6 +10,7 @@ namespace Duologue.Audio
     {
         void Play();
         void Stop();
+        void Fade();
     }
 
     public class AudioContentBase
@@ -36,10 +37,22 @@ namespace Duologue.Audio
 
     public class Song : AudioCollectionBase, ISong
     {
+        protected bool isPlaying;
         public List<Track> Tracks = new List<Track>();
         public Song() { }
-        public virtual void Play(){}
+        public virtual void Play(){ }
         public virtual void Stop() { }
+        public virtual void Fade() { }
+        public virtual bool IsPlaying
+        { 
+            get 
+            {
+                return isPlaying;
+            } 
+            set 
+            { 
+            } 
+        }
     }
 
 
@@ -49,7 +62,7 @@ namespace Duologue.Audio
         public SoundEffect(string cue)
         {
             CueName = cue;
-            this.Volume = 999.0f;
+            this.Volume = Loudness.Full;
         }
         public SoundEffect(string cue, float vol)
         {

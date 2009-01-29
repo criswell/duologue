@@ -94,18 +94,32 @@ namespace Duologue.Audio
         {
             AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
             AudioHelper.UpdateCues(SoundBankName, volumeMatrix[intensityStep]);
+            IsPlaying = true;
         }
 
         public override void Stop()
         {
+            IsPlaying = false;
             AudioHelper.StopCues(SoundBankName);
+        }
+
+        public override void Fade()
+        {
+            float fadeoutTime = 5000f; //milliseconds
+            int steps = 50;
+            AudioHelper.FadeCues(SoundBankName, fadeoutTime, steps,
+                Loudness.Full, Loudness.Quiet, true);
         }
 
         public void ChangeIntensity(int amount)
         {
+            int oldIntensityStep = intensityStep;
             intensityStep = 
                 MWMathHelper.LimitToRange(intensityStep + amount, 1, MAX_INTENSITY);
-            AudioHelper.UpdateCues(SoundBankName, volumeMatrix[intensityStep]);
+            if (intensityStep != oldIntensityStep)
+            {
+                AudioHelper.UpdateCues(SoundBankName, volumeMatrix[intensityStep]);
+            }
         }
 
 

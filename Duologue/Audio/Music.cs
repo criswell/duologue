@@ -16,8 +16,9 @@ namespace Duologue.Audio
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
     {
-        public const float Silent = 0.0f;
-        public const float Full = 999.0f;
+        public const float Silent = 0f;
+        public const float Quiet = 50f;
+        public const float Full = 100f;
     }
 
 
@@ -55,6 +56,16 @@ namespace Duologue.Audio
             if (ID == SongID.Intensity)
                 beatEngine.Enabled = false;
             songMap[ID].Stop();
+        }
+
+        public void FadeSong(SongID ID)
+        {
+            songMap[ID].Fade();
+        }
+
+        public bool SongIsPlaying(SongID ID)
+        {
+            return songMap[ID].IsPlaying;
         }
 
         public void UpdateIntensity(IntensityEventArgs e)
