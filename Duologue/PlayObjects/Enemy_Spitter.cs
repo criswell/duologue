@@ -76,6 +76,19 @@ namespace Duologue.PlayObjects
         private float lowerRightAngle;
         private float lowerLeftAngle;
 
+        private Vector2 upperLeftCorner;
+        private Vector2 upperRightCorner;
+        private Vector2 lowerRightCorner;
+        private Vector2 lowerLeftCorner;
+
+        private float upperBoundaryX;
+        private float lowerBoundaryX;
+        private float upperBoundaryY;
+        private float lowerBoundaryY;
+
+        private float innerBoundsWidth;
+        private float innerBoundsHeight;
+
         private float rotation;
         #endregion
 
@@ -155,6 +168,31 @@ namespace Duologue.PlayObjects
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
 
+            // Determine the corners and their angles
+            // One thing to remember here is we're actually flipped upside down
+            // (which means the upper become lower and visa versa)
+            lowerBoundaryX = InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent;
+            lowerBoundaryY = InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
+
+            upperBoundaryX = InstanceManager.DefaultViewport.Width
+                    - InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent;
+            upperBoundaryY = InstanceManager.DefaultViewport.Height
+                    - InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
+
+            innerBoundsWidth = upperBoundaryX - lowerBoundaryX;
+            innerBoundsHeight = upperBoundaryY - lowerBoundaryY;
+
+            lowerLeftCorner = new Vector2(lowerBoundaryX, lowerBoundaryY);
+            lowerRightCorner = new Vector2(upperBoundaryX, lowerBoundaryY);
+
+            upperRightCorner = new Vector2(upperBoundaryX, upperBoundaryY);
+            upperLeftCorner = new Vector2(lowerBoundaryX, upperBoundaryY);
+
+            upperLeftAngle = MWMathHelper.ComputeAngleAgainstX(upperLeftCorner, screenCenter);
+            upperRightAngle = MWMathHelper.ComputeAngleAgainstX(upperRightCorner, screenCenter);
+            lowerLeftAngle = MWMathHelper.ComputeAngleAgainstX(lowerLeftCorner, screenCenter);
+            lowerRightAngle = MWMathHelper.ComputeAngleAgainstX(lowerRightCorner, screenCenter);
+
             // Place us at the max position
             SetAtMaxPosition();
 
@@ -184,6 +222,37 @@ namespace Duologue.PlayObjects
         private void SetAtMaxPosition()
         {
             float angle = MWMathHelper.ComputeAngleAgainstX(Position, screenCenter);
+            // x = L cos(angle), y = L sin(angle)
+            float x;
+            float y;
+            float tan = (float)Math.Tan(angle);
+            // Remember, we need to flip the Y coords
+            if (angle >= 0 && angle <= upperRightAngle || angle > lowerRightAngle && angle <= MathHelper.TwoPi)
+            {
+                // We are on the right side of the screen
+                x = innerBoundsWidth;
+                y = (0.5f) * (innerBoundsHeight - tan * innerBoundsWidth);
+            }
+            else if (angle > upperRightAngle && angle <= upperLeftAngle)
+            {
+                // We are on the top of the screen
+                x = (0.5f) * (innerBoundsWidth + innerBoundsHeight / tan);
+                y = lowerBoundaryY;
+            }
+            else if (angle > upperLeftAngle && angle <= lowerLeftAngle)
+            {
+                // We are on the left side of the screen
+                x = lowerBoundaryX;
+                y = (0.5f) * (innerBoundsHeight + innerBoundsWidth * tan);
+            }
+            else //if (angle > lowerLeftAngle && angle <= lowerRightAngle)
+            {
+                // We are on the bottom of the screen
+                x = (0.5f) * (innerBoundsWidth - innerBoundsHeight / tan);
+                y = innerBoundsHeight;
+            }
+            Position.X = x;
+            Position.Y = y;
         }
 
         /// <summary>
