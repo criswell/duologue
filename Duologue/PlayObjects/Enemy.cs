@@ -239,6 +239,15 @@ namespace Duologue.PlayObjects
                     RenderSpriteBlendMode.AlphaBlendTop);
             }
         }
+
+        public Color GetMyColor()
+        {
+            Color c = ColorState.Negative[ColorState.Light];
+            if(ColorPolarity == ColorPolarity.Positive)
+                c = ColorState.Positive[ColorState.Light];
+
+            return c;
+        }
         #endregion
     }
 }

@@ -173,7 +173,7 @@ namespace Duologue.PlayObjects
             get
             {
                 float p = spawnCalc_m * spawnScale + spawnCalc_h;
-                Console.WriteLine(p);
+                //Console.WriteLine(p);
                 if (p > 1f)
                     return 1f;
                 else if (p < 0f)

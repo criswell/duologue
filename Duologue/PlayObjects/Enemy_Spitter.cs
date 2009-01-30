@@ -29,7 +29,8 @@ namespace Duologue.PlayObjects
         public enum SpitterState
         {
             Spawning,
-            Alive,
+            WaitingToFire,
+            Firing,
         }
         #region Constants
         private const string filename_base = "Enemies/spitter/0{0}-base";
@@ -54,6 +55,11 @@ namespace Duologue.PlayObjects
 
         private const int lowerSpitAlpha = 50;
         private const int upperSpitAlpha = 200;
+
+        private const float startSpawnScale = 5f;
+        private const float endSpawnScale = 1f;
+        private const float deltaSpawnScale = -0.1f;
+        private const float maxOpacity = 255f;
         #endregion
 
         #region Fields
@@ -71,7 +77,7 @@ namespace Duologue.PlayObjects
         private byte[] currentSpitAlphas;
         private int[] spitAlphaDeltas;
 
-        private float upperLeftAngle;
+        /*private float upperLeftAngle;
         private float upperRightAngle;
         private float lowerRightAngle;
         private float lowerLeftAngle;
@@ -79,7 +85,7 @@ namespace Duologue.PlayObjects
         private Vector2 upperLeftCorner;
         private Vector2 upperRightCorner;
         private Vector2 lowerRightCorner;
-        private Vector2 lowerLeftCorner;
+        private Vector2 lowerLeftCorner;*/
 
         private float upperBoundaryX;
         private float lowerBoundaryX;
@@ -90,10 +96,33 @@ namespace Duologue.PlayObjects
         private float innerBoundsHeight;
 
         private float rotation;
+
+        private double timeSinceStart;
+
+        private float spawnScale;
+        private float spawnCalc_m = 1f / (endSpawnScale - startSpawnScale);
+        private float spawnCalc_h = -1f * startSpawnScale / (endSpawnScale - startSpawnScale);
         #endregion
 
         #region Properties
         public SpitterState MyState;
+
+        /// <summary>
+        /// Returns a percentage complete for spawn crosshair
+        /// </summary>
+        public float SpawnCrosshairPercentage
+        {
+            get
+            {
+                float p = spawnCalc_m * spawnScale + spawnCalc_h;
+                if (p > 1f)
+                    return 1f;
+                else if (p < 0f)
+                    return 0f;
+                else
+                    return p;
+            }
+        }
         #endregion
 
         #region Constructor / Init
@@ -172,18 +201,16 @@ namespace Duologue.PlayObjects
             // One thing to remember here is we're actually flipped upside down due to
             // graphic conventions of y increasing from top to bottom (messes things up for
             // the trig functions, which assume otherwise)
-            lowerBoundaryX = InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent;
-            lowerBoundaryY = InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
+            upperBoundaryX = InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent;
+            upperBoundaryY = InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
 
-            upperBoundaryX = InstanceManager.DefaultViewport.Width
-                    - InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent;
-            upperBoundaryY = InstanceManager.DefaultViewport.Height
-                    - InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
+            lowerBoundaryX = InstanceManager.DefaultViewport.Width - upperBoundaryX;
+            lowerBoundaryY = InstanceManager.DefaultViewport.Height - upperBoundaryY;
 
             innerBoundsWidth = upperBoundaryX - lowerBoundaryX;
             innerBoundsHeight = upperBoundaryY - lowerBoundaryY;
 
-            lowerLeftCorner = new Vector2(lowerBoundaryX, lowerBoundaryY);
+            /*lowerLeftCorner = new Vector2(lowerBoundaryX, lowerBoundaryY);
             lowerRightCorner = new Vector2(upperBoundaryX, lowerBoundaryY);
 
             upperRightCorner = new Vector2(upperBoundaryX, upperBoundaryY);
@@ -192,14 +219,34 @@ namespace Duologue.PlayObjects
             upperLeftAngle = MWMathHelper.ComputeAngleAgainstX(upperLeftCorner, screenCenter);
             upperRightAngle = MWMathHelper.ComputeAngleAgainstX(upperRightCorner, screenCenter);
             lowerLeftAngle = MWMathHelper.ComputeAngleAgainstX(lowerLeftCorner, screenCenter);
-            lowerRightAngle = MWMathHelper.ComputeAngleAgainstX(lowerRightCorner, screenCenter);
+            lowerRightAngle = MWMathHelper.ComputeAngleAgainstX(lowerRightCorner, screenCenter);*/
 
             // Place us at the max position
-            SetAtMaxPosition();
+            //SetAtMaxPosition();
+            //Console.WriteLine(String.Format("Pre: {0}", Position.ToString()));
+            CheckScreenBoundary();
+            //Console.WriteLine(String.Format("Post: {0}", Position.ToString()));
 
             MyState = SpitterState.Spawning;
+            timeSinceStart = 0.0;
 
             Initialized = true;
+        }
+
+        /// <summary>
+        /// Ensure that we're still inside screenboundaries.
+        /// </summary>
+        private void CheckScreenBoundary()
+        {
+            if (Position.X > upperBoundaryX)
+                Position.X = upperBoundaryX;
+            if (Position.X < lowerBoundaryX)
+                Position.X = lowerBoundaryX;
+
+            if (Position.Y > upperBoundaryY)
+                Position.Y = upperBoundaryY;
+            if (Position.Y < lowerBoundaryY)
+                Position.Y = lowerBoundaryY;
         }
 
         /// <summary>
@@ -217,6 +264,7 @@ namespace Duologue.PlayObjects
             }
         }
 
+        /* FUCK THIS SHIT
         /// <summary>
         /// Sets us at the maximum position away from center based upon our rotation around the center of screen
         /// </summary>
@@ -252,9 +300,11 @@ namespace Duologue.PlayObjects
                 x = (0.5f) * (innerBoundsWidth - innerBoundsHeight / tan);
                 y = innerBoundsHeight;
             }
+            //Console.WriteLine(String.Format("Pre: {0}", Position.ToString()));
             Position.X = x;
             Position.Y = y;
-        }
+            //Console.WriteLine(String.Format("{0},{1} - {2}", x.ToString(), y.ToString(), Position.ToString()));
+        }*/
 
         /// <summary>
         /// Returns a vector pointing to the origin
@@ -287,39 +337,113 @@ namespace Duologue.PlayObjects
         #region Public Overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
+        }
+        #endregion
+
+        #region Private Draw Methods
+        private void DrawSpawning(GameTime gameTime)
+        {
+            Color c = GetMyColor();
+            c = new Color(c, (byte)SpawnCrosshairPercentage * maxOpacity);
+            RenderSprite.Draw(
+                textureSpawnExplode,
+                Position,
+                spawnExplodeCenter,
+                null,
+                c,
+                rotation,
+                spawnScale,
+                0.5f);
+        }
+
+        private void DrawWaitingToFire(GameTime gameTime)
+        {
+        }
+
+        private void DrawFiring(GameTime gameTime)
+        {
+        }
+        #endregion
+
+        #region Private Update Methods
+        private void UpdateSpawning(GameTime gameTime)
+        {
+            spawnScale += deltaSpawnScale;
+            if (spawnScale < endSpawnScale)
+            {
+                MyState = SpitterState.WaitingToFire;
+                spawnScale = endSpawnScale;
+            }
+        }
+
+        private void UpdateFiring(GameTime gameTime)
+        {
+        }
+
+        private void UpdateWaitingToFire(GameTime gameTime)
+        {
         }
         #endregion
 
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            switch (MyState)
+            {
+                case SpitterState.Spawning:
+                    DrawSpawning(gameTime);
+                    break;
+                case SpitterState.Firing:
+                    DrawFiring(gameTime);
+                    break;
+                default:
+                    // Waiting to fire
+                    DrawWaitingToFire(gameTime);
+                    break;
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (Position.X < frameCenters[currentFrame].X
+            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+
+            /*if (Position.X < frameCenters[currentFrame].X
                 || Position.X > InstanceManager.DefaultViewport.Width - frameCenters[currentFrame].X
                 || Position.Y < frameCenters[currentFrame].Y
                 || Position.Y > InstanceManager.DefaultViewport.Height - frameCenters[currentFrame].Y)
             {
                 SetAtMaxPosition();
+            }*/
+            CheckScreenBoundary();
+
+            switch (MyState)
+            {
+                case SpitterState.Spawning:
+                    UpdateSpawning(gameTime);
+                    break;
+                case SpitterState.Firing:
+                    UpdateFiring(gameTime);
+                    break;
+                default:
+                    // Waiting to fire
+                    UpdateWaitingToFire(gameTime);
+                    break;
             }
         }
         #endregion
