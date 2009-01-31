@@ -483,6 +483,13 @@ namespace Duologue.PlayObjects
 
         private void UpdateFiring(GameTime gameTime)
         {
+            // For now, we just do nothing but return to waiting to fire state
+            // FIXME
+            MyState = SpitterState.WaitingToFire;
+            spawnScale = endSpawnScale;
+            timeSinceStart = 0.0;
+            timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
+            timeToNextFrame = timePerFrameWaiting;
         }
 
         private void UpdateWaitingToFire(GameTime gameTime)
@@ -493,6 +500,12 @@ namespace Duologue.PlayObjects
                 if (currentFrame > maxWaitingFrame)
                     currentFrame = 0;
                 timeToNextFrame = timeSinceStart + timePerFrameWaiting;
+            }
+
+            if (timeSinceStart > timeToNextFire)
+            {
+                MyState = SpitterState.Firing;
+                timeSinceStart = 0.0;
             }
         }
         #endregion
