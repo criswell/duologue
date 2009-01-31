@@ -56,10 +56,27 @@ namespace Duologue.PlayObjects
         private const int lowerSpitAlpha = 50;
         private const int upperSpitAlpha = 200;
 
-        private const float startSpawnScale = 5f;
-        private const float endSpawnScale = 1f;
-        private const float deltaSpawnScale = -0.1f;
+        private const float startSpawnScale = 4f;
+        private const float endSpawnScale = 0.7f;
+        private const float deltaSpawnScale = -0.05f;
         private const float maxOpacity = 255f;
+
+        private const float radiusMultiplier = 0.2f;
+
+        private const float maxShadowOffset = 10f;
+
+        /// <summary>
+        /// The time per frame of animation while we're waiting to fire
+        /// </summary>
+        private const double timePerFrameWaiting = 0.2;
+
+        /// <summary>
+        /// The inclusive upper bounds for the animation frames we do when just standing around waiting
+        /// </summary>
+        private const int maxWaitingFrame = 1;
+
+        private const double minFiringTime = 2.0;
+        private const double maxFiringTime = 4.0;
         #endregion
 
         #region Fields
@@ -98,10 +115,15 @@ namespace Duologue.PlayObjects
         private float rotation;
 
         private double timeSinceStart;
+        private double timeToNextFire;
+        private double timeToNextFrame;
 
         private float spawnScale;
         private float spawnCalc_m = 1f / (endSpawnScale - startSpawnScale);
         private float spawnCalc_h = -1f * startSpawnScale / (endSpawnScale - startSpawnScale);
+
+        private Vector2 shadowOffset;
+        private Color shadowColor;
         #endregion
 
         #region Properties
@@ -131,7 +153,7 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Spitter;
             MajorType = MajorPlayObjectType.Enemy;
-            RealSize = new Vector2(85, 106);
+            RealSize = new Vector2(63, 56);
             Initialized = false;
             Alive = false;
         }
@@ -188,9 +210,11 @@ namespace Duologue.PlayObjects
             textureSpawnExplode = InstanceManager.AssetManager.LoadTexture2D(filename_spawnExplode);
             spawnExplodeCenter = new Vector2(textureSpawnExplode.Width / 2f, textureSpawnExplode.Height / 2f);
 
+            Radius = RealSize.Length() * radiusMultiplier;
+
             // Compute orientation
             Orientation = GetStartingVector();
-            rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
+            SetRotation();
 
             currentFrame = 1;
             screenCenter = new Vector2(
@@ -225,13 +249,22 @@ namespace Duologue.PlayObjects
             //SetAtMaxPosition();
             //Console.WriteLine(String.Format("Pre: {0}", Position.ToString()));
             CheckScreenBoundary();
-            Console.WriteLine(String.Format("Post: {0}", Position.ToString()));
+            //Console.WriteLine(String.Format("Post: {0}", Position.ToString()));
+
+            spawnScale = startSpawnScale;
 
             MyState = SpitterState.Spawning;
             timeSinceStart = 0.0;
+            timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
+            timeToNextFrame = timePerFrameWaiting;
 
             Initialized = true;
             Alive = true;
+        }
+
+        private void SetRotation()
+        {
+            rotation = MWMathHelper.ComputeAngleAgainstX(Orientation) + MathHelper.PiOver2;
         }
 
         /// <summary>
@@ -330,6 +363,24 @@ namespace Duologue.PlayObjects
             temp.Normalize();
             return temp;
         }
+
+        /// <summary>
+        /// Figure out the current treadoffset
+        /// </summary>
+        private void ComputeShadowOffset()
+        {
+            // Get distance
+            float distance = Vector2.Subtract(screenCenter, Position).Length();
+
+            // Compute the size of the offset based on distance
+            float size = maxShadowOffset * (distance / screenCenter.Length());
+
+            // Aim at center of screen
+            shadowOffset = Vector2.Add(screenCenter, Position);
+            shadowOffset.Normalize();
+            //shadowOffset = Vector2.Negate(shadowOffset);
+            shadowOffset *= size;
+        }
         #endregion
 
         #region Public Methods
@@ -361,7 +412,8 @@ namespace Duologue.PlayObjects
         private void DrawSpawning(GameTime gameTime)
         {
             Color c = GetMyColor();
-            c = new Color(c, (byte)SpawnCrosshairPercentage * maxOpacity);
+            c = new Color(c, (byte)(SpawnCrosshairPercentage * maxOpacity));
+            //Console.WriteLine(SpawnCrosshairPercentage.ToString());
             InstanceManager.RenderSprite.Draw(
                 textureSpawnExplode,
                 Position,
@@ -370,11 +422,44 @@ namespace Duologue.PlayObjects
                 c,
                 rotation,
                 spawnScale,
-                0.5f);
+                0f);
         }
 
         private void DrawWaitingToFire(GameTime gameTime)
         {
+            Color c = GetMyColor();
+            // Draw shadow
+            InstanceManager.RenderSprite.Draw(
+                textureBase[currentFrame],
+                Position + shadowOffset,
+                frameCenters[currentFrame],
+                null,
+                shadowColor,
+                rotation,
+                1f,
+                0f);
+
+            // Draw base
+            InstanceManager.RenderSprite.Draw(
+                textureBase[currentFrame],
+                Position,
+                frameCenters[currentFrame],
+                null,
+                c,
+                rotation,
+                1f,
+                0f);
+
+            // Draw Outline
+            InstanceManager.RenderSprite.Draw(
+                textureOutline[currentFrame],
+                Position,
+                frameCenters[currentFrame],
+                null,
+                Color.White,
+                rotation,
+                1f,
+                0f);
         }
 
         private void DrawFiring(GameTime gameTime)
@@ -390,6 +475,9 @@ namespace Duologue.PlayObjects
             {
                 MyState = SpitterState.WaitingToFire;
                 spawnScale = endSpawnScale;
+                timeSinceStart = 0.0;
+                timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
+                timeToNextFrame = timePerFrameWaiting;
             }
         }
 
@@ -399,21 +487,19 @@ namespace Duologue.PlayObjects
 
         private void UpdateWaitingToFire(GameTime gameTime)
         {
+            if (timeSinceStart > timeToNextFrame)
+            {
+                currentFrame++;
+                if (currentFrame > maxWaitingFrame)
+                    currentFrame = 0;
+                timeToNextFrame = timeSinceStart + timePerFrameWaiting;
+            }
         }
         #endregion
 
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            InstanceManager.RenderSprite.Draw(
-                textureBase[0],
-                Position,
-                frameCenters[0],
-                null,
-                Color.White,
-                0,
-                1f,
-                0);
             switch (MyState)
             {
                 case SpitterState.Spawning:
