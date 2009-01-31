@@ -225,12 +225,13 @@ namespace Duologue.PlayObjects
             //SetAtMaxPosition();
             //Console.WriteLine(String.Format("Pre: {0}", Position.ToString()));
             CheckScreenBoundary();
-            //Console.WriteLine(String.Format("Post: {0}", Position.ToString()));
+            Console.WriteLine(String.Format("Post: {0}", Position.ToString()));
 
             MyState = SpitterState.Spawning;
             timeSinceStart = 0.0;
 
             Initialized = true;
+            Alive = true;
         }
 
         /// <summary>
@@ -361,7 +362,7 @@ namespace Duologue.PlayObjects
         {
             Color c = GetMyColor();
             c = new Color(c, (byte)SpawnCrosshairPercentage * maxOpacity);
-            RenderSprite.Draw(
+            InstanceManager.RenderSprite.Draw(
                 textureSpawnExplode,
                 Position,
                 spawnExplodeCenter,
@@ -404,6 +405,15 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
+            InstanceManager.RenderSprite.Draw(
+                textureBase[0],
+                Position,
+                frameCenters[0],
+                null,
+                Color.White,
+                0,
+                1f,
+                0);
             switch (MyState)
             {
                 case SpitterState.Spawning:
