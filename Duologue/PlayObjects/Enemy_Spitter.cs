@@ -124,6 +124,10 @@ namespace Duologue.PlayObjects
 
         private Vector2 shadowOffset;
         private Color shadowColor;
+
+        private Vector2 offset;
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
         #endregion
 
         #region Properties
@@ -216,10 +220,13 @@ namespace Duologue.PlayObjects
             Orientation = GetStartingVector();
             SetRotation();
 
-            currentFrame = 1;
+            currentFrame = MWMathHelper.GetRandomInRange(0, maxWaitingFrame+1);
             screenCenter = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
+
+            shadowColor = new Color(Color.Black, 200);
+            ComputeShadowOffset();
 
             // Determine the corners and their angles
             // One thing to remember here is we're actually flipped upside down due to
@@ -389,6 +396,9 @@ namespace Duologue.PlayObjects
         #region Public Overrides
         public override bool StartOffset()
         {
+            offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestPlayer = Vector2.Zero;
             return true;
         }
 
@@ -485,11 +495,12 @@ namespace Duologue.PlayObjects
         {
             // For now, we just do nothing but return to waiting to fire state
             // FIXME
-            MyState = SpitterState.WaitingToFire;
             spawnScale = endSpawnScale;
             timeSinceStart = 0.0;
             timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
             timeToNextFrame = timePerFrameWaiting;
+            currentFrame = 0;
+            MyState = SpitterState.WaitingToFire;
         }
 
         private void UpdateWaitingToFire(GameTime gameTime)
@@ -504,8 +515,13 @@ namespace Duologue.PlayObjects
 
             if (timeSinceStart > timeToNextFire)
             {
-                MyState = SpitterState.Firing;
                 timeSinceStart = 0.0;
+                // FIXME, remove the following when we've a firing update in place
+                timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
+                timeToNextFrame = timePerFrameWaiting;
+                // FIXME, uncomment the following when we've a firing update in place
+                //currentFrame = 0;
+                //MyState = SpitterState.Firing;
             }
         }
         #endregion
@@ -513,6 +529,7 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
+            ComputeShadowOffset();
             switch (MyState)
             {
                 case SpitterState.Spawning:
