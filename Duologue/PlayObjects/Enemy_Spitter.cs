@@ -61,7 +61,7 @@ namespace Duologue.PlayObjects
         private const float deltaSpawnScale = -0.05f;
         private const float maxOpacity = 255f;
 
-        private const float radiusMultiplier = 0.2f;
+        private const float radiusMultiplier = 0.35f;
 
         private const float maxShadowOffset = 10f;
 
@@ -77,6 +77,38 @@ namespace Duologue.PlayObjects
 
         private const double minFiringTime = 2.0;
         private const double maxFiringTime = 4.0;
+
+        #region Forces/Attractions/Repulsions
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 2f;
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float playerAttract = 2.5f;
+
+        /// <summary>
+        /// The repulsion from the player if the player gets too close
+        /// </summary>
+        private const float playerRepluse = 3.5f;
+
+        /// <summary>
+        /// Min number of how many of our radius size away we're comfortable with the player
+        /// </summary>
+        private const float minPlayerComfortRadiusMultiplier = 14f;
+
+        /// <summary>
+        /// Max number of our radius we're comfortable with the player
+        /// </summary>
+        private const float maxPlayerComfortRadiusMultiplier = 14.5f;
+        #endregion
         #endregion
 
         #region Fields
@@ -128,6 +160,9 @@ namespace Duologue.PlayObjects
         private Vector2 offset;
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
+
+        private bool inBeam;
+        private bool isFleeing;
         #endregion
 
         #region Properties
@@ -355,6 +390,14 @@ namespace Duologue.PlayObjects
             Vector2 sc = new Vector2(
                     InstanceManager.DefaultViewport.Width / 2f,
                     InstanceManager.DefaultViewport.Height / 2f);
+            return GetVectorPointingAtOrigin(sc);
+        }
+
+        /// <summary>
+        /// Given a vector sc, point at it
+        /// </summary>
+        private Vector2 GetVectorPointingAtOrigin(Vector2 sc)
+        {
             return sc - Position;
         }
 
@@ -404,11 +447,120 @@ namespace Duologue.PlayObjects
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            return true;
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = len;
+                    nearestPlayer = vToPlayer;
+                }
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
+
+                // Beam handling
+                int temp = ((Player)pobj).IsInBeam(this);
+                inBeam = false;
+                //isFleeing = false;
+                if (temp != 0)
+                {
+                    inBeam = true;
+                    if (temp == -1)
+                    {
+                        //isFleeing = true;
+                        LocalInstanceManager.Steam.AddParticles(Position, GetMyColor());
+                    }
+                }
+                return true;
+            }
+            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                // Enemy
+                Vector2 vToEnemy = pobj.Position - this.Position;
+                float len = vToEnemy.Length();
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // Too close, BTFO
+                    if (len == 0f)
+                    {
+                        // Well, bah, we're on top of each other!
+                        vToEnemy = new Vector2(
+                            (float)InstanceManager.Random.NextDouble() - 0.5f,
+                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                    }
+                    vToEnemy = Vector2.Negate(vToEnemy);
+                    vToEnemy.Normalize();
+                    //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
+                    offset += standardEnemyRepulse * vToEnemy;
+                    //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
+                }
+
+                return true;
+            }
+            else
+            {
+                // Other
+
+                return true;
+            }
         }
 
         public override bool ApplyOffset()
         {
+            // First, apply the player offset
+            if (nearestPlayer.Length() > 0f)
+            {
+                // FIXME would be nice if this was more of a "turn" than a sudden jarring switch
+                Orientation = Vector2.Negate(nearestPlayer); //GetVectorPointingAtOrigin(nearestPlayer);
+                SetRotation();
+                if (!(nearestPlayerRadius > minPlayerComfortRadiusMultiplier * Radius &&
+                    nearestPlayerRadius < maxPlayerComfortRadiusMultiplier * Radius))
+                {
+                    // Default to attract, only repulse if too close
+                    float modifier = playerAttract;
+                    isFleeing = false;
+                    if (nearestPlayerRadius < minPlayerComfortRadiusMultiplier * Radius)
+                    {
+                        // Too close, BTFO
+                        modifier = playerRepluse;
+                        isFleeing = true;
+                    }
+
+                    nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                    //Orientation = nearestPlayer;
+                    nearestPlayer.Normalize();
+
+                    if (!isFleeing)
+                        nearestPlayer = Vector2.Negate(nearestPlayer);
+
+                    offset += modifier * nearestPlayer;
+                }
+            }
+            /*else
+            {
+                // If no near player, move in previous direction
+                nearestPlayer = lastDirection;
+
+                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                nearestPlayer.Normalize();
+
+                offset += playerAttract * nearestPlayer;
+            }*/
+
+            // Next apply the offset permanently
+            if (offset.Length() >= minMovement)
+            {
+                this.Position += offset;
+                //lastDirection = offset;
+                //Orientation = offset; // new Vector2(-offset.Y, offset.X);
+                //Orientation.Normalize();
+            }
+
             return true;
         }
 
