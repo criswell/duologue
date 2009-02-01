@@ -20,6 +20,7 @@ using Mimicware.Manager;
 // Duologue
 using Duologue.State;
 using Duologue.Screens;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.PlayObjects
@@ -77,6 +78,16 @@ namespace Duologue.PlayObjects
 
         private const double minFiringTime = 2.0;
         private const double maxFiringTime = 4.0;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 40;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 2;
 
         #region Forces/Attractions/Repulsions
         /// <summary>
@@ -161,8 +172,10 @@ namespace Duologue.PlayObjects
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
 
-        private bool inBeam;
+        //private bool inBeam;
         private bool isFleeing;
+
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -214,7 +227,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
-
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
         #endregion
@@ -464,17 +477,10 @@ namespace Duologue.PlayObjects
                 }
 
                 // Beam handling
-                int temp = ((Player)pobj).IsInBeam(this);
-                inBeam = false;
-                //isFleeing = false;
-                if (temp != 0)
+                if (((Player)pobj).IsInBeam(this) == -1)
                 {
-                    inBeam = true;
-                    if (temp == -1)
-                    {
-                        //isFleeing = true;
-                        LocalInstanceManager.Steam.AddParticles(Position, GetMyColor());
-                    }
+                    //isFleeing = true;
+                    LocalInstanceManager.Steam.AddParticles(Position, GetMyColor());
                 }
                 return true;
             }
@@ -566,6 +572,26 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                Color c = GetMyColor();
+
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
+                    Alive = false;
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
+                    audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(textureSpawnExplode, c, Position, 0f);
+                    audio.soundEffects.PlayEffect(EffectID.CokeBottle);
+                    return true;
+                }
+            }
             return true;
         }
         #endregion
