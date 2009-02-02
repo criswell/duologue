@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 namespace Duologue.Audio
 {
     //the rule is: one sound bank = one song = one SongID
-    public enum SongID { SelectMenu, Intensity}
+    public enum SongID { SelectMenu, Intensity, LandOfSand}
 
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
@@ -27,6 +27,7 @@ namespace Duologue.Audio
         private AudioManager notifier;
         private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         private BeatEffectsSong beatSong;
+        private LandOfSandSong landOfSandSong;
         private SelectMenuSong selectSong;
         private BeatEngine beatEngine;
 
@@ -36,12 +37,14 @@ namespace Duologue.Audio
             notifier.Changed += new IntensityEventHandler(UpdateIntensity);
 
             beatSong = new BeatEffectsSong();
+            landOfSandSong = new LandOfSandSong();
             selectSong = new SelectMenuSong();
             beatEngine = new BeatEngine(manager.Game);
             manager.Game.Components.Add(beatEngine);
 
             songMap.Add(SongID.Intensity, beatSong);
             songMap.Add(SongID.SelectMenu, selectSong);
+            songMap.Add(SongID.LandOfSand, landOfSandSong);
         }
 
         public void PlaySong(SongID ID)
@@ -71,6 +74,7 @@ namespace Duologue.Audio
         public void UpdateIntensity(IntensityEventArgs e)
         {
             beatSong.ChangeIntensity(e.ChangeAmount);
+            landOfSandSong.ChangeIntensity(e.ChangeAmount);
             //songMap.Keys.ToList().ForEach(delegate(SongID ID)
             //{
             //    if (songMap[ID].GetType() == IIntensitySong)

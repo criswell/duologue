@@ -59,7 +59,7 @@ namespace Duologue.Screens
         /// <summary>
         /// How long it takes for nothing happening to decrease intensity
         /// </summary>
-        private const float intensityLifetime = 4f;
+        private const float intensityLifetime = 6f;
 
         /// <summary>
         /// The min beat percent to bump up the intensity
@@ -187,7 +187,8 @@ namespace Duologue.Screens
             if (t && currentState != GamePlayState.GameOver)
             {
                 gameOver.Reset();
-                ServiceLocator.GetService<AudioManager>().music.FadeSong(SongID.Intensity);
+                //ServiceLocator.GetService<AudioManager>().music.FadeSong(SongID.Intensity);
+                ServiceLocator.GetService<AudioManager>().music.FadeSong(SongID.LandOfSand);
                 // FIXME
                 // Should probably do some gameover music here
                 gameOver.Visible = true;
@@ -323,7 +324,8 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    localGame.Audio.music.PlaySong(SongID.Intensity);
+                    //localGame.Audio.music.PlaySong(SongID.Intensity);
+                    localGame.Audio.music.PlaySong(SongID.LandOfSand);
                     break;
                 default:
                     // Play the game or game over
