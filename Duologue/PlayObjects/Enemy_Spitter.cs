@@ -33,11 +33,14 @@ namespace Duologue.PlayObjects
             WaitingToFire,
             Firing,
         }
+
         #region Constants
         private const string filename_base = "Enemies/spitter/0{0}-base";
         private const string filename_outline = "Enemies/spitter/0{0}-outline";
         private const string filename_spawnExplode = "Enemies/spitter/spawn-explode";
         private const string filename_spit = "Enemies/spitter/spit-{0}";
+
+        private const float spitSpeed = 3.5f;
 
         /// <summary>
         /// Max number of frames of animation
@@ -83,6 +86,43 @@ namespace Duologue.PlayObjects
 
         private const double minFiringTime = 2.0;
         private const double maxFiringTime = 4.0;
+
+        /// <summary>
+        /// The maximum spit dropping alpha
+        /// </summary>
+        private const float maxSpitDroppingAlpha = 0.4f;
+
+        /// <summary>
+        /// The minimum starting size of spit droppings
+        /// </summary>
+        private const double minStartingSpitDroppingSize = 0.8;
+
+        /// <summary>
+        /// The maximum starting size of spit droppings
+        /// </summary>
+        private const double maxStartingSpitDroppingSize = 1.5;
+
+        /// <summary>
+        /// The ending spit dropping size
+        /// </summary>
+        private const float endingSpitDroppingSize = 0.1f;
+
+        /// <summary>
+        /// The number of frames for a given spit dropping to evaporate (and thus clear said dropping for reuse)
+        /// </summary>
+        private const int numberOfFramesForSpitDroppingEvaporate = 10;
+
+        /*
+        /// <summary>
+        /// The starting alpha for a given spit dropping
+        /// </summary>
+        private const byte startingSpitDroppingAlpha = 200;
+
+        /// <summary>
+        /// The ending alpha for a givem spit dropping
+        /// </summary>
+        private const byte endingSpitDroppingAlpha = 20;
+        */
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -136,10 +176,66 @@ namespace Duologue.PlayObjects
         private Texture2D textureSpawnExplode;
         private Vector2 spawnExplodeCenter;
 
+        /// <summary>
+        /// The position of the spit
+        /// </summary>
         private Vector2 spitPosition;
+        /// <summary>
+        /// The radius of the spit
+        /// </summary>
+        private float spitRadius;
+        /// <summary>
+        /// Vector pointing where the spit is going
+        /// </summary>
+        private Vector2 spitDirection;
+        /// <summary>
+        /// Spit rotations per frame
+        /// </summary>
+        private float[] spitRotation;
+        /// <summary>
+        /// Array containing positions of the current spit droppings
+        /// </summary>
         private Vector2[] spitDroppingPositions;
+        /// <summary>
+        /// Array containing the sizes of the current spit droppings
+        /// </summary>
         private float[] spitDroppingSizes;
+        /// <summary>
+        /// Array containing the size deltas for the spit droppings
+        /// </summary>
+        private float[] spitDroppingSizeDeltas;
+        /// <summary>
+        /// The frames used for the droppings
+        /// </summary>
+        private int[] spitDroppingFrames;
+        /// <summary>
+        /// The starting position of the spit
+        /// </summary>
+        private Vector2 spitStartPosition;
+        /// <summary>
+        /// The ending position of the spit
+        /// </summary>
+        private Vector2 spitEndPosition;
+        /// <summary>
+        /// The length the spit will travel
+        /// </summary>
+        private float spitTravelLength;
+        /// <summary>
+        /// Whether the spit is alive
+        /// </summary>
         private bool spitAlive;
+        /// <summary>
+        /// True if the spit is at its destination and is splatting
+        /// </summary>
+        private bool spitSplatting;
+        /// <summary>
+        /// Array containing the current spit alphas
+        /// </summary>
+        private byte[] currentSpitAlphas;
+        /// <summary>
+        /// Array containing the current spit alpha deltas
+        /// </summary>
+        private int[] spitAlphaDeltas;
 
         private Vector2 screenCenter;
 
@@ -148,9 +244,6 @@ namespace Duologue.PlayObjects
         /// The direction (1, or -1) our animation is going
         /// </summary>
         private int animationDirection;
-
-        private byte[] currentSpitAlphas;
-        private int[] spitAlphaDeltas;
 
         /*private float upperLeftAngle;
         private float upperRightAngle;
@@ -186,6 +279,7 @@ namespace Duologue.PlayObjects
         private Vector2 offset;
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
+        private PlayObject nearestPlayerObject;
 
         //private bool inBeam;
         private bool isFleeing;
@@ -245,6 +339,7 @@ namespace Duologue.PlayObjects
             audio = ServiceLocator.GetService<AudioManager>();
 
             spitAlive = false;
+            spitSplatting = false;
 
             LoadAndInitialize();
         }
@@ -260,6 +355,13 @@ namespace Duologue.PlayObjects
             spitCenters = new Vector2[maxSpitFrames];
             currentSpitAlphas = new byte[maxSpitFrames];
             spitAlphaDeltas = new int[maxSpitFrames];
+            spitRotation = new float[maxSpitFrames];
+
+            // Spit droppings
+            spitDroppingFrames = new int[maxSpitFrames];
+            spitDroppingPositions = new Vector2[maxSpitFrames];
+            spitDroppingSizeDeltas = new float[maxSpitFrames];
+            spitDroppingSizes = new float[maxSpitFrames];
 
             // Load the animation frames
             for (int i = 0; i < maxAnimationFrames; i++)
@@ -269,11 +371,15 @@ namespace Duologue.PlayObjects
                 frameCenters[i] = new Vector2(textureOutline[i].Width / 2f, textureOutline[i].Height / 2f);
             }
 
+            spitRadius = 0f;
+
             // Load the spit frames
             for (int i = 0; i < maxSpitFrames; i++)
             {
                 textureSpit[i] = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_spit, (i + 1).ToString()));
                 spitCenters[i] = new Vector2(textureSpit[i].Width / 2f, textureSpit[i].Height / 2f);
+                if (spitCenters[i].Length() > spitRadius)
+                    spitRadius = spitCenters[i].Length();
             }
 
             // Texture for the spawn/explode image
@@ -462,6 +568,45 @@ namespace Duologue.PlayObjects
             //shadowOffset = Vector2.Negate(shadowOffset);
             shadowOffset *= size;
         }
+
+        /// <summary>
+        /// Fire spit at the player
+        /// </summary>
+        private void FireSpit(GameTime gameTime)
+        {
+            // Set our starting and ending positional data
+            spitStartPosition = Position + Vector2.Normalize(Orientation) * (Radius + spitRadius);
+            spitEndPosition = nearestPlayerObject.Position + Vector2.Normalize(Orientation) * Radius;
+            spitTravelLength = (spitStartPosition - spitEndPosition).Length();
+            spitDirection = Vector2.Negate(Vector2.Normalize(spitStartPosition - spitEndPosition));
+            spitPosition = spitStartPosition;
+
+            // Set up our alphas
+            GenerateSpitAlphas();
+            for (int i = 0; i < maxSpitFrames; i++)
+            {
+                GenerateSpitDropping(i, MWMathHelper.GetRandomInRange(0, maxSpitFrames), spitPosition);
+                spitRotation[i] = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
+            }
+
+            spitSplatting = false;
+            spitAlive = true;
+        }
+
+        /// <summary>
+        /// Generates a new spit dropping
+        /// </summary>
+        /// <param name="i">The index of the spit dropping</param>
+        /// <param name="p">The index of the spit frame to use</param>
+        /// <param name="position">The position of this spit dropping</param>
+        private void GenerateSpitDropping(int i, int p, Vector2 position)
+        {
+            spitDroppingFrames[i] = p;
+            spitDroppingPositions[i] = position;
+            spitDroppingSizes[i] = (float)MWMathHelper.GetRandomInRange(minStartingSpitDroppingSize, maxStartingSpitDroppingSize);
+            spitDroppingSizeDeltas[i] =
+                (spitDroppingSizes[i] - endingSpitDroppingSize) / numberOfFramesForSpitDroppingEvaporate;
+        }
         #endregion
 
         #region Public Methods
@@ -487,6 +632,7 @@ namespace Duologue.PlayObjects
                 {
                     nearestPlayerRadius = len;
                     nearestPlayer = vToPlayer;
+                    nearestPlayerObject = pobj;
                 }
                 if (len < this.Radius + pobj.Radius)
                 {
@@ -631,7 +777,7 @@ namespace Duologue.PlayObjects
                 0f);
         }
 
-        private void DrawWaitingToFire(GameTime gameTime)
+        private void DrawStandard(GameTime gameTime)
         {
             Color c = GetMyColor();
             // Draw shadow
@@ -667,6 +813,49 @@ namespace Duologue.PlayObjects
                 1f,
                 0f);
         }
+
+        private void DrawSpit(GameTime gameTime)
+        {
+            if(spitAlive)
+                if(!spitSplatting)
+                {
+                    for (int i = 0; i < maxSpitFrames; i++)
+                    {
+                        // Start with the spit itself
+                        InstanceManager.RenderSprite.Draw(
+                            textureSpit[i],
+                            spitPosition,
+                            spitCenters[i],
+                            null,
+                            new Color(Color.White, currentSpitAlphas[i]),
+                            spitRotation[i],
+                            1f,
+                            0f,
+                            RenderSpriteBlendMode.AlphaBlend);
+
+                        float j = maxSpitDroppingAlpha * (spitDroppingSizes[i] / ((float)maxStartingSpitDroppingSize - endingSpitDroppingSize));
+                        if(j < 0)
+                            j = 0f;
+                        else if(j > 1)
+                            j = 1.0f;
+                        // Next, do the droppings
+                        InstanceManager.RenderSprite.Draw(
+                            textureSpit[spitDroppingFrames[i]],
+                            spitDroppingPositions[i],
+                            spitCenters[spitDroppingFrames[i]],
+                            null,
+                            new Color(Color.White, j),
+                            spitRotation[i],
+                            spitDroppingSizes[i],
+                            0f,
+                            RenderSpriteBlendMode.Addititive);
+                    }
+                } else
+                {
+                    // Nothing for now
+                }
+
+        }
         #endregion
 
         #region Private Update Methods
@@ -693,6 +882,7 @@ namespace Duologue.PlayObjects
                 {
                     currentFrame = maxAnimationFrames - 1;
                     animationDirection = -1;
+                    FireSpit(gameTime);
                 }
                 else if (currentFrame < 0)
                 {
@@ -715,17 +905,52 @@ namespace Duologue.PlayObjects
                 timeToNextFrame = timeSinceStart + timePerFrameWaiting;
             }
 
-            if (timeSinceStart > timeToNextFire)
+            if (timeSinceStart > timeToNextFire && ! spitAlive)
             {
                 timeSinceStart = 0.0;
-                // FIXME, remove the following when we've a firing update in place
-                //timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
-                //timeToNextFrame = timePerFrameWaiting;
                 timeToNextFrame = timePerFrameFiring;
-                // FIXME, uncomment the following when we've a firing update in place
                 currentFrame = 0;
                 animationDirection = 1;
                 MyState = SpitterState.Firing;
+            }
+        }
+
+
+        private void SpitUpdate(GameTime gameTime)
+        {
+            if (!spitSplatting)
+            {
+                // Move the spit
+                spitPosition += spitSpeed * spitDirection;
+
+                // See if we're at our target or not
+                if ((spitStartPosition - spitPosition).Length() >= spitTravelLength)
+                {
+                    spitSplatting = true;
+                    // FIXME for now, we just turn the spit off, need some animation handling here
+                    spitAlive = false; // FIXME
+                }
+                // Update the droppings and alphas
+                for (int i = 0; i < maxSpitFrames; i++)
+                {
+                    // Handle the main spit glob's alphas
+                    int j = currentSpitAlphas[i] + spitAlphaDeltas[i];
+                    if (j < lowerSpitAlpha)
+                        j = lowerSpitAlpha;
+                    else if (j > upperSpitAlpha)
+                        j = upperSpitAlpha;
+                    currentSpitAlphas[i] = (byte)j;
+
+                    // Handle the droplets
+                    spitDroppingSizes[i] -= spitDroppingSizeDeltas[i];
+                    if (spitDroppingSizes[i] < endingSpitDroppingSize)
+                        GenerateSpitDropping(i, MWMathHelper.GetRandomInRange(0, maxSpitFrames), spitPosition);
+                }
+            }
+            else
+            {
+                // We're splatting
+                // FIXME
             }
         }
         #endregion
@@ -740,10 +965,10 @@ namespace Duologue.PlayObjects
                     DrawSpawning(gameTime);
                     break;
                 default:
-                    // Waiting to fire
-                    DrawWaitingToFire(gameTime);
+                    DrawStandard(gameTime);
                     break;
             }
+            DrawSpit(gameTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -758,6 +983,12 @@ namespace Duologue.PlayObjects
                 SetAtMaxPosition();
             }*/
             CheckScreenBoundary();
+
+            // Update the spit droppings
+            if (spitAlive)
+            {
+                SpitUpdate(gameTime);
+            }
 
             switch (MyState)
             {
