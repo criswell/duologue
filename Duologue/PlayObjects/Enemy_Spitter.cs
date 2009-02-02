@@ -646,6 +646,14 @@ namespace Duologue.PlayObjects
                     //isFleeing = true;
                     LocalInstanceManager.Steam.AddParticles(Position, GetMyColor());
                 }
+
+                // Spit handling
+                if (spitAlive && !spitSplatting)
+                {
+                    vToPlayer = spitPosition - pobj.Position;
+                    if (vToPlayer.Length() < spitRadius + pobj.Radius)
+                        return pobj.TriggerHit(this);
+                }
                 return true;
             }
             else if (pobj.MajorType == MajorPlayObjectType.Enemy)
