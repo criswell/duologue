@@ -41,6 +41,8 @@ namespace Duologue.PlayObjects
         private const string filename_spit = "Enemies/spitter/spit-{0}";
 
         private const float spitSpeed = 3.5f;
+        private const float minSplatterSpeed = spitSpeed / 2f;
+        private const float maxSplatterSpeed = spitSpeed;
 
         /// <summary>
         /// Max number of frames of animation
@@ -91,6 +93,21 @@ namespace Duologue.PlayObjects
         /// The maximum spit dropping alpha
         /// </summary>
         private const float maxSpitDroppingAlpha = 0.4f;
+
+        /// <summary>
+        /// The minimum splatter radius change
+        /// </summary>
+        private const double minSplatterAngleChange = (double)MathHelper.PiOver4/2.0;
+
+        /// <summary>
+        /// The maximum splatter radius change
+        /// </summary>
+        private const double maxSplatterAngleChange = (double)MathHelper.PiOver2;
+
+        /// <summary>
+        /// The time it takes to splatter
+        /// </summary>
+        private const double totalSplatterTime = 0.4;
 
         /// <summary>
         /// The minimum starting size of spit droppings
@@ -197,6 +214,10 @@ namespace Duologue.PlayObjects
         /// </summary>
         private Vector2[] spitDroppingPositions;
         /// <summary>
+        /// After we splat, we want some blips to go off in various directions
+        /// </summary>
+        private Vector2[] spitDroppingDirections;
+        /// <summary>
         /// Array containing the sizes of the current spit droppings
         /// </summary>
         private float[] spitDroppingSizes;
@@ -228,6 +249,10 @@ namespace Duologue.PlayObjects
         /// True if the spit is at its destination and is splatting
         /// </summary>
         private bool spitSplatting;
+        /// <summary>
+        /// The time since the splatter started
+        /// </summary>
+        private double splatterTime;
         /// <summary>
         /// Array containing the current spit alphas
         /// </summary>
@@ -362,6 +387,7 @@ namespace Duologue.PlayObjects
             spitDroppingPositions = new Vector2[maxSpitFrames];
             spitDroppingSizeDeltas = new float[maxSpitFrames];
             spitDroppingSizes = new float[maxSpitFrames];
+            spitDroppingDirections = new Vector2[maxSpitFrames];
 
             // Load the animation frames
             for (int i = 0; i < maxAnimationFrames; i++)
@@ -860,7 +886,31 @@ namespace Duologue.PlayObjects
                     }
                 } else
                 {
-                    // Nothing for now
+                    for (int i = 0; i < maxSpitFrames; i++)
+                    {
+                        float k = (float)(splatterTime / totalSplatterTime);
+                        if (k < 0)
+                            k = 0f;
+                        else if (k > 1)
+                            k = 1.0f;
+
+                        float alpha = maxSpitDroppingAlpha * k;
+                        float size = (float)maxStartingSpitDroppingSize -
+                            k * ((float)maxStartingSpitDroppingSize - endingSpitDroppingSize);
+
+                        // Next, do the droppings
+                        InstanceManager.RenderSprite.Draw(
+                            textureSpit[spitDroppingFrames[i]],
+                            spitDroppingPositions[i],
+                            spitCenters[spitDroppingFrames[i]],
+                            null,
+                            new Color(Color.White, alpha),
+                            spitRotation[i],
+                            size,
+                            0f,
+                            RenderSpriteBlendMode.Addititive);
+
+                    }
                 }
 
         }
@@ -935,30 +985,57 @@ namespace Duologue.PlayObjects
                 if ((spitStartPosition - spitPosition).Length() >= spitTravelLength)
                 {
                     spitSplatting = true;
-                    // FIXME for now, we just turn the spit off, need some animation handling here
-                    spitAlive = false; // FIXME
-                }
-                // Update the droppings and alphas
-                for (int i = 0; i < maxSpitFrames; i++)
-                {
-                    // Handle the main spit glob's alphas
-                    int j = currentSpitAlphas[i] + spitAlphaDeltas[i];
-                    if (j < lowerSpitAlpha)
-                        j = lowerSpitAlpha;
-                    else if (j > upperSpitAlpha)
-                        j = upperSpitAlpha;
-                    currentSpitAlphas[i] = (byte)j;
-
-                    // Handle the droplets
-                    spitDroppingSizes[i] -= spitDroppingSizeDeltas[i];
-                    if (spitDroppingSizes[i] < endingSpitDroppingSize)
+                    splatterTime = 0.0;
+                    for (int i = 0; i < maxSpitFrames; i++)
+                    {
                         GenerateSpitDropping(i, MWMathHelper.GetRandomInRange(0, maxSpitFrames), spitPosition);
+                        spitRotation[i] = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
+                        float k = (float)MWMathHelper.GetRandomInRange(minSplatterAngleChange, maxSplatterAngleChange);
+                        if(MWMathHelper.CoinToss())
+                            k = k * -1;
+                        spitDroppingDirections[i] =
+                            MWMathHelper.RotateVectorByRadians(spitDirection, k);
+                        spitDroppingDirections[i].Normalize();
+                        spitDroppingDirections[i] = spitDroppingDirections[i] *
+                            (float)MWMathHelper.GetRandomInRange(minSplatterSpeed, maxSplatterSpeed);
+                    }
+                }
+                else
+                {
+                    // Update the droppings and alphas
+                    for (int i = 0; i < maxSpitFrames; i++)
+                    {
+                        // Handle the main spit glob's alphas
+                        int j = currentSpitAlphas[i] + spitAlphaDeltas[i];
+                        if (j < lowerSpitAlpha)
+                            j = lowerSpitAlpha;
+                        else if (j > upperSpitAlpha)
+                            j = upperSpitAlpha;
+                        currentSpitAlphas[i] = (byte)j;
+
+                        // Handle the droplets
+                        spitDroppingSizes[i] -= spitDroppingSizeDeltas[i];
+                        if (spitDroppingSizes[i] < endingSpitDroppingSize)
+                            GenerateSpitDropping(i, MWMathHelper.GetRandomInRange(0, maxSpitFrames), spitPosition);
+                    }
                 }
             }
             else
             {
                 // We're splatting
-                // FIXME
+                splatterTime += gameTime.ElapsedGameTime.TotalSeconds;
+                if (splatterTime > totalSplatterTime)
+                {
+                    spitSplatting = false;
+                    spitAlive = false;
+                }
+                else
+                {
+                    for (int i = 0; i < maxSpitFrames; i++)
+                    {
+                        spitDroppingPositions[i] += spitDroppingDirections[i];
+                    }
+                }
             }
         }
         #endregion
