@@ -678,7 +678,9 @@ namespace Duologue.PlayObjects
                 {
                     vToPlayer = spitPosition - pobj.Position;
                     if (vToPlayer.Length() < spitRadius + pobj.Radius)
+                    {
                         return pobj.TriggerHit(this);
+                    }
                 }
                 return true;
             }
@@ -940,7 +942,8 @@ namespace Duologue.PlayObjects
                 {
                     currentFrame = maxAnimationFrames - 1;
                     animationDirection = -1;
-                    FireSpit(gameTime);
+                    if(nearestPlayerObject != null)
+                        FireSpit(gameTime);
                 }
                 else if (currentFrame < 0)
                 {
@@ -963,7 +966,7 @@ namespace Duologue.PlayObjects
                 timeToNextFrame = timeSinceStart + timePerFrameWaiting;
             }
 
-            if (timeSinceStart > timeToNextFire && ! spitAlive)
+            if (timeSinceStart > timeToNextFire && ! spitAlive && nearestPlayerObject != null)
             {
                 timeSinceStart = 0.0;
                 timeToNextFrame = timePerFrameFiring;
