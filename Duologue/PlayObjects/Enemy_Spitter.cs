@@ -72,6 +72,11 @@ namespace Duologue.PlayObjects
         private const double timePerFrameWaiting = 0.2;
 
         /// <summary>
+        /// The time per frame of animation while we're firing
+        /// </summary>
+        private const double timePerFrameFiring = 0.1;
+
+        /// <summary>
         /// The inclusive upper bounds for the animation frames we do when just standing around waiting
         /// </summary>
         private const int maxWaitingFrame = 1;
@@ -131,9 +136,19 @@ namespace Duologue.PlayObjects
         private Texture2D textureSpawnExplode;
         private Vector2 spawnExplodeCenter;
 
+        private Vector2 spitPosition;
+        private Vector2[] spitDroppingPositions;
+        private float[] spitDroppingSizes;
+        private bool spitAlive;
+
         private Vector2 screenCenter;
 
         private int currentFrame;
+        /// <summary>
+        /// The direction (1, or -1) our animation is going
+        /// </summary>
+        private int animationDirection;
+
         private byte[] currentSpitAlphas;
         private int[] spitAlphaDeltas;
 
@@ -228,6 +243,9 @@ namespace Duologue.PlayObjects
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
             audio = ServiceLocator.GetService<AudioManager>();
+
+            spitAlive = false;
+
             LoadAndInitialize();
         }
         #endregion
@@ -649,10 +667,6 @@ namespace Duologue.PlayObjects
                 1f,
                 0f);
         }
-
-        private void DrawFiring(GameTime gameTime)
-        {
-        }
         #endregion
 
         #region Private Update Methods
@@ -671,14 +685,24 @@ namespace Duologue.PlayObjects
 
         private void UpdateFiring(GameTime gameTime)
         {
-            // For now, we just do nothing but return to waiting to fire state
-            // FIXME
-            spawnScale = endSpawnScale;
-            timeSinceStart = 0.0;
-            timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
-            timeToNextFrame = timePerFrameWaiting;
-            currentFrame = 0;
-            MyState = SpitterState.WaitingToFire;
+            if (timeSinceStart > timeToNextFrame)
+            {
+                timeToNextFrame = timeSinceStart + timePerFrameFiring;
+                currentFrame += animationDirection;
+                if (currentFrame >= maxAnimationFrames)
+                {
+                    currentFrame = maxAnimationFrames - 1;
+                    animationDirection = -1;
+                }
+                else if (currentFrame < 0)
+                {
+                    timeSinceStart = 0.0;
+                    timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
+                    timeToNextFrame = timePerFrameWaiting;
+                    currentFrame = 0;
+                    MyState = SpitterState.WaitingToFire;
+                }
+            }
         }
 
         private void UpdateWaitingToFire(GameTime gameTime)
@@ -695,11 +719,13 @@ namespace Duologue.PlayObjects
             {
                 timeSinceStart = 0.0;
                 // FIXME, remove the following when we've a firing update in place
-                timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
-                timeToNextFrame = timePerFrameWaiting;
+                //timeToNextFire = MWMathHelper.GetRandomInRange(minFiringTime, maxFiringTime);
+                //timeToNextFrame = timePerFrameWaiting;
+                timeToNextFrame = timePerFrameFiring;
                 // FIXME, uncomment the following when we've a firing update in place
-                //currentFrame = 0;
-                //MyState = SpitterState.Firing;
+                currentFrame = 0;
+                animationDirection = 1;
+                MyState = SpitterState.Firing;
             }
         }
         #endregion
@@ -712,9 +738,6 @@ namespace Duologue.PlayObjects
             {
                 case SpitterState.Spawning:
                     DrawSpawning(gameTime);
-                    break;
-                case SpitterState.Firing:
-                    DrawFiring(gameTime);
                     break;
                 default:
                     // Waiting to fire
