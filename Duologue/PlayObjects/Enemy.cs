@@ -24,6 +24,13 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
+    public enum EnemyType
+    {
+        Standard,
+        Leader,
+        Follower
+    }
+
     public abstract class Enemy : PlayObject
     {
         #region Constants
@@ -101,6 +108,11 @@ namespace Duologue.PlayObjects
         /// The real size of this enemy
         /// </summary>
         public Vector2 RealSize;
+
+        /// <summary>
+        /// The type of the enemy. Defaults to standard
+        /// </summary>
+        public EnemyType MyEnemyType = EnemyType.Standard;
         #endregion
 
         #region Constructor

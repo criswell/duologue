@@ -27,6 +27,8 @@ namespace Duologue.PlayObjects
     class Enemy_Gloop : Enemy
     {
         #region Constants
+        private const string filename_glooplet = "Enemies/gloop/glooplet";
+        private const string filename_gloopletDeath = "Enemies/gloop/glooplet-death";
         #endregion
 
         #region Fields
