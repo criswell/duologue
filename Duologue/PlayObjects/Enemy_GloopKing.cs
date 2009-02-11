@@ -42,6 +42,11 @@ namespace Duologue.PlayObjects
         private const float kingBaseVerticalMiddle = 82f;
 
         /// <summary>
+        /// The offset size for the iris
+        /// </summary>
+        private const float irisOffsetSize = 32f;
+
+        /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
@@ -62,7 +67,10 @@ namespace Duologue.PlayObjects
 
         private Vector2 kingCenter;
         private Vector2 eyeCenter;
+        private Vector2 irisOffset;
         private Color currentColor;
+        private Color eyeColor;
+        private int currentFrame;
         private bool isFleeing;
         private bool isDying;
         #endregion
@@ -129,11 +137,15 @@ namespace Duologue.PlayObjects
                     String.Format(filename_kingDeath, (i + 1).ToString()));
             }
 
+            irisOffset = Vector2.Zero;
+
             Radius = definedRadius;
 
             isFleeing = false;
 
             currentColor = GetMyColor();
+            eyeColor = GetMyColor(ColorState.Dark);
+            currentFrame = 0;
 
             isDying = false;
             Initialized = true;
@@ -167,12 +179,67 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            if (isDying)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    kingDeath[currentFrame],
+                    Position,
+                    kingCenter,
+                    null,
+                    currentColor,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+            }
+            else
+            {
+                // Draw the base
+                InstanceManager.RenderSprite.Draw(
+                    kingBase,
+                    Position,
+                    kingCenter,
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+
+                // Draw the eyeball
+                InstanceManager.RenderSprite.Draw(
+                    kingEye,
+                    Position + irisOffset,
+                    eyeCenter,
+                    null,
+                    eyeColor,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+
+                // Draw the body
+                InstanceManager.RenderSprite.Draw(
+                    kingBody[currentFrame],
+                    Position,
+                    kingCenter,
+                    null,
+                    currentColor,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            if (isDying)
+            {
+            }
+            else
+            {
+            }
         }
         #endregion
     }
