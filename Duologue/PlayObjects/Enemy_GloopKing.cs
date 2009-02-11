@@ -42,7 +42,7 @@ namespace Duologue.PlayObjects
             MyType = TypesOfPlayObjects.Enemy_KingGloop;
             MajorType = MajorPlayObjectType.Enemy;
             MyEnemyType = EnemyType.Leader;
-            RealSize = new Vector2(83, 83);
+            RealSize = new Vector2(192, 158);
             Initialized = false;
             Alive = false;
         }
