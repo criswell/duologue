@@ -56,6 +56,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_Spitter:
                             Init_Spitter(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_Gloop:
+                            Init_Gloop(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -89,6 +92,10 @@ namespace Duologue.Waves
             LocalInstanceManager.Enemies[i] = new Enemy_Spitter(manager);
         }
 
+        private static void Init_Gloop(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Gloop(manager);
+        }
         #endregion
 
         #endregion

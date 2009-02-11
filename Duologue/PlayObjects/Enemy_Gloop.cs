@@ -28,6 +28,7 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const string filename_glooplet = "Enemies/gloop/glooplet";
+        private const string filename_gloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const string filename_gloopletDeath = "Enemies/gloop/glooplet-death";
 
         private const double minSize = 0.5;
@@ -36,24 +37,61 @@ namespace Duologue.PlayObjects
         private const float radiusMultiplier = 0.8f;
         private const float outlineScale = 1.1f;
 
+        private const byte maxHighlightAlpha = 255;
+        private const byte minHighlightAlpha = 20;
+        private const byte shieldAlpha = 128;
+        private const int defaultHighlightAlphaDelta = 10;
+        private double highlightTimer = 0.04;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 25;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 3;
+
+        /// <summary>
+        /// How far we can go outside the screen before we should stop
+        /// </summary>
+        private const float outsideScreenMultiplier = 3;
+
         #region Force interactions
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
         /// </summary>
         private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float playerAttract = 2.5f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 2f;
         #endregion
         #endregion
 
         #region Fields
         private Texture2D glooplet;
+        private Texture2D gloopletHighlight;
         private Texture2D gloopletDeath;
         private Vector2 gloopletCenter;
+        private Vector2 gloopletHighlightCenter;
         private Vector2 gloopletDeathCenter;
 
         private float scale;
         private bool isFleeing;
 
         private Color currentColor;
+        private byte highlightAlpha;
+        private int highlightAlphaDelta;
+
+        private double timeSinceStart;
 
         // Movement
         private Vector2 offset;
@@ -61,6 +99,7 @@ namespace Duologue.PlayObjects
         private float nearestPlayerRadius;
         private Vector2 nearestLeader;
         private float nearestLeaderRadius;
+        private Vector2 lastDirection;
         #endregion
 
         #region Properties
@@ -102,6 +141,7 @@ namespace Duologue.PlayObjects
         {
             glooplet = InstanceManager.AssetManager.LoadTexture2D(filename_glooplet);
             gloopletDeath = InstanceManager.AssetManager.LoadTexture2D(filename_gloopletDeath);
+            gloopletHighlight = InstanceManager.AssetManager.LoadTexture2D(filename_gloopletHighlight);
 
             gloopletCenter = new Vector2(
                 glooplet.Width / 2f,
@@ -109,15 +149,23 @@ namespace Duologue.PlayObjects
             gloopletDeathCenter = new Vector2(
                 gloopletDeath.Width / 2f,
                 gloopletDeath.Height / 2f);
+            gloopletHighlightCenter = new Vector2(
+                gloopletHighlight.Width / 2f,
+                gloopletHighlight.Height - 1f);
 
             scale = (float)MWMathHelper.GetRandomInRange(minSize, maxSize);
 
-            Radius = glooplet.Width * scale * radiusMultiplier;
+            Radius = (glooplet.Width/2f) * scale * radiusMultiplier;
 
             isFleeing = false;
 
             currentColor = GetMyColor();
+            highlightAlpha = (byte)MWMathHelper.GetRandomInRange(minHighlightAlpha, maxHighlightAlpha);
+            highlightAlphaDelta = defaultHighlightAlphaDelta;
+            if (MWMathHelper.CoinToss())
+                highlightAlphaDelta = highlightAlphaDelta * -1;
 
+            timeSinceStart = 0.0;
             Initialized = true;
             Alive = true;
         }
@@ -204,12 +252,74 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            // First, apply the player offset
+            if (nearestPlayer.Length() > 0f)
+            {
+                float modifier = playerAttract;
+
+                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                //Orientation = nearestPlayer;
+                nearestPlayer.Normalize();
+
+                if (!isFleeing)
+                    nearestPlayer = Vector2.Negate(nearestPlayer);
+
+                offset += modifier * nearestPlayer;
+            }
+            else
+            {
+                // If no near player, move in previous direction
+                nearestPlayer = lastDirection;
+
+                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                nearestPlayer.Normalize();
+
+                offset += playerAttract * nearestPlayer;
+            }
+
+            // Next apply the offset permanently
+            if (offset.Length() >= minMovement)
+            {
+                this.Position += offset;
+                lastDirection = offset;
+                Orientation = new Vector2(-offset.Y, offset.X);
+            }
+
+            // Check boundaries
+            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
+                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
+
+            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
+
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
+                    Alive = false;
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
+                    /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(gloopletDeath, new Color(currentColor, shieldAlpha), Position, 0f);
+                   /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    return true;
+                }
+            }
+            return true;
         }
         #endregion
 
@@ -239,11 +349,39 @@ namespace Duologue.PlayObjects
                 scale,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
+
+            // Highlight
+            InstanceManager.RenderSprite.Draw(
+                gloopletHighlight,
+                Position,
+                gloopletHighlightCenter,
+                null,
+                new Color(Color.White, highlightAlpha),
+                0f,
+                scale,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
         }
 
         public override void Update(GameTime gameTime)
         {
             // TODO
+            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeSinceStart > highlightTimer)
+            {
+                timeSinceStart = 0.0;
+                highlightAlpha = (byte)((int)highlightAlpha + highlightAlphaDelta);
+                if (highlightAlpha > maxHighlightAlpha)
+                {
+                    highlightAlpha = maxHighlightAlpha;
+                    highlightAlphaDelta = defaultHighlightAlphaDelta * -1;
+                }
+                else if (highlightAlpha < minHighlightAlpha)
+                {
+                    highlightAlpha = minHighlightAlpha;
+                    highlightAlphaDelta = defaultHighlightAlphaDelta;
+                }
+            }
         }
         #endregion
     }
