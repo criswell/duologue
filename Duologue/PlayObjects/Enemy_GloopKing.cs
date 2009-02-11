@@ -24,7 +24,7 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
-    class Enemy_GloopKing : Enemy
+    public class Enemy_GloopKing : Enemy
     {
         #region Constants
         #endregion
@@ -36,6 +36,17 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Construct/ Init
+        public Enemy_GloopKing(GamePlayScreenManager manager)
+            : base(manager)
+        {
+            MyType = TypesOfPlayObjects.Enemy_KingGloop;
+            MajorType = MajorPlayObjectType.Enemy;
+            MyEnemyType = EnemyType.Leader;
+            RealSize = new Vector2(83, 83);
+            Initialized = false;
+            Alive = false;
+        }
+
         public override void Initialize(
             Vector2 startPos, 
             Vector2 startOrientation, 

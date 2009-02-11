@@ -114,6 +114,7 @@
     <Compile Include="PlayObjects\Enemy.cs" />
     <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />
     <Compile Include="PlayObjects\Enemy_Gloop.cs" />
+    <Compile Include="PlayObjects\Enemy_GloopKing.cs" />
     <Compile Include="PlayObjects\Enemy_Spitter.cs" />
     <Compile Include="PlayObjects\Enemy_Wiggles.cs" />
     <Compile Include="PlayObjects\PlayerBullet.cs" />
