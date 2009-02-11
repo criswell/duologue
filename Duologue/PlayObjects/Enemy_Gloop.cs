@@ -37,7 +37,7 @@ namespace Duologue.PlayObjects
         private const float radiusMultiplier = 0.8f;
         private const float outlineScale = 1.1f;
 
-        private const byte maxHighlightAlpha = 255;
+        private const byte maxHighlightAlpha = 245;
         private const byte minHighlightAlpha = 20;
         private const byte shieldAlpha = 128;
         private const int defaultHighlightAlphaDelta = 10;
@@ -67,7 +67,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The player attract modifier
         /// </summary>
-        private const float playerAttract = 2.5f;
+        private const float playerAttract = 2.1f;
 
         /// <summary>
         /// The minimum movement required before we register motion
