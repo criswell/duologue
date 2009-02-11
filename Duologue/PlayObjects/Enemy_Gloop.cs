@@ -318,7 +318,7 @@ namespace Duologue.PlayObjects
             if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
             {
                 CurrentHitPoints--;
-                if (CurrentHitPoints <= 0)
+                if (CurrentHitPoints <= 0 && !isDying)
                 {
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
                     isDying = true;
