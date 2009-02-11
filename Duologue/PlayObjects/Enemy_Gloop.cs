@@ -398,7 +398,6 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            // TODO
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
 
             if (isDying)
