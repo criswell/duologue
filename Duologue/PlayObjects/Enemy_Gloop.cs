@@ -32,16 +32,19 @@ namespace Duologue.PlayObjects
         private const string filename_gloopletDeath = "Enemies/gloop/glooplet-death";
 
         private const double minSize = 0.5;
-        private const double maxSize = 1.1;
+        private const double maxSize = 1.0;
 
         private const float radiusMultiplier = 0.8f;
         private const float outlineScale = 1.1f;
+        private const float deltaRotate = 0.05f;
 
         private const byte maxHighlightAlpha = 245;
         private const byte minHighlightAlpha = 20;
         private const byte shieldAlpha = 128;
         private const int defaultHighlightAlphaDelta = 10;
         private double highlightTimer = 0.04;
+
+        private const float deathLifetime = 0.7f;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -85,7 +88,9 @@ namespace Duologue.PlayObjects
         private Vector2 gloopletDeathCenter;
 
         private float scale;
+        private float deathRotation;
         private bool isFleeing;
+        private bool isDying;
 
         private Color currentColor;
         private byte highlightAlpha;
@@ -166,6 +171,8 @@ namespace Duologue.PlayObjects
                 highlightAlphaDelta = highlightAlphaDelta * -1;
 
             timeSinceStart = 0.0;
+            deathRotation = 0f;
+            isDying = false;
             Initialized = true;
             Alive = true;
         }
@@ -184,105 +191,112 @@ namespace Duologue.PlayObjects
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            if (pobj.MajorType == MajorPlayObjectType.Player)
+            if (!isDying)
             {
-                // Player
-                Vector2 vToPlayer = this.Position - pobj.Position;
-                float len = vToPlayer.Length();
-                if (len < nearestPlayerRadius)
+                if (pobj.MajorType == MajorPlayObjectType.Player)
                 {
-                    nearestPlayerRadius = len;
-                    nearestPlayer = vToPlayer;
-                }
-                if (len < this.Radius + pobj.Radius)
-                {
-                    // We're on them, kill em
-                    return pobj.TriggerHit(this);
-                }
-
-                // Beam handling
-                int temp = ((Player)pobj).IsInBeam(this);
-                //inBeam = false;
-                isFleeing = false;
-                if (temp != 0)
-                {
-                    //inBeam = true;
-                    if (temp == -1)
+                    // Player
+                    Vector2 vToPlayer = this.Position - pobj.Position;
+                    float len = vToPlayer.Length();
+                    if (len < nearestPlayerRadius)
                     {
-                        isFleeing = true;
-                        Color c = ColorState.Negative[ColorState.Light];
-                        if(ColorPolarity == ColorPolarity.Positive)
-                            c = ColorState.Positive[ColorState.Light];
-                        LocalInstanceManager.Steam.AddParticles(Position, c);
+                        nearestPlayerRadius = len;
+                        nearestPlayer = vToPlayer;
                     }
-                }
-                return true;
-            }
-            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
-            {
-                // Enemy
-                Vector2 vToEnemy = pobj.Position - this.Position;
-                float len = vToEnemy.Length();
-                if (len < this.Radius + pobj.Radius)
-                {
-                    // Too close, BTFO
-                    if (len == 0f)
+                    if (len < this.Radius + pobj.Radius)
                     {
-                        // Well, bah, we're on top of each other!
-                        vToEnemy = new Vector2(
-                            (float)InstanceManager.Random.NextDouble() - 0.5f,
-                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        // We're on them, kill em
+                        return pobj.TriggerHit(this);
                     }
-                    vToEnemy = Vector2.Negate(vToEnemy);
-                    vToEnemy.Normalize();
-                    //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
-                    offset += standardEnemyRepulse * vToEnemy;
-                    //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
+
+                    // Beam handling
+                    int temp = ((Player)pobj).IsInBeam(this);
+                    //inBeam = false;
+                    isFleeing = false;
+                    if (temp != 0)
+                    {
+                        //inBeam = true;
+                        if (temp == -1)
+                        {
+                            isFleeing = true;
+                            Color c = ColorState.Negative[ColorState.Light];
+                            if (ColorPolarity == ColorPolarity.Positive)
+                                c = ColorState.Positive[ColorState.Light];
+                            LocalInstanceManager.Steam.AddParticles(Position, c);
+                        }
+                    }
+                    return true;
                 }
+                else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+                {
+                    // Enemy
+                    Vector2 vToEnemy = pobj.Position - this.Position;
+                    float len = vToEnemy.Length();
+                    if (len < this.Radius + pobj.Radius)
+                    {
+                        // Too close, BTFO
+                        if (len == 0f)
+                        {
+                            // Well, bah, we're on top of each other!
+                            vToEnemy = new Vector2(
+                                (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        }
+                        vToEnemy = Vector2.Negate(vToEnemy);
+                        vToEnemy.Normalize();
+                        //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
+                        offset += standardEnemyRepulse * vToEnemy;
+                        //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
+                    }
 
-                return true;
-            }
-            else
-            {
-                // Other
+                    return true;
+                }
+                else
+                {
+                    // Other
 
-                return true;
+                    return true;
+                }
             }
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            // First, apply the player offset
-            if (nearestPlayer.Length() > 0f)
+            if (!isDying)
             {
-                float modifier = playerAttract;
+                // First, apply the player offset
+                if (nearestPlayer.Length() > 0f)
+                {
+                    float modifier = playerAttract;
 
-                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
-                //Orientation = nearestPlayer;
-                nearestPlayer.Normalize();
+                    //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                    //Orientation = nearestPlayer;
+                    nearestPlayer.Normalize();
 
-                if (!isFleeing)
-                    nearestPlayer = Vector2.Negate(nearestPlayer);
+                    if (!isFleeing)
+                        nearestPlayer = Vector2.Negate(nearestPlayer);
 
-                offset += modifier * nearestPlayer;
-            }
-            else
-            {
-                // If no near player, move in previous direction
-                nearestPlayer = lastDirection;
+                    offset += modifier * nearestPlayer;
+                }
+                else
+                {
+                    // If no near player, move in previous direction
+                    nearestPlayer = lastDirection;
 
-                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
-                nearestPlayer.Normalize();
+                    //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                    nearestPlayer.Normalize();
 
-                offset += playerAttract * nearestPlayer;
-            }
+                    offset += playerAttract * nearestPlayer;
+                }
 
-            // Next apply the offset permanently
-            if (offset.Length() >= minMovement)
-            {
-                this.Position += offset;
-                lastDirection = offset;
-                Orientation = new Vector2(-offset.Y, offset.X);
+                // Next apply the offset permanently
+                if (offset.Length() >= minMovement)
+                {
+                    this.Position += offset;
+                    lastDirection = offset;
+                    Orientation = new Vector2(-offset.Y, offset.X);
+                }
             }
 
             // Check boundaries
@@ -306,8 +320,11 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
-                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
-                    Alive = false;
+                    //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
+                    isDying = true;
+                    timeSinceStart = 0.0;
+                    deathRotation = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
+                    TriggerShieldDisintegration(gloopletDeath, currentColor, Position, 0f);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
                     return false;
@@ -326,60 +343,88 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            // Outline
-            InstanceManager.RenderSprite.Draw(
-                glooplet,
-                Position,
-                gloopletCenter,
-                null,
-                Color.Black,
-                0f,
-                scale * outlineScale,
-                0f,
-                RenderSpriteBlendMode.AlphaBlend);
+            if (isDying)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    gloopletDeath,
+                    Position,
+                    gloopletDeathCenter,
+                    null,
+                    currentColor,
+                    deathRotation,
+                    scale,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+            }
+            else
+            {
+                // Outline
+                InstanceManager.RenderSprite.Draw(
+                    glooplet,
+                    Position,
+                    gloopletCenter,
+                    null,
+                    Color.Black,
+                    0f,
+                    scale * outlineScale,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
 
-            // Proper
-            InstanceManager.RenderSprite.Draw(
-                glooplet,
-                Position,
-                gloopletCenter,
-                null,
-                currentColor,
-                0f,
-                scale,
-                0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                // Proper
+                InstanceManager.RenderSprite.Draw(
+                    glooplet,
+                    Position,
+                    gloopletCenter,
+                    null,
+                    currentColor,
+                    0f,
+                    scale,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
 
-            // Highlight
-            InstanceManager.RenderSprite.Draw(
-                gloopletHighlight,
-                Position,
-                gloopletHighlightCenter,
-                null,
-                new Color(Color.White, highlightAlpha),
-                0f,
-                scale,
-                0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                // Highlight
+                InstanceManager.RenderSprite.Draw(
+                    gloopletHighlight,
+                    Position,
+                    gloopletHighlightCenter,
+                    null,
+                    new Color(Color.White, highlightAlpha),
+                    0f,
+                    scale,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
             // TODO
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
-            if (timeSinceStart > highlightTimer)
+
+            if (isDying)
             {
-                timeSinceStart = 0.0;
-                highlightAlpha = (byte)((int)highlightAlpha + highlightAlphaDelta);
-                if (highlightAlpha > maxHighlightAlpha)
+                if (timeSinceStart > deathLifetime)
                 {
-                    highlightAlpha = maxHighlightAlpha;
-                    highlightAlphaDelta = defaultHighlightAlphaDelta * -1;
+                    Alive = false;
                 }
-                else if (highlightAlpha < minHighlightAlpha)
+                deathRotation += deltaRotate;
+            }
+            else
+            {
+                if (timeSinceStart > highlightTimer)
                 {
-                    highlightAlpha = minHighlightAlpha;
-                    highlightAlphaDelta = defaultHighlightAlphaDelta;
+                    timeSinceStart = 0.0;
+                    highlightAlpha = (byte)((int)highlightAlpha + highlightAlphaDelta);
+                    if (highlightAlpha > maxHighlightAlpha)
+                    {
+                        highlightAlpha = maxHighlightAlpha;
+                        highlightAlphaDelta = defaultHighlightAlphaDelta * -1;
+                    }
+                    else if (highlightAlpha < minHighlightAlpha)
+                    {
+                        highlightAlpha = minHighlightAlpha;
+                        highlightAlphaDelta = defaultHighlightAlphaDelta;
+                    }
                 }
             }
         }
