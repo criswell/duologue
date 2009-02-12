@@ -70,7 +70,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// Attraction to the leader
         /// </summary>
-        private const float leaderAttract = 2f;
+        private const float leaderAttract = 5f;
 
         /// <summary>
         /// The player attract modifier

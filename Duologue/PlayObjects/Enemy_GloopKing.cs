@@ -43,6 +43,8 @@ namespace Duologue.PlayObjects
         private const int bodyFrames = 7;
         private const int deathFrames = 5;
 
+        private const float outlineScale = 1.05f;
+
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
         /// </summary>
@@ -417,6 +419,18 @@ namespace Duologue.PlayObjects
             }
             else
             {
+                // Outline
+                InstanceManager.RenderSprite.Draw(
+                    kingBody[currentFrame],
+                    Position,
+                    kingCenter,
+                    null,
+                    Color.Black,
+                    0f,
+                    outlineScale,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+
                 // Draw the base
                 InstanceManager.RenderSprite.Draw(
                     kingBase,
