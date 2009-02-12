@@ -24,6 +24,13 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
+    public enum GloopKingState
+    {
+        Standard,
+        CloseEye,
+        OpenEye,
+        Dying
+    }
     public class Enemy_GloopKing : Enemy
     {
         #region Constants
@@ -55,7 +62,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The offset size for the iris
         /// </summary>
-        private const float irisOffsetSize = 32f;
+        private const float irisOffsetSize = 20f;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -73,6 +80,21 @@ namespace Duologue.PlayObjects
         /// How far we can go outside the screen before we should stop
         /// </summary>
         private const float outsideScreenMultiplier = 1.5f;
+
+        /// <summary>
+        /// The time the eye remains open
+        /// </summary>
+        private const double timeEyeOpen = 1.0;
+
+        /// <summary>
+        /// The time, per frame, of the blink animation
+        /// </summary>
+        private const double timePerFrameBlinking = 0.1;
+
+        /// <summary>
+        /// The time, per frame, of the dying animation
+        /// </summary>
+        private const double timePerFrameDying = 0.07;
 
         #region Force interactions
         /// <summary>
@@ -106,8 +128,7 @@ namespace Duologue.PlayObjects
         private Color eyeColor;
         private int currentFrame;
         private bool isFleeing;
-        private bool isDying;
-        private bool isBlinking;
+        private GloopKingState currentState;
 
         private double timeSinceStart;
 
@@ -187,15 +208,27 @@ namespace Duologue.PlayObjects
 
             isFleeing = false;
 
-            currentColor = GetMyColor();
-            eyeColor = GetMyColor(ColorState.Dark);
+            SetCurrentColors();
+
             currentFrame = 0;
             timeSinceStart = 0.0;
 
-            isDying = false;
+            currentState = GloopKingState.Standard;
+
             Initialized = true;
             Alive = true;
 
+        }
+        #endregion
+
+        #region Private methods
+        /// <summary>
+        /// Call when the color state information has changed
+        /// </summary>
+        private void SetCurrentColors()
+        {
+            currentColor = GetMyColor(ColorState.Dark);
+            eyeColor = GetMyColor(ColorState.Medium);
         }
         #endregion
 
@@ -210,7 +243,7 @@ namespace Duologue.PlayObjects
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            if (!isDying)
+            if (currentState != GloopKingState.Dying)
             {
                 if (pobj.MajorType == MajorPlayObjectType.Player)
                 {
@@ -282,14 +315,18 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            if (!isDying)
+            if (currentState != GloopKingState.Dying)
             {
                 // First, apply the player offset
                 if (nearestPlayer.Length() > 0f)
                 {
                     float modifier = playerAttract;
 
-                    nearestPlayer += new Vector2(nearestPlayer.Y, nearestPlayer.X);
+                    irisOffset = Vector2.Negate(nearestPlayer);
+                    irisOffset.Normalize();
+                    irisOffset = irisOffset * irisOffsetSize;
+
+                    nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                     //Orientation = nearestPlayer;
                     nearestPlayer.Normalize();
 
@@ -307,6 +344,9 @@ namespace Duologue.PlayObjects
                     nearestPlayer.Normalize();
 
                     offset += playerAttract * nearestPlayer;
+
+                    // Eyeballs
+                    irisOffset = Vector2.Zero;
                 }
 
                 // Next apply the offset permanently
@@ -337,10 +377,10 @@ namespace Duologue.PlayObjects
             if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
             {
                 CurrentHitPoints--;
-                if (CurrentHitPoints <= 0 && !isDying)
+                if (CurrentHitPoints <= 0 && currentState != GloopKingState.Dying)
                 {
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
-                    isDying = true;
+                    currentState = GloopKingState.Dying;
                     timeSinceStart = 0.0;
                     currentFrame = 0;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
@@ -362,7 +402,7 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            if (isDying)
+            if (currentState == GloopKingState.Dying)
             {
                 InstanceManager.RenderSprite.Draw(
                     kingDeath[currentFrame],
@@ -419,11 +459,60 @@ namespace Duologue.PlayObjects
         {
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (isDying)
+            switch (currentState)
             {
-            }
-            else
-            {
+                case GloopKingState.Dying:
+                    if (timeSinceStart > timePerFrameDying)
+                    {
+                        currentFrame++;
+                        timeSinceStart = 0.0;
+                        if (currentFrame >= deathFrames)
+                        {
+                            Alive = false;
+                            currentFrame = 0;
+                        }
+                    }
+                    break;
+                case GloopKingState.OpenEye:
+                    if (timeSinceStart > timePerFrameBlinking)
+                    {
+                        currentFrame--;
+                        timeSinceStart = 0.0;
+                        if (currentFrame < 0)
+                        {
+                            currentFrame = 0;
+                            currentState = GloopKingState.Standard;
+                        }
+                    }
+                    break;
+                case GloopKingState.CloseEye:
+                    if (timeSinceStart > timePerFrameBlinking)
+                    {
+                        currentFrame++;
+                        timeSinceStart = 0.0;
+                        if(currentFrame >= bodyFrames)
+                        {
+                            currentFrame = bodyFrames - 1;
+                            currentState = GloopKingState.OpenEye;
+                            if (ColorPolarity == ColorPolarity.Positive)
+                                ColorPolarity = ColorPolarity.Negative;
+                            else
+                                ColorPolarity = ColorPolarity.Positive;
+
+                            SetCurrentColors();
+                        }
+                    }
+                    break;
+                default:
+                    // Standard
+                    if (timeSinceStart > timeEyeOpen)
+                    {
+                        currentFrame = 0;
+                        timeSinceStart = 0.0;
+                        currentState = GloopKingState.CloseEye;
+                    }
+
+                    break;
             }
         }
         #endregion

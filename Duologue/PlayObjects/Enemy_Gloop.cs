@@ -164,7 +164,7 @@ namespace Duologue.PlayObjects
 
             isFleeing = false;
 
-            currentColor = GetMyColor();
+            currentColor = GetMyColor(ColorState.Dark);
             highlightAlpha = (byte)MWMathHelper.GetRandomInRange(minHighlightAlpha, maxHighlightAlpha);
             highlightAlphaDelta = defaultHighlightAlphaDelta;
             if (MWMathHelper.CoinToss())
