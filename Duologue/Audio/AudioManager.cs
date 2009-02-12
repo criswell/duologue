@@ -7,6 +7,18 @@ using Mimicware;
 
 namespace Duologue.Audio
 {
+
+    //the rule is: one sound bank = one song = one SongID
+    public enum SongID { SelectMenu, Intensity, LandOfSand }
+
+    //keep from having to tweak floats and add levels in many places
+    public struct Loudness
+    {
+        public const float Silent = 0f;
+        public const float Quiet = 50f;
+        public const float Full = 100f;
+    }
+
     public class IntensityEventArgs : EventArgs
     {
         public int ChangeAmount;
@@ -19,8 +31,14 @@ namespace Duologue.Audio
     public class AudioManager : Microsoft.Xna.Framework.GameComponent, IService
     {
         private AudioHelper helper;
-        public Music music;
         public SoundEffects soundEffects;
+
+        private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
+        private BeatEffectsSong beatSong;
+        private LandOfSandSong landOfSandSong;
+        //private SelectMenuSong selectSong;
+        private BeatEngine beatEngine;
+        private Music music;
 
         public const string engine = "Content\\Audio\\Duologue.xgs";
         public event IntensityEventHandler Changed;
@@ -40,12 +58,62 @@ namespace Duologue.Audio
         /// </summary>
         public override void Initialize()
         {
+
             helper = new AudioHelper(Game, engine);
-            music = new Music(this);
+            beatSong = new BeatEffectsSong(Game);
+            landOfSandSong = new LandOfSandSong(Game);
+            //selectSong = new SelectMenuSong(Game);
+            
+            beatEngine = new BeatEngine(Game);
+            
+            songMap.Add(SongID.Intensity, beatSong);
+            songMap.Add(SongID.LandOfSand, landOfSandSong);
+            //songMap.Add(SongID.SelectMenu, selectSong);
+
             soundEffects = new SoundEffects(this);
+
             Game.Components.Add(helper);
+            Game.Components.Add(beatSong);
+            Game.Components.Add(landOfSandSong);
+            //Game.Components.Add(selectSong);
+            Game.Components.Add(beatEngine);
+            //Game.Components.Add(soundEffects);
+            music = new Music(this);
 
             base.Initialize();
+        }
+
+
+        public void PlaySong(SongID ID)
+        {
+            if (ID == SongID.SelectMenu)
+                music.SelectSong.Play();
+            else
+                songMap[ID].Play();
+        }
+
+        public void StopSong(SongID ID)
+        {
+            if (ID == SongID.SelectMenu)
+                music.SelectSong.Stop();
+            else
+                songMap[ID].Stop();
+        }
+
+        public void FadeSong(SongID ID)
+        {
+            if (ID == SongID.SelectMenu)
+                music.SelectSong.Fade(true);
+            //FIXME true = stop when done
+            else
+                songMap[ID].Fade(true);
+        }
+
+        public bool SongIsPlaying(SongID ID)
+        {
+            if (ID == SongID.SelectMenu)
+                return music.SelectSong.IsPlaying;
+            return songMap[ID].IsPlaying;
         }
 
         public void Intensify()

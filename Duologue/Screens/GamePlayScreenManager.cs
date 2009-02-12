@@ -189,7 +189,7 @@ namespace Duologue.Screens
                 gameOver.Reset();
                 //penis penis penis
                 //ServiceLocator.GetService<AudioManager>().music.FadeSong(SongID.Intensity);
-                ServiceLocator.GetService<AudioManager>().music.FadeSong(SongID.LandOfSand);
+                ServiceLocator.GetService<AudioManager>().FadeSong(SongID.LandOfSand);
                 // FIXME
                 // Should probably do some gameover music here
                 gameOver.Visible = true;
@@ -326,7 +326,7 @@ namespace Duologue.Screens
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
                     //localGame.Audio.music.PlaySong(SongID.Intensity);
-                    localGame.Audio.music.PlaySong(SongID.LandOfSand);
+                    localGame.Audio.PlaySong(SongID.LandOfSand);
                     break;
                 default:
                     // Play the game or game over

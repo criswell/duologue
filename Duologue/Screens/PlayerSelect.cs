@@ -320,7 +320,7 @@ namespace Duologue.Screens
             VoidCountdown();
             if (numActive > 0 && LocalInstanceManager.CurrentGameState == GameState.PlayerSelect)
             {
-                ServiceLocator.GetService<AudioManager>().music.FadeSong(SongID.SelectMenu);
+                ServiceLocator.GetService<AudioManager>().FadeSong(SongID.SelectMenu);
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
                 // Set the players
                 SetPlayers();

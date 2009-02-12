@@ -1,31 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.Xna.Framework;
+
 
 namespace Duologue.Audio
 {
-    class SelectMenuSong : Song, ISong
+    /// <summary>
+    /// This is a game component that implements IUpdateable.
+    /// </summary>
+    public class SelectMenuSong : Song
     {
 
-        private const string waveBank = "Content\\Audio\\SelectMenu.xwb";
-        private const string soundBank = "Content\\Audio\\SelectMenu.xsb";
-        
+        private const string wave = "Content\\Audio\\SelectMenu.xwb";
+        private const string sound = "Content\\Audio\\SelectMenu.xsb";
         private const string SelectMenuCue = "nicStage_gso";
 
-        private const int NUMBER_OF_TRACKS = 1;
-
-        public SelectMenuSong() : base()
+        public SelectMenuSong(Game game)
+            : base(game, sound, wave)
         {
-            this.WaveBankName = waveBank;
-            this.SoundBankName = soundBank;
             this.Tracks = new List<Track> { new Track(SelectMenuCue, Loudness.Full) };
-            List <string> cues = new List<string>();
+            List<string> cues = new List<string>();
             Tracks.ForEach(delegate(Track track)
-                {
-                    cues.Add(track.CueName);
-                });
-            AudioHelper.AddBank(SoundBankName, WaveBankName, cues);
+            {
+                cues.Add(track.CueName);
+            });
+            AudioHelper.AddBank(sound, wave, cues);
+            // TODO: Construct any child components here
+        }
+
+
+        /// <summary>
+        /// Allows the game component to perform any initialization it needs to before starting
+        /// to run.  This is where it can query for any required services and load content.
+        /// </summary>
+        public override void Initialize()
+        {
+            // TODO: Add your initialization code here
+            base.Initialize();
         }
 
         public override bool IsPlaying
@@ -41,26 +52,15 @@ namespace Duologue.Audio
             }
         }
 
-        public override void Play()
-        {
-            IsPlaying = true;
-            AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
-        }
 
-        public override void Stop()
+        /// <summary>
+        /// Allows the game component to update itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        public override void Update(GameTime gameTime)
         {
-            AudioHelper.StopCues(SoundBankName);
-            IsPlaying = false;
+            // TODO: Add your update code here
+            base.Update(gameTime);
         }
-
-        public override void Fade()
-        {
-            float fadeoutTime = 10000f; //milliseconds
-            int steps = 100;
-            AudioHelper.FadeCues(SoundBankName, fadeoutTime, steps, 
-                Loudness.Full, Loudness.Quiet, true);
-        }
-
     }
-
 }

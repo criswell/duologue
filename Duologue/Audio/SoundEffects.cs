@@ -60,10 +60,12 @@ namespace Duologue.Audio
 
                 //,EffectID.YourNewEffectID, YourNewCueName
             };
-        private EffectsBank playerBank = new EffectsBank();
+        private EffectsBank playerBank;
 
         public SoundEffects(AudioManager manager)
         {
+            notifier = manager;
+            playerBank = new EffectsBank(notifier.Game);
             playerBank.SoundBankName = PlayerEffectsSB;
             playerBank.WaveBankName = PlayerEffectsWB;
 
