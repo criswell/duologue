@@ -177,11 +177,11 @@ namespace Duologue.Waves
                 //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
                 thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                 //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_KingGloop;
-                thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
+                thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[i] = MathHelper.TwoPi;//(float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
             }
 
             thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[40] = TypesOfPlayObjects.Enemy_KingGloop;
-            thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[40] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
+            thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[40] = MathHelper.TwoPi;//(float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
 
             return thisWave;
         }
