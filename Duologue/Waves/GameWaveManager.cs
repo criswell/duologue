@@ -156,7 +156,7 @@ namespace Duologue.Waves
 
             // ERE I AM JH
             thisWave.NumWavelets = 1;
-            thisWave.NumEnemies = 11;
+            thisWave.NumEnemies = 41;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelet = new Wavelet[thisWave.NumWavelets];
             int hitsToKillEnemy = 2;
@@ -180,8 +180,8 @@ namespace Duologue.Waves
                 thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
             }
 
-            thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[10] = TypesOfPlayObjects.Enemy_KingGloop;
-            thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[10] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
+            thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[40] = TypesOfPlayObjects.Enemy_KingGloop;
+            thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[40] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
 
             return thisWave;
         }

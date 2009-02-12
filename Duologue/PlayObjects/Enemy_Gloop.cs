@@ -68,6 +68,11 @@ namespace Duologue.PlayObjects
         private const float standardEnemyRepulse = 5f;
 
         /// <summary>
+        /// Attraction to the leader
+        /// </summary>
+        private const float leaderAttract = 2f;
+
+        /// <summary>
         /// The player attract modifier
         /// </summary>
         private const float playerAttract = 2.1f;
@@ -104,6 +109,7 @@ namespace Duologue.PlayObjects
         private float nearestPlayerRadius;
         private Vector2 nearestLeader;
         private float nearestLeaderRadius;
+        private Enemy nearestLeaderObject;
         private Vector2 lastDirection;
         #endregion
 
@@ -186,6 +192,7 @@ namespace Duologue.PlayObjects
             nearestPlayer = Vector2.Zero;
             nearestLeaderRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
             nearestLeader = Vector2.Zero;
+            nearestLeaderObject = null;
             return true;
         }
 
@@ -229,24 +236,51 @@ namespace Duologue.PlayObjects
                 }
                 else if (pobj.MajorType == MajorPlayObjectType.Enemy)
                 {
-                    // Enemy
-                    Vector2 vToEnemy = pobj.Position - this.Position;
-                    float len = vToEnemy.Length();
-                    if (len < this.Radius + pobj.Radius)
+                    if (((Enemy)pobj).MyEnemyType == EnemyType.Leader)
                     {
-                        // Too close, BTFO
-                        if (len == 0f)
+                        // Leader
+                        Vector2 vToLeader = this.Position - pobj.Position;
+                        float len = vToLeader.Length();
+                        if (len < nearestLeaderRadius)
                         {
-                            // Well, bah, we're on top of each other!
-                            vToEnemy = new Vector2(
-                                (float)InstanceManager.Random.NextDouble() - 0.5f,
-                                (float)InstanceManager.Random.NextDouble() - 0.5f);
+                            nearestLeaderRadius = len;
+                            nearestLeader = vToLeader;
+                            nearestLeaderObject = (Enemy)pobj;
                         }
-                        vToEnemy = Vector2.Negate(vToEnemy);
-                        vToEnemy.Normalize();
-                        //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
-                        offset += standardEnemyRepulse * vToEnemy;
-                        //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
+                        else if (len < this.Radius + pobj.Radius)
+                        {
+                            // Too close, BTFO
+                            if (len == 0f)
+                            {
+                                // Well, bah, we're on top of each other!
+                                vToLeader = new Vector2(
+                                    (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                    (float)InstanceManager.Random.NextDouble() - 0.5f);
+                            }
+                            vToLeader = Vector2.Negate(vToLeader);
+                            vToLeader.Normalize();
+                            offset += standardEnemyRepulse * vToLeader;
+                        }
+                    }
+                    else
+                    {
+                        // Enemy
+                        Vector2 vToEnemy = pobj.Position - this.Position;
+                        float len = vToEnemy.Length();
+                        if (len < this.Radius + pobj.Radius)
+                        {
+                            // Too close, BTFO
+                            if (len == 0f)
+                            {
+                                // Well, bah, we're on top of each other!
+                                vToEnemy = new Vector2(
+                                    (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                    (float)InstanceManager.Random.NextDouble() - 0.5f);
+                            }
+                            vToEnemy = Vector2.Negate(vToEnemy);
+                            vToEnemy.Normalize();
+                            offset += standardEnemyRepulse * vToEnemy;
+                        }
                     }
 
                     return true;
@@ -265,26 +299,30 @@ namespace Duologue.PlayObjects
         {
             if (!isDying)
             {
-                // First, apply the player offset
-                if (nearestPlayer.Length() > 0f)
+                if (nearestLeader.Length() > 0f)
                 {
-                    float modifier = playerAttract;
+                    // The leader comes first
+                    nearestLeader.Normalize();
 
-                    //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
-                    //Orientation = nearestPlayer;
+                    offset += leaderAttract * Vector2.Negate(nearestLeader);
+                    ColorPolarity = nearestLeaderObject.ColorPolarity;
+                    currentColor = GetMyColor(ColorState.Dark);
+                }
+                else if (nearestPlayer.Length() > 0f)
+                {
+                    // Next priority is the player
                     nearestPlayer.Normalize();
 
                     if (!isFleeing)
                         nearestPlayer = Vector2.Negate(nearestPlayer);
 
-                    offset += modifier * nearestPlayer;
+                    offset += playerAttract * nearestPlayer;
                 }
                 else
                 {
-                    // If no near player, move in previous direction
+                    // If no near player or leader, move in previous direction
                     nearestPlayer = lastDirection;
 
-                    //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                     nearestPlayer.Normalize();
 
                     offset += playerAttract * nearestPlayer;
