@@ -24,6 +24,15 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
+    public struct StaticElement
+    {
+        public Rectangle Rect;
+        public byte Alpha;
+        public int DeltaAlpha;
+        public RenderSpriteBlendMode BlendMode;
+        public Vector2 Speed;
+    }
+
     class Enemy_StaticGloop : Enemy
     {
         #region Constants
@@ -38,7 +47,6 @@ namespace Duologue.PlayObjects
         private const float deltaRotate = 0.05f;
 
         private const byte shieldAlpha = 128;
-        private double highlightTimer = 0.04;
 
         private const float deathLifetime = 0.7f;
 
@@ -59,6 +67,24 @@ namespace Duologue.PlayObjects
         /// The maximum height of the square for the static
         /// </summary>
         private const int maxHeight = 8;
+
+        /// <summary>
+        /// The minimum static square speed
+        /// </summary>
+        private const double minSpeed = -3f;
+        /// <summary>
+        /// The maximum static square speed
+        /// </summary>
+        private const double maxSpeed = 3f;
+
+        /// <summary>
+        /// The number of static squares
+        /// </summary>
+        private const int numberOfStaticSquares = 15;
+
+        private const byte minStaticSquareAlpha = 20;
+        private const byte maxStaticSquareAlpha = 245;
+        private const byte deltaStaticSquareAlpha = 10;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -113,6 +139,8 @@ namespace Duologue.PlayObjects
         private Color currentColor;
 
         private double timeSinceStart;
+
+        private StaticElement[] squareElements;
 
         // Movement
         private Vector2 offset;
@@ -174,9 +202,14 @@ namespace Duologue.PlayObjects
             gloopletStaticCenter = new Vector2(
                 gloopletStatic.Width / 2f,
                 gloopletStatic.Height - 1f);
-
-
+            
             Radius = (glooplet.Width / 2f) * defaultSize * radiusMultiplier;
+
+            squareElements = new StaticElement[numberOfStaticSquares];
+            for (int i = 0; i < numberOfStaticSquares; i++)
+            {
+                squareElements[i] = GetStaticElement();
+            }
 
             isFleeing = false;
 
@@ -187,6 +220,35 @@ namespace Duologue.PlayObjects
             isDying = false;
             Initialized = true;
             Alive = true;
+        }
+        #endregion
+
+        #region Private Methods
+        private StaticElement GetStaticElement()
+        {
+            StaticElement e = new StaticElement();
+            int w = MWMathHelper.GetRandomInRange(minWidth, maxWidth);
+            int h = MWMathHelper.GetRandomInRange(minHeight, maxHeight);
+
+            e.Rect = new Rectangle(
+                MWMathHelper.GetRandomInRange(0, (int)(RealSize.X - w)),
+                MWMathHelper.GetRandomInRange(0, (int)(RealSize.Y - h)),
+                w, h);
+
+            e.Speed = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(minSpeed, maxSpeed),
+                (float)MWMathHelper.GetRandomInRange(minSpeed, maxSpeed));
+
+            e.Alpha = (byte)MWMathHelper.GetRandomInRange(minStaticSquareAlpha, maxStaticSquareAlpha);
+
+            e.DeltaAlpha = deltaStaticSquareAlpha;
+
+            if (MWMathHelper.CoinToss())
+                e.BlendMode = RenderSpriteBlendMode.Addititive;
+            else
+                e.BlendMode = RenderSpriteBlendMode.AlphaBlend;
+
+            return e;
         }
         #endregion
 
@@ -401,7 +463,9 @@ namespace Duologue.PlayObjects
             else
             {
                 // Static stuff
-
+                for (int i = 0; i < numberOfStaticSquares; i++)
+                {
+                }
 
                 // Outline
                 InstanceManager.RenderSprite.Draw(
