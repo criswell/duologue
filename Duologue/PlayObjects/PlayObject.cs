@@ -38,6 +38,7 @@ namespace Duologue.PlayObjects
         Enemy_Wiggles,
         Enemy_Spitter,
         Enemy_Gloop,
+        Enemy_StaticGloop,
         Enemy_KingGloop,
     }
 
