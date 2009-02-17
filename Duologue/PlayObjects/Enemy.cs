@@ -254,9 +254,21 @@ namespace Duologue.PlayObjects
 
         public Color GetMyColor()
         {
-            Color c = ColorState.Negative[ColorState.Light];
+            /*Color c = ColorState.Negative[ColorState.Light];
             if(ColorPolarity == ColorPolarity.Positive)
-                c = ColorState.Positive[ColorState.Light];
+                c = ColorState.Positive[ColorState.Light];*/
+
+            return GetMyColor(ColorState.Light);
+        }
+
+        public Color GetMyColor(int ColorStateLevel)
+        {
+            // FIXME, there's no error checking here
+            // We'd get a nasty crash if a caler wanted
+            // a color state level outside of the range
+            Color c = ColorState.Negative[ColorStateLevel];
+            if (ColorPolarity == ColorPolarity.Positive)
+                c = ColorState.Positive[ColorStateLevel];
 
             return c;
         }
