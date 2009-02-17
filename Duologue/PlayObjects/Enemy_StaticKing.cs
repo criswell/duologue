@@ -328,7 +328,7 @@ namespace Duologue.PlayObjects
             {
                 float modifier = playerAttract;
 
-                nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                nearestPlayer += new Vector2(-nearestPlayer.Y, nearestPlayer.X);
                 nearestPlayer.Normalize();
 
                 if (!isFleeing)

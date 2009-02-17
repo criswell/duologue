@@ -183,8 +183,8 @@ namespace Duologue.Waves
             thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[80] = TypesOfPlayObjects.Enemy_StaticKing;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[80] = MathHelper.TwoPi;
 
-            //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[81] = TypesOfPlayObjects.Enemy_KingGloop;
-            thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[81] = TypesOfPlayObjects.Enemy_StaticKing;
+            thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[81] = TypesOfPlayObjects.Enemy_KingGloop;
+            //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[81] = TypesOfPlayObjects.Enemy_StaticKing;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[81] = MathHelper.Pi;
 
             return thisWave;
