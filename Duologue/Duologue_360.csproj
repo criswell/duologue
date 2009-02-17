@@ -100,6 +100,7 @@
     <Compile Include="PlayObjects\Enemy_GloopKing.cs" />
     <Compile Include="PlayObjects\Enemy_Spitter.cs" />
     <Compile Include="PlayObjects\Enemy_StaticGloop.cs" />
+    <Compile Include="PlayObjects\Enemy_StaticKing.cs" />
     <Compile Include="PlayObjects\Enemy_Wiggles.cs" />
     <Compile Include="PlayObjects\PlayerBullet.cs" />
     <Compile Include="PlayObjects\PlayerColors.cs" />
