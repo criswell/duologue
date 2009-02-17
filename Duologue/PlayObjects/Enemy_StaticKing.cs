@@ -376,12 +376,54 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Draw the vapors
+            for (int i = 0; i < numberOfFrames; i++)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    frames[i].Texture,
+                    Position,
+                    center,
+                    null,
+                    new Color(currentColor, frames[i].Alpha),
+                    frames[i].Rotation,
+                    frames[i].Scale,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
+
+            // Draw the face
+            if (faceFlipped)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    textureFace,
+                    Position,
+                    center,
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
+            else
+            {
+                InstanceManager.RenderSprite.Draw(
+                    textureFace,
+                    Position,
+                    center,
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop,
+                    SpriteEffects.FlipVertically);
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
         }
         #endregion
     }
