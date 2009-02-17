@@ -16,6 +16,7 @@ namespace Duologue.Audio
     {
         public const float Silent = 0f;
         public const float Quiet = 50f;
+        public const float Normal = 80f;
         public const float Full = 100f;
     }
 
@@ -34,9 +35,6 @@ namespace Duologue.Audio
         public SoundEffects soundEffects;
 
         private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
-        private BeatEffectsSong beatSong;
-        private LandOfSandSong landOfSandSong;
-        //private SelectMenuSong selectSong;
         private BeatEngine beatEngine;
         private Music music;
 
@@ -60,25 +58,18 @@ namespace Duologue.Audio
         {
 
             helper = new AudioHelper(Game, engine);
-            beatSong = new BeatEffectsSong(Game);
-            landOfSandSong = new LandOfSandSong(Game);
-            //selectSong = new SelectMenuSong(Game);
             
             beatEngine = new BeatEngine(Game);
             
-            songMap.Add(SongID.Intensity, beatSong);
-            songMap.Add(SongID.LandOfSand, landOfSandSong);
-            //songMap.Add(SongID.SelectMenu, selectSong);
-
             soundEffects = new SoundEffects(this);
 
             Game.Components.Add(helper);
-            Game.Components.Add(beatSong);
-            Game.Components.Add(landOfSandSong);
-            //Game.Components.Add(selectSong);
             Game.Components.Add(beatEngine);
             //Game.Components.Add(soundEffects);
             music = new Music(this);
+            songMap.Add(SongID.SelectMenu, music.SelectSong);
+            songMap.Add(SongID.Intensity, music.BeatEffects);
+            songMap.Add(SongID.LandOfSand, music.LandOfSand);
 
             base.Initialize();
         }
@@ -86,33 +77,22 @@ namespace Duologue.Audio
 
         public void PlaySong(SongID ID)
         {
-            if (ID == SongID.SelectMenu)
-                music.SelectSong.Play();
-            else
-                songMap[ID].Play();
+            songMap[ID].Play();
         }
 
         public void StopSong(SongID ID)
         {
-            if (ID == SongID.SelectMenu)
-                music.SelectSong.Stop();
-            else
-                songMap[ID].Stop();
+            songMap[ID].Stop();
         }
 
         public void FadeSong(SongID ID)
         {
-            if (ID == SongID.SelectMenu)
-                music.SelectSong.Fade(true);
             //FIXME true = stop when done
-            else
-                songMap[ID].Fade(true);
+            songMap[ID].Fade(true);
         }
 
         public bool SongIsPlaying(SongID ID)
         {
-            if (ID == SongID.SelectMenu)
-                return music.SelectSong.IsPlaying;
             return songMap[ID].IsPlaying;
         }
 

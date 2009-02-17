@@ -16,7 +16,7 @@ namespace Duologue.Audio
 
     public class IntensitySong : Song, IIntensitySong
     {
-        private int intensityStep = 1;
+        private int intensityStep = 0; //trick into an update the first time
 
         // This is the place where we keep the per intensity, per track volume targets
         //              (intensity)      (Cue name) (Volume)
@@ -24,15 +24,23 @@ namespace Duologue.Audio
             new Dictionary<int, List<Track>>();
 
         private float[,] trackVolumes;
+        private string[] cues;
 
-        public IntensitySong(Game game, string sbname, string wbname) 
-            : base(game, sbname, wbname) 
+        public IntensitySong(Game game, string sbname, string wbname)
+            : base(game, sbname, wbname)
         {
         }
 
-        public IntensitySong(Game game, string sbname, string wbname, List<string> cues)
-            : base(game, sbname, wbname, cues)
+        public IntensitySong(Game game, string sbname, string wbname, List<string> cueList)
+            : base(game, sbname, wbname, cueList)
         {
+            int i = 0;
+            cues = new string[cueList.Count];
+            cueList.ForEach(cue =>
+                {
+                    this.cues[i] = cue;
+                    i++;
+                });
         }
 
         public IntensitySong(Game game, string sbname, string wbname, 
@@ -42,24 +50,26 @@ namespace Duologue.Audio
             trackVolumes = vols;
         }
 
+        public override void Play()
+        {
+            base.Play();
+            ChangeIntensity(0);
+        }
+
         public void ChangeIntensity(int amount)
         {
             int oldIntensityStep = intensityStep;
             intensityStep =
                 MWMathHelper.LimitToRange(intensityStep + amount, 1, trackVolumes.GetLength(0));
-            if (intensityStep != oldIntensityStep)
+            if (intensityStep != oldIntensityStep || amount == 0)
             {
-                float[] vols = { 
-                                   trackVolumes[intensityStep,0], 
-                                   trackVolumes[intensityStep,1],
-                                   trackVolumes[intensityStep,2], 
-                                   trackVolumes[intensityStep,3],
-                                   trackVolumes[intensityStep,4], 
-                                   trackVolumes[intensityStep,5],
-                                   trackVolumes[intensityStep,6]
-                               };
+                float[] vols = new float[trackVolumes.GetLength(1)];
+                for (int i = 0; i < trackVolumes.GetLength(0); i++)
+                {
+                    vols[i] = trackVolumes[intensityStep - 1, i];
+                }
 
-                AudioHelper.UpdateCues(SoundBankName, trackMap[intensityStep]);
+                AudioHelper.UpdateCues(SoundBankName, cues, vols);
             }
         }
 

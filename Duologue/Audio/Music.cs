@@ -13,14 +13,23 @@ namespace Duologue.Audio
 
     public class Music
     {
-
+        //Select Menu Song constants
         private const string selectMenuWaves = "Content\\Audio\\SelectMenu.xwb";
         private const string selectMenuSounds = "Content\\Audio\\SelectMenu.xsb";
         private const string selectMenuCue = "nicStage_gso";
 
+        //Beat Effects Song constants
+        private const string beatEffectsWaves = "Content\\Audio\\Intensity.xwb";
+        private const string beatEffectsSounds = "Content\\Audio\\Intensity.xsb";
+        private const string Intensity1 = "beat";
+        private const string Intensity2 = "bass";
+        private const string Intensity3 = "bassplus";
+        private const string Intensity4 = "organ";
+        private const string Intensity5 = "guitar";
+
+        //Land of Sand Song constants
         private const string landOfSandWaves = "Content\\Audio\\LandOfSand.xwb";
         private const string landOfSandSounds = "Content\\Audio\\LandOfSand.xsb";
-
         private const string LoSBassDrum = "BassDrum";
         private const string LoSHiHat = "HiHat";
         private const string LoSBassSynth = "BassSynth";
@@ -31,10 +40,9 @@ namespace Duologue.Audio
 
         private AudioManager notifier;
         private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
-        //private BeatEffectsSong beatSong;
-        //private LandOfSandSong landOfSandSong;
         public Song SelectSong;
         public IntensitySong LandOfSand;
+        public IntensitySong BeatEffects;
         private BeatEngine beatEngine;
 
         public Music(AudioManager manager)
@@ -42,63 +50,34 @@ namespace Duologue.Audio
             notifier = manager;
             notifier.Changed += new IntensityEventHandler(UpdateIntensity);
 
-            //beatSong = new BeatEffectsSong();
-            //landOfSandSong = new LandOfSandSong();
             beatEngine = new BeatEngine(manager.Game);
 
-            BuildSelectSong();
-            BuildLandOfSand();
+            float on = Loudness.Normal;
+            float off = Loudness.Silent;
 
-            manager.Game.Components.Add(SelectSong);
-            manager.Game.Components.Add(LandOfSand);
-        }
-
-        private void BuildSelectSong()
-        {
             SelectSong = new Song(notifier.Game, selectMenuSounds, selectMenuWaves,
               new List<string> { selectMenuCue });
-        }
 
-        private void BuildLandOfSand()
-        {
-            List<string> cues = new List<string> {LoSBassDrum, LoSHiHat,
+            List<string> BECues = new List<string> {Intensity1, Intensity2,
+                Intensity3, Intensity4, Intensity5 };
+            float[,] BEvolumes = {
+                                  {on, off, off, off, off},
+                                  {on, on, off, off, off},
+                                  {on, on, on, off, off},
+                                  {on, on, on, on, off},
+                                  {on, on, on, on, on}
+                              };
+
+            string[] BEcueOrder = { Intensity1, Intensity2, Intensity3, 
+                                      Intensity4, Intensity5 };
+
+            BeatEffects = new IntensitySong(notifier.Game, beatEffectsSounds,
+                beatEffectsWaves, BECues, BEvolumes);
+
+
+            List<string> LoSCues = new List<string> {LoSBassDrum, LoSHiHat,
                 LoSBassSynth, LoSStabs, LoSMelody, LoSAccent, LoSToms};
 
-            Track bassOn = new Track(LoSBassDrum, Loudness.Full);
-            Track bassOff = new Track(LoSBassDrum, Loudness.Silent);
-            Track hatOn = new Track(LoSHiHat, Loudness.Full);
-            Track hatOff = new Track(LoSHiHat, Loudness.Silent);
-            Track bsOn = new Track(LoSBassSynth, Loudness.Full);
-            Track bsOff = new Track(LoSBassSynth, Loudness.Silent);
-            Track stabsOn = new Track(LoSStabs, Loudness.Full);
-            Track stabsOff = new Track(LoSStabs, Loudness.Silent);
-            Track melodyOn = new Track(LoSMelody, Loudness.Full);
-            Track melodyOff = new Track(LoSMelody, Loudness.Silent);
-            Track accentOn = new Track(LoSAccent, Loudness.Full);
-            Track accentOff = new Track(LoSAccent, Loudness.Silent);
-            Track tomsOn = new Track(LoSToms, Loudness.Full);
-            Track tomsOff = new Track(LoSToms, Loudness.Silent);
-
-            List<Track> one = new List<Track> { bassOn, hatOn, bsOff, stabsOff,
-                melodyOff, accentOff, tomsOff };
-
-            List<Track> two = new List<Track> { bassOn, hatOn, bsOn, stabsOff,
-                melodyOff, accentOff, tomsOff };
-
-            List<Track> three = new List<Track> { bassOn, hatOn, bsOn, stabsOn,
-                melodyOff, accentOff, tomsOff };
-
-            List<Track> four = new List<Track> { bassOn, hatOn, bsOff, stabsOn,
-                melodyOn, accentOff, tomsOff };
-
-            List<Track> five = new List<Track> { bassOn, hatOn, bsOff, stabsOn,
-                melodyOn, accentOn, tomsOff };
-
-            List<Track> six = new List<Track> { bassOn, hatOff, bsOff, stabsOn,
-                melodyOn, accentOn, tomsOn };
-
-            float on = Loudness.Full;
-            float off = Loudness.Silent;
             float[,] volumes = {
                                   {on, on, off, off, off, off, off},
                                   {on, on, on, off, off, off, off},
@@ -111,14 +90,17 @@ namespace Duologue.Audio
                                   LoSMelody, LoSAccent, LoSToms};
 
             LandOfSand = new IntensitySong(notifier.Game, landOfSandSounds,
-                landOfSandWaves, cues, volumes);
+                landOfSandWaves, LoSCues, volumes);
 
+            manager.Game.Components.Add(SelectSong);
+            manager.Game.Components.Add(BeatEffects);
+            manager.Game.Components.Add(LandOfSand);
         }
 
         public void UpdateIntensity(IntensityEventArgs e)
         {
-            //beatSong.ChangeIntensity(e.ChangeAmount);
-            //landOfSandSong.ChangeIntensity(e.ChangeAmount);
+            LandOfSand.ChangeIntensity(e.ChangeAmount);
+            BeatEffects.ChangeIntensity(e.ChangeAmount);
         }
 
         public void Detach()

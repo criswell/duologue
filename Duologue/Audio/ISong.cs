@@ -47,7 +47,7 @@ namespace Duologue.Audio
         protected float volume;
 
         public List<Track> Tracks = new List<Track>();
-        public Song(Game game, string sbname, string wbname) 
+        public Song(Game game, string sbname, string wbname)
             : base(game) 
         {
             SoundBankName = sbname;
