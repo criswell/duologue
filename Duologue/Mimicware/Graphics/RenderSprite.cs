@@ -594,6 +594,10 @@ namespace Mimicware.Graphics
                 this.AddAdditive(sobj);
             else if (mode == RenderSpriteBlendMode.Multiplicative)
                 this.AddMultiplicative(sobj);
+            else if (mode == RenderSpriteBlendMode.AlphaBlendTop)
+                this.AddTop(sobj);
+            else if (mode == RenderSpriteBlendMode.AddititiveTop)
+                this.AddAdditiveTop(sobj);
             else
                 this.Add(sobj);
         }

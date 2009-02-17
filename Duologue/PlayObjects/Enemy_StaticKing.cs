@@ -77,7 +77,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// A pre-defined radius (since we can't really get this from the image
         /// </summary>
-        private const float definedRadius = 120f;
+        private const float definedRadius = 80f;
 
         /// <summary>
         /// How far we can go outside the screen before we should stop
@@ -92,6 +92,16 @@ namespace Duologue.PlayObjects
         /// The point value when my shields disintegrate if I were it at perfect beat
         /// </summary>
         private const int myShieldPointValue = 10;
+
+        /// <summary>
+        /// The size of the outline
+        /// </summary>
+        private const float outlineSize = 1.05f;
+
+        /// <summary>
+        /// The vertical offset of the face texture
+        /// </summary>
+        private const float faceVerticalOffset = -15f;
 
         #region Force interactions
         /// <summary>
@@ -115,6 +125,7 @@ namespace Duologue.PlayObjects
         private Texture2D textureFace;
         private StaticKingFrame[] frames;
         private Vector2 center;
+        private Vector2 faceCenter;
 
         private bool isFleeing;
 
@@ -168,17 +179,18 @@ namespace Duologue.PlayObjects
         {
             textureFace = InstanceManager.AssetManager.LoadTexture2D(filename_face);
             frames = new StaticKingFrame[numberOfFrames];
-            center = new Vector2(
-                textureFace.Width / 2f,
-                textureFace.Height / 2f);
-
+            
             for (int i = 0; i < numberOfFrames; i++)
             {
                 frames[i].Texture = InstanceManager.AssetManager.LoadTexture2D(
-                    String.Format(filename_frames, i.ToString()));
+                    String.Format(filename_frames, (i+1).ToString()));
                 SetupFrame(i);
                 frames[i].Scale = startingScale + i * deltaScale;
             }
+
+            center = new Vector2(
+                frames[0].Texture.Width / 2f,
+                frames[0].Texture.Height / 2f);
 
             Radius = definedRadius;
 
@@ -189,6 +201,9 @@ namespace Duologue.PlayObjects
             timeSinceStart = 0.0;
 
             faceFlipped = false;
+            faceCenter = new Vector2(
+                textureFace.Width /2f,
+                textureFace.Height/2f + faceVerticalOffset);
 
             Initialized = true;
             Alive = true;
@@ -287,6 +302,11 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
+            if (nearestPlayer.X > 0)
+                faceFlipped = true;
+            else
+                faceFlipped = false;
+
             // First, apply the player offset
             if (nearestPlayer.Length() > 0f)
             {
@@ -319,11 +339,6 @@ namespace Duologue.PlayObjects
                 Orientation = new Vector2(-offset.Y, offset.X);
             }
 
-            if (Orientation.X < 0)
-                faceFlipped = true;
-            else
-                faceFlipped = false;
-
             // Check boundaries
             if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
                 this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
@@ -345,6 +360,7 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
+                    Alive = false;
                     // Fire off explosions for each frame, if we can
                     for (int i = 0; i < numberOfFrames; i++)
                     {
@@ -376,6 +392,20 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
+            // Draw the outline (FIXME would be lovely if we didn't have to do this in two for loops)
+            for (int i = 0; i < numberOfFrames; i++)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    frames[i].Texture,
+                    Position,
+                    center,
+                    null,
+                    new Color(Color.Black, frames[i].Alpha),
+                    frames[i].Rotation,
+                    frames[i].Scale * outlineSize,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
             // Draw the vapors
             for (int i = 0; i < numberOfFrames; i++)
             {
@@ -391,33 +421,35 @@ namespace Duologue.PlayObjects
                     RenderSpriteBlendMode.AlphaBlendTop);
             }
 
-            // Draw the face
             if (faceFlipped)
             {
+                // Draw the face
                 InstanceManager.RenderSprite.Draw(
                     textureFace,
                     Position,
-                    center,
-                    null,
-                    Color.White,
-                    0f,
-                    1f,
-                    0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
-            }
-            else
-            {
-                InstanceManager.RenderSprite.Draw(
-                    textureFace,
-                    Position,
-                    center,
+                    faceCenter,
                     null,
                     Color.White,
                     0f,
                     1f,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop,
-                    SpriteEffects.FlipVertically);
+                    SpriteEffects.FlipHorizontally);
+            }
+            else
+            {
+
+                // Draw the face
+                InstanceManager.RenderSprite.Draw(
+                    textureFace,
+                    Position,
+                    faceCenter,
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
             }
         }
 
