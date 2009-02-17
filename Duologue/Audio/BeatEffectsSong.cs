@@ -15,8 +15,8 @@ namespace Duologue.Audio
         private const int MAX_INTENSITY = 5;
         private int intensityStep = 1;
 
-        public const string waveBank = "Content\\Audio\\Intensity.xwb";
-        public const string soundBank = "Content\\Audio\\Intensity.xsb";
+        public const string wave = "Content\\Audio\\Intensity.xwb";
+        public const string sound = "Content\\Audio\\Intensity.xsb";
 
         public const string Intensity1 = "beat";
         public const string Intensity2 = "bass";
@@ -24,16 +24,13 @@ namespace Duologue.Audio
         public const string Intensity4 = "organ";
         public const string Intensity5 = "guitar";
 
-        //private BeatEngine clickclickclick;
-
         // This is the place where we keep the per intensity, per track volume targets
         static private Dictionary<int, Dictionary<string, float>> volumeMatrix =
             new Dictionary<int, Dictionary<string, float>>();
 
-        public BeatEffectsSong() : base()
+        public BeatEffectsSong(Game game) 
+            : base(game, sound, wave)
         {
-            this.WaveBankName = waveBank;
-            this.SoundBankName = soundBank;
             this.Tracks = new List<Track> {
                 new Track(Intensity1, Loudness.Full),
                 new Track(Intensity2, Loudness.Full),
@@ -92,23 +89,10 @@ namespace Duologue.Audio
 
         public override void Play()
         {
-            AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
+            base.Play();
+            //AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
             AudioHelper.UpdateCues(SoundBankName, volumeMatrix[intensityStep]);
-            IsPlaying = true;
-        }
-
-        public override void Stop()
-        {
-            IsPlaying = false;
-            AudioHelper.StopCues(SoundBankName);
-        }
-
-        public override void Fade()
-        {
-            float fadeoutTime = 5000f; //milliseconds
-            int steps = 50;
-            AudioHelper.FadeCues(SoundBankName, fadeoutTime, steps,
-                Loudness.Full, Loudness.Quiet, true);
+            //IsPlaying = true;
         }
 
         public void ChangeIntensity(int amount)

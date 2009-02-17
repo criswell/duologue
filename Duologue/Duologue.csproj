@@ -84,14 +84,11 @@
     <Compile Include="AchievementSystem\AchievementManager.cs" />
     <Compile Include="Audio\AudioHelper.cs" />
     <Compile Include="Audio\AudioManager.cs" />
-    <Compile Include="Audio\BeatEffectsSong.cs" />
     <Compile Include="Audio\BeatEngine.cs" />
     <Compile Include="Audio\IIntensitySong.cs" />
     <Compile Include="Audio\IntensityController.cs" />
     <Compile Include="Audio\ISong.cs" />
-    <Compile Include="Audio\LandOfSandSong.cs" />
     <Compile Include="Audio\Music.cs" />
-    <Compile Include="Audio\SelectMenuSong.cs" />
     <Compile Include="Audio\ServiceLocator.cs" />
     <Compile Include="Audio\SoundEffects.cs" />
     <Compile Include="Background.cs" />

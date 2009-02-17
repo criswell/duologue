@@ -15,8 +15,8 @@ namespace Duologue.Audio
         private const int MAX_INTENSITY = 6;
         private int intensityStep = 1;
 
-        public const string waveBank = "Content\\Audio\\LandOfSand.xwb";
-        public const string soundBank = "Content\\Audio\\LandOfSand.xsb";
+        public const string wave = "Content\\Audio\\LandOfSand.xwb";
+        public const string sound = "Content\\Audio\\LandOfSand.xsb";
 
         public const string BassDrum = "BassDrum";
         public const string HiHat = "HiHat";
@@ -30,11 +30,9 @@ namespace Duologue.Audio
         static private Dictionary<int, Dictionary<string, float>> volumeMatrix =
             new Dictionary<int, Dictionary<string, float>>();
 
-        public LandOfSandSong()
-            : base()
+        public LandOfSandSong(Game game)
+            : base(game, sound, wave)
         {
-            this.WaveBankName = waveBank;
-            this.SoundBankName = soundBank;
             this.Tracks = new List<Track> {
                 new Track(BassDrum, Loudness.Full),
                 new Track(HiHat, Loudness.Full),
@@ -115,23 +113,10 @@ namespace Duologue.Audio
 
         public override void Play()
         {
-            AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
+            base.Play();
+            //AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
             AudioHelper.UpdateCues(SoundBankName, volumeMatrix[intensityStep]);
-            IsPlaying = true;
-        }
-
-        public override void Stop()
-        {
-            IsPlaying = false;
-            AudioHelper.StopCues(SoundBankName);
-        }
-
-        public override void Fade()
-        {
-            float fadeoutTime = 5000f; //milliseconds
-            int steps = 50;
-            AudioHelper.FadeCues(SoundBankName, fadeoutTime, steps,
-                Loudness.Full, Loudness.Quiet, true);
+            //IsPlaying = true;
         }
 
         public void ChangeIntensity(int amount)

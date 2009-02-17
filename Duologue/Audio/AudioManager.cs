@@ -7,6 +7,19 @@ using Mimicware;
 
 namespace Duologue.Audio
 {
+
+    //the rule is: one sound bank = one song = one SongID
+    public enum SongID { SelectMenu, Intensity, LandOfSand }
+
+    //keep from having to tweak floats and add levels in many places
+    public struct Loudness
+    {
+        public const float Silent = 0f;
+        public const float Quiet = 50f;
+        public const float Normal = 80f;
+        public const float Full = 100f;
+    }
+
     public class IntensityEventArgs : EventArgs
     {
         public int ChangeAmount;
@@ -19,8 +32,11 @@ namespace Duologue.Audio
     public class AudioManager : Microsoft.Xna.Framework.GameComponent, IService
     {
         private AudioHelper helper;
-        public Music music;
         public SoundEffects soundEffects;
+
+        private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
+        private BeatEngine beatEngine;
+        private Music music;
 
         public const string engine = "Content\\Audio\\Duologue.xgs";
         public event IntensityEventHandler Changed;
@@ -40,12 +56,67 @@ namespace Duologue.Audio
         /// </summary>
         public override void Initialize()
         {
+
             helper = new AudioHelper(Game, engine);
-            music = new Music(this);
+            
+            beatEngine = new BeatEngine(Game);
+            
             soundEffects = new SoundEffects(this);
+
             Game.Components.Add(helper);
+            Game.Components.Add(beatEngine);
+            //Game.Components.Add(soundEffects);
+            music = new Music(this);
+            songMap.Add(SongID.SelectMenu, music.SelectSong);
+            songMap.Add(SongID.Intensity, music.BeatEffects);
+            songMap.Add(SongID.LandOfSand, music.LandOfSand);
 
             base.Initialize();
+        }
+
+        public void StartIntensityMusic()
+        {
+            if (songMap[SongID.Intensity].IsPlaying)
+            {
+                FadeSong(SongID.Intensity);
+                PlaySong(SongID.LandOfSand);
+            }
+            else if (songMap[SongID.LandOfSand].IsPlaying)
+            {
+                FadeSong(SongID.LandOfSand);
+                PlaySong(SongID.Intensity);
+            }
+            else
+            {
+                PlaySong(SongID.Intensity);
+            }
+        }
+
+        public void StopIntensityMusic()
+        {
+            FadeSong(SongID.Intensity);
+            FadeSong(SongID.LandOfSand);
+        }
+
+        public void PlaySong(SongID ID)
+        {
+            songMap[ID].Play();
+        }
+
+        public void StopSong(SongID ID)
+        {
+            songMap[ID].Stop();
+        }
+
+        public void FadeSong(SongID ID)
+        {
+            //FIXME true = stop when done
+            songMap[ID].Fade(true);
+        }
+
+        public bool SongIsPlaying(SongID ID)
+        {
+            return songMap[ID].IsPlaying;
         }
 
         public void Intensify()
