@@ -187,7 +187,8 @@ namespace Duologue.Screens
             if (t && currentState != GamePlayState.GameOver)
             {
                 gameOver.Reset();
-                ServiceLocator.GetService<AudioManager>().FadeSong(SongID.Intensity);
+                //ServiceLocator.GetService<AudioManager>().FadeSong(SongID.Intensity);
+                ServiceLocator.GetService<AudioManager>().StopIntensityMusic();
                 // FIXME
                 // Should probably do some gameover music here
                 gameOver.Visible = true;
@@ -323,7 +324,7 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    localGame.Audio.PlaySong(SongID.Intensity);
+                    //localGame.Audio.PlaySong(SongID.Intensity);
                     //localGame.Audio.PlaySong(SongID.LandOfSand);
                     break;
                 default:

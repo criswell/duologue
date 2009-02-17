@@ -74,6 +74,29 @@ namespace Duologue.Audio
             base.Initialize();
         }
 
+        public void StartIntensityMusic()
+        {
+            if (songMap[SongID.Intensity].IsPlaying)
+            {
+                FadeSong(SongID.Intensity);
+                PlaySong(SongID.LandOfSand);
+            }
+            else if (songMap[SongID.LandOfSand].IsPlaying)
+            {
+                FadeSong(SongID.LandOfSand);
+                PlaySong(SongID.Intensity);
+            }
+            else
+            {
+                PlaySong(SongID.Intensity);
+            }
+        }
+
+        public void StopIntensityMusic()
+        {
+            FadeSong(SongID.Intensity);
+            FadeSong(SongID.LandOfSand);
+        }
 
         public void PlaySong(SongID ID)
         {

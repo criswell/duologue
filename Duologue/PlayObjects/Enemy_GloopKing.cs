@@ -20,6 +20,7 @@ using Mimicware.Manager;
 // Duologue
 using Duologue.State;
 using Duologue.Screens;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.PlayObjects
@@ -173,7 +174,8 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
-            //audio = ServiceLocator.GetService<AudioManager>();
+            AudioManager audio = ServiceLocator.GetService<AudioManager>();
+            audio.StartIntensityMusic();
             LoadAndInitialize();
         }
 
