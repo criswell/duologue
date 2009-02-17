@@ -67,7 +67,14 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The hit point array
         /// </summary>
-        static readonly byte[] hitPointArray = new byte[] {(byte)128, (byte)160, (byte)192, (byte)224, (byte)255};
+        static readonly byte[] hitPointArray = new byte[] 
+        {
+            (byte)128, 
+            (byte)160, 
+            (byte)192, 
+            (byte)224, 
+            (byte)255
+        };
         #region Force attractions / Repulsions
 
         /// <summary>
@@ -112,7 +119,6 @@ namespace Duologue.PlayObjects
         private float bladesLayer;
         private float rotation;
         private float bladesRotation;
-        //private Vector2 RealSize;
 
         // Movement
         private Vector2 offset;
@@ -143,7 +149,6 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             Position = startPos;
-            //InstanceManager.Logger.LogEntry(String.Format("startPos: {0},{1}", Position.X.ToString(), Position.Y.ToString()));
             Orientation = startOrientation;
             lastDirection = Vector2.Zero;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
@@ -222,39 +227,6 @@ namespace Duologue.PlayObjects
                 s.A = hitPointArray[CurrentHitPoints];
             else
                 s.A = hitPointArray[0];
-            /*if (isFleeing)
-            {
-                InstanceManager.RenderSprite.Draw(
-                    buzzOutline,
-                    Position,
-                    center,
-                    null,
-                    c,
-                    rotation,
-                    1f,
-                    baseLayer);
-            }
-            else
-            {
-                InstanceManager.RenderSprite.Draw(
-                    buzzBase,
-                    Position,
-                    center,
-                    null,
-                    c,
-                    MWMathHelper.ComputeAngleAgainstX(Orientation),
-                    1f,
-                    baseLayer);
-                InstanceManager.RenderSprite.Draw(
-                    buzzBlades,
-                    Position,
-                    center,
-                    null,
-                    Color.White,
-                    0f,
-                    1f,
-                    faceLayer);
-            }*/
 
             InstanceManager.RenderSprite.Draw(
                 buzzBlades,
@@ -288,17 +260,6 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            /*if (isFleeing)
-            {
-                // We only spin wildly when we're running the arg away
-                rotation += delta_Rotation;
-
-                if (rotation > MathHelper.TwoPi)
-                    rotation = 0f;
-                else if (rotation < 0f)
-                    rotation = MathHelper.TwoPi;
-            }*/
-
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
 
             bladesRotation += delta_Rotation;
@@ -371,9 +332,7 @@ namespace Duologue.PlayObjects
                     }
                     vToEnemy = Vector2.Negate(vToEnemy);
                     vToEnemy.Normalize();
-                    //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
                     offset += standardEnemyRepulse * vToEnemy;
-                    //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
                 }
 
                 return true;
@@ -396,7 +355,6 @@ namespace Duologue.PlayObjects
                     modifier = playerAttractAccel;
 
                 nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
-                //Orientation = nearestPlayer;
                 nearestPlayer.Normalize();
 
                 if (!isFleeing)
@@ -409,7 +367,6 @@ namespace Duologue.PlayObjects
                 // If no near player, move in previous direction
                 nearestPlayer = lastDirection;
 
-                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                 nearestPlayer.Normalize();
 
                 offset += playerAttract * nearestPlayer;

@@ -23,6 +23,9 @@ namespace Duologue.Audio
         private Dictionary<int, List<Track>> trackMap = 
             new Dictionary<int, List<Track>>();
 
+        //These two arrays need to be kept "in sync"
+        //That is, trackVolumes[n] must always be relevant to cues[n]
+        //This is redundant: Song has a List<Track>, Track has Cuename, Volume
         private float[,] trackVolumes;
         private string[] cues;
 
@@ -66,6 +69,7 @@ namespace Duologue.Audio
                 float[] vols = new float[trackVolumes.GetLength(1)];
                 for (int i = 0; i < trackVolumes.GetLength(0); i++)
                 {
+                    vols[i] = this.Tracks[i].Volume;
                     vols[i] = trackVolumes[intensityStep - 1, i];
                 }
 

@@ -41,10 +41,10 @@ namespace Duologue.Audio
     {
         protected bool isPlaying;
         protected bool isFading;
-        protected const float fadeDeltaV = .1f;
+        protected const float fadeDeltaV = .01f;
         protected bool stopAfterFade;
 
-        //protected float volume;
+        protected float volume;
 
         public List<Track> Tracks = new List<Track>();
         public Song(Game game, string sbname, string wbname)
@@ -109,10 +109,19 @@ namespace Duologue.Audio
         {
             if (isFading)
             {
-                Volume = Volume - fadeDeltaV;
-                //volume = volume - fadeDeltaV;
-                AudioHelper.UpdateCues(SoundBankName, Volume);
-                if (Volume <= Loudness.Silent)
+                bool readyToStop = true;
+
+                this.Tracks.ForEach(track =>
+                    {
+                        track.Volume = track.Volume - fadeDeltaV;
+                        if (track.Volume > Loudness.Silent)
+                        {
+                            readyToStop = false;
+                        }
+                    });
+                AudioHelper.UpdateCues(SoundBankName, Tracks);
+
+                if (readyToStop)
                 {
                     if (stopAfterFade)
                     {
