@@ -53,6 +53,7 @@ namespace Duologue.Audio
             SoundBankName = sbname;
             WaveBankName = wbname;
         }
+
         public Song(Game game, string sbname, string wbname, List<string> cues)
             : this(game, sbname, wbname)
         {

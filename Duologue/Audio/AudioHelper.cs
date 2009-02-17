@@ -198,6 +198,22 @@ namespace Duologue.Audio
                 });
         }
 
+        public static void UpdateCues(string sbname, List<Track> tracks)
+        {
+            tracks.ForEach(track =>
+                {
+                    cues[sbname][track.CueName].SetVariable(volumeName, track.Volume);
+                });
+        }
+
+        public static void UpdateCues(string sbname, string[] names, float[] volumes)
+        {
+            for (int i = 0; i < names.GetLength(0); i++)
+            {
+                cues[sbname][names[i]].SetVariable(volumeName, volumes[i]);
+            }
+        }
+
         public static void UpdateCues(string sbname, float volume)
         {
             cues[sbname].Values.ToList().ForEach(cue =>
