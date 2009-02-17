@@ -62,6 +62,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_KingGloop:
                             Init_KingGloop(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_StaticGloop:
+                            Init_StaticGloop(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -78,8 +81,6 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
-
-        #region Buzzsaw
         private static void Init_Buzzsaw(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_Buzzsaw(manager);
@@ -104,8 +105,11 @@ namespace Duologue.Waves
         {
             LocalInstanceManager.Enemies[i] = new Enemy_GloopKing(manager);
         }
-        #endregion
 
+        private static void Init_StaticGloop(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_StaticGloop(manager);
+        }
         #endregion
     }
 }

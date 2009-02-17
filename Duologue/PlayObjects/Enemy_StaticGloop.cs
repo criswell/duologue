@@ -46,27 +46,27 @@ namespace Duologue.PlayObjects
         private const float outlineScale = 1.1f;
         private const float deltaRotate = 0.05f;
 
-        private const byte shieldAlpha = 128;
+        private const byte shieldAlpha = 245;
 
         private const float deathLifetime = 0.7f;
 
         /// <summary>
         /// The minimum width of the square for the static
         /// </summary>
-        private const int minWidth = 3;
+        private const int minWidth = 10;
         /// <summary>
         /// The maximum width of the square for the static
         /// </summary>
-        private const int maxWidth = 11;
+        private const int maxWidth = 31;
 
         /// <summary>
         /// The minimum height of the square for the static
         /// </summary>
-        private const int minHeight = 3;
+        private const int minHeight = 8;
         /// <summary>
         /// The maximum height of the square for the static
         /// </summary>
-        private const int maxHeight = 8;
+        private const int maxHeight = 20;
 
         /// <summary>
         /// The minimum static square speed
@@ -84,7 +84,22 @@ namespace Duologue.PlayObjects
 
         private const byte minStaticSquareAlpha = 20;
         private const byte maxStaticSquareAlpha = 245;
-        private const byte deltaStaticSquareAlpha = 10;
+        private const int deltaStaticSquareAlpha = 10;
+
+        /// <summary>
+        /// The number of colors
+        /// </summary>
+        private const int numberOfColors = 3;
+
+        /// <summary>
+        /// The vertical offset for the colored layers
+        /// </summary>
+        private const float deltaOffsetForColors = 3f;
+
+        /// <summary>
+        /// The change in size for the colored layers
+        /// </summary>
+        private const float deltaSizeForColors = 0.2f;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -100,6 +115,15 @@ namespace Duologue.PlayObjects
         /// How far we can go outside the screen before we should stop
         /// </summary>
         private const float outsideScreenMultiplier = 3;
+
+        /// <summary>
+        /// The total time we take to complete the blink sequence
+        /// </summary>
+        private const double totalTimeForBlinkSequence = 1.5;
+
+        private const double blinkSequence_StageOne = 0.15;
+        private const double blinkSequence_StageTwo = 0.2;
+        private const double blinkSequence_StageThree = 0.9;
 
         #region Force interactions
         /// <summary>
@@ -136,7 +160,8 @@ namespace Duologue.PlayObjects
         private bool isFleeing;
         private bool isDying;
 
-        private Color currentColor;
+        private Color[] currentColors;
+        private byte currentAlpha;
 
         private double timeSinceStart;
 
@@ -213,9 +238,12 @@ namespace Duologue.PlayObjects
 
             isFleeing = false;
 
-            currentColor = GetMyColor(ColorState.Dark);
+            currentColors = new Color[numberOfColors];
+            currentAlpha = Color.White.A;
 
-            timeSinceStart = 0.0;
+            SetCurrentColors();
+
+            timeSinceStart = MWMathHelper.GetRandomInRange(0.0, totalTimeForBlinkSequence);
             deathRotation = 0f;
             isDying = false;
             Initialized = true;
@@ -224,6 +252,13 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private Methods
+        private void SetCurrentColors()
+        {
+            currentColors[0] = GetMyColor(ColorState.Dark);
+            currentColors[1] = GetMyColor(ColorState.Medium);
+            currentColors[2] = GetMyColor(ColorState.Light);
+        }
+
         private StaticElement GetStaticElement()
         {
             StaticElement e = new StaticElement();
@@ -374,7 +409,7 @@ namespace Duologue.PlayObjects
 
                     offset += leaderAttract * Vector2.Negate(nearestLeader);
                     ColorPolarity = nearestLeaderObject.ColorPolarity;
-                    currentColor = GetMyColor(ColorState.Dark);
+                    SetCurrentColors();
                 }
                 else if (nearestPlayer.Length() > 0f)
                 {
@@ -429,14 +464,14 @@ namespace Duologue.PlayObjects
                     isDying = true;
                     timeSinceStart = 0.0;
                     deathRotation = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
-                    TriggerShieldDisintegration(gloopletDeath, currentColor, Position, 0f);
+                    TriggerShieldDisintegration(gloopletDeath, currentColors[0], Position, 0f);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
                     return false;
                 }
                 else
                 {
-                    TriggerShieldDisintegration(gloopletDeath, new Color(currentColor, shieldAlpha), Position, 0f);
+                    TriggerShieldDisintegration(gloopletDeath, new Color(currentColors[0], shieldAlpha), Position, 0f);
                     /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
                     return true;
                 }
@@ -454,7 +489,7 @@ namespace Duologue.PlayObjects
                     Position,
                     gloopletDeathCenter,
                     null,
-                    currentColor,
+                    currentColors[0],
                     deathRotation,
                     defaultSize,
                     0f,
@@ -465,6 +500,18 @@ namespace Duologue.PlayObjects
                 // Static stuff
                 for (int i = 0; i < numberOfStaticSquares; i++)
                 {
+                    InstanceManager.RenderSprite.Draw(
+                        gloopletStatic,
+                        new Vector2(
+                            Position.X + squareElements[i].Rect.X,
+                            Position.Y + squareElements[i].Rect.Y),
+                        gloopletCenter,
+                        squareElements[i].Rect,
+                        new Color(Color.White, squareElements[i].Alpha),
+                        0f,
+                        defaultSize,
+                        0f,
+                        squareElements[i].BlendMode);
                 }
 
                 // Outline
@@ -473,19 +520,95 @@ namespace Duologue.PlayObjects
                     Position,
                     gloopletCenter,
                     null,
-                    Color.Black,
+                    new Color(Color.Black, currentAlpha),
                     0f,
                     defaultSize * outlineScale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlend);
 
                 // Proper
+                for (int i = 0; i < numberOfColors; i++)
+                {
+                    InstanceManager.RenderSprite.Draw(
+                        glooplet,
+                        new Vector2(
+                            Position.X,
+                            Position.Y - (i * deltaOffsetForColors)),
+                        gloopletCenter,
+                        null,
+                        new Color(currentColors[i], currentAlpha),
+                        0f,
+                        defaultSize - (i * deltaSizeForColors),
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                }
             }
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (isDying)
+            {
+                if (timeSinceStart > deathLifetime)
+                {
+                    Alive = false;
+                }
+                deathRotation += deltaRotate;
+            }
+            else
+            {
+                if (timeSinceStart > totalTimeForBlinkSequence)
+                {
+                    timeSinceStart = 0.0;
+                }
+                else if (timeSinceStart < blinkSequence_StageOne)
+                {
+                    currentAlpha = Color.White.A;
+                }
+                else if (timeSinceStart < blinkSequence_StageTwo)
+                {
+                    currentAlpha = 0;
+                }
+                else if (timeSinceStart < blinkSequence_StageThree)
+                {
+                    currentAlpha = (byte)(Color.White.A *
+                        (blinkSequence_StageThree - blinkSequence_StageTwo) /
+                        (blinkSequence_StageThree - timeSinceStart));
+                }
+                else
+                {
+                    currentAlpha = 0;
+                }
+
+                // Do the static squares
+                for (int i = 0; i < numberOfStaticSquares; i++)
+                {
+                    // Set the alpha
+                    squareElements[i].Alpha = (byte)((int)squareElements[i].Alpha
+                        + squareElements[i].DeltaAlpha);
+                    if (squareElements[i].Alpha > maxStaticSquareAlpha)
+                    {
+                        squareElements[i].DeltaAlpha = -1 * deltaStaticSquareAlpha;
+                    }
+                    else if (squareElements[i].Alpha < minStaticSquareAlpha)
+                    {
+                        squareElements[i] = GetStaticElement();
+                    }
+
+                    // Move the square
+                    squareElements[i].Rect.X += (int)squareElements[i].Speed.X;
+                    squareElements[i].Rect.Y += (int)squareElements[i].Speed.Y;
+                    if (squareElements[i].Rect.X > RealSize.X - squareElements[i].Rect.Width ||
+                        squareElements[i].Rect.X < 0 ||
+                        squareElements[i].Rect.Y > RealSize.Y - squareElements[i].Rect.Width ||
+                        squareElements[i].Rect.Y < 0)
+                    {
+                        squareElements[i] = GetStaticElement();
+                    }
+                }
+            }
         }
     }
 }
