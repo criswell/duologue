@@ -41,10 +41,12 @@ namespace Duologue.Audio
     {
         protected bool isPlaying;
         protected bool isFading;
-        protected const float fadeDeltaV = .01f;
+        protected const float fadeDeltaV = 1f;
+        //calls to Update aren't sufficiently evenly time spaced, so...
+        protected const float fadeIntervalMilli = 250f;
+        protected double lastFadeSecs;
         protected bool stopAfterFade;
-
-        protected float volume;
+        private List<string> update_stamps = new List<string>();
 
         public List<Track> Tracks = new List<Track>();
         public Song(Game game, string sbname, string wbname)
@@ -109,9 +111,16 @@ namespace Duologue.Audio
         {
             if (isFading)
             {
-                bool readyToStop = true;
+                double updateDiff =
+                    gameTime.TotalRealTime.TotalMilliseconds -
+                    lastFadeSecs;
+                if ( updateDiff > fadeIntervalMilli )
+                {
+                    update_stamps.Add(gameTime.TotalRealTime.TotalMilliseconds.ToString() + " mS gametime");
+                    update_stamps.Add(updateDiff + " mS Diff");
+                    bool readyToStop = true;
 
-                this.Tracks.ForEach(track =>
+                    this.Tracks.ForEach(track =>
                     {
                         track.Volume = track.Volume - fadeDeltaV;
                         if (track.Volume > Loudness.Silent)
@@ -119,16 +128,23 @@ namespace Duologue.Audio
                             readyToStop = false;
                         }
                     });
-                AudioHelper.UpdateCues(SoundBankName, Tracks);
+                    AudioHelper.UpdateCues(SoundBankName, Tracks);
+                    lastFadeSecs = gameTime.TotalRealTime.TotalMilliseconds;
 
-                if (readyToStop)
-                {
-                    if (stopAfterFade)
+                    if (readyToStop)
                     {
-                        Stop();
+                        if (stopAfterFade)
+                        {
+                            update_stamps.Add(gameTime.TotalRealTime.TotalMilliseconds.ToString() + " mS");
+                            Stop();
+                        }
+                        isFading = false;
                     }
-                    isFading = false;
                 }
+            }
+            else
+            {
+                lastFadeSecs = gameTime.TotalRealTime.TotalMilliseconds;
             }
         }
 

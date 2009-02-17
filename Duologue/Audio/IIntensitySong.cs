@@ -20,12 +20,11 @@ namespace Duologue.Audio
 
         // This is the place where we keep the per intensity, per track volume targets
         //              (intensity)      (Cue name) (Volume)
-        private Dictionary<int, List<Track>> trackMap = 
-            new Dictionary<int, List<Track>>();
-
         //These two arrays need to be kept "in sync"
-        //That is, trackVolumes[n] must always be relevant to cues[n]
-        //This is redundant: Song has a List<Track>, Track has Cuename, Volume
+        //That is, trackVolumes[n,tracknum] must always be relevant to cues[n]
+        //cues[n] is the name of the nth cue
+        //trackVolumes[n,0] is the volume of cues[n] at intensity (n+1) 0.
+        //Song has a List<Track>, Track has Cuename, Volume
         private float[,] trackVolumes;
         private string[] cues;
 
@@ -53,6 +52,20 @@ namespace Duologue.Audio
             trackVolumes = vols;
         }
 
+        private void CopyVolumesFromIntensityToSong()
+        {
+            for (int i = 0; i < cues.Length; i++)
+            {
+                Tracks.ForEach(track =>
+                    {
+                        if (cues[i] == track.CueName)
+                        {
+                            track.Volume = trackVolumes[intensityStep - 1, i];
+                        }
+                    });
+            }
+        }
+
         public override void Play()
         {
             base.Play();
@@ -72,6 +85,7 @@ namespace Duologue.Audio
                     vols[i] = this.Tracks[i].Volume;
                     vols[i] = trackVolumes[intensityStep - 1, i];
                 }
+                CopyVolumesFromIntensityToSong();
 
                 AudioHelper.UpdateCues(SoundBankName, cues, vols);
             }

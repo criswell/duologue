@@ -146,7 +146,7 @@ namespace Duologue.Audio
             else
             {
                 RecycleCue(sbname, cueName);
-                cues[sbname][cueName].SetVariable(volumeName, 100f); //FIXME
+                cues[sbname][cueName].SetVariable(volumeName, Loudness.Normal);
                 cues[sbname][cueName].Play();
             }
         }
@@ -164,7 +164,7 @@ namespace Duologue.Audio
                 cueNames.ForEach(delegate(string cueName)
                 {
                     RecycleCue(sbname, cueName);
-                    cues[sbname][cueName].SetVariable(volumeName, 999.0f); //FIXME
+                    cues[sbname][cueName].SetVariable(volumeName, Loudness.Normal);
                 });
                 cueNames.ForEach(delegate(string cueName)
                 {
