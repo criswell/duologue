@@ -50,7 +50,27 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The delta scale per frame of animation
         /// </summary>
-        private const float deltaScale = 0.1f;
+        private const float deltaScale = 0.005f;
+
+        /// <summary>
+        /// The initial delta scale per frame
+        /// </summary>
+        private const float initDeltaScale = 0.1f;
+
+        /// <summary>
+        /// The minimum scale to begin a fade
+        /// </summary>
+        private const float minScaleToTriggerFade = 1.05f;
+
+        /// <summary>
+        /// The minimum alpha that the frame can be
+        /// </summary>
+        private const byte minAlpha = 45;
+
+        /// <summary>
+        /// The delta alpha per frame once we start fading
+        /// </summary>
+        private const int deltaAlpha = -20;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -67,7 +87,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The maximum delta angle
         /// </summary>
-        private const float maxDeltaAngle = MathHelper.PiOver4 / 4f;
+        private const float maxDeltaAngle = MathHelper.PiOver4 * 0.005f;
 
         /// <summary>
         /// The maximum vertical offset
@@ -77,7 +97,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// A pre-defined radius (since we can't really get this from the image
         /// </summary>
-        private const float definedRadius = 80f;
+        private const float definedRadius = 60f;
 
         /// <summary>
         /// How far we can go outside the screen before we should stop
@@ -185,7 +205,7 @@ namespace Duologue.PlayObjects
                 frames[i].Texture = InstanceManager.AssetManager.LoadTexture2D(
                     String.Format(filename_frames, (i+1).ToString()));
                 SetupFrame(i);
-                frames[i].Scale = startingScale + i * deltaScale;
+                frames[i].Scale = startingScale + i * initDeltaScale;
             }
 
             center = new Vector2(
@@ -456,6 +476,23 @@ namespace Duologue.PlayObjects
         public override void Update(GameTime gameTime)
         {
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+
+            for (int i = 0; i < numberOfFrames; i++)
+            {
+                frames[i].Scale += deltaScale;
+                frames[i].Rotation += frames[i].DeltaRotation;
+                if (frames[i].Rotation < 0f)
+                    frames[i].Rotation = MathHelper.TwoPi;
+                else if (frames[i].Rotation > MathHelper.TwoPi)
+                    frames[i].Rotation = 0f;
+
+                if (frames[i].Scale > minScaleToTriggerFade)
+                {
+                    frames[i].Alpha = (byte)(frames[i].Alpha + deltaAlpha);
+                    if (frames[i].Alpha < minAlpha)
+                        SetupFrame(i);
+                }
+            }
         }
         #endregion
     }
