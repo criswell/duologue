@@ -78,7 +78,7 @@ namespace Duologue
         public GraphicsDeviceManager Graphics;
         public AudioManager Audio;
         SpriteBatch spriteBatch;
-        //GamePlayTest gamePlayTest;
+        public GamerServicesComponent GamerServices;
         public AssetManager Assets;
         public RenderSprite Render;
         public Logger Log;
@@ -123,7 +123,8 @@ namespace Duologue
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.Components.Add(new GamerServicesComponent(this));
+            GamerServices = new GamerServicesComponent(this);
+            this.Components.Add(GamerServices);
             debug = false;
         }
 
@@ -339,7 +340,14 @@ namespace Duologue
             // Ensure that the last game state gets the current setting for next update
             LocalInstanceManager.CurrentGameState = LocalInstanceManager.CurrentGameState;
 
-            base.Update(gameTime);
+            if (Guide.IsVisible)
+            {
+                GamerServices.Update(gameTime);
+            }
+            else
+            {
+                base.Update(gameTime);
+            }
         }
 
         /// <summary>
