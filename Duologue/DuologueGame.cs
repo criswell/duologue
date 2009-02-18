@@ -346,6 +346,7 @@ namespace Duologue
             }
             // Ensure that the last game state gets the current setting for next update
             LocalInstanceManager.CurrentGameState = LocalInstanceManager.CurrentGameState;
+
             base.Update(gameTime);
         }
 

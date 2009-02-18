@@ -149,8 +149,6 @@ namespace Duologue.PlayObjects
 
         private bool isFleeing;
 
-        private double timeSinceStart;
-
         private Color currentColor;
 
         private bool faceFlipped;
@@ -217,8 +215,6 @@ namespace Duologue.PlayObjects
             isFleeing = false;
 
             currentColor = GetMyColor(ColorState.Medium);
-
-            timeSinceStart = 0.0;
 
             faceFlipped = false;
             faceCenter = new Vector2(
@@ -332,7 +328,7 @@ namespace Duologue.PlayObjects
             {
                 float modifier = playerAttract;
 
-                nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                nearestPlayer += new Vector2(-nearestPlayer.Y, nearestPlayer.X);
                 nearestPlayer.Normalize();
 
                 if (!isFleeing)
@@ -388,7 +384,6 @@ namespace Duologue.PlayObjects
                             Position + (float)MWMathHelper.GetRandomInRange(-1.0, 1.0) * center,
                             currentColor);
                     }
-                    timeSinceStart = 0.0;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
                     /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
                     return false;
@@ -475,8 +470,6 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
-
             for (int i = 0; i < numberOfFrames; i++)
             {
                 frames[i].Scale += deltaScale;
