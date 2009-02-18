@@ -129,11 +129,44 @@ namespace Duologue.Audio
             });
         }
 
+        public static void PreloadSong(Song song)
+        {
+            SoundBank tmpSB = new SoundBank(engine, song.SoundBankName);
+            soundBanks.Add(song.SoundBankName, tmpSB);
+            waveBanks.Add(song.WaveBankName,
+                new WaveBank(engine, song.WaveBankName));
+
+            cues.Add(song.SoundBankName, new Dictionary<string, Cue>());
+
+            song.Tracks.ForEach(delegate(Track track)
+            {
+                cues[song.SoundBankName].Add(track.CueName, 
+                    tmpSB.GetCue(track.CueName));
+            });
+        }
+
         public static bool CueIsPlaying(string sbname, string cuename)
         {
             return cues[sbname][cuename].IsPlaying;
         }
 
+        public static void Play(Song song)
+        {
+            song.Tracks.ForEach(track =>
+                {
+                    PlayCue(song.SoundBankName, track.CueName, song.playType);
+                });
+
+            UpdateCues(song);
+        }
+
+        public static void Stop(Song song)
+        {
+            song.Tracks.ForEach(track =>
+                {
+                    StopCue(song.SoundBankName, track.CueName);
+                });
+        }
 
         public static void PlayCue(string sbname, string cueName, PlayType type)
         {
@@ -151,6 +184,7 @@ namespace Duologue.Audio
             }
         }
 
+        /*
 
         public static void PlayCues(string sbname, List<string> cueNames, PlayType type)
         {
@@ -180,6 +214,7 @@ namespace Duologue.Audio
             }
         }
 
+
         /// <summary>
         /// This will fire up every cue in the soundbank at the same time.
         /// </summary>
@@ -205,7 +240,6 @@ namespace Duologue.Audio
                     cues[sbname][track.CueName].SetVariable(volumeName, track.Volume);
                 });
         }
-
         public static void UpdateCues(string sbname, string[] names, float[] volumes)
         {
             for (int i = 0; i < names.GetLength(0); i++)
@@ -221,18 +255,7 @@ namespace Duologue.Audio
                     cue.SetVariable(volumeName, volume);
                 });
         }
-
-        public static void FadeCues(string sbname, float mS, float deltaV, bool stop)
-        {
-        }
-
-        public static void StopCue(string sbname, string cueName)
-        {
-            cues[sbname][cueName].Stop(AudioStopOptions.AsAuthored);
-            RecycleCue(sbname, cueName);
-        }
-
-
+        
         public static void StopCues(string sbname, List<string> cuenames)
         {
             cuenames.ForEach(delegate(string cueName)
@@ -250,6 +273,23 @@ namespace Duologue.Audio
         {
             StopCues(sbname, cues[sbname].Keys.ToList());
         }
+
+        */
+
+        public static void UpdateCues(Song song)
+        {
+            song.Tracks.ForEach(track =>
+            {
+                cues[song.SoundBankName][track.CueName].SetVariable(volumeName, track.Volume);
+            });
+        }
+
+        public static void StopCue(string sbname, string cueName)
+        {
+            cues[sbname][cueName].Stop(AudioStopOptions.AsAuthored);
+            RecycleCue(sbname, cueName);
+        }
+
 
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting

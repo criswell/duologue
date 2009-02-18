@@ -11,24 +11,13 @@ namespace Duologue.Audio
     {
         void Play();
         void Stop();
-        void Fade(bool stop);
+        void Fade();
     }
 
-    public class AudioContentBase
+    public class Track
     {
         public string CueName;
         public float Volume;
-    }
-
-    public class AudioCollectionBase : GameComponent
-    {
-        public AudioCollectionBase(Game game) : base(game) { }
-        public string SoundBankName;
-        public string WaveBankName;
-    }
-
-    public class Track : AudioContentBase
-    {
         public Track() { }
         public Track(string cue, float vol)
         {
@@ -37,16 +26,18 @@ namespace Duologue.Audio
         }
     }
 
-    public class Song : AudioCollectionBase, ISong
+    public class Song : GameComponent, ISong
     {
+        public string SoundBankName;
+        public string WaveBankName;
+
         protected bool isPlaying;
         protected bool isFading;
         protected const float fadeDeltaV = 1f;
-        //calls to Update aren't sufficiently evenly time spaced, so...
-        protected const float fadeIntervalMilli = 250f;
+        protected const float fadeIntervalMilli = 100f;
         protected double lastFadeSecs;
         protected bool stopAfterFade;
-        private List<string> update_stamps = new List<string>();
+        public PlayType playType;
 
         public List<Track> Tracks = new List<Track>();
         public Song(Game game, string sbname, string wbname)
@@ -69,29 +60,18 @@ namespace Duologue.Audio
 
         public virtual void Play()
         {
-            AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
+            AudioHelper.Play(this);
             isPlaying = true;
         }
 
         public virtual void Stop()
         {
-            AudioHelper.StopCues(SoundBankName);
+            AudioHelper.Stop(this);
             isPlaying = false;
         }
 
         public virtual bool IsPlaying
         {
-            /*
-            get
-            {
-                isPlaying = AudioHelper.CueIsPlaying(SoundBankName, CueName);
-                return isPlaying;
-            }
-            set
-            {
-                isPlaying = value;
-            }
-            */
             get 
             {
                 return isPlaying;
@@ -101,9 +81,8 @@ namespace Duologue.Audio
             } 
         }
 
-        public void Fade(bool stop)
+        public void Fade()
         {
-            stopAfterFade = stop;
             isFading = true;
         }
 
@@ -112,12 +91,9 @@ namespace Duologue.Audio
             if (isFading)
             {
                 double updateDiff =
-                    gameTime.TotalRealTime.TotalMilliseconds -
-                    lastFadeSecs;
+                    gameTime.TotalRealTime.TotalMilliseconds - lastFadeSecs;
                 if ( updateDiff > fadeIntervalMilli )
                 {
-                    update_stamps.Add(gameTime.TotalRealTime.TotalMilliseconds.ToString() + " mS gametime");
-                    update_stamps.Add(updateDiff + " mS Diff");
                     bool readyToStop = true;
 
                     this.Tracks.ForEach(track =>
@@ -128,16 +104,12 @@ namespace Duologue.Audio
                             readyToStop = false;
                         }
                     });
-                    AudioHelper.UpdateCues(SoundBankName, Tracks);
+                    AudioHelper.UpdateCues(this);
                     lastFadeSecs = gameTime.TotalRealTime.TotalMilliseconds;
 
                     if (readyToStop)
                     {
-                        if (stopAfterFade)
-                        {
-                            update_stamps.Add(gameTime.TotalRealTime.TotalMilliseconds.ToString() + " mS");
-                            Stop();
-                        }
+                        Stop();
                         isFading = false;
                     }
                 }
@@ -163,8 +135,12 @@ namespace Duologue.Audio
     }
 
 
-    public class SoundEffect : AudioContentBase
+    public class SoundEffect
     {
+        public string CueName;
+        public float Volume;
+        //FIXME
+
         public SoundEffect() { }
         public SoundEffect(string cue)
         {
@@ -178,8 +154,10 @@ namespace Duologue.Audio
         }
     }
 
-    public class EffectsBank : AudioCollectionBase
+    public class EffectsBank : GameComponent
     {
+        public string SoundBankName;
+        public string WaveBankName;
         //the dictionary key is the cue name...which we also need in
         //each of the sound effects. Crap.
         public Dictionary<string, SoundEffect> Effects =
