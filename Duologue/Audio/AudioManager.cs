@@ -36,7 +36,7 @@ namespace Duologue.Audio
 
         private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         private BeatEngine beatEngine;
-        private Music music;
+        private MusicFactory music;
 
         public const string engine = "Content\\Audio\\Duologue.xgs";
         public event IntensityEventHandler Changed;
@@ -66,7 +66,7 @@ namespace Duologue.Audio
             Game.Components.Add(helper);
             Game.Components.Add(beatEngine);
             //Game.Components.Add(soundEffects);
-            music = new Music(this);
+            music = new MusicFactory(this);
             songMap.Add(SongID.SelectMenu, music.SelectSong);
             songMap.Add(SongID.Intensity, music.BeatEffects);
             songMap.Add(SongID.LandOfSand, music.LandOfSand);
@@ -110,8 +110,7 @@ namespace Duologue.Audio
 
         public void FadeSong(SongID ID)
         {
-            //FIXME true = stop when done
-            songMap[ID].Fade(true);
+            songMap[ID].Fade();
         }
 
         public bool SongIsPlaying(SongID ID)

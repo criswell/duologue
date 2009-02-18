@@ -11,7 +11,7 @@ namespace Duologue.Audio
     {
         void Play();
         void Stop();
-        void Fade(bool stop);
+        void Fade();
     }
 
     public class AudioContentBase
@@ -42,11 +42,10 @@ namespace Duologue.Audio
         protected bool isPlaying;
         protected bool isFading;
         protected const float fadeDeltaV = 1f;
-        //calls to Update aren't sufficiently evenly time spaced, so...
-        protected const float fadeIntervalMilli = 250f;
+        protected const float fadeIntervalMilli = 100f;
         protected double lastFadeSecs;
         protected bool stopAfterFade;
-        private List<string> update_stamps = new List<string>();
+        public PlayType playType;
 
         public List<Track> Tracks = new List<Track>();
         public Song(Game game, string sbname, string wbname)
@@ -69,29 +68,18 @@ namespace Duologue.Audio
 
         public virtual void Play()
         {
-            AudioHelper.PlayCues(SoundBankName, PlayType.Nonstop);
+            AudioHelper.Play(this);
             isPlaying = true;
         }
 
         public virtual void Stop()
         {
-            AudioHelper.StopCues(SoundBankName);
+            AudioHelper.Stop(this);
             isPlaying = false;
         }
 
         public virtual bool IsPlaying
         {
-            /*
-            get
-            {
-                isPlaying = AudioHelper.CueIsPlaying(SoundBankName, CueName);
-                return isPlaying;
-            }
-            set
-            {
-                isPlaying = value;
-            }
-            */
             get 
             {
                 return isPlaying;
@@ -101,9 +89,8 @@ namespace Duologue.Audio
             } 
         }
 
-        public void Fade(bool stop)
+        public void Fade()
         {
-            stopAfterFade = stop;
             isFading = true;
         }
 
@@ -112,12 +99,9 @@ namespace Duologue.Audio
             if (isFading)
             {
                 double updateDiff =
-                    gameTime.TotalRealTime.TotalMilliseconds -
-                    lastFadeSecs;
+                    gameTime.TotalRealTime.TotalMilliseconds - lastFadeSecs;
                 if ( updateDiff > fadeIntervalMilli )
                 {
-                    update_stamps.Add(gameTime.TotalRealTime.TotalMilliseconds.ToString() + " mS gametime");
-                    update_stamps.Add(updateDiff + " mS Diff");
                     bool readyToStop = true;
 
                     this.Tracks.ForEach(track =>
@@ -128,16 +112,12 @@ namespace Duologue.Audio
                             readyToStop = false;
                         }
                     });
-                    AudioHelper.UpdateCues(SoundBankName, Tracks);
+                    AudioHelper.UpdateCues(this);
                     lastFadeSecs = gameTime.TotalRealTime.TotalMilliseconds;
 
                     if (readyToStop)
                     {
-                        if (stopAfterFade)
-                        {
-                            update_stamps.Add(gameTime.TotalRealTime.TotalMilliseconds.ToString() + " mS");
-                            Stop();
-                        }
+                        Stop();
                         isFading = false;
                     }
                 }

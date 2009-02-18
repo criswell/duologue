@@ -85,6 +85,8 @@ namespace Duologue.Audio
         public void PlayEffect(EffectID ID)
         {
             AudioHelper.PlayCue(PlayerEffectsSB, IDNameMap[ID], PlayType.Single);
+            //I want this to be:
+            //AudioHelper.PlayEffect(EffectsMap[ID]);
         }
 
         public void StopEffect(EffectID ID)

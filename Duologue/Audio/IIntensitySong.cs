@@ -87,7 +87,8 @@ namespace Duologue.Audio
                 }
                 CopyVolumesFromIntensityToSong();
 
-                AudioHelper.UpdateCues(SoundBankName, cues, vols);
+                //AudioHelper.UpdateCues(SoundBankName, cues, vols);
+                AudioHelper.UpdateCues(this);
             }
         }
 

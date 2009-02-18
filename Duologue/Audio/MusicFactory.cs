@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 namespace Duologue.Audio
 {
 
-    public class Music
+    public class MusicFactory
     {
         //Select Menu Song constants
         private const string selectMenuWaves = "Content\\Audio\\SelectMenu.xwb";
@@ -45,7 +45,7 @@ namespace Duologue.Audio
         public IntensitySong BeatEffects;
         private BeatEngine beatEngine;
 
-        public Music(AudioManager manager)
+        public MusicFactory(AudioManager manager)
         {
             notifier = manager;
             notifier.Changed += new IntensityEventHandler(UpdateIntensity);
@@ -57,6 +57,7 @@ namespace Duologue.Audio
 
             SelectSong = new Song(notifier.Game, selectMenuSounds, selectMenuWaves,
               new List<string> { selectMenuCue });
+            SelectSong.playType = PlayType.Nonstop;
 
             List<string> BECues = new List<string> {Intensity1, Intensity2,
                 Intensity3, Intensity4, Intensity5 };

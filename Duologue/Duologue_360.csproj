@@ -73,7 +73,7 @@
     <Compile Include="Audio\IntensityController.cs" />
     <Compile Include="Audio\ISong.cs" />
     <Compile Include="Audio\LandOfSandSong.cs" />
-    <Compile Include="Audio\Music.cs" />
+    <Compile Include="Audio\MusicFactory.cs" />
     <Compile Include="Audio\SelectMenuSong.cs" />
     <Compile Include="Audio\ServiceLocator.cs" />
     <Compile Include="Audio\SoundEffects.cs" />
