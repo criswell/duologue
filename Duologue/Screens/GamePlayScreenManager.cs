@@ -123,7 +123,7 @@ namespace Duologue.Screens
             gameOver.Enabled = false;
             gameOver.Visible = false;
             localGame.Components.Add(gameOver);
-            //Reset();
+            gameOver.DrawOrder = 200;
         }
 
         /// <summary>
