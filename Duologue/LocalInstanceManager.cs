@@ -164,6 +164,11 @@ namespace Duologue
         /// The current Spinner instance
         /// </summary>
         public static Spinner Spinner;
+
+        /// <summary>
+        /// True if the system is paused, false otherwise
+        /// </summary>
+        public static bool Pause;
         #endregion
 
         #region Public methods

@@ -162,11 +162,6 @@ namespace Duologue
             background.Enabled = true;
             this.Components.Add(background);
             
-            /*
-            gamePlayTest = new GamePlayTest(this);
-            gamePlayTest.Enabled = true;
-            gamePlayTest.Visible = true;
-            this.Components.Add(gamePlayTest);*/
             Log = new Logger(this);
             Log.Enabled = false;
             Log.Visible = false;
@@ -180,14 +175,10 @@ namespace Duologue
             spinner.DrawOrder = 100;
 
             steamSystem = new Steam(this, MaxSteamEffects);
-            /*steamSystem.Enabled = true;
-            steamSystem.Visible = true;*/
             this.Components.Add(steamSystem);
             steamSystem.DrawOrder = 7;
 
             playerRing = new PlayerRing(this, MaxExplosionEffects);
-            /*playerRing.Enabled = true;
-            playerRing.Visible = true;*/
             this.Components.Add(playerRing);
             playerRing.DrawOrder = 7;
 
@@ -210,8 +201,6 @@ namespace Duologue
             bulletParticle.DrawOrder = 8;
 
             achievements = new AchievementManager(this);
-            /*achievements.Enabled = true;
-            achievements.Visible = true;*/
             this.Components.Add(achievements);
 
             // Set the instance manager
@@ -290,6 +279,9 @@ namespace Duologue
             Audio = new AudioManager(this);
             ServiceLocator.RegisterService(Audio);
             this.Components.Add(Audio);
+
+            // Pause stuff
+            LocalInstanceManager.Pause = false;
 
             base.Initialize();
         }
