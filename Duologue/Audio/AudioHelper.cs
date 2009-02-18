@@ -129,6 +129,22 @@ namespace Duologue.Audio
             });
         }
 
+        public static void PreloadSong(Song song)
+        {
+            SoundBank tmpSB = new SoundBank(engine, song.SoundBankName);
+            soundBanks.Add(song.SoundBankName, tmpSB);
+            waveBanks.Add(song.WaveBankName,
+                new WaveBank(engine, song.WaveBankName));
+
+            cues.Add(song.SoundBankName, new Dictionary<string, Cue>());
+
+            song.Tracks.ForEach(delegate(Track track)
+            {
+                cues[song.SoundBankName].Add(track.CueName, 
+                    tmpSB.GetCue(track.CueName));
+            });
+        }
+
         public static bool CueIsPlaying(string sbname, string cuename)
         {
             return cues[sbname][cuename].IsPlaying;

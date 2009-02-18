@@ -25,13 +25,13 @@ namespace Duologue.Audio
         //cues[n] is the name of the nth cue
         //trackVolumes[n,0] is the volume of cues[n] at intensity (n+1) 0.
         //Song has a List<Track>, Track has Cuename, Volume
-        private float[,] trackVolumes;
-        private string[] cues;
+        protected float[,] trackVolumes;
+        protected string[] cues;
 
-        public IntensitySong(Game game, string sbname, string wbname)
-            : base(game, sbname, wbname)
-        {
-        }
+        //like, Tracks = trackMap[intensityStep];
+        protected Dictionary<int, List<Track>> trackMap = 
+            new Dictionary<int, List<Track>>();
+
 
         public IntensitySong(Game game, string sbname, string wbname, List<string> cueList)
             : base(game, sbname, wbname, cueList)
@@ -45,30 +45,31 @@ namespace Duologue.Audio
                 });
         }
 
-        public IntensitySong(Game game, string sbname, string wbname, 
-            List<string> cues, float[,] vols)
-            : this(game, sbname, wbname, cues)
+        public IntensitySong(Game game, string sbname, string wbname,
+            string[] cues, float[,] vols)
+            : base(game, sbname, wbname)
         {
-            trackVolumes = vols;
-        }
-
-        private void CopyVolumesFromIntensityToSong()
-        {
-            for (int i = 0; i < cues.Length; i++)
+            for (int intensity = 1; 
+                intensity < vols.GetLength(0);
+                intensity++)
             {
-                Tracks.ForEach(track =>
-                    {
-                        if (cues[i] == track.CueName)
-                        {
-                            track.Volume = trackVolumes[intensityStep - 1, i];
-                        }
-                    });
+                trackMap[intensity] = new List<Track>();
+                for (int cueNum = 0; cueNum < vols.GetLength(1); cueNum++)
+                {
+                    trackMap[intensity].Add
+                        (new Track(cues[cueNum], vols[intensity, cueNum]));
+                }
             }
+            Tracks = trackMap[1];
+            AudioHelper.PreloadSong(this);
         }
 
         public override void Play()
         {
-            base.Play();
+            if (!isPlaying)
+            {
+                base.Play();
+            }
             ChangeIntensity(0);
         }
 
@@ -76,18 +77,10 @@ namespace Duologue.Audio
         {
             int oldIntensityStep = intensityStep;
             intensityStep =
-                MWMathHelper.LimitToRange(intensityStep + amount, 1, trackVolumes.GetLength(0));
+                MWMathHelper.LimitToRange(intensityStep + amount, 1, trackMap.Count);
             if (intensityStep != oldIntensityStep || amount == 0)
             {
-                float[] vols = new float[trackVolumes.GetLength(1)];
-                for (int i = 0; i < trackVolumes.GetLength(0); i++)
-                {
-                    vols[i] = this.Tracks[i].Volume;
-                    vols[i] = trackVolumes[intensityStep - 1, i];
-                }
-                CopyVolumesFromIntensityToSong();
-
-                //AudioHelper.UpdateCues(SoundBankName, cues, vols);
+                Tracks = trackMap[intensityStep];
                 AudioHelper.UpdateCues(this);
             }
         }

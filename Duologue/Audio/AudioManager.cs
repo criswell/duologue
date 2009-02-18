@@ -76,6 +76,7 @@ namespace Duologue.Audio
 
         public void StartIntensityMusic()
         {
+            /*
             if (songMap[SongID.Intensity].IsPlaying)
             {
                 FadeSong(SongID.Intensity);
@@ -90,6 +91,8 @@ namespace Duologue.Audio
             {
                 PlaySong(SongID.Intensity);
             }
+             */
+            PlaySong(SongID.Intensity);
         }
 
         public void StopIntensityMusic()
