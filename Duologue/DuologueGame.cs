@@ -97,6 +97,7 @@ namespace Duologue
         //public MainMenuTest mainMenuTest;
         public MainMenuScreen mainMenuScreen;
         public ExitScreen exitScreen;
+        public PauseScreen pauseScreen;
         public PlayerSelectScreen playerSelectScreen;
         public GamePlayScreenManager gamePlayScreenManager;
 
@@ -203,6 +204,12 @@ namespace Duologue
 
             achievements = new AchievementManager(this);
             this.Components.Add(achievements);
+
+            pauseScreen = new PauseScreen(this);
+            pauseScreen.Enabled = false;
+            pauseScreen.Visible = false;
+            this.Components.Add(pauseScreen);
+            pauseScreen.DrawOrder = 300;
 
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
@@ -344,8 +351,23 @@ namespace Duologue
             {
                 GamerServices.Update(gameTime);
             }
+            else if (LocalInstanceManager.Pause)
+            {
+                GamerServices.Update(gameTime);
+                if (!pauseScreen.Enabled)
+                {
+                    pauseScreen.Enabled = true;
+                    pauseScreen.Visible = true;
+                }
+                pauseScreen.Update(gameTime);
+            }
             else
             {
+                if (pauseScreen.Enabled)
+                {
+                    pauseScreen.Enabled = false;
+                    pauseScreen.Visible = false;
+                }
                 base.Update(gameTime);
             }
         }

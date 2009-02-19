@@ -36,15 +36,17 @@ namespace Duologue.UI
     {
         #region Constants
         private const string filename_overlay = "pause-overlay";
-        private const string filename_font = "Fonts/inero-28";
+        private const string filename_font = "Fonts/inero-50";
 
-        private const byte overlayAlpha = 128;
+        private const byte overlayAlpha = 192;
 
         private const byte maxTextRed = 255;
         private const byte minTextRed = 50;
         private const int maxDeltaTextRed = 20;
 
         private const int numberOfUpdatesPerTick = 5;
+
+        private const double timePerJiggle = 0.1;
         #endregion
 
         #region Fields
@@ -65,6 +67,8 @@ namespace Duologue.UI
         private Color color_outline;
         private Vector2[] shadowOffset;
         private int deltaTextRed;
+
+        private double timeSinceStart;
         #endregion
 
         #region Properties
@@ -84,13 +88,15 @@ namespace Duologue.UI
         public override void Initialize()
         {
             shadowOffset = new Vector2[2];
-            shadowOffset[0] = Vector2.One;
-            shadowOffset[1] = -1 * Vector2.One;
+            shadowOffset[0] = 3 * Vector2.One;
+            shadowOffset[1] = -3 * Vector2.One;
 
-            color_outline = Color.Gray;
+            color_outline = Color.Black;
 
-            color_text = new Color(maxTextRed, 0, 0);
+            color_text = new Color(maxTextRed, 128, 128);
             deltaTextRed = -1 * maxDeltaTextRed;
+
+            timeSinceStart = 0;
 
             base.Initialize();
         }
@@ -149,6 +155,15 @@ namespace Duologue.UI
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Check for user input
+            if (InstanceManager.InputManager.NewButtonPressed(Buttons.B) ||
+                InstanceManager.InputManager.NewButtonPressed(Buttons.Start) ||
+                InstanceManager.InputManager.NewButtonPressed(Buttons.Back) ||
+                InstanceManager.InputManager.NewButtonPressed(Buttons.A))
+                LocalInstanceManager.Pause = false;
+
             // We only want to proceed provided the InitAll() was called
             // Since we have no guarantee that the screen is initialized here in
             // update, we ultimately will have to pass until Draw() is called
@@ -168,17 +183,21 @@ namespace Duologue.UI
                     deltaTextRed = maxDeltaTextRed;
                 }
 
-                color_text = new Color((byte)t, 0, 0);
+                color_text = new Color((byte)t, 128, 128);
 
                 // Update the overlays
-                int i;
-                for (t = 0; t < numberOfUpdatesPerTick; t++)
+                if (timeSinceStart > timePerJiggle)
                 {
-                    i = MWMathHelper.GetRandomInRange(0, numberOfTiles);
-                    if (tileEffects[i] == SpriteEffects.None)
-                        tileEffects[i] = SpriteEffects.FlipHorizontally;
-                    else
-                        tileEffects[i] = SpriteEffects.None;
+                    timeSinceStart = 0;
+                    int i;
+                    for (t = 0; t < numberOfUpdatesPerTick; t++)
+                    {
+                        i = MWMathHelper.GetRandomInRange(0, numberOfTiles);
+                        if (tileEffects[i] == SpriteEffects.None)
+                            tileEffects[i] = SpriteEffects.FlipHorizontally;
+                        else
+                            tileEffects[i] = SpriteEffects.None;
+                    }
                 }
             }
 

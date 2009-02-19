@@ -105,6 +105,10 @@ namespace Duologue.Screens
                        p.State == PlayerState.GettingReady)
                     {
                         livingPlayers++;
+                        // Check for pause requests
+                        if (InstanceManager.InputManager.NewButtonPressed(Buttons.Start, p.MyPlayerIndex))
+                            LocalInstanceManager.Pause = true;
+
                         // Update player position
                         p.Position.X += 
                             InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].ThumbSticks.Left.X
