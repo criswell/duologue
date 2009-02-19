@@ -69,13 +69,13 @@
     <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Audio\BeatEffectsSong.cs" />
     <Compile Include="Audio\BeatEngine.cs" />
-    <Compile Include="Audio\IIntensitySong.cs" />
     <Compile Include="Audio\IntensityController.cs" />
-    <Compile Include="Audio\ISong.cs" />
+    <Compile Include="Audio\IntensitySong.cs" />
     <Compile Include="Audio\LandOfSandSong.cs" />
     <Compile Include="Audio\MusicFactory.cs" />
     <Compile Include="Audio\SelectMenuSong.cs" />
     <Compile Include="Audio\ServiceLocator.cs" />
+    <Compile Include="Audio\Song.cs" />
     <Compile Include="Audio\SoundEffects.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="CreatorsClub\GameScreen.cs" />

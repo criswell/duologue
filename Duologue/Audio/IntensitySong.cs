@@ -7,14 +7,8 @@ using Mimicware;
 
 namespace Duologue.Audio
 {
-    public interface IIntensitySong : ISong
-    {
-        void ChangeIntensity(int amount);
-        void SetIntensityPercentage(float percentage);
-        float GetIntensityPercentage();
-    }
 
-    public class IntensitySong : Song, IIntensitySong
+    public class IntensitySong : Song
     {
         private int intensityStep = 0; //trick into an update the first time
 
@@ -25,7 +19,7 @@ namespace Duologue.Audio
         //cues[n] is the name of the nth cue
         //trackVolumes[n,0] is the volume of cues[n] at intensity (n+1) 0.
         //Song has a List<Track>, Track has Cuename, Volume
-        protected float[,] trackVolumes;
+        //protected float[,] trackVolumes;
         protected string[] cues;
 
         //like, Tracks = trackMap[intensityStep];
@@ -88,7 +82,8 @@ namespace Duologue.Audio
 
         public float GetIntensityPercentage()
         {
-            return (float)intensityStep / (float)trackVolumes.GetLength(0);
+            return (float)intensityStep / (float)trackMap[0].Count;
+            //return (float)intensityStep / (float)trackVolumes.GetLength(0);
         }
 
         public void SetIntensityPercentage(float percentage)

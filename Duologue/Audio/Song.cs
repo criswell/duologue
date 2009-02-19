@@ -7,12 +7,6 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Duologue.Audio
 {
-    public interface ISong
-    {
-        void Play();
-        void Stop();
-        void Fade();
-    }
 
     public class Track
     {
@@ -26,7 +20,7 @@ namespace Duologue.Audio
         }
     }
 
-    public class Song : GameComponent, ISong
+    public class Song : GameComponent
     {
         public string SoundBankName;
         public string WaveBankName;
