@@ -68,6 +68,7 @@ namespace Duologue.Screens
         private Game myGame;
 
         private Vector2[] shadowOffsets;
+        private Vector2[] shadowOffsetsSelected;
         #endregion
 
         #region Properties
@@ -110,6 +111,12 @@ namespace Duologue.Screens
             shadowOffsets[1] = -1 * Vector2.One;
             shadowOffsets[2] = new Vector2(-1f, 1f);
             shadowOffsets[3] = new Vector2(1f, -1f);
+
+            shadowOffsetsSelected = new Vector2[numberOfOffsets];
+            shadowOffsetsSelected[0] = 2 * Vector2.One;
+            shadowOffsetsSelected[1] = -2 * Vector2.One;
+            shadowOffsetsSelected[2] = new Vector2(-2f, 2f);
+            shadowOffsetsSelected[3] = new Vector2(2f, -2f);
         }
 
         /// <summary>
@@ -345,9 +352,9 @@ namespace Duologue.Screens
                         font,
                         mi.Text,
                         curPos + mi.FadePercent * selectOffset * Vector2.One,
-                        mi.Selected ? Color.Bisque : Color.Azure,
+                        mi.Selected ? Color.LightCoral : Color.Bisque,
                         Color.Black,
-                        shadowOffsets,
+                        mi.Selected ? shadowOffsetsSelected : shadowOffsets,
                         RenderSpriteBlendMode.AlphaBlendTop);
                         
                     /*InstanceManager.RenderSprite.DrawString(font,
