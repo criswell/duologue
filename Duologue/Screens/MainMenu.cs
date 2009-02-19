@@ -38,7 +38,7 @@ namespace Duologue.Screens
     {
         #region Constants
         private const string fontFilename = "Fonts/inero-50";
-        private const float yOffset = 300f;
+        private const float yOffset = 325f;
         private const float extraLineSpacing = 12;
         private const float selectOffset = 8;
         private const int numberOfOffsets = 4;
@@ -340,7 +340,7 @@ namespace Duologue.Screens
                         mi.Text,
                         curPos,
                         mi.Selected ? Color.DarkSlateBlue : Color.DarkSlateGray,
-                        RenderSpriteBlendMode.Addititive);
+                        RenderSpriteBlendMode.AddititiveTop);
                 }
                 else
                 {
