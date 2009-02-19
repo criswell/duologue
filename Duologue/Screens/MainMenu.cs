@@ -37,7 +37,7 @@ namespace Duologue.Screens
     public class MainMenu : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
-        private const string fontFilename = "Fonts/bloj-36";
+        private const string fontFilename = "Fonts/inero-40";
         private const float yOffset = 325f;
         private const float extraLineSpacing = 12;
         private const float selectOffset = 8;
