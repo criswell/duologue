@@ -36,6 +36,7 @@ namespace Duologue.UI
     {
         #region Constants
         private const string filename_overlay = "pause-overlay";
+        private const string filename_textPopper = "pause-text-popper";
         private const string filename_font = "Fonts/inero-50";
 
         private const byte overlayAlpha = 192;
@@ -51,6 +52,8 @@ namespace Duologue.UI
 
         #region Fields
         private Texture2D overlay;
+        private Texture2D textPopper;
+        private Vector2 textPopperCenter;
         private SpriteFont font;
 
         private Vector2 fontPosition;
@@ -59,6 +62,7 @@ namespace Duologue.UI
 
         private int screenWidth;
         private int screenHeight;
+        private Vector2 screenCenter;
 
         private SpriteEffects[] tileEffects;
 
@@ -106,6 +110,11 @@ namespace Duologue.UI
             overlay = InstanceManager.AssetManager.LoadTexture2D(filename_overlay);
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_font);
 
+            textPopper = InstanceManager.AssetManager.LoadTexture2D(filename_textPopper);
+            textPopperCenter = new Vector2(
+                textPopper.Width / 2f,
+                textPopper.Height / 2f);
+
             numberOfTiles = -1;
 
             color_overlay = new Color(Color.White, overlayAlpha);
@@ -134,6 +143,9 @@ namespace Duologue.UI
             }
 
             // Setup the font stuff
+            screenCenter = new Vector2(
+                screenWidth / 2f,
+                screenHeight / 2f);
             fontPosition = new Vector2(
                 screenWidth / 2f - font.MeasureString(Resources.PauseScreen_GamePaused).X / 2f,
                 screenHeight / 2f - font.MeasureString(Resources.PauseScreen_GamePaused).Y / 2f);
@@ -242,6 +254,17 @@ namespace Duologue.UI
             }
 
             // Draw the text
+            InstanceManager.RenderSprite.Draw(
+                textPopper,
+                screenCenter,
+                textPopperCenter,
+                null,
+                Color.White,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
             InstanceManager.RenderSprite.DrawString(
                 font,
                 Resources.PauseScreen_GamePaused,
