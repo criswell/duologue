@@ -37,10 +37,11 @@ namespace Duologue.Screens
     public class MainMenu : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
-        private const string fontFilename = "Fonts/inero-40";
-        private const float yOffset = 325f;
+        private const string fontFilename = "Fonts/inero-50";
+        private const float yOffset = 300f;
         private const float extraLineSpacing = 12;
         private const float selectOffset = 8;
+        private const int numberOfOffsets = 4;
         #endregion
 
         #region Fields
@@ -65,6 +66,8 @@ namespace Duologue.Screens
         private int debugSequence;
 
         private Game myGame;
+
+        private Vector2[] shadowOffsets;
         #endregion
 
         #region Properties
@@ -101,6 +104,12 @@ namespace Duologue.Screens
             gameSelectBack = 2;
 
             debugSequence = 0;
+
+            shadowOffsets = new Vector2[numberOfOffsets];
+            shadowOffsets[0] = Vector2.One;
+            shadowOffsets[1] = -1 * Vector2.One;
+            shadowOffsets[2] = new Vector2(-1f, 1f);
+            shadowOffsets[3] = new Vector2(1f, -1f);
         }
 
         /// <summary>
@@ -332,11 +341,20 @@ namespace Duologue.Screens
                 }
                 else
                 {
-                    InstanceManager.RenderSprite.DrawString(font,
+                    InstanceManager.RenderSprite.DrawString(
+                        font,
+                        mi.Text,
+                        curPos + mi.FadePercent * selectOffset * Vector2.One,
+                        mi.Selected ? Color.Bisque : Color.Azure,
+                        Color.Black,
+                        shadowOffsets,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                        
+                    /*InstanceManager.RenderSprite.DrawString(font,
                         mi.Text,
                         curPos + mi.FadePercent * selectOffset * Vector2.One,
                         mi.Selected ? Color.Azure : Color.DimGray,
-                        RenderSpriteBlendMode.Addititive);
+                        RenderSpriteBlendMode.Addititive);*/
                 }
                 curPos.Y += font.LineSpacing + extraLineSpacing;
             }
