@@ -53,7 +53,6 @@ namespace Duologue.Screens
         // The list of menu items
         private int menuPlayGame;
         private int menuAchievements;
-        private int menuLeaderboards;
         private int menuCredits;
         private int menuExit;
         private int gameSelectCampaign;
@@ -89,12 +88,10 @@ namespace Duologue.Screens
             menuPlayGame = 0;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Achievements));
             menuAchievements = 1;
-            mainMenuItems.Add(new MenuItem(Resources.MainMenu_Leaderboards));
-            menuLeaderboards = 2;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Credits));
-            menuCredits = 3;
+            menuCredits = 2;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
-            menuExit = 4;
+            menuExit = 3;
 
             // Set up the game select menu
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
@@ -130,7 +127,6 @@ namespace Duologue.Screens
 
             // Turn off those items we don't support yet
             mainMenuItems[menuAchievements].Invisible = true;
-            mainMenuItems[menuLeaderboards].Invisible = true;
 
             foreach (MenuItem mi in gameSelectItems)
                 mi.Invisible = false;
