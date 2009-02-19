@@ -187,6 +187,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game Paused.
+        /// </summary>
+        internal static string PauseScreen_GamePaused {
+            get {
+                return ResourceManager.GetString("PauseScreen_GamePaused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect controller.
         /// </summary>
         internal static string PlayerSelect_ConnectController {

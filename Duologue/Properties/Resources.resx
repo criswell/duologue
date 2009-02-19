@@ -159,6 +159,9 @@
   <data name="MainMenu_Play" xml:space="preserve">
     <value>Play Game</value>
   </data>
+  <data name="PauseScreen_GamePaused" xml:space="preserve">
+    <value>Game Paused</value>
+  </data>
   <data name="PlayerSelect_ConnectController" xml:space="preserve">
     <value>Connect controller</value>
   </data>
