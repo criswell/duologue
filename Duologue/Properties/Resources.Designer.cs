@@ -169,15 +169,6 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Leaderboards.
-        /// </summary>
-        internal static string MainMenu_Leaderboards {
-            get {
-                return ResourceManager.GetString("MainMenu_Leaderboards", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Play Game.
         /// </summary>
         internal static string MainMenu_Play {

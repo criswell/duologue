@@ -153,9 +153,6 @@
   <data name="MainMenu_GameSelect_Infinite" xml:space="preserve">
     <value>Play infinite mode</value>
   </data>
-  <data name="MainMenu_Leaderboards" xml:space="preserve">
-    <value>Leaderboards</value>
-  </data>
   <data name="MainMenu_Play" xml:space="preserve">
     <value>Play Game</value>
   </data>
