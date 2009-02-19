@@ -356,12 +356,6 @@ namespace Duologue.Screens
                         Color.Black,
                         mi.Selected ? shadowOffsetsSelected : shadowOffsets,
                         RenderSpriteBlendMode.AlphaBlendTop);
-                        
-                    /*InstanceManager.RenderSprite.DrawString(font,
-                        mi.Text,
-                        curPos + mi.FadePercent * selectOffset * Vector2.One,
-                        mi.Selected ? Color.Azure : Color.DimGray,
-                        RenderSpriteBlendMode.Addititive);*/
                 }
                 curPos.Y += font.LineSpacing + extraLineSpacing;
             }
