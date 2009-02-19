@@ -455,6 +455,12 @@ namespace Mimicware.Graphics
                     p,
                     vector2,
                     color));
+            else if (mode == RenderSpriteBlendMode.AddititiveTop)
+                this.AddAdditiveTop(new SpriteObject(
+                    font,
+                    p,
+                    vector2,
+                    color));
             else
                 this.Add(new SpriteObject(
                     font,
