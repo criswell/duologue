@@ -47,8 +47,17 @@ namespace Duologue.UI
         private const string filename_screen = "PlayerUI/ui-screen";
 
         private const int numberOfTextFrames = 2;
+        private const int numberOfColors = 5;
 
         private const int lowerFrameOffsetY = 3;
+
+        private const int maxDeltaOverlay = 3;
+
+        private const byte overlayAlpha = 185;
+
+        private const double timePerTextFrame = 2.0;
+        private const double timePerColor = 3.85;
+        private const double timeToChangeColor = 0.4;
         #endregion
 
         #region Fields
@@ -83,6 +92,19 @@ namespace Duologue.UI
         private Vector2 sideScale;
         private Vector2 bottomScale;
 
+        private Color currentWindowColor;
+        private Color lastWindowColor;
+        private bool inTransition;
+        private Color overlayColor;
+
+        private Color[] windowColors;
+        private int currentColor;
+
+        private int deltaOverlay;
+
+        private double textTimer;
+        private double colorChangeTimer;
+
         private int currentFrame;
         #endregion
 
@@ -96,6 +118,26 @@ namespace Duologue.UI
             windowSize = Vector2.Zero;
             screenRect = Rectangle.Empty;
             currentFrame = 0;
+
+            windowColors = new Color[numberOfColors];
+
+            windowColors[0] = Color.Silver;
+            windowColors[1] = Color.SpringGreen;
+            windowColors[2] = Color.Goldenrod;
+            windowColors[3] = Color.Fuchsia;
+            windowColors[4] = Color.RosyBrown;
+
+            currentColor = 0;
+
+            currentWindowColor = windowColors[currentColor];
+            inTransition = false;
+            lastWindowColor = windowColors[currentColor];
+            overlayColor = new Color(Color.White, overlayAlpha);
+
+            textTimer = 0.0;
+            colorChangeTimer = 0.0;
+
+            deltaOverlay = maxDeltaOverlay;
         }
 
         public void LoadContents()
@@ -135,12 +177,23 @@ namespace Duologue.UI
         #region Private Methods
         private void DrawBorderItem(Texture2D text, Vector2 pos, Vector2 scale)
         {
+            if(inTransition)
+                InstanceManager.RenderSprite.Draw(
+                    text,
+                    pos,
+                    Vector2.Zero,
+                    null,
+                    lastWindowColor,
+                    0f,
+                    scale,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
             InstanceManager.RenderSprite.Draw(
                 text,
                 pos,
                 Vector2.Zero,
                 null,
-                Color.White,
+                currentWindowColor,
                 0f,
                 scale,
                 0f,
@@ -175,7 +228,7 @@ namespace Duologue.UI
                 screenRect = new Rectangle(
                     0, 0,
                     (int)(windowSize.X - screenOffset.X - screenSizeOffset.X),
-                    (int)(windowSize.Y - screenOffset.Y - screenSizeOffset.Y));
+                    (int)(windowSize.Y - screenOffset.Y + lowerFrameOffsetY));
 
                 // Compute the scales
                 topScaleNum =
@@ -206,6 +259,57 @@ namespace Duologue.UI
         #region Draw/Update
         public void Update(GameTime gameTime)
         {
+            textTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            if (textTimer > timePerTextFrame)
+            {
+                textTimer = 0.0;
+                currentFrame++;
+                if (currentFrame >= numberOfTextFrames)
+                    currentFrame = 0;
+            }
+
+            colorChangeTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            if (inTransition)
+            {
+                if (colorChangeTimer > timeToChangeColor)
+                {
+                    colorChangeTimer = 0;
+                    inTransition = false;
+                    currentWindowColor = windowColors[currentColor];
+                }
+                else
+                {
+                    currentWindowColor = new Color(
+                        windowColors[currentColor],
+                        (float)(colorChangeTimer / timeToChangeColor));
+                }
+            }
+            else
+            {
+                if (colorChangeTimer > timePerColor)
+                {
+                    colorChangeTimer = 0;
+                    inTransition = true;
+                    lastWindowColor = currentWindowColor;
+                    currentColor++;
+                    if (currentColor >= numberOfColors)
+                    {
+                        currentColor = 0;
+                    }
+                }
+            }
+
+            screenRect.Y += deltaOverlay;
+            if (screenRect.Y + screenRect.Height >= screenOverlay.Height)
+            {
+                screenRect.Y = screenOverlay.Height - screenRect.Height - 1;
+                deltaOverlay = -1 * maxDeltaOverlay;
+            }
+            else if (screenRect.Y <= 0)
+            {
+                screenRect.Y = 0;
+                deltaOverlay = maxDeltaOverlay;
+            }
         }
 
         public void Draw(GameTime gameTime)
@@ -220,7 +324,7 @@ namespace Duologue.UI
                     position + screenOffset,
                     Vector2.Zero,
                     screenRect,
-                    Color.White,
+                    overlayColor,
                     0f,
                     1f,
                     0f,
@@ -264,7 +368,16 @@ namespace Duologue.UI
                 DrawBorderItem(cornerBottomRight, position + currentOffset, Vector2.One);
 
                 // Finally do the text
-                DrawBorderItem(textFrames[currentFrame], position + currentOffset, Vector2.One);
+                InstanceManager.RenderSprite.Draw(
+                    textFrames[currentFrame],
+                    position + currentOffset,
+                    Vector2.Zero,
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
             }
         }
         #endregion

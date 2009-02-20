@@ -447,6 +447,8 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            LocalInstanceManager.WindowManager.Update(gameTime);
+
             if (currentState == MainMenuState.MainMenu)
                 InnerUpdate(mainMenuItems);
             else
