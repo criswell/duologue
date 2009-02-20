@@ -157,6 +157,7 @@
     <Compile Include="UI\ScoreScroller.cs" />
     <Compile Include="UI\Spinner.cs" />
     <Compile Include="UI\WaveDisplay.cs" />
+    <Compile Include="UI\WindowManager.cs" />
     <Compile Include="Waves\GameWave.cs" />
     <Compile Include="Waves\GameWaveManager.cs" />
     <Compile Include="Waves\WaveletInit.cs" />
