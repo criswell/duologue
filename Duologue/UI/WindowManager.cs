@@ -124,7 +124,7 @@ namespace Duologue.UI
             windowColors[0] = Color.Silver;
             windowColors[1] = Color.SpringGreen;
             windowColors[2] = Color.Goldenrod;
-            windowColors[3] = Color.Fuchsia;
+            windowColors[3] = Color.MediumOrchid;
             windowColors[4] = Color.RosyBrown;
 
             currentColor = 0;
