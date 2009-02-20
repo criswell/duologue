@@ -130,6 +130,11 @@ namespace Duologue
         public static AchievementManager AchievementManager;
 
         /// <summary>
+        /// The local window manager
+        /// </summary>
+        public static WindowManager WindowManager;
+
+        /// <summary>
         /// The current game state
         /// </summary>
         public static GameState CurrentGameState

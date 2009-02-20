@@ -42,6 +42,9 @@ namespace Duologue.Screens
         private const float extraLineSpacing = 12;
         private const float selectOffset = 8;
         private const int numberOfOffsets = 4;
+
+        private const int windowOffsetX = 20;
+        private const int windowOffsetY = 10;
         #endregion
 
         #region Fields
@@ -59,6 +62,9 @@ namespace Duologue.Screens
         private int gameSelectInfinite;
         private int gameSelectBack;
         private MainMenuState currentState;
+        private Rectangle mainMenuWindowLocation;
+        private Rectangle gameSelectWindowLocation;
+
         /// <summary>
         /// Used for the debug sequence
         /// </summary>
@@ -154,21 +160,56 @@ namespace Duologue.Screens
         {
             float center = InstanceManager.DefaultViewport.Width / 2f;
             float xOffset = center;
+            float maxWidth = 0;
+            float maxHeight = 0;
+            int tempW;
+            int tempH;
+
             foreach (MenuItem mi in mainMenuItems)
             {
                 Vector2 size = font.MeasureString(mi.Text);
                 float xTest = center - size.X / 2f;
                 if (xTest < xOffset)
                     xOffset = xTest;
+
+                // Compute max width and height
+                if (size.X > maxWidth)
+                    maxWidth = size.X;
+                maxHeight += size.Y;
             }
+
+            tempW = (int)maxWidth + 2*windowOffsetX;
+            tempH = (int)maxHeight + windowOffsetY;
+
+            maxWidth = 0;
+            maxHeight = 0;
+
             foreach (MenuItem mi in gameSelectItems)
             {
                 Vector2 size = font.MeasureString(mi.Text);
                 float xTest = center - size.X / 2f;
                 if (xTest < xOffset)
                     xOffset = xTest;
+
+                // Compute max width and height
+                if (size.X > maxWidth)
+                    maxWidth = size.X;
+                maxHeight += size.Y;
             }
             position = new Vector2(xOffset, yOffset);
+
+            gameSelectWindowLocation = new Rectangle(
+                (int)position.X - windowOffsetX,
+                (int)position.Y - windowOffsetY,
+                (int)maxWidth + 2*windowOffsetX,
+                (int)maxHeight + windowOffsetY);
+
+            mainMenuWindowLocation = new Rectangle(
+                (int)position.X - windowOffsetX,
+                (int)position.Y - windowOffsetY,
+                tempW, tempH);
+
+            LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
         }
 
         /// <summary>
@@ -183,6 +224,7 @@ namespace Duologue.Screens
                 else if (currentSelection == menuPlayGame)
                 {
                     currentState = MainMenuState.GameSelect;
+                    LocalInstanceManager.WindowManager.SetLocation(gameSelectWindowLocation);
                     currentSelection = 0;
                     ResetMenuItems();
                 }
@@ -193,6 +235,7 @@ namespace Duologue.Screens
                 {
                     currentState = MainMenuState.MainMenu;
                     currentSelection = 0;
+                    LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
                     ResetMenuItems();
                 }
                 else if (currentSelection == gameSelectInfinite)
@@ -458,6 +501,8 @@ namespace Duologue.Screens
             {
                 SetPostion();
             }
+
+            LocalInstanceManager.WindowManager.Draw(gameTime);
 
             if (currentState == MainMenuState.MainMenu)
                 DrawMenu(mainMenuItems, gameTime);
