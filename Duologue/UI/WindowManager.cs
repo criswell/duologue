@@ -54,6 +54,8 @@ namespace Duologue.UI
         private const int maxDeltaOverlay = 3;
 
         private const byte overlayAlpha = 185;
+        private const byte shadowAlpha = 160;
+        private const int shadowOffset = 10;
 
         private const double timePerTextFrame = 2.0;
         private const double timePerColor = 3.85;
@@ -96,6 +98,7 @@ namespace Duologue.UI
         private Color lastWindowColor;
         private bool inTransition;
         private Color overlayColor;
+        private Color shadowColor;
 
         private Color[] windowColors;
         private int currentColor;
@@ -133,6 +136,7 @@ namespace Duologue.UI
             inTransition = false;
             lastWindowColor = windowColors[currentColor];
             overlayColor = new Color(Color.White, overlayAlpha);
+            shadowColor = new Color(Color.Black, shadowAlpha);
 
             textTimer = 0.0;
             colorChangeTimer = 0.0;
@@ -175,8 +179,20 @@ namespace Duologue.UI
         #endregion
 
         #region Private Methods
-        private void DrawBorderItem(Texture2D text, Vector2 pos, Vector2 scale)
+        private void DrawBorderItem(Texture2D text, Vector2 pos, Vector2 scale, bool shadow)
         {
+            if (shadow)
+                InstanceManager.RenderSprite.Draw(
+                    text,
+                    pos + shadowOffset * Vector2.One,
+                    Vector2.Zero,
+                    null,
+                    shadowColor,
+                    0f,
+                    scale,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+
             if(inTransition)
                 InstanceManager.RenderSprite.Draw(
                     text,
@@ -331,41 +347,41 @@ namespace Duologue.UI
                     RenderSpriteBlendMode.AlphaBlendTop);
 
                 // Next do the top bar
-                DrawBorderItem(cornerTopLeft, position, Vector2.One);
+                DrawBorderItem(cornerTopLeft, position, Vector2.One, false);
 
                 currentOffset.X += cornerTopLeft.Width;
 
-                DrawBorderItem(frameTop, position + currentOffset, topScale);
+                DrawBorderItem(frameTop, position + currentOffset, topScale, false);
 
                 currentOffset.X = windowSize.X - cornerTopRight.Width;
 
-                DrawBorderItem(cornerTopRight, position + currentOffset, Vector2.One);
+                DrawBorderItem(cornerTopRight, position + currentOffset, Vector2.One, true);
 
                 // Next do the left and right bars
                 currentOffset = Vector2.Zero;
                 currentOffset.Y += cornerTopLeft.Height;
 
-                DrawBorderItem(frameLeft, position + currentOffset, sideScale);
+                DrawBorderItem(frameLeft, position + currentOffset, sideScale, false);
 
                 currentOffset.X = windowSize.X - frameRight.Width;
 
-                DrawBorderItem(frameRight, position + currentOffset, sideScale);
+                DrawBorderItem(frameRight, position + currentOffset, sideScale, true);
 
                 // Next do the bottom bar
                 currentOffset = Vector2.Zero;
                 currentOffset.Y = windowSize.Y;
 
-                DrawBorderItem(cornerBottomLeft, position + currentOffset, Vector2.One);
+                DrawBorderItem(cornerBottomLeft, position + currentOffset, Vector2.One, true);
 
                 currentOffset.Y += lowerFrameOffsetY;
                 currentOffset.X += cornerBottomLeft.Width;
 
-                DrawBorderItem(frameBottom, position + currentOffset, bottomScale);
+                DrawBorderItem(frameBottom, position + currentOffset, bottomScale, true);
 
                 currentOffset.Y = windowSize.Y;
                 currentOffset.X = windowSize.X - cornerBottomRight.Width;
 
-                DrawBorderItem(cornerBottomRight, position + currentOffset, Vector2.One);
+                DrawBorderItem(cornerBottomRight, position + currentOffset, Vector2.One, true);
 
                 // Finally do the text
                 InstanceManager.RenderSprite.Draw(
