@@ -175,11 +175,11 @@ namespace Duologue.Screens
                 // Compute max width and height
                 if (size.X > maxWidth)
                     maxWidth = size.X;
-                maxHeight += size.Y;
+                maxHeight += font.LineSpacing + extraLineSpacing;
             }
 
             tempW = (int)maxWidth + 2*windowOffsetX;
-            tempH = (int)maxHeight + windowOffsetY;
+            tempH = (int)maxHeight + font.LineSpacing + (int)extraLineSpacing + 2*windowOffsetY;
 
             maxWidth = 0;
             maxHeight = 0;
@@ -194,7 +194,7 @@ namespace Duologue.Screens
                 // Compute max width and height
                 if (size.X > maxWidth)
                     maxWidth = size.X;
-                maxHeight += size.Y;
+                maxHeight += font.LineSpacing + extraLineSpacing;
             }
             position = new Vector2(xOffset, yOffset);
 
@@ -202,7 +202,7 @@ namespace Duologue.Screens
                 (int)position.X - windowOffsetX,
                 (int)position.Y - windowOffsetY,
                 (int)maxWidth + 2*windowOffsetX,
-                (int)maxHeight + windowOffsetY);
+                (int)maxHeight + font.LineSpacing + (int)extraLineSpacing + 2*windowOffsetY);
 
             mainMenuWindowLocation = new Rectangle(
                 (int)position.X - windowOffsetX,
