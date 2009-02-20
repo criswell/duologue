@@ -390,7 +390,7 @@ namespace Duologue.Screens
                     InstanceManager.RenderSprite.DrawString(
                         font,
                         mi.Text,
-                        curPos + mi.FadePercent * selectOffset * Vector2.One,
+                        curPos + mi.FadePercent * selectOffset * Vector2.UnitX,
                         mi.Selected ? Color.LightGoldenrodYellow : Color.Khaki,
                         Color.Black,
                         mi.Selected ? shadowOffsetsSelected : shadowOffsets,
