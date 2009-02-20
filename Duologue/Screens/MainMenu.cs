@@ -242,6 +242,7 @@ namespace Duologue.Screens
                 {
                     currentState = MainMenuState.MainMenu;
                     currentSelection = 0;
+                    LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
                     ResetMenuItems();
                     LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
                     LocalInstanceManager.NextGameState = GameState.InfinityGame;
@@ -372,11 +373,11 @@ namespace Duologue.Screens
             foreach (MenuItem mi in mis)
             {
                 mi.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-                InstanceManager.RenderSprite.DrawString(font,
+                /*InstanceManager.RenderSprite.DrawString(font,
                     mi.Text,
                     curPos,
-                    Color.Azure,
-                    RenderSpriteBlendMode.Multiplicative);
+                    Color.SeaGreen,
+                    RenderSpriteBlendMode.Multiplicative);*/
                 if (mi.Invisible)
                 {
                     InstanceManager.RenderSprite.DrawString(font,
