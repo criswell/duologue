@@ -12,11 +12,20 @@ namespace Duologue.Audio
     {
         public string CueName;
         public float Volume;
+        public float StartVolume;
+        public float EndVolume;
         public Track() { }
         public Track(string cue, float vol)
         {
-            this.CueName = cue;
-            this.Volume = vol;
+            CueName = cue;
+            Volume = vol;
+            StartVolume = vol;
+            EndVolume = vol;
+        }
+
+        public void PrepareVolumesForNextFadeUpdate()
+        {
+
         }
     }
 
@@ -26,11 +35,23 @@ namespace Duologue.Audio
         public string WaveBankName;
 
         protected bool isPlaying;
-        protected bool isFading;
-        protected const float fadeDeltaV = 1f;
-        protected const float fadeIntervalMilli = 100f;
-        protected double lastFadeSecs;
-        protected bool stopAfterFade;
+
+        protected bool isFadingOut;
+        protected const float fadeOutDeltaV = 1f;
+        protected const float fadeOutDeltaT = 100f;
+        protected double previousFadeOutTime;
+
+        protected const float fadeInDeltaV = 1f;
+        protected const float fadeInDeltaT = 100f;
+
+        protected bool isVolumeChanging;
+        protected float volChangeDeltaV;
+        protected float volChangeDeltaT;
+        protected double previousVolChangeTime;
+        protected float startVolume;
+        protected float endVolume;
+        protected bool stopAfterVolChange;
+
         public PlayType playType;
 
         public List<Track> Tracks = new List<Track>();
@@ -75,45 +96,117 @@ namespace Duologue.Audio
             } 
         }
 
-        public void Fade()
+        public void FadeOot()
         {
-            isFading = true;
+            Tracks.ForEach(track =>
+            {
+                track.StartVolume = track.Volume;
+                track.EndVolume = Loudness.Silent;
+            });
+            ChangeVolume(true, fadeOutDeltaV, fadeOutDeltaT);        
+        }
+
+        public void FadeOut()
+        {
+            isFadingOut = true;
+        }
+
+        public void FadeIn(float volume)
+        {
+            Tracks.ForEach(track => 
+            { 
+                track.Volume = Loudness.Silent;
+                track.StartVolume = Loudness.Silent;
+                track.EndVolume = volume;
+            });
+            Play();
+            ChangeVolume(false, fadeInDeltaV, fadeInDeltaT);
+        }
+
+        public void ChangeVolume(bool stop, float dV, float dT)
+        {
+            if (isVolumeChanging)
+                throw new Exception("already changing volume yo");
+            stopAfterVolChange = stop;
+            volChangeDeltaV = dV;
+            volChangeDeltaT = dT;
+            isVolumeChanging = true;
         }
 
         protected void UpdateFadingCues(GameTime gameTime)
         {
-            if (isFading)
+            if (isFadingOut)
             {
                 double updateDiff =
-                    gameTime.TotalRealTime.TotalMilliseconds - lastFadeSecs;
-                if ( updateDiff > fadeIntervalMilli )
+                    gameTime.TotalRealTime.TotalMilliseconds - previousFadeOutTime;
+                if ( updateDiff > fadeOutDeltaT )
                 {
                     bool readyToStop = true;
 
                     this.Tracks.ForEach(track =>
                     {
-                        track.Volume = track.Volume - fadeDeltaV;
+                        track.Volume = track.Volume - fadeOutDeltaV;
                         if (track.Volume > Loudness.Silent)
                         {
                             readyToStop = false;
                         }
                     });
                     AudioHelper.UpdateCues(this);
-                    lastFadeSecs = gameTime.TotalRealTime.TotalMilliseconds;
+                    previousFadeOutTime = gameTime.TotalRealTime.TotalMilliseconds;
 
                     if (readyToStop)
                     {
                         Stop();
-                        isFading = false;
+                        isFadingOut = false;
                     }
                 }
             }
             else
             {
-                lastFadeSecs = gameTime.TotalRealTime.TotalMilliseconds;
+                previousFadeOutTime = gameTime.TotalRealTime.TotalMilliseconds;
             }
         }
 
+        protected void UpdateVolumeChange(GameTime gameTime)
+        {
+            if (isVolumeChanging)
+            {
+                double updateDiff =
+                    gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime;
+                if (updateDiff > volChangeDeltaT)
+                {
+                    bool completed = true;
+                    this.Tracks.ForEach(track =>
+                    {
+                        track.Volume = track.Volume + volChangeDeltaV;
+
+                        //   if (abs(track.StartVolume - track.EndVolume) < 
+                        //        abs(track.StartVolume - track.Volume))
+                        if (((track.StartVolume > track.EndVolume) &&
+                            (track.Volume > track.EndVolume)) ||
+                            ((track.StartVolume < endVolume) &&
+                            (track.EndVolume > track.Volume)))
+                        {
+                            completed = false;
+                        }
+                    });
+                    AudioHelper.UpdateCues(this);
+                    previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+                    if (completed)
+                    {
+                        if (stopAfterVolChange)
+                        {
+                            Stop();
+                        }
+                        isVolumeChanging = false;
+                    }
+                }
+            }
+            else
+            {
+                previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+            }
+        }
 
         /// <summary>
         /// Allows the game component to update itself.
@@ -123,6 +216,7 @@ namespace Duologue.Audio
         {
             // TODO: Add your update code here
             UpdateFadingCues(gameTime);
+            UpdateVolumeChange(gameTime);
             base.Update(gameTime);
         }
 

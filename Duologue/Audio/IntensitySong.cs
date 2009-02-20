@@ -20,13 +20,13 @@ namespace Duologue.Audio
         //trackVolumes[n,0] is the volume of cues[n] at intensity (n+1) 0.
         //Song has a List<Track>, Track has Cuename, Volume
         //protected float[,] trackVolumes;
-        protected string[] cues;
+        //protected string[] cues;
 
         //like, Tracks = trackMap[intensityStep];
         protected Dictionary<int, List<Track>> trackMap = 
             new Dictionary<int, List<Track>>();
 
-
+        /*
         public IntensitySong(Game game, string sbname, string wbname, List<string> cueList)
             : base(game, sbname, wbname, cueList)
         {
@@ -38,6 +38,7 @@ namespace Duologue.Audio
                     i++;
                 });
         }
+         */
 
         public IntensitySong(Game game, string sbname, string wbname,
             string[] cues, float[,] vols)
@@ -74,8 +75,22 @@ namespace Duologue.Audio
                 MWMathHelper.LimitToRange(intensityStep + amount, 1, trackMap.Count);
             if (intensityStep != oldIntensityStep || amount == 0)
             {
-                Tracks = trackMap[intensityStep];
-                AudioHelper.UpdateCues(this);
+                if (true)
+                {
+                    Tracks = trackMap[intensityStep];
+                    AudioHelper.UpdateCues(this);
+                }
+                else
+                {
+                    Tracks.ForEach(track =>
+                        {
+                            //Employee em = elist.Find(delegate(Employee e) { return e.FirstName == “Mk”; });
+                            Track matchTrack =
+                                trackMap[intensityStep].Find(delegate(Track t) 
+                                {return t.CueName == track.CueName; });
+                            track.Volume = matchTrack.Volume;
+                        });
+                }
             }
         }
 

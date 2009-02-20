@@ -97,8 +97,13 @@ namespace Duologue.Audio
 
         public void StopIntensityMusic()
         {
-            FadeSong(SongID.Intensity);
-            FadeSong(SongID.LandOfSand);
+            FadeOut(SongID.Intensity);
+            FadeOut(SongID.LandOfSand);
+        }
+
+        public void FadeIn(SongID ID, float volume)
+        {
+            songMap[ID].FadeIn(volume);
         }
 
         public void PlaySong(SongID ID)
@@ -111,9 +116,9 @@ namespace Duologue.Audio
             songMap[ID].Stop();
         }
 
-        public void FadeSong(SongID ID)
+        public void FadeOut(SongID ID)
         {
-            songMap[ID].Fade();
+            songMap[ID].FadeOut();
         }
 
         public bool SongIsPlaying(SongID ID)
