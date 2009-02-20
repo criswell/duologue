@@ -348,7 +348,7 @@ namespace Duologue.Screens
                         font,
                         mi.Text,
                         curPos + mi.FadePercent * selectOffset * Vector2.One,
-                        mi.Selected ? Color.Gold : Color.LightGoldenrodYellow,
+                        mi.Selected ? Color.LightGoldenrodYellow : Color.Khaki,
                         Color.Black,
                         mi.Selected ? shadowOffsetsSelected : shadowOffsets,
                         RenderSpriteBlendMode.AlphaBlendTop);
