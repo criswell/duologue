@@ -43,7 +43,7 @@ namespace Duologue.Screens
         private const float selectOffset = 8;
         private const int numberOfOffsets = 4;
 
-        private const int windowOffsetX = 20;
+        private const int windowOffsetX = 30;
         private const int windowOffsetY = 10;
         #endregion
 
