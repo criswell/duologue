@@ -74,6 +74,8 @@ namespace Duologue.Screens
 
         private Vector2[] shadowOffsets;
         private Vector2[] shadowOffsetsSelected;
+
+        private bool initialized;
         #endregion
 
         #region Properties
@@ -120,6 +122,8 @@ namespace Duologue.Screens
             shadowOffsetsSelected[1] = -2 * Vector2.One;
             shadowOffsetsSelected[2] = new Vector2(-2f, 2f);
             shadowOffsetsSelected[3] = new Vector2(2f, -2f);
+
+            initialized = false;
         }
 
         /// <summary>
@@ -242,7 +246,6 @@ namespace Duologue.Screens
                 {
                     currentState = MainMenuState.MainMenu;
                     currentSelection = 0;
-                    LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
                     ResetMenuItems();
                     LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
                     LocalInstanceManager.NextGameState = GameState.InfinityGame;
@@ -439,6 +442,11 @@ namespace Duologue.Screens
         #endregion
 
         #region Public Methods
+        internal void Reset()
+        {
+            if(initialized)
+                LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
+        }
         #endregion
 
         #region Update / Draw
@@ -503,6 +511,7 @@ namespace Duologue.Screens
             if (position == Vector2.Zero)
             {
                 SetPostion();
+                initialized = true;
             }
 
             LocalInstanceManager.WindowManager.Draw(gameTime);
