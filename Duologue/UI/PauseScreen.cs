@@ -36,8 +36,9 @@ namespace Duologue.UI
     {
         #region Constants
         private const string filename_overlay = "pause-overlay";
-        private const string filename_textPopper = "pause-text-popper";
-        private const string filename_font = "Fonts/inero-50";
+        //private const string filename_textPopper = "pause-text-popper";
+        private const string filename_fontTitle = "Fonts/inero-50";
+        private const string filename_fontMenu = "Fonts/inero-40";
 
         private const byte overlayAlpha = 192;
 
@@ -48,13 +49,19 @@ namespace Duologue.UI
         private const int numberOfUpdatesPerTick = 5;
 
         private const double timePerJiggle = 0.1;
+
+        private const float extraLineSpacing = 12;
+
+        private const int windowOffsetX = 30;
+        private const int windowOffsetY = 10;
         #endregion
 
         #region Fields
         private Texture2D overlay;
-        private Texture2D textPopper;
-        private Vector2 textPopperCenter;
-        private SpriteFont font;
+        //private Texture2D textPopper;
+        //private Vector2 textPopperCenter;
+        private SpriteFont fontTitle;
+        private SpriteFont fontMenu;
 
         private Vector2 fontPosition;
         private int numberOfTiles;
@@ -73,6 +80,15 @@ namespace Duologue.UI
         private int deltaTextRed;
 
         private double timeSinceStart;
+
+        private Game myGame;
+
+        // Menu items
+        private List<MenuItem> pauseMenuItems;
+        private int resumeGame;
+        private int exitMainMenu;
+        private Rectangle pauseMenuWindowLocation;
+        private Vector2 position;
         #endregion
 
         #region Properties
@@ -82,7 +98,14 @@ namespace Duologue.UI
         public PauseScreen(Game game)
             : base(game)
         {
-            // TODO: Construct any child components here
+            myGame = game;
+
+            pauseMenuItems = new List<MenuItem>();
+
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ResumeGame));
+            resumeGame = 0;
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ExitMainMenu));
+            exitMainMenu = 1;
         }
 
         /// <summary>
@@ -108,12 +131,12 @@ namespace Duologue.UI
         protected override void LoadContent()
         {
             overlay = InstanceManager.AssetManager.LoadTexture2D(filename_overlay);
-            font = InstanceManager.AssetManager.LoadSpriteFont(filename_font);
+            fontTitle = InstanceManager.AssetManager.LoadSpriteFont(filename_fontTitle);
 
-            textPopper = InstanceManager.AssetManager.LoadTexture2D(filename_textPopper);
+            /*textPopper = InstanceManager.AssetManager.LoadTexture2D(filename_textPopper);
             textPopperCenter = new Vector2(
                 textPopper.Width / 2f,
-                textPopper.Height / 2f);
+                textPopper.Height / 2f);*/
 
             numberOfTiles = -1;
 
@@ -147,8 +170,8 @@ namespace Duologue.UI
                 screenWidth / 2f,
                 screenHeight / 2f);
             fontPosition = new Vector2(
-                screenWidth / 2f - font.MeasureString(Resources.PauseScreen_GamePaused).X / 2f,
-                screenHeight / 2f - font.MeasureString(Resources.PauseScreen_GamePaused).Y / 2f);
+                screenWidth / 2f - fontTitle.MeasureString(Resources.PauseScreen_GamePaused).X / 2f,
+                screenHeight / 2f - fontTitle.MeasureString(Resources.PauseScreen_GamePaused).Y / 2f);
         }
 
         private void JumbleTile(int i)
@@ -157,6 +180,47 @@ namespace Duologue.UI
                 tileEffects[i] = SpriteEffects.FlipHorizontally;
             else
                 tileEffects[i] = SpriteEffects.None;
+        }
+
+        /// <summary>
+        /// Generate the position
+        /// </summary>
+        private void SetPostion()
+        {
+            float center = InstanceManager.DefaultViewport.Width / 2f;
+            float xOffset = center;
+            float maxWidth = 0;
+            float maxHeight = 0;
+            int tempW;
+            int tempH;
+
+            // Start with the 
+
+            foreach (MenuItem mi in pauseMenuItems)
+            {
+                Vector2 size = fontTitle.MeasureString(mi.Text);
+                float xTest = center - size.X / 2f;
+                if (xTest < xOffset)
+                    xOffset = xTest;
+
+                // Compute max width and height
+                if (size.X > maxWidth)
+                    maxWidth = size.X;
+                maxHeight += fontTitle.LineSpacing + extraLineSpacing;
+            }
+
+            tempW = (int)maxWidth + 2 * windowOffsetX;
+            tempH = (int)maxHeight + fontTitle.LineSpacing + (int)extraLineSpacing + 2 * windowOffsetY;
+
+            maxWidth = 0;
+            maxHeight = 0;
+
+            pauseMenuWindowLocation = new Rectangle(
+                (int)position.X - windowOffsetX,
+                (int)position.Y - windowOffsetY,
+                tempW, tempH);
+
+            LocalInstanceManager.WindowManager.SetLocation(pauseMenuWindowLocation);
         }
         #endregion
 
@@ -254,7 +318,7 @@ namespace Duologue.UI
             }
 
             // Draw the text
-            InstanceManager.RenderSprite.Draw(
+            /*InstanceManager.RenderSprite.Draw(
                 textPopper,
                 screenCenter,
                 textPopperCenter,
@@ -263,10 +327,10 @@ namespace Duologue.UI
                 0f,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                RenderSpriteBlendMode.AlphaBlendTop);*/
 
             InstanceManager.RenderSprite.DrawString(
-                font,
+                fontTitle,
                 Resources.PauseScreen_GamePaused,
                 fontPosition,
                 color_text,
