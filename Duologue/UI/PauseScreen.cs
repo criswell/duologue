@@ -36,7 +36,6 @@ namespace Duologue.UI
     {
         #region Constants
         private const string filename_overlay = "pause-overlay";
-        //private const string filename_textPopper = "pause-text-popper";
         private const string filename_fontTitle = "Fonts/inero-50";
         private const string filename_fontMenu = "Fonts/inero-40";
 
@@ -54,16 +53,18 @@ namespace Duologue.UI
 
         private const int windowOffsetX = 30;
         private const int windowOffsetY = 10;
+        private const int titleSpacing = 40;
+
+        private const float selectOffset = 8;
+        private const int numberOfOffsets = 4;
         #endregion
 
         #region Fields
         private Texture2D overlay;
-        //private Texture2D textPopper;
-        //private Vector2 textPopperCenter;
         private SpriteFont fontTitle;
         private SpriteFont fontMenu;
 
-        private Vector2 fontPosition;
+        //private Vector2 fontPosition;
         private int numberOfTiles;
         private Vector2 tileCounts;
 
@@ -82,13 +83,17 @@ namespace Duologue.UI
         private double timeSinceStart;
 
         private Game myGame;
+        private bool initialized;
 
         // Menu items
+        private Vector2 menuOffset;
         private List<MenuItem> pauseMenuItems;
         private int resumeGame;
         private int exitMainMenu;
         private Rectangle pauseMenuWindowLocation;
         private Vector2 position;
+        private Vector2[] shadowOffsets;
+        private Vector2[] shadowOffsetsSelected;
         #endregion
 
         #region Properties
@@ -106,6 +111,20 @@ namespace Duologue.UI
             resumeGame = 0;
             pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ExitMainMenu));
             exitMainMenu = 1;
+
+            shadowOffsets = new Vector2[numberOfOffsets];
+            shadowOffsets[0] = Vector2.One;
+            shadowOffsets[1] = -1 * Vector2.One;
+            shadowOffsets[2] = new Vector2(-1f, 1f);
+            shadowOffsets[3] = new Vector2(1f, -1f);
+
+            shadowOffsetsSelected = new Vector2[numberOfOffsets];
+            shadowOffsetsSelected[0] = 2 * Vector2.One;
+            shadowOffsetsSelected[1] = -2 * Vector2.One;
+            shadowOffsetsSelected[2] = new Vector2(-2f, 2f);
+            shadowOffsetsSelected[3] = new Vector2(2f, -2f);
+
+            initialized = false;
         }
 
         /// <summary>
@@ -132,15 +151,11 @@ namespace Duologue.UI
         {
             overlay = InstanceManager.AssetManager.LoadTexture2D(filename_overlay);
             fontTitle = InstanceManager.AssetManager.LoadSpriteFont(filename_fontTitle);
-
-            /*textPopper = InstanceManager.AssetManager.LoadTexture2D(filename_textPopper);
-            textPopperCenter = new Vector2(
-                textPopper.Width / 2f,
-                textPopper.Height / 2f);*/
+            fontMenu = InstanceManager.AssetManager.LoadSpriteFont(filename_fontMenu);
 
             numberOfTiles = -1;
 
-            color_overlay = new Color(Color.White, overlayAlpha);
+            color_overlay = new Color(Color.DarkSlateGray, overlayAlpha);
 
             base.LoadContent();
         }
@@ -169,9 +184,6 @@ namespace Duologue.UI
             screenCenter = new Vector2(
                 screenWidth / 2f,
                 screenHeight / 2f);
-            fontPosition = new Vector2(
-                screenWidth / 2f - fontTitle.MeasureString(Resources.PauseScreen_GamePaused).X / 2f,
-                screenHeight / 2f - fontTitle.MeasureString(Resources.PauseScreen_GamePaused).Y / 2f);
         }
 
         private void JumbleTile(int i)
@@ -191,36 +203,88 @@ namespace Duologue.UI
             float xOffset = center;
             float maxWidth = 0;
             float maxHeight = 0;
-            int tempW;
-            int tempH;
+            Vector2 size;
+            float xTest;
 
-            // Start with the 
+            // Start with the title
+            size = fontTitle.MeasureString(Resources.PauseScreen_GamePaused);
+            xTest = center - size.X / 2f;
+            if (xTest < xOffset)
+                xOffset = xTest;
 
+            if (size.X > maxWidth)
+                maxWidth = size.X;
+
+            maxHeight += fontTitle.LineSpacing + titleSpacing;
+
+            // Move to the menu
             foreach (MenuItem mi in pauseMenuItems)
             {
-                Vector2 size = fontTitle.MeasureString(mi.Text);
-                float xTest = center - size.X / 2f;
+                size = fontMenu.MeasureString(mi.Text);
+                xTest = center - size.X / 2f;
                 if (xTest < xOffset)
                     xOffset = xTest;
 
                 // Compute max width and height
                 if (size.X > maxWidth)
                     maxWidth = size.X;
-                maxHeight += fontTitle.LineSpacing + extraLineSpacing;
+                maxHeight += fontMenu.LineSpacing + extraLineSpacing;
             }
 
-            tempW = (int)maxWidth + 2 * windowOffsetX;
-            tempH = (int)maxHeight + fontTitle.LineSpacing + (int)extraLineSpacing + 2 * windowOffsetY;
-
-            maxWidth = 0;
-            maxHeight = 0;
+            position = new Vector2(
+                screenCenter.X - maxWidth/2f,
+                screenCenter.Y - maxHeight/2f);
 
             pauseMenuWindowLocation = new Rectangle(
                 (int)position.X - windowOffsetX,
                 (int)position.Y - windowOffsetY,
-                tempW, tempH);
+                (int)maxWidth + 2 * windowOffsetX,
+                (int)maxHeight + fontMenu.LineSpacing + (int)extraLineSpacing + 2 * windowOffsetY);
 
             LocalInstanceManager.WindowManager.SetLocation(pauseMenuWindowLocation);
+            initialized = true;
+        }
+
+        /// <summary>
+        /// Draw a list of menu items
+        /// </summary>
+        private void DrawMenu(List<MenuItem> mis, GameTime gameTime, Vector2 curPos)
+        {
+            foreach (MenuItem mi in mis)
+            {
+                mi.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+
+                if (mi.Invisible)
+                {
+                    InstanceManager.RenderSprite.DrawString(fontMenu,
+                        mi.Text,
+                        curPos,
+                        mi.Selected ? Color.DarkSlateBlue : Color.DarkSlateGray,
+                        RenderSpriteBlendMode.AddititiveTop);
+                }
+                else
+                {
+                    InstanceManager.RenderSprite.DrawString(
+                        fontMenu,
+                        mi.Text,
+                        curPos + mi.FadePercent * selectOffset * Vector2.UnitX,
+                        mi.Selected ? Color.LightGoldenrodYellow : Color.Khaki,
+                        Color.Black,
+                        mi.Selected ? shadowOffsetsSelected : shadowOffsets,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                }
+                curPos.Y += fontMenu.LineSpacing + extraLineSpacing;
+            }
+
+        }
+        #endregion
+
+        #region Overrides
+        protected override void OnEnabledChanged(object sender, EventArgs args)
+        {
+            if(this.Enabled && initialized)
+                LocalInstanceManager.WindowManager.SetLocation(pauseMenuWindowLocation);
+            base.OnEnabledChanged(sender, args);
         }
         #endregion
 
@@ -276,7 +340,7 @@ namespace Duologue.UI
                     }
                 }
             }
-
+            LocalInstanceManager.WindowManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -285,6 +349,7 @@ namespace Duologue.UI
             if (numberOfTiles <= 0)
             {
                 InitAll();
+                SetPostion();
             }
 
             float x = 0f;
@@ -317,26 +382,23 @@ namespace Duologue.UI
                 }
             }
 
-            // Draw the text
-            /*InstanceManager.RenderSprite.Draw(
-                textPopper,
-                screenCenter,
-                textPopperCenter,
-                null,
-                Color.White,
-                0f,
-                1f,
-                0f,
-                RenderSpriteBlendMode.AlphaBlendTop);*/
+            LocalInstanceManager.WindowManager.Draw(gameTime);
+
+            // Draw the menu
+            menuOffset = Vector2.Zero;
 
             InstanceManager.RenderSprite.DrawString(
                 fontTitle,
                 Resources.PauseScreen_GamePaused,
-                fontPosition,
+                position + menuOffset,
                 color_text,
                 color_outline,
                 shadowOffset,
                 RenderSpriteBlendMode.AlphaBlendTop);
+
+            menuOffset.Y += fontTitle.LineSpacing + titleSpacing;
+
+            DrawMenu(pauseMenuItems, gameTime, position + menuOffset);
 
             base.Draw(gameTime);
         }
