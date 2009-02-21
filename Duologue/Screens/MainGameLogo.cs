@@ -30,16 +30,24 @@ namespace Duologue.Screens
     {
         #region Constants
         private const string baseFilename = "logo-base";
-        private const string borderFilename = "logo-border";
+        private const string borderFilename = "logo-border-{0}";
+        private const int numberOfFrames = 6;
         private const float yOffset = 200f;
         private const float fadeLifetime = 2f;
+
+        private const double timePerFrame = 0.075;
         #endregion
 
         #region Fields
         private SpriteObject logoBase;
-        private SpriteObject logoBorder;
+        //private SpriteObject logoBorder;
+        private Texture2D[] logoBorder;
+        private Color borderTint;
+        private Vector2 center;
         private Vector2 position;
         private float timeSinceStart;
+        private double frameTime;
+        private int currentFrame;
         #endregion
 
         #region Properties
@@ -56,6 +64,7 @@ namespace Duologue.Screens
         public MainGameLogo(Game game)
             : base(game)
         {
+            logoBorder = new Texture2D[numberOfFrames];
         }
 
         /// <summary>
@@ -65,6 +74,8 @@ namespace Duologue.Screens
         public override void Initialize()
         {
             timeSinceStart = 0f;
+            frameTime = 0;
+            currentFrame = 0;
             base.Initialize();
         }
 
@@ -83,7 +94,7 @@ namespace Duologue.Screens
                 1f,
                 0f);
 
-            logoBorder = new SpriteObject(
+            /*logoBorder = new SpriteObject(
                 InstanceManager.AssetManager.LoadTexture2D(borderFilename),
                 position,
                 new Vector2(
@@ -93,7 +104,17 @@ namespace Duologue.Screens
                 Color.White,
                 0f,
                 1f,
-                0f);
+                0f);*/
+
+            for (int i = 0; i < numberOfFrames; i++)
+            {
+                logoBorder[i] = InstanceManager.AssetManager.LoadTexture2D(String.Format(
+                   borderFilename, i.ToString()));
+            }
+
+            center = new Vector2(
+                logoBorder[0].Width / 2f,
+                logoBorder[0].Height / 2f);
             base.LoadContent();
         }
         #endregion
@@ -112,12 +133,12 @@ namespace Duologue.Screens
                     (float)Color.White.B,
                     timeSinceStart / fadeLifetime));
                 logoBase.Tint = c;
-                logoBorder.Tint = c;
+                borderTint = c;
             }
             else
             {
                 logoBase.Tint = Color.White;
-                logoBorder.Tint = Color.White;
+                borderTint = Color.White;
             }
         }
         #endregion
@@ -135,6 +156,15 @@ namespace Duologue.Screens
             if(timeSinceStart < fadeLifetime)
                 timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            frameTime += gameTime.ElapsedGameTime.TotalSeconds;
+            if (frameTime > timePerFrame)
+            {
+                frameTime = 0;
+                currentFrame++;
+                if (currentFrame >= numberOfFrames)
+                    currentFrame = 0;
+            }
+
             base.Update(gameTime);
         }
 
@@ -145,13 +175,23 @@ namespace Duologue.Screens
                     InstanceManager.DefaultViewport.Width / 2f,
                     yOffset);
                 logoBase.Position = position;
-                logoBorder.Position = position;
+                //logoBorder.Position = position;
             }
 
             SetColors();
 
+            /*InstanceManager.RenderSprite.Draw(
+                logoBorder);*/
             InstanceManager.RenderSprite.Draw(
-                logoBorder);
+                logoBorder[currentFrame],
+                position,
+                center,
+                null,
+                borderTint,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.Addititive);
             InstanceManager.RenderSprite.Draw(
                 logoBase,
                 RenderSpriteBlendMode.Multiplicative);

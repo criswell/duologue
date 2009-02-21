@@ -77,6 +77,15 @@ namespace Duologue.Screens
         #region Private methods
         #endregion
 
+        #region Overrides
+        public override void SetEnable(bool t)
+        {
+            if(t)
+                mainMenu.Reset();
+            base.SetEnable(t);
+        }
+        #endregion
+
         #region Update
         /// <summary>
         /// Allows the game component to update itself.

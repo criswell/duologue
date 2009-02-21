@@ -91,6 +91,7 @@ namespace Duologue
         public Background background;
         public AchievementManager achievements;
         public Spinner spinner;
+        public WindowManager windowManager;
         public ColorStateTestScreen colorStateTest;
 
         // Screens
@@ -211,6 +212,8 @@ namespace Duologue
             this.Components.Add(pauseScreen);
             pauseScreen.DrawOrder = 300;
 
+            windowManager = new WindowManager();
+
             // Set the instance manager
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
@@ -226,6 +229,7 @@ namespace Duologue
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;
             LocalInstanceManager.Spinner = spinner;
+            LocalInstanceManager.WindowManager = windowManager;
 
             LocalInstanceManager.Scores = new ScoreScroller[LocalInstanceManager.MaxNumberOfPlayers];
             for (int i = 0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
@@ -306,12 +310,8 @@ namespace Duologue
             InstanceManager.RenderSprite = Render;
             InstanceManager.GraphicsDevice = GraphicsDevice;
             InstanceManager.DefaultViewport = GraphicsDevice.Viewport;
-            //Log.RenderSprite = Render;
-            /*gamePlayTest.RenderSprite = Render;
-            gamePlayTest.AssetManager = Assets;
-            gamePlayTest.Device = GraphicsDevice;*/
 
-            // TODO: use this.Content to load your game content here
+            windowManager.LoadContents();
         }
 
         /// <summary>
