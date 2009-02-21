@@ -64,7 +64,6 @@ namespace Duologue.UI
         private SpriteFont fontTitle;
         private SpriteFont fontMenu;
 
-        //private Vector2 fontPosition;
         private int numberOfTiles;
         private Vector2 tileCounts;
 
