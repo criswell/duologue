@@ -88,6 +88,8 @@ namespace Duologue.Screens
         /// Countdown timer for intensity
         /// </summary>
         private float intensityTimer;
+
+        private bool initialized;
         #endregion
 
         #region Properties
@@ -124,6 +126,8 @@ namespace Duologue.Screens
             gameOver.Visible = false;
             localGame.Components.Add(gameOver);
             gameOver.DrawOrder = 200;
+
+            initialized = false;
         }
 
         /// <summary>
@@ -153,6 +157,8 @@ namespace Duologue.Screens
 
             this.SetEnable(false);
             this.SetVisible(false);
+
+            initialized = true;
         }
         #endregion
 
@@ -167,6 +173,14 @@ namespace Duologue.Screens
             else
             {
                 // Here is where we want to turn everything off
+
+                // Turn off music and any other audio as needed
+                if (initialized)
+                {
+                    ServiceLocator.GetService<AudioManager>().StopIntensityMusic();
+                    LocalInstanceManager.Enemies = null;
+                    LocalInstanceManager.CurrentNumberEnemies = 0;
+                }
 
                 // First, turn off the score
                 for (int i = 0; i < InputManager.MaxInputs; i++)
@@ -187,8 +201,6 @@ namespace Duologue.Screens
             if (t && currentState != GamePlayState.GameOver)
             {
                 gameOver.Reset();
-                //ServiceLocator.GetService<AudioManager>().FadeSong(SongID.Intensity);
-                ServiceLocator.GetService<AudioManager>().StopIntensityMusic();
                 // FIXME
                 // Should probably do some gameover music here
                 gameOver.Visible = true;
