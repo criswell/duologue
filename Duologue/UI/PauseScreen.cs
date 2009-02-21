@@ -93,6 +93,7 @@ namespace Duologue.UI
         private Vector2 position;
         private Vector2[] shadowOffsets;
         private Vector2[] shadowOffsetsSelected;
+        private int currentSelection;
         #endregion
 
         #region Properties
@@ -141,6 +142,7 @@ namespace Duologue.UI
             color_text = new Color(maxTextRed, 128, 128);
             deltaTextRed = -1 * maxDeltaTextRed;
 
+            currentSelection = 0;
             timeSinceStart = 0;
 
             base.Initialize();
@@ -245,7 +247,7 @@ namespace Duologue.UI
         }
 
         /// <summary>
-        /// Draw a list of menu items
+        /// Draw a list of menu items FIXME should be in abstract class
         /// </summary>
         private void DrawMenu(List<MenuItem> mis, GameTime gameTime, Vector2 curPos)
         {
@@ -276,6 +278,177 @@ namespace Duologue.UI
             }
 
         }
+
+        /// <summary>
+        /// When a menu item is selected, this is where we parse it
+        /// </summary>
+        private void ParseSelected()
+        {
+            if (currentSelection == resumeGame)
+            {
+                ResetMenuItems(pauseMenuItems);
+                LocalInstanceManager.Pause = false;
+            }
+            else if (currentSelection == exitMainMenu)
+            {
+                ResetMenuItems(pauseMenuItems);
+                LocalInstanceManager.Pause = false;
+                LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+            }
+        }
+
+        private void ResetMenuItems(List<MenuItem> mis)
+        {
+            foreach (MenuItem mi in mis)
+                mi.Selected = false;
+            currentSelection = 0;
+        }
+
+        /// <summary>
+        /// Inner update FIXME should be in abstract class
+        /// </summary>
+        private void InnerUpdate(List<MenuItem> mis)
+        {
+            mis[currentSelection].Selected = true;
+
+            // See if we have a button down to select
+            if (CheckButtonA())
+            {
+                ParseSelected();
+            }
+
+            // Determine if we've got a new selection
+            // Down
+            if (IsMenuDown())
+            {
+                mis[currentSelection].Selected = false;
+
+                currentSelection++;
+            }
+
+            // Up
+            if (IsMenuUp())
+            {
+                mis[currentSelection].Selected = false;
+                currentSelection--;
+            }
+
+            if (currentSelection >= mis.Count)
+                currentSelection = 0;
+            else if (currentSelection < 0)
+                currentSelection = mis.Count - 1;
+        }
+
+        /// <summary>
+        /// Check to see if the A or select button is pressed
+        /// FIXME should be in abstract class
+        /// </summary>
+        /// <returns>True if it was</returns>
+        private bool CheckButtonA()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Enter) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Enter))
+                {
+                    pressed = true;
+                    break;
+                }
+                if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
+                   InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released)
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Check to see if the B or select button is pressed
+        /// FIXME should be in abstract class
+        /// </summary>
+        /// <returns>True if it was</returns>
+        private bool CheckButtonB()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape))
+                {
+                    pressed = true;
+                    break;
+                }
+                if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
+                   InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released)
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if the "menu down" controll was triggered
+        /// FIXME should be in abstract class
+        /// </summary>
+        private bool IsMenuDown()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Down) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Down))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Down == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Down == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y < 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y >= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if the "menu up" control was triggered
+        /// FIXME should be in abstract class
+        /// </summary>
+        private bool IsMenuUp()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Up) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Up))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Up == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Up == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y > 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y <= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
         #endregion
 
         #region Overrides
@@ -296,12 +469,16 @@ namespace Duologue.UI
         {
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Check for user input
+            // Check for start, back, or B
             if (InstanceManager.InputManager.NewButtonPressed(Buttons.B) ||
                 InstanceManager.InputManager.NewButtonPressed(Buttons.Start) ||
-                InstanceManager.InputManager.NewButtonPressed(Buttons.Back) ||
-                InstanceManager.InputManager.NewButtonPressed(Buttons.A))
+                InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
+            {
+                ResetMenuItems(pauseMenuItems);
                 LocalInstanceManager.Pause = false;
+            }
+
+            InnerUpdate(pauseMenuItems);
 
             // We only want to proceed provided the InitAll() was called
             // Since we have no guarantee that the screen is initialized here in
