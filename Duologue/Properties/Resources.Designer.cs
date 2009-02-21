@@ -151,7 +151,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play the campaign.
+        ///   Looks up a localized string similar to Join the campaign.
         /// </summary>
         internal static string MainMenu_GameSelect_Campaign {
             get {
@@ -169,11 +169,20 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play Game.
+        ///   Looks up a localized string similar to Enlist for the war!.
         /// </summary>
         internal static string MainMenu_Play {
             get {
                 return ResourceManager.GetString("MainMenu_Play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extract to Main Menu.
+        /// </summary>
+        internal static string PauseScreen_ExitMainMenu {
+            get {
+                return ResourceManager.GetString("PauseScreen_ExitMainMenu", resourceCulture);
             }
         }
         
@@ -183,6 +192,15 @@ namespace Duologue.Properties {
         internal static string PauseScreen_GamePaused {
             get {
                 return ResourceManager.GetString("PauseScreen_GamePaused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resume the battle.
+        /// </summary>
+        internal static string PauseScreen_ResumeGame {
+            get {
+                return ResourceManager.GetString("PauseScreen_ResumeGame", resourceCulture);
             }
         }
         
