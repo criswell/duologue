@@ -224,7 +224,7 @@ namespace Duologue.Screens
                             Vector2.Zero,
                             LocalInstanceManager.CurrentGameWave.ColorState,
                             ColorState.RandomPolarity(),
-                            LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints);
+                            LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints[i]);
                         livingEnemies++;
                     }
                     else if(LocalInstanceManager.Enemies[i].Alive)

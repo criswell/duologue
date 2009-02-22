@@ -21,6 +21,7 @@ using Duologue;
 using Duologue.Properties;
 using Duologue.State;
 using Duologue.PlayObjects;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.Waves
@@ -41,12 +42,14 @@ namespace Duologue.Waves
         /// <summary>
         /// The starting hit points for each enemy in this wavelet
         /// </summary>
-        public int StartHitPoints;
+        public int[] StartHitPoints;
 
         /// <summary>
         /// the starting angle for each enemy
         /// </summary>
         public float[] StartAngle;
+
+        public SongID SongID;
         #endregion
 
         #region Constructor
@@ -65,7 +68,11 @@ namespace Duologue.Waves
         {
             Enemies = new TypesOfPlayObjects[NumEnemies];
             StartAngle = new float[NumEnemies];
-            StartHitPoints = StartHP;
+            StartHitPoints = new int[NumEnemies];
+            for (int i = 0; i < NumEnemies; i++)
+            {
+                StartHitPoints[i] = StartHP;
+            }
         }
         #endregion
     }
