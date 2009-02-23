@@ -67,13 +67,10 @@
     <Compile Include="AchievementSystem\AchievementManager.cs" />
     <Compile Include="Audio\AudioHelper.cs" />
     <Compile Include="Audio\AudioManager.cs" />
-    <Compile Include="Audio\BeatEffectsSong.cs" />
     <Compile Include="Audio\BeatEngine.cs" />
     <Compile Include="Audio\IntensityController.cs" />
     <Compile Include="Audio\IntensitySong.cs" />
-    <Compile Include="Audio\LandOfSandSong.cs" />
     <Compile Include="Audio\MusicFactory.cs" />
-    <Compile Include="Audio\SelectMenuSong.cs" />
     <Compile Include="Audio\ServiceLocator.cs" />
     <Compile Include="Audio\Song.cs" />
     <Compile Include="Audio\SoundEffects.cs" />

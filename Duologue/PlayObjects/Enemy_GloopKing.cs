@@ -175,7 +175,8 @@ namespace Duologue.PlayObjects
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
             AudioManager audio = ServiceLocator.GetService<AudioManager>();
-            audio.StartIntensityMusic();
+            int intensity = 1;
+            audio.FadeIn(SongID.Intensity, intensity);
             LoadAndInitialize();
         }
 

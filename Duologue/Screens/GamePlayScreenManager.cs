@@ -187,8 +187,7 @@ namespace Duologue.Screens
             if (t && currentState != GamePlayState.GameOver)
             {
                 gameOver.Reset();
-                //ServiceLocator.GetService<AudioManager>().FadeSong(SongID.Intensity);
-                ServiceLocator.GetService<AudioManager>().StopIntensityMusic();
+                ServiceLocator.GetService<AudioManager>().FadeOut(SongID.Intensity);
                 // FIXME
                 // Should probably do some gameover music here
                 gameOver.Visible = true;

@@ -53,14 +53,15 @@ namespace Duologue.Audio
             beatEngine = new BeatEngine(manager.Game);
 
             float on = Loudness.Normal;
-            float off = Loudness.Silent;
+            float off = Loudness.Quiet;
 
             SelectSong = new Song(notifier.Game, selectMenuSounds, selectMenuWaves,
               new List<string> { selectMenuCue });
             SelectSong.playType = PlayType.Nonstop;
 
-            List<string> BECues = new List<string> {Intensity1, Intensity2,
-                Intensity3, Intensity4, Intensity5 };
+            string[] BEcueOrder = { Intensity1, Intensity2, Intensity3, 
+                                      Intensity4, Intensity5 };
+
             float[,] BEvolumes = {
                                   {on, off, off, off, off},
                                   {on, on, off, off, off},
@@ -69,16 +70,12 @@ namespace Duologue.Audio
                                   {on, on, on, on, on}
                               };
 
-            string[] BEcueOrder = { Intensity1, Intensity2, Intensity3, 
-                                      Intensity4, Intensity5 };
-
             BeatEffects = new IntensitySong(notifier.Game, beatEffectsSounds,
                 beatEffectsWaves, BEcueOrder, BEvolumes);
             BeatEffects.playType = PlayType.Nonstop;
 
-
-            List<string> LoSCues = new List<string> {LoSBassDrum, LoSHiHat,
-                LoSBassSynth, LoSStabs, LoSMelody, LoSAccent, LoSToms};
+            string[] cueOrder = {LoSBassDrum, LoSHiHat, LoSBassSynth, LoSStabs, 
+                                  LoSMelody, LoSAccent, LoSToms};
 
             float[,] volumes = {
                                   {on, on, off, off, off, off, off},
@@ -88,9 +85,6 @@ namespace Duologue.Audio
                                   {on, on, off, on, on, on, off},
                                   {on, off, off, on, on, on, on},
                               };
-            string[] cueOrder = {LoSBassDrum, LoSHiHat, LoSBassSynth, LoSStabs, 
-                                  LoSMelody, LoSAccent, LoSToms};
-
             LandOfSand = new IntensitySong(notifier.Game, landOfSandSounds,
                 landOfSandWaves, cueOrder, volumes);
             LandOfSand.playType = PlayType.Nonstop;

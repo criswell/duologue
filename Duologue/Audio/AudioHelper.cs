@@ -21,16 +21,6 @@ namespace Duologue.Audio
         Nonstop
     }
 
-    public struct FadeInfo
-    {
-        public string soundBankName;
-        public string cueName;
-        public bool Fading;
-        public float DeltaV;
-        public bool Stop;
-    }
-
-
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -138,7 +128,7 @@ namespace Duologue.Audio
 
             cues.Add(song.SoundBankName, new Dictionary<string, Cue>());
 
-            song.Tracks.ForEach(delegate(Track track)
+            song.Tracks.Values.ToList().ForEach(delegate(Track track)
             {
                 cues[song.SoundBankName].Add(track.CueName, 
                     tmpSB.GetCue(track.CueName));
@@ -152,9 +142,20 @@ namespace Duologue.Audio
 
         public static void Play(Song song)
         {
-            song.Tracks.ForEach(track =>
+            song.Tracks.Values.ToList().ForEach(track =>
                 {
-                    PlayCue(song.SoundBankName, track.CueName, song.playType);
+                    if (song.playType == PlayType.Single)
+                    {
+                        // no fuss, no muss, no watch for finish, no Dispose()
+                        soundBanks[song.SoundBankName].PlayCue(track.CueName);
+                    }
+                    else
+                    {
+                        RecycleCue(song.SoundBankName, track.CueName);
+                        cues[song.SoundBankName][track.CueName].Play();
+                        cues[song.SoundBankName][track.CueName].SetVariable(
+                            volumeName, track.Volume);
+                    }
                 });
 
             UpdateCues(song);
@@ -162,7 +163,7 @@ namespace Duologue.Audio
 
         public static void Stop(Song song)
         {
-            song.Tracks.ForEach(track =>
+            song.Tracks.Values.ToList().ForEach(track =>
                 {
                     StopCue(song.SoundBankName, track.CueName);
                 });
@@ -278,7 +279,7 @@ namespace Duologue.Audio
 
         public static void UpdateCues(Song song)
         {
-            song.Tracks.ForEach(track =>
+            song.Tracks.Values.ToList().ForEach(track =>
             {
                 cues[song.SoundBankName][track.CueName].SetVariable(volumeName, track.Volume);
             });

@@ -74,36 +74,14 @@ namespace Duologue.Audio
             base.Initialize();
         }
 
-        public void StartIntensityMusic()
+        public void FadeIn(SongID ID)
         {
-            /*
-            if (songMap[SongID.Intensity].IsPlaying)
-            {
-                FadeSong(SongID.Intensity);
-                PlaySong(SongID.LandOfSand);
-            }
-            else if (songMap[SongID.LandOfSand].IsPlaying)
-            {
-                FadeSong(SongID.LandOfSand);
-                PlaySong(SongID.Intensity);
-            }
-            else
-            {
-                PlaySong(SongID.Intensity);
-            }
-             */
-            PlaySong(SongID.Intensity);
+            songMap[ID].FadeIn(Loudness.Normal);
         }
 
-        public void StopIntensityMusic()
+        public void FadeIn(SongID ID, int intensity)
         {
-            FadeOut(SongID.Intensity);
-            FadeOut(SongID.LandOfSand);
-        }
-
-        public void FadeIn(SongID ID, float volume)
-        {
-            songMap[ID].FadeIn(volume);
+            songMap[ID].FadeIn(intensity);
         }
 
         public void PlaySong(SongID ID)

@@ -14,6 +14,8 @@ namespace Duologue.Audio
         public float Volume;
         public float StartVolume;
         public float EndVolume;
+        public bool IsVolumeChanging = false;
+        public float VolChangeDeltaV;
         public Track() { }
         public Track(string cue, float vol)
         {
@@ -23,9 +25,14 @@ namespace Duologue.Audio
             EndVolume = vol;
         }
 
-        public void PrepareVolumesForNextFadeUpdate()
+        public void ChangeVolume(float newVol)
         {
-
+            if (newVol != Volume)
+            {
+                StartVolume = Volume;
+                EndVolume = newVol;
+                IsVolumeChanging = true;
+            }
         }
     }
 
@@ -37,20 +44,16 @@ namespace Duologue.Audio
         protected bool isPlaying;
 
         protected const float fadeOutDeltaV = -1f;
-        protected const float fadeOutDeltaT = 100f;
-
         protected const float fadeInDeltaV = 1f;
-        protected const float fadeInDeltaT = 100f;
 
-        protected bool isVolumeChanging;
-        protected float volChangeDeltaV;
-        protected float volChangeDeltaT;
+        protected bool isVolumeChanging = false;
+        protected  const float UpdateDeltaT = 100f;
         protected double previousVolChangeTime;
         protected bool stopAfterVolChange;
 
         public PlayType playType;
 
-        public List<Track> Tracks = new List<Track>();
+        public Dictionary<string, Track> Tracks = new Dictionary<string, Track>();
         public Song(Game game, string sbname, string wbname)
             : base(game) 
         {
@@ -64,7 +67,7 @@ namespace Duologue.Audio
             foreach (string cue in cues)
             {
                 Track newTrack = new Track(cue, Loudness.Normal);
-                Tracks.Add(newTrack);
+                Tracks.Add(cue, newTrack);
             }
             AudioHelper.AddBank(SoundBankName, WaveBankName, cues);
         }
@@ -94,52 +97,44 @@ namespace Duologue.Audio
 
         public void FadeOut()
         {
-            Tracks.ForEach(track =>
+            Tracks.Values.ToList().ForEach(track =>
             {
-                track.StartVolume = track.Volume;
-                track.EndVolume = Loudness.Silent;
+                track.ChangeVolume(Loudness.Silent);
             });
-            ChangeVolume(true, fadeOutDeltaV, fadeOutDeltaT);        
+            ChangeVolume(true);        
         }
 
-        public void FadeIn(float volume)
+        public virtual void FadeIn(float volume)
         {
-            Tracks.ForEach(track => 
-            { 
-                track.Volume = Loudness.Silent;
-                track.StartVolume = Loudness.Silent;
-                track.EndVolume = volume;
+            Tracks.Values.ToList().ForEach(track => 
+            {
+                track.Volume = Loudness.Quiet;
+                track.ChangeVolume(volume);
             });
+            ChangeVolume(false);
             Play();
-            ChangeVolume(false, fadeInDeltaV, fadeInDeltaT);
         }
 
-        public void ChangeVolume(bool stop, float dV, float dT)
+        public void ChangeVolume(bool stop)
         {
-            if (isVolumeChanging)
-                throw new Exception("already changing volume yo");
             stopAfterVolChange = stop;
-            volChangeDeltaV = dV;
-            volChangeDeltaT = dT;
             isVolumeChanging = true;
         }
 
 
         protected void UpdateVolumeChange(GameTime gameTime)
         {
-            if (isVolumeChanging)
+            double updateDiff =
+                gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime;
+            if (updateDiff > UpdateDeltaT)
             {
-                double updateDiff =
-                    gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime;
-                if (updateDiff > volChangeDeltaT)
+                bool completed = true;
+                this.Tracks.Values.ToList().ForEach(track =>
                 {
-                    bool completed = true;
-                    this.Tracks.ForEach(track =>
+                    if (track.IsVolumeChanging)
                     {
-                        track.Volume = track.Volume + volChangeDeltaV;
+                        track.Volume += (track.EndVolume - track.StartVolume) / 10f; //FIXME
 
-                        //   if (abs(track.StartVolume - track.EndVolume) < 
-                        //        abs(track.StartVolume - track.Volume))
                         if (((track.StartVolume > track.EndVolume) &&
                             (track.Volume > track.EndVolume)) ||
                             ((track.StartVolume < track.EndVolume) &&
@@ -147,22 +142,22 @@ namespace Duologue.Audio
                         {
                             completed = false;
                         }
-                    });
-                    AudioHelper.UpdateCues(this);
-                    previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
-                    if (completed)
-                    {
-                        if (stopAfterVolChange)
+                        else
                         {
-                            Stop();
+                            isVolumeChanging = true;
                         }
-                        isVolumeChanging = false;
                     }
-                }
-            }
-            else
-            {
+                });
+                AudioHelper.UpdateCues(this);
                 previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+                if (completed)
+                {
+                    if (stopAfterVolChange)
+                    {
+                        Stop();
+                    }
+                    isVolumeChanging = false;
+                }
             }
         }
 
@@ -173,7 +168,14 @@ namespace Duologue.Audio
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            UpdateVolumeChange(gameTime);
+            if (isVolumeChanging)
+            {
+                UpdateVolumeChange(gameTime);
+            }
+            else
+            {
+                previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+            }
             base.Update(gameTime);
         }
 
