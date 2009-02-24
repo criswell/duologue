@@ -54,6 +54,11 @@ namespace Duologue.Waves
         /// </summary>
         public float[] StartAngle;
 
+        /// <summary>
+        /// The color polarities for each enemy
+        /// </summary>
+        public ColorPolarity[] ColorPolarities;
+
         public SongID SongID;
         #endregion
 
@@ -69,14 +74,35 @@ namespace Duologue.Waves
         /// </summary>
         /// <param name="NumEnemies">The Number of enemies to initialize</param>
         /// <param name="StartHP">The starting HP for said enemies</param>
+        /// <param name="polarity">The color polarities for each enemy</param>
+        public Wavelet(int NumEnemies, int StartHP, ColorPolarity polarity)
+        {
+            Enemies = new TypesOfPlayObjects[NumEnemies];
+            StartAngle = new float[NumEnemies];
+            StartHitPoints = new int[NumEnemies];
+            ColorPolarities = new ColorPolarity[NumEnemies];
+            for (int i = 0; i < NumEnemies; i++)
+            {
+                StartHitPoints[i] = StartHP;
+                ColorPolarities[i] = polarity;
+            }
+        }
+
+        /// <summary>
+        /// Basic constructor
+        /// </summary>
+        /// <param name="NumEnemies">The Number of enemies to initialize</param>
+        /// <param name="StartHP">The starting HP for said enemies</param>
         public Wavelet(int NumEnemies, int StartHP)
         {
             Enemies = new TypesOfPlayObjects[NumEnemies];
             StartAngle = new float[NumEnemies];
             StartHitPoints = new int[NumEnemies];
+            ColorPolarities = new ColorPolarity[NumEnemies];
             for (int i = 0; i < NumEnemies; i++)
             {
                 StartHitPoints[i] = StartHP;
+                ColorPolarities[i] = ColorPolarity.Positive;
             }
         }
         #endregion

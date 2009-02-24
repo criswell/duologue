@@ -133,6 +133,18 @@ namespace Mimicware
         {
             return rand.Next(0, 2) == 0;
         }
+
+        /// <summary>
+        /// Tells you whether an integer is even or not
+        /// </summary>
+        public static bool IsEven(int i)
+        {
+            if (i / 2f == i / 2)
+            {
+                return true;
+            }
+            return false;
+        }
         #endregion
     }
 }
