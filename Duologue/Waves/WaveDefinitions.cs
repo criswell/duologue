@@ -116,6 +116,21 @@ namespace Duologue.Waves
             #endregion
 
             #region WaveDef (1-2) "The scouting party"
+            Waves[GetIndex(1, 2)] = new GameWave();
+            Waves[GetIndex(1, 2)].Background = 0;
+            Waves[GetIndex(1, 2)].ColorState = 0;
+            Waves[GetIndex(1, 2)].MajorWaveNumber = 1;
+            Waves[GetIndex(1, 2)].MinorWaveNumber = 1;
+            Waves[GetIndex(1, 2)].Name = "The LZ is hot!";
+
+            Wavelets = new Wavelet[4];
+            // First wavelet
+            Wavelets[0] = new Wavelet(2, 0);
+            Wavelets[0].SongID = SongID.Intensity;
+            Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[0] = 0f;
+            Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[1] = MathHelper.Pi * 1.5f;
             #endregion
         }
         #endregion

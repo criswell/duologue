@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
 // Mimicware
+using Mimicware;
 using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
@@ -141,7 +142,7 @@ namespace Duologue.Waves
 
             GameWave thisWave = new GameWave(Resources.GameScreen_InfiniteWave,
                 rand.Next(LocalInstanceManager.Background.NumBackgrounds),
-                theStates[rand.Next(theStates.Length)],
+                MWMathHelper.GetRandomInRange(0,ColorState.numberOfColorStates),
                 lastMajorWaveNo,
                 lastMinorWaveNo);
 
@@ -155,13 +156,13 @@ namespace Duologue.Waves
             }*/
 
             // ERE I AM JH
-            thisWave.NumWavelets = 1;
-            thisWave.NumEnemies = 82;
+            int NumWavelets = 1;
+            int NumEnemies = 82;
             thisWave.CurrentWavelet = 0;
-            thisWave.Wavelets = new Wavelet[thisWave.NumWavelets];
+            thisWave.Wavelets = new Wavelet[NumWavelets];
             int hitsToKillEnemy = 2;
             thisWave.Wavelets[thisWave.CurrentWavelet] = 
-                new Wavelet(thisWave.NumEnemies, hitsToKillEnemy);
+                new Wavelet(NumEnemies, hitsToKillEnemy);
             
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;

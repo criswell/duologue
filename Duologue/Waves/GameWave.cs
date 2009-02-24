@@ -39,6 +39,11 @@ namespace Duologue.Waves
         /// </summary>
         public TypesOfPlayObjects[] Enemies;
 
+        public int NumEnemies
+        {
+            get { return Enemies.Length; }
+        }
+
         /// <summary>
         /// The starting hit points for each enemy in this wavelet
         /// </summary>
@@ -126,6 +131,16 @@ namespace Duologue.Waves
         /// The wavelets of enemies we'll be fighting this wave
         /// </summary>
         public Wavelet[] Wavelets;
+
+        public int NumWavelets
+        {
+            get { return Wavelets.Length; }
+        }
+
+        public int NumEnemies
+        {
+            get { return Wavelets[CurrentWavelet].NumEnemies; }
+        }
         #endregion
 
         #region Constructors
