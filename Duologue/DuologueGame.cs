@@ -224,6 +224,7 @@ namespace Duologue
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
             InstanceManager.InputManager = new InputManager();
+            InstanceManager.Localization = new Localization("Content/Localize");
             
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;
