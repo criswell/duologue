@@ -25,7 +25,15 @@ using Duologue.Waves;
 
 namespace Duologue.Waves
 {
+    /// <summary>
+    /// For now, we'll just be storing these in memory. At a later date, we likely will
+    /// want these to be stored on disk
+    /// </summary>
     public class WaveDefinitions
     {
+        /// <summary>
+        /// The waves used in this game
+        /// </summary>
+        public List<GameWave> Waves;
     }
 }
