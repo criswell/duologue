@@ -52,6 +52,8 @@ namespace Duologue.Screens
         private int vertSize;
 
         private ColorState[] colorStates;
+
+        private int maxNameWidth;
         #endregion
 
         #region properties
@@ -73,6 +75,19 @@ namespace Duologue.Screens
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_font);
             vertSize = blend.Height + 2;
             colorStates = ColorState.GetColorStates();
+
+            // Get the width of the names
+            maxNameWidth = 0;
+            Vector2 temp;
+            for (int i = 0; i < ColorState.numberOfColorStates; i++)
+            {
+                temp = font.MeasureString(colorStates[i].PositiveName);
+                if (temp.X > maxNameWidth)
+                    maxNameWidth = (int)temp.X;
+                temp = font.MeasureString(colorStates[i].NegativeName);
+                if (temp.X > maxNameWidth)
+                    maxNameWidth = (int)temp.X;
+            }
             base.LoadContent();
         }
         #endregion
@@ -171,16 +186,23 @@ namespace Duologue.Screens
         public override void Draw(GameTime gameTime)
         {
             Vector2 pos;
+            Vector2 offset = Vector2.Zero;
+            Vector2 size;
             string temp;
             for (int i = 0; i < ColorState.numberOfColorStates; i++)
             {
                 pos = startPos + new Vector2(0f, 6f * i * vertSize);
                 for (int j = 0; j < ColorState.numberColorsPerPolarity; j++){
+                    size = font.MeasureString(colorStates[i].PositiveName);
+                    offset.X = maxNameWidth - size.X;
                     temp = String.Format("{0} {1} +", colorStates[i].PositiveName, j.ToString());
-                    DrawDetails(pos, temp, colorStates[i].Positive[j]);
+                    DrawDetails(pos + offset, temp, colorStates[i].Positive[j]);
+
                     pos += new Vector2(0f, (float)blend.Height);
+                    size = font.MeasureString(colorStates[i].NegativeName);
+                    offset.X = maxNameWidth - size.X;
                     temp = String.Format("{0} {1} -", colorStates[i].NegativeName, j.ToString());
-                    DrawDetails(pos, temp, colorStates[i].Negative[j]);
+                    DrawDetails(pos + offset, temp, colorStates[i].Negative[j]);
                     pos += new Vector2(0f, (float)blend.Height);
                 }
             }

@@ -46,9 +46,32 @@ namespace Duologue.Waves
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructs the wave def object
+        /// </summary>
+        public WaveDefinitions()
+        {
+            // For now, this is all in-memory, we may eventually want to dump this crap to a file
+            // FIXME
+            Waves = new GameWave[numberOfWaves];
+
+            Waves[GetIndex(1, 1)] = new GameWave();
+            Waves[GetIndex(1, 1)].Background = 0;
+            Waves[GetIndex(1, 1)].ColorState = 0;
+        }
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Gets the wave specified by major and minor numbers
+        /// </summary>
+        /// <param name="MajorNum">The major number of the wave</param>
+        /// <param name="MinorNum">The minor number of the wave. Must be 1-4. If greater than 4, or less than 1, will be capped.</param>
+        /// <returns>The gamewave specified by the major and minor numbers</returns>
+        public GameWave GetWave(int MajorNum, int MinorNum)
+        {
+            return Waves[GetIndex(MajorNum, MinorNum)];
+        }
         #endregion
 
         #region Private methods
@@ -59,6 +82,8 @@ namespace Duologue.Waves
         {
             if (MinorNum > 4)
                 MinorNum = 4;
+            else if (MinorNum < 1)
+                MinorNum = 1;
             int index = (MajorNum * 4) - 5 + MinorNum;
             if (index >= numberOfWaves)
                 index = numberOfWaves - 1;

@@ -115,7 +115,7 @@ namespace Duologue.Waves
         /// <summary>
         /// The color state for this wave
         /// </summary>
-        public ColorState ColorState;
+        public int ColorState;
 
         /// <summary>
         /// The number of enemies each wavelet
