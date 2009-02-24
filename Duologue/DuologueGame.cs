@@ -335,7 +335,8 @@ namespace Duologue
 
             // Determine which GameScreen should be running based upon the state
             if (LocalInstanceManager.CurrentGameState != LocalInstanceManager.LastGameState)
-            {                
+            {
+                dispatchTable[LocalInstanceManager.LastGameState].ScreenExit(gameTime);
                 dispatchTable[LocalInstanceManager.LastGameState].SetEnable(false);
                 dispatchTable[LocalInstanceManager.LastGameState].SetVisible(false);
                 dispatchTable[LocalInstanceManager.LastGameState].Enabled = false;
@@ -343,6 +344,7 @@ namespace Duologue
                 dispatchTable[LocalInstanceManager.CurrentGameState].SetEnable(true);
                 dispatchTable[LocalInstanceManager.CurrentGameState].SetVisible(true);
                 dispatchTable[LocalInstanceManager.CurrentGameState].Enabled=true;
+                dispatchTable[LocalInstanceManager.CurrentGameState].ScreenEntrance(gameTime);
             }
             // Ensure that the last game state gets the current setting for next update
             LocalInstanceManager.CurrentGameState = LocalInstanceManager.CurrentGameState;

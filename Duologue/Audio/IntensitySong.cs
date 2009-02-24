@@ -78,20 +78,17 @@ namespace Duologue.Audio
 
         public void SetIntensityPercentage(float percentage)
         {
-            //FIXME - needs to be based on variable # of intensities
-            MWMathHelper.LimitToRange(percentage, 0f, 1f);
-            if (percentage > 0.83f)
-                intensityStep = 6;
-            else if (percentage > 0.67f)
-                intensityStep = 5;
-            else if (percentage > 0.5f)
-                intensityStep = 4;
-            else if (percentage >= 0.33f)
-                intensityStep = 3;
-            else if (percentage >= 0.17f)
-                intensityStep = 2;
-            else
-                intensityStep = 1;
+            intensityStep = GetIntensityStepFromPercent(percentage);
+        }
+
+        public int GetIntensityStepFromPercent(float percent)
+        {
+            MWMathHelper.LimitToRange(percent, 0f, 1f);
+            float segment = 1f / (float)MaxIntensity;
+            float estimateStep = percent / segment;
+            int step = (int)estimateStep;
+            MWMathHelper.LimitToRange(step, 1, MaxIntensity);
+            return step;
         }
 
     }

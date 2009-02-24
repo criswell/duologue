@@ -84,6 +84,13 @@ namespace Duologue.Audio
             songMap[ID].FadeIn(intensity);
         }
 
+        public void FadeIn(SongID ID, float percentage)
+        {
+            int intensity =
+                ((IntensitySong)(songMap[ID])).GetIntensityStepFromPercent(percentage);
+            FadeIn(ID, intensity);
+        }
+
         public void PlaySong(SongID ID)
         {
             songMap[ID].Play();
@@ -102,6 +109,32 @@ namespace Duologue.Audio
         public bool SongIsPlaying(SongID ID)
         {
             return songMap[ID].IsPlaying;
+        }
+
+        public float GetIntensity(SongID ID)
+        {
+            try
+            {
+                if (songMap[ID].IsPlaying)
+                {
+                    return ((IntensitySong)(songMap[ID])).GetIntensityPercentage();
+                }
+            }
+            catch (Exception e)
+            {
+            }
+            return 0f;
+        }
+
+        public void SetIntensity(SongID ID, float percentage)
+        {
+            try
+            {
+                ((IntensitySong)(songMap[ID])).SetIntensityPercentage(percentage);
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         public void Intensify()

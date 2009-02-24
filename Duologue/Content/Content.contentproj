@@ -919,13 +919,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="pause-text-popper.png">
-      <Name>pause-text-popper</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="logo-border-0.png">
       <Name>logo-border-0</Name>
       <Importer>TextureImporter</Importer>

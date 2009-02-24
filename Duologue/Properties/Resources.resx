@@ -148,16 +148,22 @@
     <value>Back to main menu</value>
   </data>
   <data name="MainMenu_GameSelect_Campaign" xml:space="preserve">
-    <value>Play the campaign</value>
+    <value>Join the campaign</value>
   </data>
   <data name="MainMenu_GameSelect_Infinite" xml:space="preserve">
     <value>Play infinite mode</value>
   </data>
   <data name="MainMenu_Play" xml:space="preserve">
-    <value>Play Game</value>
+    <value>Enlist for the war!</value>
+  </data>
+  <data name="PauseScreen_ExitMainMenu" xml:space="preserve">
+    <value>Extract to Main Menu</value>
   </data>
   <data name="PauseScreen_GamePaused" xml:space="preserve">
     <value>Game Paused</value>
+  </data>
+  <data name="PauseScreen_ResumeGame" xml:space="preserve">
+    <value>Resume the battle</value>
   </data>
   <data name="PlayerSelect_ConnectController" xml:space="preserve">
     <value>Connect controller</value>

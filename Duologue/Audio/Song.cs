@@ -133,7 +133,7 @@ namespace Duologue.Audio
                 {
                     if (track.IsVolumeChanging)
                     {
-                        track.Volume += (track.EndVolume - track.StartVolume) / 10f; //FIXME
+                        track.Volume += (track.EndVolume - track.StartVolume) / 20f; //FIXME
 
                         if (((track.StartVolume > track.EndVolume) &&
                             (track.Volume > track.EndVolume)) ||

@@ -36,8 +36,8 @@ namespace Duologue.UI
     {
         #region Constants
         private const string filename_overlay = "pause-overlay";
-        private const string filename_textPopper = "pause-text-popper";
-        private const string filename_font = "Fonts/inero-50";
+        private const string filename_fontTitle = "Fonts/inero-50";
+        private const string filename_fontMenu = "Fonts/inero-40";
 
         private const byte overlayAlpha = 192;
 
@@ -48,15 +48,22 @@ namespace Duologue.UI
         private const int numberOfUpdatesPerTick = 5;
 
         private const double timePerJiggle = 0.1;
+
+        private const float extraLineSpacing = 12;
+
+        private const int windowOffsetX = 30;
+        private const int windowOffsetY = 10;
+        private const int titleSpacing = 40;
+
+        private const float selectOffset = 8;
+        private const int numberOfOffsets = 4;
         #endregion
 
         #region Fields
         private Texture2D overlay;
-        private Texture2D textPopper;
-        private Vector2 textPopperCenter;
-        private SpriteFont font;
+        private SpriteFont fontTitle;
+        private SpriteFont fontMenu;
 
-        private Vector2 fontPosition;
         private int numberOfTiles;
         private Vector2 tileCounts;
 
@@ -73,6 +80,20 @@ namespace Duologue.UI
         private int deltaTextRed;
 
         private double timeSinceStart;
+
+        private Game myGame;
+        private bool initialized;
+
+        // Menu items
+        private Vector2 menuOffset;
+        private List<MenuItem> pauseMenuItems;
+        private int resumeGame;
+        private int exitMainMenu;
+        private Rectangle pauseMenuWindowLocation;
+        private Vector2 position;
+        private Vector2[] shadowOffsets;
+        private Vector2[] shadowOffsetsSelected;
+        private int currentSelection;
         #endregion
 
         #region Properties
@@ -82,7 +103,28 @@ namespace Duologue.UI
         public PauseScreen(Game game)
             : base(game)
         {
-            // TODO: Construct any child components here
+            myGame = game;
+
+            pauseMenuItems = new List<MenuItem>();
+
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ResumeGame));
+            resumeGame = 0;
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ExitMainMenu));
+            exitMainMenu = 1;
+
+            shadowOffsets = new Vector2[numberOfOffsets];
+            shadowOffsets[0] = Vector2.One;
+            shadowOffsets[1] = -1 * Vector2.One;
+            shadowOffsets[2] = new Vector2(-1f, 1f);
+            shadowOffsets[3] = new Vector2(1f, -1f);
+
+            shadowOffsetsSelected = new Vector2[numberOfOffsets];
+            shadowOffsetsSelected[0] = 2 * Vector2.One;
+            shadowOffsetsSelected[1] = -2 * Vector2.One;
+            shadowOffsetsSelected[2] = new Vector2(-2f, 2f);
+            shadowOffsetsSelected[3] = new Vector2(2f, -2f);
+
+            initialized = false;
         }
 
         /// <summary>
@@ -100,6 +142,7 @@ namespace Duologue.UI
             color_text = new Color(maxTextRed, 128, 128);
             deltaTextRed = -1 * maxDeltaTextRed;
 
+            currentSelection = 0;
             timeSinceStart = 0;
 
             base.Initialize();
@@ -108,16 +151,12 @@ namespace Duologue.UI
         protected override void LoadContent()
         {
             overlay = InstanceManager.AssetManager.LoadTexture2D(filename_overlay);
-            font = InstanceManager.AssetManager.LoadSpriteFont(filename_font);
-
-            textPopper = InstanceManager.AssetManager.LoadTexture2D(filename_textPopper);
-            textPopperCenter = new Vector2(
-                textPopper.Width / 2f,
-                textPopper.Height / 2f);
+            fontTitle = InstanceManager.AssetManager.LoadSpriteFont(filename_fontTitle);
+            fontMenu = InstanceManager.AssetManager.LoadSpriteFont(filename_fontMenu);
 
             numberOfTiles = -1;
 
-            color_overlay = new Color(Color.White, overlayAlpha);
+            color_overlay = new Color(Color.DarkSlateGray, overlayAlpha);
 
             base.LoadContent();
         }
@@ -146,9 +185,6 @@ namespace Duologue.UI
             screenCenter = new Vector2(
                 screenWidth / 2f,
                 screenHeight / 2f);
-            fontPosition = new Vector2(
-                screenWidth / 2f - font.MeasureString(Resources.PauseScreen_GamePaused).X / 2f,
-                screenHeight / 2f - font.MeasureString(Resources.PauseScreen_GamePaused).Y / 2f);
         }
 
         private void JumbleTile(int i)
@@ -157,6 +193,270 @@ namespace Duologue.UI
                 tileEffects[i] = SpriteEffects.FlipHorizontally;
             else
                 tileEffects[i] = SpriteEffects.None;
+        }
+
+        /// <summary>
+        /// Generate the position
+        /// </summary>
+        private void SetPostion()
+        {
+            float center = InstanceManager.DefaultViewport.Width / 2f;
+            float xOffset = center;
+            float maxWidth = 0;
+            float maxHeight = 0;
+            Vector2 size;
+            float xTest;
+
+            // Start with the title
+            size = fontTitle.MeasureString(Resources.PauseScreen_GamePaused);
+            xTest = center - size.X / 2f;
+            if (xTest < xOffset)
+                xOffset = xTest;
+
+            if (size.X > maxWidth)
+                maxWidth = size.X;
+
+            maxHeight += fontTitle.LineSpacing + titleSpacing;
+
+            // Move to the menu
+            foreach (MenuItem mi in pauseMenuItems)
+            {
+                size = fontMenu.MeasureString(mi.Text);
+                xTest = center - size.X / 2f;
+                if (xTest < xOffset)
+                    xOffset = xTest;
+
+                // Compute max width and height
+                if (size.X > maxWidth)
+                    maxWidth = size.X;
+                maxHeight += fontMenu.LineSpacing + extraLineSpacing;
+            }
+
+            position = new Vector2(
+                screenCenter.X - maxWidth/2f,
+                screenCenter.Y - maxHeight/2f);
+
+            pauseMenuWindowLocation = new Rectangle(
+                (int)position.X - windowOffsetX,
+                (int)position.Y - windowOffsetY,
+                (int)maxWidth + 2 * windowOffsetX,
+                (int)maxHeight + fontMenu.LineSpacing + (int)extraLineSpacing + 2 * windowOffsetY);
+
+            LocalInstanceManager.WindowManager.SetLocation(pauseMenuWindowLocation);
+            initialized = true;
+        }
+
+        /// <summary>
+        /// Draw a list of menu items FIXME should be in abstract class
+        /// </summary>
+        private void DrawMenu(List<MenuItem> mis, GameTime gameTime, Vector2 curPos)
+        {
+            foreach (MenuItem mi in mis)
+            {
+                mi.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+
+                if (mi.Invisible)
+                {
+                    InstanceManager.RenderSprite.DrawString(fontMenu,
+                        mi.Text,
+                        curPos,
+                        mi.Selected ? Color.DarkSlateBlue : Color.DarkSlateGray,
+                        RenderSpriteBlendMode.AddititiveTop);
+                }
+                else
+                {
+                    InstanceManager.RenderSprite.DrawString(
+                        fontMenu,
+                        mi.Text,
+                        curPos + mi.FadePercent * selectOffset * Vector2.UnitX,
+                        mi.Selected ? Color.LightGoldenrodYellow : Color.Khaki,
+                        Color.Black,
+                        mi.Selected ? shadowOffsetsSelected : shadowOffsets,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                }
+                curPos.Y += fontMenu.LineSpacing + extraLineSpacing;
+            }
+
+        }
+
+        /// <summary>
+        /// When a menu item is selected, this is where we parse it
+        /// </summary>
+        private void ParseSelected()
+        {
+            if (currentSelection == resumeGame)
+            {
+                ResetMenuItems(pauseMenuItems);
+                LocalInstanceManager.Pause = false;
+            }
+            else if (currentSelection == exitMainMenu)
+            {
+                ResetMenuItems(pauseMenuItems);
+                LocalInstanceManager.Pause = false;
+                LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+            }
+        }
+
+        private void ResetMenuItems(List<MenuItem> mis)
+        {
+            foreach (MenuItem mi in mis)
+                mi.Selected = false;
+            currentSelection = 0;
+        }
+
+        /// <summary>
+        /// Inner update FIXME should be in abstract class
+        /// </summary>
+        private void InnerUpdate(List<MenuItem> mis)
+        {
+            mis[currentSelection].Selected = true;
+
+            // See if we have a button down to select
+            if (CheckButtonA())
+            {
+                ParseSelected();
+            }
+
+            // Determine if we've got a new selection
+            // Down
+            if (IsMenuDown())
+            {
+                mis[currentSelection].Selected = false;
+
+                currentSelection++;
+            }
+
+            // Up
+            if (IsMenuUp())
+            {
+                mis[currentSelection].Selected = false;
+                currentSelection--;
+            }
+
+            if (currentSelection >= mis.Count)
+                currentSelection = 0;
+            else if (currentSelection < 0)
+                currentSelection = mis.Count - 1;
+        }
+
+        /// <summary>
+        /// Check to see if the A or select button is pressed
+        /// FIXME should be in abstract class
+        /// </summary>
+        /// <returns>True if it was</returns>
+        private bool CheckButtonA()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Enter) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Enter))
+                {
+                    pressed = true;
+                    break;
+                }
+                if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.A == ButtonState.Pressed &&
+                   InstanceManager.InputManager.LastGamePadStates[i].Buttons.A == ButtonState.Released)
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Check to see if the B or select button is pressed
+        /// FIXME should be in abstract class
+        /// </summary>
+        /// <returns>True if it was</returns>
+        private bool CheckButtonB()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Escape) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Escape))
+                {
+                    pressed = true;
+                    break;
+                }
+                if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.B == ButtonState.Pressed &&
+                   InstanceManager.InputManager.LastGamePadStates[i].Buttons.B == ButtonState.Released)
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if the "menu down" controll was triggered
+        /// FIXME should be in abstract class
+        /// </summary>
+        private bool IsMenuDown()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Down) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Down))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Down == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Down == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y < 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y >= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if the "menu up" control was triggered
+        /// FIXME should be in abstract class
+        /// </summary>
+        private bool IsMenuUp()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Up) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Up))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Up == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Up == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y > 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y <= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        #endregion
+
+        #region Overrides
+        protected override void OnEnabledChanged(object sender, EventArgs args)
+        {
+            if(this.Enabled && initialized)
+                LocalInstanceManager.WindowManager.SetLocation(pauseMenuWindowLocation);
+            base.OnEnabledChanged(sender, args);
         }
         #endregion
 
@@ -169,12 +469,16 @@ namespace Duologue.UI
         {
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Check for user input
+            // Check for start, back, or B
             if (InstanceManager.InputManager.NewButtonPressed(Buttons.B) ||
                 InstanceManager.InputManager.NewButtonPressed(Buttons.Start) ||
-                InstanceManager.InputManager.NewButtonPressed(Buttons.Back) ||
-                InstanceManager.InputManager.NewButtonPressed(Buttons.A))
+                InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
+            {
+                ResetMenuItems(pauseMenuItems);
                 LocalInstanceManager.Pause = false;
+            }
+
+            InnerUpdate(pauseMenuItems);
 
             // We only want to proceed provided the InitAll() was called
             // Since we have no guarantee that the screen is initialized here in
@@ -212,7 +516,7 @@ namespace Duologue.UI
                     }
                 }
             }
-
+            LocalInstanceManager.WindowManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -221,6 +525,7 @@ namespace Duologue.UI
             if (numberOfTiles <= 0)
             {
                 InitAll();
+                SetPostion();
             }
 
             float x = 0f;
@@ -253,26 +558,23 @@ namespace Duologue.UI
                 }
             }
 
-            // Draw the text
-            InstanceManager.RenderSprite.Draw(
-                textPopper,
-                screenCenter,
-                textPopperCenter,
-                null,
-                Color.White,
-                0f,
-                1f,
-                0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+            LocalInstanceManager.WindowManager.Draw(gameTime);
+
+            // Draw the menu
+            menuOffset = Vector2.Zero;
 
             InstanceManager.RenderSprite.DrawString(
-                font,
+                fontTitle,
                 Resources.PauseScreen_GamePaused,
-                fontPosition,
+                position + menuOffset,
                 color_text,
                 color_outline,
                 shadowOffset,
                 RenderSpriteBlendMode.AlphaBlendTop);
+
+            menuOffset.Y += fontTitle.LineSpacing + titleSpacing;
+
+            DrawMenu(pauseMenuItems, gameTime, position + menuOffset);
 
             base.Draw(gameTime);
         }
