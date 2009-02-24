@@ -45,7 +45,7 @@ namespace Duologue.Waves
                 LocalInstanceManager.CurrentNumberEnemies = LocalInstanceManager.CurrentGameWave.NumEnemies;
                 for (int i = 0; i < LocalInstanceManager.CurrentGameWave.NumEnemies; i++)
                 {
-                    switch (LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].Enemies[i])
+                    switch (LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].Enemies[i])
                     {
                         case TypesOfPlayObjects.Enemy_Buzzsaw:
                             Init_Buzzsaw(i, manager);

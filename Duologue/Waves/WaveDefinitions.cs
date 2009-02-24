@@ -58,7 +58,7 @@ namespace Duologue.Waves
 
             Wavelet[] Wavelets;
 
-            #region WaveDef "The LZ is hot!"
+            #region WaveDef (1-1) "The LZ is hot!"
             Waves[GetIndex(1, 1)] = new GameWave();
             Waves[GetIndex(1, 1)].Background = 0;
             Waves[GetIndex(1, 1)].ColorState = 0;
@@ -111,6 +111,11 @@ namespace Duologue.Waves
             Wavelets[2].StartAngle[6] = MathHelper.Pi + MathHelper.PiOver4;
             Wavelets[2].Enemies[7] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[2].StartAngle[7] = MathHelper.Pi * 1.5f + MathHelper.PiOver4;
+
+            Waves[GetIndex(1, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (1-2) "The scouting party"
             #endregion
         }
         #endregion

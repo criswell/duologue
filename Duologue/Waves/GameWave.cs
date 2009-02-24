@@ -118,11 +118,6 @@ namespace Duologue.Waves
         public int ColorState;
 
         /// <summary>
-        /// The number of wavelets we have
-        /// </summary>
-        public int NumWavelets;
-
-        /// <summary>
         /// The current wavelet
         /// </summary>
         public int CurrentWavelet;
@@ -130,7 +125,7 @@ namespace Duologue.Waves
         /// <summary>
         /// The wavelets of enemies we'll be fighting this wave
         /// </summary>
-        public Wavelet[] Wavelet;
+        public Wavelet[] Wavelets;
         #endregion
 
         #region Constructors
@@ -139,6 +134,7 @@ namespace Duologue.Waves
         /// </summary>
         public GameWave()
         {
+            CurrentWavelet = 0;
         }
 
         /// <summary>
@@ -146,7 +142,7 @@ namespace Duologue.Waves
         /// </summary>
         public GameWave(string name,
             int background,
-            ColorState colorState,
+            int colorState,
             int majorWaveNo, int minorWaveNo)
         {
             Name = name;
@@ -154,6 +150,7 @@ namespace Duologue.Waves
             MajorWaveNumber = majorWaveNo;
             MinorWaveNumber = minorWaveNo;
             ColorState = colorState;
+            CurrentWavelet = 0;
         }
         #endregion
     }
