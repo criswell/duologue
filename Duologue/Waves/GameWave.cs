@@ -118,11 +118,6 @@ namespace Duologue.Waves
         public int ColorState;
 
         /// <summary>
-        /// The number of enemies each wavelet
-        /// </summary>
-        public int NumEnemies;
-
-        /// <summary>
         /// The number of wavelets we have
         /// </summary>
         public int NumWavelets;
