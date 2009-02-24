@@ -31,9 +31,39 @@ namespace Duologue.Waves
     /// </summary>
     public class WaveDefinitions
     {
+        #region Constants
+        private int numberOfWaves = 20;
+        #endregion
+
+        #region Fields
         /// <summary>
         /// The waves used in this game
         /// </summary>
-        public List<GameWave> Waves;
+        private GameWave[] Waves;
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructor
+        #endregion
+
+        #region Public Methods
+        #endregion
+
+        #region Private methods
+        /// <summary>
+        /// Given a major and minor number for a game wave, return the index for it
+        /// </summary>
+        private int GetIndex(int MajorNum, int MinorNum)
+        {
+            if (MinorNum > 4)
+                MinorNum = 4;
+            int index = (MajorNum * 4) - 5 + MinorNum;
+            if (index >= numberOfWaves)
+                index = numberOfWaves - 1;
+            return index;
+        }
+        #endregion
     }
 }
