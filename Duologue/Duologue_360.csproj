@@ -147,6 +147,7 @@
     <Compile Include="UI\WindowManager.cs" />
     <Compile Include="Waves\GameWave.cs" />
     <Compile Include="Waves\GameWaveManager.cs" />
+    <Compile Include="Waves\WaveDefinitions.cs" />
     <Compile Include="Waves\WaveletInit.cs" />
   </ItemGroup>
   <ItemGroup>
