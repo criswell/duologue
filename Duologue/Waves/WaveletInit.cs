@@ -73,7 +73,7 @@ namespace Duologue.Waves
                             break;
                     }
                 }
-
+                
                 return true;
             }
             else

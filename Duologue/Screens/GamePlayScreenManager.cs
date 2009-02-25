@@ -275,6 +275,30 @@ namespace Duologue.Screens
                 }
             }
         }
+
+        /// <summary>
+        /// Get the next wave
+        /// </summary>
+        public void GetNextWave()
+        {
+            // Get the next wave
+            LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
+
+            // Display the wave intro
+            string[] text = new string[2];
+            text[0] = String.Format(Resources.GameScreen_Wave,
+                LocalInstanceManager.CurrentGameWave.MajorWaveNumber.ToString(),
+                LocalInstanceManager.CurrentGameWave.MinorWaveNumber.ToString());
+            text[1] = LocalInstanceManager.CurrentGameWave.Name;
+            waveDisplay.Text = text;
+            // Set up the background and enemies
+            LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
+
+            // Set up the exit stuff
+            currentState = GamePlayState.Delay;
+            timeSinceStart = 0f;
+            //nextState = GamePlayState.InitPlayerSpawn;
+        }
         #endregion
 
         #region Update
@@ -300,22 +324,7 @@ namespace Duologue.Screens
             switch (currentState)
             {
                 case GamePlayState.WaveIntro:
-                    // Get the next wave
-                    LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
-
-                    // Display the wave intro
-                    string[] text = new string[2];
-                    text[0] = String.Format(Resources.GameScreen_Wave,
-                        LocalInstanceManager.CurrentGameWave.MajorWaveNumber.ToString(),
-                        LocalInstanceManager.CurrentGameWave.MinorWaveNumber.ToString());
-                    text[1] = LocalInstanceManager.CurrentGameWave.Name;
-                    waveDisplay.Text = text;
-                    // Set up the background and enemies
-                    LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
-
-                    // Set up the exit stuff
-                    currentState = GamePlayState.Delay;
-                    timeSinceStart = 0f;
+                    GetNextWave();
                     nextState = GamePlayState.InitPlayerSpawn;
                     break;
                 case GamePlayState.Delay:
