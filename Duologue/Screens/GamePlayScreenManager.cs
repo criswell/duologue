@@ -115,7 +115,7 @@ namespace Duologue.Screens
         public GamePlayScreenManager(Game game) : base(game)
         {
             localGame = (DuologueGame)game;
-            gameWaveManager = new GameWaveManager(null);
+            gameWaveManager = new GameWaveManager();
             waveDisplay = new WaveDisplay(localGame);
             localGame.Components.Add(waveDisplay);
             gamePlayLoop = new GamePlayLoop(localGame, this);
@@ -145,12 +145,6 @@ namespace Duologue.Screens
             intensityCounter = 0f;
             intensityTimer = 0f;
         }
-
-        /*
-        public override void Initialize()
-        {
-            base.Initialize();
-        }*/
 
         protected override void InitializeConstants()
         {
@@ -359,11 +353,6 @@ namespace Duologue.Screens
                 localGame.Audio.Detensify();
             }
 
-            /*if (LocalInstanceManager.CurrentGameWave == null)
-            {
-                LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
-            }*/
-
             switch (currentState)
             {
                 case GamePlayState.WaveIntro:
@@ -387,8 +376,6 @@ namespace Duologue.Screens
                     }
                     currentState = GamePlayState.Delay;
                     nextState = GamePlayState.Playing;
-                    //localGame.Audio.PlaySong(SongID.Intensity);
-                    //localGame.Audio.PlaySong(SongID.LandOfSand);
                     break;
                 default:
                     // Play the game or game over
