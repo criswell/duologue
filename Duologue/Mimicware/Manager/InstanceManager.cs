@@ -74,6 +74,11 @@ namespace Mimicware.Manager
         /// The game-wide random instance
         /// </summary>
         public static Random Random = new Random();
+
+        /// <summary>
+        /// The game-wide localization instance
+        /// </summary>
+        public static Localization Localization;
         #endregion
 
         #region Private Methods

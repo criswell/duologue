@@ -39,6 +39,11 @@ namespace Duologue.Waves
         /// </summary>
         public TypesOfPlayObjects[] Enemies;
 
+        public int NumEnemies
+        {
+            get { return Enemies.Length; }
+        }
+
         /// <summary>
         /// The starting hit points for each enemy in this wavelet
         /// </summary>
@@ -115,17 +120,7 @@ namespace Duologue.Waves
         /// <summary>
         /// The color state for this wave
         /// </summary>
-        public ColorState ColorState;
-
-        /// <summary>
-        /// The number of enemies each wavelet
-        /// </summary>
-        public int NumEnemies;
-
-        /// <summary>
-        /// The number of wavelets we have
-        /// </summary>
-        public int NumWavelets;
+        public int ColorState;
 
         /// <summary>
         /// The current wavelet
@@ -135,7 +130,17 @@ namespace Duologue.Waves
         /// <summary>
         /// The wavelets of enemies we'll be fighting this wave
         /// </summary>
-        public Wavelet[] Wavelet;
+        public Wavelet[] Wavelets;
+
+        public int NumWavelets
+        {
+            get { return Wavelets.Length; }
+        }
+
+        public int NumEnemies
+        {
+            get { return Wavelets[CurrentWavelet].NumEnemies; }
+        }
         #endregion
 
         #region Constructors
@@ -144,6 +149,7 @@ namespace Duologue.Waves
         /// </summary>
         public GameWave()
         {
+            CurrentWavelet = 0;
         }
 
         /// <summary>
@@ -151,7 +157,7 @@ namespace Duologue.Waves
         /// </summary>
         public GameWave(string name,
             int background,
-            ColorState colorState,
+            int colorState,
             int majorWaveNo, int minorWaveNo)
         {
             Name = name;
@@ -159,6 +165,7 @@ namespace Duologue.Waves
             MajorWaveNumber = majorWaveNo;
             MinorWaveNumber = minorWaveNo;
             ColorState = colorState;
+            CurrentWavelet = 0;
         }
         #endregion
     }

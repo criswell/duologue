@@ -74,28 +74,33 @@ namespace Duologue
         #endregion
 
         #region Properties
-        #endregion
+        // XNA stuff
         public GraphicsDeviceManager Graphics;
-        public AudioManager Audio;
-        SpriteBatch spriteBatch;
+        public SpriteBatch spriteBatch;
         public GamerServicesComponent GamerServices;
+
+        // Mimicware stuff
         public AssetManager Assets;
         public RenderSprite Render;
         public Logger Log;
+
+        // Particle system stuff
         public Steam steamSystem;
         public PlayerRing playerRing;
         public PlayerExplosion playerExplosion;
         public EnemyExplodeSystem enemyExplodeSystem;
         public PlayerSmoke playerSmoke;
         public BulletParticle bulletParticle;
+
+        // Elements
         public Background background;
         public AchievementManager achievements;
         public Spinner spinner;
         public WindowManager windowManager;
-        public ColorStateTestScreen colorStateTest;
+        public AudioManager Audio;
 
         // Screens
-        //public MainMenuTest mainMenuTest;
+        public ColorStateTestScreen colorStateTest;
         public MainMenuScreen mainMenuScreen;
         public ExitScreen exitScreen;
         public PauseScreen pauseScreen;
@@ -120,6 +125,7 @@ namespace Duologue
                 Log.Visible = value;
             }
         }
+        #endregion
 
         public DuologueGame()
         {
@@ -218,6 +224,7 @@ namespace Duologue
             InstanceManager.AssetManager = Assets;
             InstanceManager.Logger = Log;
             InstanceManager.InputManager = new InputManager();
+            InstanceManager.Localization = new Localization("Content/Localize");
             
             // Set the local instance manager
             LocalInstanceManager.Steam = steamSystem;

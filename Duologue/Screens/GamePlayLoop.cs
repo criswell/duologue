@@ -219,12 +219,12 @@ namespace Duologue.Screens
                     {
                         LocalInstanceManager.Enemies[i].Initialize(
                             LocalInstanceManager.GenerateEnemyStartPos(
-                            LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartAngle[i],
+                            LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartAngle[i],
                             LocalInstanceManager.Enemies[i].RealSize.Length()/2f),
                             Vector2.Zero,
-                            LocalInstanceManager.CurrentGameWave.ColorState,
+                            ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState],
                             ColorState.RandomPolarity(),
-                            LocalInstanceManager.CurrentGameWave.Wavelet[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints[i]);
+                            LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints[i]);
                         livingEnemies++;
                     }
                     else if(LocalInstanceManager.Enemies[i].Alive)

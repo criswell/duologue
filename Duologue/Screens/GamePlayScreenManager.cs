@@ -327,7 +327,7 @@ namespace Duologue.Screens
                     {
                         if (LocalInstanceManager.Players[i].Active)
                         {
-                            LocalInstanceManager.Players[i].ColorState = LocalInstanceManager.CurrentGameWave.ColorState;
+                            LocalInstanceManager.Players[i].ColorState = ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState];
                             LocalInstanceManager.Players[i].Spawn();
 
                             LocalInstanceManager.Scores[i].Enabled = true;
