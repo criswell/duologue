@@ -103,6 +103,7 @@
     <Compile Include="Mimicware\Manager\InstanceManager.cs" />
     <Compile Include="ParticleEffects\BulletParticle.cs" />
     <Compile Include="ParticleEffects\EnemyExplodeSystem.cs" />
+    <Compile Include="ParticleEffects\EnemySplatterSystem.cs" />
     <Compile Include="ParticleEffects\ExplodeRingSystem.cs" />
     <Compile Include="ParticleEffects\ExplodeRing.cs" />
     <Compile Include="ParticleEffects\PlayerExplosion.cs" />

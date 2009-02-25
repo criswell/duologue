@@ -211,9 +211,6 @@ namespace Duologue.Screens
             {
                 for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
                 {
-                    // We really only want to spawn new enemies if we have active/living players
-                    //if (livingPlayers > 0)
-                    //{
                     if (LocalInstanceManager.Enemies[i] == null ||
                         !LocalInstanceManager.Enemies[i].Initialized)
                     {
@@ -256,7 +253,6 @@ namespace Duologue.Screens
 
                     LocalInstanceManager.Enemies[i].Update(gameTime);
                     LocalInstanceManager.Enemies[i].InnerUpdate(gameTime);
-                    //}
                 }
             }
 
@@ -271,11 +267,17 @@ namespace Duologue.Screens
             // or move to next wave
             if (livingEnemies < 1 && livingPlayers > 0)
             {
+                if (myManager.CurrentState == GamePlayState.Playing)
+                    LocalInstanceManager.CurrentGameWave.CurrentWavelet++;
                 // FIXME, uh, we might want some sort of loading bar here....
                 if (!WaveletInit.Initialize(myManager))
                 {
                     // No further wavelets, move up to next wave
-                    // ERE I AM JH
+                    myManager.GetNextWave();
+                }
+                else
+                {
+                    myManager.SetNextMusic();
                 }
             }
 

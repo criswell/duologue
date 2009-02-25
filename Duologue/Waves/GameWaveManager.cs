@@ -19,6 +19,7 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.Audio;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.UI;
@@ -157,12 +158,17 @@ namespace Duologue.Waves
 
             // ERE I AM JH
             int NumWavelets = 1;
-            int NumEnemies = 82;
+            int NumEnemies = 22;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelets = new Wavelet[NumWavelets];
-            int hitsToKillEnemy = 2;
+            int hitsToKillEnemy = 0;
             thisWave.Wavelets[thisWave.CurrentWavelet] = 
                 new Wavelet(NumEnemies, hitsToKillEnemy);
+
+            if (MWMathHelper.CoinToss())
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Intensity;
+            else
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.LandOfSand;
             
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;
@@ -175,18 +181,18 @@ namespace Duologue.Waves
                     thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 else
                     thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;*/
-                //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
                 //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
-                thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                //thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
                 thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
             }
             //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[80] = TypesOfPlayObjects.Enemy_KingGloop;
-            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[80] = TypesOfPlayObjects.Enemy_StaticKing;
-            thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[80] = MathHelper.TwoPi;
+            /*thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[20] = TypesOfPlayObjects.Enemy_StaticKing;
+            thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[20] = MathHelper.TwoPi;
 
-            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[81] = TypesOfPlayObjects.Enemy_KingGloop;
+            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[21] = TypesOfPlayObjects.Enemy_KingGloop;
             //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[81] = TypesOfPlayObjects.Enemy_StaticKing;
-            thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[81] = MathHelper.Pi;
+            thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[21] = MathHelper.Pi;*/
 
             return thisWave;
         }

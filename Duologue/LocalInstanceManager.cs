@@ -120,6 +120,11 @@ namespace Duologue
         public static EnemyExplodeSystem EnemyExplodeSystem;
 
         /// <summary>
+        /// The local instance of the enemy splatter system
+        /// </summary>
+        public static EnemySplatterSystem EnemySplatterSystem;
+
+        /// <summary>
         /// The local instance of the background object
         /// </summary>
         public static Background Background;

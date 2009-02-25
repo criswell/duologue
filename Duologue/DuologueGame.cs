@@ -89,6 +89,7 @@ namespace Duologue
         public PlayerRing playerRing;
         public PlayerExplosion playerExplosion;
         public EnemyExplodeSystem enemyExplodeSystem;
+        public EnemySplatterSystem enemySplatterSystem;
         public PlayerSmoke playerSmoke;
         public BulletParticle bulletParticle;
 
@@ -199,6 +200,10 @@ namespace Duologue
             this.Components.Add(enemyExplodeSystem);
             enemyExplodeSystem.DrawOrder = 7;
 
+            enemySplatterSystem = new EnemySplatterSystem(this, MaxEnemyExplosions);
+            this.Components.Add(enemySplatterSystem);
+            enemySplatterSystem.DrawOrder = 7;
+
             playerSmoke = new PlayerSmoke(this, MaxPlayerSmokeEffects);
             this.Components.Add(playerSmoke);
             playerSmoke.DrawOrder = 7;
@@ -232,6 +237,7 @@ namespace Duologue
             LocalInstanceManager.PlayerSmoke = playerSmoke;
             LocalInstanceManager.PlayerExplosion = playerExplosion;
             LocalInstanceManager.EnemyExplodeSystem = enemyExplodeSystem;
+            LocalInstanceManager.EnemySplatterSystem = enemySplatterSystem;
             LocalInstanceManager.BulletParticle = bulletParticle;
             LocalInstanceManager.Background = background;
             LocalInstanceManager.AchievementManager = achievements;
