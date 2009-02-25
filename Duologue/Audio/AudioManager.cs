@@ -91,7 +91,7 @@ namespace Duologue.Audio
         {
             int intensity =
                 ((IntensitySong)(songMap[ID])).GetIntensityStepFromPercent(percentage);
-            songMap[ID].FadeIn(intensity);
+            ((IntensitySong)songMap[ID]).FadeIn(intensity);
         }
 
         public void PlaySong(SongID ID)

@@ -53,6 +53,7 @@ namespace Duologue.Audio
             {
                 base.Play();
             }
+            MWMathHelper.LimitToRange(intensity, 1, MaxIntensity);
             ChangeIntensity(intensity - intensityStep);
         }
 
