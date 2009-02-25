@@ -779,7 +779,7 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
-                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
+                    LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, c);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
