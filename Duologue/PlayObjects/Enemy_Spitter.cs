@@ -270,16 +270,6 @@ namespace Duologue.PlayObjects
         /// </summary>
         private int animationDirection;
 
-        /*private float upperLeftAngle;
-        private float upperRightAngle;
-        private float lowerRightAngle;
-        private float lowerLeftAngle;
-
-        private Vector2 upperLeftCorner;
-        private Vector2 upperRightCorner;
-        private Vector2 lowerRightCorner;
-        private Vector2 lowerLeftCorner;*/
-
         private float upperBoundaryX;
         private float lowerBoundaryX;
         private float upperBoundaryY;
@@ -439,22 +429,7 @@ namespace Duologue.PlayObjects
             innerBoundsWidth = upperBoundaryX - lowerBoundaryX;
             innerBoundsHeight = upperBoundaryY - lowerBoundaryY;
 
-            /*lowerLeftCorner = new Vector2(lowerBoundaryX, lowerBoundaryY);
-            lowerRightCorner = new Vector2(upperBoundaryX, lowerBoundaryY);
-
-            upperRightCorner = new Vector2(upperBoundaryX, upperBoundaryY);
-            upperLeftCorner = new Vector2(lowerBoundaryX, upperBoundaryY);
-
-            upperLeftAngle = MWMathHelper.ComputeAngleAgainstX(upperLeftCorner, screenCenter);
-            upperRightAngle = MWMathHelper.ComputeAngleAgainstX(upperRightCorner, screenCenter);
-            lowerLeftAngle = MWMathHelper.ComputeAngleAgainstX(lowerLeftCorner, screenCenter);
-            lowerRightAngle = MWMathHelper.ComputeAngleAgainstX(lowerRightCorner, screenCenter);*/
-
-            // Place us at the max position
-            //SetAtMaxPosition();
-            //Console.WriteLine(String.Format("Pre: {0}", Position.ToString()));
             CheckScreenBoundary();
-            //Console.WriteLine(String.Format("Post: {0}", Position.ToString()));
 
             spawnScale = startSpawnScale;
 
@@ -502,48 +477,6 @@ namespace Duologue.PlayObjects
                     spitAlphaDeltas[i] = spitDeltaDefaultSize;
             }
         }
-
-        /* FUCK THIS SHIT
-        /// <summary>
-        /// Sets us at the maximum position away from center based upon our rotation around the center of screen
-        /// </summary>
-        private void SetAtMaxPosition()
-        {
-            float angle = MWMathHelper.ComputeAngleAgainstX(Position, screenCenter);
-            // x = L cos(angle), y = L sin(angle)
-            float x;
-            float y;
-            float tan = (float)Math.Tan(angle);
-            // Remember, we need to flip the Y coords
-            if (angle >= 0 && angle <= upperRightAngle || angle > lowerRightAngle && angle <= MathHelper.TwoPi)
-            {
-                // We are on the right side of the screen
-                x = innerBoundsWidth;
-                y = (0.5f) * (innerBoundsHeight - tan * innerBoundsWidth);
-            }
-            else if (angle > upperRightAngle && angle <= upperLeftAngle)
-            {
-                // We are on the top of the screen
-                x = (0.5f) * (innerBoundsWidth + innerBoundsHeight / tan);
-                y = lowerBoundaryY;
-            }
-            else if (angle > upperLeftAngle && angle <= lowerLeftAngle)
-            {
-                // We are on the left side of the screen
-                x = lowerBoundaryX;
-                y = (0.5f) * (innerBoundsHeight + innerBoundsWidth * tan);
-            }
-            else //if (angle > lowerLeftAngle && angle <= lowerRightAngle)
-            {
-                // We are on the bottom of the screen
-                x = (0.5f) * (innerBoundsWidth - innerBoundsHeight / tan);
-                y = innerBoundsHeight;
-            }
-            //Console.WriteLine(String.Format("Pre: {0}", Position.ToString()));
-            Position.X = x;
-            Position.Y = y;
-            //Console.WriteLine(String.Format("{0},{1} - {2}", x.ToString(), y.ToString(), Position.ToString()));
-        }*/
 
         /// <summary>
         /// Returns a vector pointing to the origin
@@ -663,7 +596,8 @@ namespace Duologue.PlayObjects
                 if (len < this.Radius + pobj.Radius)
                 {
                     // We're on them, kill em
-                    return pobj.TriggerHit(this);
+                    if(MyState != SpitterState.Spawning)
+                        return pobj.TriggerHit(this);
                 }
 
                 // Beam handling

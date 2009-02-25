@@ -160,7 +160,7 @@ namespace Duologue.Waves
             int NumEnemies = 22;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelets = new Wavelet[NumWavelets];
-            int hitsToKillEnemy = 2;
+            int hitsToKillEnemy = 0;
             thisWave.Wavelets[thisWave.CurrentWavelet] = 
                 new Wavelet(NumEnemies, hitsToKillEnemy);
             
