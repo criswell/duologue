@@ -53,36 +53,10 @@ namespace Duologue.Waves
         #endregion
 
         #region Fields
-        /// <summary>
-        /// The list of game waves this manager owns
-        /// </summary>
-        //private List<GameWave> waves;
-
-        /// <summary>
-        /// The current wave we are on
-        /// </summary>
-        private int currentWaveIndex;
-
-        //private Random rand;
-
         private WaveDefinitions waveDef;
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets or sets the current wave index
-        /// Note: If you try to set this outside the possible range, it will
-        /// default to 0 or MaxNumofGameWaves
-        /// </summary>
-        /*public int CurrentWaveIndex
-        {
-            get { return currentWaveIndex; }
-            set
-            {
-                currentWaveIndex = Math.Max(0, Math.Min(value, waves.Count-1));
-            }
-        }*/
-
         /// <summary>
         /// The current wave's Major Number
         /// </summary>
@@ -102,16 +76,7 @@ namespace Duologue.Waves
         /// <param name="maxNumOfGameWaves"></param>
         public GameWaveManager()//int? maxNumOfGameWaves)
         {
-            //rand = new Random();
             waveDef = new WaveDefinitions();
-            /*if (maxNumOfGameWaves == null)
-            {
-                waves = new List<GameWave>(MaxNumOfGameWaves);
-            }
-            else
-            {
-                waves = new List<GameWave>((int)maxNumOfGameWaves);
-            }*/
 
             // Sensible defaults
             CurrentMajorNumber = 0;
