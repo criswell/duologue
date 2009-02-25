@@ -74,31 +74,21 @@ namespace Duologue.Audio
             base.Initialize();
         }
 
-        public void StartIntensityMusic()
+        public void FadeIn(SongID ID)
         {
-            /*
-            if (songMap[SongID.Intensity].IsPlaying)
-            {
-                FadeSong(SongID.Intensity);
-                PlaySong(SongID.LandOfSand);
-            }
-            else if (songMap[SongID.LandOfSand].IsPlaying)
-            {
-                FadeSong(SongID.LandOfSand);
-                PlaySong(SongID.Intensity);
-            }
-            else
-            {
-                PlaySong(SongID.Intensity);
-            }
-             */
-            PlaySong(SongID.Intensity);
+            songMap[ID].FadeIn(Loudness.Normal);
         }
 
-        public void StopIntensityMusic()
+        public void FadeIn(SongID ID, int intensity)
         {
-            FadeSong(SongID.Intensity);
-            FadeSong(SongID.LandOfSand);
+            songMap[ID].FadeIn(intensity);
+        }
+
+        public void FadeIn(SongID ID, float percentage)
+        {
+            int intensity =
+                ((IntensitySong)(songMap[ID])).GetIntensityStepFromPercent(percentage);
+            FadeIn(ID, intensity);
         }
 
         public void PlaySong(SongID ID)
@@ -111,14 +101,40 @@ namespace Duologue.Audio
             songMap[ID].Stop();
         }
 
-        public void FadeSong(SongID ID)
+        public void FadeOut(SongID ID)
         {
-            songMap[ID].Fade();
+            songMap[ID].FadeOut();
         }
 
         public bool SongIsPlaying(SongID ID)
         {
             return songMap[ID].IsPlaying;
+        }
+
+        public float GetIntensity(SongID ID)
+        {
+            try
+            {
+                if (songMap[ID].IsPlaying)
+                {
+                    return ((IntensitySong)(songMap[ID])).GetIntensityPercentage();
+                }
+            }
+            catch (Exception e)
+            {
+            }
+            return 0f;
+        }
+
+        public void SetIntensity(SongID ID, float percentage)
+        {
+            try
+            {
+                ((IntensitySong)(songMap[ID])).SetIntensityPercentage(percentage);
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         public void Intensify()

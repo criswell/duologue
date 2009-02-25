@@ -12,11 +12,27 @@ namespace Duologue.Audio
     {
         public string CueName;
         public float Volume;
+        public float StartVolume;
+        public float EndVolume;
+        public bool IsVolumeChanging = false;
+        public float VolChangeDeltaV;
         public Track() { }
         public Track(string cue, float vol)
         {
-            this.CueName = cue;
-            this.Volume = vol;
+            CueName = cue;
+            Volume = vol;
+            StartVolume = vol;
+            EndVolume = vol;
+        }
+
+        public void ChangeVolume(float newVol)
+        {
+            if (newVol != Volume)
+            {
+                StartVolume = Volume;
+                EndVolume = newVol;
+                IsVolumeChanging = true;
+            }
         }
     }
 
@@ -26,14 +42,18 @@ namespace Duologue.Audio
         public string WaveBankName;
 
         protected bool isPlaying;
-        protected bool isFading;
-        protected const float fadeDeltaV = 1f;
-        protected const float fadeIntervalMilli = 100f;
-        protected double lastFadeSecs;
-        protected bool stopAfterFade;
+
+        protected const float fadeOutDeltaV = -1f;
+        protected const float fadeInDeltaV = 1f;
+
+        protected bool isVolumeChanging = false;
+        protected  const float UpdateDeltaT = 100f;
+        protected double previousVolChangeTime;
+        protected bool stopAfterVolChange;
+
         public PlayType playType;
 
-        public List<Track> Tracks = new List<Track>();
+        public Dictionary<string, Track> Tracks = new Dictionary<string, Track>();
         public Song(Game game, string sbname, string wbname)
             : base(game) 
         {
@@ -47,7 +67,7 @@ namespace Duologue.Audio
             foreach (string cue in cues)
             {
                 Track newTrack = new Track(cue, Loudness.Normal);
-                Tracks.Add(newTrack);
+                Tracks.Add(cue, newTrack);
             }
             AudioHelper.AddBank(SoundBankName, WaveBankName, cues);
         }
@@ -62,6 +82,7 @@ namespace Duologue.Audio
         {
             AudioHelper.Stop(this);
             isPlaying = false;
+            stopAfterVolChange = false;
         }
 
         public virtual bool IsPlaying
@@ -75,45 +96,71 @@ namespace Duologue.Audio
             } 
         }
 
-        public void Fade()
+        public void FadeOut()
         {
-            isFading = true;
+            Tracks.Values.ToList().ForEach(track =>
+            {
+                track.ChangeVolume(Loudness.Silent);
+            });
+            ChangeVolume(true);        
         }
 
-        protected void UpdateFadingCues(GameTime gameTime)
+        public virtual void FadeIn(float volume)
         {
-            if (isFading)
+            Tracks.Values.ToList().ForEach(track => 
             {
-                double updateDiff =
-                    gameTime.TotalRealTime.TotalMilliseconds - lastFadeSecs;
-                if ( updateDiff > fadeIntervalMilli )
+                track.Volume = Loudness.Quiet;
+                track.ChangeVolume(volume);
+            });
+            ChangeVolume(false);
+            Play();
+        }
+
+        public void ChangeVolume(bool stop)
+        {
+            stopAfterVolChange = stopAfterVolChange || stop;
+            isVolumeChanging = true;
+        }
+
+
+        protected void UpdateVolumeChange(GameTime gameTime)
+        {
+            double updateDiff =
+                gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime;
+            if (updateDiff > UpdateDeltaT)
+            {
+                bool completed = true;
+                this.Tracks.Values.ToList().ForEach(track =>
                 {
-                    bool readyToStop = true;
-
-                    this.Tracks.ForEach(track =>
+                    if (track.IsVolumeChanging)
                     {
-                        track.Volume = track.Volume - fadeDeltaV;
-                        if (track.Volume > Loudness.Silent)
-                        {
-                            readyToStop = false;
-                        }
-                    });
-                    AudioHelper.UpdateCues(this);
-                    lastFadeSecs = gameTime.TotalRealTime.TotalMilliseconds;
+                        track.Volume += (track.EndVolume - track.StartVolume) / 20f; //FIXME
 
-                    if (readyToStop)
+                        if (((track.StartVolume > track.EndVolume) &&
+                            (track.Volume > track.EndVolume)) ||
+                            ((track.StartVolume < track.EndVolume) &&
+                            (track.EndVolume > track.Volume)))
+                        {
+                            completed = false;
+                        }
+                        else
+                        {
+                            isVolumeChanging = true;
+                        }
+                    }
+                });
+                AudioHelper.UpdateCues(this);
+                previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+                if (completed)
+                {
+                    if (stopAfterVolChange)
                     {
                         Stop();
-                        isFading = false;
                     }
+                    isVolumeChanging = false;
                 }
             }
-            else
-            {
-                lastFadeSecs = gameTime.TotalRealTime.TotalMilliseconds;
-            }
         }
-
 
         /// <summary>
         /// Allows the game component to update itself.
@@ -122,7 +169,14 @@ namespace Duologue.Audio
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            UpdateFadingCues(gameTime);
+            if (isVolumeChanging)
+            {
+                UpdateVolumeChange(gameTime);
+            }
+            else
+            {
+                previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+            }
             base.Update(gameTime);
         }
 
