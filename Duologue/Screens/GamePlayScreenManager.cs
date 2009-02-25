@@ -189,6 +189,7 @@ namespace Duologue.Screens
                 // Turn off music and any other audio as needed
                 if (initialized)
                 {
+                    //FIXME what if some other song is playing?
                     ServiceLocator.GetService<AudioManager>().FadeOut(SongID.Intensity);
                     LocalInstanceManager.Enemies = null;
                     LocalInstanceManager.CurrentNumberEnemies = 0;

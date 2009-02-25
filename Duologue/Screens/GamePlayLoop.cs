@@ -260,6 +260,7 @@ namespace Duologue.Screens
             {
                 // Game Over
                 myManager.GameOver(true);
+                ServiceLocator.GetService<AudioManager>().GameOver();
             }
 
             // If we have no living enemies, it means we need to get them from the next wavelet,

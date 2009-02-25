@@ -184,12 +184,13 @@ namespace Duologue.PlayObjects
             }
             else if (audio.SongIsPlaying(SongID.LandOfSand))
             {
+                float current = audio.GetIntensity(SongID.LandOfSand);
                 audio.FadeOut(SongID.LandOfSand);
-                audio.FadeIn(SongID.Intensity);
+                audio.FadeIn(SongID.Intensity, current);
             }
             else
             {
-                audio.FadeIn(SongID.Intensity);
+                audio.FadeIn(SongID.Intensity, 0f);
             }
             audio.FadeIn(SongID.Intensity, intensity);*/
             LoadAndInitialize();

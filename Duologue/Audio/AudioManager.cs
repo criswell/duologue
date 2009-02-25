@@ -15,7 +15,7 @@ namespace Duologue.Audio
     public struct Loudness
     {
         public const float Silent = 0f;
-        public const float Quiet = 50f;
+        public const float Quiet = 40f;
         public const float Normal = 80f;
         public const float Full = 100f;
     }
@@ -56,11 +56,8 @@ namespace Duologue.Audio
         /// </summary>
         public override void Initialize()
         {
-
             helper = new AudioHelper(Game, engine);
-            
             beatEngine = new BeatEngine(Game);
-            
             soundEffects = new SoundEffects(this);
 
             Game.Components.Add(helper);
@@ -74,21 +71,27 @@ namespace Duologue.Audio
             base.Initialize();
         }
 
+        public void GameOver()
+        {
+            songMap.Values.ToList().ForEach(song =>
+                {
+                    if (song.IsPlaying)
+                    {
+                        song.FadeOut();
+                    }
+                });
+        }
+
         public void FadeIn(SongID ID)
         {
             songMap[ID].FadeIn(Loudness.Normal);
-        }
-
-        public void FadeIn(SongID ID, int intensity)
-        {
-            songMap[ID].FadeIn(intensity);
         }
 
         public void FadeIn(SongID ID, float percentage)
         {
             int intensity =
                 ((IntensitySong)(songMap[ID])).GetIntensityStepFromPercent(percentage);
-            FadeIn(ID, intensity);
+            ((IntensitySong)songMap[ID]).FadeIn(intensity);
         }
 
         public void PlaySong(SongID ID)

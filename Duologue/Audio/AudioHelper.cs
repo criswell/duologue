@@ -144,20 +144,11 @@ namespace Duologue.Audio
         {
             song.Tracks.Values.ToList().ForEach(track =>
                 {
-                    if (song.playType == PlayType.Single)
-                    {
-                        // no fuss, no muss, no watch for finish, no Dispose()
-                        soundBanks[song.SoundBankName].PlayCue(track.CueName);
-                    }
-                    else
-                    {
-                        RecycleCue(song.SoundBankName, track.CueName);
-                        cues[song.SoundBankName][track.CueName].Play();
-                        cues[song.SoundBankName][track.CueName].SetVariable(
-                            volumeName, track.Volume);
-                    }
+                    RecycleCue(song.SoundBankName, track.CueName);
+                    cues[song.SoundBankName][track.CueName].Play();
+                    cues[song.SoundBankName][track.CueName].SetVariable(
+                        volumeName, track.Volume);
                 });
-
             UpdateCues(song);
         }
 
@@ -171,18 +162,9 @@ namespace Duologue.Audio
 
         public static void PlayCue(string sbname, string cueName, PlayType type)
         {
-            //FIXME need a volume param. Need to handle repeating.
-            if (type == PlayType.Single)
-            {
-                // no fuss, no muss, no watch for finish, no Dispose()
-                soundBanks[sbname].PlayCue(cueName);
-            }
-            else
-            {
-                RecycleCue(sbname, cueName);
-                cues[sbname][cueName].SetVariable(volumeName, Loudness.Normal);
-                cues[sbname][cueName].Play();
-            }
+            RecycleCue(sbname, cueName);
+            cues[sbname][cueName].SetVariable(volumeName, Loudness.Normal);
+            cues[sbname][cueName].Play();
         }
 
         /*
@@ -310,7 +292,6 @@ namespace Duologue.Audio
             engine.Update();
             ProcessDynamicCues();
             ProcessPlayedCues();
-            //need something to process "nonstop" play.
             // TODO: Add your update code here
             base.Update(gameTime);
         }
