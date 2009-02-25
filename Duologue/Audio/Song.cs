@@ -15,7 +15,7 @@ namespace Duologue.Audio
         public float StartVolume;
         public float EndVolume;
         public bool IsVolumeChanging = false;
-        public float VolChangeDeltaV;
+        //public float VolChangeDeltaV;
         public Track() { }
         public Track(string cue, float vol)
         {
@@ -41,17 +41,12 @@ namespace Duologue.Audio
         public string SoundBankName;
         public string WaveBankName;
 
-        protected bool isPlaying;
-
-        protected const float fadeOutDeltaV = -1f;
-        protected const float fadeInDeltaV = 1f;
-
+        protected bool isPlaying = false;
         protected bool isVolumeChanging = false;
-        protected  const float UpdateDeltaT = 100f;
+        protected const float updateDeltaT = 100f;
+        protected const float volSteps = 10f;
         protected double previousVolChangeTime;
         protected bool stopAfterVolChange;
-
-        public PlayType playType;
 
         public Dictionary<string, Track> Tracks = new Dictionary<string, Track>();
         public Song(Game game, string sbname, string wbname)
@@ -127,14 +122,14 @@ namespace Duologue.Audio
         {
             double updateDiff =
                 gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime;
-            if (updateDiff > UpdateDeltaT)
+            if (updateDiff > updateDeltaT)
             {
                 bool completed = true;
                 this.Tracks.Values.ToList().ForEach(track =>
                 {
                     if (track.IsVolumeChanging)
                     {
-                        track.Volume += (track.EndVolume - track.StartVolume) / 20f; //FIXME
+                        track.Volume += (track.EndVolume - track.StartVolume) / 4f; //FIXME
 
                         if (((track.StartVolume > track.EndVolume) &&
                             (track.Volume > track.EndVolume)) ||

@@ -57,7 +57,6 @@ namespace Duologue.Audio
 
             SelectSong = new Song(notifier.Game, selectMenuSounds, selectMenuWaves,
               new List<string> { selectMenuCue });
-            SelectSong.playType = PlayType.Nonstop;
 
             string[] BEcueOrder = { Intensity1, Intensity2, Intensity3, 
                                       Intensity4, Intensity5 };
@@ -72,7 +71,6 @@ namespace Duologue.Audio
 
             BeatEffects = new IntensitySong(notifier.Game, beatEffectsSounds,
                 beatEffectsWaves, BEcueOrder, BEvolumes);
-            BeatEffects.playType = PlayType.Nonstop;
 
             string[] cueOrder = {LoSBassDrum, LoSHiHat, LoSBassSynth, LoSStabs, 
                                   LoSMelody, LoSAccent, LoSToms};
@@ -87,7 +85,6 @@ namespace Duologue.Audio
                               };
             LandOfSand = new IntensitySong(notifier.Game, landOfSandSounds,
                 landOfSandWaves, cueOrder, volumes);
-            LandOfSand.playType = PlayType.Nonstop;
 
             manager.Game.Components.Add(SelectSong);
             manager.Game.Components.Add(BeatEffects);
