@@ -82,6 +82,7 @@ namespace Duologue.Audio
         {
             AudioHelper.Stop(this);
             isPlaying = false;
+            stopAfterVolChange = false;
         }
 
         public virtual bool IsPlaying
@@ -117,7 +118,7 @@ namespace Duologue.Audio
 
         public void ChangeVolume(bool stop)
         {
-            stopAfterVolChange = stop;
+            stopAfterVolChange = stopAfterVolChange || stop;
             isVolumeChanging = true;
         }
 
