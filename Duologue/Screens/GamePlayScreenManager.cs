@@ -284,6 +284,12 @@ namespace Duologue.Screens
             // Get the next wave
             LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
 
+            // Set the player
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+                if (LocalInstanceManager.Players[i].Active)
+                    LocalInstanceManager.Players[i].ColorState =
+                        ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState];
+
             // Display the wave intro
             string[] text = new string[2];
             text[0] = String.Format(Resources.GameScreen_Wave,
@@ -336,7 +342,6 @@ namespace Duologue.Screens
                     {
                         if (LocalInstanceManager.Players[i].Active)
                         {
-                            LocalInstanceManager.Players[i].ColorState = ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState];
                             LocalInstanceManager.Players[i].Spawn();
 
                             LocalInstanceManager.Scores[i].Enabled = true;
