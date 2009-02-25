@@ -266,13 +266,14 @@ namespace Duologue.Screens
             // or move to next wave
             if (livingEnemies < 1 && livingPlayers > 0)
             {
+                if (myManager.CurrentState == GamePlayState.Playing)
+                    LocalInstanceManager.CurrentGameWave.CurrentWavelet++;
                 // FIXME, uh, we might want some sort of loading bar here....
                 if (!WaveletInit.Initialize(myManager))
                 {
                     // No further wavelets, move up to next wave
                     myManager.GetNextWave();
                 }
-                LocalInstanceManager.CurrentGameWave.CurrentWavelet++;
             }
 
             #endregion Enemy Stuff
