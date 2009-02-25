@@ -90,6 +90,8 @@ namespace Duologue.Screens
         private float intensityTimer;
 
         private bool initialized;
+
+        private SongID lastSongID;
         #endregion
 
         #region Properties
@@ -159,6 +161,22 @@ namespace Duologue.Screens
             this.SetVisible(false);
 
             initialized = true;
+        }
+
+        public override void ScreenEntrance(GameTime gameTime)
+        {
+            // We default to what we should get coming into the game
+            lastSongID = SongID.SelectMenu;
+
+            base.ScreenEntrance(gameTime);
+        }
+
+        public override void ScreenExit(GameTime gameTime)
+        {
+            // We default to what we should get coming into the game
+            lastSongID = SongID.SelectMenu;
+
+            base.ScreenExit(gameTime);
         }
         #endregion
 
@@ -303,7 +321,26 @@ namespace Duologue.Screens
             // Set up the exit stuff
             currentState = GamePlayState.Delay;
             timeSinceStart = 0f;
-            //nextState = GamePlayState.InitPlayerSpawn;
+        }
+
+        /// <summary>
+        /// Set the music for the current wavelet
+        /// </summary>
+        public void SetNextMusic()
+        {
+            AudioManager audio = ServiceLocator.GetService<AudioManager>();
+
+            if (LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID != lastSongID)
+            {
+                float currentIntensity = audio.GetIntensity(lastSongID);
+                audio.FadeOut(lastSongID);
+                audio.FadeIn(
+                    LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID,
+                    currentIntensity);
+
+                lastSongID =
+                    LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID;
+            }
         }
         #endregion
 

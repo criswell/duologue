@@ -274,6 +274,10 @@ namespace Duologue.Screens
                     // No further wavelets, move up to next wave
                     myManager.GetNextWave();
                 }
+                else
+                {
+                    myManager.SetNextMusic();
+                }
             }
 
             #endregion Enemy Stuff

@@ -174,7 +174,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
-            AudioManager audio = ServiceLocator.GetService<AudioManager>();
+            /*AudioManager audio = ServiceLocator.GetService<AudioManager>();
             int intensity = 1;
             if (audio.SongIsPlaying(SongID.Intensity))
             {
@@ -191,7 +191,7 @@ namespace Duologue.PlayObjects
             {
                 audio.FadeIn(SongID.Intensity);
             }
-            audio.FadeIn(SongID.Intensity, intensity);
+            audio.FadeIn(SongID.Intensity, intensity);*/
             LoadAndInitialize();
         }
 

@@ -19,6 +19,7 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
+using Duologue.Audio;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.UI;
@@ -163,6 +164,11 @@ namespace Duologue.Waves
             int hitsToKillEnemy = 0;
             thisWave.Wavelets[thisWave.CurrentWavelet] = 
                 new Wavelet(NumEnemies, hitsToKillEnemy);
+
+            if (MWMathHelper.CoinToss())
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Intensity;
+            else
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.LandOfSand;
             
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;
