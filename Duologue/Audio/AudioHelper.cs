@@ -80,11 +80,6 @@ namespace Duologue.Audio
                     usedCues.Remove(cue);
                 }
             });
-            //Look for any volume profile adjustments needed (if we are handling that on this side)
-        }
-
-        private static void ProcessDynamicCues()
-        {
         }
 
         private static void RecycleCue(string sbname, string cueName)
@@ -167,98 +162,6 @@ namespace Duologue.Audio
             cues[sbname][cueName].Play();
         }
 
-        /*
-
-        public static void PlayCues(string sbname, List<string> cueNames, PlayType type)
-        {
-            //FIXME at some point, will need to allow for this manager
-            //to control repeating loop play, with different cues being
-            //different lengths.
-            bool SYNCSTART = false;
-
-            if (SYNCSTART)
-            {
-                cueNames.ForEach(delegate(string cueName)
-                {
-                    RecycleCue(sbname, cueName);
-                    cues[sbname][cueName].SetVariable(volumeName, Loudness.Normal);
-                });
-                cueNames.ForEach(delegate(string cueName)
-                {
-                    cues[sbname][cueName].Play();
-                });
-            }
-            else
-            {
-                cueNames.ForEach(delegate(string cueName)
-                {
-                    PlayCue(sbname, cueName, type);
-                });
-            }
-        }
-
-
-        /// <summary>
-        /// This will fire up every cue in the soundbank at the same time.
-        /// </summary>
-        /// <param name="sbname"></param>
-        /// <param name="type"></param>
-        public static void PlayCues(string sbname, PlayType type)
-        {
-            PlayCues(sbname, cues[sbname].Keys.ToList(), type);
-        }
-
-        public static void UpdateCues(string sbname, Dictionary<string, float> cueVolumes)
-        {
-            cueVolumes.Keys.ToList().ForEach( name =>
-                {
-                    cues[sbname][name].SetVariable(volumeName, cueVolumes[name]);
-                });
-        }
-
-        public static void UpdateCues(string sbname, List<Track> tracks)
-        {
-            tracks.ForEach(track =>
-                {
-                    cues[sbname][track.CueName].SetVariable(volumeName, track.Volume);
-                });
-        }
-        public static void UpdateCues(string sbname, string[] names, float[] volumes)
-        {
-            for (int i = 0; i < names.GetLength(0); i++)
-            {
-                cues[sbname][names[i]].SetVariable(volumeName, volumes[i]);
-            }
-        }
-
-        public static void UpdateCues(string sbname, float volume)
-        {
-            cues[sbname].Values.ToList().ForEach(cue =>
-                {
-                    cue.SetVariable(volumeName, volume);
-                });
-        }
-        
-        public static void StopCues(string sbname, List<string> cuenames)
-        {
-            cuenames.ForEach(delegate(string cueName)
-            {
-                StopCue(sbname, cueName);
-            });
-        }
-
-
-        /// <summary>
-        /// Stop every cue in the parameter sound bank. Handy for songs.
-        /// </summary>
-        /// <param name="sbname"></param>
-        public static void StopCues(string sbname)
-        {
-            StopCues(sbname, cues[sbname].Keys.ToList());
-        }
-
-        */
-
         public static void UpdateCues(Song song)
         {
             song.Tracks.Values.ToList().ForEach(track =>
@@ -290,9 +193,7 @@ namespace Duologue.Audio
         public override void Update(GameTime gameTime)
         {
             engine.Update();
-            ProcessDynamicCues();
             ProcessPlayedCues();
-            // TODO: Add your update code here
             base.Update(gameTime);
         }
     }

@@ -22,6 +22,36 @@ namespace Duologue.Audio
         //,newname
     }
 
+    public class SoundEffect
+    {
+        public string CueName;
+        public float Volume;
+
+        public SoundEffect() { }
+        public SoundEffect(string cue)
+        {
+            CueName = cue;
+            Volume = Loudness.Normal;
+        }
+        public SoundEffect(string cue, float vol)
+        {
+            CueName = cue;
+            Volume = vol;
+        }
+    }
+
+    public class EffectsBank : GameComponent
+    {
+        public string SoundBankName;
+        public string WaveBankName;
+        //the dictionary key is the cue name...which we also need in
+        //each of the sound effects. Crap.
+        public Dictionary<string, SoundEffect> Effects =
+            new Dictionary<string, SoundEffect>();
+        public EffectsBank(Game game) : base(game) { }
+    }
+
+
     /// <summary>
     /// Convenience class. Provides no-arg methods that invoke AudioHelper generics
     /// </summary>

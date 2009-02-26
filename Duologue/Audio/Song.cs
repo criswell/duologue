@@ -180,36 +180,4 @@ namespace Duologue.Audio
         }
 
     }
-
-
-    public class SoundEffect
-    {
-        public string CueName;
-        public float Volume;
-        //FIXME
-
-        public SoundEffect() { }
-        public SoundEffect(string cue)
-        {
-            CueName = cue;
-            this.Volume = Loudness.Normal;
-        }
-        public SoundEffect(string cue, float vol)
-        {
-            CueName = cue;
-            this.Volume = vol;
-        }
-    }
-
-    public class EffectsBank : GameComponent
-    {
-        public string SoundBankName;
-        public string WaveBankName;
-        //the dictionary key is the cue name...which we also need in
-        //each of the sound effects. Crap.
-        public Dictionary<string, SoundEffect> Effects =
-            new Dictionary<string, SoundEffect>();
-        public EffectsBank(Game game) : base(game) { }
-    }
-
 }
