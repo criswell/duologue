@@ -406,7 +406,7 @@ namespace Mimicware.Graphics
 
         internal void DrawString(
             SpriteFont font,
-            string p,
+            string text,
             Vector2 vector2,
             Color color,
             Vector2 scale,
@@ -415,7 +415,7 @@ namespace Mimicware.Graphics
         {
             SpriteObject sobj = new SpriteObject(
                 font,
-                p,
+                text,
                 vector2,
                 color);
             sobj.Scale = scale;
@@ -424,6 +424,10 @@ namespace Mimicware.Graphics
                 this.AddAdditive(sobj);
             else if (mode == RenderSpriteBlendMode.Multiplicative)
                 this.AddMultiplicative(sobj);
+            else if (mode == RenderSpriteBlendMode.AddititiveTop)
+                this.AddAdditiveTop(sobj);
+            else if (mode == RenderSpriteBlendMode.AlphaBlendTop)
+                this.AddTop(sobj);
             else
                 this.Add(sobj);
         }
@@ -507,25 +511,25 @@ namespace Mimicware.Graphics
         }
 
         /// <summary>
-        /// 
+        /// Draw a string with shadow based upon a scale and a center
         /// </summary>
-        /// <param name="font"></param>
-        /// <param name="p"></param>
-        /// <param name="pos"></param>
-        /// <param name="mainColor"></param>
-        /// <param name="shadowColor"></param>
-        /// <param name="scale"></param>
-        /// <param name="vector2"></param>
-        /// <param name="shadowOffset"></param>
-        /// <param name="renderSpriteBlendMode"></param>
+        /// <param name="font">The Font to use</param>
+        /// <param name="text">The string to draw</param>
+        /// <param name="pos">The position for the string</param>
+        /// <param name="mainColor">The main color of the string</param>
+        /// <param name="shadowColor">The color of the shadow</param>
+        /// <param name="scale">The universal scale of the text</param>
+        /// <param name="center">Center of the text</param>
+        /// <param name="shadowOffset">An array of shadow offsets</param>
+        /// <param name="renderSpriteBlendMode">The sprite blend mode</param>
         internal void DrawString(
             SpriteFont font,
-            string p,
+            string text,
             Vector2 pos,
             Color mainColor,
             Color shadowColor,
             float scale,
-            Vector2 vector2,
+            Vector2 center,
             Vector2[] shadowOffset,
             RenderSpriteBlendMode renderSpriteBlendMode)
         {
@@ -533,21 +537,21 @@ namespace Mimicware.Graphics
             for (int i = 0; i < shadowOffset.Length; i++)
             {
                 this.DrawString(font,
-                    p,
+                    text,
                     pos + shadowOffset[i],
                     shadowColor,
                     new Vector2(scale),
-                    vector2,
+                    center,
                     renderSpriteBlendMode);
             }
 
             // Draw the main text
             this.DrawString(font,
-                p,
+                text,
                 pos,
                 mainColor,
                 new Vector2(scale),
-                vector2,
+                center,
                 renderSpriteBlendMode);
         }
 

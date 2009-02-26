@@ -79,7 +79,7 @@ namespace Duologue.Waves
             waveDef = new WaveDefinitions();
 
             // Sensible defaults
-            CurrentMajorNumber = 0;
+            CurrentMajorNumber = 1;
             CurrentMinorNumber = 0;
         }
         #endregion
@@ -93,6 +93,7 @@ namespace Duologue.Waves
             int[] k = IncrementWaveNumbers(lastMajorNumber, lastMinorNumber);
             lastMajorNumber = k[0];
             lastMinorNumber = k[1];
+            Console.WriteLine(String.Format("Getting ({0}-{1})", lastMajorNumber, lastMinorNumber));
             return waveDef.GetWave(lastMajorNumber, lastMinorNumber);
         }
 
@@ -188,6 +189,24 @@ namespace Duologue.Waves
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Reset the game wave back to 1-1
+        /// </summary>
+        public void Reset()
+        {
+            Reset(1, 0);
+        }
+
+        /// <summary>
+        /// Reset the game back to a major and minor number specified
+        /// </summary>
+        public void Reset(int Major, int Minor)
+        {
+            CurrentMajorNumber = Major;
+            CurrentMinorNumber = Minor;
+            Console.WriteLine(String.Format("Resetting to ({0}-{1})", CurrentMajorNumber, CurrentMinorNumber));
+        }
+
         /// <summary>
         /// Get the next wave
         /// </summary>

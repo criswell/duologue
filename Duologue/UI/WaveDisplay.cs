@@ -49,9 +49,10 @@ namespace Duologue.UI
         private string[] theText;
         private float timeSinceStart;
         private TextTransitionType currentType;
-        private Random rand;
+        //private Random rand;
         private Vector2 screenCenter;
         private Vector2[] shadowOffset;
+        private Vector2 totalSize;
         #endregion
 
         #region Properties
@@ -69,6 +70,7 @@ namespace Duologue.UI
                 theText = value;
                 timeSinceStart = 0f;
                 GetNewTransitionType();
+                GetTotalSize();
             }
         }
 
@@ -96,7 +98,7 @@ namespace Duologue.UI
             : base(game)
         {
             localGame = game;
-            rand = new Random();
+            //rand = new Random();
             screenCenter = Vector2.Zero;
             shadowOffset = new Vector2[1];
             shadowOffset[0] = Vector2.One;
@@ -132,7 +134,7 @@ namespace Duologue.UI
         private void DrawFade(GameTime gameTime)
         {
             // Get the position
-            Vector2 totalSize = GetTotalSize();
+            //totalSize = GetTotalSize();
             Vector2 pos = screenCenter - totalSize / 2f;
 
             // Calculate the fade percent
@@ -166,7 +168,7 @@ namespace Duologue.UI
                         ShadowColor.B,
                         (byte)(255 * fadePercent)),
                     shadowOffset,
-                    RenderSpriteBlendMode.AlphaBlend);
+                    RenderSpriteBlendMode.AlphaBlendTop);
                 pos.Y += font.LineSpacing;
             }
         }
@@ -177,11 +179,12 @@ namespace Duologue.UI
         private void DrawZoomIn(GameTime gameTime)
         {
             // Get the position
-            Vector2 totalSize = GetTotalSize();
+            //totalSize = GetTotalSize();
             //Vector2 pos = screenCenter - totalSize / 2f;
 
             // Calculate the fade percent
             float scale = 1f;
+            Vector2 pos = screenCenter;// -totalSize / 2f;
             if (PercentComplete <= fadeInLifetime)
             {
                 // We're fading in
@@ -198,7 +201,8 @@ namespace Duologue.UI
                 //pos.X = screenCenter.X - font.MeasureString(theText[i]).X / 2f;
                 // FIXME
                 // Yeah, this is totally wrong and butchered... but don't want to figure it out now
-                Vector2 pos = screenCenter - font.MeasureString(theText[i]) + i * font.LineSpacing * Vector2.UnitY;
+                //pos.X = font.MeasureString(theText[i]).X / 2f;
+                //Vector2 pos = screenCenter - font.MeasureString(theText[i]) + i * font.LineSpacing * Vector2.UnitY;
                 InstanceManager.RenderSprite.DrawString(
                     font,
                     theText[i],
@@ -208,8 +212,8 @@ namespace Duologue.UI
                     scale,
                     font.MeasureString(theText[i])/2f,
                     shadowOffset,
-                    RenderSpriteBlendMode.AlphaBlend);
-                //pos.Y += font.LineSpacing;
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                pos.Y += font.LineSpacing;
             }
 
         }
@@ -221,15 +225,15 @@ namespace Duologue.UI
         /// </summary>
         private void GetNewTransitionType()
         {
-            //currentType = (TextTransitionType)rand.Next((int)TextTransitionType.MaxNum);
+            currentType = (TextTransitionType)InstanceManager.Random.Next((int)TextTransitionType.MaxNum);
             // For now, we just use this for testing
-            currentType = TextTransitionType.Fade;
+            //currentType = TextTransitionType.Fade;
         }
 
         /// <summary>
         /// Get the total size of theText
         /// </summary>
-        private Vector2 GetTotalSize()
+        private void GetTotalSize()
         {
             Vector2 theSize = Vector2.Zero;
             for (int i = 0; i < theText.Length; i++)
@@ -240,7 +244,7 @@ namespace Duologue.UI
 
                 theSize.Y += size.Y;
             }
-            return theSize;
+            totalSize = theSize;
         }
         #endregion
 

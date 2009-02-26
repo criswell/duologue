@@ -111,6 +111,7 @@ namespace Duologue.Screens
             localGame = (DuologueGame)game;
             gameWaveManager = new GameWaveManager();
             waveDisplay = new WaveDisplay(localGame);
+            waveDisplay.DrawOrder = 200;
             localGame.Components.Add(waveDisplay);
             gamePlayLoop = new GamePlayLoop(localGame, this);
             gamePlayLoop.DrawOrder = 4;
@@ -132,8 +133,7 @@ namespace Duologue.Screens
         private void Reset()
         {
             currentState = GamePlayState.WaveIntro;
-            gameWaveManager.CurrentMajorNumber = 1;
-            gameWaveManager.CurrentMinorNumber = 0;
+            gameWaveManager.Reset();
             LocalInstanceManager.CurrentGameWave = null;
             timeSinceStart = 0f;
             intensityCounter = 0f;
@@ -165,6 +165,15 @@ namespace Duologue.Screens
             audio.FadeOut(lastSongID);
             audio.FadeOut(
                 LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID);
+
+            gameWaveManager.Reset();
+            LocalInstanceManager.Enemies = null;
+            LocalInstanceManager.CurrentNumberEnemies = 0;
+            LocalInstanceManager.CurrentGameWave = null;
+            currentState = GamePlayState.WaveIntro;
+            timeSinceStart = 0f;
+            intensityCounter = 0f;
+            intensityTimer = 0f;
             // We default to what we should get coming into the game
             lastSongID = SongID.SelectMenu;
 
