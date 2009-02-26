@@ -93,7 +93,7 @@ namespace Duologue.Waves
             int[] k = IncrementWaveNumbers(lastMajorNumber, lastMinorNumber);
             lastMajorNumber = k[0];
             lastMinorNumber = k[1];
-            return waveDef.GetWave(lastMinorNumber, lastMinorNumber);
+            return waveDef.GetWave(lastMajorNumber, lastMinorNumber);
         }
 
         private int[] IncrementWaveNumbers(int lastMajorNo, int lastMinorNo)

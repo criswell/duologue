@@ -52,11 +52,6 @@ namespace Duologue.Screens
         private const int intensityIncreaseLimit = 2;
 
         /// <summary>
-        /// The rate of increase for the intensity counter
-        /// </summary>
-        //private const float intensityIncreaseDelta = 0.5f;
-
-        /// <summary>
         /// How long it takes for nothing happening to decrease intensity
         /// </summary>
         private const float intensityLifetime = 6f;
@@ -70,7 +65,6 @@ namespace Duologue.Screens
         #region Fields
         private DuologueGame localGame;
         private GameWaveManager gameWaveManager;
-        //private GameWave currentWave;
         private GamePlayState currentState;
         private GamePlayState nextState;
         private WaveDisplay waveDisplay;
@@ -167,6 +161,10 @@ namespace Duologue.Screens
 
         public override void ScreenExit(GameTime gameTime)
         {
+            AudioManager audio = ServiceLocator.GetService<AudioManager>();
+            audio.FadeOut(lastSongID);
+            audio.FadeOut(
+                LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID);
             // We default to what we should get coming into the game
             lastSongID = SongID.SelectMenu;
 
@@ -190,7 +188,7 @@ namespace Duologue.Screens
                 if (initialized)
                 {
                     //FIXME what if some other song is playing?
-                    ServiceLocator.GetService<AudioManager>().FadeOut(SongID.Intensity);
+                    ServiceLocator.GetService<AudioManager>().FadeOut(lastSongID);
                     LocalInstanceManager.Enemies = null;
                     LocalInstanceManager.CurrentNumberEnemies = 0;
                 }
