@@ -86,6 +86,8 @@ namespace Duologue.Screens
         private bool initialized;
 
         private SongID lastSongID;
+
+        private bool launchedFirstWave;
         #endregion
 
         #region Properties
@@ -155,6 +157,7 @@ namespace Duologue.Screens
         {
             // We default to what we should get coming into the game
             lastSongID = SongID.SelectMenu;
+            launchedFirstWave = false;
 
             base.ScreenEntrance(gameTime);
         }
@@ -301,28 +304,32 @@ namespace Duologue.Screens
         /// </summary>
         public void GetNextWave()
         {
-            // Get the next wave
-            LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
+            if (launchedFirstWave)
+            {
+                // Get the next wave
+                LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
+                LocalInstanceManager.CurrentGameWave.CurrentWavelet = 0;
 
-            // Set the player
-            for (int i = 0; i < InputManager.MaxInputs; i++)
-                if (LocalInstanceManager.Players[i].Active)
-                    LocalInstanceManager.Players[i].ColorState =
-                        ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState];
+                // Set the player
+                for (int i = 0; i < InputManager.MaxInputs; i++)
+                    if (LocalInstanceManager.Players[i].Active)
+                        LocalInstanceManager.Players[i].ColorState =
+                            ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState];
 
-            // Display the wave intro
-            string[] text = new string[2];
-            text[0] = String.Format(Resources.GameScreen_Wave,
-                LocalInstanceManager.CurrentGameWave.MajorWaveNumber.ToString(),
-                LocalInstanceManager.CurrentGameWave.MinorWaveNumber.ToString());
-            text[1] = LocalInstanceManager.CurrentGameWave.Name;
-            waveDisplay.Text = text;
-            // Set up the background and enemies
-            LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
+                // Display the wave intro
+                string[] text = new string[2];
+                text[0] = String.Format(Resources.GameScreen_Wave,
+                    LocalInstanceManager.CurrentGameWave.MajorWaveNumber.ToString(),
+                    LocalInstanceManager.CurrentGameWave.MinorWaveNumber.ToString());
+                text[1] = LocalInstanceManager.CurrentGameWave.Name;
+                waveDisplay.Text = text;
+                // Set up the background and enemies
+                LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
 
-            // Set up the exit stuff
-            currentState = GamePlayState.Delay;
-            timeSinceStart = 0f;
+                // Set up the exit stuff
+                currentState = GamePlayState.Delay;
+                timeSinceStart = 0f;
+            }
         }
 
         /// <summary>
@@ -364,6 +371,7 @@ namespace Duologue.Screens
             switch (currentState)
             {
                 case GamePlayState.WaveIntro:
+                    launchedFirstWave = true;
                     GetNextWave();
                     nextState = GamePlayState.InitPlayerSpawn;
                     break;

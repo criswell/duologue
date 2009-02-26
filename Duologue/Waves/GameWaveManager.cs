@@ -93,7 +93,6 @@ namespace Duologue.Waves
             int[] k = IncrementWaveNumbers(lastMajorNumber, lastMinorNumber);
             lastMajorNumber = k[0];
             lastMinorNumber = k[1];
-            Console.WriteLine(String.Format("Getting ({0}-{1})", lastMajorNumber, lastMinorNumber));
             return waveDef.GetWave(lastMajorNumber, lastMinorNumber);
         }
 
@@ -204,7 +203,6 @@ namespace Duologue.Waves
         {
             CurrentMajorNumber = Major;
             CurrentMinorNumber = Minor;
-            Console.WriteLine(String.Format("Resetting to ({0}-{1})", CurrentMajorNumber, CurrentMinorNumber));
         }
 
         /// <summary>
