@@ -53,34 +53,10 @@ namespace Duologue.Waves
         #endregion
 
         #region Fields
-        /// <summary>
-        /// The list of game waves this manager owns
-        /// </summary>
-        private List<GameWave> waves;
-
-        /// <summary>
-        /// The current wave we are on
-        /// </summary>
-        private int currentWaveIndex;
-
-        private Random rand;
+        private WaveDefinitions waveDef;
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets or sets the current wave index
-        /// Note: If you try to set this outside the possible range, it will
-        /// default to 0 or MaxNumofGameWaves
-        /// </summary>
-        public int CurrentWaveIndex
-        {
-            get { return currentWaveIndex; }
-            set
-            {
-                currentWaveIndex = Math.Max(0, Math.Min(value, waves.Count-1));
-            }
-        }
-
         /// <summary>
         /// The current wave's Major Number
         /// </summary>
@@ -98,17 +74,9 @@ namespace Duologue.Waves
         /// Basic constructor
         /// </summary>
         /// <param name="maxNumOfGameWaves"></param>
-        public GameWaveManager(int? maxNumOfGameWaves)
+        public GameWaveManager()//int? maxNumOfGameWaves)
         {
-            rand = new Random();
-            if (maxNumOfGameWaves == null)
-            {
-                waves = new List<GameWave>(MaxNumOfGameWaves);
-            }
-            else
-            {
-                waves = new List<GameWave>((int)maxNumOfGameWaves);
-            }
+            waveDef = new WaveDefinitions();
 
             // Sensible defaults
             CurrentMajorNumber = 0;
@@ -117,33 +85,53 @@ namespace Duologue.Waves
         #endregion
 
         #region Private Methods
-        #endregion
+        /// <summary>
+        /// Get the next wave
+        /// </summary>
+        private GameWave GetWave(int lastMajorNumber, int lastMinorNumber)
+        {
+            int[] k = IncrementWaveNumbers(lastMajorNumber, lastMinorNumber);
+            lastMajorNumber = k[0];
+            lastMinorNumber = k[1];
+            return waveDef.GetWave(lastMinorNumber, lastMinorNumber);
+        }
 
-        #region Public Methods
+        private int[] IncrementWaveNumbers(int lastMajorNo, int lastMinorNo)
+        {
+            int[] k = new int[2];
+            lastMinorNo++;
+            if (lastMinorNo > MaxMinorNumber)
+            {
+                lastMinorNo = 0;
+                lastMajorNo++;
+                if (lastMajorNo > MaxMajorNumber)
+                {
+                    lastMajorNo = 0;
+                    // FIXME: Need an achievement here, I think
+                }
+            }
+            k[0] = lastMajorNo;
+            k[1] = lastMinorNo;
+
+            return k;
+        }
+
         /// <summary>
         /// Generate a random wave
         /// </summary>
         /// <returns>A random game wave</returns>
-        public GameWave GenerateRandomWave(int lastMajorWaveNo, int lastMinorWaveNo)
+        private GameWave GenerateRandomWave(int lastMajorWaveNo, int lastMinorWaveNo)
         {
-            lastMinorWaveNo++;
-            if (lastMinorWaveNo > MaxMinorNumber)
-            {
-                lastMinorWaveNo = 0;
-                lastMajorWaveNo++;
-                if (lastMajorWaveNo > MaxMajorNumber)
-                {
-                    lastMajorWaveNo = 0;
-                    // FIXME: Need an achievement here, I think
-                }
-            }
+            int[] k = IncrementWaveNumbers(lastMajorWaveNo, lastMinorWaveNo);
+            lastMajorWaveNo = k[0];
+            lastMinorWaveNo = k[1];
 
             // Get a random color state
             ColorState[] theStates = ColorState.GetColorStates();
 
             GameWave thisWave = new GameWave(Resources.GameScreen_InfiniteWave,
-                rand.Next(LocalInstanceManager.Background.NumBackgrounds),
-                MWMathHelper.GetRandomInRange(0,ColorState.numberOfColorStates),
+                InstanceManager.Random.Next(LocalInstanceManager.Background.NumBackgrounds),
+                MWMathHelper.GetRandomInRange(0, ColorState.numberOfColorStates),
                 lastMajorWaveNo,
                 lastMinorWaveNo);
 
@@ -162,14 +150,14 @@ namespace Duologue.Waves
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelets = new Wavelet[NumWavelets];
             int hitsToKillEnemy = 0;
-            thisWave.Wavelets[thisWave.CurrentWavelet] = 
+            thisWave.Wavelets[thisWave.CurrentWavelet] =
                 new Wavelet(NumEnemies, hitsToKillEnemy);
 
             if (MWMathHelper.CoinToss())
                 thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Intensity;
             else
                 thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.LandOfSand;
-            
+
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;
 
@@ -185,6 +173,7 @@ namespace Duologue.Waves
                 //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                 //thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
                 thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
+                thisWave.Wavelets[thisWave.CurrentWavelet].ColorPolarities[i] = ColorState.RandomPolarity();
             }
             //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[80] = TypesOfPlayObjects.Enemy_KingGloop;
             /*thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[20] = TypesOfPlayObjects.Enemy_StaticKing;
@@ -196,7 +185,9 @@ namespace Duologue.Waves
 
             return thisWave;
         }
+        #endregion
 
+        #region Public Methods
         /// <summary>
         /// Get the next wave
         /// </summary>
@@ -212,9 +203,9 @@ namespace Duologue.Waves
             }
             else
             {
-                // FIXME
-                // Need to handle campaign here
-                temp = new GameWave();
+                temp = GetWave(CurrentMajorNumber, CurrentMinorNumber);
+                CurrentMajorNumber = temp.MajorWaveNumber;
+                CurrentMinorNumber = temp.MinorWaveNumber;
             }
             return temp;
         }

@@ -287,6 +287,7 @@ namespace Duologue
             gamePlayScreenManager = new GamePlayScreenManager(this);
             this.Components.Add(gamePlayScreenManager);
             dispatchTable.Add(GameState.InfinityGame, gamePlayScreenManager);
+            dispatchTable.Add(GameState.CampaignGame, gamePlayScreenManager);
 
             // Color State Test screen
             colorStateTest = new ColorStateTestScreen(this);

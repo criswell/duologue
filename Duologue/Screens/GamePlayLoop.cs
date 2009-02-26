@@ -220,7 +220,7 @@ namespace Duologue.Screens
                             LocalInstanceManager.Enemies[i].RealSize.Length()/2f),
                             Vector2.Zero,
                             ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState],
-                            ColorState.RandomPolarity(),
+                            LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].ColorPolarities[i],
                             LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints[i]);
                         livingEnemies++;
                     }

@@ -250,6 +250,14 @@ namespace Duologue.Screens
                     LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
                     LocalInstanceManager.NextGameState = GameState.InfinityGame;
                 }
+                else if (currentSelection == gameSelectCampaign)
+                {
+                    currentState = MainMenuState.MainMenu;
+                    currentSelection = 0;
+                    ResetMenuItems();
+                    LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
+                    LocalInstanceManager.NextGameState = GameState.CampaignGame;
+                }
             }
         }
 
