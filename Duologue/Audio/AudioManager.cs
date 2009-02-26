@@ -145,7 +145,7 @@ namespace Duologue.Audio
             ChangeIntensity(1);
         }
 
-        public void ChangeIntensity(int amount)
+        protected void ChangeIntensity(int amount)
         {
             IntensityEventArgs e = new IntensityEventArgs();
             e.ChangeAmount = amount;

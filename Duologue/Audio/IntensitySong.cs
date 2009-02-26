@@ -62,8 +62,8 @@ namespace Duologue.Audio
             int oldIntensityStep = intensityStep;
             intensityStep =
                 MWMathHelper.LimitToRange(intensityStep + amount, 1, MaxIntensity);
-            //if ( ( (intensityStep != oldIntensityStep) || amount == 0 ) && !this.isVolumeChanging )
-            if (!isVolumeChanging)
+            //if ( ( (intensityStep != oldIntensityStep) || amount == 0 ) && !this.volumeChanging )
+            if (!volumeChanging)
             {
                 Tracks.Keys.ToList().ForEach(name =>
                 {

@@ -174,25 +174,6 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
-            /*AudioManager audio = ServiceLocator.GetService<AudioManager>();
-            int intensity = 1;
-            if (audio.SongIsPlaying(SongID.Intensity))
-            {
-                float current = audio.GetIntensity(SongID.Intensity);
-                audio.FadeOut(SongID.Intensity);
-                audio.FadeIn(SongID.LandOfSand, current);
-            }
-            else if (audio.SongIsPlaying(SongID.LandOfSand))
-            {
-                float current = audio.GetIntensity(SongID.LandOfSand);
-                audio.FadeOut(SongID.LandOfSand);
-                audio.FadeIn(SongID.Intensity, current);
-            }
-            else
-            {
-                audio.FadeIn(SongID.Intensity, 0f);
-            }
-            audio.FadeIn(SongID.Intensity, intensity);*/
             LoadAndInitialize();
         }
 

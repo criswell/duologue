@@ -10,12 +10,12 @@ namespace Duologue.Audio
 
     public class Track
     {
+        protected const float volSteps = 20f;
         public string CueName;
         public float Volume;
         public float StartVolume;
         public float EndVolume;
-        public bool IsVolumeChanging = false;
-        //public float VolChangeDeltaV;
+        public bool VolumeChanging = false;
         public Track() { }
         public Track(string cue, float vol)
         {
@@ -31,7 +31,20 @@ namespace Duologue.Audio
             {
                 StartVolume = Volume;
                 EndVolume = newVol;
-                IsVolumeChanging = true;
+                VolumeChanging = true;
+            }
+        }
+
+        public void IncrementFade()
+        {
+            if (VolumeChanging)
+            {
+                Volume += (EndVolume - StartVolume) / volSteps;
+                if (((StartVolume > EndVolume) && !(Volume > EndVolume)) ||
+                    ((StartVolume < EndVolume) && !(EndVolume > Volume)))
+                {
+                    VolumeChanging = false;
+                }
             }
         }
     }
@@ -41,10 +54,9 @@ namespace Duologue.Audio
         public string SoundBankName;
         public string WaveBankName;
 
-        protected bool isPlaying = false;
-        protected bool isVolumeChanging = false;
+        protected bool isPlaying;
+        protected bool volumeChanging;
         protected const float updateDeltaT = 100f;
-        protected const float volSteps = 10f;
         protected double previousVolChangeTime;
         protected bool stopAfterVolChange;
 
@@ -59,12 +71,20 @@ namespace Duologue.Audio
         public Song(Game game, string sbname, string wbname, List<string> cues)
             : this(game, sbname, wbname)
         {
+            initvars();
             foreach (string cue in cues)
             {
                 Track newTrack = new Track(cue, Loudness.Normal);
                 Tracks.Add(cue, newTrack);
             }
             AudioHelper.AddBank(SoundBankName, WaveBankName, cues);
+        }
+
+        protected void initvars()
+        {
+            isPlaying = false;
+            volumeChanging = false;
+            stopAfterVolChange = false;
         }
 
         public virtual void Play()
@@ -76,8 +96,7 @@ namespace Duologue.Audio
         public virtual void Stop()
         {
             AudioHelper.Stop(this);
-            isPlaying = false;
-            stopAfterVolChange = false;
+            initvars();
         }
 
         public virtual bool IsPlaying
@@ -114,45 +133,31 @@ namespace Duologue.Audio
         public void ChangeVolume(bool stop)
         {
             stopAfterVolChange = stopAfterVolChange || stop;
-            isVolumeChanging = true;
+            volumeChanging = true;
         }
 
 
         protected void UpdateVolumeChange(GameTime gameTime)
         {
-            double updateDiff =
-                gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime;
-            if (updateDiff > updateDeltaT)
+            if (gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime > updateDeltaT)
             {
-                bool completed = true;
-                this.Tracks.Values.ToList().ForEach(track =>
+                volumeChanging = false;
+                Tracks.Values.ToList().ForEach(track =>
                 {
-                    if (track.IsVolumeChanging)
+                    previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+                    if (track.VolumeChanging)
                     {
-                        track.Volume += (track.EndVolume - track.StartVolume) / 4f; //FIXME
-
-                        if (((track.StartVolume > track.EndVolume) &&
-                            (track.Volume > track.EndVolume)) ||
-                            ((track.StartVolume < track.EndVolume) &&
-                            (track.EndVolume > track.Volume)))
-                        {
-                            completed = false;
-                        }
-                        else
-                        {
-                            isVolumeChanging = true;
-                        }
+                        track.IncrementFade();
+                        volumeChanging |= track.VolumeChanging;
                     }
                 });
                 AudioHelper.UpdateCues(this);
-                previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
-                if (completed)
+                if (!volumeChanging)
                 {
                     if (stopAfterVolChange)
                     {
                         Stop();
                     }
-                    isVolumeChanging = false;
                 }
             }
         }
@@ -163,8 +168,7 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
-            if (isVolumeChanging)
+            if (volumeChanging)
             {
                 UpdateVolumeChange(gameTime);
             }
