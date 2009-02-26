@@ -51,8 +51,8 @@ namespace Duologue.ParticleEffects
             minNumParticles = 10;
             maxNumParticles = 15;
 
-            minRotationSpeed = MathHelper.PiOver4 / 4f; ;
-            maxRotationSpeed = MathHelper.PiOver4 / 2f ;
+            minRotationSpeed = MathHelper.PiOver4 / 4f;
+            maxRotationSpeed = MathHelper.PiOver4 / 2f;
 
             // additive blending is very good at creating fiery effects.
             spriteBlendMode = RenderSpriteBlendMode.AlphaBlend;
