@@ -52,11 +52,6 @@ namespace Duologue.Screens
         private const int intensityIncreaseLimit = 2;
 
         /// <summary>
-        /// The rate of increase for the intensity counter
-        /// </summary>
-        //private const float intensityIncreaseDelta = 0.5f;
-
-        /// <summary>
         /// How long it takes for nothing happening to decrease intensity
         /// </summary>
         private const float intensityLifetime = 6f;
@@ -70,7 +65,6 @@ namespace Duologue.Screens
         #region Fields
         private DuologueGame localGame;
         private GameWaveManager gameWaveManager;
-        //private GameWave currentWave;
         private GamePlayState currentState;
         private GamePlayState nextState;
         private WaveDisplay waveDisplay;
@@ -117,6 +111,7 @@ namespace Duologue.Screens
             localGame = (DuologueGame)game;
             gameWaveManager = new GameWaveManager();
             waveDisplay = new WaveDisplay(localGame);
+            waveDisplay.DrawOrder = 200;
             localGame.Components.Add(waveDisplay);
             gamePlayLoop = new GamePlayLoop(localGame, this);
             gamePlayLoop.DrawOrder = 4;
@@ -138,8 +133,7 @@ namespace Duologue.Screens
         private void Reset()
         {
             currentState = GamePlayState.WaveIntro;
-            gameWaveManager.CurrentMajorNumber = 1;
-            gameWaveManager.CurrentMinorNumber = 0;
+            gameWaveManager.Reset();
             LocalInstanceManager.CurrentGameWave = null;
             timeSinceStart = 0f;
             intensityCounter = 0f;
@@ -167,6 +161,19 @@ namespace Duologue.Screens
 
         public override void ScreenExit(GameTime gameTime)
         {
+            AudioManager audio = ServiceLocator.GetService<AudioManager>();
+            audio.FadeOut(lastSongID);
+            audio.FadeOut(
+                LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID);
+
+            gameWaveManager.Reset();
+            LocalInstanceManager.Enemies = null;
+            LocalInstanceManager.CurrentNumberEnemies = 0;
+            LocalInstanceManager.CurrentGameWave = null;
+            currentState = GamePlayState.WaveIntro;
+            timeSinceStart = 0f;
+            intensityCounter = 0f;
+            intensityTimer = 0f;
             // We default to what we should get coming into the game
             lastSongID = SongID.SelectMenu;
 
@@ -190,7 +197,7 @@ namespace Duologue.Screens
                 if (initialized)
                 {
                     //FIXME what if some other song is playing?
-                    ServiceLocator.GetService<AudioManager>().FadeOut(SongID.Intensity);
+                    ServiceLocator.GetService<AudioManager>().FadeOut(lastSongID);
                     LocalInstanceManager.Enemies = null;
                     LocalInstanceManager.CurrentNumberEnemies = 0;
                 }
