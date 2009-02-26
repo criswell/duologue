@@ -38,8 +38,6 @@ namespace Duologue.ParticleEffects
             minInitialSpeed = 10;
             maxInitialSpeed = 25;
 
-            // doesn't matter what these values are set to, acceleration is tweaked in
-            // the override of InitializeParticle.
             minAcceleration = 1;
             maxAcceleration = 10;
 
@@ -47,14 +45,14 @@ namespace Duologue.ParticleEffects
             minLifetime = .5f;
             maxLifetime = 1.0f;
 
-            minScale = 0.5f;
+            minScale = 0.25f;
             maxScale = 2.0f;
 
             minNumParticles = 10;
             maxNumParticles = 15;
 
-            minRotationSpeed = 0;
-            maxRotationSpeed = 0;
+            minRotationSpeed = MathHelper.PiOver4 / 4f; ;
+            maxRotationSpeed = MathHelper.PiOver4 / 2f ;
 
             // additive blending is very good at creating fiery effects.
             spriteBlendMode = RenderSpriteBlendMode.AlphaBlend;
