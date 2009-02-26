@@ -22,7 +22,7 @@ namespace Duologue.Audio
     {
         #region Private Fields
         private float beatTimer = 0f;
-        private float beatInterval = 3433f;
+        private float beatInterval = 500f;
         private DuologueGame localGame;
         private AudioManager audio;
         #endregion
@@ -69,7 +69,7 @@ namespace Duologue.Audio
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-            this.Enabled = false;
+            this.Enabled = true;
             audio = ServiceLocator.GetService<AudioManager>();
             base.Initialize();
         }
