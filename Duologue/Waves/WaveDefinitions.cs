@@ -86,42 +86,54 @@ namespace Duologue.Waves
             // Third wavelet
             Wavelets[2] = new Wavelet(4, 2);
             Wavelets[2].SongID = SongID.Intensity;
+
             Wavelets[2].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[2].StartAngle[0] = 0f;
             Wavelets[2].ColorPolarities[0] = ColorPolarity.Negative;
+
             Wavelets[2].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[2].StartAngle[1] = MathHelper.Pi * 1.5f;
             Wavelets[2].ColorPolarities[1] = ColorPolarity.Positive;
+
             Wavelets[2].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[2].StartAngle[2] = MathHelper.Pi;
             Wavelets[2].ColorPolarities[2] = ColorPolarity.Negative;
+
             Wavelets[2].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[2].StartAngle[3] = MathHelper.PiOver2;
             Wavelets[2].ColorPolarities[3] = ColorPolarity.Positive;
             // Fourth wavelet
             Wavelets[3] = new Wavelet(8, 2);
             Wavelets[3].SongID = SongID.Intensity;
+
             Wavelets[3].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[3].StartAngle[0] = 0f;
             Wavelets[3].ColorPolarities[0] = ColorPolarity.Positive;
+
             Wavelets[3].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[3].StartAngle[1] = MathHelper.Pi * 1.5f;
             Wavelets[3].ColorPolarities[1] = ColorPolarity.Negative;
+
             Wavelets[3].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[3].StartAngle[2] = MathHelper.Pi;
             Wavelets[3].ColorPolarities[2] = ColorPolarity.Positive;
+
             Wavelets[3].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[3].StartAngle[3] = MathHelper.PiOver2;
             Wavelets[3].ColorPolarities[3] = ColorPolarity.Negative;
+
             Wavelets[3].Enemies[4] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[3].StartAngle[4] = MathHelper.PiOver4;
             Wavelets[3].ColorPolarities[4] = ColorPolarity.Positive;
+
             Wavelets[3].Enemies[5] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[3].StartAngle[5] = MathHelper.PiOver2 + MathHelper.PiOver4;
             Wavelets[3].ColorPolarities[5] = ColorPolarity.Negative;
+
             Wavelets[3].Enemies[6] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[3].StartAngle[6] = MathHelper.Pi + MathHelper.PiOver4;
             Wavelets[3].ColorPolarities[6] = ColorPolarity.Positive;
+
             Wavelets[3].Enemies[7] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[3].StartAngle[7] = MathHelper.Pi * 1.5f + MathHelper.PiOver4;
             Wavelets[3].ColorPolarities[7] = ColorPolarity.Negative;
