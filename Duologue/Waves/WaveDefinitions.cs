@@ -28,6 +28,19 @@ using Duologue.State;
 
 namespace Duologue.Waves
 {
+    [Serializable()]
+    public class WavesOutOfRangeException : System.Exception
+    {
+        public WavesOutOfRangeException() { }
+        public WavesOutOfRangeException(string message) { }
+        public WavesOutOfRangeException(string message, System.Exception inner) { }
+
+        // Constructor needed for serialization 
+        // when exception propagates from a remoting server to the client.
+        protected WavesOutOfRangeException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) { }
+    }
+
     /// <summary>
     /// For now, we'll just be storing these in memory. At a later date, we likely will
     /// want these to be stored on disk
@@ -272,7 +285,14 @@ namespace Duologue.Waves
         /// <returns>The gamewave specified by the major and minor numbers</returns>
         public GameWave GetWave(int MajorNum, int MinorNum)
         {
-            return Waves[GetIndex(MajorNum, MinorNum)];
+            try
+            {
+                return Waves[GetIndex(MajorNum, MinorNum)];
+            }
+            catch
+            {
+                throw;
+            }
         }
         #endregion
 
@@ -288,7 +308,7 @@ namespace Duologue.Waves
                 MinorNum = 1;
             int index = (MajorNum * 4) - 5 + MinorNum;
             if (index >= numberOfWaves)
-                index = numberOfWaves - 1;
+                throw new WavesOutOfRangeException();
             return index;
         }
         #endregion
