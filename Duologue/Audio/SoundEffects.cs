@@ -6,7 +6,8 @@ namespace Duologue.Audio
 {
 
     //the rule is: one sound bank = one group of effects = one EffectsGroupID
-    public enum EffectsBankID { Player, Wiggles }
+    public enum EffectsBankID { Player, Wiggles, Plucks }
+    public enum PluckNote { A, A3, C, C3, E }
     public enum EffectID
     {
         Clock,
@@ -48,7 +49,11 @@ namespace Duologue.Audio
         //each of the sound effects. Crap.
         public Dictionary<string, SoundEffect> Effects =
             new Dictionary<string, SoundEffect>();
-        public EffectsBank(Game game) : base(game) { }
+        public EffectsBank(Game game, string waves, string sounds) : base(game) 
+        {
+            WaveBankName = waves;
+            SoundBankName = sounds;
+        }
     }
 
 
@@ -59,6 +64,15 @@ namespace Duologue.Audio
     {
         public const string PlayerEffectsWB = "Content\\Audio\\PlayerEffects.xwb";
         public const string PlayerEffectsSB = "Content\\Audio\\PlayerEffects.xsb";
+
+        public const string PlucksWB = "Content\\Audio\\Plucks.xwb";
+        public const string PlucksSB = "Content\\Audio\\Plucks.xsb";
+
+        public const string A = "A";
+        public const string A3 = "A3";
+        public const string C = "C";
+        public const string C3 = "C3";
+        public const string E = "E";
         
         public const string Bamboo = "bambooclick";
         public const string Explosion = "player-explosion";
@@ -90,14 +104,24 @@ namespace Duologue.Audio
 
                 //,EffectID.YourNewEffectID, YourNewCueName
             };
+
+        private static Dictionary<PluckNote, string> PluckMap =
+            new Dictionary<PluckNote, string>
+            {
+                {PluckNote.A, A},
+                {PluckNote.A3, A3},
+                {PluckNote.C, C},
+                {PluckNote.C3, C3},
+                {PluckNote.E, E}
+            };
+
         private EffectsBank playerBank;
+        private EffectsBank plucksBank;
 
         public SoundEffects(AudioManager manager)
         {
             notifier = manager;
-            playerBank = new EffectsBank(notifier.Game);
-            playerBank.SoundBankName = PlayerEffectsSB;
-            playerBank.WaveBankName = PlayerEffectsWB;
+            playerBank = new EffectsBank(notifier.Game, PlayerEffectsWB, PlayerEffectsSB);
 
             List<string> effectNames = new List<string>();
             foreach (string name in IDNameMap.Values)
@@ -105,10 +129,17 @@ namespace Duologue.Audio
                 effectNames.Add(name);
                 playerBank.Effects.Add(name, new SoundEffect(name));
             }
-
             AudioHelper.AddBank(PlayerEffectsSB, PlayerEffectsWB, effectNames);
 
-            notifier = manager;
+            plucksBank = new EffectsBank(notifier.Game, PlucksWB, PlucksSB);
+            List<string> plucksNames = new List<string>();
+            foreach (string name in PluckMap.Values)
+            {
+                plucksNames.Add(name);
+                plucksBank.Effects.Add(name, new SoundEffect(name));
+            }
+            AudioHelper.AddBank(PlucksSB, PlucksWB, plucksNames);
+
             notifier.Changed += new IntensityEventHandler(UpdateIntensity);
         }
 
@@ -117,6 +148,11 @@ namespace Duologue.Audio
             AudioHelper.PlayCue(PlayerEffectsSB, IDNameMap[ID], PlayType.Single);
             //I want this to be:
             //AudioHelper.PlayEffect(EffectsMap[ID]);
+        }
+
+        public void PlayPluckNote(PluckNote note)
+        {
+            AudioHelper.PlayCue(PlucksSB, PluckMap[note], PlayType.Single);
         }
 
         public void StopEffect(EffectID ID)
@@ -150,5 +186,29 @@ namespace Duologue.Audio
             PlayEffect(EffectID.Clock);
         }
 
+        public void A_()
+        {
+            PlayPluckNote(PluckNote.A);
+        }
+
+        public void A3_()
+        {
+            PlayPluckNote(PluckNote.A3);
+        }
+
+        public void C_()
+        {
+            PlayPluckNote(PluckNote.C);
+        }
+
+        public void C3_()
+        {
+            PlayPluckNote(PluckNote.C3);
+        }
+
+        public void E_()
+        {
+            PlayPluckNote(PluckNote.E);
+        }
     }
 }

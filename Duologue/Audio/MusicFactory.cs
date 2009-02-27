@@ -14,36 +14,36 @@ namespace Duologue.Audio
     public class MusicFactory
     {
         //Select Menu Song constants
-        private const string selectMenuWaves = "Content\\Audio\\SelectMenu.xwb";
-        private const string selectMenuSounds = "Content\\Audio\\SelectMenu.xsb";
-        private const string selectMenuCue = "nicStage_gso";
+        protected const string selectMenuWaves = "Content\\Audio\\SelectMenu.xwb";
+        protected const string selectMenuSounds = "Content\\Audio\\SelectMenu.xsb";
+        protected const string selectMenuCue = "nicStage_gso";
 
         //Beat Effects Song constants
-        private const string beatEffectsWaves = "Content\\Audio\\Intensity.xwb";
-        private const string beatEffectsSounds = "Content\\Audio\\Intensity.xsb";
-        private const string Intensity1 = "beat";
-        private const string Intensity2 = "bass";
-        private const string Intensity3 = "bassplus";
-        private const string Intensity4 = "organ";
-        private const string Intensity5 = "guitar";
+        protected const string beatEffectsWaves = "Content\\Audio\\Intensity.xwb";
+        protected const string beatEffectsSounds = "Content\\Audio\\Intensity.xsb";
+        protected const string Intensity1 = "beat";
+        protected const string Intensity2 = "bass";
+        protected const string Intensity3 = "bassplus";
+        protected const string Intensity4 = "organ";
+        protected const string Intensity5 = "guitar";
 
         //Land of Sand Song constants
-        private const string landOfSandWaves = "Content\\Audio\\LandOfSand.xwb";
-        private const string landOfSandSounds = "Content\\Audio\\LandOfSand.xsb";
-        private const string LoSBassDrum = "BassDrum";
-        private const string LoSHiHat = "HiHat";
-        private const string LoSBassSynth = "BassSynth";
-        private const string LoSStabs = "Stabs";
-        private const string LoSMelody = "Melody";
-        private const string LoSAccent = "Accent";
-        private const string LoSToms = "Toms";
+        protected const string landOfSandWaves = "Content\\Audio\\LandOfSand.xwb";
+        protected const string landOfSandSounds = "Content\\Audio\\LandOfSand.xsb";
+        protected const string LoSBassDrum = "BassDrum";
+        protected const string LoSHiHat = "HiHat";
+        protected const string LoSBassSynth = "BassSynth";
+        protected const string LoSStabs = "Stabs";
+        protected const string LoSMelody = "Melody";
+        protected const string LoSAccent = "Accent";
+        protected const string LoSToms = "Toms";
 
-        private AudioManager notifier;
-        private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
+        protected AudioManager notifier;
+        protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
         public IntensitySong LandOfSand;
         public IntensitySong BeatEffects;
-        private BeatEngine beatEngine;
+        protected BeatEngine beatEngine;
 
         public MusicFactory(AudioManager manager)
         {
