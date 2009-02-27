@@ -56,15 +56,6 @@ namespace Duologue.ParticleEffects
 
             // additive blending is very good at creating fiery effects.
             spriteBlendMode = RenderSpriteBlendMode.AlphaBlend;
-
-            //DrawOrder = AdditiveDrawOrder;
         }
-
-        /*protected override void InitializeParticle(Particle p, Vector2 where, Color tint)
-        {
-            base.InitializeParticle(p, where, tint);
-
-            p.Acceleration = -p.Velocity / p.Lifetime;
-        }*/
     }
 }
