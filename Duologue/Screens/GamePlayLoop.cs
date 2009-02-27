@@ -148,6 +148,7 @@ namespace Duologue.Screens
                         }
 
                         // Level skip
+                        // FIXME this is for debugging... if we leave it in, we should make it harder to pull off
                         if (InstanceManager.InputManager.NewKeyPressed(Keys.PageUp))
                             skip = true;
 
