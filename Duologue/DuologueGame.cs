@@ -107,6 +107,7 @@ namespace Duologue
         public PauseScreen pauseScreen;
         public PlayerSelectScreen playerSelectScreen;
         public GamePlayScreenManager gamePlayScreenManager;
+        public EndCinematicScreenManager endCinematicScreenManager;
 
         /// <summary>
         /// The dispatch table for game state changes
@@ -293,6 +294,11 @@ namespace Duologue
             colorStateTest = new ColorStateTestScreen(this);
             this.Components.Add(colorStateTest);
             dispatchTable.Add(GameState.ColorStateTest, colorStateTest);
+
+            // End cinematics screen
+            endCinematicScreenManager = new EndCinematicScreenManager(this);
+            this.Components.Add(endCinematicScreenManager);
+            dispatchTable.Add(GameState.EndCinematics, endCinematicScreenManager);
 
             // Ensure that everything in the dispatch is disabled
             foreach (GameScreen scr in dispatchTable.Values)

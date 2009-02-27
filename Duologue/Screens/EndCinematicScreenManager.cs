@@ -48,6 +48,10 @@ namespace Duologue.Screens
         {
             localGame = (DuologueGame)game;
             endCinematicScreen = new EndCinematicScreen(game, this);
+            endCinematicScreen.DrawOrder = 4;
+            endCinematicScreen.Enabled = false;
+            endCinematicScreen.Visible = false;
+            localGame.Components.Add(endCinematicScreen);
         }
         protected override void InitializeConstants()
         {
@@ -61,6 +65,8 @@ namespace Duologue.Screens
         #region Update
         public override void Update(GameTime gameTime)
         {
+            if (InstanceManager.InputManager.NewButtonPressed(Buttons.Start) || InstanceManager.InputManager.NewButtonPressed(Buttons.A))
+                LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
             base.Update(gameTime);
         }
         #endregion

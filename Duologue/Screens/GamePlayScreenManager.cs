@@ -306,29 +306,36 @@ namespace Duologue.Screens
         {
             if (launchedFirstWave)
             {
-                // Get the next wave
-                LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
-                LocalInstanceManager.CurrentGameWave.CurrentWavelet = 0;
+                try
+                {
+                    // Get the next wave
+                    LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
+                    LocalInstanceManager.CurrentGameWave.CurrentWavelet = 0;
 
-                // Set the player
-                for (int i = 0; i < InputManager.MaxInputs; i++)
-                    if (LocalInstanceManager.Players[i].Active)
-                        LocalInstanceManager.Players[i].ColorState =
-                            ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState];
+                    // Set the player
+                    for (int i = 0; i < InputManager.MaxInputs; i++)
+                        if (LocalInstanceManager.Players[i].Active)
+                            LocalInstanceManager.Players[i].ColorState =
+                                ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState];
 
-                // Display the wave intro
-                string[] text = new string[2];
-                text[0] = String.Format(Resources.GameScreen_Wave,
-                    LocalInstanceManager.CurrentGameWave.MajorWaveNumber.ToString(),
-                    LocalInstanceManager.CurrentGameWave.MinorWaveNumber.ToString());
-                text[1] = LocalInstanceManager.CurrentGameWave.Name;
-                waveDisplay.Text = text;
-                // Set up the background and enemies
-                LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
+                    // Display the wave intro
+                    string[] text = new string[2];
+                    text[0] = String.Format(Resources.GameScreen_Wave,
+                        LocalInstanceManager.CurrentGameWave.MajorWaveNumber.ToString(),
+                        LocalInstanceManager.CurrentGameWave.MinorWaveNumber.ToString());
+                    text[1] = LocalInstanceManager.CurrentGameWave.Name;
+                    waveDisplay.Text = text;
+                    // Set up the background and enemies
+                    LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
 
-                // Set up the exit stuff
-                currentState = GamePlayState.Delay;
-                timeSinceStart = 0f;
+                    // Set up the exit stuff
+                    currentState = GamePlayState.Delay;
+                    timeSinceStart = 0f;
+                }
+                catch (WavesOutOfRangeException e)
+                {
+                    LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
+                }
             }
         }
 

@@ -91,9 +91,18 @@ namespace Duologue.Waves
         private GameWave GetWave(int lastMajorNumber, int lastMinorNumber)
         {
             int[] k = IncrementWaveNumbers(lastMajorNumber, lastMinorNumber);
-            lastMajorNumber = k[0];
-            lastMinorNumber = k[1];
-            return waveDef.GetWave(lastMajorNumber, lastMinorNumber);
+            GameWave temp;
+            try
+            {
+                temp = waveDef.GetWave(k[0], k[1]);
+                lastMajorNumber = k[0];
+                lastMinorNumber = k[1];
+                return temp;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         private int[] IncrementWaveNumbers(int lastMajorNo, int lastMinorNo)
@@ -212,7 +221,7 @@ namespace Duologue.Waves
         public GameWave GetNextWave()
         {
             GameWave temp;
-            if (LocalInstanceManager.CurrentGameState == Duologue.State.GameState.InfinityGame)
+            if (LocalInstanceManager.CurrentGameState == GameState.InfinityGame)
             {
                 temp = GenerateRandomWave(CurrentMajorNumber, CurrentMinorNumber);
                 CurrentMajorNumber = temp.MajorWaveNumber;

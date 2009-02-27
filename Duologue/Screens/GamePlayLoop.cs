@@ -92,6 +92,7 @@ namespace Duologue.Screens
             int livingEnemies = 0;
             int activePlayers = 0;
             bool dumb;
+            bool skip = false;
 
             #region Player stuff
             // First, run through the players, doing their stuff
@@ -145,20 +146,12 @@ namespace Duologue.Screens
                             // Swap color
                             p.SwapColors();
                         }
-                        /*
-                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].DPad.Up > 0 &&
-                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].DPad.Up == 0)
-                        {
-                            new BeatEffectsSong().IncreaseIntensity();
-                        }
-                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].DPad.Down > 0 &&
-                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].DPad.Down == 0)
-                        {
-                            new BeatEffectsSong().DecreaseIntensity();
-                        }
-                        */
+
+                        // Level skip
+                        if (InstanceManager.InputManager.NewKeyPressed(Keys.PageUp))
+                            skip = true;
+
                         // Now, make sure no one is stepping on eachother
-                        //bool dumb;
                         dumb = p.StartOffset();
                         // Yeah, not efficient... but we have very low n in O(n^2)
                         for (int j = 0; j < InputManager.MaxInputs; j++)
@@ -265,7 +258,7 @@ namespace Duologue.Screens
 
             // If we have no living enemies, it means we need to get them from the next wavelet,
             // or move to next wave
-            if (livingEnemies < 1 && livingPlayers > 0)
+            if ((livingEnemies < 1 && livingPlayers > 0) || skip)
             {
                 if (myManager.CurrentState == GamePlayState.Playing)
                     LocalInstanceManager.CurrentGameWave.CurrentWavelet++;
@@ -273,7 +266,9 @@ namespace Duologue.Screens
                 if (!WaveletInit.Initialize(myManager))
                 {
                     // No further wavelets, move up to next wave
+                    LocalInstanceManager.CurrentGameWave.CurrentWavelet--;
                     myManager.GetNextWave();
+                    WaveletInit.Initialize(myManager);
                 }
                 else
                 {
