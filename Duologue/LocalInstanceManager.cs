@@ -226,7 +226,6 @@ namespace Duologue
         {
             Vector2 startPos;
             float localAngle;
-            //float converter;
             float startRadius;
 
             // Get centerOfScreen if we don't have it yet
@@ -235,8 +234,6 @@ namespace Duologue
                 centerOfScreen = new Vector2(
                     InstanceManager.DefaultViewport.Width/2f,
                     InstanceManager.DefaultViewport.Height/2f);
-                //centerOfScreen.X = -centerOfScreen.X;
-                Console.WriteLine(centerOfScreen.ToString());
             }
 
             // Get the corners if we don't have them yet
@@ -265,63 +262,39 @@ namespace Duologue
                         InstanceManager.DefaultViewport.Width,
                         0f),
                     centerOfScreen) + MathHelper.TwoPi;
-
-                Console.WriteLine(
-                    String.Format("({0}={1}), ({2}={3}), ({4}={5}), ({6}={7})", 
-                        originPiOver4, localPiOver4, 
-                        origin3PiOver4, local3PiOver4, 
-                        origin5PiOver4, local5PiOver4, 
-                        origin7PiOver4, local7PiOver4));
             }
 
             // Convert the angle to our local coordinate system and get intersect points
             if (angleRad >= 0f && angleRad < originPiOver4)
             {
                 // In the upper right corner of the screen
-                //converter = localPiOver4 / originPiOver4;
                 localAngle = localPiOver4 * (angleRad / originPiOver4);
-                // Intersection would be (x,y) = (DV.Width, y)
-                // so r = DV.Width / COS localAngle
                 startRadius = centerOfScreen.X / (float)Math.Cos(localAngle);
             }
             else if (angleRad >= originPiOver4 && angleRad < origin3PiOver4)
             {
                 // Top of screen
-                //converter = (local3PiOver4 - localPiOver4) / (origin3PiOver4 - originPiOver4);
                 localAngle = local3PiOver4 * (angleRad / origin3PiOver4);// +localPiOver4;
-                // Intersection would be (x,y) = (x, 0)
-                // so r = DV.Height / SIN localAngle
                 startRadius = centerOfScreen.Y / (float)Math.Sin(localAngle);
             }
             else if (angleRad >= origin3PiOver4 && angleRad < origin5PiOver4)
             {
                 // Right of screen
-                //converter = local5PiOver4 /origin5PiOver4;
                 localAngle = local5PiOver4 * (angleRad /origin5PiOver4);// +local3PiOver4;
-                // Intersection would be (x,y) = (0, y)
-                // so r = DV.Width / COS localAngle
                 startRadius = centerOfScreen.X / (float)Math.Cos(localAngle);
             }
             else if (angleRad >= origin5PiOver4 && angleRad < origin7PiOver4)
             {
                 // Bottom of screen
-                //converter = local7PiOver4 / origin7PiOver4;
                 localAngle = local7PiOver4 * (angleRad / origin7PiOver4);// + local5PiOver4;
-                // Intersection would be (x,y) = (x, DV.Height)
-                // so r = DV.Height / SiIN localAngle
                 startRadius = centerOfScreen.Y / (float)Math.Sin(localAngle);
             }
             else
             {
                 // Only thing left is the lower right corner of the screen
-                //converter = (MathHelper.TwoPi - local7PiOver4) / (MathHelper.TwoPi - origin7PiOver4);
                 localAngle = angleRad;// + local7PiOver4;
-                // Intersection would be (x,y) = (DV.Width, y)
-                // so r = DV.Width / COS localAngle
                 startRadius = centerOfScreen.X / (float)Math.Cos(localAngle);
             }
-
-            Console.WriteLine(String.Format("From {0} To {1}", MathHelper.ToDegrees(angleRad), MathHelper.ToDegrees(localAngle)));
 
             // Get the start radius
             startRadius = radius + Math.Abs(startRadius);
@@ -329,35 +302,6 @@ namespace Duologue
             startPos = new Vector2(
                 startRadius * (float)Math.Cos((double)localAngle),
                 startRadius * -1 * (float)Math.Sin((double)localAngle)) +centerOfScreen;
-
-            Console.WriteLine(String.Format("(x,y)=({0}, {1})",
-                startPos.X,
-                startPos.Y));
-
-            //InstanceManager.Logger.LogEntry(String.Format("centerOfScreen: {0} radius: {1}", centerOfScreen.ToString(), radius.ToString()));
-
-            // Get the screenRadius if we dont have it yet
-            /*if (screenRadius < 1f)
-            {
-                //screenRadius = (float)Math.Sqrt((double)(centerOfScreen.X * centerOfScreen.X + centerOfScreen.Y * centerOfScreen.Y));
-                screenRadius = centerOfScreen.Length();
-            }*/
-
-            //InstanceManager.Logger.LogEntry(String.Format("screenRadius: {0}", screenRadius.ToString()));
-
-            // Now, make that a vector pointing in the opposite direction at the screenRadius distance
-            // FIXME - We're still spawning the enemies in visible screen
-            /*startPos = new Vector2(
-                (screenRadius + radius) * (float)Math.Cos((double)angleRad),
-                (screenRadius + radius) * -1 * (float)Math.Sin((double)angleRad));
-
-            //InstanceManager.Logger.LogEntry(String.Format("startPos(pre): {0}", startPos.ToString()));
-
-            //startPos = Vector2.Reflect(Vector2.Negate(startPos),Vector2.UnitX)+ centerOfScreen;
-            startPos = startPos + centerOfScreen;*/
-
-            //InstanceManager.Logger.LogEntry(String.Format("startPos: {0}", startPos.ToString()));
-            //InstanceManager.Logger.LogEntry("-------");
 
             return startPos;
         }

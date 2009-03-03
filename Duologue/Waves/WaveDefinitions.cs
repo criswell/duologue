@@ -87,7 +87,7 @@ namespace Duologue.Waves
             Wavelets[0].SongID = SongID.Intensity;
             for (int i = 0; i < 4; i++)
             {
-                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop; //TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                 Wavelets[0].StartAngle[i] = (float)i * MathHelper.PiOver2;
             }
             // Second wavelet
@@ -95,7 +95,7 @@ namespace Duologue.Waves
             Wavelets[1].SongID = SongID.Intensity;
             for (int i = 0; i < 4; i++)
             {
-                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop; // TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                 Wavelets[1].StartAngle[i] = (float)i * MathHelper.PiOver2 + MathHelper.PiOver4;
             }
             // Third wavelet
