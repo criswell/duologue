@@ -167,7 +167,6 @@ namespace Duologue.PlayObjects
         private double timeSinceColorChange;
 
         private bool isFleeing;
-        private bool isDying;
 
         // Movement
         private Vector2 offset;
@@ -249,7 +248,6 @@ namespace Duologue.PlayObjects
             currentEmberColor = 0;
             lastEmberColor = 0;
             timeSinceColorChange = 0;
-            isDying = false;
             isFleeing = false;
 
             Initialized = true;
@@ -291,141 +289,134 @@ namespace Duologue.PlayObjects
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            if (!isDying)
+            if (pobj.MajorType == MajorPlayObjectType.Player)
             {
-                if (pobj.MajorType == MajorPlayObjectType.Player)
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < nearestPlayerRadius)
                 {
-                    // Player
-                    Vector2 vToPlayer = this.Position - pobj.Position;
-                    float len = vToPlayer.Length();
-                    if (len < nearestPlayerRadius)
-                    {
-                        nearestPlayerRadius = len;
-                        nearestPlayer = vToPlayer;
-                    }
-                    if (len < this.Radius + pobj.Radius)
-                    {
-                        // We're on them, kill em
-                        return pobj.TriggerHit(this);
-                    }
-
-                    // Beam handling
-                    int temp = ((Player)pobj).IsInBeam(this);
-                    //inBeam = false;
-                    isFleeing = false;
-                    if (temp != 0)
-                    {
-                        //inBeam = true;
-                        if (temp == -1)
-                        {
-                            isFleeing = true;
-                            /*Color c = ColorState.Negative[ColorState.Light];
-                            if (ColorPolarity == ColorPolarity.Positive)
-                                c = ColorState.Positive[ColorState.Light];*/
-                            LocalInstanceManager.Steam.AddParticles(Position, emberColors[currentEmberColor]);
-                        }
-                    }
-                    return true;
+                    nearestPlayerRadius = len;
+                    nearestPlayer = vToPlayer;
                 }
-                else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+                if (len < this.Radius + pobj.Radius)
                 {
-                    if (((Enemy)pobj).MyEnemyType == EnemyType.Leader)
-                    {
-                        // Leader
-                        Vector2 vToLeader = this.Position - pobj.Position;
-                        float len = vToLeader.Length();
-                        if (len < nearestLeaderRadius)
-                        {
-                            nearestLeaderRadius = len;
-                            nearestLeader = vToLeader;
-                            nearestLeaderObject = (Enemy)pobj;
-                        }
-                        else if (len < this.Radius + pobj.Radius)
-                        {
-                            // Too close, BTFO
-                            if (len == 0f)
-                            {
-                                // Well, bah, we're on top of each other!
-                                vToLeader = new Vector2(
-                                    (float)InstanceManager.Random.NextDouble() - 0.5f,
-                                    (float)InstanceManager.Random.NextDouble() - 0.5f);
-                            }
-                            vToLeader = Vector2.Negate(vToLeader);
-                            vToLeader.Normalize();
-                            offset += standardEnemyRepulse * vToLeader;
-                        }
-                    }
-                    else
-                    {
-                        // Enemy
-                        Vector2 vToEnemy = pobj.Position - this.Position;
-                        float len = vToEnemy.Length();
-                        if (len < this.Radius + pobj.Radius)
-                        {
-                            // Too close, BTFO
-                            if (len == 0f)
-                            {
-                                // Well, bah, we're on top of each other!
-                                vToEnemy = new Vector2(
-                                    (float)InstanceManager.Random.NextDouble() - 0.5f,
-                                    (float)InstanceManager.Random.NextDouble() - 0.5f);
-                            }
-                            vToEnemy = Vector2.Negate(vToEnemy);
-                            vToEnemy.Normalize();
-                            offset += standardEnemyRepulse * vToEnemy;
-                        }
-                    }
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
 
-                    return true;
+                // Beam handling
+                int temp = ((Player)pobj).IsInBeam(this);
+                //inBeam = false;
+                isFleeing = false;
+                if (temp != 0)
+                {
+                    //inBeam = true;
+                    if (temp == -1)
+                    {
+                        isFleeing = true;
+                        /*Color c = ColorState.Negative[ColorState.Light];
+                        if (ColorPolarity == ColorPolarity.Positive)
+                            c = ColorState.Positive[ColorState.Light];*/
+                        LocalInstanceManager.Steam.AddParticles(Position, emberColors[currentEmberColor]);
+                    }
+                }
+                return true;
+            }
+            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                if (((Enemy)pobj).MyEnemyType == EnemyType.Leader)
+                {
+                    // Leader
+                    Vector2 vToLeader = this.Position - pobj.Position;
+                    float len = vToLeader.Length();
+                    if (len < nearestLeaderRadius)
+                    {
+                        nearestLeaderRadius = len;
+                        nearestLeader = vToLeader;
+                        nearestLeaderObject = (Enemy)pobj;
+                    }
+                    else if (len < this.Radius + pobj.Radius)
+                    {
+                        // Too close, BTFO
+                        if (len == 0f)
+                        {
+                            // Well, bah, we're on top of each other!
+                            vToLeader = new Vector2(
+                                (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        }
+                        vToLeader = Vector2.Negate(vToLeader);
+                        vToLeader.Normalize();
+                        offset += standardEnemyRepulse * vToLeader;
+                    }
                 }
                 else
                 {
-                    // Other
-
-                    return true;
+                    // Enemy
+                    Vector2 vToEnemy = pobj.Position - this.Position;
+                    float len = vToEnemy.Length();
+                    if (len < this.Radius + pobj.Radius)
+                    {
+                        // Too close, BTFO
+                        if (len == 0f)
+                        {
+                            // Well, bah, we're on top of each other!
+                            vToEnemy = new Vector2(
+                                (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        }
+                        vToEnemy = Vector2.Negate(vToEnemy);
+                        vToEnemy.Normalize();
+                        offset += standardEnemyRepulse * vToEnemy;
+                    }
                 }
+
+                return true;
             }
-            return true;
+            else
+            {
+                // Other
+
+                return true;
+            }
         }
 
         public override bool ApplyOffset()
         {
-            if (!isDying)
+            if (nearestLeader.Length() > 0f)
             {
-                if (nearestLeader.Length() > 0f)
-                {
-                    // The leader comes first
-                    nearestLeader.Normalize();
+                // The leader comes first
+                nearestLeader.Normalize();
 
-                    offset += leaderAttract * Vector2.Negate(nearestLeader);
-                }
-                else if (nearestPlayer.Length() > 0f)
-                {
-                    // Next priority is the player
-                    nearestPlayer.Normalize();
+                offset += leaderAttract * Vector2.Negate(nearestLeader);
+            }
+            else if (nearestPlayer.Length() > 0f)
+            {
+                // Next priority is the player
+                nearestPlayer.Normalize();
 
-                    if (!isFleeing)
-                        nearestPlayer = Vector2.Negate(nearestPlayer);
+                if (!isFleeing)
+                    nearestPlayer = Vector2.Negate(nearestPlayer);
 
-                    offset += playerAttract * nearestPlayer;
-                }
-                else
-                {
-                    // If no near player or leader, move in previous direction
-                    nearestPlayer = lastDirection;
+                offset += playerAttract * nearestPlayer;
+            }
+            else
+            {
+                // If no near player or leader, move in previous direction
+                nearestPlayer = lastDirection;
 
-                    nearestPlayer.Normalize();
+                nearestPlayer.Normalize();
 
-                    offset += playerAttract * nearestPlayer;
-                }
+                offset += playerAttract * nearestPlayer;
+            }
 
-                // Next apply the offset permanently
-                if (offset.Length() >= minMovement)
-                {
-                    this.Position += offset;
-                    lastDirection = offset;
-                    Orientation = new Vector2(-offset.Y, offset.X);
-                }
+            // Next apply the offset permanently
+            if (offset.Length() >= minMovement)
+            {
+                this.Position += offset;
+                lastDirection = offset;
+                Orientation = new Vector2(-offset.Y, offset.X);
             }
 
             // Check boundaries
