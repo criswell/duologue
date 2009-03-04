@@ -140,6 +140,11 @@ namespace Duologue.PlayObjects
         private const float leaderAttract = 5f;
 
         /// <summary>
+        /// Repulsion from the leader
+        /// </summary>
+        private const float leaderRepulse = 3f;
+
+        /// <summary>
         /// The player attract modifier
         /// </summary>
         private const float playerAttract = 2.1f;
@@ -148,12 +153,17 @@ namespace Duologue.PlayObjects
         /// The repulsion from the player if the player gets too close
         /// this should be lower than attract so that the player can bump into them
         /// </summary>
-        private const float playerRepluse = 1.5f;
+        private const float playerRepulse = 1.5f;
 
         /// <summary>
         /// The rotate speed
         /// </summary>
         private const float rotateSpeed = 1.5f;
+
+        /// <summary>
+        /// The rotate speed for when we're around the leader
+        /// </summary>
+        private const float rotateSpeedLeader = 10f;
 
         /// <summary>
         /// The minimum movement required before we register motion
@@ -169,6 +179,16 @@ namespace Duologue.PlayObjects
         /// Max number of our radius we're comfortable with the player
         /// </summary>
         private const float maxPlayerComfortRadiusMultiplier = 2.5f;
+
+        /// <summary>
+        /// Min number of our radius away from the leader we're comfortable with
+        /// </summary>
+        private const float minLeaderComfortRadiusMultiplier = 1.5f;
+
+        /// <summary>
+        /// Max number of our radius away from the leader we're comfortable with
+        /// </summary>
+        private const float maxLeaderComfortRadiusMultiplier = 2f;
         #endregion
         #endregion
 
@@ -405,11 +425,31 @@ namespace Duologue.PlayObjects
             if (nearestLeader.Length() > 0f)
             {
                 // The leader comes first
-                nearestLeader.Normalize();
+                if (nearestLeaderRadius >= maxLeaderComfortRadiusMultiplier * originalRadius)
+                {
+                    // If we're outside our comfort zone, let's get near the leader
+                    nearestLeader.Normalize();
 
-                offset += leaderAttract * Vector2.Negate(nearestLeader);
-            }
-            else if (nearestPlayer.Length() > 0f)
+                    offset += leaderAttract * Vector2.Negate(nearestLeader);
+                }
+                else if (nearestLeaderRadius < maxLeaderComfortRadiusMultiplier * originalRadius &&
+                    nearestLeaderRadius >= minLeaderComfortRadiusMultiplier * originalRadius)
+                {
+                    // Raaaah! Inside the comfort zone, <3 leader
+                    nearestLeader.Normalize();
+
+                    nearestLeader = new Vector2(nearestLeader.Y, -nearestLeader.X);
+
+                    offset += rotateSpeedLeader * nearestLeader;
+                }
+                else
+                {
+                    // Woah, BTFO man
+                    nearestLeader.Normalize();
+
+                    offset += leaderRepulse * nearestLeader;
+                }
+            } else if (nearestPlayer.Length() > 0f)
             {
                 // Next priority is the player
                 if (nearestPlayerRadius >= maxPlayerComfortRadiusMultiplier * originalRadius)
@@ -438,7 +478,7 @@ namespace Duologue.PlayObjects
                     // We're too close to the player for comfort, let's BTFO
                     nearestPlayer.Normalize();
 
-                    offset += playerRepluse * nearestPlayer;
+                    offset += playerRepulse * nearestPlayer;
                 }
             }
             else
