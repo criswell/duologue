@@ -41,6 +41,7 @@ namespace Duologue.PlayObjects
         Enemy_StaticGloop,
         Enemy_KingGloop,
         Enemy_StaticKing,
+        Enemy_Ember,
     }
 
     /// <summary>

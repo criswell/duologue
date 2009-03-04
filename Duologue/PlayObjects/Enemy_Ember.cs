@@ -27,6 +27,27 @@ namespace Duologue.PlayObjects
 {
     public class Enemy_Ember : Enemy
     {
+        #region Constants
+        #endregion
+
+        #region Fields
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructor / Init
+        public Enemy_Ember(GamePlayScreenManager manager)
+            : base(manager)
+        {
+            MyType = TypesOfPlayObjects.Enemy_Buzzsaw;
+            MajorType = MajorPlayObjectType.Enemy;
+            Initialized = false;
+
+            // Set the RealSize by hand
+            RealSize = new Vector2(85, 87);
+        }
+
         public override void Initialize(
             Vector2 startPos, 
             Vector2 startOrientation, 
@@ -36,7 +57,9 @@ namespace Duologue.PlayObjects
         {
             throw new NotImplementedException();
         }
+        #endregion
 
+        #region Overrides
         public override bool StartOffset()
         {
             throw new NotImplementedException();
@@ -56,7 +79,9 @@ namespace Duologue.PlayObjects
         {
             throw new NotImplementedException();
         }
+        #endregion
 
+        #region Draw/Update
         public override void Draw(GameTime gameTime)
         {
             throw new NotImplementedException();
@@ -66,5 +91,6 @@ namespace Duologue.PlayObjects
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
