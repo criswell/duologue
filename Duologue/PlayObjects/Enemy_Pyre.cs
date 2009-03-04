@@ -34,7 +34,7 @@ namespace Duologue.PlayObjects
         public Vector2 Offset;
     }
 
-    class Enemy_StaticKing : Enemy
+    class Enemy_Pyre : Enemy
     {
         #region Constants
         private const string filename_face = "Enemies/static-king-face";
@@ -161,10 +161,10 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
-        public Enemy_StaticKing(GamePlayScreenManager manager)
+        public Enemy_Pyre(GamePlayScreenManager manager)
             : base(manager)
         {
-            MyType = TypesOfPlayObjects.Enemy_StaticKing;
+            MyType = TypesOfPlayObjects.Enemy_Pyre;
             MajorType = MajorPlayObjectType.Enemy;
             MyEnemyType = EnemyType.Leader;
             RealSize = new Vector2(150, 143);

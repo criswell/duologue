@@ -363,7 +363,7 @@ namespace Duologue.PlayObjects
             }
             else if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
-                if (pobj.MyType == TypesOfPlayObjects.Enemy_StaticKing)
+                if (pobj.MyType == TypesOfPlayObjects.Enemy_Pyre)
                 {
                     // We only hold allegiance to the other fire guy
                     Vector2 vToLeader = this.Position - pobj.Position;

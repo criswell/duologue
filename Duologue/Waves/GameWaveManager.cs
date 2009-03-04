@@ -185,7 +185,7 @@ namespace Duologue.Waves
                 thisWave.Wavelets[thisWave.CurrentWavelet].ColorPolarities[i] = ColorState.RandomPolarity();
             }
             //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[80] = TypesOfPlayObjects.Enemy_KingGloop;
-            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[39] = TypesOfPlayObjects.Enemy_StaticKing;
+            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[39] = TypesOfPlayObjects.Enemy_Pyre;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[39] = MathHelper.TwoPi;
 
             thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[38] = TypesOfPlayObjects.Enemy_KingGloop;

@@ -65,8 +65,8 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_StaticGloop:
                             Init_StaticGloop(i, manager);
                             break;
-                        case TypesOfPlayObjects.Enemy_StaticKing:
-                            Init_StaticKing(i, manager);
+                        case TypesOfPlayObjects.Enemy_Pyre:
+                            Init_Pyre(i, manager);
                             break;
                         case TypesOfPlayObjects.Enemy_Ember:
                             Init_Ember(i, manager);
@@ -92,9 +92,9 @@ namespace Duologue.Waves
             LocalInstanceManager.Enemies[i] = new Enemy_Ember(manager);
         }
 
-        private static void Init_StaticKing(int i, GamePlayScreenManager manager)
+        private static void Init_Pyre(int i, GamePlayScreenManager manager)
         {
-            LocalInstanceManager.Enemies[i] = new Enemy_StaticKing(manager);
+            LocalInstanceManager.Enemies[i] = new Enemy_Pyre(manager);
         }
 
         private static void Init_Buzzsaw(int i, GamePlayScreenManager manager)
