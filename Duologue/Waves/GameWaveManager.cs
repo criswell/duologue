@@ -140,7 +140,7 @@ namespace Duologue.Waves
 
             GameWave thisWave = new GameWave(Resources.GameScreen_InfiniteWave,
                 InstanceManager.Random.Next(LocalInstanceManager.Background.NumBackgrounds),
-                MWMathHelper.GetRandomInRange(0, ColorState.numberOfColorStates),
+                MWMathHelper.GetRandomInRange(0, ColorState.NumberOfColorStates),
                 lastMajorWaveNo,
                 lastMinorWaveNo);
 

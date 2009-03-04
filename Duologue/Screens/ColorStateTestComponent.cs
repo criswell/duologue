@@ -79,7 +79,7 @@ namespace Duologue.Screens
             // Get the width of the names
             maxNameWidth = 0;
             Vector2 temp;
-            for (int i = 0; i < ColorState.numberOfColorStates; i++)
+            for (int i = 0; i < ColorState.NumberOfColorStates; i++)
             {
                 temp = font.MeasureString(colorStates[i].PositiveName);
                 if (temp.X > maxNameWidth)
@@ -189,10 +189,10 @@ namespace Duologue.Screens
             Vector2 offset = Vector2.Zero;
             Vector2 size;
             string temp;
-            for (int i = 0; i < ColorState.numberOfColorStates; i++)
+            for (int i = 0; i < ColorState.NumberOfColorStates; i++)
             {
                 pos = startPos + new Vector2(0f, 6f * i * vertSize);
-                for (int j = 0; j < ColorState.numberColorsPerPolarity; j++){
+                for (int j = 0; j < ColorState.NumberColorsPerPolarity; j++){
                     size = font.MeasureString(colorStates[i].PositiveName);
                     offset.X = maxNameWidth - size.X;
                     temp = String.Format("{0} {1} +", colorStates[i].PositiveName, j.ToString());
