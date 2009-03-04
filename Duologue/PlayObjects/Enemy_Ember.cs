@@ -363,9 +363,9 @@ namespace Duologue.PlayObjects
             }
             else if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
-                if (((Enemy)pobj).MyEnemyType == EnemyType.Leader)
+                if (pobj.MyType == TypesOfPlayObjects.Enemy_StaticKing)
                 {
-                    // Leader
+                    // We only hold allegiance to the other fire guy
                     Vector2 vToLeader = this.Position - pobj.Position;
                     float len = vToLeader.Length();
                     if (len < nearestLeaderRadius)
