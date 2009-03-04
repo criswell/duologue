@@ -236,7 +236,7 @@ namespace Duologue.PlayObjects
                 }
                 else if (pobj.MajorType == MajorPlayObjectType.Enemy)
                 {
-                    if (((Enemy)pobj).MyEnemyType == EnemyType.Leader)
+                    if (((Enemy)pobj).MyEnemyType == EnemyType.Leader && pobj.MyType != TypesOfPlayObjects.Enemy_Pyre)
                     {
                         // Leader
                         Vector2 vToLeader = this.Position - pobj.Position;
