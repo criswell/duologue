@@ -145,9 +145,30 @@ namespace Duologue.PlayObjects
         private const float playerAttract = 2.1f;
 
         /// <summary>
+        /// The repulsion from the player if the player gets too close
+        /// this should be lower than attract so that the player can bump into them
+        /// </summary>
+        private const float playerRepluse = 1.5f;
+
+        /// <summary>
+        /// The rotate speed
+        /// </summary>
+        private const float rotateSpeed = 1.5f;
+
+        /// <summary>
         /// The minimum movement required before we register motion
         /// </summary>
-        private const float minMovement = 2f;
+        private const float minMovement = 1.4f;
+
+        /// <summary>
+        /// Min number of how many of our radius size away we're comfortable with the player
+        /// </summary>
+        private const float minPlayerComfortRadiusMultiplier = 1.5f;
+
+        /// <summary>
+        /// Max number of our radius we're comfortable with the player
+        /// </summary>
+        private const float maxPlayerComfortRadiusMultiplier = 2.5f;
         #endregion
         #endregion
 
@@ -159,6 +180,7 @@ namespace Duologue.PlayObjects
         private Vector2 flameScale;
         private float emberScale;
         private Vector2 emberOffset;
+        private float originalRadius;
 
         private Color flameColor;
         private Color[] emberColors;
@@ -191,6 +213,7 @@ namespace Duologue.PlayObjects
 
             // Set the RealSize by hand
             RealSize = new Vector2(100, 95);
+            originalRadius = RealSize.Length() / 2f;
         }
 
         public override void Initialize(
@@ -307,17 +330,12 @@ namespace Duologue.PlayObjects
 
                 // Beam handling
                 int temp = ((Player)pobj).IsInBeam(this);
-                //inBeam = false;
                 isFleeing = false;
                 if (temp != 0)
                 {
-                    //inBeam = true;
                     if (temp == -1)
                     {
                         isFleeing = true;
-                        /*Color c = ColorState.Negative[ColorState.Light];
-                        if (ColorPolarity == ColorPolarity.Positive)
-                            c = ColorState.Positive[ColorState.Light];*/
                         LocalInstanceManager.Steam.AddParticles(Position, emberColors[currentEmberColor]);
                     }
                 }
@@ -394,12 +412,36 @@ namespace Duologue.PlayObjects
             else if (nearestPlayer.Length() > 0f)
             {
                 // Next priority is the player
-                nearestPlayer.Normalize();
+                if (nearestPlayerRadius >= maxPlayerComfortRadiusMultiplier * originalRadius)
+                {
+                    // If we're outside our comfort radius, bear down on the player
+                    // like a mad man
+                    nearestPlayer.Normalize();
 
-                if (!isFleeing)
-                    nearestPlayer = Vector2.Negate(nearestPlayer);
+                    if (!isFleeing)
+                        nearestPlayer = Vector2.Negate(nearestPlayer);
 
-                offset += playerAttract * nearestPlayer;
+                    offset += playerAttract * nearestPlayer;
+                }
+                else if (nearestPlayerRadius < maxPlayerComfortRadiusMultiplier * originalRadius &&
+                    nearestPlayerRadius >= minPlayerComfortRadiusMultiplier * originalRadius)
+                {
+                    // We're in our comfort zone, we just orbit the player
+                    nearestPlayer.Normalize();
+
+                    nearestPlayer = new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+
+                    offset += rotateSpeed * nearestPlayer;
+                }
+                else
+                {
+                    // We're too close to the player for comfort, let's BTFO
+                    nearestPlayer.Normalize();
+
+                    //nearestPlayer = Vector2.Negate(nearestPlayer);
+
+                    offset += playerRepluse * nearestPlayer;
+                }
             }
             else
             {
