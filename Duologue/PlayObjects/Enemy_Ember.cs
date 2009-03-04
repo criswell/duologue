@@ -36,17 +36,17 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The minimum scale for the ember
         /// </summary>
-        private const double minScale = 0.3;
+        private const double minScale = 0.1;
 
         /// <summary>
         /// The maximum scale for the ember
         /// </summary>
-        private const double maxScale = 0.9;
+        private const double maxScale = 0.7;
 
         /// <summary>
         /// The vertical offset of the ember
         /// </summary>
-        private const float verticalOffset = 8f;
+        private const float verticalOffset = 20f;
 
         /// <summary>
         /// The vertical scale for the flame
@@ -61,7 +61,12 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The delta scale per frame of animation
         /// </summary>
-        private const float deltaScale = 0.005f;
+        private const float deltaScale = 0.01f;
+
+        /// <summary>
+        /// The radius multiplier (inside this point counts as a hit or colision
+        /// </summary>
+        private const float radiusMultiplier = 0.8f;
 
         /// <summary>
         /// The initial delta scale per frame
@@ -71,7 +76,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The minimum scale to begin a fade
         /// </summary>
-        private const float minScaleToTriggerFade = 1.05f;
+        private const float minScaleToTriggerFade = 0.9f;
 
         /// <summary>
         /// The minimum alpha that the frame can be
@@ -111,7 +116,39 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The time it takes between ember color changes
         /// </summary>
-        private const double emberColorChangeDelta = 0.4;
+        private const double emberColorChangeDelta = 0.08;
+
+        /// <summary>
+        /// How far we can go outside the screen before we should stop
+        /// </summary>
+        private const float outsideScreenMultiplier = 3;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 15;
+
+        #region Force interactions
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// Attraction to the leader
+        /// </summary>
+        private const float leaderAttract = 5f;
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float playerAttract = 2.1f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 2f;
+        #endregion
         #endregion
 
         #region Fields
@@ -128,6 +165,18 @@ namespace Duologue.PlayObjects
         private int currentEmberColor;
         private int lastEmberColor;
         private double timeSinceColorChange;
+
+        private bool isFleeing;
+        private bool isDying;
+
+        // Movement
+        private Vector2 offset;
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
+        private Vector2 nearestLeader;
+        private float nearestLeaderRadius;
+        private Enemy nearestLeaderObject;
+        private Vector2 lastDirection;
         #endregion
 
         #region Properties
@@ -190,6 +239,8 @@ namespace Duologue.PlayObjects
             emberOffset = new Vector2(0, verticalOffset * emberScale);
             flameScale = new Vector2(emberScale, emberScale * flameVerticalScale);
 
+            Radius = emberCenter.X * emberScale * radiusMultiplier;
+
             flameColor = GetMyColor(ColorState.Medium);
             emberColors = new Color[ColorState.NumberColorsPerPolarity];
             emberColors[0] = GetMyColor(ColorState.Light);
@@ -198,6 +249,8 @@ namespace Duologue.PlayObjects
             currentEmberColor = 0;
             lastEmberColor = 0;
             timeSinceColorChange = 0;
+            isDying = false;
+            isFleeing = false;
 
             Initialized = true;
             Alive = true;
@@ -227,22 +280,195 @@ namespace Duologue.PlayObjects
         #region Overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestPlayer = Vector2.Zero;
+            nearestLeaderRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestLeader = Vector2.Zero;
+            nearestLeaderObject = null;
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (!isDying)
+            {
+                if (pobj.MajorType == MajorPlayObjectType.Player)
+                {
+                    // Player
+                    Vector2 vToPlayer = this.Position - pobj.Position;
+                    float len = vToPlayer.Length();
+                    if (len < nearestPlayerRadius)
+                    {
+                        nearestPlayerRadius = len;
+                        nearestPlayer = vToPlayer;
+                    }
+                    if (len < this.Radius + pobj.Radius)
+                    {
+                        // We're on them, kill em
+                        return pobj.TriggerHit(this);
+                    }
+
+                    // Beam handling
+                    int temp = ((Player)pobj).IsInBeam(this);
+                    //inBeam = false;
+                    isFleeing = false;
+                    if (temp != 0)
+                    {
+                        //inBeam = true;
+                        if (temp == -1)
+                        {
+                            isFleeing = true;
+                            /*Color c = ColorState.Negative[ColorState.Light];
+                            if (ColorPolarity == ColorPolarity.Positive)
+                                c = ColorState.Positive[ColorState.Light];*/
+                            LocalInstanceManager.Steam.AddParticles(Position, emberColors[currentEmberColor]);
+                        }
+                    }
+                    return true;
+                }
+                else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+                {
+                    if (((Enemy)pobj).MyEnemyType == EnemyType.Leader)
+                    {
+                        // Leader
+                        Vector2 vToLeader = this.Position - pobj.Position;
+                        float len = vToLeader.Length();
+                        if (len < nearestLeaderRadius)
+                        {
+                            nearestLeaderRadius = len;
+                            nearestLeader = vToLeader;
+                            nearestLeaderObject = (Enemy)pobj;
+                        }
+                        else if (len < this.Radius + pobj.Radius)
+                        {
+                            // Too close, BTFO
+                            if (len == 0f)
+                            {
+                                // Well, bah, we're on top of each other!
+                                vToLeader = new Vector2(
+                                    (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                    (float)InstanceManager.Random.NextDouble() - 0.5f);
+                            }
+                            vToLeader = Vector2.Negate(vToLeader);
+                            vToLeader.Normalize();
+                            offset += standardEnemyRepulse * vToLeader;
+                        }
+                    }
+                    else
+                    {
+                        // Enemy
+                        Vector2 vToEnemy = pobj.Position - this.Position;
+                        float len = vToEnemy.Length();
+                        if (len < this.Radius + pobj.Radius)
+                        {
+                            // Too close, BTFO
+                            if (len == 0f)
+                            {
+                                // Well, bah, we're on top of each other!
+                                vToEnemy = new Vector2(
+                                    (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                    (float)InstanceManager.Random.NextDouble() - 0.5f);
+                            }
+                            vToEnemy = Vector2.Negate(vToEnemy);
+                            vToEnemy.Normalize();
+                            offset += standardEnemyRepulse * vToEnemy;
+                        }
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    // Other
+
+                    return true;
+                }
+            }
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            if (!isDying)
+            {
+                if (nearestLeader.Length() > 0f)
+                {
+                    // The leader comes first
+                    nearestLeader.Normalize();
+
+                    offset += leaderAttract * Vector2.Negate(nearestLeader);
+                }
+                else if (nearestPlayer.Length() > 0f)
+                {
+                    // Next priority is the player
+                    nearestPlayer.Normalize();
+
+                    if (!isFleeing)
+                        nearestPlayer = Vector2.Negate(nearestPlayer);
+
+                    offset += playerAttract * nearestPlayer;
+                }
+                else
+                {
+                    // If no near player or leader, move in previous direction
+                    nearestPlayer = lastDirection;
+
+                    nearestPlayer.Normalize();
+
+                    offset += playerAttract * nearestPlayer;
+                }
+
+                // Next apply the offset permanently
+                if (offset.Length() >= minMovement)
+                {
+                    this.Position += offset;
+                    lastDirection = offset;
+                    Orientation = new Vector2(-offset.Y, offset.X);
+                }
+            }
+
+            // Check boundaries
+            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
+                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
+
+            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
+
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    Alive = false;
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                            Position, emberColors[currentEmberColor]);
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
+                    /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(
+                        flameFrames[MWMathHelper.GetRandomInRange(0, numberOfFrames)].Texture,
+                        flameColor,
+                        Position,
+                        0f);
+                    //MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
+                    /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    return true;
+                }
+            }
+            return true;
         }
         #endregion
 

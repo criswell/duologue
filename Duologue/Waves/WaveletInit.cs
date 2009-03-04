@@ -68,6 +68,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_StaticKing:
                             Init_StaticKing(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_Ember:
+                            Init_Ember(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -84,6 +87,11 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_Ember(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Ember(manager);
+        }
+
         private static void Init_StaticKing(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_StaticKing(manager);
