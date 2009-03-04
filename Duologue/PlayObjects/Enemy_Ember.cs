@@ -438,8 +438,6 @@ namespace Duologue.PlayObjects
                     // We're too close to the player for comfort, let's BTFO
                     nearestPlayer.Normalize();
 
-                    //nearestPlayer = Vector2.Negate(nearestPlayer);
-
                     offset += playerRepluse * nearestPlayer;
                 }
             }
