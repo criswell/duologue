@@ -20,21 +20,22 @@ namespace Duologue.Audio
     /// </summary>
     public class BeatEngine : Microsoft.Xna.Framework.GameComponent
     {
-        #region Private Fields
+        #region Protected Fields
         protected float beatTimer = 0f;
-        protected float beatInterval = 420f;
-        //protected float beatInterval = 3433f;
+        protected float beatInterval = 3433.039f/8.000f;
+        protected bool wait = false;
+        protected int beatState = 0;
         protected DuologueGame localGame;
         protected AudioManager audio;
 
         protected const string beatEffectsSounds = "Content\\Audio\\Intensity.xsb";
-        protected const string Intensity1 = "beat";
-        protected const string Intensity2 = "bass";
-        protected const string Intensity3 = "bassplus";
-        protected const string Intensity4 = "organ";
-        protected const string Intensity5 = "guitar";
+        protected const string Intensity1 = "beat2";
+        protected const string Intensity2 = "bass2";
+        protected const string Intensity3 = "bassplus2";
+        protected const string Intensity4 = "organ2";
+        protected const string Intensity5 = "guitar2";
 
-        protected int currentMeasure = 0;
+        protected int currentBeat = 0;
         protected PluckNote[][] arrangement = 
             {
                 new PluckNote[]{PluckNote.A, PluckNote.A, PluckNote.A, PluckNote.A},
@@ -55,17 +56,7 @@ namespace Duologue.Audio
                 new PluckNote[]{PluckNote.A, PluckNote.C3}
             };
 
-        protected string[][] intenseTracks =
-        {
-            new string[]{ Intensity1, Intensity2, Intensity3, Intensity4, Intensity5 },
-            new string[]{},
-            new string[]{},
-            new string[]{},
-            new string[]{},
-            new string[]{},
-            new string[]{},
-            new string[]{}
-        };
+        protected string[][] intenseTracks;
 
         #endregion
 
@@ -110,58 +101,62 @@ namespace Duologue.Audio
         /// </summary>
         public override void Initialize()
         {
-            // TODO: Add your initialization code here
             this.Enabled = true;
             audio = ServiceLocator.GetService<AudioManager>();
-
+            intenseTracks = GetIntenseTracks();
             base.Initialize();
         }
 
-        public void IncrementMeasure()
+        public void IncrementBeat()
         {
-            if (currentMeasure < arrangement.Length)
+            if (currentBeat < arrangement.Length)
             {
-                currentMeasure++;
+                currentBeat++;
             }
             else
             {
-                currentMeasure = 1;
+                currentBeat = 1;
             }
 
-            for (int i = 0; i < arrangement[currentMeasure-1].Length; i++)
+            for (int i = 0; i < arrangement[currentBeat-1].Length; i++)
             {
-                audio.soundEffects.PlayPluckNote(arrangement[currentMeasure-1][i]);
+                audio.soundEffects.PlayPluckNote(arrangement[currentBeat-1][i]);
             }
         }
 
-        protected void PlayIntensitySong()
+
+        public string[][] GetIntenseTracks()
         {
-            if (currentMeasure < intenseTracks.Length)
-            {
-                currentMeasure++;
-            }
-            else
-            {
-                currentMeasure = 1;
-            }
+            string[][] tracks = {
+        
+            //new string[]{ Intensity1, Intensity2, Intensity3, Intensity4, Intensity5 },
+            new string[]{},
+            new string[]{},new string[]{},new string[]{},new string[]{},
+            new string[]{},new string[]{},new string[]{},
+            new string[]{},
+            new string[]{},new string[]{},new string[]{},new string[]{},
+            new string[]{},new string[]{},new string[]{},
+            new string[]{},
+            new string[]{},new string[]{},new string[]{},new string[]{},
+            new string[]{},new string[]{},new string[]{},
+            new string[]{},
+            new string[]{},new string[]{},new string[]{},new string[]{},
+            new string[]{},new string[]{},new string[]{},
+            new string[]{},
+            new string[]{},new string[]{},new string[]{},new string[]{},
+            new string[]{},new string[]{},new string[]{}
+                                };
+            return tracks;
+        }
 
-            for (int i = 0; i < intenseTracks[currentMeasure - 1].Length;)
+        protected void PlayBeat(int beat)
+        {
+            for (int i = 0; i < intenseTracks[beat - 1].Length; i++)
             {
-                if (false && (i == 0) && (AudioHelper.CueIsPlaying(beatEffectsSounds,
-                        intenseTracks[currentMeasure-1][i])))
-                {
-                    bool waiting = true;
-                }
-                else
-                {
-                    AudioHelper.PlayCue(
-                        beatEffectsSounds,
-                        intenseTracks[currentMeasure - 1][i],
-                        PlayType.Single);
-                    i++;
-                }
+                AudioHelper.PlayCue(beatEffectsSounds, intenseTracks[currentBeat - 1][i]);
             }
         }
+
 
         /// <summary>
         /// Allows the game component to update itself.
@@ -169,15 +164,6 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            beatTimer += (float)gameTime.ElapsedRealTime.TotalMilliseconds;
-            //beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (beatTimer > beatInterval)
-            {
-                //PlayIntensitySong();
-                //IncrementMeasure();
-                //audio.soundEffects.BambooClick();
-                beatTimer = 0f;
-            }
             base.Update(gameTime);
         }
     }

@@ -84,7 +84,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Negative);
-            Wavelets[0].SongID = SongID.Intensity;
+            Wavelets[0].SongID = SongID.Dance8ths;
             for (int i = 0; i < 4; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
@@ -92,7 +92,7 @@ namespace Duologue.Waves
             }
             // Second wavelet
             Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Positive);
-            Wavelets[1].SongID = SongID.Intensity;
+            Wavelets[1].SongID = SongID.Dance8ths;
             for (int i = 0; i < 4; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
@@ -100,7 +100,7 @@ namespace Duologue.Waves
             }
             // Third wavelet
             Wavelets[2] = new Wavelet(8, 0);
-            Wavelets[2].SongID = SongID.Intensity;
+            Wavelets[2].SongID = SongID.Dance8ths;
             for (int i = 0; i < 8; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
@@ -126,7 +126,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[4];
             // First wavelet
             Wavelets[0] = new Wavelet(3, 0, ColorPolarity.Positive);
-            Wavelets[0].SongID = SongID.Intensity;
+            Wavelets[0].SongID = SongID.Dance8ths;
             Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             Wavelets[0].StartAngle[0] = 0f;
             Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Wiggles;
@@ -135,7 +135,7 @@ namespace Duologue.Waves
             Wavelets[0].StartAngle[2] = MathHelper.Pi;
             // Second wavelet
             Wavelets[1] = new Wavelet(3, 0, ColorPolarity.Negative);
-            Wavelets[1].SongID = SongID.Intensity;
+            Wavelets[1].SongID = SongID.Dance8ths;
             Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             Wavelets[1].StartAngle[0] = 0f;
             Wavelets[1].Enemies[1] = TypesOfPlayObjects.Enemy_Wiggles;
@@ -144,7 +144,7 @@ namespace Duologue.Waves
             Wavelets[1].StartAngle[2] = MathHelper.Pi;
             // Third wavelet
             Wavelets[2] = new Wavelet(8, 0);
-            Wavelets[2].SongID = SongID.Intensity;
+            Wavelets[2].SongID = SongID.Dance8ths;
             for (int i = 0; i < 8; i++)
             {
                 if(MWMathHelper.IsEven(i))
@@ -161,7 +161,7 @@ namespace Duologue.Waves
             }
             // Fourth wavelet
             Wavelets[3] = new Wavelet(8, 2);
-            Wavelets[3].SongID = SongID.Intensity;
+            Wavelets[3].SongID = SongID.Dance8ths;
             for (int i = 0; i < 8; i++)
             {
                 if (MWMathHelper.IsEven(i))

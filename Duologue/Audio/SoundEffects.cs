@@ -129,7 +129,7 @@ namespace Duologue.Audio
                 effectNames.Add(name);
                 playerBank.Effects.Add(name, new SoundEffect(name));
             }
-            AudioHelper.AddBank(PlayerEffectsSB, PlayerEffectsWB, effectNames);
+            AudioHelper.Preload(PlayerEffectsSB, PlayerEffectsWB, effectNames);
 
             plucksBank = new EffectsBank(notifier.Game, PlucksWB, PlucksSB);
             List<string> plucksNames = new List<string>();
@@ -138,21 +138,21 @@ namespace Duologue.Audio
                 plucksNames.Add(name);
                 plucksBank.Effects.Add(name, new SoundEffect(name));
             }
-            AudioHelper.AddBank(PlucksSB, PlucksWB, plucksNames);
+            AudioHelper.Preload(PlucksSB, PlucksWB, plucksNames);
 
             notifier.Changed += new IntensityEventHandler(UpdateIntensity);
         }
 
         public void PlayEffect(EffectID ID)
         {
-            AudioHelper.PlayCue(PlayerEffectsSB, IDNameMap[ID], PlayType.Single);
+            AudioHelper.PlayCue(PlayerEffectsSB, IDNameMap[ID]);
             //I want this to be:
-            //AudioHelper.PlayEffect(EffectsMap[ID]);
+            //AudioManager.PlayEffect(EffectsMap[ID]);
         }
 
         public void PlayPluckNote(PluckNote note)
         {
-            AudioHelper.PlayCue(PlucksSB, PluckMap[note], PlayType.Single);
+            AudioHelper.PlayCue(PlucksSB, PluckMap[note]);
         }
 
         public void StopEffect(EffectID ID)
