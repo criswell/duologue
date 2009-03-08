@@ -92,7 +92,7 @@ namespace Duologue.Waves
             }
             // Second wavelet
             Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Positive);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < 4; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
@@ -126,7 +126,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[4];
             // First wavelet
             Wavelets[0] = new Wavelet(3, 0, ColorPolarity.Positive);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.LandOfSand16ths;
             Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             Wavelets[0].StartAngle[0] = 0f;
             Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Wiggles;
@@ -144,7 +144,7 @@ namespace Duologue.Waves
             Wavelets[1].StartAngle[2] = MathHelper.Pi;
             // Third wavelet
             Wavelets[2] = new Wavelet(8, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < 8; i++)
             {
                 if(MWMathHelper.IsEven(i))
@@ -191,7 +191,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             Wavelets[0] = new Wavelet(2, 0);
-            Wavelets[0].SongID = SongID.LandOfSand;
+            Wavelets[0].SongID = SongID.LandOfSand16ths;
 
             Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Spitter;
             Wavelets[0].StartAngle[0] = MathHelper.PiOver4;
@@ -202,7 +202,7 @@ namespace Duologue.Waves
             Wavelets[0].ColorPolarities[1] = ColorPolarity.Negative;
             // Second wavelet
             Wavelets[1] = new Wavelet(6, 0);
-            Wavelets[1].SongID = SongID.LandOfSand;
+            Wavelets[1].SongID = SongID.Dance8ths;
 
             Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Spitter;
             Wavelets[1].StartAngle[0] = MathHelper.PiOver4 + MathHelper.PiOver2;
@@ -229,7 +229,7 @@ namespace Duologue.Waves
             Wavelets[1].ColorPolarities[5] = ColorPolarity.Positive;
             // Third wavelet
             Wavelets[2] = new Wavelet(10, 2);
-            Wavelets[2].SongID = SongID.LandOfSand;
+            Wavelets[2].SongID = SongID.LandOfSand16ths;
 
             Wavelets[2].Enemies[0] = TypesOfPlayObjects.Enemy_Spitter;
             Wavelets[2].StartAngle[0] = MathHelper.PiOver2;

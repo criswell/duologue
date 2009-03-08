@@ -205,6 +205,7 @@ namespace Duologue.Audio
                 track.Stop();
             });
             initvars();
+            Enabled = false;
         }
 
         public bool IsPlaying

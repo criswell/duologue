@@ -9,7 +9,7 @@ namespace Duologue.Audio
 {
 
     //the rule is: one sound bank = one song = one SongID
-    public enum SongID { SelectMenu, Intensity, LandOfSand, Dance8ths }
+    public enum SongID { SelectMenu, Intensity, LandOfSand, Dance8ths, LandOfSand16ths }
 
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
@@ -65,6 +65,7 @@ namespace Duologue.Audio
             songMap.Add(SongID.Intensity, music.BeatEffects);
             songMap.Add(SongID.LandOfSand, music.LandOfSand);
             songMap.Add(SongID.Dance8ths, music.Dance8ths);
+            songMap.Add(SongID.LandOfSand16ths, music.LandOfSand16ths);
 
             base.Initialize();
         }
