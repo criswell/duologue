@@ -42,8 +42,8 @@ namespace Duologue.State
     public class ColorState
     {
         #region Constants
-        public const int numberColorsPerPolarity = 3;
-        public const int numberOfColorStates = 3;
+        public const int NumberColorsPerPolarity = 3;
+        public const int NumberOfColorStates = 3;
 
         /// <summary>
         /// Light version of the color
@@ -90,8 +90,8 @@ namespace Duologue.State
         #region Constructor
         private ColorState()
         {
-            Positive = new Color[numberColorsPerPolarity];
-            Negative = new Color[numberColorsPerPolarity];
+            Positive = new Color[NumberColorsPerPolarity];
+            Negative = new Color[NumberColorsPerPolarity];
         }
         #endregion
 
@@ -103,7 +103,7 @@ namespace Duologue.State
         public static ColorState[] GetColorStates()
         {
             if (theStates == null) {
-                theStates = new ColorState[numberOfColorStates];
+                theStates = new ColorState[NumberOfColorStates];
                 
                 // Sloppy? Maybe... whatever
 
