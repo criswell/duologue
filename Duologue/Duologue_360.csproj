@@ -71,9 +71,11 @@
     <Compile Include="Audio\IntensityController.cs" />
     <Compile Include="Audio\IntensitySong.cs" />
     <Compile Include="Audio\MusicFactory.cs" />
+    <Compile Include="Audio\Q.cs" />
     <Compile Include="Audio\ServiceLocator.cs" />
     <Compile Include="Audio\Song.cs" />
     <Compile Include="Audio\SoundEffects.cs" />
+    <Compile Include="Audio\Track.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="CreatorsClub\GameScreen.cs" />
     <Compile Include="CreatorsClub\InputState.cs" />

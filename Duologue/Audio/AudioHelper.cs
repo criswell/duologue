@@ -3,23 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-using Microsoft.Xna.Framework.Storage;
 
 
 namespace Duologue.Audio
 {
-
-    public enum PlayType
-    {
-        Single,
-        Nonstop
-    }
 
     /// <summary>
     /// This is a game component that implements IUpdateable.
@@ -39,29 +26,29 @@ namespace Duologue.Audio
         // basis in the future, without continually adding specialized dictionaries and
         // specialized update code to this class. How should we do that?
 
-        private const string volumeName = "Volume";
+        protected const string volumeName = "Volume";
 
-        private static string engineFileName;
-        private static AudioEngine engine;
+        protected static string engineFileName;
+        protected static AudioEngine engine;
 
         // These SoundBanks are where we pull new copies of Cues. We don't play them there.
-        private static Dictionary<string, SoundBank> soundBanks = new Dictionary<string, SoundBank>();
+        protected static Dictionary<string, SoundBank> soundBanks = new Dictionary<string, SoundBank>();
 
         // These WaveBanks are where the audio data actually resides
         // Although we don't interact with the WaveBank objects, we have to load them or nothing works
-        private static Dictionary<string, WaveBank> waveBanks = new Dictionary<string, WaveBank>();
+        protected static Dictionary<string, WaveBank> waveBanks = new Dictionary<string, WaveBank>();
 
         // These Cues are the ones we will actually call Play on.
         // They stay in this structure until they either:
         // - stop playing
         // - are bumped by a new instance
         //                        <soundbank name, <cue name, Cue instance>>
-        private static Dictionary<string, Dictionary<string, Cue>> cues =
+        protected static Dictionary<string, Dictionary<string, Cue>> cues =
             new Dictionary<string, Dictionary<string, Cue>>();
 
         // This List of Cues is where Cues go after they leave the "cues" structure.
         // During updates, this List is checked for Cues that can be disposed.
-        private static List<Cue> usedCues = new List<Cue>();
+        protected static List<Cue> usedCues = new List<Cue>();
 
         public AudioHelper(Game game, string engineName) : base(game)
         {
@@ -69,7 +56,7 @@ namespace Duologue.Audio
             engine = new AudioEngine(engineFileName);
         }
 
-        private static void ProcessPlayedCues()
+        protected static void ProcessPlayedCues()
         {
             //FIXME watch for this introducing process latency
             usedCues.ForEach(delegate(Cue cue)
@@ -80,14 +67,9 @@ namespace Duologue.Audio
                     usedCues.Remove(cue);
                 }
             });
-            //Look for any volume profile adjustments needed (if we are handling that on this side)
         }
 
-        private static void ProcessDynamicCues()
-        {
-        }
-
-        private static void RecycleCue(string sbname, string cueName)
+        protected static void RecycleCue(string sbname, string cueName)
         {
             if (null != cues[sbname][cueName])
             {
@@ -105,172 +87,157 @@ namespace Duologue.Audio
             cues[sbname][cueName] = soundBanks[sbname].GetCue(cueName);
         }
 
-        public static void AddBank(string soundBankName, string waveBankName, List<string> cueNames)
+        protected static void Preload(string soundbank, string cue)
         {
-            SoundBank tmpSB = new SoundBank(engine, soundBankName);
-            soundBanks.Add(soundBankName, tmpSB);
-            waveBanks.Add(waveBankName, new WaveBank(engine, waveBankName));
+            if (!cues[soundbank].Keys.Contains(cue))
+            {
+                cues[soundbank].Add(cue, soundBanks[soundbank].GetCue(cue));
+            }
+        }
 
-            cues.Add(soundBankName, new Dictionary<string, Cue>());
+        protected static void Preload(Q q)
+        {
+            Preload(q.SoundBankName, q.cueName);
+        }
 
+        protected static void Preload(Track track)
+        {
+            track.cues.ForEach(q =>
+                {
+                    Preload(q);
+                });
+        }
+
+        public static void Preload(Song song)
+        {
+            AddBank(song.SoundBankName, song.WaveBankName);
+            SoundBank sb = soundBanks[song.SoundBankName];
+            song.Tracks.ForEach(delegate(Track track)
+            {
+                Preload(track);
+            });
+        }
+
+        protected static void AddBank(string soundBankName, string waveBankName)
+        {
+            if (!soundBanks.Keys.Contains(soundBankName))
+            {
+                SoundBank tmpSB = new SoundBank(engine, soundBankName);
+                soundBanks.Add(soundBankName, tmpSB);
+                waveBanks.Add(waveBankName, new WaveBank(engine, waveBankName));
+            }
+
+            if (!cues.Keys.Contains(soundBankName))
+            {
+                cues.Add(soundBankName, new Dictionary<string, Cue>());
+            }
+        }
+
+        public static void Preload(string soundBankName, string waveBankName, List<string> cueNames)
+        {
+            AddBank(soundBankName, waveBankName);
             cueNames.ForEach(delegate(string cueName)
             {
-                cues[soundBankName].Add(cueName, tmpSB.GetCue(cueName));
+                Preload(soundBankName, cueName);
             });
         }
 
-        public static void PreloadSong(Song song)
-        {
-            SoundBank tmpSB = new SoundBank(engine, song.SoundBankName);
-            soundBanks.Add(song.SoundBankName, tmpSB);
-            waveBanks.Add(song.WaveBankName,
-                new WaveBank(engine, song.WaveBankName));
-
-            cues.Add(song.SoundBankName, new Dictionary<string, Cue>());
-
-            song.Tracks.Values.ToList().ForEach(delegate(Track track)
-            {
-                cues[song.SoundBankName].Add(track.CueName, 
-                    tmpSB.GetCue(track.CueName));
-            });
-        }
 
         public static bool CueIsPlaying(string sbname, string cuename)
         {
             return cues[sbname][cuename].IsPlaying;
         }
 
-        public static void Play(Song song)
+        public static bool CueIsStopping(string sbname, string cuename)
         {
-            song.Tracks.Values.ToList().ForEach(track =>
-                {
-                    RecycleCue(song.SoundBankName, track.CueName);
-                    cues[song.SoundBankName][track.CueName].Play();
-                    cues[song.SoundBankName][track.CueName].SetVariable(
-                        volumeName, track.Volume);
-                });
-            UpdateCues(song);
+            return cues[sbname][cuename].IsStopping;
         }
 
-        public static void Stop(Song song)
+        public static void PlayCue(string sbname, string cueName)
         {
-            song.Tracks.Values.ToList().ForEach(track =>
-                {
-                    StopCue(song.SoundBankName, track.CueName);
-                });
+            Q q = new Q(sbname, cueName);
+            Play(q);
         }
 
-        public static void PlayCue(string sbname, string cueName, PlayType type)
+        public static void Play(Q q)
         {
-            RecycleCue(sbname, cueName);
-            cues[sbname][cueName].SetVariable(volumeName, Loudness.Normal);
-            cues[sbname][cueName].Play();
+            RecycleCue(q.SoundBankName, q.cueName);
+            cues[q.SoundBankName][q.cueName].Play();
         }
 
-        /*
-
-        public static void PlayCues(string sbname, List<string> cueNames, PlayType type)
+        public static void Play(Q q, float volume)
         {
-            //FIXME at some point, will need to allow for this manager
-            //to control repeating loop play, with different cues being
-            //different lengths.
-            bool SYNCSTART = false;
+            Play(q);
+            cues[q.SoundBankName][q.cueName].SetVariable(volumeName, volume);
+            //we *could* range limit the volume before making that call
+        }
 
-            if (SYNCSTART)
+        public static void Pause(Q q)
+        {
+            cues[q.SoundBankName][q.cueName].Pause();
+        }
+
+        public static void Resume(Q q)
+        {
+            if (cues[q.SoundBankName][q.cueName].IsPaused)
             {
-                cueNames.ForEach(delegate(string cueName)
-                {
-                    RecycleCue(sbname, cueName);
-                    cues[sbname][cueName].SetVariable(volumeName, Loudness.Normal);
-                });
-                cueNames.ForEach(delegate(string cueName)
-                {
-                    cues[sbname][cueName].Play();
-                });
-            }
-            else
-            {
-                cueNames.ForEach(delegate(string cueName)
-                {
-                    PlayCue(sbname, cueName, type);
-                });
+                cues[q.SoundBankName][q.cueName].Resume();
             }
         }
 
-
-        /// <summary>
-        /// This will fire up every cue in the soundbank at the same time.
-        /// </summary>
-        /// <param name="sbname"></param>
-        /// <param name="type"></param>
-        public static void PlayCues(string sbname, PlayType type)
+        public static void Stop(Q q)
         {
-            PlayCues(sbname, cues[sbname].Keys.ToList(), type);
-        }
-
-        public static void UpdateCues(string sbname, Dictionary<string, float> cueVolumes)
-        {
-            cueVolumes.Keys.ToList().ForEach( name =>
-                {
-                    cues[sbname][name].SetVariable(volumeName, cueVolumes[name]);
-                });
-        }
-
-        public static void UpdateCues(string sbname, List<Track> tracks)
-        {
-            tracks.ForEach(track =>
-                {
-                    cues[sbname][track.CueName].SetVariable(volumeName, track.Volume);
-                });
-        }
-        public static void UpdateCues(string sbname, string[] names, float[] volumes)
-        {
-            for (int i = 0; i < names.GetLength(0); i++)
-            {
-                cues[sbname][names[i]].SetVariable(volumeName, volumes[i]);
-            }
-        }
-
-        public static void UpdateCues(string sbname, float volume)
-        {
-            cues[sbname].Values.ToList().ForEach(cue =>
-                {
-                    cue.SetVariable(volumeName, volume);
-                });
-        }
-        
-        public static void StopCues(string sbname, List<string> cuenames)
-        {
-            cuenames.ForEach(delegate(string cueName)
-            {
-                StopCue(sbname, cueName);
-            });
-        }
-
-
-        /// <summary>
-        /// Stop every cue in the parameter sound bank. Handy for songs.
-        /// </summary>
-        /// <param name="sbname"></param>
-        public static void StopCues(string sbname)
-        {
-            StopCues(sbname, cues[sbname].Keys.ToList());
-        }
-
-        */
-
-        public static void UpdateCues(Song song)
-        {
-            song.Tracks.Values.ToList().ForEach(track =>
-            {
-                cues[song.SoundBankName][track.CueName].SetVariable(volumeName, track.Volume);
-            });
+            cues[q.SoundBankName][q.cueName].Stop(AudioStopOptions.AsAuthored);
+            RecycleCue(q.SoundBankName, q.cueName);
         }
 
         public static void StopCue(string sbname, string cueName)
         {
             cues[sbname][cueName].Stop(AudioStopOptions.AsAuthored);
             RecycleCue(sbname, cueName);
+        }
+
+
+        public static void Play(Song song)
+        {
+            song.Tracks.ForEach(track =>
+                {
+                    track.cues.ForEach(q =>
+                        {
+                            Play(q, track.Volume);
+                        });
+                });
+            UpdateCues(song);
+        }
+
+
+        /*
+        protected static void Stop(Track track)
+        {
+            if (cues[track.SoundbankName][track.CueName].IsPlaying)
+            {
+                StopCue(track.SoundbankName, track.CueName);
+            }
+        }
+
+        public static void Stop(Song song)
+        {
+            song.Tracks.ForEach(track =>
+                {
+                    StopCue(song.SoundBankName, track.CueName);
+                });
+        }
+        */
+
+        public static void UpdateCues(Song song)
+        {
+            song.Tracks.ForEach(track =>
+            {
+                track.cues.ForEach(q =>
+                    {
+                        cues[song.SoundBankName][q.cueName].SetVariable(volumeName, track.Volume);
+                    });
+            });
         }
 
 
@@ -290,9 +257,7 @@ namespace Duologue.Audio
         public override void Update(GameTime gameTime)
         {
             engine.Update();
-            ProcessDynamicCues();
             ProcessPlayedCues();
-            // TODO: Add your update code here
             base.Update(gameTime);
         }
     }

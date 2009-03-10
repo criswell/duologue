@@ -8,35 +8,61 @@ using Mimicware;
 namespace Duologue.Audio
 {
 
+    public class IntensityHelper
+    {
+        public int Step = 0;
+        public int Max;
+        public Dictionary<string, float>[] CueVolume; //must know array size before init
+
+        public IntensityHelper(string[] cues, float[,] vols)
+        {
+            Max = vols.GetLength(0);
+            CueVolume = new Dictionary<string, float>[Max];
+            for (int i = 0; i < Max; i++)
+            {
+                CueVolume[i] = new Dictionary<string, float>();
+                for (int cueNum = 0; cueNum < vols.GetLength(1); cueNum++)
+                {
+                    CueVolume[i].Add(cues[cueNum], vols[i, cueNum]);
+                }
+            }
+        }
+    }
+
     public class IntensitySong : Song
     {
-        protected int intensityStep = 0; //trick into an update the first time
-        public int MaxIntensity;
+        public IntensityHelper Intensity;
 
-        protected Dictionary<string, float>[] intensityCueVolume; //must know array size before init
+        public IntensitySong(Game game, string sbname, string wbname)
+            : base(game, sbname, wbname)
+        {
+        }
 
+        /*
         public IntensitySong(Game game, string sbname, string wbname,
             string[] cues, float[,] vols)
-            : base(game, sbname, wbname) 
+            : this(game, sbname, wbname)
         {
-            MaxIntensity = vols.GetLength(0);
-            Tracks = new Dictionary<string, Track>();
             for (int cueNum = 0; cueNum < vols.GetLength(1); cueNum++)
             {
                 Tracks.Add(cues[cueNum], new Track(cues[cueNum], vols[0, cueNum]));
             }
-
-            intensityCueVolume = new Dictionary<string, float>[MaxIntensity];
-            for (int i = 0; i < MaxIntensity; i++)
-            {
-                intensityCueVolume[i] = new Dictionary<string, float>();
-                for (int cueNum = 0; cueNum < vols.GetLength(1); cueNum++)
-                {
-                    intensityCueVolume[i].Add(cues[cueNum], vols[i, cueNum]);
-                }
-            }
-            AudioHelper.PreloadSong(this);
+            AudioHelper.Preload(this);
+            Intensity = new IntensityHelper(cues, vols);
         }
+
+        public IntensitySong(Game game, string sbname, string wbname,
+            string[][] cues, float[,] vols)
+            : this(game, sbname, wbname)
+        {
+            for (int track = 0; track < cues.Length; track++)
+            {
+                Tracks.Add(new Track(sbname, track));
+            }
+            AudioHelper.Preload(this);
+            Intensity = new IntensityHelper(cues, vols);
+        }
+         */
 
         public override void Play()
         {
@@ -53,21 +79,22 @@ namespace Duologue.Audio
             {
                 base.Play();
             }
-            MWMathHelper.LimitToRange(intensity, 1, MaxIntensity);
-            ChangeIntensity(intensity - intensityStep);
+            MWMathHelper.LimitToRange(intensity, 1, Intensity.Max);
+            ChangeIntensity(intensity - Intensity.Step);
         }
 
         public void ChangeIntensity(int amount)
         {
-            int oldIntensityStep = intensityStep;
-            intensityStep =
-                MWMathHelper.LimitToRange(intensityStep + amount, 1, MaxIntensity);
-            //if ( ( (intensityStep != oldIntensityStep) || amount == 0 ) && !this.volumeChanging )
+            int oldIntensityStep = Intensity.Step;
+            Intensity.Step =
+                MWMathHelper.LimitToRange(Intensity.Step + amount, 1, Intensity.Max);
+            //if ( ( (Intensity.Step != oldIntensityStep) || amount == 0 ) && !this.volumeChanging )
             if (!volumeChanging)
             {
-                Tracks.Keys.ToList().ForEach(name =>
+                Tracks.ForEach(track =>
                 {
-                    Tracks[name].ChangeVolume(intensityCueVolume[intensityStep - 1][name]);
+                    track.ChangeVolume(Intensity.CueVolume[Intensity.Step - 1][""]);
+                    //Tracks[name].ChangeVolume(Intensity.CueVolume[Intensity.Step - 1][name]);
                 });
                 ChangeVolume(false);
             }
@@ -75,21 +102,21 @@ namespace Duologue.Audio
 
         public float GetIntensityPercentage()
         {
-            return (float)intensityStep / (float)MaxIntensity;
+            return (float)Intensity.Step / (float)Intensity.Max;
         }
 
         public void SetIntensityPercentage(float percentage)
         {
-            intensityStep = GetIntensityStepFromPercent(percentage);
+            Intensity.Step = GetIntensityStepFromPercent(percentage);
         }
 
         public int GetIntensityStepFromPercent(float percent)
         {
             MWMathHelper.LimitToRange(percent, 0f, 1f);
-            float segment = 1f / (float)MaxIntensity;
+            float segment = 1f / (float)Intensity.Max;
             float estimateStep = percent / segment;
             int step = (int)estimateStep;
-            MWMathHelper.LimitToRange(step, 1, MaxIntensity);
+            MWMathHelper.LimitToRange(step, 1, Intensity.Max);
             return step;
         }
 
