@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Duologue.Audio.Widgets;
 
 namespace Duologue.Audio
 {
@@ -10,18 +11,11 @@ namespace Duologue.Audio
         public string SoundbankName;
         public List<Q> cues;
         public float Volume = Loudness.Normal;
-
-        // this should only be set true for Cues that are set
-        // to repeat (usually infinitely) in XACT.
-        //public bool AutoLoop;
+        public bool VolumeChanging;
 
         //things relevant to songs with volume fades
-        public VolumeChangeWidget Fade;
-
-        protected int MILLISECONDS_FADE = 500;
-
-        //things relevant to "beat" songs, i.e. songs which we need
-        // to be able to know the timing of audible events
+        //public VolumeChangeWidget Fade;
+        //protected int MILLISECONDS_FADE = 500;
 
         public Track()
         {
@@ -44,44 +38,21 @@ namespace Duologue.Audio
             cues[beat - 1].Play();
         }
 
-        public bool VolumeChanging()
+        /*
+        public void ChangeVolume(float newVol, bool stop)
         {
             if (null != Fade)
             {
-                return Fade.VolumeChanging;
+                Fade.ChangeVolume(newVol, stop);
             }
-            else
-            {
-                return false;
-            }
-        }
-
-        public void ChangeVolume(float newVol)
-        {
-            if (null != Fade)
-            {
-                Fade.ChangeVolume(newVol);
-            }
-        }
-
-        public void IncrementFade()
-        {
-            if (null != Fade)
-            {
-                Volume = Fade.IncrementFade();
-            }
-        }
-
-        public void SetFade(float start, float end, int mS)
-        {
-            Fade = new VolumeChangeWidget(start, end, mS);
         }
 
         public void FadeIn(float vol)
         {
             SetFade(Loudness.Quiet, Loudness.Normal, MILLISECONDS_FADE); //FIXME
-            Fade.FadeIn(vol);
+            Fade.FadeIn();
         }
+         */
 
         public void Play()
         {

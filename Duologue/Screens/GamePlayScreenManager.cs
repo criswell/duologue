@@ -293,7 +293,7 @@ namespace Duologue.Screens
                 if (intensityCounter > intensityIncreaseLimit)
                 {
                     InstanceManager.Logger.LogEntry("INTENSITY++");
-                    localGame.Audio.Intensify();
+                    localGame.Intensity.Intensify();
                     intensityCounter = 0f;
                 }
             }
@@ -345,10 +345,11 @@ namespace Duologue.Screens
         public void SetNextMusic()
         {
             AudioManager audio = ServiceLocator.GetService<AudioManager>();
+            IntensityNotifier intensity = ServiceLocator.GetService<IntensityNotifier>();
 
             if (LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID != lastSongID)
             {
-                float currentIntensity = audio.GetIntensity(lastSongID);
+                float currentIntensity = intensity.GetIntensity(lastSongID);
                 audio.FadeOut(lastSongID);
                 audio.FadeIn(
                     LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID,
@@ -372,7 +373,7 @@ namespace Duologue.Screens
                 intensityTimer = 0f;
                 intensityCounter = 0f;
                 InstanceManager.Logger.LogEntry("INTENSITY--");
-                localGame.Audio.Detensify();
+                localGame.Intensity.Detensify();
             }
 
             switch (currentState)
