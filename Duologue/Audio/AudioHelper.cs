@@ -97,7 +97,7 @@ namespace Duologue.Audio
 
         protected static void Preload(Q q)
         {
-            Preload(q.SoundBankName, q.cueName);
+            Preload(q.SoundBankName, q.CueName);
         }
 
         protected static void Preload(Track track)
@@ -161,34 +161,34 @@ namespace Duologue.Audio
 
         public static void Play(Q q)
         {
-            RecycleCue(q.SoundBankName, q.cueName);
-            cues[q.SoundBankName][q.cueName].Play();
+            RecycleCue(q.SoundBankName, q.CueName);
+            cues[q.SoundBankName][q.CueName].Play();
         }
 
         public static void Play(Q q, float volume)
         {
             Play(q);
-            cues[q.SoundBankName][q.cueName].SetVariable(volumeName, volume);
+            cues[q.SoundBankName][q.CueName].SetVariable(volumeName, volume);
             //we *could* range limit the volume before making that call
         }
 
         public static void Pause(Q q)
         {
-            cues[q.SoundBankName][q.cueName].Pause();
+            cues[q.SoundBankName][q.CueName].Pause();
         }
 
         public static void Resume(Q q)
         {
-            if (cues[q.SoundBankName][q.cueName].IsPaused)
+            if (cues[q.SoundBankName][q.CueName].IsPaused)
             {
-                cues[q.SoundBankName][q.cueName].Resume();
+                cues[q.SoundBankName][q.CueName].Resume();
             }
         }
 
         public static void Stop(Q q)
         {
-            cues[q.SoundBankName][q.cueName].Stop(AudioStopOptions.AsAuthored);
-            RecycleCue(q.SoundBankName, q.cueName);
+            cues[q.SoundBankName][q.CueName].Stop(AudioStopOptions.AsAuthored);
+            RecycleCue(q.SoundBankName, q.CueName);
         }
 
         public static void StopCue(string sbname, string cueName)
@@ -235,7 +235,7 @@ namespace Duologue.Audio
             {
                 track.cues.ForEach(q =>
                     {
-                        cues[song.SoundBankName][q.cueName].SetVariable(volumeName, track.Volume);
+                        cues[song.SoundBankName][q.CueName].SetVariable(volumeName, track.Volume);
                     });
             });
         }

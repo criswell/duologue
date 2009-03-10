@@ -5,67 +5,10 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Mimicware;
+using Duologue.Audio.Widgets;
 
 namespace Duologue.Audio
 {
-
-    //Things relevant to songs with volume fades
-    public class VolumeChangeWidget
-    {        
-        //Most recently commanded Volume
-        public float Volume;
-
-        public const int UPDATE_MILLISECONDS = 50;
-        //Number of volume change steps between StartVolume and EndVolume
-        //We should calculate that, and the step amounts
-        //steps = total mS/update mS
-
-        protected int steps;
-        protected float stepAmount;
-        public float StartVolume; //prefer read-only
-        public float EndVolume; //prefer read-only
-        public bool VolumeChanging = false; //prefer read-only
-
-        public VolumeChangeWidget(float start, float end, int milliseconds)
-        {
-            StartVolume = MWMathHelper.LimitToRange(start, 0f, 1f);
-            EndVolume = MWMathHelper.LimitToRange(end, 0f, 1f);
-            milliseconds = MWMathHelper.LimitToRange(steps, 1, 5000);
-            steps = milliseconds / UPDATE_MILLISECONDS;
-            stepAmount = (EndVolume - StartVolume) / steps;
-        }
-
-        public void ChangeVolume(float newVol)
-        {
-            if (newVol != Volume)
-            {
-                StartVolume = Volume;
-                EndVolume = newVol;
-                VolumeChanging = true;
-            }
-        }
-
-        public void FadeIn(float volume)
-        {
-                Volume = Loudness.Quiet;
-                ChangeVolume(volume);
-        }
-
-        public float IncrementFade()
-        {
-            if (VolumeChanging)
-            {
-                Volume += (EndVolume - StartVolume) / (float)steps;
-                if (((StartVolume > EndVolume) && !(Volume > EndVolume)) ||
-                    ((StartVolume < EndVolume) && !(EndVolume > Volume)))
-                {
-                    VolumeChanging = false;
-                }
-            }
-            return Volume;
-        }
-    }
-
     public class Song : GameComponent
     {
         //relevant to all songs:
@@ -80,21 +23,17 @@ namespace Duologue.Audio
         // (usually infinitely) in XACT.
         public bool AutoLoop = true;
 
-        //relevant to "Fadeable" songs:
-        protected bool volumeChanging;
-        protected const float updateDeltaT = 50f;
-        protected double previousVolChangeTime;
-        protected bool stopAfterVolChange;
+        protected VolumeChangeWidget fader = null;
+        protected BeatWidget beater = null;
+        protected IntensityWidget hyper = null;
 
-        //"sliced" songs
-        public bool IsBeatSong = false;
-        public int NumberOfBeats;
-        public int NumberOfTracks;
-
-        //"intensity" songs (selectively sound tracks when game intensity increases)
-        public bool IsIntensitySong = false;
-
-        public Song(Game game, string sbname, string wbname)
+        /// <summary>
+        /// Protected c'tor for "least common denominator"
+        /// </summary>
+        /// <param name="game">Game</param>
+        /// <param name="sbname">SoundBankName</param>
+        /// <param name="wbname">WaveBankName</param>
+        protected Song(Game game, string sbname, string wbname)
             : base(game) 
         {
             Enabled = false;
@@ -122,47 +61,62 @@ namespace Duologue.Audio
             ArrayToTracks(arrange);
         }
 
-        //adding the arrangement parameter sets this up as a "Beat" song
-        //Hence, not AutoLooping, until we discover looping manually sucks
+
+        /// <summary>
+        /// Constructor for Songs with just the "Beat" feature. No looping cues allowed.
+        /// </summary>
+        /// <param name="game">Game</param>
+        /// <param name="sbname">SoundBankName</param>
+        /// <param name="wbname">WaveBankName</param>
+        /// <param name="arrangement">arrangement in string[track#,cue#]=cueName form</param>
         public Song(Game game, string sbname, string wbname, string[,] arrangement)
             : this(game, sbname, wbname)
         {
             AutoLoop = false;
-            IsBeatSong = true;
             initvars();
-            NumberOfTracks = arrangement.GetLength(0);
-            NumberOfBeats = arrangement.GetLength(1);
+            beater = new BeatWidget(arrangement.GetLength(0), arrangement.GetLength(1));
             ArrayToTracks(arrangement);
         }
 
-        //adding the intensityMap parameter lets this set up "intensity" songs
+        /// <summary>
+        /// Constructor for Songs with just the "Intensity" feature.
+        /// </summary>
+        /// <param name="game">Game</param>
+        /// <param name="sbname">SoundBankName</param>
+        /// <param name="wbname">WaveBankName</param>
+        /// <param name="intensityMap">intensityMap in string[intensity,track number]=track.Volume form</param>
         public Song(Game game, string sbname, string wbname, float[,] intensityMap)
             : this(game, sbname, wbname)
         {
             AutoLoop = false;
-            IsIntensitySong = true;
-            //FIXME
-            //Create data property for use by intensity update
-            //subscribe to intensity changes
+            hyper = new IntensityWidget(this);
+            //FIXME Create data property for use by intensity update
+            // & subscribe to intensity changes
         }
 
-        //constructor for songs with both "intensity" and "beat"
+        
+        /// <summary>
+        /// Constructor for Songs with both "Intensity" and "Beat" features. No looping cues allowed.
+        /// </summary>
+        /// <param name="game">Game</param>
+        /// <param name="sbname">SoundBankName</param>
+        /// <param name="wbname">WaveBankName</param>
+        /// <param name="arrangement">arrangement in string[track#,cue#]=cueName form</param>
+        /// <param name="intensityMap">intensityMap in string[intensity,track number]=track.Volume form</param>
         public Song(Game game, string sbname, string wbname, string[,] arrangement,
             float[,] intensityMap)
             : this(game, sbname, wbname, intensityMap)
         {
-            IsBeatSong = true;
+            beater = new BeatWidget(arrangement.GetLength(0), arrangement.GetLength(1));
             ArrayToTracks(arrangement);
         }
 
         protected void ArrayToTracks(string[,] arrangement)
         {
-            NumberOfTracks = arrangement.GetLength(0);
-            NumberOfBeats = arrangement.GetLength(1);
-            for (int track = 0; track < NumberOfTracks; track++)
+            for (int track = 0; track < arrangement.GetLength(0); track++)
             {
-                string[] row = new string[NumberOfBeats];
-                for (int q = 0; q < NumberOfBeats; q++)
+                string[] row = new string[arrangement.GetLength(1)];
+                for (int q = 0; q < arrangement.GetLength(1); q++)
                 {
                     row[q] = arrangement[track, q];
                 }
@@ -171,29 +125,29 @@ namespace Duologue.Audio
             AudioHelper.Preload(this);
         }
 
-        protected void PlayBeat(int beat)
-        {
-            Tracks.ForEach(track => { track.PlayBeat(beat); });
-        }
-
         protected void initvars()
         {
             isPlaying = false;
-            volumeChanging = false;
-            stopAfterVolChange = false;
+            //could probably null the fader each time it is done, unless
+            //we want to hold it to reduce memory thrash
+            if (null != fader)
+            {
+                fader.VolumeChanging = false;
+                fader.StopAfterChange = false;
+            }
         }
 
         public void Play()
         {
             if (AutoLoop) //simplest case - parallel infinite Cues
             {
-                //AudioHelper.Play(this);
                 Tracks.ForEach(track =>
                     {
-                        track.Play();
+                        //there should only be ONE cue per track in infinite loops
+                        track.cues[0].Play();
                     });
-                isPlaying = true;
             }
+            isPlaying = true;
             Enabled = true;
         }
 
@@ -221,90 +175,35 @@ namespace Duologue.Audio
 
         public void FadeOut()
         {
-            Tracks.ForEach(track =>
+            if (IsPlaying)
             {
-                track.ChangeVolume(Loudness.Silent);
-            });
-            ChangeVolume(true);        
+                fader = new VolumeChangeWidget(this);
+                fader.Volume = Loudness.Normal;
+                fader.FadeOut(500);
+                //Tracks.ForEach(track =>
+                //{
+                //    track.ChangeVolume(Loudness.Silent);
+                //});
+                ChangeVolume(true);
+            }
         }
 
         public void FadeIn(float volume)
         {
-            Tracks.ForEach(track => 
-            {
-                track.FadeIn(volume);
-            });
-            ChangeVolume(false);
+            fader = new VolumeChangeWidget(this);
+            fader.FadeIn(500);
+            //Tracks.ForEach(track => 
+            //{
+            //    track.FadeIn(volume);
+            //});
+            //ChangeVolume(false);
             Play();
         }
 
         public void ChangeVolume(bool stop)
         {
-            stopAfterVolChange = stopAfterVolChange || stop;
-            volumeChanging = true;
-        }
-
-
-        protected void UpdateVolumeChange(GameTime gameTime)
-        {
-            if (gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime > updateDeltaT)
-            {
-                volumeChanging = false;
-                Tracks.ForEach(track =>
-                {
-                    previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
-                    if (track.VolumeChanging())
-                    {
-                        track.IncrementFade();
-                        volumeChanging |= track.VolumeChanging();
-                    }
-                });
-                AudioHelper.UpdateCues(this);
-                if (!volumeChanging && stopAfterVolChange)
-                {
-                    Stop();
-                }
-            }
-        }
-
-        protected void UpdateTracks()
-        {
-            Tracks.ForEach(track =>
-                {
-                });
-        }
-
-        protected float beatTimer = 0f;
-        protected float lengthOfBeat = (3433.039f / 8.000f); //FIXME this should be set per-instance
-        protected int beatState = 0;
-        protected int currentBeat = 0;
-
-        protected void UpdateBeatSong(GameTime gameTime)
-        {
-            switch (beatState)
-            {
-                case 0:
-                    currentBeat = 0;
-                    beatState = 20;
-                    break;
-                case 20:
-                    if (currentBeat >= NumberOfBeats)
-                    {
-                        currentBeat = 0;
-                    }
-                    beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (beatTimer > lengthOfBeat)
-                    {
-                        currentBeat++;
-                        PlayBeat(currentBeat);
-                        beatTimer = 0f;
-                    }
-                    break;
-                case 999:
-                    throw new Exception("unexpected beatState");
-                default:
-                    throw new Exception("bad state value");
-            }
+            fader.StopAfterChange = fader.StopAfterChange || stop;
+            fader.VolumeChanging = true;
         }
 
 
@@ -314,22 +213,15 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            if (IsBeatSong && Enabled)
+            if (Enabled)
             {
-                UpdateBeatSong(gameTime);
-            }
-            if (IsIntensitySong && Enabled)
-            {
-                //should need this: intensity changes come from notification
+                if (null != beater)
+                    beater.Update(gameTime, this);
+                if (null != fader)
+                    fader.Update(gameTime, this);
+                //should not need this: intensity changes come from notification
                 //and take effect immediately
-            }
-            if (volumeChanging)
-            {
-                UpdateVolumeChange(gameTime);
-            }
-            else
-            {
-                previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+                if (null != hyper) { }
             }
             base.Update(gameTime);
         }

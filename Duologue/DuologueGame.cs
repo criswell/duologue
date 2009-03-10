@@ -99,6 +99,7 @@ namespace Duologue
         public Spinner spinner;
         public WindowManager windowManager;
         public AudioManager Audio;
+        public IntensityNotifier Intensity;
 
         // Screens
         public ColorStateTestScreen colorStateTest;
@@ -311,6 +312,9 @@ namespace Duologue
             Audio = new AudioManager(this);
             ServiceLocator.RegisterService(Audio);
             this.Components.Add(Audio);
+
+            Intensity = new IntensityNotifier();
+            ServiceLocator.RegisterService(Intensity);
 
             // Pause stuff
             LocalInstanceManager.Pause = false;

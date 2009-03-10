@@ -183,28 +183,23 @@ namespace Duologue.Audio
         protected const string LoST15 = "LoSToms-15";
         protected const string LoST16 = "LoSToms-16";
 
-        protected AudioManager notifier;
         protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
-        public Song LandOfSand;
-        public Song BeatEffects;
+        //public Song LandOfSand;
+        //public Song BeatEffects;
         public Song Dance8ths;
         public Song LandOfSand16ths;
 
         public MusicFactory(AudioManager manager)
         {
-            //general use
-            notifier = manager;
-            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
-
-            //SelectSong
-            string[] selectArr = { selectMenuCue };
-            SelectSong = new Song(notifier.Game, selectMenuSounds, selectMenuWaves, selectArr);
-
-            //BeatEffectsSong aka IntensitySong aka Dance
             float on = Loudness.Normal;
             float off = Loudness.Quiet;
 
+            //SelectSong
+            string[] selectArr = { selectMenuCue };
+            SelectSong = new Song(manager.Game, selectMenuSounds, selectMenuWaves, selectArr);
+            /*
+            //BeatEffectsSong aka IntensitySong aka Dance
             string[,] BEarr = { {Intensity1}, {Intensity2}, {Intensity3}, 
                                    {Intensity4}, {Intensity5} };
 
@@ -216,7 +211,7 @@ namespace Duologue.Audio
                                   {on, on, on, on, on}
                               };
 
-            BeatEffects = new Song(notifier.Game, beatEffectsSounds, beatEffectsWaves,
+            BeatEffects = new Song(manager.Game, beatEffectsSounds, beatEffectsWaves,
                 BEarr, BEvolumes);
 
             //LandOfSand, the second IntensitySong
@@ -233,9 +228,9 @@ namespace Duologue.Audio
                                   {on, off, off, on, on, on, on},
                               };
 
-            LandOfSand = new Song(notifier.Game, landOfSandSounds, landOfSandWaves,
+            LandOfSand = new Song(manager.Game, landOfSandSounds, landOfSandWaves,
                 LoStracks, LoSvolumes);
-
+            */
             //Dance8ths, an attempt to slice each track of the BeatSong into 8 segments 
             // ("beats") that we fire every time they play, instead of relying on the 
             // wav being infinite repeat
@@ -261,9 +256,8 @@ namespace Duologue.Audio
                                   {on, on, on, on, off},
                                   {on, on, on, on, on}
                               };
-            Dance8ths = new Song(notifier.Game, dance8thsSounds, dance8thsWaves,
+            Dance8ths = new Song(manager.Game, dance8thsSounds, dance8thsWaves,
                 D8arr, D8volumes);
-            Dance8ths.IsBeatSong = true;
 
             //LandOfSand16ths
             string[,] LoS16arr = {
@@ -292,30 +286,15 @@ namespace Duologue.Audio
                                   {on, on, off, on, on, on, off},
                                   {on, off, off, on, on, on, on},
                               };
-            LandOfSand16ths = new Song(notifier.Game, LoS16Sounds, LoS16Waves,
+            LandOfSand16ths = new Song(manager.Game, LoS16Sounds, LoS16Waves,
                 LoS16arr, LoS16volumes);
-            LandOfSand16ths.IsBeatSong = true;
-
 
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);
-            manager.Game.Components.Add(BeatEffects);
-            manager.Game.Components.Add(LandOfSand);
+            //manager.Game.Components.Add(BeatEffects);
+            //manager.Game.Components.Add(LandOfSand);
             manager.Game.Components.Add(Dance8ths);
             manager.Game.Components.Add(LandOfSand16ths);
-        }
-
-        public void UpdateIntensity(IntensityEventArgs e)
-        {
-            //LandOfSand.ChangeIntensity(e.ChangeAmount);
-            //BeatEffects.ChangeIntensity(e.ChangeAmount);
-            //Dance8ths.ChangeIntensity(e.ChangeAmount); FIXME
-        }
-
-        public void Detach()
-        {
-            notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
-            notifier = null;
         }
 
     }

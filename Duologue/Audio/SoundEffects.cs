@@ -86,7 +86,8 @@ namespace Duologue.Audio
         public const string BuzzDeath = "BuzzDeath";
         //public const string YourNewCueName = "Cue as named in XACT";
 
-        private AudioManager notifier;
+        protected IntensityNotifier notifier;
+        protected AudioManager audio;
 
         private static Dictionary<EffectID, string> IDNameMap = 
             new Dictionary<EffectID, string>
@@ -120,8 +121,10 @@ namespace Duologue.Audio
 
         public SoundEffects(AudioManager manager)
         {
-            notifier = manager;
-            playerBank = new EffectsBank(notifier.Game, PlayerEffectsWB, PlayerEffectsSB);
+            notifier = ServiceLocator.GetService<IntensityNotifier>();
+            audio = ServiceLocator.GetService<AudioManager>();
+
+            playerBank = new EffectsBank(audio.Game, PlayerEffectsWB, PlayerEffectsSB);
 
             List<string> effectNames = new List<string>();
             foreach (string name in IDNameMap.Values)
@@ -131,7 +134,8 @@ namespace Duologue.Audio
             }
             AudioHelper.Preload(PlayerEffectsSB, PlayerEffectsWB, effectNames);
 
-            plucksBank = new EffectsBank(notifier.Game, PlucksWB, PlucksSB);
+            plucksBank = new EffectsBank(audio.Game, PlucksWB, PlucksSB);
+
             List<string> plucksNames = new List<string>();
             foreach (string name in PluckMap.Values)
             {
