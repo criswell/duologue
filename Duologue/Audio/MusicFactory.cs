@@ -185,8 +185,6 @@ namespace Duologue.Audio
 
         protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
-        //public Song LandOfSand;
-        //public Song BeatEffects;
         public Song Dance8ths;
         public Song LandOfSand16ths;
 
@@ -198,50 +196,11 @@ namespace Duologue.Audio
             //SelectSong
             string[] selectArr = { selectMenuCue };
             SelectSong = new Song(manager.Game, selectMenuSounds, selectMenuWaves, selectArr);
-            /*
-            //BeatEffectsSong aka IntensitySong aka Dance
-            string[,] BEarr = { {Intensity1}, {Intensity2}, {Intensity3}, 
-                                   {Intensity4}, {Intensity5} };
 
-            float[,] BEvolumes = {
-                                  {on, off, off, off, off},
-                                  {on, on, off, off, off},
-                                  {on, on, on, off, off},
-                                  {on, on, on, on, off},
-                                  {on, on, on, on, on}
-                              };
-
-            BeatEffects = new Song(manager.Game, beatEffectsSounds, beatEffectsWaves,
-                BEarr, BEvolumes);
-
-            //LandOfSand, the second IntensitySong
-            string[,] LoStracks = {
-                   {LoSBassDrum}, {LoSHiHat}, {LoSBassSynth}, {LoSStabs}, 
-                   {LoSMelody}, {LoSAccent}, {LoSToms} };
-
-            float[,] LoSvolumes = {
-                                  {on, on, off, off, off, off, off},
-                                  {on, on, on, off, off, off, off},
-                                  {on, on, on, on, off, off, off},
-                                  {on, on, off, on, on, off, off},
-                                  {on, on, off, on, on, on, off},
-                                  {on, off, off, on, on, on, on},
-                              };
-
-            LandOfSand = new Song(manager.Game, landOfSandSounds, landOfSandWaves,
-                LoStracks, LoSvolumes);
-            */
             //Dance8ths, an attempt to slice each track of the BeatSong into 8 segments 
             // ("beats") that we fire every time they play, instead of relying on the 
             // wav being infinite repeat
             string[,] D8arr = { 
-                {D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th},
-                {D8bassplus1, D8bassplus2, D8bassplus3, D8bassplus4, D8bassplus5, D8bassplus6, D8bassplus7, D8bassplus8},
-                {D8organ1, D8organ2, D8organ3, D8organ4, D8organ5, D8organ6, D8organ7, D8organ8},
-                {D8guitar1, D8guitar2, D8guitar3, D8guitar4, D8guitar5, D8guitar6, D8guitar7, D8guitar8}
-                        };
-
-            string[,] D8arrangement = {
                 {D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th},
                 {D8bassplus1, D8bassplus2, D8bassplus3, D8bassplus4, D8bassplus5, D8bassplus6, D8bassplus7, D8bassplus8},
                 {D8organ1, D8organ2, D8organ3, D8organ4, D8organ5, D8organ6, D8organ7, D8organ8},
@@ -291,8 +250,6 @@ namespace Duologue.Audio
 
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);
-            //manager.Game.Components.Add(BeatEffects);
-            //manager.Game.Components.Add(LandOfSand);
             manager.Game.Components.Add(Dance8ths);
             manager.Game.Components.Add(LandOfSand16ths);
         }
