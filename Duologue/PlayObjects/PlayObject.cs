@@ -42,6 +42,7 @@ namespace Duologue.PlayObjects
         Enemy_KingGloop,
         Enemy_Pyre,
         Enemy_Ember,
+        Enemy_UncleanRot,
     }
 
     /// <summary>

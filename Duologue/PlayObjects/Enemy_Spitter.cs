@@ -296,7 +296,6 @@ namespace Duologue.PlayObjects
         private float nearestPlayerRadius;
         private PlayObject nearestPlayerObject;
 
-        //private bool inBeam;
         private bool isFleeing;
 
         private AudioManager audio;
@@ -656,7 +655,7 @@ namespace Duologue.PlayObjects
             if (nearestPlayer.Length() > 0f)
             {
                 // FIXME would be nice if this was more of a "turn" than a sudden jarring switch
-                Orientation = Vector2.Negate(nearestPlayer); //GetVectorPointingAtOrigin(nearestPlayer);
+                Orientation = Vector2.Negate(nearestPlayer);
                 SetRotation();
                 if (!(nearestPlayerRadius > minPlayerComfortRadiusMultiplier * Radius &&
                     nearestPlayerRadius < maxPlayerComfortRadiusMultiplier * Radius))
@@ -672,7 +671,6 @@ namespace Duologue.PlayObjects
                     }
 
                     nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
-                    //Orientation = nearestPlayer;
                     nearestPlayer.Normalize();
 
                     if (!isFleeing)
@@ -681,24 +679,11 @@ namespace Duologue.PlayObjects
                     offset += modifier * nearestPlayer;
                 }
             }
-            /*else
-            {
-                // If no near player, move in previous direction
-                nearestPlayer = lastDirection;
-
-                //nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
-                nearestPlayer.Normalize();
-
-                offset += playerAttract * nearestPlayer;
-            }*/
 
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
             {
                 this.Position += offset;
-                //lastDirection = offset;
-                //Orientation = offset; // new Vector2(-offset.Y, offset.X);
-                //Orientation.Normalize();
             }
 
             return true;

@@ -139,7 +139,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The player attract modifier
         /// </summary>
-        private const float playerAttract = 2.1f;
+        private const float playerAttract = 3.5f;
 
         /// <summary>
         /// The minimum movement required before we register motion
