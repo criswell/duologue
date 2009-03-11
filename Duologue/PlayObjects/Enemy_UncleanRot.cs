@@ -24,6 +24,14 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
+    public enum RotState
+    {
+        FadeIn,
+        FadeOut,
+        ScreamIn,
+        ScreamOut
+    }
+
     public class Enemy_UncleanRot : Enemy
     {
         #region Constants
@@ -55,6 +63,12 @@ namespace Duologue.PlayObjects
 
         private Vector2 center_Body;
         private Vector2 center_Static;
+
+        private int currentFrame_Body;
+        private int currentFrame_Static;
+        private int currentFrame_Tongue;
+
+        private RotState currentState;
         #endregion
 
         #region Properties
@@ -128,6 +142,12 @@ namespace Duologue.PlayObjects
 
             center_Static = new Vector2(
                 texture_Static[0].Width / 2f, texture_Static[0].Height / 2f);
+
+            // Init the basic variables
+            currentFrame_Body = 0;
+            currentFrame_Static = 0;
+            currentFrame_Tongue = 0;
+            currentState = RotState.FadeIn;
         }
         #endregion
 
