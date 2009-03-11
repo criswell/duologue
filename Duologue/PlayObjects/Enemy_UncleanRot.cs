@@ -45,7 +45,7 @@ namespace Duologue.PlayObjects
         private const string filename_Outline = "Enemies/unclean_rot/outline_{0}";
         private const string filename_OutlineTongue = "Enemies/unclean_rot/outline-tongue-{0}";
         private const string filename_Skullcap = "Enemies/unclean_rot/skullcap-{0}";
-        private const string filename_Static = "Enemies/unclean_rot/static-{0:00}";
+        private const string filename_Static = "Enemies/unclean_rot/static-{0:D2}";
 
         private const int numFrames_Body = 9;
         private const int numFrames_Tongue = 6;
@@ -163,12 +163,12 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// Min number of how many of our radius size away we're comfortable with the player
         /// </summary>
-        private const float minPlayerComfortRadiusMultiplier = 2f;
+        private const float minPlayerComfortRadiusMultiplier = 5f;
 
         /// <summary>
         /// Max number of our radius we're comfortable with the player
         /// </summary>
-        private const float maxPlayerComfortRadiusMultiplier = 2.5f;
+        private const float maxPlayerComfortRadiusMultiplier = 5.5f;
         #endregion
         #endregion
 
@@ -276,7 +276,7 @@ namespace Duologue.PlayObjects
             for (int i = 0; i < numFrames_Static; i++)
             {
                 texture_Static[i] = InstanceManager.AssetManager.LoadTexture2D(
-                    String.Format(filename_Static, (i + 1).ToString()));
+                    String.Format(filename_Static, (i + 1)));
             }
 
             center_Static = new Vector2(
@@ -287,8 +287,8 @@ namespace Duologue.PlayObjects
             SetCurrentColors();
 
             color_Steady = new Color[2];
-            color_Steady[0] = Color.LightSlateGray;
-            color_Steady[1] = Color.SteelBlue;
+            color_Steady[0] = Color.Silver;
+            color_Steady[1] = Color.LightSlateGray;
 
             color_Static = new Color[4];
             color_Static[0] = new Color(Color.Ivory, 200);
@@ -313,6 +313,9 @@ namespace Duologue.PlayObjects
             numberOfTimesFaded = 0;
             numberOfTongueRolls = 0;
             isFleeing = false;
+
+            Initialized = true;
+            Alive = true;
         }
         #endregion
 
