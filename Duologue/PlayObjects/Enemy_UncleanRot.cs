@@ -123,6 +123,53 @@ namespace Duologue.PlayObjects
         /// This is the number of times we fade before we start a scream
         /// </summary>
         private const int totalNumberOfTimesToFade = 4;
+
+        /// <summary>
+        /// The defined radius of the mob
+        /// </summary>
+        private const float definedRadius = 60f;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 1000;
+
+        /// <summary>
+        /// The point value when my shields disintegrate if I were it at perfect beat
+        /// </summary>
+        private const int myShieldPointValue = 10;
+
+        #region Forces/Attractions/Repulsions
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 2f;
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float playerAttract = 2.5f;
+
+        /// <summary>
+        /// The repulsion from the player if the player gets too close
+        /// </summary>
+        private const float playerRepluse = 3.5f;
+
+        /// <summary>
+        /// Min number of how many of our radius size away we're comfortable with the player
+        /// </summary>
+        private const float minPlayerComfortRadiusMultiplier = 2f;
+
+        /// <summary>
+        /// Max number of our radius we're comfortable with the player
+        /// </summary>
+        private const float maxPlayerComfortRadiusMultiplier = 2.5f;
+        #endregion
         #endregion
 
         #region Fields
@@ -135,6 +182,7 @@ namespace Duologue.PlayObjects
         private Color[] color_Steady;
         private Color[] color_CurrentColors;
         private Color[] color_Static;
+        private Color color_Shield;
         private int currentStaticColor;
 
         private int color_ScreamBase;
@@ -153,6 +201,13 @@ namespace Duologue.PlayObjects
         private double timeSinceLastStaticFrame;
         private int numberOfTimesFaded;
         private int numberOfTongueRolls;
+
+        private Vector2 offset;
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
+        private PlayObject nearestPlayerObject;
+
+        private bool isFleeing;
         #endregion
 
         #region Properties
@@ -229,9 +284,7 @@ namespace Duologue.PlayObjects
 
             // Init the colors
             color_CurrentColors = new Color[ColorState.NumberColorsPerPolarity];
-            color_CurrentColors[ColorState.Light] = GetMyColor(ColorState.Light);
-            color_CurrentColors[ColorState.Medium] = GetMyColor(ColorState.Medium);
-            color_CurrentColors[ColorState.Dark] = GetMyColor(ColorState.Dark);
+            SetCurrentColors();
 
             color_Steady = new Color[2];
             color_Steady[0] = Color.LightSlateGray;
@@ -244,10 +297,13 @@ namespace Duologue.PlayObjects
             color_Static[3] = new Color(Color.Silver, 225);
             currentStaticColor = 0;
 
+            color_Shield = new Color(Color.White, 128);
+
             color_ScreamBase = ColorState.Light;
             color_ScreamSkullcap = ColorState.Dark;
 
             // Init the basic variables
+            Radius = definedRadius;
             currentFrame_Body = 0;
             currentFrame_Static = 0;
             currentFrame_Tongue = 0;
@@ -256,28 +312,150 @@ namespace Duologue.PlayObjects
             timeSinceLastStaticFrame = 0;
             numberOfTimesFaded = 0;
             numberOfTongueRolls = 0;
+            isFleeing = false;
         }
         #endregion
 
         #region Public overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestPlayer = Vector2.Zero;
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = len;
+                    nearestPlayer = vToPlayer;
+                    nearestPlayerObject = pobj;
+                }
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
+
+                // Beam handling
+                if (((Player)pobj).IsInBeam(this) == -1 && currentState != RotState.Steady)
+                {
+                    LocalInstanceManager.Steam.AddParticles(Position, GetMyColor());
+                }
+            }
+            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                // Enemy
+                Vector2 vToEnemy = pobj.Position - this.Position;
+                float len = vToEnemy.Length();
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // Too close, BTFO
+                    if (len == 0f)
+                    {
+                        // Well, bah, we're on top of each other!
+                        vToEnemy = new Vector2(
+                            (float)InstanceManager.Random.NextDouble() - 0.5f,
+                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                    }
+                    vToEnemy = Vector2.Negate(vToEnemy);
+                    vToEnemy.Normalize();
+                    offset += standardEnemyRepulse * vToEnemy;
+                }
+
+                return true;
+            }
+            else
+            {
+                // Other
+
+                return true;
+            }
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            // First, apply the player offset
+            if (nearestPlayer.Length() > 0f)
+            {
+                // FIXME would be nice if this was more of a "turn" than a sudden jarring switch
+                Orientation = Vector2.Negate(nearestPlayer);
+                if (!(nearestPlayerRadius > minPlayerComfortRadiusMultiplier * Radius &&
+                    nearestPlayerRadius < maxPlayerComfortRadiusMultiplier * Radius))
+                {
+                    // Default to attract, only repulse if too close
+                    float modifier = playerAttract;
+                    isFleeing = false;
+                    if (nearestPlayerRadius < minPlayerComfortRadiusMultiplier * Radius)
+                    {
+                        // Too close, BTFO
+                        modifier = playerRepluse;
+                        isFleeing = true;
+                    }
+
+                    nearestPlayer += new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                    nearestPlayer.Normalize();
+
+                    if (!isFleeing)
+                        nearestPlayer = Vector2.Negate(nearestPlayer);
+
+                    offset += modifier * nearestPlayer;
+                }
+            }
+
+            // Next apply the offset permanently
+            if (offset.Length() >= minMovement)
+            {
+                this.Position += offset;
+            }
+
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet && currentState != RotState.Steady)
+            {
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                            Position + (float)MWMathHelper.GetRandomInRange(-1.0, 1.0) * center_Static,
+                            color_CurrentColors[MWMathHelper.GetRandomInRange(0, color_CurrentColors.Length)]);
+                    }
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
+                    Alive = false;
+                    //audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(texture_Static[currentFrame_Static], color_Shield, Position, 0f);
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
+                    //audio.soundEffects.PlayEffect(EffectID.CokeBottle);
+                    return true;
+                }
+            }
+            return true;
+        }
+        #endregion
+
+        #region Private methods
+        private void SetCurrentColors()
+        {
+            color_CurrentColors[ColorState.Light] = GetMyColor(ColorState.Light);
+            color_CurrentColors[ColorState.Medium] = GetMyColor(ColorState.Medium);
+            color_CurrentColors[ColorState.Dark] = GetMyColor(ColorState.Dark);
         }
         #endregion
 
@@ -511,6 +689,7 @@ namespace Duologue.PlayObjects
                 {
                     currentState = RotState.ScreamOut;
                     numberOfTongueRolls = 0;
+                    MyEnemyType = EnemyType.Leader;
                 }
                 else
                 {
@@ -585,6 +764,12 @@ namespace Duologue.PlayObjects
                 {
                     currentState = RotState.ScreamIn;
                     numberOfTimesFaded = 0;
+                    if (ColorPolarity == ColorPolarity.Positive)
+                        ColorPolarity = ColorPolarity.Negative;
+                    else
+                        ColorPolarity = ColorPolarity.Positive;
+                    SetCurrentColors();
+                    MyEnemyType = EnemyType.Standard;
                 }
                 else
                 {
