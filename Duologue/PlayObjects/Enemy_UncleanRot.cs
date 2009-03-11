@@ -26,9 +26,13 @@ namespace Duologue.PlayObjects
 {
     public enum RotState
     {
+        Steady,
         FadeIn,
+        FullOn,
         FadeOut,
         ScreamIn,
+        TongueRoll,
+        Scream,
         ScreamOut
     }
 
@@ -52,6 +56,16 @@ namespace Duologue.PlayObjects
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
         private const int realHitPointMultiplier = 5;
+
+        /// <summary>
+        /// The time it takes to fade in
+        /// </summary>
+        private const double deltaTime_FadeIn = 2f;
+
+        /// <summary>
+        /// The time it takes to fade out
+        /// </summary>
+        private const double deltaTime_FadeOut = 2f;
         #endregion
 
         #region Fields
@@ -61,6 +75,11 @@ namespace Duologue.PlayObjects
         private Texture2D[] texture_Skullcap;
         private Texture2D[] texture_Static;
 
+        private Color[] color_Steady;
+        private Color[] color_CurrentColors;
+        private Color[] color_Static;
+        private int currentStaticColor;
+
         private Vector2 center_Body;
         private Vector2 center_Static;
 
@@ -69,6 +88,8 @@ namespace Duologue.PlayObjects
         private int currentFrame_Tongue;
 
         private RotState currentState;
+
+        private double timeSinceLastSwitch;
         #endregion
 
         #region Properties
@@ -132,7 +153,7 @@ namespace Duologue.PlayObjects
             }
 
             center_Body = new Vector2(
-                texture_Base[0].Width / 2f, texture_Base[0].Height / 2f);
+                80f, texture_Base[0].Height / 2f);
 
             for (int i = 0; i < numFrames_Static; i++)
             {
@@ -143,11 +164,28 @@ namespace Duologue.PlayObjects
             center_Static = new Vector2(
                 texture_Static[0].Width / 2f, texture_Static[0].Height / 2f);
 
+            // Init the colors
+            color_CurrentColors = new Color[ColorState.NumberColorsPerPolarity];
+            color_CurrentColors[ColorState.Light] = GetMyColor(ColorState.Light);
+            color_CurrentColors[ColorState.Medium] = GetMyColor(ColorState.Medium);
+            color_CurrentColors[ColorState.Dark] = GetMyColor(ColorState.Dark);
+
+            color_Steady = new Color[2];
+            color_Steady[0] = Color.LightSlateGray;
+            color_Steady[1] = Color.SteelBlue;
+
+            color_Static = new Color[4];
+            color_Static[0] = new Color(Color.Ivory, 200);
+            color_Static[1] = new Color(Color.White, 128);
+            color_Static[2] = new Color(Color.Thistle, 175);
+            color_Static[3] = new Color(Color.Silver, 225);
+            currentStaticColor = 0;
+
             // Init the basic variables
             currentFrame_Body = 0;
             currentFrame_Static = 0;
             currentFrame_Tongue = 0;
-            currentState = RotState.FadeIn;
+            currentState = RotState.Steady;
         }
         #endregion
 
@@ -173,10 +211,101 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
+        #region Private Draw methods
+        private void Draw_NormalFace(GameTime gameTime)
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Outline[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                Color.White,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
+
+        private void Draw_Steady(GameTime gameTime)
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Base[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                color_Steady[0],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Skullcap[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                color_Steady[1],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
+
+        private void Draw_FadeIn(GameTime gameTime)
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Base[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                new Color(color_CurrentColors[ColorState.Medium],
+                    (float)(timeSinceLastSwitch/deltaTime_FadeIn)),
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Skullcap[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                new Color(color_CurrentColors[ColorState.Dark],
+                    (float)(timeSinceLastSwitch / deltaTime_FadeIn)),
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
+        #endregion
+
         #region Draw/ Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Draw the static
+            InstanceManager.RenderSprite.Draw(
+                texture_Static[currentFrame_Static],
+                Position,
+                center_Static,
+                null,
+                color_Static[currentStaticColor],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlend);
+
+            switch (currentState)
+            {
+                case RotState.FadeIn:
+                    Draw_Steady(gameTime);
+                    Draw_FadeIn(gameTime);
+                    Draw_NormalFace(gameTime);
+                    break;
+                default:
+                    Draw_Steady(gameTime);
+                    Draw_NormalFace(gameTime);
+                    break;
+            }
         }
 
         public override void Update(GameTime gameTime)
