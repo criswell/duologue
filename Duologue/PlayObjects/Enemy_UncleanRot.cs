@@ -80,6 +80,9 @@ namespace Duologue.PlayObjects
         private Color[] color_Static;
         private int currentStaticColor;
 
+        private int color_ScreamBase;
+        private int color_ScreamSkullcap;
+
         private Vector2 center_Body;
         private Vector2 center_Static;
 
@@ -181,6 +184,9 @@ namespace Duologue.PlayObjects
             color_Static[3] = new Color(Color.Silver, 225);
             currentStaticColor = 0;
 
+            color_ScreamBase = ColorState.Light;
+            color_ScreamSkullcap = ColorState.Dark;
+
             // Init the basic variables
             currentFrame_Body = 0;
             currentFrame_Static = 0;
@@ -277,6 +283,94 @@ namespace Duologue.PlayObjects
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
         }
+
+        private void Draw_FadeOut(GameTime gameTime)
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Base[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                new Color(color_CurrentColors[ColorState.Medium],
+                    1f - (float)(timeSinceLastSwitch / deltaTime_FadeOut)),
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Skullcap[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                new Color(color_CurrentColors[ColorState.Dark],
+                    1f - (float)(timeSinceLastSwitch / deltaTime_FadeOut)),
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
+
+        private void Draw_FullOn(GameTime gameTime)
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Base[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                color_CurrentColors[ColorState.Medium],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Skullcap[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                color_CurrentColors[ColorState.Dark],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
+
+        private void Draw_TongueRoll(GameTime gameTime)
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Base[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                color_CurrentColors[color_ScreamBase],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Skullcap[currentFrame_Body],
+                Position,
+                center_Body,
+                null,
+                color_CurrentColors[color_ScreamSkullcap],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_OutlineTongue[currentFrame_Tongue],
+                Position,
+                center_Body,
+                null,
+                Color.White,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
         #endregion
 
         #region Draw/ Update
@@ -300,6 +394,32 @@ namespace Duologue.PlayObjects
                     Draw_Steady(gameTime);
                     Draw_FadeIn(gameTime);
                     Draw_NormalFace(gameTime);
+                    break;
+                case RotState.FadeOut:
+                    Draw_Steady(gameTime);
+                    Draw_FadeOut(gameTime);
+                    Draw_NormalFace(gameTime);
+                    break;
+                case RotState.FullOn:
+                    Draw_FullOn(gameTime);
+                    Draw_NormalFace(gameTime);
+                    break;
+                case RotState.ScreamIn:
+                    // Silly duplicate, I know, if we can do ORs in switch statements, I don't know how
+                    Draw_Steady(gameTime);
+                    Draw_FadeIn(gameTime);
+                    Draw_NormalFace(gameTime);
+                    break;
+                case RotState.ScreamOut:
+                    Draw_Steady(gameTime);
+                    Draw_FadeOut(gameTime);
+                    Draw_NormalFace(gameTime);
+                    break;
+                case RotState.TongueRoll:
+                    Draw_TongueRoll(gameTime);
+                    break;
+                case RotState.Scream:
+                    Draw_TongueRoll(gameTime);
                     break;
                 default:
                     Draw_Steady(gameTime);
