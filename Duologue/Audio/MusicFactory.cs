@@ -191,7 +191,7 @@ namespace Duologue.Audio
         public MusicFactory(AudioManager manager)
         {
             float on = Loudness.Normal;
-            float off = Loudness.Quiet;
+            float off = Loudness.Silent;
 
             //SelectSong
             string[] selectArr = { selectMenuCue };

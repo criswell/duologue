@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Mimicware;
 
 namespace Duologue.Audio.Widgets
 {
@@ -9,9 +10,13 @@ namespace Duologue.Audio.Widgets
     {
         protected IntensityNotifier notifier;
         protected Song parentSong;
+        protected float[,] intensityMap;
+        protected int myIntensity; //this will ONLY be meaningful to one song
 
-        public IntensityWidget(Song song)
+        public IntensityWidget(Song song, float [,] map)
         {
+            myIntensity = 1;
+            intensityMap = map;
             parentSong = song;
             notifier = ServiceLocator.GetService<IntensityNotifier>();
             notifier.Changed += new IntensityEventHandler(UpdateIntensity);
@@ -19,7 +24,25 @@ namespace Duologue.Audio.Widgets
 
         public void UpdateIntensity(IntensityEventArgs e)
         {
-            //parentSong.Tracks
+            if (e.ChangeAmount > 0)
+                myIntensity++;
+            else
+                myIntensity--;
+
+            myIntensity = MWMathHelper.LimitToRange(myIntensity, 1, 5);
+            
+            for (int t = 0; t < parentSong.TrackCount; t++)
+            {
+                if (intensityMap[myIntensity, t] == Loudness.Silent)
+                {
+                    parentSong.Tracks[t].Enabled = false;
+                }
+                else
+                {
+                    parentSong.Tracks[t].Enabled = true;
+                    //parentSong.Tracks[t].Play();
+                }   
+            }
         }
 
         public void Detach()
