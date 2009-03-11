@@ -107,6 +107,7 @@
     <Compile Include="PlayObjects\Enemy_Pyre.cs" />
     <Compile Include="PlayObjects\Enemy_Spitter.cs" />
     <Compile Include="PlayObjects\Enemy_StaticGloop.cs" />
+    <Compile Include="PlayObjects\Enemy_UncleanRot.cs" />
     <Compile Include="PlayObjects\Enemy_Wiggles.cs" />
     <Compile Include="PlayObjects\PlayerBullet.cs" />
     <Compile Include="PlayObjects\PlayerColors.cs" />
