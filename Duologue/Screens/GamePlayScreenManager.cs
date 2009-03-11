@@ -349,7 +349,7 @@ namespace Duologue.Screens
 
             if (LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID != lastSongID)
             {
-                float currentIntensity = intensity.GetIntensity(lastSongID);
+                float currentIntensity = intensity.Intensity;
                 audio.FadeOut(lastSongID);
                 audio.FadeIn(
                     LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID,

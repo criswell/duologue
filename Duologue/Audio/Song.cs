@@ -90,7 +90,6 @@ namespace Duologue.Audio
         {
             AutoLoop = false;
             hyper = new IntensityWidget(this, intensityMap);
-            //FIXME  subscribe to intensity changes
         }
 
         

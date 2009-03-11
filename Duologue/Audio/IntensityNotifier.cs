@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Mimicware;
 
 namespace Duologue.Audio
 {
@@ -13,41 +14,25 @@ namespace Duologue.Audio
     public delegate void IntensityEventHandler(IntensityEventArgs e);
     public class IntensityNotifier : IService
     {
+        protected float intensity;
+        public float Intensity //value between 0 and 1, representing a percentage
+        {
+            get
+            {
+                return intensity;
+            }
+            set
+            {
+                intensity = MWMathHelper.LimitToRange(value, 0f, 1f);
+            }
+        }
+
+
         public event IntensityEventHandler Changed;
         protected virtual void OnChanged(IntensityEventArgs e)
         {
             if (Changed != null)
                 Changed(e);
-        }
-
-        public float GetIntensity(SongID ID)
-        {
-            try
-            {
-                AudioManager am = ServiceLocator.GetService<AudioManager>();
-                //WTF. The current song should be the trusted repository for the global
-                //intensity. That shit needs to be stored HERE!
-                if (am.SongIsPlaying(ID))
-                {
-                    //return songMap[ID].GetIntensityPercentage();
-                    return 1f;
-                }
-            }
-            catch (Exception e)
-            {
-            }
-            return 0f;
-        }
-
-        public void SetIntensity(SongID ID, float percentage)
-        {
-            try
-            {
-                //songMap[ID].SetIntensityPercentage(percentage);
-            }
-            catch (Exception e)
-            {
-            }
         }
 
         public void Intensify()

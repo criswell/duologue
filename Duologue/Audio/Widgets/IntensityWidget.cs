@@ -33,14 +33,13 @@ namespace Duologue.Audio.Widgets
             
             for (int t = 0; t < parentSong.TrackCount; t++)
             {
-                if (intensityMap[myIntensity, t] == Loudness.Silent)
+                if (intensityMap[myIntensity-1, t] == Loudness.Silent)
                 {
                     parentSong.Tracks[t].Enabled = false;
                 }
                 else
                 {
                     parentSong.Tracks[t].Enabled = true;
-                    //parentSong.Tracks[t].Play();
                 }   
             }
         }
