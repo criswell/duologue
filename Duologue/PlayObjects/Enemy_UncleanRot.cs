@@ -66,7 +66,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The time per frame for the static animation when screaming
         /// </summary>
-        private const double deltaTime_StaticScream = 0.15;
+        private const double deltaTime_StaticScream = 0.01;
 
         /// <summary>
         /// The time it takes to fade in
