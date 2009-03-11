@@ -94,14 +94,16 @@ namespace Duologue.Audio.Widgets
             {
                 previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
                 VolumeChanging = false;
-                song.Tracks.ForEach(track =>
+
+                for (int t = 0; t < song.TrackCount; t++)
                 {
-                    track.cues.ForEach(cue =>
-                        {
-                            cue.ChangeVolume(IncrementFade());
-                        });
-                    VolumeChanging |= track.VolumeChanging;
-                });
+                    for (int q = 0; q < song.Tracks[t].QCount; q++)
+                    {
+                        song.Tracks[t].Cues[q].ChangeVolume(IncrementFade());
+                    }
+                    VolumeChanging |= song.Tracks[t].VolumeChanging;
+                }
+
                 AudioHelper.UpdateCues(song);
                 if (!VolumeChanging && StopAfterChange)
                 {

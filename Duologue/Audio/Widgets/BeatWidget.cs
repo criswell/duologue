@@ -13,16 +13,18 @@ namespace Duologue.Audio.Widgets
         protected float beatTimer = 0f;
         protected float lengthOfBeat;
         protected int currentBeat = 0;
+        protected Song parentSong;
 
-        public BeatWidget(int tracks, int beats)
+        public BeatWidget(Song song, int tracks, int beats)
         {
+            parentSong = song;
             NumberOfBeats = beats;
             NumberOfTracks = tracks;
             lengthOfBeat = (3433.039f / 8.000f);
         }
 
-        public BeatWidget(int tracks, int beats, float beatLength)
-            : this(tracks, beats)
+        public BeatWidget(Song song, int tracks, int beats, float beatLength)
+            : this(song, tracks, beats)
         {
             lengthOfBeat = beatLength;
         }
@@ -37,7 +39,14 @@ namespace Duologue.Audio.Widgets
             if (beatTimer > lengthOfBeat)
             {
                 currentBeat++;
-                song.Tracks.ForEach(track => { track.PlayBeat(currentBeat); });
+
+                for (int t = 0; t < parentSong.TrackCount; t++)
+                {
+                    if (parentSong.Tracks[t].Enabled)
+                    {
+                        parentSong.Tracks[t].Cues[currentBeat-1].Play();
+                    }
+                }
                 beatTimer = 0f;
             }
         }

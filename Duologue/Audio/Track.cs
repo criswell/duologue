@@ -9,9 +9,11 @@ namespace Duologue.Audio
     public class Track
     {
         public string SoundbankName;
-        public List<Q> cues;
+        public Q[] Cues;
         public float Volume = Loudness.Normal;
         public bool VolumeChanging;
+        public bool Enabled = true;
+        public int QCount;
 
         //things relevant to songs with volume fades
         //public VolumeChangeWidget Fade;
@@ -19,23 +21,28 @@ namespace Duologue.Audio
 
         public Track()
         {
-            cues = new List<Q>();
         }
 
         public Track(string soundbank, string[] argCues)
             : this()
         {
+            QCount = argCues.Length;
+            Cues = new Q[QCount];
             SoundbankName = soundbank;
-            foreach (string argCue in argCues)
+            for (int q = 0; q < QCount; q++)
             {
-                Q newQ = new Q(SoundbankName, argCue);
-                this.cues.Add(newQ);
-            };
+                Q newQ = new Q(SoundbankName, argCues[q]);
+                Cues[q] = newQ;
+
+            }
         }
 
         public void PlayBeat(int beat)
         {
-            cues[beat - 1].Play();
+            if (Enabled)
+            {
+                Cues[beat - 1].Play();
+            }
         }
 
         /*
@@ -56,18 +63,18 @@ namespace Duologue.Audio
 
         public void Play()
         {
-            cues.ForEach(q =>
+            for (int q = 0; q < QCount; q++)
             {
-                q.Play();
-            });
+                Cues[q].Play();
+            }
         }
 
         public void Stop()
         {
-            cues.ForEach(q =>
+            for (int q = 0; q < QCount; q++)
             {
-                q.Stop();
-            });
+                Cues[q].Stop();
+            }
         }
     }
 }

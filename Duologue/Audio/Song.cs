@@ -17,7 +17,8 @@ namespace Duologue.Audio
         public string WaveBankName;
         protected bool isPlaying = false;
         public float Volume;
-        public List <Track> Tracks = new List <Track>();
+        public Track[] Tracks;
+        public int TrackCount;
 
         // this should only be left true for Song composed of repeating cues
         // (usually infinitely) in XACT.
@@ -40,7 +41,6 @@ namespace Duologue.Audio
             localGame = (DuologueGame)game;
             SoundBankName = sbname;
             WaveBankName = wbname;
-            Tracks = new List<Track>();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Duologue.Audio
         {
             AutoLoop = false;
             initvars();
-            beater = new BeatWidget(arrangement.GetLength(0), arrangement.GetLength(1));
+            beater = new BeatWidget(this, arrangement.GetLength(0), arrangement.GetLength(1));
             ArrayToTracks(arrangement);
         }
 
@@ -106,21 +106,26 @@ namespace Duologue.Audio
             float[,] intensityMap)
             : this(game, sbname, wbname, intensityMap)
         {
-            beater = new BeatWidget(arrangement.GetLength(0), arrangement.GetLength(1));
+            beater = new BeatWidget(this, arrangement.GetLength(0), arrangement.GetLength(1));
             ArrayToTracks(arrangement);
         }
 
         protected void ArrayToTracks(string[,] arrangement)
         {
-            for (int track = 0; track < arrangement.GetLength(0); track++)
+            TrackCount = arrangement.GetLength(0);
+            int cueCount = arrangement.GetLength(1);
+            Tracks = new Track[TrackCount];
+
+            for (int track = 0; track < TrackCount; track++)
             {
-                string[] row = new string[arrangement.GetLength(1)];
-                for (int q = 0; q < arrangement.GetLength(1); q++)
+                string[] row = new string[cueCount];
+                for (int q = 0; q < cueCount; q++)
                 {
                     row[q] = arrangement[track, q];
                 }
-                Tracks.Add(new Track(SoundBankName, row));
+                Tracks[track] = new Track(SoundBankName, row);
             }
+
             AudioHelper.Preload(this);
         }
 
@@ -140,11 +145,11 @@ namespace Duologue.Audio
         {
             if (AutoLoop) //simplest case - parallel infinite Cues
             {
-                Tracks.ForEach(track =>
-                    {
-                        //there should only be ONE cue per track in infinite loops
-                        track.cues[0].Play();
-                    });
+                for (int t = 0; t < TrackCount; t++)
+                {
+                    //there should only be ONE cue per track in infinite loops
+                    Tracks[t].Cues[0].Play();
+                }
             }
             isPlaying = true;
             Enabled = true;
@@ -153,10 +158,10 @@ namespace Duologue.Audio
         public void Stop()
         {
             //AudioHelper.Stop(this);
-            Tracks.ForEach(track =>
+            for (int t = 0; t < TrackCount; t++)
             {
-                track.Stop();
-            });
+                Tracks[t].Stop();
+            }
             initvars();
             Enabled = false;
         }
@@ -179,10 +184,6 @@ namespace Duologue.Audio
                 fader = new VolumeChangeWidget(this);
                 fader.Volume = Loudness.Normal;
                 fader.FadeOut(500);
-                //Tracks.ForEach(track =>
-                //{
-                //    track.ChangeVolume(Loudness.Silent);
-                //});
                 ChangeVolume(true);
             }
         }
@@ -212,16 +213,13 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            if (Enabled)
-            {
-                if (null != beater)
-                    beater.Update(gameTime, this);
-                if (null != fader)
-                    fader.Update(gameTime, this);
-                //should not need this: intensity changes come from notification
-                //and take effect immediately
-                if (null != hyper) { }
-            }
+            if (null != beater)
+                beater.Update(gameTime, this);
+            if (null != fader)
+                fader.Update(gameTime, this);
+            //should not need this: intensity changes come from notification
+            //and take effect immediately
+            if (null != hyper) { }
             base.Update(gameTime);
         }
 

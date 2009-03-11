@@ -102,20 +102,20 @@ namespace Duologue.Audio
 
         protected static void Preload(Track track)
         {
-            track.cues.ForEach(q =>
-                {
-                    Preload(q);
-                });
+            for (int q = 0; q < track.QCount; q++)
+            {
+                Preload(track.Cues[q]);
+            }
         }
 
         public static void Preload(Song song)
         {
             AddBank(song.SoundBankName, song.WaveBankName);
             SoundBank sb = soundBanks[song.SoundBankName];
-            song.Tracks.ForEach(delegate(Track track)
+            for (int t = 0; t < song.TrackCount; t++)
             {
-                Preload(track);
-            });
+                Preload(song.Tracks[t]);
+            }
         }
 
         protected static void AddBank(string soundBankName, string waveBankName)
@@ -200,13 +200,13 @@ namespace Duologue.Audio
 
         public static void Play(Song song)
         {
-            song.Tracks.ForEach(track =>
+            for (int t = 0; t < song.TrackCount; t++)
+            {
+                for (int q = 0; q < song.Tracks[t].QCount; q++)
                 {
-                    track.cues.ForEach(q =>
-                        {
-                            Play(q, track.Volume);
-                        });
-                });
+                    Play(song.Tracks[t].Cues[q], song.Tracks[t].Volume);
+                }
+            }
             UpdateCues(song);
         }
 
@@ -231,13 +231,14 @@ namespace Duologue.Audio
 
         public static void UpdateCues(Song song)
         {
-            song.Tracks.ForEach(track =>
+            for (int t = 0; t < song.TrackCount; t++)
             {
-                track.cues.ForEach(q =>
-                    {
-                        cues[song.SoundBankName][q.CueName].SetVariable(volumeName, track.Volume);
-                    });
-            });
+                for (int q = 0; q < song.Tracks[t].QCount; q++)
+                {
+                    cues[song.SoundBankName][song.Tracks[t].Cues[q].CueName].SetVariable(
+                        volumeName, song.Tracks[t].Volume);
+                }
+            }
         }
 
 
