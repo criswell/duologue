@@ -31,8 +31,9 @@ namespace Duologue.PlayObjects
         FullOn,
         FadeOut,
         ScreamIn,
-        TongueRoll,
+        RollOutTongue,
         Scream,
+        RollInTongue,
         ScreamOut
     }
 
@@ -60,12 +61,58 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The time it takes to fade in
         /// </summary>
-        private const double deltaTime_FadeIn = 2f;
+        private const double deltaTime_FadeIn = 2.0;
 
         /// <summary>
         /// The time it takes to fade out
         /// </summary>
-        private const double deltaTime_FadeOut = 2f;
+        private const double deltaTime_FadeOut = 2.0;
+
+        /// <summary>
+        /// The time it takes to scream in
+        /// </summary>
+        private const double deltaTime_ScreamIn = 1.0;
+
+        /// <summary>
+        /// The time it takes to scream out
+        /// </summary>
+        private const double deltaTime_ScreamOut = 1.0;
+
+        /// <summary>
+        /// The time the mob remains in a steady state
+        /// </summary>
+        private const double deltaTime_Steady = 4.0;
+
+        /// <summary>
+        /// The time the mob remains full on
+        /// </summary>
+        private const double deltaTime_FullOn = 1.5;
+
+        /// <summary>
+        /// The total time it takes to roll out the tongue
+        /// </summary>
+        private const double deltaTime_TongueRollOut = 0.4;
+
+        /// <summary>
+        /// The total time it takes to roll in the tongue
+        /// </summary>
+        private const double deltaTime_TongueRollIn = 0.3;
+
+        /// <summary>
+        /// The time per frame for a tongue roll
+        /// </summary>
+        private const double deltaTime_TongueRoll = 0.5;
+
+        /// <summary>
+        /// The number of tongue rolls per scream. This basically means that the total time screaming
+        /// will be deltaTime_TongueRoll * numberOfTongueRolls
+        /// </summary>
+        private const int totalNumberOfTongueRolls = 5;
+
+        /// <summary>
+        /// This is the number of times we fade before we start a scream
+        /// </summary>
+        private const int totalNumberOfTimesToFade = 4;
         #endregion
 
         #region Fields
@@ -93,6 +140,8 @@ namespace Duologue.PlayObjects
         private RotState currentState;
 
         private double timeSinceLastSwitch;
+        private int numberOfTimesFaded;
+        private int numberOfTongueRolls;
         #endregion
 
         #region Properties
@@ -192,6 +241,9 @@ namespace Duologue.PlayObjects
             currentFrame_Static = 0;
             currentFrame_Tongue = 0;
             currentState = RotState.Steady;
+            timeSinceLastSwitch = 0;
+            numberOfTimesFaded = 0;
+            numberOfTongueRolls = 0;
         }
         #endregion
 
@@ -257,7 +309,7 @@ namespace Duologue.PlayObjects
                 RenderSpriteBlendMode.AlphaBlendTop);
         }
 
-        private void Draw_FadeIn(GameTime gameTime)
+        private void Draw_FadeIn(GameTime gameTime, double deltaTime)
         {
             InstanceManager.RenderSprite.Draw(
                 texture_Base[currentFrame_Body],
@@ -265,7 +317,7 @@ namespace Duologue.PlayObjects
                 center_Body,
                 null,
                 new Color(color_CurrentColors[ColorState.Medium],
-                    (float)(timeSinceLastSwitch/deltaTime_FadeIn)),
+                    (float)(timeSinceLastSwitch/deltaTime)),
                 0f,
                 1f,
                 0f,
@@ -277,14 +329,14 @@ namespace Duologue.PlayObjects
                 center_Body,
                 null,
                 new Color(color_CurrentColors[ColorState.Dark],
-                    (float)(timeSinceLastSwitch / deltaTime_FadeIn)),
+                    (float)(timeSinceLastSwitch / deltaTime)),
                 0f,
                 1f,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
         }
 
-        private void Draw_FadeOut(GameTime gameTime)
+        private void Draw_FadeOut(GameTime gameTime, double deltaTime)
         {
             InstanceManager.RenderSprite.Draw(
                 texture_Base[currentFrame_Body],
@@ -292,7 +344,7 @@ namespace Duologue.PlayObjects
                 center_Body,
                 null,
                 new Color(color_CurrentColors[ColorState.Medium],
-                    1f - (float)(timeSinceLastSwitch / deltaTime_FadeOut)),
+                    1f - (float)(timeSinceLastSwitch / deltaTime)),
                 0f,
                 1f,
                 0f,
@@ -304,7 +356,7 @@ namespace Duologue.PlayObjects
                 center_Body,
                 null,
                 new Color(color_CurrentColors[ColorState.Dark],
-                    1f - (float)(timeSinceLastSwitch / deltaTime_FadeOut)),
+                    1f - (float)(timeSinceLastSwitch / deltaTime)),
                 0f,
                 1f,
                 0f,
@@ -336,7 +388,7 @@ namespace Duologue.PlayObjects
                 RenderSpriteBlendMode.AlphaBlendTop);
         }
 
-        private void Draw_TongueRoll(GameTime gameTime)
+        private void Draw_Scream(GameTime gameTime)
         {
             InstanceManager.RenderSprite.Draw(
                 texture_Base[currentFrame_Body],
@@ -373,6 +425,161 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
+        #region Private Update methods
+        private void Update_FadeIn()
+        {
+            currentFrame_Body = 0;
+            if (timeSinceLastSwitch >= deltaTime_FadeIn)
+            {
+                timeSinceLastSwitch = 0;
+                currentState = RotState.FullOn;
+            }
+        }
+
+        private void Update_FullOn()
+        {
+            currentFrame_Body = 0;
+            if (timeSinceLastSwitch >= deltaTime_FullOn)
+            {
+                timeSinceLastSwitch = 0;
+                currentState = RotState.FadeOut;
+            }
+        }
+
+        private void Update_FadeOut()
+        {
+            currentFrame_Body = 0;
+            if (timeSinceLastSwitch >= deltaTime_FadeOut)
+            {
+                timeSinceLastSwitch = 0;
+                numberOfTimesFaded++;
+                currentState = RotState.Steady;
+            }
+        }
+
+        private void Update_ScreamIn()
+        {
+            if (timeSinceLastSwitch >= deltaTime_ScreamIn)
+            {
+                timeSinceLastSwitch = 0;
+                currentState = RotState.RollOutTongue;
+                currentFrame_Tongue = 0;
+                currentFrame_Body = (numFrames_Body - 1);
+            }
+            else
+            {
+                currentFrame_Body = (numFrames_Body - 1) * (int)(timeSinceLastSwitch / deltaTime_ScreamIn);
+            }
+        }
+
+        private void Update_ScreamOut()
+        {
+            if (timeSinceLastSwitch >= deltaTime_ScreamOut)
+            {
+                timeSinceLastSwitch = 0;
+                currentState = RotState.Steady;
+                currentFrame_Tongue = 0;
+                currentFrame_Body = 0;
+            }
+            else
+            {
+                currentFrame_Body = (numFrames_Body - 1) -
+            (numFrames_Body - 1) * (int)(timeSinceLastSwitch / deltaTime_FadeOut);
+            }
+
+        }
+
+        private void Update_Scream()
+        {
+            currentFrame_Body = (numFrames_Body - 1);
+            if (timeSinceLastSwitch >= deltaTime_TongueRoll)
+            {
+                timeSinceLastSwitch = 0;
+                if (numberOfTongueRolls >= totalNumberOfTongueRolls)
+                {
+                    currentState = RotState.ScreamOut;
+                    numberOfTongueRolls = 0;
+                }
+                else
+                {
+                    numberOfTongueRolls++;
+                    if (currentFrame_Tongue != texture_OutlineTongue.Length)
+                    {
+                        currentFrame_Tongue = texture_OutlineTongue.Length;
+                    }
+                    else
+                    {
+                        currentFrame_Tongue = texture_OutlineTongue.Length - 1;
+                    }
+
+                    if (color_ScreamBase != ColorState.Medium)
+                    {
+                        color_ScreamBase = ColorState.Medium;
+                        color_ScreamSkullcap = ColorState.Dark;
+                    }
+                    else
+                    {
+                        color_ScreamBase = ColorState.Light;
+                        color_ScreamSkullcap = ColorState.Medium;
+                    }
+                }
+            }
+        }
+
+        private void Update_RollOutTongue()
+        {
+            currentFrame_Body = (numFrames_Body - 1);
+            if (timeSinceLastSwitch >= deltaTime_TongueRollOut)
+            {
+                timeSinceLastSwitch = 0;
+                currentState = RotState.Scream;
+                color_ScreamBase = ColorState.Medium;
+                color_ScreamSkullcap = ColorState.Dark;
+                numberOfTongueRolls = 0;
+            }
+            else
+            {
+                currentFrame_Tongue = (numFrames_Tongue - 1)
+                    * (int)(timeSinceLastSwitch / deltaTime_TongueRollOut);
+            }
+        }
+
+        private void Update_RollInTongue()
+        {
+            currentFrame_Body = (numFrames_Body - 1);
+            if (timeSinceLastSwitch >= deltaTime_TongueRollIn)
+            {
+                timeSinceLastSwitch = 0;
+                currentState = RotState.Steady;
+                color_ScreamBase = ColorState.Medium;
+                color_ScreamSkullcap = ColorState.Dark;
+                numberOfTongueRolls = 0;
+            }
+            else
+            {
+                currentFrame_Tongue = (numFrames_Tongue - 1) - (numFrames_Tongue - 1)
+                    * (int)(timeSinceLastSwitch / deltaTime_TongueRollOut);
+            }
+        }
+
+        private void Update_Steady()
+        {
+            if (timeSinceLastSwitch >= deltaTime_Steady)
+            {
+                timeSinceLastSwitch = 0;
+                if (numberOfTimesFaded >= totalNumberOfTimesToFade)
+                {
+                    currentState = RotState.ScreamIn;
+                    numberOfTimesFaded = 0;
+                }
+                else
+                {
+                    currentState = RotState.FadeIn;
+                }
+            }
+        }
+        #endregion
+
         #region Draw/ Update
         public override void Draw(GameTime gameTime)
         {
@@ -392,12 +599,12 @@ namespace Duologue.PlayObjects
             {
                 case RotState.FadeIn:
                     Draw_Steady(gameTime);
-                    Draw_FadeIn(gameTime);
+                    Draw_FadeIn(gameTime, deltaTime_FadeIn);
                     Draw_NormalFace(gameTime);
                     break;
                 case RotState.FadeOut:
                     Draw_Steady(gameTime);
-                    Draw_FadeOut(gameTime);
+                    Draw_FadeOut(gameTime, deltaTime_FadeOut);
                     Draw_NormalFace(gameTime);
                     break;
                 case RotState.FullOn:
@@ -405,21 +612,20 @@ namespace Duologue.PlayObjects
                     Draw_NormalFace(gameTime);
                     break;
                 case RotState.ScreamIn:
-                    // Silly duplicate, I know, if we can do ORs in switch statements, I don't know how
                     Draw_Steady(gameTime);
-                    Draw_FadeIn(gameTime);
+                    Draw_FadeIn(gameTime, deltaTime_ScreamIn);
                     Draw_NormalFace(gameTime);
                     break;
                 case RotState.ScreamOut:
                     Draw_Steady(gameTime);
-                    Draw_FadeOut(gameTime);
+                    Draw_FadeOut(gameTime, deltaTime_ScreamOut);
                     Draw_NormalFace(gameTime);
                     break;
-                case RotState.TongueRoll:
-                    Draw_TongueRoll(gameTime);
+                case RotState.RollOutTongue:
+                    Draw_Scream(gameTime);
                     break;
                 case RotState.Scream:
-                    Draw_TongueRoll(gameTime);
+                    Draw_Scream(gameTime);
                     break;
                 default:
                     Draw_Steady(gameTime);
@@ -430,7 +636,38 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            timeSinceLastSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+
+            switch (currentState)
+            {
+                case RotState.FadeIn:
+                    Update_FadeIn();
+                    break;
+                case RotState.FullOn:
+                    Update_FullOn();
+                    break;
+                case RotState.FadeOut:
+                    Update_FadeOut();
+                    break;
+                case RotState.ScreamIn:
+                    Update_ScreamIn();
+                    break;
+                case RotState.Scream:
+                    Update_Scream();
+                    break;
+                case RotState.RollOutTongue:
+                    Update_RollOutTongue();
+                    break;
+                case RotState.ScreamOut:
+                    Update_ScreamOut();
+                    break;
+                case RotState.RollInTongue:
+                    Update_RollInTongue();
+                    break;
+                default:
+                    Update_Steady();                    
+                    break;
+            }
         }
         #endregion
     }
