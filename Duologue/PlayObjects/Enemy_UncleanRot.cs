@@ -59,6 +59,16 @@ namespace Duologue.PlayObjects
         private const int realHitPointMultiplier = 5;
 
         /// <summary>
+        /// The time per frame for the static animation in steady state
+        /// </summary>
+        private const double deltaTime_StaticSteady = 0.3;
+
+        /// <summary>
+        /// The time per frame for the static animation when screaming
+        /// </summary>
+        private const double deltaTime_StaticScream = 0.1;
+
+        /// <summary>
         /// The time it takes to fade in
         /// </summary>
         private const double deltaTime_FadeIn = 2.0;
@@ -140,6 +150,7 @@ namespace Duologue.PlayObjects
         private RotState currentState;
 
         private double timeSinceLastSwitch;
+        private double timeSinceLastStaticFrame;
         private int numberOfTimesFaded;
         private int numberOfTongueRolls;
         #endregion
@@ -242,6 +253,7 @@ namespace Duologue.PlayObjects
             currentFrame_Tongue = 0;
             currentState = RotState.Steady;
             timeSinceLastSwitch = 0;
+            timeSinceLastStaticFrame = 0;
             numberOfTimesFaded = 0;
             numberOfTongueRolls = 0;
         }
@@ -484,7 +496,7 @@ namespace Duologue.PlayObjects
             else
             {
                 currentFrame_Body = (numFrames_Body - 1) -
-            (numFrames_Body - 1) * (int)(timeSinceLastSwitch / deltaTime_FadeOut);
+                    (numFrames_Body - 1) * (int)(timeSinceLastSwitch / deltaTime_ScreamOut);
             }
 
         }
@@ -637,6 +649,31 @@ namespace Duologue.PlayObjects
         public override void Update(GameTime gameTime)
         {
             timeSinceLastSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+            timeSinceLastStaticFrame += gameTime.ElapsedGameTime.TotalSeconds;
+            if (currentState == RotState.Scream)
+            {
+                if (timeSinceLastStaticFrame > deltaTime_StaticScream)
+                {
+                    currentFrame_Static++;
+                    timeSinceLastStaticFrame = 0;
+                    if (currentFrame_Static >= numFrames_Static)
+                    {
+                        currentFrame_Static = 0;
+                    }
+                }
+            }
+            else
+            {
+                if (timeSinceLastStaticFrame > deltaTime_StaticSteady)
+                {
+                    currentFrame_Static++;
+                    timeSinceLastStaticFrame = 0;
+                    if (currentFrame_Static >= numFrames_Static)
+                    {
+                        currentFrame_Static = 0;
+                    }
+                }
+            }
 
             switch (currentState)
             {
