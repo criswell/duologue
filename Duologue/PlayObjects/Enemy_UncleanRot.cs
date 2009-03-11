@@ -548,6 +548,8 @@ namespace Duologue.PlayObjects
                 color_ScreamBase = ColorState.Medium;
                 color_ScreamSkullcap = ColorState.Dark;
                 numberOfTongueRolls = 0;
+                // FIXME AUDIO
+                // Need some sort of scream sound here
             }
             else
             {
