@@ -61,57 +61,57 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The time per frame for the static animation in steady state
         /// </summary>
-        private const double deltaTime_StaticSteady = 0.3;
+        private const double deltaTime_StaticSteady = 0.1;
 
         /// <summary>
         /// The time per frame for the static animation when screaming
         /// </summary>
-        private const double deltaTime_StaticScream = 0.1;
+        private const double deltaTime_StaticScream = 0.15;
 
         /// <summary>
         /// The time it takes to fade in
         /// </summary>
-        private const double deltaTime_FadeIn = 2.0;
+        private const double deltaTime_FadeIn = 0.6;
 
         /// <summary>
         /// The time it takes to fade out
         /// </summary>
-        private const double deltaTime_FadeOut = 2.0;
+        private const double deltaTime_FadeOut = 0.6;
 
         /// <summary>
         /// The time it takes to scream in
         /// </summary>
-        private const double deltaTime_ScreamIn = 1.0;
+        private const double deltaTime_ScreamIn = 0.25 / (double)numFrames_Body;
 
         /// <summary>
         /// The time it takes to scream out
         /// </summary>
-        private const double deltaTime_ScreamOut = 1.0;
+        private const double deltaTime_ScreamOut = 0.25 / (double)numFrames_Body;
 
         /// <summary>
         /// The time the mob remains in a steady state
         /// </summary>
-        private const double deltaTime_Steady = 4.0;
+        private const double deltaTime_Steady = 2.0;
 
         /// <summary>
         /// The time the mob remains full on
         /// </summary>
-        private const double deltaTime_FullOn = 1.5;
+        private const double deltaTime_FullOn = 0.5;
 
         /// <summary>
         /// The total time it takes to roll out the tongue
         /// </summary>
-        private const double deltaTime_TongueRollOut = 0.4;
+        private const double deltaTime_TongueRollOut = 0.4 / (double)numFrames_Tongue;
 
         /// <summary>
         /// The total time it takes to roll in the tongue
         /// </summary>
-        private const double deltaTime_TongueRollIn = 0.3;
+        private const double deltaTime_TongueRollIn = 0.3 / (double)numFrames_Tongue;
 
         /// <summary>
         /// The time per frame for a tongue roll
         /// </summary>
-        private const double deltaTime_TongueRoll = 0.5;
+        private const double deltaTime_TongueRoll = 0.25;
 
         /// <summary>
         /// The number of tongue rolls per scream. This basically means that the total time screaming
@@ -122,7 +122,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// This is the number of times we fade before we start a scream
         /// </summary>
-        private const int totalNumberOfTimesToFade = 4;
+        private const int totalNumberOfTimesToFade = 3;
 
         /// <summary>
         /// The defined radius of the mob
@@ -236,7 +236,7 @@ namespace Duologue.PlayObjects
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
-            if (hitPoints == null)
+            if (hitPoints == null || hitPoints == 0)
             {
                 hitPoints = 1;
             }
@@ -655,13 +655,13 @@ namespace Duologue.PlayObjects
             if (timeSinceLastSwitch >= deltaTime_ScreamIn)
             {
                 timeSinceLastSwitch = 0;
-                currentState = RotState.RollOutTongue;
-                currentFrame_Tongue = 0;
-                currentFrame_Body = (numFrames_Body - 1);
-            }
-            else
-            {
-                currentFrame_Body = (numFrames_Body - 1) * (int)(timeSinceLastSwitch / deltaTime_ScreamIn);
+                currentFrame_Body++;
+                if (currentFrame_Body == numFrames_Body)
+                {
+                    currentState = RotState.RollOutTongue;
+                    currentFrame_Tongue = 0;
+                    currentFrame_Body = (numFrames_Body - 1);
+                }
             }
         }
 
@@ -670,16 +670,14 @@ namespace Duologue.PlayObjects
             if (timeSinceLastSwitch >= deltaTime_ScreamOut)
             {
                 timeSinceLastSwitch = 0;
-                currentState = RotState.Steady;
-                currentFrame_Tongue = 0;
-                currentFrame_Body = 0;
+                currentFrame_Body--;
+                if (currentFrame_Body < 0)
+                {
+                    currentState = RotState.Steady;
+                    currentFrame_Tongue = 0;
+                    currentFrame_Body = 0;
+                }
             }
-            else
-            {
-                currentFrame_Body = (numFrames_Body - 1) -
-                    (numFrames_Body - 1) * (int)(timeSinceLastSwitch / deltaTime_ScreamOut);
-            }
-
         }
 
         private void Update_Scream()
@@ -697,13 +695,13 @@ namespace Duologue.PlayObjects
                 else
                 {
                     numberOfTongueRolls++;
-                    if (currentFrame_Tongue != texture_OutlineTongue.Length)
+                    if (currentFrame_Tongue != texture_OutlineTongue.Length - 1)
                     {
-                        currentFrame_Tongue = texture_OutlineTongue.Length;
+                        currentFrame_Tongue = texture_OutlineTongue.Length - 1;
                     }
                     else
                     {
-                        currentFrame_Tongue = texture_OutlineTongue.Length - 1;
+                        currentFrame_Tongue = texture_OutlineTongue.Length - 2;
                     }
 
                     if (color_ScreamBase != ColorState.Medium)
@@ -726,17 +724,17 @@ namespace Duologue.PlayObjects
             if (timeSinceLastSwitch >= deltaTime_TongueRollOut)
             {
                 timeSinceLastSwitch = 0;
-                currentState = RotState.Scream;
-                color_ScreamBase = ColorState.Medium;
-                color_ScreamSkullcap = ColorState.Dark;
-                numberOfTongueRolls = 0;
-                // FIXME AUDIO
-                // Need some sort of scream sound here
-            }
-            else
-            {
-                currentFrame_Tongue = (numFrames_Tongue - 1)
-                    * (int)(timeSinceLastSwitch / deltaTime_TongueRollOut);
+                currentFrame_Tongue++;
+                if (currentFrame_Tongue == numFrames_Tongue)
+                {
+                    currentFrame_Tongue = numFrames_Tongue - 1;
+                    currentState = RotState.Scream;
+                    color_ScreamBase = ColorState.Medium;
+                    color_ScreamSkullcap = ColorState.Dark;
+                    numberOfTongueRolls = 0;
+                    // FIXME AUDIO
+                    // Need some sort of scream sound here
+                }
             }
         }
 
@@ -746,15 +744,15 @@ namespace Duologue.PlayObjects
             if (timeSinceLastSwitch >= deltaTime_TongueRollIn)
             {
                 timeSinceLastSwitch = 0;
-                currentState = RotState.Steady;
-                color_ScreamBase = ColorState.Medium;
-                color_ScreamSkullcap = ColorState.Dark;
-                numberOfTongueRolls = 0;
-            }
-            else
-            {
-                currentFrame_Tongue = (numFrames_Tongue - 1) - (numFrames_Tongue - 1)
-                    * (int)(timeSinceLastSwitch / deltaTime_TongueRollOut);
+                currentFrame_Tongue--;
+                if (currentFrame_Tongue < 0)
+                {
+                    currentFrame_Tongue = 0;
+                    currentState = RotState.Steady;
+                    color_ScreamBase = ColorState.Medium;
+                    color_ScreamSkullcap = ColorState.Dark;
+                    numberOfTongueRolls = 0;
+                }
             }
         }
 
