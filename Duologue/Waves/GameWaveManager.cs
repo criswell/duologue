@@ -162,9 +162,9 @@ namespace Duologue.Waves
             thisWave.Wavelets[thisWave.CurrentWavelet] =
                 new Wavelet(NumEnemies, hitsToKillEnemy);
 
-            if (MWMathHelper.CoinToss())
-                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Dance8ths;
-            else
+            //if (MWMathHelper.CoinToss())
+                //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Dance8ths;
+            //else
                 thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.LandOfSand16ths;
 
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
