@@ -292,9 +292,9 @@ namespace Duologue.PlayObjects
 
             color_Static = new Color[4];
             color_Static[0] = new Color(Color.Ivory, 200);
-            color_Static[1] = new Color(Color.White, 128);
-            color_Static[2] = new Color(Color.Thistle, 175);
-            color_Static[3] = new Color(Color.Silver, 225);
+            color_Static[1] = new Color(Color.White, 200);
+            color_Static[2] = new Color(Color.Thistle, 200);
+            color_Static[3] = new Color(Color.Silver, 200);
             currentStaticColor = 0;
 
             color_Shield = new Color(Color.White, 128);
