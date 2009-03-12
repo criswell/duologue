@@ -9,7 +9,7 @@ namespace Duologue.Audio
 {
 
     //the rule is: one sound bank = one song = one SongID
-    public enum SongID { SelectMenu, Dance8ths, LandOfSand16ths }
+    public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths }
 
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
@@ -25,11 +25,24 @@ namespace Duologue.Audio
     /// </summary>
     public class AudioManager : Microsoft.Xna.Framework.GameComponent, IService
     {
-        private AudioHelper helper;
+        protected AudioHelper helper;
         public SoundEffects soundEffects;
 
-        private static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
-        private MusicFactory music;
+        protected SongID playingSong;
+        public SongID PlayingSong
+        {
+            get
+            {
+                return playingSong;
+            }
+            set
+            {
+                playingSong = value;
+            }
+        }
+
+        protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
+        protected MusicFactory music;
 
         public const string engine = "Content\\Audio\\Duologue.xgs";
 
@@ -83,12 +96,20 @@ namespace Duologue.Audio
 
         public void PlaySong(SongID ID)
         {
-            songMap[ID].Play();
+            if (!SongIsPlaying(ID))
+            {
+                songMap[ID].Play();
+                PlayingSong = ID;
+            }
         }
 
         public void StopSong(SongID ID)
         {
-            songMap[ID].Stop();
+            if (SongIsPlaying(ID))
+            {
+                songMap[ID].Stop();
+                PlayingSong = SongID.None;
+            }
         }
 
         public void FadeOut(SongID ID)

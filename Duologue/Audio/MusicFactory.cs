@@ -197,9 +197,7 @@ namespace Duologue.Audio
             string[] selectArr = { selectMenuCue };
             SelectSong = new Song(manager.Game, selectMenuSounds, selectMenuWaves, selectArr);
 
-            //Dance8ths, an attempt to slice each track of the BeatSong into 8 segments 
-            // ("beats") that we fire every time they play, instead of relying on the 
-            // wav being infinite repeat
+            //Dance8ths
             string[,] D8arr = { 
                 {D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th, D8Bass8th},
                 {D8bassplus1, D8bassplus2, D8bassplus3, D8bassplus4, D8bassplus5, D8bassplus6, D8bassplus7, D8bassplus8},

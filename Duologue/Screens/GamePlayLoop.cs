@@ -18,7 +18,6 @@ using Mimicware.Manager;
 using Mimicware.Graphics;
 // Duologue
 using Duologue;
-using Duologue.Audio;
 using Duologue.Properties;
 using Duologue.Screens;
 using Duologue.PlayObjects;
@@ -254,7 +253,6 @@ namespace Duologue.Screens
             {
                 // Game Over
                 myManager.GameOver(true);
-                ServiceLocator.GetService<AudioManager>().GameOver();
             }
 
             // If we have no living enemies, it means we need to get them from the next wavelet,

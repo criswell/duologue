@@ -10,16 +10,17 @@ namespace Duologue.Audio.Widgets
     {
         protected IntensityNotifier notifier;
         protected Song parentSong;
-        protected float[,] intensityMap;
-        protected int myIntensity; //this will ONLY be meaningful to one song
+        protected float[,] intensityMap;  //TrackVolume = intensityMap[myIntensity,tracknumber]
+        protected int myIntensity;
+        protected int maxIntensity;
 
         public IntensityWidget(Song song, float [,] map)
         {
             myIntensity = 1;
             intensityMap = map;
+            maxIntensity = intensityMap.GetLength(0);
             parentSong = song;
-            notifier = ServiceLocator.GetService<IntensityNotifier>();
-            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+            Attach();
         }
 
         public void UpdateIntensity(IntensityEventArgs e)
@@ -29,8 +30,8 @@ namespace Duologue.Audio.Widgets
             else
                 myIntensity--;
 
-            myIntensity = MWMathHelper.LimitToRange(myIntensity, 1, 5);
-            
+            myIntensity = MWMathHelper.LimitToRange(myIntensity, 1, maxIntensity);
+
             for (int t = 0; t < parentSong.TrackCount; t++)
             {
                 if (intensityMap[myIntensity-1, t] == Loudness.Silent)
@@ -44,12 +45,16 @@ namespace Duologue.Audio.Widgets
             }
         }
 
+        public void Attach()
+        {
+            notifier = ServiceLocator.GetService<IntensityNotifier>();
+            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+        }
+
         public void Detach()
         {
             notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
             notifier = null;
         }
-
-
     }
 }

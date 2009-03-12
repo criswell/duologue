@@ -11,7 +11,6 @@ namespace Duologue.Audio
 {
     public class Song : GameComponent
     {
-        //relevant to all songs:
         protected DuologueGame localGame;
         public string SoundBankName;
         public string WaveBankName;
@@ -150,6 +149,10 @@ namespace Duologue.Audio
                     Tracks[t].Cues[0].Play();
                 }
             }
+            if (hyper != null)
+            {
+                hyper.Attach();
+            }
             isPlaying = true;
             Enabled = true;
         }
@@ -162,6 +165,10 @@ namespace Duologue.Audio
                 Tracks[t].Stop();
             }
             initvars();
+            if (hyper != null)
+            {
+                hyper.Detach();
+            }
             Enabled = false;
         }
 
@@ -180,10 +187,11 @@ namespace Duologue.Audio
         {
             if (IsPlaying)
             {
-                fader = new VolumeChangeWidget(this);
-                fader.Volume = Loudness.Normal;
-                fader.FadeOut(500);
-                ChangeVolume(true);
+                Stop();
+                //fader = new VolumeChangeWidget(this);
+                //fader.Volume = Loudness.Normal;
+                //fader.FadeOut(500);
+                //ChangeVolume(true);
             }
         }
 
@@ -191,10 +199,10 @@ namespace Duologue.Audio
         {
             fader = new VolumeChangeWidget(this);
             fader.FadeIn(500);
-            //Tracks.ForEach(track => 
+            //for (int t = 0; t < TrackCount; t++)
             //{
-            //    track.FadeIn(volume);
-            //});
+            //    Tracks[t].FadeIn(volume);
+            //}
             //ChangeVolume(false);
             Play();
         }

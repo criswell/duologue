@@ -224,6 +224,7 @@ namespace Duologue.Screens
             if (t && currentState != GamePlayState.GameOver)
             {
                 gameOver.Reset();
+                ServiceLocator.GetService<AudioManager>().GameOver();
                 // FIXME
                 // Should probably do some gameover music here
                 gameOver.Visible = true;
