@@ -217,22 +217,20 @@ namespace Duologue.Audio
                 D8arr, D8volumes);
 
             //LandOfSand16ths
-            string[,] LoS16arr = {
-                {LoSBD01, LoSBD02, LoSBD03, LoSBD04, LoSBD05, LoSBD06, LoSBD07, LoSBD08,
-                    LoSBD09, LoSBD10, LoSBD11, LoSBD12, LoSBD13, LoSBD14, LoSBD15, LoSBD16},
-                {LoSHH01, LoSHH02, LoSHH03, LoSHH04, LoSHH05, LoSHH06, LoSHH07, LoSHH08,
-                    LoSHH09, LoSHH10, LoSHH11, LoSHH12, LoSHH13, LoSHH14, LoSHH15, LoSHH16},
-                {LoSBS01, LoSBS02, LoSBS03, LoSBS04, LoSBS05, LoSBS06, LoSBS07, LoSBS08,
-                    LoSBS09, LoSBS10, LoSBS11, LoSBS12, LoSBS13, LoSBS14, LoSBS15, LoSBS16},
-                {LoSSt01, LoSSt02, LoSSt03, LoSSt04, LoSSt05, LoSSt06, LoSSt07, LoSSt08,
-                    LoSSt09, LoSSt10, LoSSt11, LoSSt12, LoSSt13, LoSSt14, LoSSt15, LoSSt16},
-                {LoSMel01, LoSMel02, LoSMel03, LoSMel04, LoSMel05, LoSMel06, LoSMel07, LoSMel08,
-                    LoSMel09, LoSMel10, LoSMel11, LoSMel12, LoSMel13, LoSMel14, LoSMel15, LoSMel16},
-                {LoSAcc01, LoSAcc02, LoSAcc03, LoSAcc04, LoSAcc05, LoSAcc06, LoSAcc07, LoSAcc08,
-                    LoSAcc09, LoSAcc10, LoSAcc11, LoSAcc12, LoSAcc13, LoSAcc14, LoSAcc15, LoSAcc16},
-                {LoST01, LoST02, LoST03, LoST04, LoST05, LoST06, LoST07, LoST08,
-                    LoST09, LoST10, LoST11, LoST12, LoST13, LoST14, LoST15, LoST16},
-                                };
+            string[,] LoS16arr = { 
+            { LoSBD01, LoSBD01,LoSBD01,LoSBD01,LoSBD01,LoSBD01,LoSBD01,LoSBD01,
+                    LoSBD01,LoSBD01,LoSBD01,LoSBD01,LoSBD01,LoSBD01,LoSBD01,LoSBD01},
+            { LoSHH01, LoSHH02, LoSHH03, LoSHH04, LoSHH01, LoSHH02, LoSHH03, LoSHH04, 
+                    LoSHH01, LoSHH02, LoSHH03, LoSHH04, LoSHH01, LoSHH02, LoSHH03, LoSHH04},
+            { LoSBS01, LoSBS02, LoSBS03, LoSBS04, LoSBS05, LoSBS06, LoSBS07, LoSBS08, 
+                    LoSBS01, LoSBS02, LoSBS03, LoSBS04, LoSBS05, LoSBS06, LoSBS07, LoSBS08},
+            { LoSSt01, LoSSt02, LoSSt03, LoSSt04, LoSSt05, LoSSt06, LoSSt07, LoSSt08, 
+                    LoSSt01, LoSSt02, LoSSt03, LoSSt04, LoSSt05, LoSSt06, LoSSt07, LoSSt08},
+            {LoSMel01, LoSMel02, LoSMel03, LoSMel04, LoSMel05, LoSMel06, LoSMel07, LoSMel08,
+                    LoSMel01, LoSMel02, LoSMel03, LoSMel04, LoSMel05, LoSMel06, LoSMel07, LoSMel08},
+            {LoSAcc01, LoSAcc02, LoSAcc03, LoSAcc04, LoSAcc05, LoSAcc06, LoSAcc07, LoSAcc08,
+                    LoSAcc01, LoSAcc02, LoSAcc03, LoSAcc04, LoSAcc05, LoSAcc06, LoSAcc07, LoSAcc08,},                                 
+                                 };
 
             //this intensity volume map is per track, not per Q
             float[,] LoS16volumes = {
