@@ -224,9 +224,6 @@ namespace Duologue.Audio
                 beater.Update(gameTime, this);
             if (null != fader)
                 fader.Update(gameTime, this);
-            //should not need this: intensity changes come from notification
-            //and take effect immediately
-            if (null != hyper) { }
             base.Update(gameTime);
         }
 
