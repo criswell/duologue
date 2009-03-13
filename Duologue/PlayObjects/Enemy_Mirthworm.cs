@@ -25,7 +25,7 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
-    class EnemyMirthworm : Enemy
+    class Enemy_Mirthworm : Enemy
     {
         #region Constants
         #endregion
@@ -37,6 +37,18 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor/Init
+        public Enemy_Mirthworm(GamePlayScreenManager manager)
+            : base(manager)
+        {
+            MyType = TypesOfPlayObjects.Enemy_Ember;
+            MajorType = MajorPlayObjectType.Enemy;
+            Initialized = false;
+
+            // Set the RealSize by hand
+            RealSize = new Vector2(100, 95);
+            //originalRadius = RealSize.Length() / 2f;
+        }
+
         public override void Initialize(
             Vector2 startPos, 
             Vector2 startOrientation, 
