@@ -70,7 +70,6 @@
     <Compile Include="Audio\BeatEngine.cs" />
     <Compile Include="Audio\IntensityController.cs" />
     <Compile Include="Audio\IntensityNotifier.cs" />
-    <Compile Include="Audio\IntensitySong.cs" />
     <Compile Include="Audio\MusicFactory.cs" />
     <Compile Include="Audio\Q.cs" />
     <Compile Include="Audio\ServiceLocator.cs" />
