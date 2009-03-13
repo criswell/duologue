@@ -74,6 +74,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_UncleanRot:
                             Init_UncleanRot(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_Mirthworm:
+                            Init_Mirthworm(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -90,6 +93,11 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_Mirthworm(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Mirthworm(manager);
+        }
+
         private static void Init_UncleanRot(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_UncleanRot(manager);

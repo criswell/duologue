@@ -43,6 +43,7 @@ namespace Duologue.PlayObjects
         Enemy_Pyre,
         Enemy_Ember,
         Enemy_UncleanRot,
+        Enemy_Mirthworm,
     }
 
     /// <summary>
