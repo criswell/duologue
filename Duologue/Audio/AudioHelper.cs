@@ -52,8 +52,11 @@ namespace Duologue.Audio
 
         public AudioHelper(Game game, string engineName) : base(game)
         {
+            long seconds = 1;
+            long ticks = seconds * 10000000000;
+            TimeSpan lookahead = new TimeSpan(ticks); // tick is ten to the -10 seconds
             engineFileName = engineName;
-            engine = new AudioEngine(engineFileName);
+            engine = new AudioEngine(engineFileName, lookahead, Guid.Empty);
         }
 
         protected static void ProcessPlayedCues()
