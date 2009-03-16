@@ -10,18 +10,35 @@ namespace Duologue.Audio.Widgets
     {
         protected IntensityNotifier notifier;
         protected Song parentSong;
-        protected bool[,] intensityMap;  //TrackVolume = intensityMap[myIntensity,tracknumber]
-        protected int myIntensity;
+        protected bool[,] intensityMap;  //TrackVolume = intensityMap[intensity,tracknumber]
+        protected int intensity;
         protected int maxIntensity;
+        protected bool attached = false;
+
+        public int Intensity
+        {
+            get 
+            {
+                return intensity;
+            }
+            set 
+            {
+                intensity = MWMathHelper.LimitToRange(value, 1, maxIntensity);
+            }
+        }
 
         public IntensityWidget(Song song, bool [,] map)
         {
-            myIntensity = 1;
-            myIntensity = (int)(maxIntensity * ServiceLocator.GetService<IntensityNotifier>().Intensity);
+            parentSong = song;
             intensityMap = map;
             maxIntensity = intensityMap.GetLength(0);
-            parentSong = song;
+            SetIntensity(ServiceLocator.GetService<IntensityNotifier>().Intensity);
             Attach();
+        }
+
+        public void SetIntensity(float percent)
+        {
+            intensity = (int)(maxIntensity * percent);
         }
 
         /// <summary>
@@ -33,28 +50,45 @@ namespace Duologue.Audio.Widgets
         public void UpdateIntensity(IntensityEventArgs e)
         {
             if (e.ChangeAmount > 0)
-                myIntensity++;
+                intensity++;
             else
-                myIntensity--;
+                intensity--;
 
-            myIntensity = MWMathHelper.LimitToRange(myIntensity, 1, maxIntensity);
+            intensity = MWMathHelper.LimitToRange(intensity, 1, maxIntensity);
 
             for (int t = 0; t < parentSong.TrackCount; t++)
             {
-                parentSong.Tracks[t].Enabled = intensityMap[myIntensity - 1, t];
+                parentSong.Tracks[t].Enabled = intensityMap[intensity - 1, t];
             }
         }
 
         public void Attach()
         {
-            notifier = ServiceLocator.GetService<IntensityNotifier>();
-            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+            if (!attached)
+            {
+                attached = true;
+                notifier = ServiceLocator.GetService<IntensityNotifier>();
+                notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+            }
+            else
+            {
+                throw new Exception("Already Attached!");
+            }
         }
 
         public void Detach()
         {
-            notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
-            notifier = null;
+            if (attached)
+            {
+                attached = false;
+                notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
+                notifier = null;
+            }
+            else
+            {
+                throw new Exception("Not attached so I can not Detach!");
+            }
+
         }
     }
 }

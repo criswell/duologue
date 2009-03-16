@@ -85,10 +85,8 @@ namespace Duologue.Audio
         {
             songMap[ID].FadeIn(Loudness.Normal);
             if (songMap[ID].hyper != null)
-            {
-                float intensity = ServiceLocator.GetService<IntensityNotifier>().Intensity;
-                //songMap[ID].FadeIn(intensity);//FIXME: um...WTF?
-            }
+                songMap[ID].hyper.SetIntensity(
+                    ServiceLocator.GetService<IntensityNotifier>().Intensity);
         }
 
 

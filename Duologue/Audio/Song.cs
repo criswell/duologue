@@ -208,6 +208,19 @@ namespace Duologue.Audio
 
         public void Play()
         {
+            //Intensity manages itself event driven
+            if (Managed)
+            {
+                //We don't have to do anything because it's Autolooped
+                if (null == fader)
+                    fader = new VolumeChangeWidget(this);
+            }
+            if (!Managed)
+            {
+                if (null == beater)
+                    beater = new BeatWidget(this, 1, 1);
+            }
+
             if (AutoLoop) //simplest case - parallel infinite Cues
             {
                 managed = true; //must be, or we could never stop it!
@@ -217,12 +230,9 @@ namespace Duologue.Audio
                     Tracks[t].Cues[0].Play();
                 }
             }
-            if (hyper != null)
-            {
-                hyper.Attach();
-            }
             playing = true;
             Enabled = true;
+            ServiceLocator.GetService<IntensityNotifier>().Detensify();
         }
 
         public void Stop()
