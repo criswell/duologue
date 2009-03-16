@@ -30,6 +30,11 @@ namespace Duologue.Audio.Widgets
             lengthOfBeat = beatLength;
         }
 
+        public double BeatPercentage()
+        {
+            return 0.75d + 0.25d * Math.Cos(2d * Math.PI * (beatTimer / lengthOfBeat));
+        }
+
         public void Update(GameTime gameTime, Song song)
         {
             beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
