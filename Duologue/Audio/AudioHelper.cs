@@ -115,9 +115,12 @@ namespace Duologue.Audio
         {
             AddBank(song.SoundBankName, song.WaveBankName);
             SoundBank sb = soundBanks[song.SoundBankName];
-            for (int t = 0; t < song.TrackCount; t++)
+            if (song.Managed)
             {
-                Preload(song.Tracks[t]);
+                for (int t = 0; t < song.TrackCount; t++)
+                {
+                    Preload(song.Tracks[t]);
+                }
             }
         }
 
@@ -159,18 +162,26 @@ namespace Duologue.Audio
         public static void PlayCue(string sbname, string cueName)
         {
             Q q = new Q(sbname, cueName);
-            Play(q);
+            Play(q, false);
         }
 
-        public static void Play(Q q)
+        public static void Play(Q q, bool retainReference)
         {
-            RecycleCue(q.SoundBankName, q.CueName);
-            cues[q.SoundBankName][q.CueName].Play();
+            if (retainReference)
+            {
+                RecycleCue(q.SoundBankName, q.CueName);
+                cues[q.SoundBankName][q.CueName].Play();
+            }
+            else
+            {
+                soundBanks[q.SoundBankName].PlayCue(q.CueName);
+                //PlayCue(q.SoundBankName, q.CueName);
+            }
         }
 
         public static void Play(Q q, float volume)
         {
-            Play(q);
+            Play(q, true);
             cues[q.SoundBankName][q.CueName].SetVariable(volumeName, volume);
             //we *could* range limit the volume before making that call
         }

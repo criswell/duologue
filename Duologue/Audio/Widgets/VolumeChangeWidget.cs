@@ -11,7 +11,7 @@ namespace Duologue.Audio.Widgets
     public class VolumeChangeWidget
     {
         //Most recently commanded Volume
-        public float Volume;
+        public float Volume = Loudness.Normal;
 
         //This number should be in a fairly tight window - smaller numbers make a fade tax the CPU more,
         //larger numbers compromise the smoothness of the audio transition
@@ -31,12 +31,15 @@ namespace Duologue.Audio.Widgets
 
         public VolumeChangeWidget(Song song)
         {
+            init();
             parentSong = song;
         }
 
         //allow for re-use of this widget over the life of a song
         protected void init()
         {
+            StartVolume = Loudness.Quiet;
+            Volume = Loudness.Quiet;
         }
 
         protected void SetTimingVars(int milliseconds)
@@ -50,17 +53,16 @@ namespace Duologue.Audio.Widgets
         {
             if (newVol != Volume)
             {
-                StartVolume = MWMathHelper.LimitToRange(Volume, 0f, 1f);
-                EndVolume = MWMathHelper.LimitToRange(newVol, 0f, 1f);
+                StartVolume = MWMathHelper.LimitToRange(Volume, 0f, 100f);
+                EndVolume = MWMathHelper.LimitToRange(newVol, 0f, 100f);
                 SetTimingVars(milliseconds);
                 VolumeChanging = true;
                 StopAfterChange = stop;
             }
-        }
-
-        public void FadeIn(int milliseconds)
-        {
-            ChangeVolume(Loudness.Normal, milliseconds, false);
+            else
+            {
+                SetTimingVars(5000);
+            }
         }
 
         public void FadeIn(float volume, int milliseconds)
@@ -68,49 +70,49 @@ namespace Duologue.Audio.Widgets
             ChangeVolume(volume, milliseconds, false);
         }
 
-        public void FadeOut(int milliseconds)
+        public void FadeIn(int milliseconds)
         {
-            ChangeVolume(Loudness.Silent, milliseconds, true);
+            FadeIn(Loudness.Normal, milliseconds);
         }
 
-        protected float IncrementFade()
+        public void FadeIn()
         {
-            if (VolumeChanging)
-            {
-                Volume += (EndVolume - StartVolume) / (float)steps;
-                if (((StartVolume > EndVolume) && !(Volume > EndVolume)) ||
-                    ((StartVolume < EndVolume) && !(EndVolume > Volume)))
-                {
-                    VolumeChanging = false;
-                }
-            }
-            return Volume;
+            FadeIn(1000);
+        }
+
+        public void FadeOut(int milliseconds)
+        {
+            ChangeVolume(Loudness.Quiet, milliseconds, true);
+        }
+
+        public void FadeOut()
+        {
+            FadeOut(500);
         }
 
         public void Update(GameTime gameTime, Song song)
         {
-            if (gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime > 
-                UPDATE_MILLISECONDS)
+            if (VolumeChanging)
             {
-                previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
-                VolumeChanging = false;
-
-                for (int t = 0; t < song.TrackCount; t++)
+                if (gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime >
+                    UPDATE_MILLISECONDS)
                 {
-                    for (int q = 0; q < song.Tracks[t].QCount; q++)
-                    {
-                        song.Tracks[t].Cues[q].ChangeVolume(IncrementFade());
-                    }
-                    VolumeChanging |= song.Tracks[t].VolumeChanging;
-                }
+                    previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
+                    VolumeChanging = false;
+                    Volume += stepAmount;
 
-                AudioHelper.UpdateCues(song);
-                if (!VolumeChanging && StopAfterChange)
-                {
-                    song.Stop();
+                    for (int t = 0; t < song.TrackCount; t++)
+                        song.Tracks[t].ChangeVolume(Volume);
+
+                    VolumeChanging =
+                        (((StartVolume > EndVolume) && (Volume > EndVolume)) ||
+                        ((StartVolume < EndVolume) && (Volume < EndVolume)));
+
+                    AudioHelper.UpdateCues(song);
+                    if (!VolumeChanging && StopAfterChange)
+                        song.Stop();
                 }
             }
         }
-
     }
 }

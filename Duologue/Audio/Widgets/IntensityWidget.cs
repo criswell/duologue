@@ -10,19 +10,26 @@ namespace Duologue.Audio.Widgets
     {
         protected IntensityNotifier notifier;
         protected Song parentSong;
-        protected float[,] intensityMap;  //TrackVolume = intensityMap[myIntensity,tracknumber]
+        protected bool[,] intensityMap;  //TrackVolume = intensityMap[myIntensity,tracknumber]
         protected int myIntensity;
         protected int maxIntensity;
 
-        public IntensityWidget(Song song, float [,] map)
+        public IntensityWidget(Song song, bool [,] map)
         {
             myIntensity = 1;
+            myIntensity = (int)(maxIntensity * ServiceLocator.GetService<IntensityNotifier>().Intensity);
             intensityMap = map;
             maxIntensity = intensityMap.GetLength(0);
             parentSong = song;
             Attach();
         }
 
+        /// <summary>
+        /// UpdateIntensity is a callback which marks tracks as enabled or disabled based
+        /// on the definition map in the song, and the current Intensity.
+        /// Note that the actual update to play the correct cues always occurs elsewhere.
+        /// </summary>
+        /// <param name="e"></param>
         public void UpdateIntensity(IntensityEventArgs e)
         {
             if (e.ChangeAmount > 0)
@@ -34,14 +41,7 @@ namespace Duologue.Audio.Widgets
 
             for (int t = 0; t < parentSong.TrackCount; t++)
             {
-                if (intensityMap[myIntensity-1, t] == Loudness.Silent)
-                {
-                    parentSong.Tracks[t].Enabled = false;
-                }
-                else
-                {
-                    parentSong.Tracks[t].Enabled = true;
-                }   
+                parentSong.Tracks[t].Enabled = intensityMap[myIntensity - 1, t];
             }
         }
 

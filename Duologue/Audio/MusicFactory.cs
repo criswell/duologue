@@ -190,8 +190,8 @@ namespace Duologue.Audio
 
         public MusicFactory(AudioManager manager)
         {
-            float on = Loudness.Normal;
-            float off = Loudness.Silent;
+            bool on = true;
+            bool off = false;
 
             //SelectSong
             string[] selectArr = { selectMenuCue };
@@ -206,9 +206,9 @@ namespace Duologue.Audio
                         };
 
             //this intensity volume map is per track, not per Q
-            float[,] D8volumes = {
+            bool[,] D8volumes = {
                                   {on, off, off, off, off}, // One row per intensity
-                                  {on, on, off, off, off},  // with a volume for each track
+                                  {on, on, off, off, off},  // with a switch for each track
                                   {on, on, on, off, off},
                                   {on, on, on, on, off},
                                   {on, on, on, on, on}
@@ -233,7 +233,7 @@ namespace Duologue.Audio
                                  };
 
             //this intensity volume map is per track, not per Q
-            float[,] LoS16volumes = {
+            bool[,] LoS16volumes = {
                                   {on, on, off, off, off, off, off},
                                   {on, on, on, off, off, off, off},
                                   {on, on, on, on, off, off, off},

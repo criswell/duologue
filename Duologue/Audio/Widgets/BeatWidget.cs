@@ -12,7 +12,7 @@ namespace Duologue.Audio.Widgets
         public int NumberOfTracks;
         protected float beatTimer = 0f;
         protected float lengthOfBeat;
-        protected int currentBeat = 0;
+        public int currentBeat = 0;
         protected Song parentSong;
 
         public BeatWidget(Song song, int tracks, int beats)
@@ -21,6 +21,7 @@ namespace Duologue.Audio.Widgets
             NumberOfBeats = beats;
             NumberOfTracks = tracks;
             lengthOfBeat = (3433.039f / 8.000f);
+            //FIXME: This only matches 140BPM
         }
 
         public BeatWidget(Song song, int tracks, int beats, float beatLength)
@@ -31,25 +32,23 @@ namespace Duologue.Audio.Widgets
 
         public void Update(GameTime gameTime, Song song)
         {
-            if (currentBeat >= NumberOfBeats)
-            {
-                currentBeat = 0;
-            }
             beatTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (beatTimer > lengthOfBeat)
             {
+                if (currentBeat >= NumberOfBeats)
+                {
+                    currentBeat = 0;
+                }
                 currentBeat++;
-
                 for (int t = 0; t < parentSong.TrackCount; t++)
                 {
                     if (parentSong.Tracks[t].Enabled)
                     {
-                        parentSong.Tracks[t].Cues[currentBeat-1].Play();
+                        AudioHelper.Play(parentSong.Tracks[t].Cues[currentBeat - 1], false);
                     }
                 }
                 beatTimer = 0f;
             }
         }
-
     }
 }

@@ -62,6 +62,7 @@ namespace Duologue.Audio
             Game.Components.Add(helper);
             //Game.Components.Add(soundEffects);
             music = new MusicFactory(this);
+            //FIXME: It would be kinda handy if we didn't have to explicitly add each song here
             songMap.Add(SongID.SelectMenu, music.SelectSong);
             songMap.Add(SongID.Dance8ths, music.Dance8ths);
             songMap.Add(SongID.LandOfSand16ths, music.LandOfSand16ths);
@@ -73,7 +74,7 @@ namespace Duologue.Audio
         {
             songMap.Values.ToList().ForEach(song =>
                 {
-                    if (song.IsPlaying)
+                    if (song.Playing)
                     {
                         song.FadeOut();
                     }
@@ -82,17 +83,14 @@ namespace Duologue.Audio
 
         public void FadeIn(SongID ID)
         {
-            PlaySong(ID);
-            //songMap[ID].FadeIn(Loudness.Normal);
+            songMap[ID].FadeIn(Loudness.Normal);
+            if (songMap[ID].hyper != null)
+            {
+                float intensity = ServiceLocator.GetService<IntensityNotifier>().Intensity;
+                //songMap[ID].FadeIn(intensity);//FIXME: um...WTF?
+            }
         }
 
-        public void FadeIn(SongID ID, float percentage)
-        {
-            PlaySong(ID);
-            // FadeIn(ID);
-            //int intensity = songMap[ID].GetIntensityStepFromPercent(percentage);
-            //songMap[ID].FadeIn(intensity);
-        }
 
         public void PlaySong(SongID ID)
         {
@@ -114,13 +112,12 @@ namespace Duologue.Audio
 
         public void FadeOut(SongID ID)
         {
-            StopSong(ID);
-            //songMap[ID].FadeOut();
+            songMap[ID].FadeOut();
         }
 
         public bool SongIsPlaying(SongID ID)
         {
-            return songMap[ID].IsPlaying;
+            return songMap[ID].Playing;
         }
 
 
