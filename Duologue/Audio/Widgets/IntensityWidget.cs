@@ -10,51 +10,85 @@ namespace Duologue.Audio.Widgets
     {
         protected IntensityNotifier notifier;
         protected Song parentSong;
-        protected float[,] intensityMap;  //TrackVolume = intensityMap[myIntensity,tracknumber]
-        protected int myIntensity;
+        protected bool[,] intensityMap;  //TrackVolume = intensityMap[intensity,tracknumber]
+        protected int intensity;
         protected int maxIntensity;
+        protected bool attached = false;
 
-        public IntensityWidget(Song song, float [,] map)
+        public int Intensity
         {
-            myIntensity = 1;
+            get 
+            {
+                return intensity;
+            }
+            set 
+            {
+                intensity = MWMathHelper.LimitToRange(value, 1, maxIntensity);
+            }
+        }
+
+        public IntensityWidget(Song song, bool [,] map)
+        {
+            parentSong = song;
             intensityMap = map;
             maxIntensity = intensityMap.GetLength(0);
-            parentSong = song;
+            SetIntensity(ServiceLocator.GetService<IntensityNotifier>().Intensity);
             Attach();
         }
 
+        public void SetIntensity(float percent)
+        {
+            intensity = (int)(maxIntensity * percent);
+        }
+
+        /// <summary>
+        /// UpdateIntensity is a callback which marks tracks as enabled or disabled based
+        /// on the definition map in the song, and the current Intensity.
+        /// Note that the actual update to play the correct cues always occurs elsewhere.
+        /// </summary>
+        /// <param name="e"></param>
         public void UpdateIntensity(IntensityEventArgs e)
         {
             if (e.ChangeAmount > 0)
-                myIntensity++;
+                intensity++;
             else
-                myIntensity--;
+                intensity--;
 
-            myIntensity = MWMathHelper.LimitToRange(myIntensity, 1, maxIntensity);
+            intensity = MWMathHelper.LimitToRange(intensity, 1, maxIntensity);
 
             for (int t = 0; t < parentSong.TrackCount; t++)
             {
-                if (intensityMap[myIntensity-1, t] == Loudness.Silent)
-                {
-                    parentSong.Tracks[t].Enabled = false;
-                }
-                else
-                {
-                    parentSong.Tracks[t].Enabled = true;
-                }   
+                parentSong.Tracks[t].Enabled = intensityMap[intensity - 1, t];
             }
         }
 
         public void Attach()
         {
-            notifier = ServiceLocator.GetService<IntensityNotifier>();
-            notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+            if (!attached)
+            {
+                attached = true;
+                notifier = ServiceLocator.GetService<IntensityNotifier>();
+                notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+            }
+            else
+            {
+                throw new Exception("Already Attached!");
+            }
         }
 
         public void Detach()
         {
-            notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
-            notifier = null;
+            if (attached)
+            {
+                attached = false;
+                notifier.Changed -= new IntensityEventHandler(UpdateIntensity);
+                notifier = null;
+            }
+            else
+            {
+                throw new Exception("Not attached so I can not Detach!");
+            }
+
         }
     }
 }
