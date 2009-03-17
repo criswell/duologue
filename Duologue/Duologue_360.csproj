@@ -120,6 +120,7 @@
     <Compile Include="CreatorsClub\ScreenManager.cs" />
     <Compile Include="Screens\ColorStateTestComponent.cs" />
     <Compile Include="Screens\ColorStateTestScreen.cs" />
+    <Compile Include="Screens\CompanyIntroScreenManager.cs" />
     <Compile Include="Screens\EndCinematicScreen.cs" />
     <Compile Include="Screens\EndCinematicScreenManager.cs" />
     <Compile Include="Screens\ExitScreen.cs" />
