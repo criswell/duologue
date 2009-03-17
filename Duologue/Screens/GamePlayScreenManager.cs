@@ -177,7 +177,6 @@ namespace Duologue.Screens
             timeSinceStart = 0f;
             intensityCounter = 0f;
             intensityTimer = 0f;
-            //lastSongID = SongID.SelectMenu;
             base.ScreenExit(gameTime);
         }
         #endregion
