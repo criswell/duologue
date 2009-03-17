@@ -33,30 +33,26 @@ namespace Duologue.Audio
         protected bool playing = false;
 
         /// <summary>
-        /// managed implies two important things:
+        /// managed implies three important things:
         /// 1) The song can have post-play commands sent to it, like volume changes
         /// 2) AudioHelper will hold the song's Cue instances and dispose them when they are done
+        /// 3) The Cues were defined as looping infinitely in XACT
         /// </summary>
         protected bool managed = false;
         public Track[] Tracks;
         public int TrackCount;
 
         /// <summary>
-        /// This should only be left true for Song composed of repeating cues
-        /// (usually infinitely) in XACT.
-        /// Better be managed, or we won't be able to ever stop it.
-        /// </summary>
-        public bool AutoLoop = true;
-
-        /// <summary>
         /// The BeatWidget is what keeps firing off our cues for us on an unmanaged song.
         /// For system performance reasons, Managed must be false if the song has a BeatWidget
+        /// If a song isn't managed, it's a beater
         /// </summary>
         public BeatWidget beater = null;
 
         /// <summary>
         /// VolumeChangeWidget is what keeps sending volume change commands during a fade.
         /// This can only work on a managed song. Managed must be true.
+        /// An intensity song can't have a fader.
         /// </summary>
         public VolumeChangeWidget fader = null;
 
@@ -78,6 +74,7 @@ namespace Duologue.Audio
             : base(game) 
         {
             Enabled = false;
+            playing = false;
             localGame = (DuologueGame)game;
             SoundBankName = sbname;
             WaveBankName = wbname;
@@ -112,7 +109,9 @@ namespace Duologue.Audio
         /// at each possible intensity level.
         /// (Invocations of this constructor are probably rare, 
         /// as Intensity and Beat usually go together.)
-        /// Note that this form does allow the song to be "Managed"
+        /// Note that this form does allow the song to be "Managed",
+        /// and sets that field. Other constructors that call this one
+        /// will have to set that false.
         /// </summary>
         /// <param name="game">Game</param>
         /// <param name="sbname">SoundBankName</param>
@@ -121,7 +120,7 @@ namespace Duologue.Audio
         public Song(Game game, string sbname, string wbname, bool[,] intensityMap)
             : this(game, sbname, wbname)
         {
-            AutoLoop = false;
+            managed = true;
             hyper = new IntensityWidget(this, intensityMap);
             AudioHelper.Preload(this);
         }
@@ -142,8 +141,6 @@ namespace Duologue.Audio
         public Song(Game game, string sbname, string wbname, string[,] arrangement)
             : this(game, sbname, wbname)
         {
-            AutoLoop = false;
-            initvars();
             beater = new BeatWidget(this, arrangement.GetLength(0), arrangement.GetLength(1));
             managed = false;
             ArrayToTracks(arrangement);
@@ -169,12 +166,9 @@ namespace Duologue.Audio
         /// <param name="intensityMap">intensityMap in bool[intensity,track number]=track.Enabled form</param>
         public Song(Game game, string sbname, string wbname, string[,] arrangement,
             bool[,] intensityMap)
-            : this(game, sbname, wbname, intensityMap)
+            : this(game, sbname, wbname, arrangement)
         {
-            beater = new BeatWidget(this, arrangement.GetLength(0), arrangement.GetLength(1));
-            managed = false;
-            ArrayToTracks(arrangement);
-            AudioHelper.Preload(this);
+            hyper = new IntensityWidget(this, intensityMap);
         }
 
         protected void ArrayToTracks(string[,] arrangement)
@@ -194,24 +188,16 @@ namespace Duologue.Audio
             }
         }
 
-        protected void initvars()
-        {
-            playing = false;
-            //could probably null the fader each time it is done, unless
-            //we want to hold it to reduce memory thrash
-            if (null != fader)
-            {
-                fader.VolumeChanging = false;
-                fader.StopAfterChange = false;
-            }
-        }
-
         public void Play()
         {
             //Intensity manages itself event driven
             if (Managed)
             {
-                //We don't have to do anything because it's Autolooped
+                for (int t = 0; t < TrackCount; t++)
+                {
+                    //there should only be ONE cue per track in infinite loops
+                    Tracks[t].Cues[0].Play();
+                }
                 if (null == fader)
                     fader = new VolumeChangeWidget(this);
             }
@@ -221,15 +207,6 @@ namespace Duologue.Audio
                     beater = new BeatWidget(this, 1, 1);
             }
 
-            if (AutoLoop) //simplest case - parallel infinite Cues
-            {
-                managed = true; //must be, or we could never stop it!
-                for (int t = 0; t < TrackCount; t++)
-                {
-                    //there should only be ONE cue per track in infinite loops
-                    Tracks[t].Cues[0].Play();
-                }
-            }
             playing = true;
             Enabled = true;
             ServiceLocator.GetService<IntensityNotifier>().Detensify();
@@ -244,7 +221,6 @@ namespace Duologue.Audio
                 {
                     Tracks[t].Stop();
                 }
-                initvars();
                 if (hyper != null)
                 {
                     hyper.Detach();
@@ -254,6 +230,7 @@ namespace Duologue.Audio
             {
                 Enabled = false;
             }
+            playing = false;
         }
 
         public bool Playing
