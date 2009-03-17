@@ -51,6 +51,19 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        public Enemy_RollingRock(GamePlayScreenManager manager)
+            : base(manager)
+        {
+            MyType = TypesOfPlayObjects.Enemy_Mirthworm;
+            MajorType = MajorPlayObjectType.Enemy;
+            Initialized = false;
+
+            // Set the RealSize by hand
+            RealSize = new Vector2(83, 83);
+            Initialized = false;
+            Alive = false;
+        }
+
         public override void Initialize(
             Vector2 startPos, 
             Vector2 startOrientation, 
