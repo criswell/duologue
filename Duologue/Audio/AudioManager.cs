@@ -90,9 +90,6 @@ namespace Duologue.Audio
             PlayingSong = ID;
         }
 
-
-
-
         public void PlaySong(SongID ID)
         {
             if (!SongIsPlaying(ID))

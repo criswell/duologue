@@ -51,7 +51,7 @@ namespace Duologue.Audio.Widgets
         {
             if (e.ChangeAmount > 0)
                 intensity++;
-            else
+            else if (e.ChangeAmount < 0)
                 intensity--;
 
             intensity = MWMathHelper.LimitToRange(intensity, 1, maxIntensity);

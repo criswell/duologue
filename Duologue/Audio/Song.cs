@@ -209,7 +209,7 @@ namespace Duologue.Audio
 
             playing = true;
             Enabled = true;
-            ServiceLocator.GetService<IntensityNotifier>().Detensify();
+            ServiceLocator.GetService<IntensityNotifier>().RequestUpdate();
         }
 
         public void Stop()

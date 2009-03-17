@@ -51,5 +51,10 @@ namespace Duologue.Audio
         {
             ChangeIntensity(-1);
         }
+
+        public void RequestUpdate()
+        {
+            ChangeIntensity(0);
+        }
     }
 }
