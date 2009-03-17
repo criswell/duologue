@@ -178,7 +178,7 @@ namespace Duologue.Screens
             intensityCounter = 0f;
             intensityTimer = 0f;
             // We default to what we should get coming into the game
-            lastSongID = SongID.SelectMenu;
+            //lastSongID = SongID.SelectMenu;
 
             base.ScreenExit(gameTime);
         }
