@@ -177,9 +177,7 @@ namespace Duologue.Screens
             timeSinceStart = 0f;
             intensityCounter = 0f;
             intensityTimer = 0f;
-            // We default to what we should get coming into the game
             //lastSongID = SongID.SelectMenu;
-
             base.ScreenExit(gameTime);
         }
         #endregion
@@ -270,7 +268,8 @@ namespace Duologue.Screens
         {
             // Get the beat percentage
             // FIXME for now it's just random
-            double bp = MWMathHelper.GetRandomInRange(0.5, 1);
+            double bp = ServiceLocator.GetService<AudioManager>().BeatPercentage();
+            //double bp = MWMathHelper.GetRandomInRange(0.5, 1);
 
             // Update the score based on that
             int pointValueM = (int)(bp * (double)pointValue);

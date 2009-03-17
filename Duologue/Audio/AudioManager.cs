@@ -87,7 +87,10 @@ namespace Duologue.Audio
             if (songMap[ID].hyper != null)
                 songMap[ID].hyper.SetIntensity(
                     ServiceLocator.GetService<IntensityNotifier>().Intensity);
+            PlayingSong = ID;
         }
+
+
 
 
         public void PlaySong(SongID ID)
@@ -111,6 +114,7 @@ namespace Duologue.Audio
         public void FadeOut(SongID ID)
         {
             songMap[ID].FadeOut();
+            PlayingSong = SongID.None;
         }
 
         public bool SongIsPlaying(SongID ID)
@@ -118,6 +122,18 @@ namespace Duologue.Audio
             return songMap[ID].Playing;
         }
 
+        public double BeatPercentage()
+        {
+            double retVal = 1d;
+            if (PlayingSong != SongID.None)
+            {
+                if (null != songMap[PlayingSong].beater)
+                {
+                    retVal = songMap[PlayingSong].beater.BeatPercentage();
+                }
+            }
+            return retVal;
+        }
 
         /// <summary>
         /// Allows the game component to update itself.
