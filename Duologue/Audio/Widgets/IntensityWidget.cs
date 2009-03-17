@@ -60,6 +60,9 @@ namespace Duologue.Audio.Widgets
             {
                 parentSong.Tracks[t].Enabled = intensityMap[intensity - 1, t];
             }
+            ServiceLocator.GetService<IntensityNotifier>().Intensity = 
+                ((float)intensity) / ((float)maxIntensity);
+
         }
 
         public void Attach()

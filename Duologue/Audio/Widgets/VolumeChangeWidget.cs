@@ -110,7 +110,10 @@ namespace Duologue.Audio.Widgets
 
                     AudioHelper.UpdateCues(song);
                     if (!VolumeChanging && StopAfterChange)
+                    {
                         song.Stop();
+                        StopAfterChange = false;
+                    }
                 }
             }
         }
