@@ -1418,8 +1418,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="funavision-motto.en-US.png">
-      <Name>funavision-motto.en-US</Name>
+    <Compile Include="funavision-motto.png">
+      <Name>funavision-motto</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
