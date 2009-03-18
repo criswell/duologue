@@ -27,7 +27,7 @@ namespace Duologue.Screens
     {
         LogoFadeIn,
         Stablize,
-        MottoFadein,
+        MottoFadeIn,
         Wait,
         Loading
     }
@@ -46,6 +46,9 @@ namespace Duologue.Screens
         private const double delta_Stabilize = 0.01;
         private const double delta_MottoFadeIn = 0.1;
         private const double delta_Wait = 0.5;
+
+        private const float minLogoSize = 0.8f;
+        private const float maxLogoSize = 1.1f;
         #endregion
 
         #region Fields
@@ -60,20 +63,26 @@ namespace Duologue.Screens
         private Vector2 position_Motto;
         private Vector2 position_Copyright;
 
-        private Game myGame;
+        private Color textColor;
+
+        //private Game myGame;
+        private CompanyIntroScreenManager myManager;
         private IntroState myState;
         private double timeSinceSwitch;
         private float totalHeight;
+
+        private float deltaSize;
         #endregion
 
         #region Properties
         #endregion
 
         #region Constructor / init
-        public CompanyIntroScreen(Game game)
+        public CompanyIntroScreen(Game game, CompanyIntroScreenManager manager)
             : base(game)
         {
-            myGame = game;
+            //myGame = game;
+            myManager = manager;
         }
 
         protected override void LoadContent()
@@ -98,6 +107,10 @@ namespace Duologue.Screens
             timeSinceSwitch = 0;
 
             position_Logo = Vector2.Zero;
+
+            deltaSize = maxLogoSize - minLogoSize;
+
+            textColor = Color.SeaShell;
 
             base.LoadContent();
         }
@@ -126,6 +139,103 @@ namespace Duologue.Screens
         }
         #endregion
 
+        #region Private Draw methods
+        private void Draw_LogoFadeIn()
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Logo,
+                position_Logo,
+                center_Logo,
+                null,
+                new Color(textColor, (float)(timeSinceSwitch / delta_LogoFadeIn)),
+                0f,
+                minLogoSize + deltaSize * (float)(timeSinceSwitch / delta_LogoFadeIn),
+                0f,
+                RenderSpriteBlendMode.Addititive);
+        }
+
+        private void Draw_Stablize()
+        {
+            // Draw part fading out
+            InstanceManager.RenderSprite.Draw(
+                texture_Logo,
+                position_Logo,
+                center_Logo,
+                null,
+                new Color(textColor, 1 - (float)(timeSinceSwitch/delta_Stabilize)),
+                0f,
+                maxLogoSize - deltaSize * (float)(timeSinceSwitch / delta_Stabilize),
+                0f,
+                RenderSpriteBlendMode.Addititive);
+
+            // Draw part fading in
+            InstanceManager.RenderSprite.Draw(
+                texture_Logo,
+                position_Logo,
+                center_Logo,
+                null,
+                new Color(textColor, (float)(timeSinceSwitch / delta_Stabilize)),
+                0f,
+                minLogoSize - deltaSize * (float)(timeSinceSwitch / delta_Stabilize),
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
+
+        private void Draw_Logo()
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Logo,
+                position_Logo,
+                center_Logo,
+                null,
+                textColor,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlend);
+        }
+
+        private void Draw_MottoFadeIn()
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Motto,
+                position_Motto,
+                center_Motto,
+                null,
+                new Color(textColor, (float)(timeSinceSwitch / delta_MottoFadeIn)),
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlend);
+        }
+
+        private void Draw_Motto()
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Motto,
+                position_Motto,
+                center_Motto,
+                null,
+                textColor,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlend);
+        }
+
+        private void Draw_Copyright()
+        {
+            InstanceManager.RenderSprite.DrawString(
+                font,
+                Resources.Intro_Copyright,
+                position_Copyright,
+                textColor,
+                Vector2.One,
+                center_Copyright,
+                RenderSpriteBlendMode.AlphaBlend);
+        }
+        #endregion
+
         #region Draw/Update
         public override void Update(GameTime gameTime)
         {
@@ -137,6 +247,7 @@ namespace Duologue.Screens
                     if(timeSinceSwitch > delta_LogoFadeIn)
                     {
                         timeSinceSwitch = 0;
+                        deltaSize = maxLogoSize - 1f;
                         myState = IntroState.Stablize;
                     }
                     break;
@@ -144,10 +255,10 @@ namespace Duologue.Screens
                     if(timeSinceSwitch > delta_Stabilize)
                     {
                         timeSinceSwitch = 0;
-                        myState = IntroState.MottoFadein;
+                        myState = IntroState.MottoFadeIn;
                     }
                     break;
-                case IntroState.MottoFadein:
+                case IntroState.MottoFadeIn:
                     if(timeSinceSwitch > delta_MottoFadeIn)
                     {
                         timeSinceSwitch = 0;
@@ -174,6 +285,31 @@ namespace Duologue.Screens
         {
             if (position_Logo == Vector2.Zero)
                 SetPositions();
+
+            switch (myState)
+            {
+                case IntroState.LogoFadeIn:
+                    Draw_LogoFadeIn();
+                    break;
+                case IntroState.Stablize:
+                    Draw_Stablize();
+                    break;
+                case IntroState.MottoFadeIn:
+                    Draw_Logo();
+                    Draw_MottoFadeIn();
+                    break;
+                case IntroState.Wait:
+                    Draw_Logo();
+                    Draw_Motto();
+                    Draw_Copyright();
+                    break;
+                default:
+                    Draw_Logo();
+                    Draw_Motto();
+                    Draw_Copyright();
+                    // Default is loading
+                    break;
+            }
 
             base.Draw(gameTime);
         }
