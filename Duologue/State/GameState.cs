@@ -17,5 +17,6 @@ namespace Duologue.State
         ColorStateTest,
         EndCinematics,
         Exit,
+        CompanyIntro,
     }
 }

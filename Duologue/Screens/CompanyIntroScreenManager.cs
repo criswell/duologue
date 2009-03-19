@@ -41,6 +41,10 @@ namespace Duologue.Screens
         #endregion
 
         #region Constructor / Init
+        public CompanyIntroScreenManager(Game game)
+        {
+        }
+
         protected override void InitializeConstants()
         {
             throw new NotImplementedException();
@@ -50,6 +54,7 @@ namespace Duologue.Screens
         #region Public Methods
         public void Exit()
         {
+            LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
         }
         #endregion
 

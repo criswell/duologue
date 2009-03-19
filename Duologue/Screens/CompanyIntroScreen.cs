@@ -194,6 +194,7 @@ namespace Duologue.Screens
                 {
                     // We're all done, ext
                     VoidSpinner();
+                    myManager.Exit();
                 }
             }
         }
