@@ -47,6 +47,12 @@ namespace Duologue.Screens
         }
         #endregion
 
+        #region Public Methods
+        public void Exit()
+        {
+        }
+        #endregion
+
         #region Public Overrides
         #endregion
 

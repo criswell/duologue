@@ -124,6 +124,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        internal static string Intro_Loading {
+            get {
+                return ResourceManager.GetString("Intro_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Achievements.
         /// </summary>
         internal static string MainMenu_Achievements {

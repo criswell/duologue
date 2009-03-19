@@ -39,6 +39,7 @@ namespace Duologue.Screens
         private const string filename_Font = "Fonts/deja-vu-serif-12";
         private const string filename_Logo = "funavision-logo";
         private const string filename_Motto = "funavision-motto";
+        private const string filename_LoadingFont = "Fonts\\inero-28";
 
         private const float spacing_Motto = 15f;
         private const float spacing_Copyright = 200f;
@@ -50,10 +51,13 @@ namespace Duologue.Screens
 
         private const float minLogoSize = 0.8f;
         private const float maxLogoSize = 1.1f;
+
+        private const float loadingPadding = 15f;
         #endregion
 
         #region Fields
         private SpriteFont font;
+        private SpriteFont loadingFont;
         private Texture2D texture_Logo;
         private Texture2D texture_Motto;
         private Vector2 center_Logo;
@@ -80,6 +84,11 @@ namespace Duologue.Screens
         private PlayObject currentPlayObject;
         private String[] currentFilenames;
         private int currentFilenameIndex;
+        private Vector2 position_Loading;
+        private Vector2 loadingSize;
+
+        // Pre-cached texture
+        private Texture2D tempTexture;
         #endregion
 
         #region Properties
@@ -115,6 +124,7 @@ namespace Duologue.Screens
         protected override void LoadContent()
         {
             font = InstanceManager.Localization.GetLocalizedFont(filename_Font);
+            loadingFont = InstanceManager.Localization.GetLocalizedFont(filename_LoadingFont);
             texture_Logo = InstanceManager.AssetManager.LoadTexture2D(filename_Logo);
             texture_Motto = InstanceManager.Localization.GetLocalizedTexture(filename_Motto);
 
@@ -129,6 +139,9 @@ namespace Duologue.Screens
 
             totalHeight = (float)texture_Logo.Height + spacing_Motto +
                 (float)texture_Motto.Height + spacing_Copyright + (float)copyrightSize.Y;
+
+            loadingSize = font.MeasureString(Resources.Intro_Loading);
+            position_Loading = Vector2.Zero;
 
             myState = IntroState.LogoFadeIn;
             timeSinceSwitch = 0;
@@ -162,7 +175,27 @@ namespace Duologue.Screens
 
         private void LoadData(double timeSinceSwitch)
         {
-            throw new NotImplementedException();
+            if (currentFilenameIndex < currentFilenames.Length)
+            {
+                // pre-cache next image
+                tempTexture =
+                    InstanceManager.AssetManager.LoadTexture2D(currentFilenames[currentFilenameIndex]);
+                currentFilenameIndex++;
+            }
+            else
+            {
+                if (currentPlayObjectIndex < playObjects.Length)
+                {
+                    // load up the next play object
+                    SetCurrentFilenames();
+                    currentFilenameIndex++;
+                }
+                else
+                {
+                    // We're all done, ext
+                    VoidSpinner();
+                }
+            }
         }
 
         private void SetCurrentFilenames()
@@ -218,6 +251,39 @@ namespace Duologue.Screens
                     currentPlayObject = new PlayerBullet();
                     break;
             }
+        }
+
+        private void TriggerLoadingSpinner()
+        {
+            LocalInstanceManager.Spinner.Initialize();
+
+            // Font stuff
+            LocalInstanceManager.Spinner.DisplayFont = loadingFont;
+            LocalInstanceManager.Spinner.DisplayText = Resources.Intro_Loading;
+            LocalInstanceManager.Spinner.FontColor = Color.Sienna;
+            LocalInstanceManager.Spinner.FontShadowColor = Color.SandyBrown;
+
+            // Spinner colors
+            LocalInstanceManager.Spinner.BaseColor = Color.Moccasin;
+            LocalInstanceManager.Spinner.TrackerColor = Color.Peru;
+            
+            // Location and scale
+            position_Loading = new Vector2(
+                (float)InstanceManager.DefaultViewport.TitleSafeArea.Width - loadingSize.X / 2f,
+                (float)InstanceManager.DefaultViewport.TitleSafeArea.Height -
+                    loadingSize.Y / 2f - loadingPadding);
+            LocalInstanceManager.Spinner.Position = position_Loading;
+            LocalInstanceManager.Spinner.Scale = Vector2.One;
+
+            LocalInstanceManager.Spinner.Enabled = true;
+            LocalInstanceManager.Spinner.Visible = true;
+        }
+
+        private void VoidSpinner()
+        {
+            LocalInstanceManager.Spinner.Enabled = false;
+            LocalInstanceManager.Spinner.Visible = false;
+            LocalInstanceManager.Spinner.Initialize();
         }
         #endregion
 
@@ -354,6 +420,7 @@ namespace Duologue.Screens
                         // FIXME switch on the loading indicator here
                         currentPlayObjectIndex = 0;
                         SetCurrentFilenames();
+                        TriggerLoadingSpinner();
                         myState = IntroState.Loading;
                     }
                     break;
