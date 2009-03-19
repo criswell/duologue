@@ -178,6 +178,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Wiggles() : base() { }
+
         public Enemy_Wiggles(GamePlayScreenManager manager)
             : base(manager)
         {

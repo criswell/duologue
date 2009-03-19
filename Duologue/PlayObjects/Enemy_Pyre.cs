@@ -161,6 +161,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Pyre() : base() { }
+
         public Enemy_Pyre(GamePlayScreenManager manager)
             : base(manager)
         {

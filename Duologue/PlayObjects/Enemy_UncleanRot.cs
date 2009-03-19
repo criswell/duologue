@@ -214,6 +214,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_UncleanRot() : base() { }
+
         public Enemy_UncleanRot(GamePlayScreenManager manager)
             : base(manager)
         {

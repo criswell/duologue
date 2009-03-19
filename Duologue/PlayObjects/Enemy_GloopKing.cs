@@ -146,6 +146,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Construct/ Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_GloopKing() : base() { }
+
         public Enemy_GloopKing(GamePlayScreenManager manager)
             : base(manager)
         {

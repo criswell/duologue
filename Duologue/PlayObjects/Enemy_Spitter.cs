@@ -323,6 +323,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Spitter() : base() { }
+
         public Enemy_Spitter(GamePlayScreenManager manager)
             : base(manager)
         {

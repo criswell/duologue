@@ -19,6 +19,7 @@ using Mimicware.Graphics;
 // Duologue
 using Duologue;
 using Duologue.Properties;
+using Duologue.PlayObjects;
 #endregion
 
 namespace Duologue.Screens
@@ -72,6 +73,13 @@ namespace Duologue.Screens
         private float totalHeight;
 
         private float deltaSize;
+
+        // Loading screen stuff
+        private TypesOfPlayObjects[] playObjects;
+        private int currentPlayObjectIndex;
+        private PlayObject currentPlayObject;
+        private String[] currentFilenames;
+        private int currentFilenameIndex;
         #endregion
 
         #region Properties
@@ -83,6 +91,25 @@ namespace Duologue.Screens
         {
             //myGame = game;
             myManager = manager;
+
+            // Set up the play objects
+            playObjects = new TypesOfPlayObjects[]
+            {
+                TypesOfPlayObjects.Enemy_Buzzsaw,
+                TypesOfPlayObjects.Enemy_Ember,
+                TypesOfPlayObjects.Enemy_Gloop,
+                TypesOfPlayObjects.Enemy_KingGloop,
+                TypesOfPlayObjects.Enemy_Mirthworm,
+                TypesOfPlayObjects.Enemy_Pyre,
+                TypesOfPlayObjects.Enemy_Spitter,
+                TypesOfPlayObjects.Enemy_StaticGloop,
+                TypesOfPlayObjects.Enemy_UncleanRot,
+                TypesOfPlayObjects.Enemy_Wiggles,
+                TypesOfPlayObjects.Player,
+                TypesOfPlayObjects.PlayerBullet
+            };
+
+            currentPlayObjectIndex = 0;
         }
 
         protected override void LoadContent()
@@ -136,6 +163,61 @@ namespace Duologue.Screens
         private void LoadData(double timeSinceSwitch)
         {
             throw new NotImplementedException();
+        }
+
+        private void SetCurrentFilenames()
+        {
+            // Get the current play object
+            GetCurrentPlayObject();
+            currentPlayObjectIndex++;
+
+            // Get the filenames
+            currentFilenames = currentPlayObject.GetFilenames();
+            currentFilenameIndex = 0;            
+        }
+
+        private void GetCurrentPlayObject()
+        {
+            switch (playObjects[currentPlayObjectIndex])
+            {
+                case TypesOfPlayObjects.Enemy_Buzzsaw:
+                    currentPlayObject = new Enemy_Buzzsaw();
+                    break;
+                case TypesOfPlayObjects.Enemy_Ember:
+                    currentPlayObject = new Enemy_Ember();
+                    break;
+                case TypesOfPlayObjects.Enemy_Gloop:
+                    currentPlayObject = new Enemy_Gloop();
+                    break;
+                case TypesOfPlayObjects.Enemy_KingGloop:
+                    currentPlayObject = new Enemy_GloopKing();
+                    break;
+                case TypesOfPlayObjects.Enemy_Mirthworm:
+                    currentPlayObject = new Enemy_Mirthworm();
+                    break;
+                case TypesOfPlayObjects.Enemy_Pyre:
+                    currentPlayObject = new Enemy_Pyre();
+                    break;
+                case TypesOfPlayObjects.Enemy_Spitter:
+                    currentPlayObject = new Enemy_Spitter();
+                    break;
+                case TypesOfPlayObjects.Enemy_StaticGloop:
+                    currentPlayObject = new Enemy_StaticGloop();
+                    break;
+                case TypesOfPlayObjects.Enemy_UncleanRot:
+                    currentPlayObject = new Enemy_UncleanRot();
+                    break;
+                case TypesOfPlayObjects.Enemy_Wiggles:
+                    currentPlayObject = new Enemy_Wiggles();
+                    break;
+                case TypesOfPlayObjects.Player:
+                    currentPlayObject = new Player();
+                    break;
+                default:
+                    // Player Bullet
+                    currentPlayObject = new PlayerBullet();
+                    break;
+            }
         }
         #endregion
 
@@ -269,6 +351,9 @@ namespace Duologue.Screens
                     if(timeSinceSwitch > delta_Wait)
                     {
                         timeSinceSwitch = 0;
+                        // FIXME switch on the loading indicator here
+                        currentPlayObjectIndex = 0;
+                        SetCurrentFilenames();
                         myState = IntroState.Loading;
                     }
                     break;

@@ -138,6 +138,14 @@ namespace Duologue.PlayObjects
                 bulletFrames[0].Height / 2f);
             currentFrame = maxNumBulletFrames;
         }
+
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy()
+            : base()
+        {
+        }
         #endregion
 
         #region Load / Init

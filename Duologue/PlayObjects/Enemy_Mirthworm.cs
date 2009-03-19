@@ -109,6 +109,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor/Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Mirthworm() : base() { }
+
         public Enemy_Mirthworm(GamePlayScreenManager manager)
             : base(manager)
         {

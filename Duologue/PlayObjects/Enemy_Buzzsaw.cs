@@ -141,6 +141,13 @@ namespace Duologue.PlayObjects
             RealSize = new Vector2(85, 87);
         }
 
+        /// <summary>
+        /// Empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Buzzsaw() : base()
+        {
+        }
+
         public override void Initialize(
             Vector2 startPos,
             Vector2 startOrientation,

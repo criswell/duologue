@@ -224,6 +224,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Ember() : base() { }
+
         public Enemy_Ember(GamePlayScreenManager manager)
             : base(manager)
         {
