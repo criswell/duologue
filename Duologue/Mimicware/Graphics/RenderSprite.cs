@@ -35,6 +35,7 @@ namespace Mimicware.Graphics
         Multiplicative,
         AlphaBlendTop,
         AddititiveTop,
+        AbsoluteTop,
     }
     public class RenderSprite
     {
@@ -45,6 +46,7 @@ namespace Mimicware.Graphics
         private List<SpriteObject> multiplicativeSprites;
         private List<SpriteObject> spritesTop;
         private List<SpriteObject> additiveSpritesTop;
+        private List<SpriteObject> absoluteTop;
         #endregion
 
         #region Properties
@@ -59,6 +61,7 @@ namespace Mimicware.Graphics
             additiveSprites = new List<SpriteObject>();
             multiplicativeSprites = new List<SpriteObject>();
             additiveSpritesTop = new List<SpriteObject>();
+            absoluteTop = new List<SpriteObject>();
         }
         #endregion
 
@@ -79,6 +82,11 @@ namespace Mimicware.Graphics
         private void AddTop(SpriteObject sprite)
         {
             spritesTop.Add(sprite);
+        }
+
+        private void AddAbsoluteTop(SpriteObject sprite)
+        {
+            absoluteTop.Add(sprite);
         }
 
         /// <summary>
@@ -259,6 +267,17 @@ namespace Mimicware.Graphics
                         rotation,
                         scale,
                         layer));
+            else if (mode == RenderSpriteBlendMode.AbsoluteTop)
+                this.AddAbsoluteTop(
+                    new SpriteObject(
+                        texture,
+                        position,
+                        center,
+                        source,
+                        tint,
+                        rotation,
+                        scale,
+                        layer));
             else if (mode == RenderSpriteBlendMode.AddititiveTop)
                 this.AddAdditiveTop(
                     new SpriteObject(
@@ -328,6 +347,17 @@ namespace Mimicware.Graphics
                         layer));
             else if (mode == RenderSpriteBlendMode.AlphaBlendTop)
                 this.AddTop(
+                    new SpriteObject(
+                        texture,
+                        position,
+                        center,
+                        source,
+                        tint,
+                        rotation,
+                        scale,
+                        layer));
+            else if (mode == RenderSpriteBlendMode.AbsoluteTop)
+                this.AddAbsoluteTop(
                     new SpriteObject(
                         texture,
                         position,
@@ -428,6 +458,8 @@ namespace Mimicware.Graphics
                 this.AddAdditiveTop(sobj);
             else if (mode == RenderSpriteBlendMode.AlphaBlendTop)
                 this.AddTop(sobj);
+            else if (mode == RenderSpriteBlendMode.AbsoluteTop)
+                this.AddAbsoluteTop(sobj);
             else
                 this.Add(sobj);
         }
@@ -461,6 +493,12 @@ namespace Mimicware.Graphics
                     color));
             else if (mode == RenderSpriteBlendMode.AddititiveTop)
                 this.AddAdditiveTop(new SpriteObject(
+                    font,
+                    p,
+                    vector2,
+                    color));
+            else if (mode == RenderSpriteBlendMode.AbsoluteTop)
+                this.AddAbsoluteTop(new SpriteObject(
                     font,
                     p,
                     vector2,
@@ -608,6 +646,8 @@ namespace Mimicware.Graphics
                 this.AddTop(sobj);
             else if (mode == RenderSpriteBlendMode.AddititiveTop)
                 this.AddAdditiveTop(sobj);
+            else if (mode == RenderSpriteBlendMode.AbsoluteTop)
+                this.AddAbsoluteTop(sobj);
             else
                 this.Add(sobj);
         }
@@ -668,6 +708,16 @@ namespace Mimicware.Graphics
                 batch.End();
             }
             additiveSpritesTop.Clear();
+
+            // Render the absolute top
+            if (absoluteTop.Count > 0)
+            {
+                batch.Begin(SpriteBlendMode.AlphaBlend);
+
+                RenderAllSprites(absoluteTop);
+
+                batch.End();
+            }
         }
         #endregion
     }
