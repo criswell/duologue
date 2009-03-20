@@ -40,7 +40,7 @@ namespace Duologue.Screens
     public class CompanyIntroScreen : DrawableGameComponent
     {
         #region Constants
-        private const string filename_Font = "Fonts/deja-vu-sans-small";
+        private const string filename_Font = "Fonts/deja-vu-serif-small";
         private const string filename_Logo = "funavision-logo";
         private const string filename_Motto = "funavision-motto";
         private const string filename_LoadingFont = "Fonts\\inero-28";

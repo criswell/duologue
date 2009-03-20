@@ -1425,8 +1425,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\deja-vu-sans-small.png">
-      <Name>deja-vu-sans-small</Name>
+    <Compile Include="Fonts\deja-vu-serif-small.png">
+      <Name>deja-vu-serif-small</Name>
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
     </Compile>
