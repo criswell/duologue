@@ -413,7 +413,7 @@ namespace Duologue.Screens
                 0f,
                 scale_Blank,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                RenderSpriteBlendMode.AbsoluteTop);
         }
 
 
@@ -428,7 +428,7 @@ namespace Duologue.Screens
                 0f,
                 scale_Blank,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                RenderSpriteBlendMode.AbsoluteTop);
         }
 
         private void Draw_FadeOut()
