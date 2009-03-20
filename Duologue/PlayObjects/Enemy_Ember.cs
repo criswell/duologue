@@ -330,10 +330,10 @@ namespace Duologue.PlayObjects
 
             for (int i = 0; i < numberOfFrames; i++)
             {
-                filenames[i] = String.Format(filename_frames, i.ToString());
+                filenames[i] = String.Format(filename_frames, (i+1).ToString());
             }
 
-            filenames[numberOfFrames - 1] = filename_Ember;
+            filenames[numberOfFrames] = filename_Ember;
 
             return filenames;
         }

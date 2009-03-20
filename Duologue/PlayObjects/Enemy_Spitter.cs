@@ -586,15 +586,15 @@ namespace Duologue.PlayObjects
 
             for (int i = 0; i < maxAnimationFrames; i++)
             {
-                filenames[t] = String.Format(filename_base, i.ToString());
+                filenames[t] = String.Format(filename_base, (i+1).ToString());
                 t++;
-                filenames[t] = String.Format(filename_outline, i.ToString());
+                filenames[t] = String.Format(filename_outline, (i+1).ToString());
                 t++;
             }
 
             for (int i = 0; i < maxSpitFrames; i++)
             {
-                filenames[t] = String.Format(filename_spit, i.ToString());
+                filenames[t] = String.Format(filename_spit, (i+1).ToString());
                 t++;
             }
 

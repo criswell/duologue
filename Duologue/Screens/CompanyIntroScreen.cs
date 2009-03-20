@@ -36,7 +36,7 @@ namespace Duologue.Screens
     public class CompanyIntroScreen : DrawableGameComponent
     {
         #region Constants
-        private const string filename_Font = "Fonts/deja-vu-serif-12";
+        private const string filename_Font = "Fonts/deja-vu-sans-small";
         private const string filename_Logo = "funavision-logo";
         private const string filename_Motto = "funavision-motto";
         private const string filename_LoadingFont = "Fonts\\inero-28";
@@ -177,6 +177,7 @@ namespace Duologue.Screens
         {
             if (currentFilenameIndex < currentFilenames.Length)
             {
+                Console.WriteLine(currentFilenames[currentFilenameIndex]);
                 // pre-cache next image
                 tempTexture =
                     InstanceManager.AssetManager.LoadTexture2D(currentFilenames[currentFilenameIndex]);
@@ -186,9 +187,9 @@ namespace Duologue.Screens
             {
                 if (currentPlayObjectIndex < playObjects.Length)
                 {
+                    Console.WriteLine(playObjects[currentPlayObjectIndex].ToString());
                     // load up the next play object
                     SetCurrentFilenames();
-                    currentFilenameIndex++;
                 }
                 else
                 {

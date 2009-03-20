@@ -254,13 +254,13 @@ namespace Duologue.PlayObjects
 
             for (int i = 0; i < bodyFrames; i++)
             {
-                filenames[t] = String.Format(filename_kingBody, i.ToString());
+                filenames[t] = String.Format(filename_kingBody, (i+1).ToString());
                 t++;
             }
 
             for (int i = 0; i < deathFrames; i++)
             {
-                filenames[t] = String.Format(filename_kingDeath, i.ToString());
+                filenames[t] = String.Format(filename_kingDeath, (i+1).ToString());
                 t++;
             }
 

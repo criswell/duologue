@@ -159,11 +159,15 @@ namespace Duologue.PlayObjects
         #region Public Overrides
         public override String[] GetFilenames()
         {
-            return new String[]
+            String[] filenames = new String[1 + numberOfShotHighlights];
+
+            for (int i = 0; i < numberOfShotHighlights; i++)
             {
-                filename_ShotBase,
-                filename_ShotHighlight
-            };
+                filenames[i] = String.Format(filename_ShotHighlight, (i + 1).ToString());
+            }
+            filenames[numberOfShotHighlights] = filename_ShotBase;
+
+            return filenames;
         }
 
         public override bool StartOffset()

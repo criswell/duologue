@@ -327,7 +327,7 @@ namespace Duologue.PlayObjects
         #region Public overrides
         public override string[] GetFilenames()
         {
-            String[] filenames = new String[numFrames_Body + numFrames_Static + numFrames_Tongue];
+            String[] filenames = new String[3*numFrames_Body + numFrames_Static + numFrames_Tongue];
 
             int t = 0;
 

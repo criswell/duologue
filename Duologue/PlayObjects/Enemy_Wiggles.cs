@@ -473,24 +473,24 @@ namespace Duologue.PlayObjects
         #region Public overrides
         public override String[] GetFilenames()
         {
-            String[] filenames = new String[3*numberOfDeathFrames + 2*numberOfWalkingFrames];
+            String[] filenames = new String[2*numberOfDeathFrames + 3*numberOfWalkingFrames];
 
             int t = 0;
             for (int i = 0; i < numberOfWalkingFrames; i++)
             {
-                filenames[t] = String.Format(filename_base, i.ToString());
+                filenames[t] = String.Format(filename_base, (i+1).ToString());
                 t++;
-                filenames[t] = String.Format(filename_outline, i.ToString());
+                filenames[t] = String.Format(filename_outline, (i+1).ToString());
                 t++;
-                filenames[t] = String.Format(filename_invertOutline, i.ToString());
+                filenames[t] = String.Format(filename_invertOutline, (i+1).ToString());
                 t++;
             }
 
             for (int i = 0; i < numberOfDeathFrames; i++)
             {
-                filenames[t] = String.Format(filename_deathBase, i.ToString());
+                filenames[t] = String.Format(filename_deathBase, (i+1).ToString());
                 t++;
-                filenames[t] = String.Format(filename_deathOutline, i.ToString());
+                filenames[t] = String.Format(filename_deathOutline, (i+1).ToString());
                 t++;
             }
 

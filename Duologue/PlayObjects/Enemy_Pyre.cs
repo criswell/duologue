@@ -258,7 +258,7 @@ namespace Duologue.PlayObjects
 
             for (int i = 0; i < numberOfFrames; i++)
             {
-                filenames[i] = String.Format(filename_frames, i.ToString());
+                filenames[i] = String.Format(filename_frames, (i+1).ToString());
             }
 
             filenames[numberOfFrames] = filename_face;
