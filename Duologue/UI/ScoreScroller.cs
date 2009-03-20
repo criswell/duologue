@@ -465,13 +465,13 @@ namespace Duologue.UI
                     playerText,
                     origin,
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    RenderSpriteBlendMode.AbsoluteTop);
                 Render.DrawString(
                     playerFont,
                     (lives-1).ToString(),
                     origin + new Vector2(playerTextSize.X, 0f),
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    RenderSpriteBlendMode.AbsoluteTop);
             }
             else
             {
@@ -480,23 +480,8 @@ namespace Duologue.UI
                     gameOverText,
                     origin,
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    RenderSpriteBlendMode.AbsoluteTop);
             }
-
-            // Lives
-            /*for (int i = 1; i <= lives; i++)
-            {
-                Render.Draw(
-                    life,
-                    origin + new Vector2(scoreSize.X  - (float)(i * life.Width), 0f),
-                    Vector2.Zero,
-                    null,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    0f,
-                    1f,
-                    0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
-            }*/
 
 
             // The score itself
@@ -508,7 +493,7 @@ namespace Duologue.UI
                     "0",
                     charPos,
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    RenderSpriteBlendMode.AbsoluteTop);
                 currentChar++;
             }
 
@@ -520,7 +505,7 @@ namespace Duologue.UI
                     chars.Current.ToString(),
                     charPos,
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    RenderSpriteBlendMode.AbsoluteTop);
 
                 if (scrollingScore < score &&
                     diffLength > 0 &&

@@ -181,6 +181,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_StaticGloop() : base() { }
+
         public Enemy_StaticGloop(GamePlayScreenManager manager)
             : base(manager)
         {
@@ -288,6 +293,16 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public Overrides
+        public override string[] GetFilenames()
+        {
+            return new String[]
+            {
+                filename_glooplet,
+                filename_gloopletDeath,
+                filename_static
+            };
+        }
+
         public override bool StartOffset()
         {
             offset = Vector2.Zero;

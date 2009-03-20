@@ -146,6 +146,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Construct/ Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_GloopKing() : base() { }
+
         public Enemy_GloopKing(GamePlayScreenManager manager)
             : base(manager)
         {
@@ -235,6 +240,32 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public Overrides
+        public override string[] GetFilenames()
+        {
+            String[] filenames = new String[3 + bodyFrames + deathFrames];
+
+            int t = 0;
+            filenames[t] = filename_kingBase;
+            t++;
+            filenames[t] = filename_kingEye;
+            t++;
+            filenames[t] = filename_kingShield;
+            t++;
+
+            for (int i = 0; i < bodyFrames; i++)
+            {
+                filenames[t] = String.Format(filename_kingBody, (i+1).ToString());
+                t++;
+            }
+
+            for (int i = 0; i < deathFrames; i++)
+            {
+                filenames[t] = String.Format(filename_kingDeath, (i+1).ToString());
+                t++;
+            }
+
+            return filenames;
+        }
         public override bool StartOffset()
         {
             offset = Vector2.Zero;

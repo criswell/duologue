@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using Mimicware;
+using Mimicware.Manager;
 #endregion
 
 namespace Mimicware
@@ -54,6 +56,28 @@ namespace Mimicware
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Get a localized texture
+        /// </summary>
+        /// <param name="s">The filename</param>
+        /// <returns>The localized texture</returns>
+        public Texture2D GetLocalizedTexture(string s)
+        {
+            // TODO
+            return InstanceManager.AssetManager.LoadTexture2D(s);
+        }
+
+        /// <summary>
+        /// Get a localized font
+        /// </summary>
+        /// <param name="s">Filename</param>
+        /// <returns>The localized font</returns>
+        public SpriteFont GetLocalizedFont(string s)
+        {
+            // TODO
+            return InstanceManager.AssetManager.LoadSpriteFont(s);
+        }
+
         /// <summary>
         /// Get a localized string
         /// </summary>

@@ -722,6 +722,21 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public Overrides
+        public override string[] GetFilenames()
+        {
+            /* The player object is such a bear to initialize, and yet its
+             * assets get loaded only once per game, that we're going to be
+             * lazy here and not properly pre-cache all of the player assets.
+             * Since the player is the only thing doing this, I think we
+             * should be fine. -Sam
+             */
+            return new String[]
+            {
+                filename_playerCannon,
+                filename_playerBase,
+                filename_playerLight
+            };
+        }
         /// <summary>
         /// Call to set the AssetManager
         /// </summary>
