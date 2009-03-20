@@ -18,6 +18,11 @@ namespace Duologue.Audio
         protected const string selectMenuSounds = "Content\\Audio\\SelectMenu.xsb";
         protected const string selectMenuCue = "nicStage_gso";
 
+        //Credits Song constants
+        protected const string creditsWaves = "Content\\Audio\\CreditsMenu.xwb";
+        protected const string creditsSounds = "Content\\Audio\\CreditsMenu.xsb";
+        protected const string creditsCue = "credits";
+
         //Beat Effects Song constants
         protected const string beatEffectsWaves = "Content\\Audio\\Intensity.xwb";
         protected const string beatEffectsSounds = "Content\\Audio\\Intensity.xsb";
@@ -187,6 +192,7 @@ namespace Duologue.Audio
         public Song SelectSong;
         public Song Dance8ths;
         public Song LandOfSand16ths;
+        public Song Credits;
 
         public MusicFactory(AudioManager manager)
         {
@@ -196,6 +202,10 @@ namespace Duologue.Audio
             //SelectSong
             string[] selectArr = { selectMenuCue };
             SelectSong = new Song(manager.Game, selectMenuSounds, selectMenuWaves, selectArr);
+
+            //SelectSong
+            string[] creditsArr = { creditsCue };
+            Credits = new Song(manager.Game, creditsSounds, creditsWaves, creditsArr);
 
             //Dance8ths
             string[,] D8arr = { 
@@ -248,6 +258,7 @@ namespace Duologue.Audio
             manager.Game.Components.Add(SelectSong);
             manager.Game.Components.Add(Dance8ths);
             manager.Game.Components.Add(LandOfSand16ths);
+            manager.Game.Components.Add(Credits);
         }
 
     }

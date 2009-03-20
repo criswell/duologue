@@ -13,10 +13,8 @@ namespace Duologue.Audio
     {
         private void these_are_the_cases_that_need_to_be_handled()
         {
-            //Intensity manages itself event driven
             if (Managed)
             {
-                //We don't have to do anything because it's Autolooped
                 if (null == fader)
                     fader = new VolumeChangeWidget(this);
             }
@@ -24,6 +22,8 @@ namespace Duologue.Audio
             {
                 if (null == beater)
                     beater = new BeatWidget(this, 1, 1);
+                if (null == hyper)
+                    hyper = new IntensityWidget(this, new bool[1, 1]);
             }
         }
 
@@ -31,6 +31,7 @@ namespace Duologue.Audio
         public string SoundBankName;
         public string WaveBankName;
         protected bool playing = false;
+        protected bool paused = false;
 
         /// <summary>
         /// managed implies three important things:
@@ -233,16 +234,9 @@ namespace Duologue.Audio
             playing = false;
         }
 
-        public bool Playing
-        {
-            get 
-            {
-                return playing;
-            } 
-            set 
-            { 
-            } 
-        }
+        public bool Playing { get{return playing;} set{ } }
+
+        public bool Paused { get { return paused; } set { } }
 
         public bool Managed
         {
@@ -280,9 +274,28 @@ namespace Duologue.Audio
                 {
                     fader = new VolumeChangeWidget(this);
                 }
+                for (int t = 0; t < TrackCount; t++)
+                {
+                    Tracks[t].Cues[0].ChangeVolume(Loudness.Silent);
+                }
                 fader.FadeIn();
+                //Play();
+                AudioHelper.Pause(this);
+                paused = true;
+                //for (double f = 0; f < 100000000; f++) {}
             }
-            Play();
+            if (Managed)
+            {
+                AudioHelper.Resume(this);
+                paused = false;
+                //playing = true;
+                Enabled = true;
+                //Play();
+            }
+            else
+            {
+                Play();
+            }
         }
 
         /// <summary>
@@ -292,7 +305,17 @@ namespace Duologue.Audio
         public override void Update(GameTime gameTime)
         {
             if (Managed && null != fader)
+            {
                 fader.Update(gameTime, this);
+                if (!Playing)
+                {
+                    Play();
+                    for (int t = 0; t < TrackCount; t++)
+                    {
+                        Tracks[t].Cues[0].ChangeVolume(Loudness.Silent);
+                    }
+                }
+            }
             else if (!Managed && null != beater)
                 beater.Update(gameTime, this);
             base.Update(gameTime);

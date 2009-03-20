@@ -93,9 +93,10 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            if (!ServiceLocator.GetService<AudioManager>().SongIsPlaying(SongID.SelectMenu))
+            AudioManager am = ServiceLocator.GetService<AudioManager>();
+            if (!am.SongIsPlaying(SongID.SelectMenu) && !am.SongIsPaused(SongID.SelectMenu))
             {
-                ServiceLocator.GetService<AudioManager>().FadeIn(SongID.SelectMenu);
+                am.FadeIn(SongID.SelectMenu);
             }
             if (mainGameLogo.PercentComplete < 1f)
             {

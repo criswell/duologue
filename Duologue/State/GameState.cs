@@ -16,6 +16,7 @@ namespace Duologue.State
         InfinityGame,
         ColorStateTest,
         EndCinematics,
+        Credits,
         Exit,
     }
 }

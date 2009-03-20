@@ -109,6 +109,7 @@ namespace Duologue
         public PlayerSelectScreen playerSelectScreen;
         public GamePlayScreenManager gamePlayScreenManager;
         public EndCinematicScreenManager endCinematicScreenManager;
+        public CreditsScreenManager creditsScreenManager;
 
         /// <summary>
         /// The dispatch table for game state changes
@@ -300,6 +301,11 @@ namespace Duologue
             endCinematicScreenManager = new EndCinematicScreenManager(this);
             this.Components.Add(endCinematicScreenManager);
             dispatchTable.Add(GameState.EndCinematics, endCinematicScreenManager);
+
+            // Credits screen
+            creditsScreenManager = new CreditsScreenManager(this);
+            this.Components.Add(creditsScreenManager);
+            dispatchTable.Add(GameState.Credits, creditsScreenManager);
 
             // Ensure that everything in the dispatch is disabled
             foreach (GameScreen scr in dispatchTable.Values)

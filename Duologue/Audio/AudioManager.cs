@@ -9,7 +9,7 @@ namespace Duologue.Audio
 {
 
     //the rule is: one sound bank = one song = one SongID
-    public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths }
+    public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths, Credits }
 
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
@@ -66,6 +66,7 @@ namespace Duologue.Audio
             songMap.Add(SongID.SelectMenu, music.SelectSong);
             songMap.Add(SongID.Dance8ths, music.Dance8ths);
             songMap.Add(SongID.LandOfSand16ths, music.LandOfSand16ths);
+            songMap.Add(SongID.Credits, music.Credits);
 
             base.Initialize();
         }
@@ -117,6 +118,11 @@ namespace Duologue.Audio
         public bool SongIsPlaying(SongID ID)
         {
             return songMap[ID].Playing;
+        }
+
+        public bool SongIsPaused(SongID ID)
+        {
+            return songMap[ID].Paused;
         }
 
         public double BeatPercentage()

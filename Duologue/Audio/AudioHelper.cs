@@ -148,7 +148,7 @@ namespace Duologue.Audio
             });
         }
 
-
+/*
         public static bool CueIsPlaying(string sbname, string cuename)
         {
             return cues[sbname][cuename].IsPlaying;
@@ -158,7 +158,7 @@ namespace Duologue.Audio
         {
             return cues[sbname][cuename].IsStopping;
         }
-
+*/
         public static void PlayCue(string sbname, string cueName)
         {
             Q q = new Q(sbname, cueName);
@@ -175,7 +175,6 @@ namespace Duologue.Audio
             else
             {
                 soundBanks[q.SoundBankName].PlayCue(q.CueName);
-                //PlayCue(q.SoundBankName, q.CueName);
             }
         }
 
@@ -184,6 +183,18 @@ namespace Duologue.Audio
             Play(q, true);
             cues[q.SoundBankName][q.CueName].SetVariable(volumeName, volume);
             //we *could* range limit the volume before making that call
+        }
+
+        public static void Play(Song song)
+        {
+            for (int t = 0; t < song.TrackCount; t++)
+            {
+                for (int q = 0; q < song.Tracks[t].QCount; q++)
+                {
+                    Play(song.Tracks[t].Cues[q], song.Tracks[t].Volume);
+                }
+            }
+            UpdateCues(song);
         }
 
         public static void Pause(Q q)
@@ -211,19 +222,29 @@ namespace Duologue.Audio
             RecycleCue(sbname, cueName);
         }
 
-
-        public static void Play(Song song)
+        public static void Pause(Song song)
         {
             for (int t = 0; t < song.TrackCount; t++)
             {
                 for (int q = 0; q < song.Tracks[t].QCount; q++)
                 {
-                    Play(song.Tracks[t].Cues[q], song.Tracks[t].Volume);
+                    Pause(song.Tracks[t].Cues[q]);
                 }
             }
             UpdateCues(song);
         }
 
+        public static void Resume(Song song)
+        {
+            for (int t = 0; t < song.TrackCount; t++)
+            {
+                for (int q = 0; q < song.Tracks[t].QCount; q++)
+                {
+                    Resume(song.Tracks[t].Cues[q]);
+                }
+            }
+            UpdateCues(song);
+        }
 
         /*
         protected static void Stop(Track track)

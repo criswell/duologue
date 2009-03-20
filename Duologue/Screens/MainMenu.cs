@@ -30,6 +30,7 @@ namespace Duologue.Screens
     {
         MainMenu,
         GameSelect,
+        Credits,
     }
     /// <summary>
     /// This is a game component that implements IUpdateable.
@@ -64,6 +65,7 @@ namespace Duologue.Screens
         private MainMenuState currentState;
         private Rectangle mainMenuWindowLocation;
         private Rectangle gameSelectWindowLocation;
+        private Rectangle creditsWindowLocation;
 
         /// <summary>
         /// Used for the debug sequence
@@ -208,6 +210,12 @@ namespace Duologue.Screens
                 (int)maxWidth + 2*windowOffsetX,
                 (int)maxHeight + font.LineSpacing + (int)extraLineSpacing + 2*windowOffsetY);
 
+            creditsWindowLocation = new Rectangle(
+                (int)position.X - windowOffsetX,
+                (int)position.Y - windowOffsetY,
+                (int)maxWidth + 2 * windowOffsetX,
+                (int)maxHeight + font.LineSpacing + (int)extraLineSpacing + 2 * windowOffsetY);
+
             mainMenuWindowLocation = new Rectangle(
                 (int)position.X - windowOffsetX,
                 (int)position.Y - windowOffsetY,
@@ -231,6 +239,13 @@ namespace Duologue.Screens
                     LocalInstanceManager.WindowManager.SetLocation(gameSelectWindowLocation);
                     currentSelection = 0;
                     ResetMenuItems();
+                }
+                else if (currentSelection == menuCredits)
+                {
+                    currentState = MainMenuState.Credits;
+                    LocalInstanceManager.CurrentGameState = GameState.Credits;
+                    LocalInstanceManager.WindowManager.SetLocation(creditsWindowLocation);
+                    LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
                 }
             }
             else
@@ -468,6 +483,11 @@ namespace Duologue.Screens
 
             if (currentState == MainMenuState.MainMenu)
                 InnerUpdate(mainMenuItems);
+            else if (currentState == MainMenuState.Credits)
+            {
+                if (CheckButtonB())
+                    currentState = MainMenuState.MainMenu;
+            }
             else
             {
                 if (CheckButtonB())
@@ -526,8 +546,10 @@ namespace Duologue.Screens
 
             if (currentState == MainMenuState.MainMenu)
                 DrawMenu(mainMenuItems, gameTime);
-            else
+            else if (currentState == MainMenuState.GameSelect)
                 DrawMenu(gameSelectItems, gameTime);
+            else if (currentState == MainMenuState.Credits)
+            { } //shrug
             base.Draw(gameTime);
         }
         #endregion
