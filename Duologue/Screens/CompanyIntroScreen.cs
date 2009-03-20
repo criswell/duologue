@@ -75,6 +75,8 @@ namespace Duologue.Screens
         private Vector2 center_Logo;
         private Vector2 center_Motto;
         private Vector2 center_Copyright;
+        private Vector2 center_Legal1;
+        private Vector2 center_Legal2;
         private Vector2 scale_Blank;
 
         private Vector2 position_Logo;
@@ -151,8 +153,16 @@ namespace Duologue.Screens
             center_Copyright = new Vector2(
                 copyrightSize.X / 2f, copyrightSize.Y / 2f);
 
+            Vector2 legalSize = font.MeasureString(Resources.Intro_Legal1);
+            center_Legal1 = new Vector2(
+                legalSize.X / 2f, legalSize.Y / 2f);
+            legalSize = font.MeasureString(Resources.Intro_Legal2);
+            center_Legal2 = new Vector2(
+                legalSize.X / 2f, legalSize.Y / 2f);
+
             totalHeight = (float)texture_Logo.Height + spacing_Motto +
-                (float)texture_Motto.Height + spacing_Copyright + (float)copyrightSize.Y;
+                (float)texture_Motto.Height + spacing_Copyright + (float)copyrightSize.Y +
+                loadingPadding + 2f * legalSize.Y;
 
             loadingSize = font.MeasureString(Resources.Intro_Loading);
             position_Loading = Vector2.Zero;
@@ -400,6 +410,25 @@ namespace Duologue.Screens
                 Vector2.One,
                 center_Copyright,
                 RenderSpriteBlendMode.AlphaBlend);
+
+            InstanceManager.RenderSprite.DrawString(
+                font,
+                Resources.Intro_Legal1,
+                position_Copyright + loadingPadding * Vector2.UnitY + center_Legal1.Y * Vector2.UnitY,
+                textColor,
+                Vector2.One,
+                center_Legal1,
+                RenderSpriteBlendMode.AlphaBlend);
+
+            InstanceManager.RenderSprite.DrawString(
+                font,
+                Resources.Intro_Legal2,
+                position_Copyright + loadingPadding * Vector2.UnitY + 2*center_Legal1.Y * Vector2.UnitY +
+                        center_Legal2.Y * Vector2.UnitY,
+                textColor,
+                Vector2.One,
+                center_Legal2,
+                RenderSpriteBlendMode.AlphaBlend);
         }
 
         private void Draw_Black()
@@ -462,6 +491,25 @@ namespace Duologue.Screens
                 new Color(textColor, 1f - (float)(timeSinceSwitch / delta_ScreenFadeOut)),
                 Vector2.One,
                 center_Copyright,
+                RenderSpriteBlendMode.AlphaBlend);
+
+            InstanceManager.RenderSprite.DrawString(
+                font,
+                Resources.Intro_Legal1,
+                position_Copyright + loadingPadding * Vector2.UnitY + center_Legal1.Y * Vector2.UnitY,
+                new Color(textColor, 1f - (float)(timeSinceSwitch / delta_ScreenFadeOut)),
+                Vector2.One,
+                center_Legal1,
+                RenderSpriteBlendMode.AlphaBlend);
+
+            InstanceManager.RenderSprite.DrawString(
+                font,
+                Resources.Intro_Legal2,
+                position_Copyright + loadingPadding * Vector2.UnitY + 2 * center_Legal1.Y * Vector2.UnitY +
+                        center_Legal2.Y * Vector2.UnitY,
+                new Color(textColor, 1f - (float)(timeSinceSwitch / delta_ScreenFadeOut)),
+                Vector2.One,
+                center_Legal2,
                 RenderSpriteBlendMode.AlphaBlend);
         }
         #endregion

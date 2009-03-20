@@ -138,6 +138,12 @@
   <data name="Intro_Copyright" xml:space="preserve">
     <value>Copyright © 2009 Funavision, Inc. All rights reserved.</value>
   </data>
+  <data name="Intro_Legal1" xml:space="preserve">
+    <value>Contains game assets released under Creative Commons and Microsoft Public Licenses.</value>
+  </data>
+  <data name="Intro_Legal2" xml:space="preserve">
+    <value>Powered by the Mimicware Engine. See game credits for more details.</value>
+  </data>
   <data name="Intro_Loading" xml:space="preserve">
     <value>Loading...</value>
   </data>

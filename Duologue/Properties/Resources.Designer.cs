@@ -124,6 +124,24 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contains game assets released under Creative Commons and Microsoft Public Licenses..
+        /// </summary>
+        internal static string Intro_Legal1 {
+            get {
+                return ResourceManager.GetString("Intro_Legal1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Powered by the Mimicware Engine. See game credits for more details..
+        /// </summary>
+        internal static string Intro_Legal2 {
+            get {
+                return ResourceManager.GetString("Intro_Legal2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         internal static string Intro_Loading {
