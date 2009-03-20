@@ -471,6 +471,10 @@ namespace Duologue.Screens
         {
             timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
 
+            if (InstanceManager.InputManager.NewButtonPressed(Buttons.A) ||
+                InstanceManager.InputManager.NewButtonPressed(Buttons.Start))
+                timeSinceSwitch = maxDelta;
+
             switch(myState)
             {
                 case IntroState.Black:
