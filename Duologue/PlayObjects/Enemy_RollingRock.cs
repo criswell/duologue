@@ -76,6 +76,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public overrides
+        public override string[] GetFilenames()
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool StartOffset()
         {
             throw new NotImplementedException();

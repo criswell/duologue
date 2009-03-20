@@ -471,6 +471,32 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public overrides
+        public override String[] GetFilenames()
+        {
+            String[] filenames = new String[3*numberOfDeathFrames + 2*numberOfWalkingFrames];
+
+            int t = 0;
+            for (int i = 0; i < numberOfWalkingFrames; i++)
+            {
+                filenames[t] = String.Format(filename_base, i.ToString());
+                t++;
+                filenames[t] = String.Format(filename_outline, i.ToString());
+                t++;
+                filenames[t] = String.Format(filename_invertOutline, i.ToString());
+                t++;
+            }
+
+            for (int i = 0; i < numberOfDeathFrames; i++)
+            {
+                filenames[t] = String.Format(filename_deathBase, i.ToString());
+                t++;
+                filenames[t] = String.Format(filename_deathOutline, i.ToString());
+                t++;
+            }
+
+            return filenames;
+        }
+
         public override bool StartOffset()
         {
             if (CurrentState != WigglesState.Dying && CurrentState != WigglesState.Fading)

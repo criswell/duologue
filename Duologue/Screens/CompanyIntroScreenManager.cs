@@ -35,19 +35,28 @@ namespace Duologue.Screens
         #endregion
 
         #region Fields
+        private CompanyIntroScreen introScreen;
         #endregion 
 
         #region Properties
         #endregion
 
         #region Constructor / Init
-        public CompanyIntroScreenManager(Game game)
+        public CompanyIntroScreenManager(Game game) : base(game)
         {
+            introScreen = new CompanyIntroScreen(game, this);
+            game.Components.Add(introScreen);
+            introScreen.DrawOrder = 200;
+            introScreen.Enabled = false;
+            introScreen.Visible = false;
         }
 
         protected override void InitializeConstants()
         {
-            throw new NotImplementedException();
+            MyComponents.Add(introScreen);
+
+            this.SetEnable(false);
+            this.SetVisible(false);
         }
         #endregion
 
@@ -62,10 +71,10 @@ namespace Duologue.Screens
         #endregion
 
         #region Update
-        public override void Update(GameTime gameTime)
+        /*public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-        }
+        }*/
         #endregion
     }
 }

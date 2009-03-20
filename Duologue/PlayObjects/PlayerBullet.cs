@@ -157,6 +157,15 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public Overrides
+        public override String[] GetFilenames()
+        {
+            return new String[]
+            {
+                filename_ShotBase,
+                filename_ShotHighlight
+            };
+        }
+
         public override bool StartOffset()
         {
             // For now, this does nothing (might always do nothing)

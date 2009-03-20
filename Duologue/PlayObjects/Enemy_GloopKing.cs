@@ -240,6 +240,40 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public Overrides
+        public override string[] GetFilenames()
+        {
+            String[] filenames = new String[3 + bodyFrames + deathFrames];
+            /*private const string filename_kingBase = "Enemies/gloop/king-gloop-base";
+            private const string filename_kingEye = "Enemies/gloop/king-gloop-eye";
+            private const string filename_kingShield = "Enemies/gloop/king-gloop-shield";
+            private const string filename_kingBody = "Enemies/gloop/king-gloop-{0}";
+            private const string filename_kingDeath = "Enemies/gloop/king-gloop-death-{0}";
+
+            private const int bodyFrames = 7;
+            private const int deathFrames = 5;*/
+
+            int t = 0;
+            filenames[t] = filename_kingBase;
+            t++;
+            filenames[t] = filename_kingEye;
+            t++;
+            filenames[t] = filename_kingShield;
+            t++;
+
+            for (int i = 0; i < bodyFrames; i++)
+            {
+                filenames[t] = String.Format(filename_kingBody, i.ToString());
+                t++;
+            }
+
+            for (int i = 0; i < deathFrames; i++)
+            {
+                filenames[t] = String.Format(filename_kingDeath, i.ToString());
+                t++;
+            }
+
+            return filenames;
+        }
         public override bool StartOffset()
         {
             offset = Vector2.Zero;

@@ -324,6 +324,20 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Overrides
+        public override string[] GetFilenames()
+        {
+            String[] filenames = new String[numberOfFrames + 1];
+
+            for (int i = 0; i < numberOfFrames; i++)
+            {
+                filenames[i] = String.Format(filename_frames, i.ToString());
+            }
+
+            filenames[numberOfFrames - 1] = filename_Ember;
+
+            return filenames;
+        }
+
         public override bool StartOffset()
         {
             offset = Vector2.Zero;

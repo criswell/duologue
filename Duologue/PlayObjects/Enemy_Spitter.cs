@@ -576,6 +576,31 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public Overrides
+        public override string[] GetFilenames()
+        {
+            String[] filenames = new String[2 * maxAnimationFrames + maxSpitFrames + 1];
+
+            int t = 0;
+            filenames[t] = filename_spawnExplode;
+            t++;
+
+            for (int i = 0; i < maxAnimationFrames; i++)
+            {
+                filenames[t] = String.Format(filename_base, i.ToString());
+                t++;
+                filenames[t] = String.Format(filename_outline, i.ToString());
+                t++;
+            }
+
+            for (int i = 0; i < maxSpitFrames; i++)
+            {
+                filenames[t] = String.Format(filename_spit, i.ToString());
+                t++;
+            }
+
+            return filenames;
+        }
+
         public override bool StartOffset()
         {
             offset = Vector2.Zero;
