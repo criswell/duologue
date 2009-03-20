@@ -177,7 +177,6 @@ namespace Duologue.Screens
         {
             if (currentFilenameIndex < currentFilenames.Length)
             {
-                Console.WriteLine(currentFilenames[currentFilenameIndex]);
                 // pre-cache next image
                 tempTexture =
                     InstanceManager.AssetManager.LoadTexture2D(currentFilenames[currentFilenameIndex]);
@@ -187,7 +186,6 @@ namespace Duologue.Screens
             {
                 if (currentPlayObjectIndex < playObjects.Length)
                 {
-                    Console.WriteLine(playObjects[currentPlayObjectIndex].ToString());
                     // load up the next play object
                     SetCurrentFilenames();
                 }
@@ -262,18 +260,18 @@ namespace Duologue.Screens
             // Font stuff
             LocalInstanceManager.Spinner.DisplayFont = loadingFont;
             LocalInstanceManager.Spinner.DisplayText = Resources.Intro_Loading;
-            LocalInstanceManager.Spinner.FontColor = Color.Sienna;
-            LocalInstanceManager.Spinner.FontShadowColor = Color.SandyBrown;
+            LocalInstanceManager.Spinner.FontColor = Color.AntiqueWhite;
+            LocalInstanceManager.Spinner.FontShadowColor = Color.DarkGray;
 
             // Spinner colors
-            LocalInstanceManager.Spinner.BaseColor = Color.Moccasin;
-            LocalInstanceManager.Spinner.TrackerColor = Color.Peru;
+            LocalInstanceManager.Spinner.BaseColor = Color.SlateBlue;
+            LocalInstanceManager.Spinner.TrackerColor = Color.SkyBlue;
             
             // Location and scale
             position_Loading = new Vector2(
-                (float)InstanceManager.DefaultViewport.TitleSafeArea.Width - loadingSize.X / 2f,
+                (float)InstanceManager.DefaultViewport.TitleSafeArea.Width - loadingSize.X,
                 (float)InstanceManager.DefaultViewport.TitleSafeArea.Height -
-                    loadingSize.Y / 2f - loadingPadding);
+                    loadingSize.Y - 2f*loadingPadding);
             LocalInstanceManager.Spinner.Position = position_Loading;
             LocalInstanceManager.Spinner.Scale = Vector2.One;
 
