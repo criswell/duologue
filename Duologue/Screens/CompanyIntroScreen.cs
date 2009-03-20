@@ -280,7 +280,7 @@ namespace Duologue.Screens
             LocalInstanceManager.Spinner.DisplayFont = loadingFont;
             LocalInstanceManager.Spinner.DisplayText = Resources.Intro_Loading;
             LocalInstanceManager.Spinner.FontColor = Color.AntiqueWhite;
-            LocalInstanceManager.Spinner.FontShadowColor = Color.DarkGray;
+            LocalInstanceManager.Spinner.FontShadowColor = Color.DarkBlue;
 
             // Spinner colors
             LocalInstanceManager.Spinner.BaseColor = Color.SlateBlue;
