@@ -44,10 +44,10 @@ namespace Duologue.Screens
         private const float spacing_Motto = 15f;
         private const float spacing_Copyright = 200f;
 
-        private const double delta_LogoFadeIn = 0.2;
-        private const double delta_Stabilize = 0.01;
-        private const double delta_MottoFadeIn = 0.1;
-        private const double delta_Wait = 0.5;
+        private const double delta_LogoFadeIn = 1.0;
+        private const double delta_Stabilize = 0.5;
+        private const double delta_MottoFadeIn = 0.8;
+        private const double delta_Wait = 1.5;
 
         private const float minLogoSize = 0.8f;
         private const float maxLogoSize = 1.1f;
@@ -324,7 +324,7 @@ namespace Duologue.Screens
                 null,
                 new Color(textColor, (float)(timeSinceSwitch / delta_Stabilize)),
                 0f,
-                minLogoSize - deltaSize * (float)(timeSinceSwitch / delta_Stabilize),
+                maxLogoSize - deltaSize * (float)(timeSinceSwitch / delta_Stabilize),
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
         }
