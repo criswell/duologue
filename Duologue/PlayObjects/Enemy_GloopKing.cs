@@ -243,14 +243,6 @@ namespace Duologue.PlayObjects
         public override string[] GetFilenames()
         {
             String[] filenames = new String[3 + bodyFrames + deathFrames];
-            /*private const string filename_kingBase = "Enemies/gloop/king-gloop-base";
-            private const string filename_kingEye = "Enemies/gloop/king-gloop-eye";
-            private const string filename_kingShield = "Enemies/gloop/king-gloop-shield";
-            private const string filename_kingBody = "Enemies/gloop/king-gloop-{0}";
-            private const string filename_kingDeath = "Enemies/gloop/king-gloop-death-{0}";
-
-            private const int bodyFrames = 7;
-            private const int deathFrames = 5;*/
 
             int t = 0;
             filenames[t] = filename_kingBase;

@@ -1427,8 +1427,8 @@
   <ItemGroup>
     <Compile Include="Fonts\deja-vu-serif-12.png">
       <Name>deja-vu-serif-12</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontTextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
