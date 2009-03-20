@@ -26,11 +26,15 @@ namespace Duologue.Screens
 {
     public enum IntroState
     {
+        Black,
+        ScreenFadeIn,
         LogoFadeIn,
         Stablize,
         MottoFadeIn,
         Wait,
-        Loading
+        Loading,
+        FadeOut,
+        Blank
     }
 
     public class CompanyIntroScreen : DrawableGameComponent
@@ -40,6 +44,7 @@ namespace Duologue.Screens
         private const string filename_Logo = "funavision-logo";
         private const string filename_Motto = "funavision-motto";
         private const string filename_LoadingFont = "Fonts\\inero-28";
+        private const string filename_Blank = "Mimicware/blank";
 
         private const float spacing_Motto = 15f;
         private const float spacing_Copyright = 200f;
@@ -48,6 +53,12 @@ namespace Duologue.Screens
         private const double delta_Stabilize = 0.5;
         private const double delta_MottoFadeIn = 0.8;
         private const double delta_Wait = 1.5;
+        private const double delta_ScreenBlack = 0.5;
+        private const double delta_ScreenFadeIn = 1.0;
+        private const double delta_ScreenFadeOut = 1.0;
+        private const double delta_Blank = 0.5;
+
+        private const double maxDelta = 99;
 
         private const float minLogoSize = 0.8f;
         private const float maxLogoSize = 1.1f;
@@ -60,9 +71,11 @@ namespace Duologue.Screens
         private SpriteFont loadingFont;
         private Texture2D texture_Logo;
         private Texture2D texture_Motto;
+        private Texture2D texture_Blank;
         private Vector2 center_Logo;
         private Vector2 center_Motto;
         private Vector2 center_Copyright;
+        private Vector2 scale_Blank;
 
         private Vector2 position_Logo;
         private Vector2 position_Motto;
@@ -127,6 +140,7 @@ namespace Duologue.Screens
             loadingFont = InstanceManager.Localization.GetLocalizedFont(filename_LoadingFont);
             texture_Logo = InstanceManager.AssetManager.LoadTexture2D(filename_Logo);
             texture_Motto = InstanceManager.Localization.GetLocalizedTexture(filename_Motto);
+            texture_Blank = InstanceManager.AssetManager.LoadTexture2D(filename_Blank);
 
             center_Logo = new Vector2(
                 texture_Logo.Width / 2f, texture_Logo.Height / 2f);
@@ -143,7 +157,7 @@ namespace Duologue.Screens
             loadingSize = font.MeasureString(Resources.Intro_Loading);
             position_Loading = Vector2.Zero;
 
-            myState = IntroState.LogoFadeIn;
+            myState = IntroState.Black;
             timeSinceSwitch = 0;
 
             position_Logo = Vector2.Zero;
@@ -170,10 +184,14 @@ namespace Duologue.Screens
             position_Copyright = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f,
                 position_Motto.Y + center_Motto.Y + spacing_Copyright + center_Copyright.Y);
+
+            scale_Blank = new Vector2(
+                (float)InstanceManager.DefaultViewport.Width,
+                (float)InstanceManager.DefaultViewport.Height);
         }
 
 
-        private void LoadData(double timeSinceSwitch)
+        private void LoadData(double currentTimer)
         {
             if (currentFilenameIndex < currentFilenames.Length)
             {
@@ -191,9 +209,10 @@ namespace Duologue.Screens
                 }
                 else
                 {
-                    // We're all done, ext
+                    // We're all done
                     VoidSpinner();
-                    myManager.Exit();
+                    timeSinceSwitch = 0;
+                    myState = IntroState.FadeOut;
                 }
             }
         }
@@ -382,6 +401,69 @@ namespace Duologue.Screens
                 center_Copyright,
                 RenderSpriteBlendMode.AlphaBlend);
         }
+
+        private void Draw_Black()
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Blank,
+                Vector2.Zero,
+                Vector2.Zero,
+                null,
+                Color.Black,
+                0f,
+                scale_Blank,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
+
+
+        private void Draw_ScreenFadeIn()
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Blank,
+                Vector2.Zero,
+                Vector2.Zero,
+                null,
+                new Color(Color.Black, 1f - (float)(timeSinceSwitch / delta_ScreenBlack)),
+                0f,
+                scale_Blank,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+        }
+
+        private void Draw_FadeOut()
+        {
+            InstanceManager.RenderSprite.Draw(
+                texture_Logo,
+                position_Logo,
+                center_Logo,
+                null,
+                new Color(textColor, 1f-(float)(timeSinceSwitch/delta_ScreenFadeOut)),
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlend);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Motto,
+                position_Motto,
+                center_Motto,
+                null,
+                new Color(textColor, 1f - (float)(timeSinceSwitch / delta_ScreenFadeOut)),
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlend);
+
+            InstanceManager.RenderSprite.DrawString(
+                font,
+                Resources.Intro_Copyright,
+                position_Copyright,
+                new Color(textColor, 1f - (float)(timeSinceSwitch / delta_ScreenFadeOut)),
+                Vector2.One,
+                center_Copyright,
+                RenderSpriteBlendMode.AlphaBlend);
+        }
         #endregion
 
         #region Draw/Update
@@ -391,6 +473,20 @@ namespace Duologue.Screens
 
             switch(myState)
             {
+                case IntroState.Black:
+                    if (timeSinceSwitch > delta_ScreenBlack)
+                    {
+                        timeSinceSwitch = 0;
+                        myState = IntroState.ScreenFadeIn;
+                    }
+                    break;
+                case IntroState.ScreenFadeIn:
+                    if (timeSinceSwitch > delta_ScreenFadeIn)
+                    {
+                        timeSinceSwitch = 0;
+                        myState = IntroState.LogoFadeIn;
+                    }
+                    break;
                 case IntroState.LogoFadeIn:
                     if(timeSinceSwitch > delta_LogoFadeIn)
                     {
@@ -424,6 +520,20 @@ namespace Duologue.Screens
                         myState = IntroState.Loading;
                     }
                     break;
+                case IntroState.FadeOut:
+                    if (timeSinceSwitch > delta_ScreenFadeOut)
+                    {
+                        timeSinceSwitch = 0;
+                        myState = IntroState.Blank;
+                    }
+                    break;
+                case IntroState.Blank:
+                    if (timeSinceSwitch > delta_Blank)
+                    {
+                        timeSinceSwitch = delta_Blank;
+                        myManager.Exit();
+                    }
+                    break;
                 default:
                     // Default is loading
                     LoadData(timeSinceSwitch);
@@ -440,6 +550,12 @@ namespace Duologue.Screens
 
             switch (myState)
             {
+                case IntroState.Black:
+                    Draw_Black();
+                    break;
+                case IntroState.ScreenFadeIn:
+                    Draw_ScreenFadeIn();
+                    break;
                 case IntroState.LogoFadeIn:
                     Draw_LogoFadeIn();
                     break;
@@ -454,6 +570,12 @@ namespace Duologue.Screens
                     Draw_Logo();
                     Draw_Motto();
                     Draw_Copyright();
+                    break;
+                case IntroState.FadeOut:
+                    Draw_FadeOut();
+                    break;
+                case IntroState.Blank:
+                    // NADA
                     break;
                 default:
                     Draw_Logo();
