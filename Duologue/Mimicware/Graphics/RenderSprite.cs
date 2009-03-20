@@ -718,6 +718,7 @@ namespace Mimicware.Graphics
 
                 batch.End();
             }
+            absoluteTop.Clear();
         }
         #endregion
     }
