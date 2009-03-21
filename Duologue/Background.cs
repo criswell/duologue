@@ -27,6 +27,8 @@ namespace Duologue
         public int Intensity;
         public Color Tint;
         public bool MotionPositive;
+        public bool Clouds;
+        public bool Debris;
     }
 
     /// <summary>
@@ -56,6 +58,12 @@ namespace Duologue
 
         // Parallax items
         private Texture2D[] texture_Clouds;
+        private ParallaxElement currentBottomParallax;
+        private ParallaxElement lastBottomParallax;
+        private bool bottomParallaxChange;
+        private ParallaxElement currentTopParallax;
+        private ParallaxElement lastTopParallax;
+        private bool topParallaxChange;
         #endregion
 
         #region Properties
