@@ -123,6 +123,11 @@ namespace Duologue
                 center[i] = new Vector2(backgrounds[i].Width / 2f, backgrounds[i].Height / 2f);
             }
 
+            for (int i = 0; i < numClouds; i++)
+            {
+                texture_Clouds[i] = assets.LoadTexture2D(String.Format(filename_Cloud, i + 1));
+            }
+
             currentBackground = 0;
             lastBackground = numBackgrounds - 1;
             TransitionTime = 0.5f;
