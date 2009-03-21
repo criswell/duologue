@@ -40,6 +40,7 @@ namespace Duologue.Screens
         private SpriteFont font;
 
         private Vector2 pos;
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -50,6 +51,12 @@ namespace Duologue.Screens
             : base(game)
         {
             myManager = manager;
+        }
+
+        public override void Initialize()
+        {
+            audio = ServiceLocator.GetService<AudioManager>();
+            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -63,12 +70,6 @@ namespace Duologue.Screens
         #region Update / Draw
         public override void Update(GameTime gameTime)
         {
-            AudioManager am = ServiceLocator.GetService<AudioManager>();
-            if (!am.SongIsPlaying(SongID.Credits) && !am.SongIsPaused(SongID.Credits))
-            {
-                am.PauseSong(SongID.SelectMenu);
-                am.FadeIn(SongID.Credits);
-            }
             base.Update(gameTime);
         }
 
@@ -84,23 +85,22 @@ namespace Duologue.Screens
 
         protected override void OnEnabledChanged(object sender, EventArgs args)
         {
-            AudioManager am = ServiceLocator.GetService<AudioManager>();
-            if (null != am)
+            if (null != audio)
             {
                 if (Enabled)
                 {
-                    if (am.SongIsPaused(SongID.Credits))
+                    if (audio.SongIsPaused(SongID.Credits))
                     {
-                        am.ResumeSong(SongID.Credits);
+                        audio.ResumeSong(SongID.Credits);
                     }
                     else
                     {
-                        am.FadeIn(SongID.Credits);
+                        audio.FadeIn(SongID.Credits);
                     }
                 }
                 else
                 {
-                    am.PauseSong(SongID.Credits);
+                    audio.PauseSong(SongID.Credits);
                 }
             }
             base.OnEnabledChanged(sender, args);

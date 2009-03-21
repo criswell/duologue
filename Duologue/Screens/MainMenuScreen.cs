@@ -36,6 +36,7 @@ namespace Duologue.Screens
         private MainGameLogo mainGameLogo;
         private MainMenu mainMenu;
         private float timeSinceStart;
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -59,6 +60,7 @@ namespace Duologue.Screens
         /// </summary>
         public override void Initialize()
         {
+            audio = ServiceLocator.GetService<AudioManager>();
             base.Initialize();
         }
         #endregion
@@ -116,23 +118,22 @@ namespace Duologue.Screens
 
         protected override void OnEnabledChanged(object sender, EventArgs args)
         {
-            AudioManager am = ServiceLocator.GetService<AudioManager>();
-            if (null != am)
+            if (null != audio)
             {
                 if (Enabled)
                 {
-                    if (am.SongIsPaused(SongID.SelectMenu))
+                    if (audio.SongIsPaused(SongID.SelectMenu))
                     {
-                        am.ResumeSong(SongID.SelectMenu);
+                        audio.ResumeSong(SongID.SelectMenu);
                     }
                     else
                     {
-                        am.FadeIn(SongID.SelectMenu);
+                        audio.FadeIn(SongID.SelectMenu);
                     }
                 }
                 else
                 {
-                    am.PauseSong(SongID.SelectMenu);
+                    audio.PauseSong(SongID.SelectMenu);
                 }
             }
             base.OnEnabledChanged(sender, args);
