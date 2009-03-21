@@ -30,6 +30,7 @@ namespace Duologue.Audio
 
         protected static string engineFileName;
         protected static AudioEngine engine;
+        protected static AudioCategory musicCategory;
 
         // These SoundBanks are where we pull new copies of Cues. We don't play them there.
         protected static Dictionary<string, SoundBank> soundBanks = new Dictionary<string, SoundBank>();
@@ -57,6 +58,8 @@ namespace Duologue.Audio
             TimeSpan lookahead = new TimeSpan(ticks); // tick is ten to the -10 seconds
             engineFileName = engineName;
             engine = new AudioEngine(engineFileName, lookahead, Guid.Empty);
+            musicCategory = engine.GetCategory("Music");
+            musicCategory.SetVolume(0.1f);
         }
 
         protected static void ProcessPlayedCues()
