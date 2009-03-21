@@ -46,8 +46,9 @@ namespace Duologue.Screens
         private const string filename_LoadingFont = "Fonts\\inero-28";
         private const string filename_Blank = "Mimicware/blank";
 
+        private const float spacing_LogoStart = -40f;
         private const float spacing_Motto = 15f;
-        private const float spacing_Copyright = 200f;
+        private const float spacing_Copyright = 100f;
 
         private const double delta_LogoFadeIn = 1.0;
         private const double delta_Stabilize = 0.5;
@@ -184,7 +185,7 @@ namespace Duologue.Screens
         private void SetPositions()
         {
             position_Logo = new Vector2(
-                InstanceManager.DefaultViewport.Width / 2f,
+                InstanceManager.DefaultViewport.Width / 2f, spacing_LogoStart +
                 InstanceManager.DefaultViewport.Height / 2f - totalHeight / 2f + center_Logo.Y);
 
             position_Motto = new Vector2(
