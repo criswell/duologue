@@ -22,13 +22,23 @@ using Mimicware.Fx;
 
 namespace Duologue
 {
+    public struct ParallaxElement
+    {
+        public int Intensity;
+        public Color Tint;
+        public bool MotionPositive;
+    }
+
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class Background : Microsoft.Xna.Framework.DrawableGameComponent
+    public class Background : DrawableGameComponent
     {
         #region Constants
+        private const string filename_Background = "background-{0:00}";
+        private const string filename_Cloud = "Background/clouds-{0:D2}";
         private const int numBackgrounds = 5;
+        private const int numClouds = 2;
         #endregion
 
         #region Fields
@@ -43,6 +53,9 @@ namespace Duologue
         private Color lastColor;
         private Color currentColor;
         private float timeSinceTransitionRequest;
+
+        // Parallax items
+        private Texture2D[] texture_Clouds;
         #endregion
 
         #region Properties
@@ -98,7 +111,7 @@ namespace Duologue
 
             for (int i = 0; i < numBackgrounds; i++)
             {
-                backgrounds[i] = assets.LoadTexture2D(String.Format("background-{0:00}", i+1));
+                backgrounds[i] = assets.LoadTexture2D(String.Format(filename_Background, i+1));
                 center[i] = new Vector2(backgrounds[i].Width / 2f, backgrounds[i].Height / 2f);
             }
 
