@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Mimicware;
 
 
 namespace Duologue.Audio
@@ -59,7 +60,7 @@ namespace Duologue.Audio
             engineFileName = engineName;
             engine = new AudioEngine(engineFileName, lookahead, Guid.Empty);
             musicCategory = engine.GetCategory("Music");
-            musicCategory.SetVolume(0.1f);
+            musicCategory.SetVolume(0.5f);
         }
 
         protected static void ProcessPlayedCues()
@@ -266,6 +267,13 @@ namespace Duologue.Audio
                 });
         }
         */
+
+        public static void SetMusicVolume(float vol)
+        {
+            float volume = MWMathHelper.LimitToRange(vol, 0f, 1f);
+            musicCategory.SetVolume(volume);
+        }
+
 
         public static void UpdateCues(Song song)
         {
