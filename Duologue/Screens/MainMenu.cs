@@ -30,7 +30,6 @@ namespace Duologue.Screens
     {
         MainMenu,
         GameSelect,
-        Credits,
     }
     /// <summary>
     /// This is a game component that implements IUpdateable.
@@ -242,9 +241,7 @@ namespace Duologue.Screens
                 }
                 else if (currentSelection == menuCredits)
                 {
-                    currentState = MainMenuState.Credits;
                     LocalInstanceManager.CurrentGameState = GameState.Credits;
-                    LocalInstanceManager.WindowManager.SetLocation(creditsWindowLocation);
                     LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
                 }
             }
@@ -483,11 +480,6 @@ namespace Duologue.Screens
 
             if (currentState == MainMenuState.MainMenu)
                 InnerUpdate(mainMenuItems);
-            else if (currentState == MainMenuState.Credits)
-            {
-                if (CheckButtonB())
-                    currentState = MainMenuState.MainMenu;
-            }
             else
             {
                 if (CheckButtonB())
@@ -548,8 +540,6 @@ namespace Duologue.Screens
                 DrawMenu(mainMenuItems, gameTime);
             else if (currentState == MainMenuState.GameSelect)
                 DrawMenu(gameSelectItems, gameTime);
-            else if (currentState == MainMenuState.Credits)
-            { } //shrug
             base.Draw(gameTime);
         }
         #endregion

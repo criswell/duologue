@@ -214,6 +214,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_UncleanRot() : base() { }
+
         public Enemy_UncleanRot(GamePlayScreenManager manager)
             : base(manager)
         {
@@ -320,6 +325,36 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public overrides
+        public override string[] GetFilenames()
+        {
+            String[] filenames = new String[3*numFrames_Body + numFrames_Static + numFrames_Tongue];
+
+            int t = 0;
+
+            for (int i = 0; i < numFrames_Body; i++)
+            {
+                filenames[t] = String.Format(filename_Base, (i + 1).ToString());
+                t++;
+                filenames[t] = String.Format(filename_Outline, (i + 1).ToString());
+                t++;
+                filenames[t] = String.Format(filename_Skullcap, (i + 1).ToString());
+                t++;
+            }
+
+            for (int i = 0; i < numFrames_Tongue; i++)
+            {
+                filenames[t] = String.Format(filename_OutlineTongue, (i + 1).ToString());
+                t++;
+            }
+
+            for (int i = 0; i < numFrames_Static; i++)
+            {
+                filenames[t] = String.Format(filename_Static, (i + 1));
+                t++;
+            }
+
+            return filenames;
+        }
         public override bool StartOffset()
         {
             offset = Vector2.Zero;

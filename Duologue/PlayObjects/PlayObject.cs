@@ -168,6 +168,11 @@ namespace Duologue.PlayObjects
         public abstract bool ApplyOffset();
 
         /// <summary>
+        /// Get the filenames for the images I need to have pre-cached
+        /// </summary>
+        public abstract String[] GetFilenames();
+
+        /// <summary>
         /// Triggers a hit between objects
         /// </summary>
         /// <param name="pobj"></param>

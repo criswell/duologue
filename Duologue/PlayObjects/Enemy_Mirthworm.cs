@@ -109,6 +109,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor/Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Mirthworm() : base() { }
+
         public Enemy_Mirthworm(GamePlayScreenManager manager)
             : base(manager)
         {
@@ -209,6 +214,15 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public overrides
+        public override string[] GetFilenames()
+        {
+            return new String[]
+            {
+                filename_Death,
+                filename_Glooplet,
+                filename_Highlight
+            };
+        }
         public override bool StartOffset()
         {
             offset = Vector2.Zero;

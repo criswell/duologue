@@ -141,6 +141,13 @@ namespace Duologue.PlayObjects
             RealSize = new Vector2(85, 87);
         }
 
+        /// <summary>
+        /// Empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Buzzsaw() : base()
+        {
+        }
+
         public override void Initialize(
             Vector2 startPos,
             Vector2 startOrientation,
@@ -271,6 +278,16 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public overrides
+        public override string[] GetFilenames()
+        {
+            return new String[]
+            {
+                filename_base,
+                filename_blades,
+                filename_shine
+            };
+        }
+
         public override bool StartOffset()
         {
             offset = Vector2.Zero;

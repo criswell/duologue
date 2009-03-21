@@ -18,5 +18,6 @@ namespace Duologue.State
         EndCinematics,
         Credits,
         Exit,
+        CompanyIntro,
     }
 }

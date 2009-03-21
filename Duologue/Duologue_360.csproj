@@ -104,6 +104,7 @@
     <Compile Include="PlayObjects\Enemy_GloopKing.cs" />
     <Compile Include="PlayObjects\Enemy_Mirthworm.cs" />
     <Compile Include="PlayObjects\Enemy_Pyre.cs" />
+    <Compile Include="PlayObjects\Enemy_RollingRock.cs" />
     <Compile Include="PlayObjects\Enemy_Spitter.cs" />
     <Compile Include="PlayObjects\Enemy_StaticGloop.cs" />
     <Compile Include="PlayObjects\Enemy_UncleanRot.cs" />
@@ -120,6 +121,8 @@
     <Compile Include="Screens\ColorStateTestScreen.cs" />
     <Compile Include="Screens\CreditsScreen.cs" />
     <Compile Include="Screens\CreditsScreenManager.cs" />
+    <Compile Include="Screens\CompanyIntroScreen.cs" />
+    <Compile Include="Screens\CompanyIntroScreenManager.cs" />
     <Compile Include="Screens\EndCinematicScreen.cs" />
     <Compile Include="Screens\EndCinematicScreenManager.cs" />
     <Compile Include="Screens\ExitScreen.cs" />

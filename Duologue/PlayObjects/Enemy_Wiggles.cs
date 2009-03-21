@@ -178,6 +178,11 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Constructor / Init
+        /// <summary>
+        /// The empty constructor for pre-caching
+        /// </summary>
+        public Enemy_Wiggles() : base() { }
+
         public Enemy_Wiggles(GamePlayScreenManager manager)
             : base(manager)
         {
@@ -466,6 +471,32 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public overrides
+        public override String[] GetFilenames()
+        {
+            String[] filenames = new String[2*numberOfDeathFrames + 3*numberOfWalkingFrames];
+
+            int t = 0;
+            for (int i = 0; i < numberOfWalkingFrames; i++)
+            {
+                filenames[t] = String.Format(filename_base, (i+1).ToString());
+                t++;
+                filenames[t] = String.Format(filename_outline, (i+1).ToString());
+                t++;
+                filenames[t] = String.Format(filename_invertOutline, (i+1).ToString());
+                t++;
+            }
+
+            for (int i = 0; i < numberOfDeathFrames; i++)
+            {
+                filenames[t] = String.Format(filename_deathBase, (i+1).ToString());
+                t++;
+                filenames[t] = String.Format(filename_deathOutline, (i+1).ToString());
+                t++;
+            }
+
+            return filenames;
+        }
+
         public override bool StartOffset()
         {
             if (CurrentState != WigglesState.Dying && CurrentState != WigglesState.Fading)

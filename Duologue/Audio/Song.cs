@@ -217,7 +217,6 @@ namespace Duologue.Audio
         {
             if (Managed)
             {
-                //AudioHelper.Stop(this);
                 for (int t = 0; t < TrackCount; t++)
                 {
                     Tracks[t].Stop();
@@ -227,27 +226,44 @@ namespace Duologue.Audio
                     hyper.Detach();
                 }
             }
-            else
-            {
-                Enabled = false;
-            }
+            Enabled = false;
             playing = false;
+            paused = false;
+        }
+
+        public void Pause()
+        {
+            if (Managed)
+            {
+                for (int t = 0; t < TrackCount; t++)
+                {
+                    Tracks[t].Pause();
+                }
+            }
+            Enabled = false;
+            playing = false;
+            paused = true;
+        }
+
+        public void Resume()
+        {
+            if (Managed && Paused)
+            {
+                for (int t = 0; t < TrackCount; t++)
+                {
+                    Tracks[t].Resume();
+                }
+            }
+            Enabled = true;
+            playing = true;
+            paused = false;
         }
 
         public bool Playing { get{return playing;} set{ } }
 
         public bool Paused { get { return paused; } set { } }
 
-        public bool Managed
-        {
-            get
-            {
-                return managed;
-            }
-            set
-            {
-            }
-        }
+        public bool Managed { get { return managed; } set { } }
 
 
         public void FadeOut()
@@ -279,18 +295,7 @@ namespace Duologue.Audio
                     Tracks[t].Cues[0].ChangeVolume(Loudness.Silent);
                 }
                 fader.FadeIn();
-                //Play();
-                AudioHelper.Pause(this);
-                paused = true;
-                //for (double f = 0; f < 100000000; f++) {}
-            }
-            if (Managed)
-            {
-                AudioHelper.Resume(this);
-                paused = false;
-                //playing = true;
                 Enabled = true;
-                //Play();
             }
             else
             {
@@ -307,13 +312,16 @@ namespace Duologue.Audio
             if (Managed && null != fader)
             {
                 fader.Update(gameTime, this);
-                if (!Playing)
+                if (!Playing && !Paused)
                 {
                     Play();
                     for (int t = 0; t < TrackCount; t++)
                     {
                         Tracks[t].Cues[0].ChangeVolume(Loudness.Silent);
                     }
+                }
+                else if (Paused)
+                {
                 }
             }
             else if (!Managed && null != beater)

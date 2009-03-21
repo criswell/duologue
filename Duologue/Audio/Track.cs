@@ -72,6 +72,22 @@ namespace Duologue.Audio
             }
         }
 
+        public void Pause()
+        {
+            for (int q = 0; q < QCount; q++)
+            {
+                Cues[q].Pause();
+            }
+        }
+
+        public void Resume()
+        {
+            for (int q = 0; q < QCount; q++)
+            {
+                Cues[q].Resume();
+            }
+        }
+
         public void Stop()
         {
             for (int q = 0; q < QCount; q++)

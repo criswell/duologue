@@ -109,6 +109,24 @@ namespace Duologue.Audio
             }
         }
 
+        public void PauseSong(SongID ID)
+        {
+            if (SongIsPlaying(ID))
+            {
+                songMap[ID].Pause();
+                PlayingSong = SongID.None;
+            }
+        }
+
+        public void ResumeSong(SongID ID)
+        {
+            if (SongIsPaused(ID))
+            {
+                songMap[ID].Resume();
+                PlayingSong = ID;
+            }
+        }
+
         public void FadeOut(SongID ID)
         {
             songMap[ID].FadeOut();

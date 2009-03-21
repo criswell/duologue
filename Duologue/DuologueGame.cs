@@ -110,6 +110,7 @@ namespace Duologue
         public GamePlayScreenManager gamePlayScreenManager;
         public EndCinematicScreenManager endCinematicScreenManager;
         public CreditsScreenManager creditsScreenManager;
+        public CompanyIntroScreenManager companyIntroScreenManager;
 
         /// <summary>
         /// The dispatch table for game state changes
@@ -266,7 +267,7 @@ namespace Duologue
 
             // A bit of trickery to ensure we have a lastGameState
             LocalInstanceManager.CurrentGameState = GameState.Exit;
-            LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+            LocalInstanceManager.CurrentGameState = GameState.CompanyIntro;
 
             // Configure up the various GameScreens and dispatch
             dispatchTable = new Dictionary<GameState, GameScreen>();
@@ -301,6 +302,11 @@ namespace Duologue
             endCinematicScreenManager = new EndCinematicScreenManager(this);
             this.Components.Add(endCinematicScreenManager);
             dispatchTable.Add(GameState.EndCinematics, endCinematicScreenManager);
+
+            // Intro screen
+            companyIntroScreenManager = new CompanyIntroScreenManager(this);
+            this.Components.Add(companyIntroScreenManager);
+            dispatchTable.Add(GameState.CompanyIntro, companyIntroScreenManager);
 
             // Credits screen
             creditsScreenManager = new CreditsScreenManager(this);

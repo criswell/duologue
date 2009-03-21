@@ -66,7 +66,7 @@ namespace Duologue.Screens
             AudioManager am = ServiceLocator.GetService<AudioManager>();
             if (!am.SongIsPlaying(SongID.Credits) && !am.SongIsPaused(SongID.Credits))
             {
-                am.StopSong(SongID.SelectMenu);
+                am.PauseSong(SongID.SelectMenu);
                 am.FadeIn(SongID.Credits);
             }
             base.Update(gameTime);
@@ -80,6 +80,30 @@ namespace Duologue.Screens
                 pos,
                 Color.Azure);
             base.Draw(gameTime);
+        }
+
+        protected override void OnEnabledChanged(object sender, EventArgs args)
+        {
+            AudioManager am = ServiceLocator.GetService<AudioManager>();
+            if (null != am)
+            {
+                if (Enabled)
+                {
+                    if (am.SongIsPaused(SongID.Credits))
+                    {
+                        am.ResumeSong(SongID.Credits);
+                    }
+                    else
+                    {
+                        am.FadeIn(SongID.Credits);
+                    }
+                }
+                else
+                {
+                    am.PauseSong(SongID.Credits);
+                }
+            }
+            base.OnEnabledChanged(sender, args);
         }
         #endregion
     }
