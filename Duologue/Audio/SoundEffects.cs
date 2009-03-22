@@ -15,8 +15,8 @@ namespace Duologue.Audio
     {
         Clock,
         PlayerExplosion,
-        PlayerBeamA,
-        PlayerBeamB,
+        //PlayerBeamA, currently unassigned
+        //PlayerBeamB, currently unassigned
         CokeBottle,
         WigglesDeath,
         CLONK,
@@ -79,8 +79,6 @@ namespace Duologue.Audio
         
         public const string Bamboo = "bambooclick";
         public const string Explosion = "player-explosion";
-        public const string LightColorA = "Saxdual";
-        public const string LightColorB = "Saxmachine-high";
         public const string CokeBottle = "edwin_p_manchester";
         public const string WigglesDeath = "WigglesDeath";
         public const string CLONK = "CLONK";
@@ -97,8 +95,6 @@ namespace Duologue.Audio
             {
                 {EffectID.Clock, Bamboo},
                 {EffectID.PlayerExplosion, Explosion},
-                {EffectID.PlayerBeamA, LightColorA},
-                {EffectID.PlayerBeamB, LightColorB},
                 {EffectID.CokeBottle, CokeBottle},
                 {EffectID.WigglesDeath, WigglesDeath},
                 {EffectID.CLONK, CLONK},
@@ -186,6 +182,24 @@ namespace Duologue.Audio
             SoundEffect explosion = audio.Game.Content.Load<SoundEffect>
                 ("Audio\\PlayerEffects\\player-explosion");
             SoundEffectInstance explosionInstance = explosion.Play();
+            SoundEffectInstance highBlast = explosion.Play(.4f, 1f, .3f, false);
+            SoundEffectInstance deepBlast = explosion.Play(.6f, -1f, -.3f, false);
+            for (float shift = 1f; shift > -1f; shift -= .00005f)
+            {
+                float fastFreq = Math.Abs((shift + 1f) / 2f);
+                float slowFreq = Math.Abs(fastFreq / 4f);
+                GamePad.SetVibration(PlayerIndex.One, slowFreq, fastFreq);
+                highBlast.Pan = shift;
+            }
+            for (float shift = -1f; shift < 1f; shift += .0002f)
+            {
+                float slowFreq = Math.Abs((shift - 1f) / 2f);
+                float fastFreq = Math.Abs(slowFreq / 8f);
+                GamePad.SetVibration(PlayerIndex.One, slowFreq, fastFreq);
+                GamePad.SetVibration(PlayerIndex.One, Math.Abs(shift), 0f);
+                deepBlast.Pan = shift;
+            }
+            GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
         }
 
         /// <summary>
