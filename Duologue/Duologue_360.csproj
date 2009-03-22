@@ -84,6 +84,7 @@
     <Compile Include="LocalInstanceManager.cs" />
     <Compile Include="Mimicware\Fx\Particle.cs" />
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
+    <Compile Include="Mimicware\GamePadHelper.cs" />
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
     <Compile Include="Mimicware\Localization.cs" />
     <Compile Include="Mimicware\Manager\InputManager.cs" />

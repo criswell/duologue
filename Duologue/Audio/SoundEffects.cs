@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using Duologue.Mimicware;
 
 namespace Duologue.Audio
 {
@@ -178,28 +179,21 @@ namespace Duologue.Audio
         /// </summary>
         public void PlayerExplosion()
         {
-            //PlayEffect(EffectID.PlayerExplosion);
-            SoundEffect explosion = audio.Game.Content.Load<SoundEffect>
-                ("Audio\\PlayerEffects\\player-explosion");
-            SoundEffectInstance explosionInstance = explosion.Play();
-            SoundEffectInstance highBlast = explosion.Play(.4f, 1f, .3f, false);
-            SoundEffectInstance deepBlast = explosion.Play(.6f, -1f, -.3f, false);
-            for (float shift = 1f; shift > -1f; shift -= .00005f)
+            if (false)
             {
-                float fastFreq = Math.Abs((shift + 1f) / 2f);
-                float slowFreq = Math.Abs(fastFreq / 4f);
-                GamePad.SetVibration(PlayerIndex.One, slowFreq, fastFreq);
-                highBlast.Pan = shift;
+                PlayEffect(EffectID.PlayerExplosion);
             }
-            for (float shift = -1f; shift < 1f; shift += .0002f)
+            else
             {
-                float slowFreq = Math.Abs((shift - 1f) / 2f);
-                float fastFreq = Math.Abs(slowFreq / 8f);
-                GamePad.SetVibration(PlayerIndex.One, slowFreq, fastFreq);
-                GamePad.SetVibration(PlayerIndex.One, Math.Abs(shift), 0f);
-                deepBlast.Pan = shift;
+                SoundEffect explosion = audio.Game.Content.Load<SoundEffect>
+                    ("Audio\\PlayerEffects\\player-explosion");
+                SoundEffectInstance explosionInstance = explosion.Play();
+                //SoundEffectInstance highBlast = explosion.Play(.4f, 1f, .3f, false);
+                //SoundEffectInstance deepBlast = explosion.Play(.6f, -1f, -.3f, false);
+                GamePadHelper pad = new GamePadHelper(audio.Game, PlayerIndex.One);
+                //pad.ShakeIt(500f, 1f, 1f);
+                pad.ChirpIt(500f, 0f, 1f);                
             }
-            GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
         }
 
         /// <summary>
