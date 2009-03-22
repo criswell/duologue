@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace Duologue.Audio
 {
@@ -23,18 +26,18 @@ namespace Duologue.Audio
         //,newname
     }
 
-    public class SoundEffect
+    public class SoundEffectThing
     {
         public string CueName;
         public float Volume;
 
-        public SoundEffect() { }
-        public SoundEffect(string cue)
+        public SoundEffectThing() { }
+        public SoundEffectThing(string cue)
         {
             CueName = cue;
             Volume = Loudness.Normal;
         }
-        public SoundEffect(string cue, float vol)
+        public SoundEffectThing(string cue, float vol)
         {
             CueName = cue;
             Volume = vol;
@@ -47,8 +50,8 @@ namespace Duologue.Audio
         public string WaveBankName;
         //the dictionary key is the cue name...which we also need in
         //each of the sound effects. Crap.
-        public Dictionary<string, SoundEffect> Effects =
-            new Dictionary<string, SoundEffect>();
+        public Dictionary<string, SoundEffectThing> Effects =
+            new Dictionary<string, SoundEffectThing>();
         public EffectsBank(Game game, string waves, string sounds) : base(game) 
         {
             WaveBankName = waves;
@@ -119,7 +122,7 @@ namespace Duologue.Audio
         private EffectsBank playerBank;
         private EffectsBank plucksBank;
 
-        public SoundEffects(AudioManager manager)
+        public SoundEffects(AudioManager manager)//FIXME Don't need the argument, ServiceLocator finds it
         {
             notifier = ServiceLocator.GetService<IntensityNotifier>();
             audio = ServiceLocator.GetService<AudioManager>();
@@ -130,7 +133,7 @@ namespace Duologue.Audio
             foreach (string name in IDNameMap.Values)
             {
                 effectNames.Add(name);
-                playerBank.Effects.Add(name, new SoundEffect(name));
+                playerBank.Effects.Add(name, new SoundEffectThing(name));
             }
             AudioHelper.Preload(PlayerEffectsSB, PlayerEffectsWB, effectNames);
 
@@ -140,7 +143,7 @@ namespace Duologue.Audio
             foreach (string name in PluckMap.Values)
             {
                 plucksNames.Add(name);
-                plucksBank.Effects.Add(name, new SoundEffect(name));
+                plucksBank.Effects.Add(name, new SoundEffectThing(name));
             }
             AudioHelper.Preload(PlucksSB, PlucksWB, plucksNames);
 
@@ -179,7 +182,10 @@ namespace Duologue.Audio
         /// </summary>
         public void PlayerExplosion()
         {
-            PlayEffect(EffectID.PlayerExplosion);
+            //PlayEffect(EffectID.PlayerExplosion);
+            SoundEffect explosion = audio.Game.Content.Load<SoundEffect>
+                ("Audio\\PlayerEffects\\player-explosion");
+            SoundEffectInstance explosionInstance = explosion.Play();
         }
 
         /// <summary>
