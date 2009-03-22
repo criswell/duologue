@@ -16,8 +16,8 @@ Global Settings
     Header File = Duologue.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 785859844;
-    Last Modified High = 29983161;
+    Last Modified Low = 29983161;
+    Last Modified High = 785859844;
 
     Category
     {
@@ -264,7 +264,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+            Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -462,14 +462,10 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 786016094;
-    PC Bank Last Modified High = 29983161;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
-    Bank Last Revised Low = 2159173776;
-    Bank Last Revised High = 29983119;
+    Bank Last Revised Low = 1621573762;
+    Bank Last Revised High = 29993603;
 
     Wave
     {
@@ -537,75 +533,6 @@ Wave Bank
             File Type = 1;
             Last Modified Low = 3819431888;
             Last Modified High = 29976247;
-        }
-    }
-
-    Wave
-    {
-        Name = Saxmachine-high;
-        File = PlayerEffects\Saxmachine-high.wav;
-        Build Settings Last Modified Low = 2602563306;
-        Build Settings Last Modified High = 29981689;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 296104;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 3150169562;
-            Last Modified High = 29976303;
-        }
-    }
-
-    Wave
-    {
-        Name = Saxmachine-high2;
-        File = PlayerEffects\Saxmachine-high2.wav;
-        Build Settings Last Modified Low = 1677250806;
-        Build Settings Last Modified High = 29981689;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 296104;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 2992357062;
-            Last Modified High = 29976303;
-        }
-    }
-
-    Wave
-    {
-        Name = Saxdual;
-        File = PlayerEffects\Saxdual.wav;
-        Build Settings Last Modified Low = 2873344556;
-        Build Settings Last Modified High = 29981689;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 296352;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 2771194280;
-            Last Modified High = 29976320;
         }
     }
 
@@ -4941,147 +4868,6 @@ Sound Bank
 
     Sound
     {
-        Name = Saxmachine-high;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = FX;
-        }
-
-        Track
-        {
-            Volume = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaer Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = PlayerEffects;
-                    Bank Index = 0;
-                    Entry Name = Saxmachine-high;
-                    Entry Index = 3;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = Saxmachine-high2;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = FX;
-        }
-
-        Track
-        {
-            Volume = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaer Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = PlayerEffects;
-                    Bank Index = 0;
-                    Entry Name = Saxmachine-high2;
-                    Entry Index = 4;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = Saxdual;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = FX;
-        }
-
-        Track
-        {
-            Volume = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaer Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = PlayerEffects;
-                    Bank Index = 0;
-                    Entry Name = Saxdual;
-                    Entry Index = 5;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
         Name = edwin_p_manchester;
         Volume = -1200;
         Pitch = 0;
@@ -5125,7 +4911,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 3240_edwin_p_manchester_20;
-                    Entry Index = 6;
+                    Entry Index = 3;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5135,7 +4921,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 3228_edwin_p_manchester_08;
-                    Entry Index = 7;
+                    Entry Index = 4;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5145,7 +4931,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 3237_edwin_p_manchester_17;
-                    Entry Index = 8;
+                    Entry Index = 5;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5155,7 +4941,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 3238_edwin_p_manchester_18;
-                    Entry Index = 9;
+                    Entry Index = 6;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5208,7 +4994,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 66539_Robinhood76_00840_witch_hit_5;
-                    Entry Index = 10;
+                    Entry Index = 7;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5218,7 +5004,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 66132_Robinhood76_00822_monster_2_voice;
-                    Entry Index = 11;
+                    Entry Index = 8;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5228,7 +5014,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 66133_Robinhood76_00825_monster_4_voice;
-                    Entry Index = 12;
+                    Entry Index = 9;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5238,7 +5024,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 66134_Robinhood76_00826_zombie_hit_1;
-                    Entry Index = 13;
+                    Entry Index = 10;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5248,7 +5034,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 66494_Robinhood76_00831_monster_in_face_3;
-                    Entry Index = 14;
+                    Entry Index = 11;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5301,7 +5087,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = ricochet4;
-                    Entry Index = 18;
+                    Entry Index = 15;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5311,7 +5097,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = ricochet1;
-                    Entry Index = 19;
+                    Entry Index = 16;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5321,7 +5107,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = ricochet2;
-                    Entry Index = 20;
+                    Entry Index = 17;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5331,7 +5117,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = ricochet3;
-                    Entry Index = 21;
+                    Entry Index = 18;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5384,7 +5170,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 3216_edwin_p_manchester_04;
-                    Entry Index = 15;
+                    Entry Index = 12;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5394,7 +5180,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 3214_edwin_p_manchester_02;
-                    Entry Index = 16;
+                    Entry Index = 13;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5404,7 +5190,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 3215_edwin_p_manchester_03;
-                    Entry Index = 17;
+                    Entry Index = 14;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5450,7 +5236,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = 22036_Anton_plons2editedsploosh;
-                    Entry Index = 22;
+                    Entry Index = 19;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5503,7 +5289,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = brake3;
-                    Entry Index = 23;
+                    Entry Index = 20;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5513,7 +5299,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = brake1;
-                    Entry Index = 24;
+                    Entry Index = 21;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5523,7 +5309,7 @@ Sound Bank
                     Bank Name = PlayerEffects;
                     Bank Index = 0;
                     Entry Name = brake2;
-                    Entry Index = 25;
+                    Entry Index = 22;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -5593,66 +5379,6 @@ Sound Bank
 
     Cue
     {
-        Name = Saxmachine-high;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = Saxmachine-high;
-            Index = 3;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = Saxmachine-high2;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = Saxmachine-high2;
-            Index = 4;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = Saxdual;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = Saxdual;
-            Index = 5;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
         Name = edwin_p_manchester;
 
         Variation
@@ -5665,7 +5391,7 @@ Sound Bank
         Sound Entry
         {
             Name = edwin_p_manchester;
-            Index = 6;
+            Index = 3;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -5685,7 +5411,7 @@ Sound Bank
         Sound Entry
         {
             Name = WigglesDeath;
-            Index = 7;
+            Index = 4;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -5705,7 +5431,7 @@ Sound Bank
         Sound Entry
         {
             Name = CLONK;
-            Index = 9;
+            Index = 6;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -5725,7 +5451,7 @@ Sound Bank
         Sound Entry
         {
             Name = ricochet;
-            Index = 8;
+            Index = 5;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -5745,7 +5471,7 @@ Sound Bank
         Sound Entry
         {
             Name = Sploosh;
-            Index = 10;
+            Index = 7;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -5765,7 +5491,7 @@ Sound Bank
         Sound Entry
         {
             Name = BuzzDeath;
-            Index = 11;
+            Index = 8;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -5835,7 +5561,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -5893,7 +5619,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -5951,7 +5677,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6009,7 +5735,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6067,7 +5793,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6566,7 +6292,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6655,7 +6381,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6713,7 +6439,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6771,7 +6497,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6829,7 +6555,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6887,7 +6613,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -6945,7 +6671,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7003,7 +6729,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7552,7 +7278,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7609,7 +7335,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7666,7 +7392,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7723,7 +7449,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7780,7 +7506,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7837,7 +7563,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7894,7 +7620,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -7951,7 +7677,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8008,7 +7734,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8065,7 +7791,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8122,7 +7848,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8179,7 +7905,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8236,7 +7962,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8293,7 +8019,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8350,7 +8076,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8407,7 +8133,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8464,7 +8190,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8521,7 +8247,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8578,7 +8304,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8635,7 +8361,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8692,7 +8418,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8749,7 +8475,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8806,7 +8532,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8863,7 +8589,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -8920,7 +8646,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9488,7 +9214,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9545,7 +9271,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9602,7 +9328,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9659,7 +9385,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9716,7 +9442,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9773,7 +9499,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9830,7 +9556,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9887,7 +9613,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -9944,7 +9670,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10001,7 +9727,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10058,7 +9784,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10115,7 +9841,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10172,7 +9898,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10229,7 +9955,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10286,7 +10012,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10343,7 +10069,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10400,7 +10126,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10457,7 +10183,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10514,7 +10240,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10571,7 +10297,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10628,7 +10354,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10685,7 +10411,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10742,7 +10468,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10799,7 +10525,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10856,7 +10582,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10913,7 +10639,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -10970,7 +10696,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11027,7 +10753,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11084,7 +10810,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11141,7 +10867,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11198,7 +10924,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11255,7 +10981,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11312,7 +11038,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11369,7 +11095,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11426,7 +11152,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11483,7 +11209,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11540,7 +11266,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11597,7 +11323,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11654,7 +11380,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11711,7 +11437,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11768,7 +11494,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11825,7 +11551,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11882,7 +11608,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11939,7 +11665,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -11996,7 +11722,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12053,7 +11779,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12110,7 +11836,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12167,7 +11893,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12224,7 +11950,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12281,7 +12007,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12338,7 +12064,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12395,7 +12121,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12452,7 +12178,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12509,7 +12235,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12566,7 +12292,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12623,7 +12349,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12680,7 +12406,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12737,7 +12463,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12794,7 +12520,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12851,7 +12577,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12908,7 +12634,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -12965,7 +12691,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13022,7 +12748,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13079,7 +12805,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13136,7 +12862,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13193,7 +12919,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13250,7 +12976,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13307,7 +13033,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13364,7 +13090,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13421,7 +13147,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13478,7 +13204,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13535,7 +13261,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13592,7 +13318,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13649,7 +13375,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13706,7 +13432,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13763,7 +13489,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13820,7 +13546,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13877,7 +13603,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13934,7 +13660,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -13991,7 +13717,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14048,7 +13774,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14105,7 +13831,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14162,7 +13888,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14219,7 +13945,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14276,7 +14002,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14333,7 +14059,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14390,7 +14116,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14447,7 +14173,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14504,7 +14230,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14561,7 +14287,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14618,7 +14344,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14675,7 +14401,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14732,7 +14458,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14789,7 +14515,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14846,7 +14572,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14903,7 +14629,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -14960,7 +14686,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15017,7 +14743,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15074,7 +14800,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15131,7 +14857,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15188,7 +14914,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15245,7 +14971,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15302,7 +15028,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15359,7 +15085,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15416,7 +15142,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15473,7 +15199,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15530,7 +15256,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15587,7 +15313,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15644,7 +15370,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15701,7 +15427,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15758,7 +15484,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -15815,7 +15541,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }
@@ -18124,7 +17850,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::dcdd407a-4b30-455e-a687-616664218394;
+                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
             }
         }
     }

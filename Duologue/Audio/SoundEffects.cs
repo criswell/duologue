@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace Duologue.Audio
 {
@@ -12,8 +15,8 @@ namespace Duologue.Audio
     {
         Clock,
         PlayerExplosion,
-        PlayerBeamA,
-        PlayerBeamB,
+        //PlayerBeamA, currently unassigned
+        //PlayerBeamB, currently unassigned
         CokeBottle,
         WigglesDeath,
         CLONK,
@@ -23,18 +26,18 @@ namespace Duologue.Audio
         //,newname
     }
 
-    public class SoundEffect
+    public class SoundEffectThing
     {
         public string CueName;
         public float Volume;
 
-        public SoundEffect() { }
-        public SoundEffect(string cue)
+        public SoundEffectThing() { }
+        public SoundEffectThing(string cue)
         {
             CueName = cue;
             Volume = Loudness.Normal;
         }
-        public SoundEffect(string cue, float vol)
+        public SoundEffectThing(string cue, float vol)
         {
             CueName = cue;
             Volume = vol;
@@ -47,8 +50,8 @@ namespace Duologue.Audio
         public string WaveBankName;
         //the dictionary key is the cue name...which we also need in
         //each of the sound effects. Crap.
-        public Dictionary<string, SoundEffect> Effects =
-            new Dictionary<string, SoundEffect>();
+        public Dictionary<string, SoundEffectThing> Effects =
+            new Dictionary<string, SoundEffectThing>();
         public EffectsBank(Game game, string waves, string sounds) : base(game) 
         {
             WaveBankName = waves;
@@ -76,8 +79,6 @@ namespace Duologue.Audio
         
         public const string Bamboo = "bambooclick";
         public const string Explosion = "player-explosion";
-        public const string LightColorA = "Saxdual";
-        public const string LightColorB = "Saxmachine-high";
         public const string CokeBottle = "edwin_p_manchester";
         public const string WigglesDeath = "WigglesDeath";
         public const string CLONK = "CLONK";
@@ -94,8 +95,6 @@ namespace Duologue.Audio
             {
                 {EffectID.Clock, Bamboo},
                 {EffectID.PlayerExplosion, Explosion},
-                {EffectID.PlayerBeamA, LightColorA},
-                {EffectID.PlayerBeamB, LightColorB},
                 {EffectID.CokeBottle, CokeBottle},
                 {EffectID.WigglesDeath, WigglesDeath},
                 {EffectID.CLONK, CLONK},
@@ -119,7 +118,7 @@ namespace Duologue.Audio
         private EffectsBank playerBank;
         private EffectsBank plucksBank;
 
-        public SoundEffects(AudioManager manager)
+        public SoundEffects(AudioManager manager)//FIXME Don't need the argument, ServiceLocator finds it
         {
             notifier = ServiceLocator.GetService<IntensityNotifier>();
             audio = ServiceLocator.GetService<AudioManager>();
@@ -130,7 +129,7 @@ namespace Duologue.Audio
             foreach (string name in IDNameMap.Values)
             {
                 effectNames.Add(name);
-                playerBank.Effects.Add(name, new SoundEffect(name));
+                playerBank.Effects.Add(name, new SoundEffectThing(name));
             }
             AudioHelper.Preload(PlayerEffectsSB, PlayerEffectsWB, effectNames);
 
@@ -140,7 +139,7 @@ namespace Duologue.Audio
             foreach (string name in PluckMap.Values)
             {
                 plucksNames.Add(name);
-                plucksBank.Effects.Add(name, new SoundEffect(name));
+                plucksBank.Effects.Add(name, new SoundEffectThing(name));
             }
             AudioHelper.Preload(PlucksSB, PlucksWB, plucksNames);
 
@@ -179,7 +178,28 @@ namespace Duologue.Audio
         /// </summary>
         public void PlayerExplosion()
         {
-            PlayEffect(EffectID.PlayerExplosion);
+            //PlayEffect(EffectID.PlayerExplosion);
+            SoundEffect explosion = audio.Game.Content.Load<SoundEffect>
+                ("Audio\\PlayerEffects\\player-explosion");
+            SoundEffectInstance explosionInstance = explosion.Play();
+            SoundEffectInstance highBlast = explosion.Play(.4f, 1f, .3f, false);
+            SoundEffectInstance deepBlast = explosion.Play(.6f, -1f, -.3f, false);
+            for (float shift = 1f; shift > -1f; shift -= .00005f)
+            {
+                float fastFreq = Math.Abs((shift + 1f) / 2f);
+                float slowFreq = Math.Abs(fastFreq / 4f);
+                GamePad.SetVibration(PlayerIndex.One, slowFreq, fastFreq);
+                highBlast.Pan = shift;
+            }
+            for (float shift = -1f; shift < 1f; shift += .0002f)
+            {
+                float slowFreq = Math.Abs((shift - 1f) / 2f);
+                float fastFreq = Math.Abs(slowFreq / 8f);
+                GamePad.SetVibration(PlayerIndex.One, slowFreq, fastFreq);
+                GamePad.SetVibration(PlayerIndex.One, Math.Abs(shift), 0f);
+                deepBlast.Pan = shift;
+            }
+            GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
         }
 
         /// <summary>
