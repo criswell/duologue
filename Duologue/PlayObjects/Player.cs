@@ -807,7 +807,9 @@ namespace Duologue.PlayObjects
                 LocalInstanceManager.PlayerSmoke.AddParticles(this.Position, Color.White);
 
                 // Should trigger other explosions here
-                
+
+                GamePadHelper pad = new GamePadHelper(audio.Game, PlayerIndex.One);
+                pad.ChirpIt(500f, 0f, 1f);
                 audio.PlayEffect(EffectID.PlayerExplosion);
                 
                 // Set the graphical items

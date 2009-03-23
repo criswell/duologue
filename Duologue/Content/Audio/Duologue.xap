@@ -16,8 +16,8 @@ Global Settings
     Header File = Duologue.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 29983161;
-    Last Modified High = 785859844;
+    Last Modified Low = 785859844;
+    Last Modified High = 29983161;
 
     Category
     {
@@ -264,7 +264,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+            Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -462,6 +462,10 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
     Bank Last Revised Low = 1621573762;
@@ -4718,6 +4722,755 @@ Wave Bank
     }
 }
 
+Wave Bank
+{
+    Name = ultrafix;
+    Xbox File = Xbox\ultrafix.xwb;
+    Windows File = Win\ultrafix.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = <none>;
+    Bank Last Revised Low = 4249648004;
+    Bank Last Revised High = 29993826;
+
+    Wave
+    {
+        Name = synth-8;
+        File = ultrafix\synth-8.wav;
+        Build Settings Last Modified Low = 3886366754;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2794335504;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = bass_line-1;
+        File = ultrafix\bass_line-1.wav;
+        Build Settings Last Modified Low = 3886366754;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1539804254;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = bass_line-2;
+        File = ultrafix\bass_line-2.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1540898004;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = bass_line-3;
+        File = ultrafix\bass_line-3.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1541679254;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = bass_line-4;
+        File = ultrafix\bass_line-4.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1542304254;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = bass_line-5;
+        File = ultrafix\bass_line-5.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1542929254;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = bass_line-6;
+        File = ultrafix\bass_line-6.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1543398004;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = bass_line-7;
+        File = ultrafix\bass_line-7.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1544023004;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = bass_line-8;
+        File = ultrafix\bass_line-8.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1544648004;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = drum-1;
+        File = ultrafix\drum-1.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2044960504;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = drum-2;
+        File = ultrafix\drum-2.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2046054254;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = drum-3;
+        File = ultrafix\drum-3.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2047148004;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = drum-4;
+        File = ultrafix\drum-4.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2047929254;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = drum-5;
+        File = ultrafix\drum-5.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2048710504;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = drum-6;
+        File = ultrafix\drum-6.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2049335504;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = drum-7;
+        File = ultrafix\drum-7.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2049960504;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = drum-8;
+        File = ultrafix\drum-8.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2050429254;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = fx-1;
+        File = ultrafix\fx-1.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2388085504;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = fx-2;
+        File = ultrafix\fx-2.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2389179254;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = fx-3;
+        File = ultrafix\fx-3.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2390116754;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = fx-4;
+        File = ultrafix\fx-4.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2390898004;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = fx-5;
+        File = ultrafix\fx-5.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2391366754;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = fx-6;
+        File = ultrafix\fx-6.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2391991754;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = fx-7;
+        File = ultrafix\fx-7.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2392773004;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = fx-8;
+        File = ultrafix\fx-8.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2393398004;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = synth-1;
+        File = ultrafix\synth-1.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2786366754;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = synth-2;
+        File = ultrafix\synth-2.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2787616754;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = synth-3;
+        File = ultrafix\synth-3.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2791366754;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = synth-4;
+        File = ultrafix\synth-4.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2791991754;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = synth-5;
+        File = ultrafix\synth-5.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2792616754;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = synth-6;
+        File = ultrafix\synth-6.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2793085504;
+            Last Modified High = 29993826;
+        }
+    }
+
+    Wave
+    {
+        Name = synth-7;
+        File = ultrafix\synth-7.wav;
+        Build Settings Last Modified Low = 3886523004;
+        Build Settings Last Modified High = 29993826;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 88200;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2793710504;
+            Last Modified High = 29993826;
+        }
+    }
+}
+
 Sound Bank
 {
     Name = PlayerEffects;
@@ -5561,7 +6314,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -5619,7 +6372,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -5677,7 +6430,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -5735,7 +6488,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -5793,7 +6546,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -6292,7 +7045,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -6381,7 +7134,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -6439,7 +7192,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -6497,7 +7250,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -6555,7 +7308,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -6613,7 +7366,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -6671,7 +7424,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -6729,7 +7482,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7278,7 +8031,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7335,7 +8088,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7392,7 +8145,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7449,7 +8202,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7506,7 +8259,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7563,7 +8316,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7620,7 +8373,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7677,7 +8430,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7734,7 +8487,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7791,7 +8544,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7848,7 +8601,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7905,7 +8658,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -7962,7 +8715,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8019,7 +8772,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8076,7 +8829,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8133,7 +8886,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8190,7 +8943,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8247,7 +9000,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8304,7 +9057,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8361,7 +9114,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8418,7 +9171,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8475,7 +9228,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8532,7 +9285,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8589,7 +9342,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -8646,7 +9399,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9214,7 +9967,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9271,7 +10024,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9328,7 +10081,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9385,7 +10138,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9442,7 +10195,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9499,7 +10252,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9556,7 +10309,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9613,7 +10366,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9670,7 +10423,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9727,7 +10480,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9784,7 +10537,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9841,7 +10594,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9898,7 +10651,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -9955,7 +10708,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10012,7 +10765,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10069,7 +10822,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10126,7 +10879,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10183,7 +10936,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10240,7 +10993,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10297,7 +11050,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10354,7 +11107,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10411,7 +11164,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10468,7 +11221,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10525,7 +11278,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10582,7 +11335,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10639,7 +11392,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10696,7 +11449,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10753,7 +11506,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10810,7 +11563,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10867,7 +11620,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10924,7 +11677,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -10981,7 +11734,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11038,7 +11791,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11095,7 +11848,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11152,7 +11905,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11209,7 +11962,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11266,7 +12019,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11323,7 +12076,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11380,7 +12133,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11437,7 +12190,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11494,7 +12247,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11551,7 +12304,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11608,7 +12361,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11665,7 +12418,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11722,7 +12475,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11779,7 +12532,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11836,7 +12589,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11893,7 +12646,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -11950,7 +12703,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12007,7 +12760,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12064,7 +12817,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12121,7 +12874,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12178,7 +12931,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12235,7 +12988,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12292,7 +13045,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12349,7 +13102,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12406,7 +13159,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12463,7 +13216,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12520,7 +13273,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12577,7 +13330,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12634,7 +13387,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12691,7 +13444,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12748,7 +13501,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12805,7 +13558,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12862,7 +13615,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12919,7 +13672,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -12976,7 +13729,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13033,7 +13786,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13090,7 +13843,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13147,7 +13900,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13204,7 +13957,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13261,7 +14014,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13318,7 +14071,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13375,7 +14128,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13432,7 +14185,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13489,7 +14242,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13546,7 +14299,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13603,7 +14356,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13660,7 +14413,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13717,7 +14470,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13774,7 +14527,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13831,7 +14584,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13888,7 +14641,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -13945,7 +14698,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14002,7 +14755,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14059,7 +14812,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14116,7 +14869,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14173,7 +14926,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14230,7 +14983,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14287,7 +15040,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14344,7 +15097,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14401,7 +15154,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14458,7 +15211,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14515,7 +15268,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14572,7 +15325,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14629,7 +15382,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14686,7 +15439,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14743,7 +15496,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14800,7 +15553,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14857,7 +15610,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14914,7 +15667,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -14971,7 +15724,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15028,7 +15781,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15085,7 +15838,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15142,7 +15895,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15199,7 +15952,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15256,7 +16009,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15313,7 +16066,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15370,7 +16123,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15427,7 +16180,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15484,7 +16237,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -15541,7 +16294,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -17850,7 +18603,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::aca1dc99-b0ec-4a55-b0a7-31e4b68e6555;
+                RPC Curve Name = 1::e11608d1-3698-4266-b79f-441416128bd7;
             }
         }
     }
@@ -17870,6 +18623,2127 @@ Sound Bank
         {
             Name = credits;
             Index = 0;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+}
+
+Sound Bank
+{
+    Name = ultrafix;
+    Xbox File = Xbox\ultrafix.xsb;
+    Windows File = Win\ultrafix.xsb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+
+    Sound
+    {
+        Name = bass_line-1;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = bass_line-1;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = bass_line-2;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = bass_line-2;
+                    Entry Index = 2;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = bass_line-3;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = bass_line-3;
+                    Entry Index = 3;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = bass_line-4;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = bass_line-4;
+                    Entry Index = 4;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = bass_line-5;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = bass_line-5;
+                    Entry Index = 5;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = bass_line-6;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = bass_line-6;
+                    Entry Index = 6;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = bass_line-7;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = bass_line-7;
+                    Entry Index = 7;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = bass_line-8;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = bass_line-8;
+                    Entry Index = 8;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = drum-1;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = drum-1;
+                    Entry Index = 9;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = drum-2;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = drum-2;
+                    Entry Index = 10;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = drum-3;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = drum-3;
+                    Entry Index = 11;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = drum-4;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = drum-4;
+                    Entry Index = 12;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = drum-5;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = drum-5;
+                    Entry Index = 13;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = drum-6;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = drum-6;
+                    Entry Index = 14;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = drum-7;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = drum-7;
+                    Entry Index = 15;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = drum-8;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = drum-8;
+                    Entry Index = 16;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = fx-1;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = fx-1;
+                    Entry Index = 17;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = fx-2;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = fx-2;
+                    Entry Index = 18;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = fx-3;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = fx-3;
+                    Entry Index = 19;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = fx-4;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = fx-4;
+                    Entry Index = 20;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = fx-5;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = fx-5;
+                    Entry Index = 21;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = fx-6;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = fx-6;
+                    Entry Index = 22;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = fx-7;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = fx-7;
+                    Entry Index = 23;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = fx-8;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = fx-8;
+                    Entry Index = 24;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = synth-1;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = synth-1;
+                    Entry Index = 25;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = synth-2;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = synth-2;
+                    Entry Index = 26;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = synth-3;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = synth-3;
+                    Entry Index = 27;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = synth-4;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = synth-4;
+                    Entry Index = 28;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = synth-5;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = synth-5;
+                    Entry Index = 29;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = synth-6;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = synth-6;
+                    Entry Index = 30;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = synth-7;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = synth-7;
+                    Entry Index = 31;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = synth-8;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = ultrafix;
+                    Bank Index = 8;
+                    Entry Name = synth-8;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = bass_line-1;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = bass_line-1;
+            Index = 0;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = bass_line-2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = bass_line-2;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = bass_line-3;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = bass_line-3;
+            Index = 2;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = bass_line-4;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = bass_line-4;
+            Index = 3;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = bass_line-5;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = bass_line-5;
+            Index = 4;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = bass_line-6;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = bass_line-6;
+            Index = 5;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = bass_line-7;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = bass_line-7;
+            Index = 6;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = bass_line-8;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = bass_line-8;
+            Index = 7;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = drum-1;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = drum-1;
+            Index = 8;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = drum-2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = drum-2;
+            Index = 9;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = drum-3;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = drum-3;
+            Index = 10;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = drum-4;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = drum-4;
+            Index = 11;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = drum-5;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = drum-5;
+            Index = 12;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = drum-6;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = drum-6;
+            Index = 13;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = drum-7;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = drum-7;
+            Index = 14;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = drum-8;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = drum-8;
+            Index = 15;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = fx-1;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = fx-1;
+            Index = 16;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = fx-2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = fx-2;
+            Index = 17;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = fx-3;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = fx-3;
+            Index = 18;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = fx-4;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = fx-4;
+            Index = 19;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = fx-5;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = fx-5;
+            Index = 20;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = fx-6;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = fx-6;
+            Index = 21;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = fx-7;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = fx-7;
+            Index = 22;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = fx-8;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = fx-8;
+            Index = 23;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = synth-1;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = synth-1;
+            Index = 24;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = synth-2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = synth-2;
+            Index = 25;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = synth-3;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = synth-3;
+            Index = 26;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = synth-4;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = synth-4;
+            Index = 27;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = synth-5;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = synth-5;
+            Index = 28;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = synth-6;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = synth-6;
+            Index = 29;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = synth-7;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = synth-7;
+            Index = 30;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = synth-8;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = synth-8;
+            Index = 31;
             Weight Min = 0;
             Weight Max = 255;
         }

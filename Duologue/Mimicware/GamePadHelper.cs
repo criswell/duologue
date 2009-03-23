@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
 
-namespace Duologue.Mimicware
+namespace Mimicware
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.

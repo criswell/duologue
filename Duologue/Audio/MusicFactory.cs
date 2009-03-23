@@ -188,11 +188,48 @@ namespace Duologue.Audio
         protected const string LoST15 = "LoSToms-15";
         protected const string LoST16 = "LoSToms-16";
 
+        //ultrafix song constants
+        protected const string UFWaves = "Content\\Audio\\ultrafix.xwb";
+        protected const string UFSounds = "Content\\Audio\\ultrafix.xsb";
+        protected const string UFB1 = "bass_line-1";
+        protected const string UFB2 = "bass_line-2";
+        protected const string UFB3 = "bass_line-3";
+        protected const string UFB4 = "bass_line-4";
+        protected const string UFB5 = "bass_line-5";
+        protected const string UFB6 = "bass_line-6";
+        protected const string UFB7 = "bass_line-7";
+        protected const string UFB8 = "bass_line-8";
+        protected const string UFD1 = "drum-1";
+        protected const string UFD2 = "drum-2";
+        protected const string UFD3 = "drum-3";
+        protected const string UFD4 = "drum-4";
+        protected const string UFD5 = "drum-5";
+        protected const string UFD6 = "drum-6";
+        protected const string UFD7 = "drum-7";
+        protected const string UFD8 = "drum-8";
+        protected const string UFFX1 = "fx-1";
+        protected const string UFFX2 = "fx-2";
+        protected const string UFFX3 = "fx-3";
+        protected const string UFFX4 = "fx-4";
+        protected const string UFFX5 = "fx-5";
+        protected const string UFFX6 = "fx-6";
+        protected const string UFFX7 = "fx-7";
+        protected const string UFFX8 = "fx-8";
+        protected const string UFS1 = "synth-1";
+        protected const string UFS2 = "synth-2";
+        protected const string UFS3 = "synth-3";
+        protected const string UFS4 = "synth-4";
+        protected const string UFS5 = "synth-5";
+        protected const string UFS6 = "synth-6";
+        protected const string UFS7 = "synth-7";
+        protected const string UFS8 = "synth-8";
+
         protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
         public Song Dance8ths;
         public Song LandOfSand16ths;
         public Song Credits;
+        public Song Ultrafix;
 
         public MusicFactory(AudioManager manager)
         {
@@ -203,7 +240,7 @@ namespace Duologue.Audio
             string[] selectArr = { selectMenuCue };
             SelectSong = new Song(manager.Game, selectMenuSounds, selectMenuWaves, selectArr);
 
-            //SelectSong
+            //CreditsSong
             string[] creditsArr = { creditsCue };
             Credits = new Song(manager.Game, creditsSounds, creditsWaves, creditsArr);
 
@@ -254,11 +291,30 @@ namespace Duologue.Audio
             LandOfSand16ths = new Song(manager.Game, LoS16Sounds, LoS16Waves,
                 LoS16arr, LoS16volumes);
 
+            //Ultrafix
+            string[,] UFarr = {
+              {UFB1, UFB2, UFB3, UFB4, UFB5, UFB6, UFB7, UFB8},
+              {UFD1, UFD2, UFD3, UFD4, UFD5, UFD6, UFD7, UFD8},
+              {UFFX1, UFFX2, UFFX3, UFFX4, UFFX5, UFFX6, UFFX7, UFFX8},
+              {UFS1, UFS2, UFS3, UFS4, UFS5, UFS6, UFS7, UFS8}
+                              };
+
+            bool[,] UFvolumes = {
+                      {on, off, off, off}, // One row per intensity
+                      {on, on, off, off},  // with a switch for each track
+                      {on, on, on, off},
+                      {on, on, on, on},
+                                };
+
+            Ultrafix = new Song(manager.Game, UFSounds, UFWaves, UFarr, UFvolumes);
+            Ultrafix.beater.lengthOfBeat = 500f;
+
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);
             manager.Game.Components.Add(Dance8ths);
             manager.Game.Components.Add(LandOfSand16ths);
             manager.Game.Components.Add(Credits);
+            manager.Game.Components.Add(Ultrafix);
         }
 
     }
