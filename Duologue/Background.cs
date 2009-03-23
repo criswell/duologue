@@ -105,6 +105,9 @@ namespace Duologue
             // TODO: Add your initialization code here
             backgrounds = new Texture2D[numBackgrounds];
             center = new Vector2[numBackgrounds];
+            texture_Clouds = new Texture2D[numClouds];
+
+
             base.Initialize();
         }
 
@@ -113,7 +116,6 @@ namespace Duologue
         /// </summary>
         protected override void LoadContent()
         {
-            base.LoadContent();
             if (assets == null)
                 assets = InstanceManager.AssetManager;
 
@@ -123,10 +125,10 @@ namespace Duologue
                 center[i] = new Vector2(backgrounds[i].Width / 2f, backgrounds[i].Height / 2f);
             }
 
-            /*for (int i = 0; i < numClouds; i++)
+            for (int i = 0; i < numClouds; i++)
             {
                 texture_Clouds[i] = assets.LoadTexture2D(String.Format(filename_Cloud, i + 1));
-            }*/
+            }
 
             currentBackground = 0;
             lastBackground = numBackgrounds - 1;
@@ -134,6 +136,7 @@ namespace Duologue
             timeSinceTransitionRequest = 1f;
             currentColor = Color.White;
             lastColor = Color.White;
+            base.LoadContent();
         }
         #endregion
 

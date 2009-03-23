@@ -285,7 +285,7 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet && !dying)
             {
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
