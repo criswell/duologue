@@ -808,7 +808,7 @@ namespace Duologue.PlayObjects
 
                 // Should trigger other explosions here
                 
-                audio.soundEffects.PlayerExplosion();
+                audio.PlayEffect(EffectID.PlayerExplosion);
                 
                 // Set the graphical items
                 state = PlayerState.Dying;

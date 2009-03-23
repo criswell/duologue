@@ -9,22 +9,16 @@ using Duologue.Mimicware;
 namespace Duologue.Audio
 {
 
-    //the rule is: one sound bank = one group of effects = one EffectsGroupID
-    public enum EffectsBankID { Player, Wiggles, Plucks }
-    public enum PluckNote { A, A3, C, C3, E }
     public enum EffectID
     {
-        Clock,
-        PlayerExplosion,
-        //PlayerBeamA, currently unassigned
-        //PlayerBeamB, currently unassigned
-        CokeBottle,
-        WigglesDeath,
-        CLONK,
-        Ricochet,
-        Sploosh,
-        BuzzDeath
+        Clock, PlayerExplosion, CokeBottle, WigglesDeath, CLONK, 
+        Ricochet, Sploosh, BuzzDeath
         //,newname
+    }
+
+    public enum EffectFileID
+    {
+        PlayerExplosion
     }
 
     public class SoundEffectThing
@@ -45,39 +39,18 @@ namespace Duologue.Audio
         }
     }
 
-    public class EffectsBank : GameComponent
-    {
-        public string SoundBankName;
-        public string WaveBankName;
-        //the dictionary key is the cue name...which we also need in
-        //each of the sound effects. Crap.
-        public Dictionary<string, SoundEffectThing> Effects =
-            new Dictionary<string, SoundEffectThing>();
-        public EffectsBank(Game game, string waves, string sounds) : base(game) 
-        {
-            WaveBankName = waves;
-            SoundBankName = sounds;
-        }
-    }
-
 
     /// <summary>
     /// Convenience class. Provides no-arg methods that invoke AudioHelper generics
     /// </summary>
     public class SoundEffects
     {
+        public const string EffectsFilePath = "Audio\\PlayerEffects\\";
+        public const string PlayerExplosionFile = EffectsFilePath + "player-explosion";
+
         public const string PlayerEffectsWB = "Content\\Audio\\PlayerEffects.xwb";
         public const string PlayerEffectsSB = "Content\\Audio\\PlayerEffects.xsb";
 
-        public const string PlucksWB = "Content\\Audio\\Plucks.xwb";
-        public const string PlucksSB = "Content\\Audio\\Plucks.xsb";
-
-        public const string A = "A";
-        public const string A3 = "A3";
-        public const string C = "C";
-        public const string C3 = "C3";
-        public const string E = "E";
-        
         public const string Bamboo = "bambooclick";
         public const string Explosion = "player-explosion";
         public const string CokeBottle = "edwin_p_manchester";
@@ -89,7 +62,7 @@ namespace Duologue.Audio
         //public const string YourNewCueName = "Cue as named in XACT";
 
         protected IntensityNotifier notifier;
-        protected AudioManager audio;
+        protected DuologueGame game;
 
         private static Dictionary<EffectID, string> IDNameMap = 
             new Dictionary<EffectID, string>
@@ -102,61 +75,46 @@ namespace Duologue.Audio
                 {EffectID.Ricochet, Ricochet},
                 {EffectID.Sploosh, Sploosh},
                 {EffectID.BuzzDeath, BuzzDeath}
-
                 //,EffectID.YourNewEffectID, YourNewCueName
             };
 
-        private static Dictionary<PluckNote, string> PluckMap =
-            new Dictionary<PluckNote, string>
+        private static Dictionary<EffectFileID, string> IDFileMap =
+            new Dictionary<EffectFileID, string>
             {
-                {PluckNote.A, A},
-                {PluckNote.A3, A3},
-                {PluckNote.C, C},
-                {PluckNote.C3, C3},
-                {PluckNote.E, E}
+                {EffectFileID.PlayerExplosion, PlayerExplosionFile}
             };
 
-        private EffectsBank playerBank;
-        private EffectsBank plucksBank;
-
-        public SoundEffects(AudioManager manager)//FIXME Don't need the argument, ServiceLocator finds it
+        public SoundEffects()
         {
             notifier = ServiceLocator.GetService<IntensityNotifier>();
-            audio = ServiceLocator.GetService<AudioManager>();
-
-            playerBank = new EffectsBank(audio.Game, PlayerEffectsWB, PlayerEffectsSB);
+            game = ServiceLocator.GetService<DuologueGame>();
 
             List<string> effectNames = new List<string>();
             foreach (string name in IDNameMap.Values)
             {
                 effectNames.Add(name);
-                playerBank.Effects.Add(name, new SoundEffectThing(name));
             }
             AudioHelper.Preload(PlayerEffectsSB, PlayerEffectsWB, effectNames);
-
-            plucksBank = new EffectsBank(audio.Game, PlucksWB, PlucksSB);
-
-            List<string> plucksNames = new List<string>();
-            foreach (string name in PluckMap.Values)
-            {
-                plucksNames.Add(name);
-                plucksBank.Effects.Add(name, new SoundEffectThing(name));
-            }
-            AudioHelper.Preload(PlucksSB, PlucksWB, plucksNames);
-
             notifier.Changed += new IntensityEventHandler(UpdateIntensity);
         }
 
         public void PlayEffect(EffectID ID)
         {
             AudioHelper.PlayCue(PlayerEffectsSB, IDNameMap[ID]);
-            //I want this to be:
+            //FIXME I want this to be:
             //AudioManager.PlayEffect(EffectsMap[ID]);
         }
 
-        public void PlayPluckNote(PluckNote note)
+        public SoundEffectInstance PlayEffectFile(EffectFileID ID, 
+            float volume, float pitch, float pan)
         {
-            AudioHelper.PlayCue(PlucksSB, PluckMap[note]);
+            SoundEffect effect = game.Content.Load<SoundEffect>(IDFileMap[ID]);
+            return effect.Play(volume, pitch, pan, false);
+        }
+
+        public SoundEffectInstance PlayEffectFile(EffectFileID ID)
+        {
+            return PlayEffectFile(ID, 1f, 0f, 0f);
         }
 
         public void StopEffect(EffectID ID)
@@ -185,17 +143,26 @@ namespace Duologue.Audio
             }
             else
             {
-                SoundEffect explosion = audio.Game.Content.Load<SoundEffect>
-                    ("Audio\\PlayerEffects\\player-explosion");
-                SoundEffectInstance explosionInstance = explosion.Play();
-                //SoundEffectInstance highBlast = explosion.Play(.4f, 1f, .3f, false);
-                //SoundEffectInstance deepBlast = explosion.Play(.6f, -1f, -.3f, false);
-                GamePadHelper pad = new GamePadHelper(audio.Game, PlayerIndex.One);
-                //pad.ShakeIt(500f, 1f, 1f);
+                SoundEffectInstance explosionInstance =
+                    PlayEffectFile(EffectFileID.PlayerExplosion);
+                GamePadHelper pad = new GamePadHelper(game, PlayerIndex.One);
                 pad.ChirpIt(500f, 0f, 1f);                
             }
         }
 
+        public void FinalPlayerExplosion()
+        {
+            SoundEffectInstance explosionInstance =
+                PlayEffectFile(EffectFileID.PlayerExplosion);
+            SoundEffectInstance highBlast =
+                PlayEffectFile(EffectFileID.PlayerExplosion, .4f, 1f, .3f);
+            SoundEffectInstance deepBlast = 
+                PlayEffectFile(EffectFileID.PlayerExplosion, .6f, -1f, -.3f);
+            GamePadHelper pad = new GamePadHelper(game, PlayerIndex.One);
+            //FIXME should be for whichever player is exploding^^^^^
+            pad.ShakeIt(500f, 1f, 1f);
+        }
+        
         /// <summary>
         /// Passes the proper name parameters to the AudioHelper
         /// </summary>
@@ -204,29 +171,5 @@ namespace Duologue.Audio
             PlayEffect(EffectID.Clock);
         }
 
-        public void A_()
-        {
-            PlayPluckNote(PluckNote.A);
-        }
-
-        public void A3_()
-        {
-            PlayPluckNote(PluckNote.A3);
-        }
-
-        public void C_()
-        {
-            PlayPluckNote(PluckNote.C);
-        }
-
-        public void C3_()
-        {
-            PlayPluckNote(PluckNote.C3);
-        }
-
-        public void E_()
-        {
-            PlayPluckNote(PluckNote.E);
-        }
     }
 }

@@ -31,7 +31,7 @@ namespace Duologue
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class DuologueGame : Microsoft.Xna.Framework.Game
+    public class DuologueGame : Microsoft.Xna.Framework.Game, IService
     {
         #region Constants
         /// <summary>
@@ -327,6 +327,8 @@ namespace Duologue
 
             Intensity = new IntensityNotifier();
             ServiceLocator.RegisterService(Intensity);
+
+            ServiceLocator.RegisterService(this);
 
             // Pause stuff
             LocalInstanceManager.Pause = false;

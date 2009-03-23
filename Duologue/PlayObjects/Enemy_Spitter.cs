@@ -731,13 +731,13 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, c);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
+                    audio.PlayEffect(EffectID.BuzzDeath);
                     return false;
                 }
                 else
                 {
                     TriggerShieldDisintegration(textureSpawnExplode, c, Position, 0f);
-                    audio.soundEffects.PlayEffect(EffectID.CokeBottle);
+                    audio.PlayEffect(EffectID.CokeBottle);
                     return true;
                 }
             }

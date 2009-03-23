@@ -200,7 +200,7 @@ namespace Duologue.PlayObjects
                     {
                         // We just get absorbed
                         Alive = false;
-                        audio.soundEffects.PlayEffect(EffectID.Ricochet);
+                        audio.PlayEffect(EffectID.Ricochet);
                     }
                     return true;
                 }
