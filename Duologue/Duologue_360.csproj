@@ -70,6 +70,7 @@
     <Compile Include="Audio\BeatEngine.cs" />
     <Compile Include="Audio\IntensityNotifier.cs" />
     <Compile Include="Audio\MusicFactory.cs" />
+    <Compile Include="Audio\Plucks.cs" />
     <Compile Include="Audio\Q.cs" />
     <Compile Include="Audio\ServiceLocator.cs" />
     <Compile Include="Audio\Song.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="LocalInstanceManager.cs" />
     <Compile Include="Mimicware\Fx\Particle.cs" />
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
+    <Compile Include="Mimicware\GamePadHelper.cs" />
     <Compile Include="Mimicware\Graphics\DrawableObject.cs" />
     <Compile Include="Mimicware\Localization.cs" />
     <Compile Include="Mimicware\Manager\InputManager.cs" />

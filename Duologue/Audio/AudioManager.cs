@@ -8,8 +8,7 @@ using Mimicware;
 namespace Duologue.Audio
 {
 
-    //the rule is: one sound bank = one song = one SongID
-    public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths, Credits }
+    public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths, Credits, Ultrafix }
 
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
@@ -26,7 +25,7 @@ namespace Duologue.Audio
     public class AudioManager : Microsoft.Xna.Framework.GameComponent, IService
     {
         protected AudioHelper helper;
-        public SoundEffects soundEffects;
+        protected SoundEffects soundEffects;
 
         protected SongID playingSong;
         public SongID PlayingSong
@@ -57,7 +56,7 @@ namespace Duologue.Audio
         public override void Initialize()
         {
             helper = new AudioHelper(Game, engine);
-            soundEffects = new SoundEffects(this);
+            soundEffects = new SoundEffects();
 
             Game.Components.Add(helper);
             //Game.Components.Add(soundEffects);
@@ -67,6 +66,7 @@ namespace Duologue.Audio
             songMap.Add(SongID.Dance8ths, music.Dance8ths);
             songMap.Add(SongID.LandOfSand16ths, music.LandOfSand16ths);
             songMap.Add(SongID.Credits, music.Credits);
+            songMap.Add(SongID.Ultrafix, music.Ultrafix);
 
             base.Initialize();
         }
@@ -141,6 +141,11 @@ namespace Duologue.Audio
         public bool SongIsPaused(SongID ID)
         {
             return songMap[ID].Paused;
+        }
+
+        public void PlayEffect(EffectID ID)
+        {
+            soundEffects.PlayEffect(ID);
         }
 
         public double BeatPercentage()

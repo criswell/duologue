@@ -11,7 +11,7 @@ namespace Duologue.Audio.Widgets
         public int NumberOfBeats;
         public int NumberOfTracks;
         protected float beatTimer = 0f;
-        protected float lengthOfBeat;
+        public float lengthOfBeat;
         public int currentBeat = 0;
         protected Song parentSong;
 

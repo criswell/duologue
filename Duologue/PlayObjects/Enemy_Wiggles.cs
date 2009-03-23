@@ -670,13 +670,13 @@ namespace Duologue.PlayObjects
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     //WigglesDeath
                     AudioManager am = ServiceLocator.GetService<AudioManager>();
-                    am.soundEffects.PlayEffect(EffectID.WigglesDeath);
+                    am.PlayEffect(EffectID.WigglesDeath);
                     return false;
                 }
                 else
                 {
                     AudioManager am = ServiceLocator.GetService<AudioManager>();
-                    am.soundEffects.PlayEffect(EffectID.Sploosh);
+                    am.PlayEffect(EffectID.Sploosh);
                     TriggerShieldDisintegration(invertOutlineFrames[currentFrame], c, Position, 0f);
                     return true;
                 }
