@@ -184,6 +184,14 @@ namespace Duologue.Screens
         #region Private Methods
         private void SetPositions()
         {
+            ParallaxElement pe;
+            pe.Clouds = true;
+            pe.Intensity = 1;
+            pe.Speed = -10f;
+            pe.Debris = false;
+            pe.Tint = new Color(Color.AntiqueWhite, 100);
+            LocalInstanceManager.Background.SetParallaxElement(pe, false);
+                
             position_Logo = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f, spacing_LogoStart +
                 InstanceManager.DefaultViewport.Height / 2f - totalHeight / 2f + center_Logo.Y);
@@ -566,7 +574,8 @@ namespace Duologue.Screens
                     if(timeSinceSwitch > delta_Wait)
                     {
                         timeSinceSwitch = 0;
-                        // FIXME switch on the loading indicator here
+                        LocalInstanceManager.Background.SetParallaxElement(
+                            LocalInstanceManager.Background.EmptyParallaxElement, false);
                         currentPlayObjectIndex = 0;
                         SetCurrentFilenames();
                         TriggerLoadingSpinner();
