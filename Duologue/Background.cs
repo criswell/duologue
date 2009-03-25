@@ -26,7 +26,7 @@ namespace Duologue
     {
         public int Intensity;
         public Color Tint;
-        public bool MotionPositive;
+        public float Speed;
         public bool Clouds;
         public bool Debris;
     }
@@ -41,6 +41,7 @@ namespace Duologue
         private const string filename_Cloud = "Background/clouds-{0:D2}";
         private const int numBackgrounds = 5;
         private const int numClouds = 2;
+        private const int totalNumPossibleLayers = 5;
         #endregion
 
         #region Fields
@@ -64,6 +65,17 @@ namespace Duologue
         private ParallaxElement currentTopParallax;
         private ParallaxElement lastTopParallax;
         private bool topParallaxChange;
+        private ParallaxElement emptyParallax;
+        private double timeSinceTopChange;
+        private double timeSinceBottomChange;
+
+        private int[] topLayers;
+        private int[] bottomLayers;
+        private Vector2[] center_TopClouds;
+        private Vector2[] center_BottomClouds;
+
+        private float topFadeAlpha;
+        private float bottomFadeAlpha;
         #endregion
 
         #region Properties
@@ -71,6 +83,11 @@ namespace Duologue
         /// How long it takes to transition between backgrounds
         /// </summary>
         public float TransitionTime;
+
+        /// <summary>
+        /// The transition time for parallax changes
+        /// </summary>
+        public double ParallaxTransitionTime;
 
         public bool InTransition
         {
@@ -86,6 +103,14 @@ namespace Duologue
             {
                 return numBackgrounds;
             }
+        }
+
+        /// <summary>
+        /// An empty parallax element
+        /// </summary>
+        public ParallaxElement EmptyParallaxElement
+        {
+            get { return emptyParallax; }
         }
         #endregion
 
@@ -107,6 +132,20 @@ namespace Duologue
             center = new Vector2[numBackgrounds];
             texture_Clouds = new Texture2D[numClouds];
 
+            bottomParallaxChange = false;
+            topParallaxChange = false;
+
+            emptyParallax = new ParallaxElement();
+            emptyParallax.Clouds = false;
+            emptyParallax.Debris = false;
+            emptyParallax.Intensity = 0;
+            emptyParallax.Speed = 0f;
+            emptyParallax.Tint = Color.TransparentWhite;
+
+            currentBottomParallax = emptyParallax;
+            currentTopParallax = emptyParallax;
+            lastBottomParallax = emptyParallax;
+            lastTopParallax = emptyParallax;
 
             base.Initialize();
         }
@@ -133,14 +172,135 @@ namespace Duologue
             currentBackground = 0;
             lastBackground = numBackgrounds - 1;
             TransitionTime = 0.5f;
+            ParallaxTransitionTime = 0.25f;
             timeSinceTransitionRequest = 1f;
             currentColor = Color.White;
             lastColor = Color.White;
+            timeSinceBottomChange = 0;
+            timeSinceTopChange = 0;
             base.LoadContent();
         }
         #endregion
 
         #region Private methods
+        private void UpdateParallax(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DrawParallax(GameTime gameTime)
+        {
+            // Do the top
+            if (topParallaxChange)
+            {
+                DrawElement(lastTopParallax, 1f - topFadeAlpha, true);
+                DrawElement(currentTopParallax, topFadeAlpha, true);
+            }
+            else
+            {
+                DrawElement(currentTopParallax, 1f, true);
+            }
+
+            // Do the bottom
+            if (bottomParallaxChange)
+            {
+                DrawElement(lastBottomParallax, 1f - bottomFadeAlpha, false);
+                DrawElement(currentBottomParallax, bottomFadeAlpha, false);
+            }
+            else
+            {
+                DrawElement(currentBottomParallax, 1f, false);
+            }
+        }
+
+        private void DrawElement(ParallaxElement pe, float alpha, bool isTop)
+        {
+            Color c = pe.Tint;
+            c.A = (byte)((float)c.A * alpha);
+
+            if (isTop)
+            {
+                // Draw the top
+                int i = pe.Intensity;
+                if (i > 0)
+                {
+                    // We do nothing if the intensity is zero
+                    if (i > totalNumPossibleLayers)
+                        i = totalNumPossibleLayers;
+                    i--;
+
+                    for (int t = 0; t < i; t++)
+                    {
+                        DrawLayer(
+                            texture_Clouds[topLayers[t]],
+                            Vector2.Zero,
+                            center_TopClouds[t],
+                            c,
+                            true);
+                    }
+                }
+            }
+            else
+            {
+                // Draw the bottom
+                // Draw the top
+                int i = pe.Intensity;
+                if (i > 0)
+                {
+                    // We do nothing if the intensity is zero
+                    if (i > totalNumPossibleLayers)
+                        i = totalNumPossibleLayers;
+                    i--;
+
+                    for (int t = 0; t < i; t++)
+                    {
+                        DrawLayer(
+                            texture_Clouds[bottomLayers[t]],
+                            Vector2.Zero,
+                            center_BottomClouds[t],
+                            c,
+                            false);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draw a given layer
+        /// </summary>
+        /// <param name="texture2D">The texture to draw</param>
+        /// <param name="vector2">The position</param>
+        /// <param name="vector2_3">The center</param>
+        /// <param name="c">The color</param>
+        /// <param name="p">True if we need to flip the texture</param>
+        private void DrawLayer(
+            Texture2D texture2D, 
+            Vector2 vector2, 
+            Vector2 vector2_3, 
+            Color c, 
+            bool p)
+        {
+            SpriteEffects se = SpriteEffects.None;
+            if (p)
+                se = SpriteEffects.FlipVertically;
+
+            int maxX = (int)(((float)InstanceManager.DefaultViewport.Width + (float)texture2D.Width) / (float)texture2D.Width);
+
+            for (int x = 0; x < maxX; x++)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    texture2D,
+                    vector2 + (float)x * (float)texture2D.Width * Vector2.UnitX,
+                    vector2_3,
+                    null,
+                    c,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AbsoluteTop,
+                    se);
+            }
+        }
         #endregion
 
         #region Public methods
@@ -172,6 +332,29 @@ namespace Duologue
             timeSinceTransitionRequest = 0f;
             lastColor = Color.White;
             currentColor = new Color(Vector4.Zero);
+        }
+
+        /// <summary>
+        /// Set the next parallax element
+        /// </summary>
+        /// <param name="pe">The parallax element to transition to</param>
+        /// <param name="top">Set to true if you want the top parallax, false if the bottom</param>
+        public void SetParallaxElement(ParallaxElement pe, bool top)
+        {
+            if (top)
+            {
+                lastTopParallax = currentTopParallax;
+                currentTopParallax = pe;
+                topParallaxChange = true;
+                timeSinceTopChange = 0;
+            }
+            else
+            {
+                lastBottomParallax = currentBottomParallax;
+                currentBottomParallax = pe;
+                bottomParallaxChange = true;
+                timeSinceBottomChange = 0;
+            }
         }
         #endregion
 
@@ -205,6 +388,7 @@ namespace Duologue
                     InstanceManager.GraphicsDevice.Viewport.Height / 2f);
                 InstanceManager.Logger.LogEntry(screenCenter.ToString());
             }
+            UpdateParallax(gameTime);
             base.Update(gameTime);
         }
 
@@ -246,6 +430,8 @@ namespace Duologue
                     1f,
                     1f);
             }
+
+            DrawParallax(gameTime);
             base.Draw(gameTime);
         }
         #endregion
