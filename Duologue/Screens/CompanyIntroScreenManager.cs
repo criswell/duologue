@@ -71,10 +71,6 @@ namespace Duologue.Screens
         #endregion
 
         #region Update
-        /*public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }*/
         #endregion
     }
 }
