@@ -69,13 +69,11 @@ namespace Duologue
         private double timeSinceTopChange;
         private double timeSinceBottomChange;
 
-        private int[] topLayers;
-        private int[] bottomLayers;
+        private int[] cloudLayers;
         private Vector2[] center_TopClouds;
         private Vector2[] center_BottomClouds;
-
-        private float topFadeAlpha;
-        private float bottomFadeAlpha;
+        private float[] cloudLayerSpeedOffsets;
+        private float[] cloudLayerAlphaModifiers;
         #endregion
 
         #region Properties
@@ -92,6 +90,15 @@ namespace Duologue
         public bool InTransition
         {
             get { return timeSinceTransitionRequest < TransitionTime; }
+        }
+
+        public float TopFadeAlpha
+        {
+            get { return (float)timeSinceTopChange / TransitionTime; }
+        }
+        public float BottomFadeAlpha
+        {
+            get { return (float)timeSinceBottomChange / TransitionTime; }
         }
 
         /// <summary>
@@ -185,7 +192,43 @@ namespace Duologue
         #region Private methods
         private void UpdateParallax(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Update the center offsets
+            for (int i = 0; i < totalNumPossibleLayers; i++)
+            {
+                center_TopClouds[i] += Vector2.UnitX * currentTopParallax.Speed * cloudLayerSpeedOffsets[i];
+                center_BottomClouds[i] += Vector2.UnitX * currentBottomParallax.Speed * cloudLayerSpeedOffsets[i];
+
+                if (center_TopClouds[i].X > texture_Clouds[cloudLayers[i]].Width)
+                    center_TopClouds[i].X = 0;
+                else if (center_TopClouds[i].X < 0)
+                    center_TopClouds[i].X = (float)texture_Clouds[cloudLayers[i]].Width;
+
+                if (center_BottomClouds[i].X > texture_Clouds[cloudLayers[i]].Width)
+                    center_BottomClouds[i].X = 0;
+                else if (center_BottomClouds[i].X <0)
+                    center_BottomClouds[i].X = (float)texture_Clouds[cloudLayers[i]].Width;
+            }
+            
+            // Update any transitions
+            if (topParallaxChange)
+            {
+                timeSinceTopChange += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timeSinceTopChange > TransitionTime)
+                {
+                    topParallaxChange = false;
+                    timeSinceTopChange = 0;
+                }
+            }
+
+            if (bottomParallaxChange)
+            {
+                timeSinceBottomChange += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timeSinceBottomChange > TransitionTime)
+                {
+                    bottomParallaxChange = false;
+                    timeSinceBottomChange = 0;
+                }
+            }
         }
 
         private void DrawParallax(GameTime gameTime)
@@ -193,8 +236,8 @@ namespace Duologue
             // Do the top
             if (topParallaxChange)
             {
-                DrawElement(lastTopParallax, 1f - topFadeAlpha, true);
-                DrawElement(currentTopParallax, topFadeAlpha, true);
+                DrawElement(lastTopParallax, 1f - TopFadeAlpha, true);
+                DrawElement(currentTopParallax, TopFadeAlpha, true);
             }
             else
             {
@@ -204,8 +247,8 @@ namespace Duologue
             // Do the bottom
             if (bottomParallaxChange)
             {
-                DrawElement(lastBottomParallax, 1f - bottomFadeAlpha, false);
-                DrawElement(currentBottomParallax, bottomFadeAlpha, false);
+                DrawElement(lastBottomParallax, 1f - BottomFadeAlpha, false);
+                DrawElement(currentBottomParallax, BottomFadeAlpha, false);
             }
             else
             {
@@ -215,52 +258,39 @@ namespace Duologue
 
         private void DrawElement(ParallaxElement pe, float alpha, bool isTop)
         {
-            Color c = pe.Tint;
-            c.A = (byte)((float)c.A * alpha);
-
-            if (isTop)
+            // Draw the top
+            int i = pe.Intensity;
+            if (i > 0)
             {
-                // Draw the top
-                int i = pe.Intensity;
-                if (i > 0)
-                {
-                    // We do nothing if the intensity is zero
-                    if (i > totalNumPossibleLayers)
-                        i = totalNumPossibleLayers;
-                    i--;
+                // We do nothing if the intensity is zero
+                if (i > totalNumPossibleLayers)
+                    i = totalNumPossibleLayers;
+                i--;
 
+                if (isTop)
+                {
                     for (int t = 0; t < i; t++)
                     {
                         DrawLayer(
-                            texture_Clouds[topLayers[t]],
+                            texture_Clouds[cloudLayers[t]],
                             Vector2.Zero,
                             center_TopClouds[t],
-                            c,
-                            true);
+                            new Color(pe.Tint, (byte)((float)pe.Tint.A * alpha * cloudLayerAlphaModifiers[t])),
+                            isTop);
                     }
                 }
-            }
-            else
-            {
-                // Draw the bottom
-                // Draw the top
-                int i = pe.Intensity;
-                if (i > 0)
+                else
                 {
-                    // We do nothing if the intensity is zero
-                    if (i > totalNumPossibleLayers)
-                        i = totalNumPossibleLayers;
-                    i--;
-
                     for (int t = 0; t < i; t++)
                     {
                         DrawLayer(
-                            texture_Clouds[bottomLayers[t]],
-                            Vector2.Zero,
+                            texture_Clouds[cloudLayers[t]],
+                            (float)InstanceManager.DefaultViewport.Height * Vector2.UnitY,
                             center_BottomClouds[t],
-                            c,
-                            false);
+                            new Color(pe.Tint, (byte)((float)pe.Tint.A * alpha * cloudLayerAlphaModifiers[t])),
+                            isTop);
                     }
+
                 }
             }
         }
