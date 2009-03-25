@@ -40,8 +40,8 @@ namespace Duologue
         private const string filename_Background = "background-{0:00}";
         private const string filename_Cloud = "Background/clouds-{0:D2}";
         private const int numBackgrounds = 5;
-        private const int numClouds = 2;
-        private const int totalNumPossibleLayers = 5;
+        private const int numClouds = 3;
+        private const int totalNumPossibleLayers = 4;
         #endregion
 
         #region Fields
@@ -175,6 +175,39 @@ namespace Duologue
             {
                 texture_Clouds[i] = assets.LoadTexture2D(String.Format(filename_Cloud, i + 1));
             }
+
+            #region Layer definitions (hard coded bullshit)
+            // Set up the layer stuff- lots of hardcoded nastiness, can't be helped
+            cloudLayers = new int[totalNumPossibleLayers];
+            cloudLayerAlphaModifiers = new float[totalNumPossibleLayers];
+            cloudLayerSpeedOffsets = new float[totalNumPossibleLayers];
+            center_TopClouds = new Vector2[totalNumPossibleLayers];
+            center_BottomClouds = new Vector2[totalNumPossibleLayers];
+
+            cloudLayers[0] = 0;
+            center_TopClouds[0] = new Vector2(0, texture_Clouds[cloudLayers[0]].Height * 0.4f);
+            center_BottomClouds[0] = new Vector2(0, texture_Clouds[cloudLayers[0]].Height * 0.6f);
+            cloudLayerAlphaModifiers[0] = 0.25f;
+            cloudLayerSpeedOffsets[0] = 1f;
+
+            cloudLayers[1] = 1;
+            center_TopClouds[1] = new Vector2(0, texture_Clouds[cloudLayers[1]].Height * 0.5f);
+            center_BottomClouds[1] = new Vector2(0, texture_Clouds[cloudLayers[1]].Height * 0.5f);
+            cloudLayerAlphaModifiers[1] = 0.37f;
+            cloudLayerSpeedOffsets[1] = 1.4f;
+
+            cloudLayers[2] = 0;
+            center_TopClouds[2] = new Vector2(0, texture_Clouds[cloudLayers[2]].Height * 0.6f);
+            center_BottomClouds[2] = new Vector2(0, texture_Clouds[cloudLayers[2]].Height * 0.4f);
+            cloudLayerAlphaModifiers[2] = 0.5f;
+            cloudLayerSpeedOffsets[2] = 1.8f;
+
+            cloudLayers[3] = 2;
+            center_TopClouds[3] = new Vector2(0, texture_Clouds[cloudLayers[3]].Height * 1f);
+            center_BottomClouds[3] = new Vector2(0, texture_Clouds[cloudLayers[3]].Height * 1f);
+            cloudLayerAlphaModifiers[3] = 0.8f;
+            cloudLayerSpeedOffsets[3] = 2f;
+            #endregion
 
             currentBackground = 0;
             lastBackground = numBackgrounds - 1;
