@@ -133,7 +133,8 @@ namespace Duologue.Screens
                 TypesOfPlayObjects.Enemy_UncleanRot,
                 TypesOfPlayObjects.Enemy_Wiggles,
                 TypesOfPlayObjects.Player,
-                TypesOfPlayObjects.PlayerBullet
+                TypesOfPlayObjects.PlayerBullet,
+                TypesOfPlayObjects.Enemy_AnnMoeba,
             };
 
             currentPlayObjectIndex = 0;

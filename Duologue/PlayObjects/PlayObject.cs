@@ -44,6 +44,7 @@ namespace Duologue.PlayObjects
         Enemy_Ember,
         Enemy_UncleanRot,
         Enemy_Mirthworm,
+        Enemy_AnnMoeba,
     }
 
     /// <summary>
