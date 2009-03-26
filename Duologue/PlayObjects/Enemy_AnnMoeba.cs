@@ -31,10 +31,18 @@ namespace Duologue.PlayObjects
         private const string filename_GloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const string filename_Death = "Enemies/gloop/glooplet-death";
 
+        private const float radiusMultiplier = 0.8f;
+
         private const int numberOfGlobules = 5;
 
         private const double minScale = 0.6;
         private const double maxScale = 1.2;
+
+        private const double minGlobuleScale = 0.1;
+        private const double maxGlobuleScale = 0.4;
+
+        private const double minGlobuleSpeed = -2.0;
+        private const double maxGlobuleSpeed = 2.0;
         #region Force interactions
         #endregion
         #endregion
@@ -50,6 +58,7 @@ namespace Duologue.PlayObjects
         private Vector2 center_Highlight;
 
         private Vector2[] offset_Globules;
+        private Vector2[] speed_Globules;
         private float[] scale_Globules;
         private float mainScale;
         #endregion
@@ -94,6 +103,30 @@ namespace Duologue.PlayObjects
         private void LoadAndInitialize()
         {
             texture_Glooplet = InstanceManager.AssetManager.LoadTexture2D(filename_Glooplet);
+            texture_Death = InstanceManager.AssetManager.LoadTexture2D(filename_Death);
+            texture_Highlight = InstanceManager.AssetManager.LoadTexture2D(filename_GloopletHighlight);
+            center_Glooplet = new Vector2(
+                texture_Glooplet.Width / 2f, texture_Glooplet.Height / 2f);
+            center_Highlight = new Vector2(
+                texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
+
+            mainScale = (float)MWMathHelper.GetRandomInRange(minScale, maxScale);
+            scale_Globules = new float[numberOfGlobules];
+            offset_Globules = new Vector2[numberOfGlobules];
+            speed_Globules = new Vector2[numberOfGlobules];
+
+            Radius = RealSize.Length() * mainScale * radiusMultiplier;
+
+            for (int i = 0; i < numberOfGlobules; i++)
+            {
+                scale_Globules[i] = (float)MWMathHelper.GetRandomInRange(minGlobuleScale, maxGlobuleScale);
+                offset_Globules[i] = new Vector2(
+                    (float)MWMathHelper.GetRandomInRange((double)(-Radius), (double)Radius),
+                    (float)MWMathHelper.GetRandomInRange((double)(-Radius), (double)Radius));
+                speed_Globules[i] = MWMathHelper.RotateVectorByRadians(Vector2.One, (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi));
+                speed_Globules[i] *= (float)MWMathHelper.GetRandomInRange(minGlobuleSpeed, maxGlobuleSpeed);
+            }
+
             Initialized = true;
             Alive = true;
         }
