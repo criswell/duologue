@@ -167,7 +167,9 @@ namespace Duologue.PlayObjects
         #region Private methods
         private void ComputeGlobuleOffsets()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < numberOfGlobules; i++)
+            {
+            }
         }
         #endregion
 

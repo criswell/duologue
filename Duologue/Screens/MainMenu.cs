@@ -463,8 +463,15 @@ namespace Duologue.Screens
         #region Public Methods
         internal void Reset()
         {
-            if(initialized)
+            if (initialized)
+            {
                 LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
+                // Get rid of parallax
+                LocalInstanceManager.Background.SetParallaxElement(
+                    LocalInstanceManager.Background.EmptyParallaxElement, true);
+                LocalInstanceManager.Background.SetParallaxElement(
+                    LocalInstanceManager.Background.EmptyParallaxElement, false);
+            }
         }
         #endregion
 
