@@ -116,6 +116,7 @@
     <Compile Include="ParticleEffects\PlayerSmoke.cs" />
     <Compile Include="ParticleEffects\Steam.cs" />
     <Compile Include="PlayObjects\Enemy.cs" />
+    <Compile Include="PlayObjects\Enemy_AnnMoeba.cs" />
     <Compile Include="PlayObjects\Enemy_Mirthworm.cs" />
     <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />
     <Compile Include="PlayObjects\Enemy_Ember.cs" />
