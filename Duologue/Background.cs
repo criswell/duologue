@@ -389,7 +389,7 @@ namespace Duologue
         {
             lastBackground = currentBackground;
             if (backgroundNum >= numBackgrounds)
-                backgroundNum = numBackgrounds - numBackgrounds % backgroundNum;
+                backgroundNum = numBackgrounds % backgroundNum - 1;
 
             currentBackground = backgroundNum;
             timeSinceTransitionRequest = 0f;

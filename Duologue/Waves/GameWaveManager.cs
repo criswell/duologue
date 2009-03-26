@@ -167,6 +167,41 @@ namespace Duologue.Waves
             //else
                 thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Ultrafix;
 
+            // Randomize the background and parallax elements
+            thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);
+            
+            thisWave.ParallaxElementTop.Intensity = MWMathHelper.GetRandomInRange(0, 5);
+            thisWave.ParallaxElementTop.Clouds = MWMathHelper.CoinToss();
+            thisWave.ParallaxElementTop.Debris = MWMathHelper.CoinToss();
+            thisWave.ParallaxElementTop.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);
+            thisWave.ParallaxElementTop.Tint = new Color(
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(50, 255));
+
+            thisWave.ParallaxElementBottom.Intensity = MWMathHelper.GetRandomInRange(0, 5);
+            if (MWMathHelper.CoinToss())
+            {
+                thisWave.ParallaxElementBottom.Clouds = thisWave.ParallaxElementTop.Clouds;
+                thisWave.ParallaxElementBottom.Debris = thisWave.ParallaxElementTop.Debris;
+                thisWave.ParallaxElementBottom.Speed = thisWave.ParallaxElementTop.Speed;
+                thisWave.ParallaxElementBottom.Tint = thisWave.ParallaxElementTop.Tint;
+            }
+            else
+            {
+                thisWave.ParallaxElementBottom.Clouds = MWMathHelper.CoinToss();
+                thisWave.ParallaxElementBottom.Debris = MWMathHelper.CoinToss();
+                thisWave.ParallaxElementBottom.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);
+                thisWave.ParallaxElementBottom.Tint = new Color(
+                    (byte)MWMathHelper.GetRandomInRange(0, 255),
+                    (byte)MWMathHelper.GetRandomInRange(0, 255),
+                    (byte)MWMathHelper.GetRandomInRange(0, 255),
+                    (byte)MWMathHelper.GetRandomInRange(50, 255));
+
+            }
+
+
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;
 

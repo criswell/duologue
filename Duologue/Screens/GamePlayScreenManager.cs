@@ -326,6 +326,11 @@ namespace Duologue.Screens
                     waveDisplay.Text = text;
                     // Set up the background and enemies
                     LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
+                    // Set the parallax elements
+                    LocalInstanceManager.Background.SetParallaxElement(
+                        LocalInstanceManager.CurrentGameWave.ParallaxElementTop, true);
+                    LocalInstanceManager.Background.SetParallaxElement(
+                        LocalInstanceManager.CurrentGameWave.ParallaxElementBottom, false);
 
                     // Set up the exit stuff
                     currentState = GamePlayState.Delay;

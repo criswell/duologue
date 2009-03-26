@@ -144,6 +144,16 @@ namespace Duologue.Waves
         public int Background;
 
         /// <summary>
+        /// The top parallax element for this GameWave
+        /// </summary>
+        public ParallaxElement ParallaxElementTop;
+
+        /// <summary>
+        /// The bottom parallax element for this GameWave
+        /// </summary>
+        public ParallaxElement ParallaxElementBottom;
+
+        /// <summary>
         /// The color state for this wave
         /// </summary>
         public int ColorState;
@@ -192,6 +202,8 @@ namespace Duologue.Waves
             MinorWaveNumber = minorWaveNo;
             ColorState = colorState;
             CurrentWavelet = 0;
+            ParallaxElementTop = LocalInstanceManager.Background.EmptyParallaxElement;
+            ParallaxElementBottom = LocalInstanceManager.Background.EmptyParallaxElement;
         }
         #endregion
     }
