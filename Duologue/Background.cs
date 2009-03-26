@@ -187,25 +187,25 @@ namespace Duologue
             cloudLayers[0] = 0;
             center_TopClouds[0] = new Vector2(0, (float)texture_Clouds[cloudLayers[0]].Height - texture_Clouds[cloudLayers[0]].Height* 0.4f);
             center_BottomClouds[0] = new Vector2(0, (float)texture_Clouds[cloudLayers[0]].Height - texture_Clouds[cloudLayers[0]].Height * 0.4f);
-            cloudLayerAlphaModifiers[0] = 0.40f;
+            cloudLayerAlphaModifiers[0] = 0.50f;
             cloudLayerSpeedOffsets[0] = 1f;
 
             cloudLayers[1] = 1;
             center_TopClouds[1] = new Vector2(0, (float)texture_Clouds[cloudLayers[1]].Height - texture_Clouds[cloudLayers[1]].Height * 0.5f);
             center_BottomClouds[1] = new Vector2(0, (float)texture_Clouds[cloudLayers[1]].Height - texture_Clouds[cloudLayers[1]].Height * 0.5f);
-            cloudLayerAlphaModifiers[1] = 0.50f;
+            cloudLayerAlphaModifiers[1] = 0.60f;
             cloudLayerSpeedOffsets[1] = 1.5f;
 
             cloudLayers[2] = 0;
             center_TopClouds[2] = new Vector2(0, (float)texture_Clouds[cloudLayers[2]].Height - texture_Clouds[cloudLayers[2]].Height * 0.6f);
             center_BottomClouds[2] = new Vector2(0, (float)texture_Clouds[cloudLayers[2]].Height - texture_Clouds[cloudLayers[2]].Height * 0.6f);
-            cloudLayerAlphaModifiers[2] = 0.60f;
+            cloudLayerAlphaModifiers[2] = 0.70f;
             cloudLayerSpeedOffsets[2] = 2f;
 
             cloudLayers[3] = 2;
             center_TopClouds[3] = new Vector2(0, texture_Clouds[cloudLayers[3]].Height * 1f);
             center_BottomClouds[3] = new Vector2(0, texture_Clouds[cloudLayers[3]].Height * 1f);
-            cloudLayerAlphaModifiers[3] = 0.8f;
+            cloudLayerAlphaModifiers[3] = 0.9f;
             cloudLayerSpeedOffsets[3] = 2.5f;
             #endregion
 
@@ -302,7 +302,7 @@ namespace Duologue
 
                 if (isTop)
                 {
-                    for (int t = 0; t < i; t++)
+                    for (int t = 0; t <= i; t++)
                     {
                         DrawLayer(
                             texture_Clouds[cloudLayers[t]],
@@ -314,7 +314,7 @@ namespace Duologue
                 }
                 else
                 {
-                    for (int t = 0; t < i; t++)
+                    for (int t = 0; t <= i; t++)
                     {
                         DrawLayer(
                             texture_Clouds[cloudLayers[t]],
@@ -347,7 +347,7 @@ namespace Duologue
             if (p)
                 se = SpriteEffects.FlipVertically;
 
-            int maxX = (int)(((float)InstanceManager.DefaultViewport.Width + (float)texture2D.Width) / (float)texture2D.Width);
+            int maxX = (int)(((float)InstanceManager.DefaultViewport.Width + (float)texture2D.Width) / (float)texture2D.Width) + 1;
 
             for (int x = 0; x < maxX; x++)
             {

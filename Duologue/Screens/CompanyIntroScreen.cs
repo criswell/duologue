@@ -187,8 +187,9 @@ namespace Duologue.Screens
             ParallaxElement pe;
             pe.Clouds = true;
             pe.Intensity = 5;
-            pe.Speed = -10f;
+            pe.Speed = -1f;
             pe.Debris = false;
+            //pe.Tint = Color.AntiqueWhite;
             pe.Tint = new Color(Color.AntiqueWhite, 100);
             LocalInstanceManager.Background.SetParallaxElement(pe, false);
 
