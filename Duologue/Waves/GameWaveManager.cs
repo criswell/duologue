@@ -165,7 +165,7 @@ namespace Duologue.Waves
             //if (MWMathHelper.CoinToss())
                 //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Dance8ths;
             //else
-                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.LandOfSand16ths;
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Ultrafix;
 
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;

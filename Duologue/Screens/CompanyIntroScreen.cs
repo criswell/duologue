@@ -186,11 +186,13 @@ namespace Duologue.Screens
         {
             ParallaxElement pe;
             pe.Clouds = true;
-            pe.Intensity = 1;
+            pe.Intensity = 5;
             pe.Speed = -10f;
             pe.Debris = false;
             pe.Tint = new Color(Color.AntiqueWhite, 100);
             LocalInstanceManager.Background.SetParallaxElement(pe, false);
+
+            LocalInstanceManager.Background.SetParallaxElement(pe, true);
                 
             position_Logo = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f, spacing_LogoStart +
@@ -576,6 +578,8 @@ namespace Duologue.Screens
                         timeSinceSwitch = 0;
                         LocalInstanceManager.Background.SetParallaxElement(
                             LocalInstanceManager.Background.EmptyParallaxElement, false);
+                        LocalInstanceManager.Background.SetParallaxElement(
+                            LocalInstanceManager.Background.EmptyParallaxElement, true);
                         currentPlayObjectIndex = 0;
                         SetCurrentFilenames();
                         TriggerLoadingSpinner();
