@@ -184,29 +184,29 @@ namespace Duologue
             center_TopClouds = new Vector2[totalNumPossibleLayers];
             center_BottomClouds = new Vector2[totalNumPossibleLayers];
 
-            cloudLayers[0] = 0;
-            center_TopClouds[0] = new Vector2(0, (float)texture_Clouds[cloudLayers[0]].Height - texture_Clouds[cloudLayers[0]].Height* 0.4f);
-            center_BottomClouds[0] = new Vector2(0, (float)texture_Clouds[cloudLayers[0]].Height - texture_Clouds[cloudLayers[0]].Height * 0.4f);
-            cloudLayerAlphaModifiers[0] = 0.50f;
+            cloudLayers[0] = 1;
+            center_TopClouds[0] = Vector2.Zero;//new Vector2(0, (float)texture_Clouds[cloudLayers[0]].Height);
+            center_BottomClouds[0] = new Vector2(0, (float)texture_Clouds[cloudLayers[0]].Height);
+            cloudLayerAlphaModifiers[0] = 0.25f;
             cloudLayerSpeedOffsets[0] = 1f;
 
-            cloudLayers[1] = 1;
-            center_TopClouds[1] = new Vector2(0, (float)texture_Clouds[cloudLayers[1]].Height - texture_Clouds[cloudLayers[1]].Height * 0.5f);
-            center_BottomClouds[1] = new Vector2(0, (float)texture_Clouds[cloudLayers[1]].Height - texture_Clouds[cloudLayers[1]].Height * 0.5f);
-            cloudLayerAlphaModifiers[1] = 0.60f;
-            cloudLayerSpeedOffsets[1] = 1.5f;
+            cloudLayers[1] = 0;
+            center_TopClouds[1] = new Vector2(0, texture_Clouds[cloudLayers[1]].Height * 0.2f);
+            center_BottomClouds[1] = new Vector2(0, (float)texture_Clouds[cloudLayers[1]].Height - texture_Clouds[cloudLayers[1]].Height * 0.2f);
+            cloudLayerAlphaModifiers[1] = 0.5f;
+            cloudLayerSpeedOffsets[1] = 5f;
 
             cloudLayers[2] = 0;
-            center_TopClouds[2] = new Vector2(0, (float)texture_Clouds[cloudLayers[2]].Height - texture_Clouds[cloudLayers[2]].Height * 0.6f);
+            center_TopClouds[2] = new Vector2(0, texture_Clouds[cloudLayers[2]].Height * 0.6f);
             center_BottomClouds[2] = new Vector2(0, (float)texture_Clouds[cloudLayers[2]].Height - texture_Clouds[cloudLayers[2]].Height * 0.6f);
             cloudLayerAlphaModifiers[2] = 0.70f;
-            cloudLayerSpeedOffsets[2] = 2f;
+            cloudLayerSpeedOffsets[2] = 7f;
 
             cloudLayers[3] = 2;
-            center_TopClouds[3] = new Vector2(0, texture_Clouds[cloudLayers[3]].Height * 1f);
-            center_BottomClouds[3] = new Vector2(0, texture_Clouds[cloudLayers[3]].Height * 1f);
-            cloudLayerAlphaModifiers[3] = 0.9f;
-            cloudLayerSpeedOffsets[3] = 2.5f;
+            center_TopClouds[3] = new Vector2(0, texture_Clouds[cloudLayers[3]].Height*0.4f);
+            center_BottomClouds[3] = new Vector2(0, (float)texture_Clouds[cloudLayers[3]].Height - texture_Clouds[cloudLayers[3]].Height * 0.4f);
+            cloudLayerAlphaModifiers[3] = 0.5f;
+            cloudLayerSpeedOffsets[3] = 9f;
             #endregion
 
             currentBackground = 0;

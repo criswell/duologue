@@ -86,6 +86,8 @@ namespace Duologue.Screens
 
         private Color textColor;
 
+        private ParallaxElement myEmptyPE;
+
         //private Game myGame;
         private CompanyIntroScreenManager myManager;
         private IntroState myState;
@@ -186,14 +188,17 @@ namespace Duologue.Screens
         {
             ParallaxElement pe;
             pe.Clouds = true;
-            pe.Intensity = 5;
-            pe.Speed = -1f;
+            pe.Intensity = 4;
+            pe.Speed = -0.6f;
             pe.Debris = false;
-            //pe.Tint = Color.AntiqueWhite;
-            pe.Tint = new Color(Color.AntiqueWhite, 100);
+            pe.Tint = Color.Tomato;
             LocalInstanceManager.Background.SetParallaxElement(pe, false);
 
+            pe.Intensity = 1;
             LocalInstanceManager.Background.SetParallaxElement(pe, true);
+
+            myEmptyPE = LocalInstanceManager.Background.EmptyParallaxElement;
+            myEmptyPE.Speed = pe.Speed;
                 
             position_Logo = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f, spacing_LogoStart +
@@ -578,9 +583,9 @@ namespace Duologue.Screens
                     {
                         timeSinceSwitch = 0;
                         LocalInstanceManager.Background.SetParallaxElement(
-                            LocalInstanceManager.Background.EmptyParallaxElement, false);
+                            myEmptyPE, false);
                         LocalInstanceManager.Background.SetParallaxElement(
-                            LocalInstanceManager.Background.EmptyParallaxElement, true);
+                            myEmptyPE, true);
                         currentPlayObjectIndex = 0;
                         SetCurrentFilenames();
                         TriggerLoadingSpinner();
