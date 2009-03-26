@@ -191,11 +191,12 @@ namespace Duologue.Screens
             pe.Clouds = true;
             pe.Intensity = 4;
             pe.Speed = -0.6f;
-            pe.Debris = false;
+            pe.Debris = true;
             pe.Tint = Color.Tomato;
             LocalInstanceManager.Background.SetParallaxElement(pe, false);
 
             pe.Intensity = 1;
+            pe.Debris = false;
             LocalInstanceManager.Background.SetParallaxElement(pe, true);
 
             myEmptyPE = LocalInstanceManager.Background.EmptyParallaxElement;

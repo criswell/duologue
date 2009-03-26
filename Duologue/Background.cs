@@ -39,9 +39,11 @@ namespace Duologue
         #region Constants
         private const string filename_Background = "background-{0:00}";
         private const string filename_Cloud = "Background/clouds-{0:D2}";
+        private const string filename_Debris = "Background/debirs"; //HAHA lazy
         private const int numBackgrounds = 5;
         private const int numClouds = 3;
         private const int totalNumPossibleLayers = 4;
+        private const float debrisShadowOffset = -2f;
         #endregion
 
         #region Fields
@@ -59,6 +61,9 @@ namespace Duologue
 
         // Parallax items
         private Texture2D[] texture_Clouds;
+        private Texture2D texture_Debris;
+        private Vector2 center_TopDebris;
+        private Vector2 center_BottomDebris;
         private ParallaxElement currentBottomParallax;
         private ParallaxElement lastBottomParallax;
         private bool bottomParallaxChange;
@@ -74,6 +79,8 @@ namespace Duologue
         private Vector2[] center_BottomClouds;
         private float[] cloudLayerSpeedOffsets;
         private float[] cloudLayerAlphaModifiers;
+        private float debrisLayerSpeedOffset;
+        private float debrisLayerAlphaModifier;
         #endregion
 
         #region Properties
@@ -176,6 +183,8 @@ namespace Duologue
                 texture_Clouds[i] = assets.LoadTexture2D(String.Format(filename_Cloud, i + 1));
             }
 
+            texture_Debris = assets.LoadTexture2D(filename_Debris);
+
             #region Layer definitions (hard coded bullshit)
             // Set up the layer stuff- lots of hardcoded nastiness, can't be helped
             cloudLayers = new int[totalNumPossibleLayers];
@@ -207,6 +216,11 @@ namespace Duologue
             center_BottomClouds[3] = new Vector2(0, (float)texture_Clouds[cloudLayers[3]].Height - texture_Clouds[cloudLayers[3]].Height * 0.4f);
             cloudLayerAlphaModifiers[3] = 0.5f;
             cloudLayerSpeedOffsets[3] = 9f;
+
+            center_TopDebris = Vector2.Zero;
+            center_BottomDebris = new Vector2(0, (float)texture_Debris.Height);
+            debrisLayerAlphaModifier = 0.5f;
+            debrisLayerSpeedOffset = 2f;
             #endregion
 
             currentBackground = 0;
@@ -241,6 +255,18 @@ namespace Duologue
                 else if (center_BottomClouds[i].X <0)
                     center_BottomClouds[i].X = (float)texture_Clouds[cloudLayers[i]].Width;
             }
+
+            center_TopDebris += Vector2.UnitX * currentTopParallax.Speed * (currentTopParallax.Intensity+1) * debrisLayerSpeedOffset;
+            center_BottomDebris += Vector2.UnitX * currentBottomParallax.Speed * (currentBottomParallax.Intensity+1) * debrisLayerSpeedOffset;
+            if (center_TopDebris.X > texture_Debris.Width)
+                center_TopDebris.X = 0;
+            else if (center_TopDebris.X < 0)
+                center_TopDebris.X = (float)texture_Debris.Width;
+
+            if (center_BottomDebris.X > texture_Debris.Width)
+                center_BottomDebris.X = 0;
+            else if (center_BottomDebris.X < 0)
+                center_BottomDebris.X = (float)texture_Debris.Width;
             
             // Update any transitions
             if (topParallaxChange)
@@ -311,6 +337,21 @@ namespace Duologue
                             new Color(pe.Tint, (byte)((float)pe.Tint.A * alpha * cloudLayerAlphaModifiers[t])),
                             isTop);
                     }
+                    if (pe.Debris)
+                    {
+                        DrawLayer(
+                            texture_Debris,
+                            Vector2.Zero,
+                            center_TopDebris + debrisShadowOffset * Vector2.UnitX,
+                            new Color(Color.Black, (byte)((float)pe.Tint.A * alpha * debrisLayerAlphaModifier)),
+                            isTop);
+                        DrawLayer(
+                            texture_Debris,
+                            Vector2.Zero,
+                            center_TopDebris,
+                            new Color(pe.Tint, (byte)((float)pe.Tint.A * alpha * debrisLayerAlphaModifier)),
+                            isTop);
+                    }
                 }
                 else
                 {
@@ -323,7 +364,21 @@ namespace Duologue
                             new Color(pe.Tint, (byte)((float)pe.Tint.A * alpha * cloudLayerAlphaModifiers[t])),
                             isTop);
                     }
-
+                    if (pe.Debris)
+                    {
+                        DrawLayer(
+                            texture_Debris,
+                            (float)InstanceManager.DefaultViewport.Height * Vector2.UnitY,
+                            center_TopDebris + debrisShadowOffset * Vector2.UnitX,
+                            new Color(Color.Black, (byte)((float)pe.Tint.A * alpha * debrisLayerAlphaModifier)),
+                            isTop);
+                        DrawLayer(
+                            texture_Debris,
+                            (float)InstanceManager.DefaultViewport.Height * Vector2.UnitY,
+                            center_BottomDebris,
+                            new Color(pe.Tint, (byte)((float)pe.Tint.A * alpha * debrisLayerAlphaModifier)),
+                            isTop);
+                    }
                 }
             }
         }
