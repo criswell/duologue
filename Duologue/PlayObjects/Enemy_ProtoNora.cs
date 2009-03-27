@@ -51,11 +51,17 @@ namespace Duologue.PlayObjects
         private const float meanderAttract = 0.6f;
         private const float originAttract = 0.1f;
         private const float originRepluse = 0.1f;
+        private const float minOriginComfortZone = 0.5f;
 
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
         /// </summary>
         private const float standardEnemyRepulse = 5f;
+
+        /*/// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 1.2f;*/
         #endregion
         #endregion
 
@@ -79,6 +85,7 @@ namespace Duologue.PlayObjects
         private float lengthOfGlobExtension;
         private Vector2 tempOffset;
         private Vector2 offset;
+        private bool originApproach;
         //private bool isFleeing;
         #endregion
 
@@ -132,6 +139,8 @@ namespace Duologue.PlayObjects
             currentPhi = 0;
             rotation_Bubble = 0;
 
+            originApproach = true;
+
             deltaPhiForGlobules = (double)(MathHelper.TwoPi / (float)numberOfGlobules);
 
             color_Bubble = Color.Azure;
@@ -151,6 +160,19 @@ namespace Duologue.PlayObjects
                 filename_GloopletHighlight,
                 filename_Bubble
             };
+        }
+        #endregion
+
+        #region Private methods
+        /// <summary>
+        /// Returns a vector pointing to the origin
+        /// </summary>
+        private Vector2 GetVectorPointingAtOrigin()
+        {
+            Vector2 sc = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            return sc - Position;
         }
         #endregion
 
@@ -207,12 +229,43 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            // Apply offset due to attraction to center
+            tempOffset = GetVectorPointingAtOrigin();
+            float modifier = originRepluse;
+
+            if (tempOffset.Length() < minOriginComfortZone * Radius ||
+                (Position.X > InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent ||
+                Position.X < InstanceManager.DefaultViewport.Width - InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent ||
+                Position.Y > InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent ||
+                Position.Y < InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent))
+            {
+                originApproach = !originApproach;
+            }
+
+            if (originApproach)
+                modifier = originAttract;
+
+            tempOffset.Normalize();
+            offset += modifier * tempOffset;
+
+            // Apply offset due to direction field
+            tempOffset = new Vector2(
+                (float)Math.Cos(Position.Y), (float)Math.Sin(Position.X));
+            tempOffset.Normalize();
+            offset += meanderAttract * tempOffset;
+
+            // Apply the final offset to position
+            // Next apply the offset permanently
+            //if (offset.Length() >= minMovement)
+            //{
+            this.Position += offset;
+            //}
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
         }
         #endregion
 
