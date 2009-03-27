@@ -38,6 +38,8 @@ namespace Duologue.PlayObjects
 
         private const int numberOfGlobules = 5;
 
+        private const float globulesRadiusScale = 0.25f;
+
         private const double minScale = 0.6;
         private const double maxScale = 1.2;
 
@@ -47,11 +49,8 @@ namespace Duologue.PlayObjects
         private const double minGlobuleScale = 0.1;
         private const double maxGlobuleScale = 0.4;
 
-        private const double minGlobuleAddition = -1.0;
-        private const double maxGlobuleAddition = 1.0;
-
-        private const double minGlobuleMultiplication = -3.0;
-        private const double maxGlobuleMultiplication = 3.0;
+        private const double minGlobuleAddition = -10.0;
+        private const double maxGlobuleAddition = 10.0;
         #region Force interactions
         #endregion
         #endregion
@@ -73,7 +72,6 @@ namespace Duologue.PlayObjects
 
         private Vector2[] offset_Globules;
         private Vector2[] phiOperands_Addition;
-        private Vector2[] phiOperands_Multiplication;
         private float[] scale_Globules;
         private float mainScale;
 
@@ -144,7 +142,6 @@ namespace Duologue.PlayObjects
             scale_Globules = new float[numberOfGlobules];
             offset_Globules = new Vector2[numberOfGlobules];
             phiOperands_Addition = new Vector2[numberOfGlobules];
-            phiOperands_Multiplication = new Vector2[numberOfGlobules];
 
             Radius = RealSize.Length() * mainScale * radiusMultiplier * bubbleScale;
 
@@ -154,9 +151,6 @@ namespace Duologue.PlayObjects
                 phiOperands_Addition[i] = new Vector2(
                     (float)MWMathHelper.GetRandomInRange(minGlobuleAddition, maxGlobuleAddition),
                     (float)MWMathHelper.GetRandomInRange(minGlobuleAddition, maxGlobuleAddition));
-                phiOperands_Multiplication[i] = new Vector2(
-                    (float)MWMathHelper.GetRandomInRange(minGlobuleMultiplication, maxGlobuleMultiplication),
-                    (float)MWMathHelper.GetRandomInRange(minGlobuleMultiplication, maxGlobuleMultiplication));
             }
             currentPhi = 0;
             ComputeGlobuleOffsets();
@@ -188,8 +182,8 @@ namespace Duologue.PlayObjects
             for (int i = 0; i < numberOfGlobules; i++)
             {
                 offset_Globules[i] = new Vector2(
-                    (float)Math.Cos(phiOperands_Multiplication[i].X * currentPhi + phiOperands_Addition[i].X),
-                    (float)Math.Sin(phiOperands_Multiplication[i].Y * currentPhi + phiOperands_Addition[i].Y)) * Radius * 0.25f;
+                    (float)Math.Cos(currentPhi + phiOperands_Addition[i].X),
+                    (float)Math.Sin(currentPhi + phiOperands_Addition[i].Y)) * Radius * globulesRadiusScale;
             }
 
             throbScale = new Vector2(
