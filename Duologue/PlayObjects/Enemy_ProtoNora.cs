@@ -53,9 +53,6 @@ namespace Duologue.PlayObjects
         private const int realHitPointMultiplier = 5;
         #region Forces
         private const float speed = 1.1f;
-        //private const float originAttract = 1.1f;
-        //private const float originRepluse = 1.5f;
-        //private const float minOriginComfortZone = 4f;
 
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
@@ -63,11 +60,6 @@ namespace Duologue.PlayObjects
         private const float standardEnemyRepulse = 5f;
 
         private const float outsideScreenMultiplier = 2f;
-
-        /// <summary>
-        /// The minimum movement required before we register motion
-        /// </summary>
-        //private const float minMovement = 1.1f;
         #endregion
         #endregion
 
@@ -90,8 +82,6 @@ namespace Duologue.PlayObjects
         private float subGlobOffset;
         private Vector2 tempOffset;
         private Vector2 offset;
-        //private bool originApproach;
-        //private bool isFleeing;
         private double timeSinceSwitch;
         #endregion
 
@@ -151,8 +141,6 @@ namespace Duologue.PlayObjects
             Radius = RealSize.Length() * 0.5f * radiusMultiplier;
             currentPhi = 0;
             rotation_Bubble = 0;
-
-            //originApproach = true;
 
             timeSinceSwitch = 0;
 
@@ -222,13 +210,6 @@ namespace Duologue.PlayObjects
                     // We're on them, kill em
                     return pobj.TriggerHit(this);
                 }
-
-                // Beam handling
-                /*if (((Player)pobj).IsInBeam(this) == -1)
-                {
-                    isFleeing = true;
-                    LocalInstanceManager.Steam.AddParticles(Position, color_Current);
-                }*/
             }
             else if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
