@@ -55,6 +55,17 @@ namespace Duologue.PlayObjects
         private const float delta_Rotation = MathHelper.PiOver4 * 0.01f;
 
         private const double time_Spawning = 1.8;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 25;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 3;
+
         #region Force interactions
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
@@ -359,6 +370,27 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, color_Bubble);
+                    LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                        Position + offset_Globules[MWMathHelper.GetRandomInRange(0, numberOfGlobules - 1)],
+                        color_Current);
+                    Alive = false;
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
+                    /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(texture_Death, color_Bubble, Position, 0f);
+                    /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    return true;
+                }
+            }
             return false;
         }
         #endregion
