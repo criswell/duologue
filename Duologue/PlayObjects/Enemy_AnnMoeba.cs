@@ -111,7 +111,6 @@ namespace Duologue.PlayObjects
         private Vector2 center_Bubble;
         private Vector2 center_Glooplet;
         private Vector2 center_Highlight;
-        private Vector2 center_Death;
 
         private Color color_Bubble;
         private Color color_Current;
@@ -196,8 +195,6 @@ namespace Duologue.PlayObjects
                 texture_Glooplet.Width / 2f, texture_Glooplet.Height / 2f);
             center_Highlight = new Vector2(
                 texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
-            center_Death = new Vector2(
-                texture_Death.Width / 2f, texture_Death.Height / 2f);
 
             mainScale = (float)MWMathHelper.GetRandomInRange(minScale, maxScale);
             scale_Globules = new float[numberOfGlobules];
