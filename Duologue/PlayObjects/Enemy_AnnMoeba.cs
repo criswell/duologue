@@ -146,7 +146,7 @@ namespace Duologue.PlayObjects
             phiOperands_Addition = new Vector2[numberOfGlobules];
             phiOperands_Multiplication = new Vector2[numberOfGlobules];
 
-            Radius = RealSize.Length() * mainScale * radiusMultiplier;
+            Radius = RealSize.Length() * mainScale * radiusMultiplier * bubbleScale;
 
             for (int i = 0; i < numberOfGlobules; i++)
             {
@@ -189,34 +189,34 @@ namespace Duologue.PlayObjects
             {
                 offset_Globules[i] = new Vector2(
                     (float)Math.Cos(phiOperands_Multiplication[i].X * currentPhi + phiOperands_Addition[i].X),
-                    (float)Math.Sin(phiOperands_Multiplication[i].Y * currentPhi + phiOperands_Addition[i].Y)) * Radius;
+                    (float)Math.Sin(phiOperands_Multiplication[i].Y * currentPhi + phiOperands_Addition[i].Y)) * Radius * 0.25f;
             }
 
             throbScale = new Vector2(
                 (maxThrobScale - minThrobScale) * (float)Math.Cos(currentPhi) + minThrobScale,
-                (maxThrobScale - minThrobScale) * (float)Math.Sin(currentPhi) + minThrobScale);
+                (maxThrobScale - minThrobScale) * (float)Math.Sin(currentPhi) + minThrobScale) * bubbleScale * mainScale;
         }
         #endregion
 
         #region Public overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return false;
         }
         #endregion
 
