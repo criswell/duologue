@@ -31,15 +31,19 @@ namespace Duologue.PlayObjects
         private const string filename_GloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const string filename_Bubble = "Enemies/iridescent_bubble";
 
-        private const float radiusMultiplier = 0.6f;
+        private const float radiusMultiplier = 0.4f;
 
         private const int numberOfGlobules = 5;
 
         private const float minThrobScale = 0.9f;
         private const float maxThrobScale = 1.1f;
 
-        private const float scale_MainGlob = 1.2f;
+        private const float scale_MainGlob = 0.85f;
         private const float scale_SubGlobs = 0.35f;
+
+        private const double timeBetweenTurns = 1.1;
+        private const double minTurnAngle = -1f * MathHelper.PiOver4;
+        private const double maxTurnAngle = MathHelper.PiOver4;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -48,20 +52,22 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const int realHitPointMultiplier = 5;
         #region Forces
-        private const float meanderAttract = 0.6f;
-        private const float originAttract = 0.1f;
-        private const float originRepluse = 0.1f;
-        private const float minOriginComfortZone = 0.5f;
+        private const float speed = 1.1f;
+        //private const float originAttract = 1.1f;
+        //private const float originRepluse = 1.5f;
+        //private const float minOriginComfortZone = 4f;
 
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
         /// </summary>
         private const float standardEnemyRepulse = 5f;
 
-        /*/// <summary>
+        private const float outsideScreenMultiplier = 2f;
+
+        /// <summary>
         /// The minimum movement required before we register motion
         /// </summary>
-        private const float minMovement = 1.2f;*/
+        //private const float minMovement = 1.1f;
         #endregion
         #endregion
 
@@ -80,13 +86,13 @@ namespace Duologue.PlayObjects
         private double deltaPhiForGlobules;
         private Color color_Bubble;
         private float rotation_Bubble;
-        private float subGlobOffset;
         private Color color_Current;
-        private float lengthOfGlobExtension;
+        private float subGlobOffset;
         private Vector2 tempOffset;
         private Vector2 offset;
-        private bool originApproach;
+        //private bool originApproach;
         //private bool isFleeing;
+        private double timeSinceSwitch;
         #endregion
 
         #region Constructor / Init
@@ -111,7 +117,14 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             Position = startPos;
-            Orientation = startOrientation;
+            if (startOrientation == Vector2.Zero)
+            {
+                Orientation = GetStartingVector();
+            }
+            else
+            {
+                Orientation = startOrientation;
+            }
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             if (hitPoints == null)
@@ -135,18 +148,20 @@ namespace Duologue.PlayObjects
             center_Highlight = new Vector2(
                 texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
 
-            Radius = RealSize.Length() * radiusMultiplier;
+            Radius = RealSize.Length() * 0.5f * radiusMultiplier;
             currentPhi = 0;
             rotation_Bubble = 0;
 
-            originApproach = true;
+            //originApproach = true;
+
+            timeSinceSwitch = 0;
 
             deltaPhiForGlobules = (double)(MathHelper.TwoPi / (float)numberOfGlobules);
 
             color_Bubble = Color.Azure;
             color_Current = GetMyColor(ColorState.Medium);
 
-            lengthOfGlobExtension = center_Gloop.Length() * scale_MainGlob + center_Gloop.Length() * scale_SubGlobs;
+            subGlobOffset = (center_Gloop.Length() * scale_MainGlob + center_Gloop.Length() * scale_SubGlobs) /2f;
 
             Alive = true;
             Initialized = true;
@@ -173,6 +188,18 @@ namespace Duologue.PlayObjects
                     InstanceManager.DefaultViewport.Width / 2f,
                     InstanceManager.DefaultViewport.Height / 2f);
             return sc - Position;
+        }
+        /// <summary>
+        /// Get a starting vector for this dude
+        /// </summary>
+        private Vector2 GetStartingVector()
+        {
+            // Just aim at the center of screen for now
+            Vector2 temp = GetVectorPointingAtOrigin() + new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-.5, .5),
+                (float)MWMathHelper.GetRandomInRange(-.5, .5));
+            temp.Normalize();
+            return temp;
         }
         #endregion
 
@@ -230,36 +257,36 @@ namespace Duologue.PlayObjects
         public override bool ApplyOffset()
         {
             // Apply offset due to attraction to center
-            tempOffset = GetVectorPointingAtOrigin();
-            float modifier = originRepluse;
+            Orientation.Normalize();
 
-            if (tempOffset.Length() < minOriginComfortZone * Radius ||
-                (Position.X > InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent ||
-                Position.X < InstanceManager.DefaultViewport.Width - InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent ||
-                Position.Y > InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent ||
-                Position.Y < InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent))
+            offset += Orientation * speed;
+
+            this.Position += offset;
+            Orientation = offset;
+
+            // Check boundaries
+            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
             {
-                originApproach = !originApproach;
+                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
+                Orientation = GetVectorPointingAtOrigin();
+            }
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+            {
+                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
+                Orientation = GetVectorPointingAtOrigin();
             }
 
-            if (originApproach)
-                modifier = originAttract;
+            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
+            {
+                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
+                Orientation = GetVectorPointingAtOrigin();
+            }
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
+            {
+                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
+                Orientation = GetVectorPointingAtOrigin();
+            }
 
-            tempOffset.Normalize();
-            offset += modifier * tempOffset;
-
-            // Apply offset due to direction field
-            tempOffset = new Vector2(
-                (float)Math.Cos(Position.Y), (float)Math.Sin(Position.X));
-            tempOffset.Normalize();
-            offset += meanderAttract * tempOffset;
-
-            // Apply the final offset to position
-            // Next apply the offset permanently
-            //if (offset.Length() >= minMovement)
-            //{
-            this.Position += offset;
-            //}
             return true;
         }
 
@@ -300,7 +327,7 @@ namespace Duologue.PlayObjects
                         (float)Math.Cos(i * deltaPhiForGlobules + currentPhi),
                         (float)Math.Sin(i * deltaPhiForGlobules + currentPhi));
                 tempOffset.Normalize();
-                tempOffset = tempOffset * lengthOfGlobExtension;
+                tempOffset = tempOffset * (subGlobOffset * (float)Math.Cos(currentPhi) + 5f);
 
                 InstanceManager.RenderSprite.Draw(
                     texture_Gloop,
@@ -344,6 +371,15 @@ namespace Duologue.PlayObjects
             currentPhi += gameTime.ElapsedGameTime.TotalSeconds;
             if (currentPhi > MathHelper.TwoPi)
                 currentPhi = 0;
+
+            timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeSinceSwitch > timeBetweenTurns)
+            {
+                // Turn randomly
+                Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
+                    (float)MWMathHelper.GetRandomInRange(minTurnAngle, maxTurnAngle));
+                timeSinceSwitch = 0;
+            }
         }
         #endregion
     }
