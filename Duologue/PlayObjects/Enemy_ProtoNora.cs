@@ -41,7 +41,8 @@ namespace Duologue.PlayObjects
         private const float scale_MainGlob = 0.85f;
         private const float scale_SubGlobs = 0.35f;
 
-        private const double timeBetweenTurns = 1.1;
+        private const double timeBetweenTurns = 3.1;
+        private const double shieldCoolOffTime = 0.6;
         private const double minTurnAngle = -1f * MathHelper.PiOver4;
         private const double maxTurnAngle = MathHelper.PiOver4;
 
@@ -60,7 +61,7 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPointMultiplier = 20;
+        private const int realHitPointMultiplier = 10;
 
         private const float vertHighlightOffset = -10f;
         #region Forces
@@ -93,6 +94,7 @@ namespace Duologue.PlayObjects
         private Vector2 tempOffset;
         private Vector2 offset;
         private double timeSinceSwitch;
+        private double shieldCoolOff;
         #endregion
 
         #region Constructor / Init
@@ -117,14 +119,7 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             Position = startPos;
-            if (startOrientation == Vector2.Zero)
-            {
-                Orientation = GetStartingVector();
-            }
-            else
-            {
-                Orientation = startOrientation;
-            }
+            Orientation = GetStartingVector();
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             if (hitPoints == null || (int)hitPoints == 0)
@@ -153,6 +148,7 @@ namespace Duologue.PlayObjects
             rotation_Bubble = 0;
 
             timeSinceSwitch = 0;
+            shieldCoolOff = 0;
 
             deltaPhiForGlobules = (double)(MathHelper.TwoPi / (float)numberOfGlobules);
 
@@ -251,25 +247,25 @@ namespace Duologue.PlayObjects
             if (this.Position.X < -1 * RealSize.X)
             {
                 this.Position.X = -1 * RealSize.X;
-                Orientation = GetVectorPointingAtOrigin();
+                Orientation = GetStartingVector();
             }
             else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X)
             {
                 this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X;
-                Orientation = GetVectorPointingAtOrigin();
+                Orientation = GetStartingVector();
             }
 
             if (this.Position.Y < -1 * RealSize.Y)
             {
                 this.Position.Y = -1 * RealSize.Y;
-                Orientation = GetVectorPointingAtOrigin();
+                Orientation = GetStartingVector();
             }
             else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y)
             {
                 this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y;
-                Orientation = GetVectorPointingAtOrigin();
+                Orientation = GetStartingVector();
             }
-            
+
             Orientation.Normalize();
 
             offset += Orientation * speed;
@@ -282,9 +278,10 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet && shieldCoolOff >= shieldCoolOffTime)
             {
                 CurrentHitPoints--;
+                shieldCoolOff = 0;
                 if (CurrentHitPoints <= 0)
                 {
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
@@ -395,13 +392,18 @@ namespace Duologue.PlayObjects
                 currentPhi = 0;
 
             timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
-            if (timeSinceSwitch > timeBetweenTurns)
+            if (timeSinceSwitch > timeBetweenTurns &&
+                InstanceManager.DefaultViewport.TitleSafeArea.Contains((int)Position.X,(int)Position.Y))
             {
                 // Turn randomly
                 Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
                     (float)MWMathHelper.GetRandomInRange(minTurnAngle, maxTurnAngle));
                 timeSinceSwitch = 0;
             }
+
+            shieldCoolOff += gameTime.ElapsedGameTime.TotalSeconds;
+            if (shieldCoolOff > shieldCoolOffTime)
+                shieldCoolOff = shieldCoolOffTime;
         }
         #endregion
     }
