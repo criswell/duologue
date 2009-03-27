@@ -129,18 +129,6 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const int numberOfFramesForSpitDroppingEvaporate = 10;
 
-        /*
-        /// <summary>
-        /// The starting alpha for a given spit dropping
-        /// </summary>
-        private const byte startingSpitDroppingAlpha = 200;
-
-        /// <summary>
-        /// The ending alpha for a givem spit dropping
-        /// </summary>
-        private const byte endingSpitDroppingAlpha = 20;
-        */
-
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
         /// </summary>

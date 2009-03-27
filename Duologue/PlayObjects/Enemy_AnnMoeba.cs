@@ -37,6 +37,7 @@ namespace Duologue.PlayObjects
         private const float radiusMultiplier = 0.8f;
 
         private const int numberOfGlobules = 5;
+        private const int numberOfSpawnlets = 6;
 
         private const float globulesRadiusScale = 0.25f;
 
@@ -53,6 +54,15 @@ namespace Duologue.PlayObjects
         private const double maxGlobuleAddition = 10.0;
 
         private const float delta_Rotation = MathHelper.PiOver4 * 0.01f;
+
+        private const double time_Spawning = 1.8;
+        private const double minSpawnStartTime = 0;
+        private const double maxSpawnStartTime = 0.5;
+
+        private const float maxSpawnScale = 2.5f;
+        private const float minSpawnScale = 0.1f;
+        private const double minSpawnDelta = 0.002;
+        private const double maxSpawnDelta = 0.02;
         #region Force interactions
         #endregion
         #endregion
@@ -68,6 +78,7 @@ namespace Duologue.PlayObjects
         private Vector2 center_Bubble;
         private Vector2 center_Glooplet;
         private Vector2 center_Highlight;
+        private Vector2 center_Death;
 
         private Color color_Bubble;
         private Color color_Current;
@@ -77,10 +88,17 @@ namespace Duologue.PlayObjects
         private float[] scale_Globules;
         private float mainScale;
 
+        private float[] scale_Spawnlets;
+        private float[] delta_SpawnScale;
+        private float[] rotation_Spawnlets;
+
         private Vector2 throbScale;
 
         private double currentPhi;
         private float bubbleRotation;
+
+        private bool isSpawning;
+        private double timeSinceSwitch;
         #endregion
 
         #region Constructor / Init
@@ -139,6 +157,8 @@ namespace Duologue.PlayObjects
                 texture_Glooplet.Width / 2f, texture_Glooplet.Height / 2f);
             center_Highlight = new Vector2(
                 texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
+            center_Death = new Vector2(
+                texture_Death.Width / 2f, texture_Death.Height / 2f);
 
             mainScale = (float)MWMathHelper.GetRandomInRange(minScale, maxScale);
             scale_Globules = new float[numberOfGlobules];
@@ -159,8 +179,22 @@ namespace Duologue.PlayObjects
 
             bubbleRotation = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
 
-            color_Bubble = new Color(2, 109, 74, 200);
+            color_Bubble = new Color(2, 109, 74);
             color_Current = GetMyColor(ColorState.Medium);
+
+            // Spawn stuff
+            scale_Spawnlets = new float[numberOfSpawnlets];
+            delta_SpawnScale = new float[numberOfSpawnlets];
+            rotation_Spawnlets = new float[numberOfSpawnlets];
+
+            for (int i = 0; i < numberOfSpawnlets; i++)
+            {
+                scale_Spawnlets[i] = (float)MWMathHelper.GetRandomInRange(minSpawnScale, maxSpawnScale);
+                GenerateStartingSpawntlet(i);
+            }
+
+            isSpawning = true;
+            timeSinceSwitch = 0;
 
             Initialized = true;
             Alive = true;
@@ -192,6 +226,12 @@ namespace Duologue.PlayObjects
                 (maxThrobScale - minThrobScale) * (float)Math.Cos(currentPhi) + minThrobScale,
                 (maxThrobScale - minThrobScale) * (float)Math.Sin(currentPhi) + minThrobScale) * bubbleScale * mainScale;
         }
+
+        private void GenerateStartingSpawntlet(int i)
+        {
+            delta_SpawnScale[i] = (float)MWMathHelper.GetRandomInRange(minSpawnDelta, maxSpawnDelta);
+            rotation_Spawnlets[i] = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
+        }
         #endregion
 
         #region Public overrides
@@ -219,43 +259,77 @@ namespace Duologue.PlayObjects
         #region Public Draw/Update
         public override void Draw(GameTime gameTime)
         {
-            // Start by doing the innards
-            for (int i = 0; i < numberOfGlobules; i++)
+            if (isSpawning)
             {
+                // Start by doing the bubble
                 InstanceManager.RenderSprite.Draw(
-                    texture_Glooplet,
-                    Position + offset_Globules[i],
-                    center_Glooplet,
+                    texture_Bubble,
+                    Position,
+                    center_Bubble,
                     null,
-                    color_Current,
-                    0f,
-                    scale_Globules[i],
+                    new Color(Color.White, (float)(timeSinceSwitch / time_Spawning)),
+                    bubbleRotation,
+                    throbScale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlend);
 
+                // Now do the spawnlets
+                for (int i = 0; i < numberOfSpawnlets; i++)
+                {
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Death,
+                        Position,
+                        center_Death,
+                        null,
+                        new Color(color_Bubble, 
+                            1f -
+                            scale_Spawnlets[i] / maxSpawnScale),
+                        rotation_Spawnlets[i],
+                        scale_Spawnlets[i],
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlend);
+                }
+            }
+            else
+            {
+                // Start by doing the innards
+                for (int i = 0; i < numberOfGlobules; i++)
+                {
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Glooplet,
+                        Position + offset_Globules[i],
+                        center_Glooplet,
+                        null,
+                        color_Current,
+                        0f,
+                        scale_Globules[i],
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlend);
+
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Highlight,
+                        Position + offset_Globules[i],
+                        center_Highlight,
+                        null,
+                        Color.White,
+                        0f,
+                        scale_Globules[i],
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                }
+
+                // Finish by doing the bubble
                 InstanceManager.RenderSprite.Draw(
-                    texture_Highlight,
-                    Position + offset_Globules[i],
-                    center_Highlight,
+                    texture_Bubble,
+                    Position,
+                    center_Bubble,
                     null,
                     Color.White,
-                    0f,
-                    scale_Globules[i],
+                    bubbleRotation,
+                    throbScale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
             }
-
-            // Finish by doing the bubble
-            InstanceManager.RenderSprite.Draw(
-                texture_Bubble,
-                Position,
-                center_Bubble,
-                null,
-                Color.White,
-                bubbleRotation,
-                throbScale,
-                0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
         }
 
         public override void Update(GameTime gameTime)
@@ -263,6 +337,25 @@ namespace Duologue.PlayObjects
             currentPhi += gameTime.ElapsedGameTime.TotalSeconds;
             if (currentPhi > MathHelper.TwoPi)
                 currentPhi = 0;
+
+            if (isSpawning)
+            {
+                timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timeSinceSwitch > time_Spawning)
+                {
+                    timeSinceSwitch = 0;
+                    isSpawning = false;
+                }
+                for (int i = 0; i < numberOfSpawnlets; i++)
+                {
+                    scale_Spawnlets[i] -= delta_SpawnScale[i];
+                    if (scale_Spawnlets[i] < minSpawnScale)
+                    {
+                        scale_Spawnlets[i] = maxSpawnScale;
+                        GenerateStartingSpawntlet(i);
+                    }
+                }
+            }
 
             bubbleRotation += delta_Rotation;
             if (bubbleRotation > MathHelper.TwoPi)
