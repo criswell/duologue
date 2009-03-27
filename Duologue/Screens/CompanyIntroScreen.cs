@@ -188,15 +188,12 @@ namespace Duologue.Screens
         private void SetPositions()
         {
             ParallaxElement pe;
-            pe.Clouds = true;
-            pe.Intensity = 4;
+            pe.Intensity = 5;
             pe.Speed = -0.6f;
-            pe.Debris = true;
             pe.Tint = Color.Tomato;
             LocalInstanceManager.Background.SetParallaxElement(pe, false);
 
             pe.Intensity = 1;
-            pe.Debris = false;
             LocalInstanceManager.Background.SetParallaxElement(pe, true);
 
             myEmptyPE = LocalInstanceManager.Background.EmptyParallaxElement;
