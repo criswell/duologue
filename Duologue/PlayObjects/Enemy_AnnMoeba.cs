@@ -51,6 +51,8 @@ namespace Duologue.PlayObjects
 
         private const double minGlobuleAddition = -10.0;
         private const double maxGlobuleAddition = 10.0;
+
+        private const float delta_Rotation = MathHelper.PiOver4 * 0.01f;
         #region Force interactions
         #endregion
         #endregion
@@ -152,7 +154,7 @@ namespace Duologue.PlayObjects
                     (float)MWMathHelper.GetRandomInRange(minGlobuleAddition, maxGlobuleAddition),
                     (float)MWMathHelper.GetRandomInRange(minGlobuleAddition, maxGlobuleAddition));
             }
-            currentPhi = 0;
+            currentPhi = MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
             ComputeGlobuleOffsets();
 
             bubbleRotation = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
@@ -261,6 +263,12 @@ namespace Duologue.PlayObjects
             currentPhi += gameTime.ElapsedGameTime.TotalSeconds;
             if (currentPhi > MathHelper.TwoPi)
                 currentPhi = 0;
+
+            bubbleRotation += delta_Rotation;
+            if (bubbleRotation > MathHelper.TwoPi)
+                bubbleRotation = 0;
+            else if (bubbleRotation < 0)
+                bubbleRotation = (float)MathHelper.TwoPi;
 
             ComputeGlobuleOffsets();
         }
