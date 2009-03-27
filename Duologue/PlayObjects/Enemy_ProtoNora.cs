@@ -46,11 +46,23 @@ namespace Duologue.PlayObjects
         private const double maxTurnAngle = MathHelper.PiOver4;
 
         /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 400;
+
+        /// <summary>
+        /// The point value when my shields disintegrate if I were it at perfect beat
+        /// </summary>
+        private const int myShieldPointValue = 5;
+
+        /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPointMultiplier = 5;
+        private const int realHitPointMultiplier = 20;
+
+        private const float vertHighlightOffset = -10f;
         #region Forces
         private const float speed = 1.1f;
 
@@ -58,8 +70,6 @@ namespace Duologue.PlayObjects
         /// Standard repulsion of the enemy ships when too close
         /// </summary>
         private const float standardEnemyRepulse = 5f;
-
-        private const float outsideScreenMultiplier = 2f;
         #endregion
         #endregion
 
@@ -117,7 +127,7 @@ namespace Duologue.PlayObjects
             }
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
-            if (hitPoints == null)
+            if (hitPoints == null || (int)hitPoints == 0)
             {
                 hitPoints = 1;
             }
@@ -237,7 +247,29 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            // Apply offset due to attraction to center
+            // Check boundaries
+            if (this.Position.X < -1 * RealSize.X)
+            {
+                this.Position.X = -1 * RealSize.X;
+                Orientation = GetVectorPointingAtOrigin();
+            }
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X)
+            {
+                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X;
+                Orientation = GetVectorPointingAtOrigin();
+            }
+
+            if (this.Position.Y < -1 * RealSize.Y)
+            {
+                this.Position.Y = -1 * RealSize.Y;
+                Orientation = GetVectorPointingAtOrigin();
+            }
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y)
+            {
+                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y;
+                Orientation = GetVectorPointingAtOrigin();
+            }
+            
             Orientation.Normalize();
 
             offset += Orientation * speed;
@@ -245,34 +277,42 @@ namespace Duologue.PlayObjects
             this.Position += offset;
             Orientation = offset;
 
-            // Check boundaries
-            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
-            {
-                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
-                Orientation = GetVectorPointingAtOrigin();
-            }
-            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
-            {
-                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
-                Orientation = GetVectorPointingAtOrigin();
-            }
-
-            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
-            {
-                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
-                Orientation = GetVectorPointingAtOrigin();
-            }
-            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
-            {
-                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
-                Orientation = GetVectorPointingAtOrigin();
-            }
-
             return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
+                    Alive = false;
+                    for (int i = 0; i < numberOfGlobules; i++)
+                    {
+                        tempOffset = new Vector2(
+                            (float)Math.Cos(i * deltaPhiForGlobules + currentPhi),
+                            (float)Math.Sin(i * deltaPhiForGlobules + currentPhi));
+                        tempOffset.Normalize();
+                        tempOffset = tempOffset * (subGlobOffset * (float)Math.Cos(currentPhi) + 5f);
+                        if (MWMathHelper.CoinToss())
+                            LocalInstanceManager.EnemySplatterSystem.AddParticles(Position + tempOffset, color_Bubble);
+                        else
+                            LocalInstanceManager.EnemySplatterSystem.AddParticles(Position + tempOffset, color_Current);
+                    }
+                    /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(texture_Bubble, color_Bubble, Position, 0f);
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
+                    /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    return true;
+                }
+            }
             return true;
         }
         #endregion
@@ -293,7 +333,7 @@ namespace Duologue.PlayObjects
                 RenderSpriteBlendMode.AlphaBlend);
             InstanceManager.RenderSprite.Draw(
                 texture_Highlight,
-                Position,
+                Position + Vector2.UnitY * vertHighlightOffset,
                 center_Highlight,
                 null,
                 Color.White,
@@ -329,7 +369,8 @@ namespace Duologue.PlayObjects
                     0f,
                     scale_SubGlobs,
                     0f,
-                    RenderSpriteBlendMode.AbsoluteTop);
+                    RenderSpriteBlendMode.AbsoluteTop,
+                    SpriteEffects.FlipVertically);
             }
 
             // Draw the bubble

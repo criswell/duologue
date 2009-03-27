@@ -77,6 +77,10 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const float minPlayerComfortRadiusMultiplier = 4.4f;
 
+        private const float leaderDistance_Ignore = 4f;
+        private const float leaderDistance_maxComfortZone = 3f;
+        private const float leaderDistance_minComfortZone = 1.5f;
+
         /// <summary>
         /// The repulsion from the player if the player gets too close
         /// this should be lower than attract so that the player can bump into them
@@ -92,6 +96,21 @@ namespace Duologue.PlayObjects
         /// Our attraction to the center if we move off screen
         /// </summary>
         private const float centerAttract = 1.5f;
+
+        /// <summary>
+        /// Attraction to the leader
+        /// </summary>
+        private const float leaderAttract = 5f;
+
+        /// <summary>
+        /// Repulsion from the leader
+        /// </summary>
+        private const float leaderRepulse = 3f;
+
+        /// <summary>
+        /// The rotate speed for when we're around the leader
+        /// </summary>
+        private const float rotateSpeedLeader = 5f;
 
         /// <summary>
         /// The minimum movement required before we register motion
@@ -306,22 +325,52 @@ namespace Duologue.PlayObjects
             }
             else if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
-                // Enemy
-                Vector2 vToEnemy = pobj.Position - this.Position;
-                float len = vToEnemy.Length();
-                if (len < this.Radius + pobj.Radius)
+                if (((Enemy)pobj).MyEnemyType == EnemyType.Leader &&
+                    ((Enemy)pobj).ColorPolarity != ColorPolarity)
                 {
-                    // Too close, BTFO
-                    if (len == 0f)
+                    // We only hold allegiance to the opposite colored leaders
+                    Vector2 vToLeader = this.Position - pobj.Position;
+                    float len = vToLeader.Length();
+                    if (len < nearestLeaderRadius)
                     {
-                        // Well, bah, we're on top of each other!
-                        vToEnemy = new Vector2(
-                            (float)InstanceManager.Random.NextDouble() - 0.5f,
-                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        nearestLeaderRadius = len;
+                        nearestLeader = vToLeader;
+                        nearestLeaderObject = (Enemy)pobj;
                     }
-                    vToEnemy = Vector2.Negate(vToEnemy);
-                    vToEnemy.Normalize();
-                    offset += standardEnemyRepulse * vToEnemy;
+                    else if (len < this.Radius + pobj.Radius)
+                    {
+                        // Too close, BTFO
+                        if (len == 0f)
+                        {
+                            // Well, bah, we're on top of each other!
+                            vToLeader = new Vector2(
+                                (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        }
+                        vToLeader = Vector2.Negate(vToLeader);
+                        vToLeader.Normalize();
+                        offset += standardEnemyRepulse * vToLeader;
+                    }
+                }
+                else
+                {
+                    // Enemy
+                    Vector2 vToEnemy = pobj.Position - this.Position;
+                    float len = vToEnemy.Length();
+                    if (len < this.Radius + pobj.Radius)
+                    {
+                        // Too close, BTFO
+                        if (len == 0f)
+                        {
+                            // Well, bah, we're on top of each other!
+                            vToEnemy = new Vector2(
+                                (float)InstanceManager.Random.NextDouble() - 0.5f,
+                                (float)InstanceManager.Random.NextDouble() - 0.5f);
+                        }
+                        vToEnemy = Vector2.Negate(vToEnemy);
+                        vToEnemy.Normalize();
+                        offset += standardEnemyRepulse * vToEnemy;
+                    }
                 }
 
             }
@@ -342,6 +391,35 @@ namespace Duologue.PlayObjects
                 if (isFleeing)
                 {
                     offset += lightRepulse * nearestPlayer;
+                }
+            }
+
+            // Next, apply the leader offset
+            if (nearestLeader.Length() > 0f)
+            {
+                if (nearestLeaderRadius < leaderDistance_Ignore * nearestLeaderObject.Radius &&
+                    nearestLeaderRadius >= leaderDistance_maxComfortZone * nearestLeaderObject.Radius)
+                {
+                    // Attract
+                    nearestLeader.Normalize();
+                    offset += leaderAttract * Vector2.Negate(nearestLeader);
+                }
+                else if (nearestLeaderRadius < leaderDistance_maxComfortZone * nearestLeaderObject.Radius &&
+                    nearestLeaderRadius >= leaderDistance_minComfortZone * nearestLeaderObject.Radius)
+                {
+                    // Rotate
+                    nearestLeader.Normalize();
+
+                    nearestLeader = new Vector2(nearestLeader.Y, -nearestLeader.X);
+
+                    offset += rotateSpeedLeader * nearestLeader;
+                }
+                else if (nearestLeaderRadius < leaderDistance_minComfortZone * nearestLeaderObject.Radius)
+                {
+                    // Repulse
+                    nearestLeader.Normalize();
+
+                    offset += leaderRepulse * nearestLeader;
                 }
             }
 
