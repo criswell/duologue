@@ -264,7 +264,11 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            currentPhi += gameTime.ElapsedGameTime.TotalSeconds;
+            if (currentPhi > MathHelper.TwoPi)
+                currentPhi = 0;
+
+            ComputeGlobuleOffsets();
         }
         #endregion
     }
