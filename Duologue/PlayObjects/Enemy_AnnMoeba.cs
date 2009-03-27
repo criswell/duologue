@@ -56,6 +56,36 @@ namespace Duologue.PlayObjects
 
         private const double time_Spawning = 1.8;
         #region Force interactions
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// Min number of how many of our radius size away we're comfortable with the player
+        /// </summary>
+        private const float minPlayerComfortRadiusMultiplier = 4.4f;
+
+        /// <summary>
+        /// The repulsion from the player if the player gets too close
+        /// this should be lower than attract so that the player can bump into them
+        /// </summary>
+        private const float playerRepulse = 1.5f;
+
+        /// <summary>
+        /// Our repulsion force when we're hit by a light
+        /// </summary>
+        private const float lightRepulse = 1.2f;
+
+        /// <summary>
+        /// Our attraction to the center if we move off screen
+        /// </summary>
+        private const float centerAttract = 1.5f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 1.2f;
         #endregion
         #endregion
 
@@ -88,6 +118,15 @@ namespace Duologue.PlayObjects
         private bool isSpawning;
         private double timeSinceSwitch;
         private float spawnScale;
+
+        private Vector2 offset;
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
+        private Vector2 nearestLeader;
+        private float nearestLeaderRadius;
+        private Enemy nearestLeaderObject;
+
+        private bool isFleeing;
         #endregion
 
         #region Constructor / Init
@@ -205,21 +244,116 @@ namespace Duologue.PlayObjects
                 (maxThrobScale - minThrobScale) * (float)Math.Cos(currentPhi) + minThrobScale,
                 (maxThrobScale - minThrobScale) * (float)Math.Sin(currentPhi) + minThrobScale) * bubbleScale * mainScale;
         }
+
+        /// <summary>
+        /// Returns a vector pointing to the origin
+        /// </summary>
+        private Vector2 GetVectorPointingAtOrigin()
+        {
+            Vector2 sc = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            return sc - Position;
+        }
         #endregion
 
         #region Public overrides
         public override bool StartOffset()
         {
+            offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestPlayer = Vector2.Zero;
+            nearestLeaderRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestLeader = Vector2.Zero;
+            nearestLeaderObject = null;
+            isFleeing = false;
             return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = len;
+                    nearestPlayer = vToPlayer;
+                }
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    if(!isSpawning)
+                        return pobj.TriggerHit(this);
+                }
+
+                // Beam handling
+                if (((Player)pobj).IsInBeam(this) == -1)
+                {
+                    isFleeing = true;
+                    LocalInstanceManager.Steam.AddParticles(Position, GetMyColor());
+                }
+            }
+            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                // Enemy
+                Vector2 vToEnemy = pobj.Position - this.Position;
+                float len = vToEnemy.Length();
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // Too close, BTFO
+                    if (len == 0f)
+                    {
+                        // Well, bah, we're on top of each other!
+                        vToEnemy = new Vector2(
+                            (float)InstanceManager.Random.NextDouble() - 0.5f,
+                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                    }
+                    vToEnemy = Vector2.Negate(vToEnemy);
+                    vToEnemy.Normalize();
+                    offset += standardEnemyRepulse * vToEnemy;
+                }
+
+            }
             return true;
         }
 
         public override bool ApplyOffset()
         {
+            // First, apply the player offset
+            if (nearestPlayer.Length() > 0f)
+            {
+                nearestPlayer.Normalize();
+                if (nearestPlayerRadius < minPlayerComfortRadiusMultiplier * Radius)
+                {
+                    offset += playerRepulse * nearestPlayer;
+                }
+
+                if (isFleeing)
+                {
+                    offset += lightRepulse * nearestPlayer;
+                }
+            }
+
+            // Check boundaries
+            if (Position.X > InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent ||
+                Position.X < InstanceManager.DefaultViewport.Width - InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent ||
+                Position.Y > InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent ||
+                Position.Y < InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent)
+            {
+                Vector2 temp = GetVectorPointingAtOrigin();
+                temp.Normalize();
+                offset += centerAttract * temp;
+            }
+
+            // Next apply the offset permanently
+            if (offset.Length() >= minMovement)
+            {
+                this.Position += offset;
+            }
+
             return true;
         }
 
