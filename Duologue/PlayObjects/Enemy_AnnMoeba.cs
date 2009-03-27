@@ -41,6 +41,9 @@ namespace Duologue.PlayObjects
         private const double minScale = 0.6;
         private const double maxScale = 1.2;
 
+        private const float minThrobScale = 0.9f;
+        private const float maxThrobScale = 1.1f;
+
         private const double minGlobuleScale = 0.1;
         private const double maxGlobuleScale = 0.4;
 
@@ -66,6 +69,7 @@ namespace Duologue.PlayObjects
         private Vector2 center_Highlight;
 
         private Color color_Bubble;
+        private Color color_Current;
 
         private Vector2[] offset_Globules;
         private Vector2[] phiOperands_Addition;
@@ -73,7 +77,10 @@ namespace Duologue.PlayObjects
         private float[] scale_Globules;
         private float mainScale;
 
+        private Vector2 throbScale;
+
         private double currentPhi;
+        private float bubbleRotation;
         #endregion
 
         #region Constructor / Init
@@ -99,7 +106,14 @@ namespace Duologue.PlayObjects
             ColorPolarity startColorPolarity, 
             int? hitPoints)
         {
-            Position = startPos;
+            // We define our own start position
+            Position = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(
+                    (double)InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent,
+                    (double)InstanceManager.DefaultViewport.Width - (double)InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent),
+                (float)MWMathHelper.GetRandomInRange(
+                    (double)InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent,
+                    (double)InstanceManager.DefaultViewport.Height - (double)InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent));
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
@@ -147,7 +161,10 @@ namespace Duologue.PlayObjects
             currentPhi = 0;
             ComputeGlobuleOffsets();
 
+            bubbleRotation = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
+
             color_Bubble = new Color(2, 109, 74, 200);
+            color_Current = GetMyColor(ColorState.Medium);
 
             Initialized = true;
             Alive = true;
@@ -159,7 +176,8 @@ namespace Duologue.PlayObjects
             {
                 filename_Death,
                 filename_Glooplet,
-                filename_GloopletHighlight
+                filename_GloopletHighlight,
+                filename_Bubble
             };
         }
         #endregion
@@ -169,7 +187,14 @@ namespace Duologue.PlayObjects
         {
             for (int i = 0; i < numberOfGlobules; i++)
             {
+                offset_Globules[i] = new Vector2(
+                    (float)Math.Cos(phiOperands_Multiplication[i].X * currentPhi + phiOperands_Addition[i].X),
+                    (float)Math.Sin(phiOperands_Multiplication[i].Y * currentPhi + phiOperands_Addition[i].Y)) * Radius;
             }
+
+            throbScale = new Vector2(
+                (maxThrobScale - minThrobScale) * (float)Math.Cos(currentPhi) + minThrobScale,
+                (maxThrobScale - minThrobScale) * (float)Math.Sin(currentPhi) + minThrobScale);
         }
         #endregion
 
@@ -198,7 +223,43 @@ namespace Duologue.PlayObjects
         #region Public Draw/Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Start by doing the innards
+            for (int i = 0; i < numberOfGlobules; i++)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    texture_Glooplet,
+                    Position + offset_Globules[i],
+                    center_Glooplet,
+                    null,
+                    color_Current,
+                    0f,
+                    scale_Globules[i],
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+
+                InstanceManager.RenderSprite.Draw(
+                    texture_Highlight,
+                    Position + offset_Globules[i],
+                    center_Highlight,
+                    null,
+                    Color.White,
+                    0f,
+                    scale_Globules[i],
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
+
+            // Finish by doing the bubble
+            InstanceManager.RenderSprite.Draw(
+                texture_Bubble,
+                Position,
+                center_Bubble,
+                null,
+                Color.White,
+                bubbleRotation,
+                throbScale,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
         }
 
         public override void Update(GameTime gameTime)
