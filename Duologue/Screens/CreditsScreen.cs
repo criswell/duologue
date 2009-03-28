@@ -25,8 +25,8 @@ using Duologue.Screens;
 using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
-using Scurvy.Media.VideoModel;
-using Scurvy.Media;
+//using Scurvy.Media.VideoModel;
+//using Scurvy.Media;
 #endregion
 
 namespace Duologue.Screens
