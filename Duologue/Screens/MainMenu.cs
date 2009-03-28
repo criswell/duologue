@@ -242,6 +242,7 @@ namespace Duologue.Screens
                 else if (currentSelection == menuCredits)
                 {
                     LocalInstanceManager.CurrentGameState = GameState.Credits;
+                    
                 }
             }
             else
