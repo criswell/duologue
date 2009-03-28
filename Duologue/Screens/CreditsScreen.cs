@@ -45,8 +45,8 @@ namespace Duologue.Screens
 
         private Vector2 pos;
         private AudioManager audio;
-        private ContentManager contentMangler;
-        private Video vid;
+        //private ContentManager contentMangler;
+        //private Video vid;
         #endregion
 
         #region Properties
@@ -58,7 +58,8 @@ namespace Duologue.Screens
         {
             localGame = (DuologueGame)game;
             myManager = manager;
-            contentMangler = new VideoContentManager(game.Services);
+            //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
+            //contentMangler = new VideoContentManager(game.Services);
         }
 
         public override void Initialize()
@@ -72,8 +73,9 @@ namespace Duologue.Screens
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
             pos = new Vector2(400, 400);
 
-            vid = contentMangler.Load<Video>(vidFilename);
-            vid.Loop = false;
+            //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
+            //vid = contentMangler.Load<Video>(vidFilename);
+            //vid.Loop = false;
 
             base.LoadContent();
         }
@@ -82,24 +84,23 @@ namespace Duologue.Screens
         #region Update / Draw
         public override void Update(GameTime gameTime)
         {
-            vid.Update();
+            //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
+            //vid.Update();
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            //InstanceManager.RenderSprite.DrawString(
-            //    font,
-            //    "Placeholder for credits",
-            //    pos,
-            //    Color.Azure);
+            InstanceManager.RenderSprite.DrawString(
+                font, "Placeholder for credits", pos, Color.Azure);
 
-            if (vid.IsPlaying)
-            {
-                localGame.spriteBatch.Begin();
-                localGame.spriteBatch.Draw(vid.CurrentTexture, new Vector2(10, 10), Color.White);
-                localGame.spriteBatch.End();
-            }
+            //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
+            //if (vid.IsPlaying)
+            //{
+            //    localGame.spriteBatch.Begin();
+            //    localGame.spriteBatch.Draw(vid.CurrentTexture, new Vector2(10, 10), Color.White);
+            //    localGame.spriteBatch.End();
+            //}
 
             base.Draw(gameTime);
         }
@@ -110,8 +111,9 @@ namespace Duologue.Screens
             {
                 if (Enabled)
                 {
-                    vid.Play();
-                    /*
+                    //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
+                    //vid.Play();
+                    
                     if (audio.SongIsPaused(SongID.Credits))
                     {
                         audio.ResumeSong(SongID.Credits);
@@ -120,12 +122,13 @@ namespace Duologue.Screens
                     {
                         audio.FadeIn(SongID.Credits);
                     }
-                     */
+                    
                 }
                 else
                 {
-                    vid.Stop();
-                    //audio.PauseSong(SongID.Credits);
+                    //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
+                    //vid.Stop();
+                    audio.PauseSong(SongID.Credits);
                 }
             }
             base.OnEnabledChanged(sender, args);
