@@ -1480,12 +1480,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cred.avi">
+    <None Include="cred.avi">
       <Name>cred</Name>
       <Importer>AviVidImporter</Importer>
       <Processor>VidProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
