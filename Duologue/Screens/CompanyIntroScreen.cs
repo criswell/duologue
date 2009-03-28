@@ -135,6 +135,8 @@ namespace Duologue.Screens
                 TypesOfPlayObjects.Player,
                 TypesOfPlayObjects.PlayerBullet,
                 TypesOfPlayObjects.Enemy_AnnMoeba,
+                TypesOfPlayObjects.Enemy_ProtoNora,
+                //TypesOfPlayObjects.Enemy_RollingRock,
             };
 
             currentPlayObjectIndex = 0;

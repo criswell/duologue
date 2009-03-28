@@ -46,6 +46,7 @@ namespace Duologue.PlayObjects
         Enemy_Mirthworm,
         Enemy_AnnMoeba,
         Enemy_ProtoNora,
+        Enemy_RollingRock,
     }
 
     /// <summary>

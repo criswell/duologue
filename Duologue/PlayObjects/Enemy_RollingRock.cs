@@ -54,12 +54,12 @@ namespace Duologue.PlayObjects
         public Enemy_RollingRock(GamePlayScreenManager manager)
             : base(manager)
         {
-            MyType = TypesOfPlayObjects.Enemy_Mirthworm;
+            MyType = TypesOfPlayObjects.Enemy_RollingRock;
             MajorType = MajorPlayObjectType.Enemy;
             Initialized = false;
 
             // Set the RealSize by hand
-            RealSize = new Vector2(83, 83);
+            RealSize = new Vector2(100, 98);
             Initialized = false;
             Alive = false;
         }
