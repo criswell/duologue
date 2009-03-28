@@ -95,6 +95,9 @@ namespace Duologue.PlayObjects
         private Vector2 offset;
         private double timeSinceSwitch;
         private double shieldCoolOff;
+
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
         #endregion
 
         #region Constructor / Init
@@ -144,7 +147,7 @@ namespace Duologue.PlayObjects
                 texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
 
             Radius = RealSize.Length() * 0.5f * radiusMultiplier;
-            currentPhi = 0;
+            currentPhi = MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
             rotation_Bubble = 0;
 
             timeSinceSwitch = 0;
@@ -201,6 +204,8 @@ namespace Duologue.PlayObjects
         public override bool StartOffset()
         {
             offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestPlayer = Vector2.Zero;
             return true;
         }
 
@@ -211,6 +216,11 @@ namespace Duologue.PlayObjects
                 // Player
                 Vector2 vToPlayer = this.Position - pobj.Position;
                 float len = vToPlayer.Length();
+                if (len < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = len;
+                    nearestPlayer = vToPlayer;
+                }
                 if (len < this.Radius + pobj.Radius)
                 {
                     // We're on them, kill em
@@ -266,9 +276,20 @@ namespace Duologue.PlayObjects
                 Orientation = GetStartingVector();
             }
 
-            Orientation.Normalize();
+            if (nearestPlayer.Length() > 0f)
+            {
+                nearestPlayer += new Vector2(nearestPlayer.Y, (float)Math.Cos(currentPhi) * nearestPlayer.X);
+                nearestPlayer = Vector2.Negate(nearestPlayer);
+            }
+            else
+            {
+                // If no near player, move in previous direction
+                nearestPlayer = Orientation;
+            }
 
-            offset += Orientation * speed;
+            nearestPlayer.Normalize();
+
+            offset += speed * nearestPlayer;
 
             this.Position += offset;
             Orientation = offset;
