@@ -1466,8 +1466,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Background\debirs.png">
-      <Name>debirs</Name>
+    <Compile Include="Background\clouds-04.png">
+      <Name>clouds-04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

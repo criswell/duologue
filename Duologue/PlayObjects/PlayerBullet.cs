@@ -218,8 +218,7 @@ namespace Duologue.PlayObjects
         {
             if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
-                Alive = false;
-                pobj.TriggerHit(this);
+                Alive = pobj.TriggerHit(this);
             }
             return Alive;
         }

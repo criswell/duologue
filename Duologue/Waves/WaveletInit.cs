@@ -77,6 +77,12 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_Mirthworm:
                             Init_Mirthworm(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_AnnMoeba:
+                            Init_AnnMoeba(i, manager);
+                            break;
+                        case TypesOfPlayObjects.Enemy_ProtoNora:
+                            Init_ProtoNora(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -93,6 +99,16 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_ProtoNora(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_ProtoNora(manager);
+        }
+
+        private static void Init_AnnMoeba(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_AnnMoeba(manager);
+        }
+
         private static void Init_Mirthworm(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_Mirthworm(manager);
