@@ -69,7 +69,7 @@
     </Reference>
     <Reference Include="Scurvy.Media, Version=0.7.2009.106, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Scurvy.Media 0.7.2009.0106\x86\Scurvy.Media.dll</HintPath>
+      <HintPath>..\Scurvy.Media 0.7.2009.0106\x86\Scurvy.Media.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
