@@ -67,7 +67,6 @@
     <Compile Include="AchievementSystem\AchievementManager.cs" />
     <Compile Include="Audio\AudioHelper.cs" />
     <Compile Include="Audio\AudioManager.cs" />
-    <Compile Include="Audio\BeatEngine.cs" />
     <Compile Include="Audio\IntensityNotifier.cs" />
     <Compile Include="Audio\MusicFactory.cs" />
     <Compile Include="Audio\Plucks.cs" />
