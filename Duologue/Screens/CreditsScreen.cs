@@ -25,6 +25,8 @@ using Duologue.Screens;
 using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
+using Scurvy.Media.VideoModel;
+using Scurvy.Media;
 #endregion
 
 namespace Duologue.Screens
@@ -33,14 +35,18 @@ namespace Duologue.Screens
     {
         #region Constants
         private const string fontFilename = "Fonts/inero-50";
+        private const string vidFilename = "Content/cred";
         #endregion
 
         #region Fields
         private CreditsScreenManager myManager;
         private SpriteFont font;
+        private DuologueGame localGame;
 
         private Vector2 pos;
         private AudioManager audio;
+        private ContentManager contentMangler;
+        private Video vid;
         #endregion
 
         #region Properties
@@ -50,7 +56,9 @@ namespace Duologue.Screens
         public CreditsScreen(Game game, CreditsScreenManager manager)
             : base(game)
         {
+            localGame = (DuologueGame)game;
             myManager = manager;
+            contentMangler = new VideoContentManager(game.Services);
         }
 
         public override void Initialize()
@@ -63,6 +71,10 @@ namespace Duologue.Screens
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
             pos = new Vector2(400, 400);
+
+            vid = contentMangler.Load<Video>(vidFilename);
+            vid.Loop = false;
+
             base.LoadContent();
         }
         #endregion
@@ -70,16 +82,25 @@ namespace Duologue.Screens
         #region Update / Draw
         public override void Update(GameTime gameTime)
         {
+            vid.Update();
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            InstanceManager.RenderSprite.DrawString(
-                font,
-                "Placeholder for credits",
-                pos,
-                Color.Azure);
+            //InstanceManager.RenderSprite.DrawString(
+            //    font,
+            //    "Placeholder for credits",
+            //    pos,
+            //    Color.Azure);
+
+            if (vid.IsPlaying)
+            {
+                localGame.spriteBatch.Begin();
+                localGame.spriteBatch.Draw(vid.CurrentTexture, new Vector2(10, 10), Color.White);
+                localGame.spriteBatch.End();
+            }
+
             base.Draw(gameTime);
         }
 
@@ -89,6 +110,8 @@ namespace Duologue.Screens
             {
                 if (Enabled)
                 {
+                    vid.Play();
+                    /*
                     if (audio.SongIsPaused(SongID.Credits))
                     {
                         audio.ResumeSong(SongID.Credits);
@@ -97,10 +120,12 @@ namespace Duologue.Screens
                     {
                         audio.FadeIn(SongID.Credits);
                     }
+                     */
                 }
                 else
                 {
-                    audio.PauseSong(SongID.Credits);
+                    vid.Stop();
+                    //audio.PauseSong(SongID.Credits);
                 }
             }
             base.OnEnabledChanged(sender, args);
