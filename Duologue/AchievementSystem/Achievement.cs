@@ -1,6 +1,18 @@
+#region File Description
+#endregion
+
+#region Using statements
 using System;
 using System.Collections.Generic;
-using System.Text;
+// XNA
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Content;
+#endregion
 
 namespace Duologue.AchievementSystem
 {
@@ -19,10 +31,6 @@ namespace Duologue.AchievementSystem
         /// </summary>
         public string Description;
         /// <summary>
-        /// The points this achievement is worth
-        /// </summary>
-        public int Points;
-        /// <summary>
         /// Whether or not this player has unlocked it
         /// </summary>
         public bool Unlocked;
@@ -30,6 +38,14 @@ namespace Duologue.AchievementSystem
         /// Whether or not we've displayed this achievement
         /// </summary>
         public bool Displayed;
+        /// <summary>
+        /// The icon for this achievement
+        /// </summary>
+        public Texture2D Icon;
+        /// <summary>
+        /// The weight of this achievement
+        /// </summary>
+        public int Weight;
         #endregion
 
         #region Construct / Init
@@ -40,7 +56,6 @@ namespace Duologue.AchievementSystem
         {
             Name = null;
             Description = null;
-            Points = 0;
             Unlocked = false;
             Displayed = false;
         }
@@ -50,14 +65,12 @@ namespace Duologue.AchievementSystem
         /// </summary>
         /// <param name="name">Name of the achievement</param>
         /// <param name="description">Description of the achievement</param>
-        /// <param name="points">Points this achievement is worth</param>
-        public Achievement(string name, string description, int points)
+        public Achievement(string name, string description)
         {
             Name = name;
             Description = description;
             Unlocked = false;
             Displayed = false;
-            Points = points;
         }
         #endregion
     }

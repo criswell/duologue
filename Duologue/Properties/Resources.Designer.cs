@@ -79,15 +79,6 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.
-        /// </summary>
-        internal static string Achievement_Points_RolledScore {
-            get {
-                return ResourceManager.GetString("Achievement_Points_RolledScore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to PlayerUI/game-over_en_US.
         /// </summary>
         internal static string Filename_GameOver {

@@ -123,9 +123,6 @@
   <data name="Achievement_Name_RolledScore" xml:space="preserve">
     <value>Rolled the score</value>
   </data>
-  <data name="Achievement_Points_RolledScore" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="Filename_GameOver" xml:space="preserve">
     <value>PlayerUI/game-over_en_US</value>
   </data>
