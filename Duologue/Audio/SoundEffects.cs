@@ -135,7 +135,7 @@ namespace Duologue.Audio
         /// <summary>
         /// Passes the proper name parameters to the AudioHelper
         /// </summary>
-        public void PlayerExplosion()
+        /*public void PlayerExplosion()
         {
             if (false)
             {
@@ -148,7 +148,7 @@ namespace Duologue.Audio
                 GamePadHelper pad = new GamePadHelper(game, PlayerIndex.One);
                 pad.ChirpIt(500f, 0f, 1f);                
             }
-        }
+        }*/
 
         /*public void FinalPlayerExplosion()
         {
