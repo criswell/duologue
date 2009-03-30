@@ -28,6 +28,7 @@ namespace Mimicware
         protected float chirpChange = 0f;
         protected float chirpAmount = 0f;
         protected bool chirping = false;
+        protected bool waitingForPad = false;
         protected const float chirpStepTime = 50f; //milliseconds
 
         public GamePadHelper(Game game, PlayerIndex index)
@@ -87,7 +88,8 @@ namespace Mimicware
                     Enabled = false;
                 }
             }
-            else*/ if (chirping)
+            else*/
+            if (chirping)
             {
                 GamePad.SetVibration(player, chirpAmount, chirpAmount);
                 chirpStepTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -100,11 +102,20 @@ namespace Mimicware
                 }
                 if (gamePadTimer > durationInMs)
                 {
-                    GamePad.SetVibration(player, 0f, 0f);
+                    // If the gamepad isn't ready to shut vibration off, we need to
+                    // keep trying until it is
+                    waitingForPad = !GamePad.SetVibration(player, 0f, 0f);
                     //shaking = false;
                     chirping = false;
                     gamePadTimer = 0f;
                     durationInMs = 0f;
+                }
+            } 
+            else if(waitingForPad)
+            {
+                if (GamePad.SetVibration(player, 0f, 0f))
+                {
+                    waitingForPad = false;
                     Enabled = false;
                 }
             }
