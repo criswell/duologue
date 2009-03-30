@@ -62,6 +62,11 @@ namespace Duologue
         public static Player[] Players;
 
         /// <summary>
+        /// The local game pad helpers
+        /// </summary>
+        public static GamePadHelper[] GamePadHelpers;
+
+        /// <summary>
         /// The local score scrollers
         /// </summary>
         public static ScoreScroller[] Scores;

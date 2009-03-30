@@ -317,7 +317,7 @@ namespace Duologue.PlayObjects
             lastPosition = startPos;
             colorState = currentColorState;
 
-            myPadHelper = new GamePadHelper(audio.Game, MyPlayerIndex);
+            myPadHelper = LocalInstanceManager.GamePadHelpers[myPlayerIndexNum];
 
             // Set up the orientation related items
             lightIsNegative = true;

@@ -330,6 +330,13 @@ namespace Duologue
 
             ServiceLocator.RegisterService(this);
 
+            // Gamepad stuff
+            LocalInstanceManager.GamePadHelpers = new GamePadHelper[LocalInstanceManager.MaxNumberOfPlayers];
+            for (int i = 0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
+            {
+                LocalInstanceManager.GamePadHelpers[i] = new GamePadHelper(this, (PlayerIndex)i);
+            }
+
             // Pause stuff
             LocalInstanceManager.Pause = false;
 
