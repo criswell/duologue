@@ -155,6 +155,7 @@ namespace Duologue.PlayObjects
 
         // Audio
         private AudioManager audio;
+        private GamePadHelper myPadHelper;
         #endregion
 
         #region Properties
@@ -284,6 +285,7 @@ namespace Duologue.PlayObjects
             MyType = TypesOfPlayObjects.Player;
             MajorType = MajorPlayObjectType.Player;
             Initialized = false;
+            audio = ServiceLocator.GetService<AudioManager>();
         }
 
         /// <summary>
@@ -315,6 +317,8 @@ namespace Duologue.PlayObjects
             lastPosition = startPos;
             colorState = currentColorState;
 
+            myPadHelper = new GamePadHelper(audio.Game, MyPlayerIndex);
+
             // Set up the orientation related items
             lightIsNegative = true;
             Orientation = orientation;
@@ -334,8 +338,6 @@ namespace Duologue.PlayObjects
             state = PlayerState.Dead;
             spawnScale = startSpawnScale;
             spawnRotation = 0f;
-
-            audio = ServiceLocator.GetService<AudioManager>();
 
             Initialized = true;
         }
@@ -807,9 +809,7 @@ namespace Duologue.PlayObjects
                 LocalInstanceManager.PlayerSmoke.AddParticles(this.Position, Color.White);
 
                 // Should trigger other explosions here
-
-                GamePadHelper pad = new GamePadHelper(audio.Game, PlayerIndex.One);
-                pad.ChirpIt(500f, 0f, 1f);
+                myPadHelper.ChirpIt(500f, 0f, 1f);
                 audio.PlayEffect(EffectID.PlayerExplosion);
                 
                 // Set the graphical items
