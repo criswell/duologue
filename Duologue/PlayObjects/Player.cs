@@ -41,7 +41,6 @@ namespace Duologue.PlayObjects
         private const string filename_playerBase = "player-base";
         private const string filename_playerCannon = "player-cannon";
         private const string filename_playerLight = "player-light";
-        //private const string filename_shot = "shot";
         private const string filename_playerUIbase = "PlayerUI/P{0}-base";
         private const string filename_playerUIroot = "PlayerUI/player-root";
         private const string filename_spawnCrosshairs = "ship-spawn";
@@ -64,6 +63,7 @@ namespace Duologue.PlayObjects
         private const float maxUITransparency = 192f;
         private const int numTimesBlink = 10;
         private const float maxBlinkTimer = 0.25f;
+        private const float vibrationTimeOnDeath = 500f;
 
         /// <summary>
         /// The time it takes to finish death sequence
@@ -809,7 +809,7 @@ namespace Duologue.PlayObjects
                 LocalInstanceManager.PlayerSmoke.AddParticles(this.Position, Color.White);
 
                 // Should trigger other explosions here
-                myPadHelper.ChirpIt(500f, 0f, 1f);
+                myPadHelper.ChirpIt(vibrationTimeOnDeath, 0f, 1f);
                 audio.PlayEffect(EffectID.PlayerExplosion);
                 
                 // Set the graphical items

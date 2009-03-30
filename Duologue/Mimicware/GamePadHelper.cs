@@ -39,25 +39,22 @@ namespace Mimicware
         }
 
 
-        public void ShakeIt(float milliseconds, float lowSpeed, float highSpeed)
+        /*public void ShakeIt(float milliseconds, float lowSpeed, float highSpeed)
         {
             durationInMs = milliseconds;
             GamePad.SetVibration(player, lowSpeed, highSpeed);
             shaking = true;
             Enabled = true;
-        }
+        }*/
 
         public void ChirpIt(float milliseconds, float startSpeed, float endSpeed)
         {
-            if (!shaking)
-            {
-                durationInMs = milliseconds;
-                chirpChange = (endSpeed - startSpeed) * chirpStepTime / durationInMs;
-                chirpAmount = startSpeed;
-                shaking = true;
-                chirping = true;
-                Enabled = true;
-            }
+            durationInMs = milliseconds;
+            chirpChange = (endSpeed - startSpeed) * chirpStepTime / durationInMs;
+            chirpAmount = startSpeed;
+            shaking = true;
+            chirping = true;
+            Enabled = true;
         }
 
 

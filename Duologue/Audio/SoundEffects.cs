@@ -150,7 +150,7 @@ namespace Duologue.Audio
             }
         }
 
-        public void FinalPlayerExplosion()
+        /*public void FinalPlayerExplosion()
         {
             SoundEffectInstance explosionInstance =
                 PlayEffectFile(EffectFileID.PlayerExplosion);
@@ -158,10 +158,11 @@ namespace Duologue.Audio
                 PlayEffectFile(EffectFileID.PlayerExplosion, .4f, 1f, .3f);
             SoundEffectInstance deepBlast = 
                 PlayEffectFile(EffectFileID.PlayerExplosion, .6f, -1f, -.3f);
-            GamePadHelper pad = new GamePadHelper(game, PlayerIndex.One);
+            // Uh, do we need this?
+            //GamePadHelper pad = new GamePadHelper(game, PlayerIndex.One);
             //FIXME should be for whichever player is exploding^^^^^
-            pad.ShakeIt(500f, 1f, 1f);
-        }
+            //pad.ShakeIt(500f, 1f, 1f);
+        }*/
         
         /// <summary>
         /// Passes the proper name parameters to the AudioHelper
