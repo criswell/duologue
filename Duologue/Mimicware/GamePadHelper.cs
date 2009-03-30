@@ -22,7 +22,7 @@ namespace Mimicware
         protected PlayerIndex player;
         protected float gamePadTimer = 0f;
         protected float durationInMs = 0f;
-        protected bool shaking = false;
+        //protected bool shaking = false;
 
         protected float chirpStepTimer = 0f;
         protected float chirpChange = 0f;
@@ -52,7 +52,7 @@ namespace Mimicware
             durationInMs = milliseconds;
             chirpChange = (endSpeed - startSpeed) * chirpStepTime / durationInMs;
             chirpAmount = startSpeed;
-            shaking = true;
+            //shaking = true;
             chirping = true;
             Enabled = true;
         }
@@ -75,7 +75,7 @@ namespace Mimicware
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            if (shaking && !chirping)
+            /*if (shaking && !chirping)
             {
                 gamePadTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (gamePadTimer > durationInMs)
@@ -87,7 +87,7 @@ namespace Mimicware
                     Enabled = false;
                 }
             }
-            else if (chirping)
+            else*/ if (chirping)
             {
                 GamePad.SetVibration(player, chirpAmount, chirpAmount);
                 chirpStepTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -101,7 +101,7 @@ namespace Mimicware
                 if (gamePadTimer > durationInMs)
                 {
                     GamePad.SetVibration(player, 0f, 0f);
-                    shaking = false;
+                    //shaking = false;
                     chirping = false;
                     gamePadTimer = 0f;
                     durationInMs = 0f;
