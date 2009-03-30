@@ -358,7 +358,7 @@ namespace Duologue.PlayObjects
                 0f,
                 scale_MainGlob,
                 0f,
-                RenderSpriteBlendMode.AbsoluteTop);
+                RenderSpriteBlendMode.AlphaBlendTop);
 
             for (int i = 0; i < numberOfGlobules; i++)
             {
@@ -387,7 +387,7 @@ namespace Duologue.PlayObjects
                     0f,
                     scale_SubGlobs,
                     0f,
-                    RenderSpriteBlendMode.AbsoluteTop,
+                    RenderSpriteBlendMode.AlphaBlendTop,
                     SpriteEffects.FlipVertically);
             }
 
@@ -403,7 +403,7 @@ namespace Duologue.PlayObjects
                     (maxThrobScale - minThrobScale) * (float)Math.Cos(currentPhi) + minThrobScale,
                     (maxThrobScale - minThrobScale) * (float)Math.Sin(currentPhi) + minThrobScale),
                 0f,
-                RenderSpriteBlendMode.AbsoluteTop);
+                RenderSpriteBlendMode.AlphaBlendTop);
         }
 
         public override void Update(GameTime gameTime)

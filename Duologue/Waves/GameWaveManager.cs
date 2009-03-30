@@ -172,6 +172,8 @@ namespace Duologue.Waves
             
             thisWave.ParallaxElementTop.Intensity = MWMathHelper.GetRandomInRange(0, 6);
             thisWave.ParallaxElementTop.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);
+            if (thisWave.ParallaxElementTop.Speed == 0)
+                thisWave.ParallaxElementTop.Speed = 0.1f;
             thisWave.ParallaxElementTop.Tint = new Color(
                 (byte)MWMathHelper.GetRandomInRange(0, 255),
                 (byte)MWMathHelper.GetRandomInRange(0, 255),
@@ -187,6 +189,8 @@ namespace Duologue.Waves
             else
             {
                 thisWave.ParallaxElementBottom.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);
+                if (thisWave.ParallaxElementBottom.Speed == 0)
+                    thisWave.ParallaxElementBottom.Speed = 0.1f;
                 thisWave.ParallaxElementBottom.Tint = new Color(
                     (byte)MWMathHelper.GetRandomInRange(0, 255),
                     (byte)MWMathHelper.GetRandomInRange(0, 255),
