@@ -76,6 +76,7 @@ namespace Duologue.Waves
             #region WaveDef (1-1) "The LZ is hot!"
             Waves[GetIndex(1, 1)] = new GameWave();
             Waves[GetIndex(1, 1)].Background = 0;
+            Waves[GetIndex(1, 1)].ThrobColor = Color.Tomato;
             Waves[GetIndex(1, 1)].ColorState = 0;
             Waves[GetIndex(1, 1)].MajorWaveNumber = 1;
             Waves[GetIndex(1, 1)].MinorWaveNumber = 1;
@@ -118,6 +119,7 @@ namespace Duologue.Waves
             #region WaveDef (1-2) "The scouting party"
             Waves[GetIndex(1, 2)] = new GameWave();
             Waves[GetIndex(1, 2)].Background = 4;
+            Waves[GetIndex(1, 2)].ThrobColor = Color.SaddleBrown;
             Waves[GetIndex(1, 2)].ColorState = 1;
             Waves[GetIndex(1, 2)].MajorWaveNumber = 1;
             Waves[GetIndex(1, 2)].MinorWaveNumber = 2;
@@ -183,6 +185,7 @@ namespace Duologue.Waves
             #region WaveDef (1-3) "Bringing in the big guns"
             Waves[GetIndex(1, 3)] = new GameWave();
             Waves[GetIndex(1, 3)].Background = 2;
+            Waves[GetIndex(1, 3)].ThrobColor = Color.SeaGreen;
             Waves[GetIndex(1, 3)].ColorState = 2;
             Waves[GetIndex(1, 3)].MajorWaveNumber = 1;
             Waves[GetIndex(1, 3)].MinorWaveNumber = 3;

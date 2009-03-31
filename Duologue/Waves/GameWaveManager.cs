@@ -169,6 +169,10 @@ namespace Duologue.Waves
 
             // Randomize the background and parallax elements
             thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);
+            thisWave.ThrobColor =  new Color(
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(0, 255));
             
             thisWave.ParallaxElementTop.Intensity = MWMathHelper.GetRandomInRange(0, 6);
             thisWave.ParallaxElementTop.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);

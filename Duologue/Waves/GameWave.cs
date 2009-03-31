@@ -144,6 +144,11 @@ namespace Duologue.Waves
         public int Background;
 
         /// <summary>
+        /// The color of the throb
+        /// </summary>
+        public Color ThrobColor;
+
+        /// <summary>
         /// The top parallax element for this GameWave
         /// </summary>
         public ParallaxElement ParallaxElementTop;
@@ -186,6 +191,7 @@ namespace Duologue.Waves
         public GameWave()
         {
             CurrentWavelet = 0;
+            ThrobColor = Color.WhiteSmoke;
         }
 
         /// <summary>
@@ -202,6 +208,7 @@ namespace Duologue.Waves
             MinorWaveNumber = minorWaveNo;
             ColorState = colorState;
             CurrentWavelet = 0;
+            ThrobColor = Color.WhiteSmoke;
             ParallaxElementTop = LocalInstanceManager.Background.EmptyParallaxElement;
             ParallaxElementBottom = LocalInstanceManager.Background.EmptyParallaxElement;
         }

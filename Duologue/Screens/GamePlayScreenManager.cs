@@ -326,6 +326,7 @@ namespace Duologue.Screens
                     waveDisplay.Text = text;
                     // Set up the background and enemies
                     LocalInstanceManager.Background.SetBackground(LocalInstanceManager.CurrentGameWave.Background);
+                    LocalInstanceManager.Background.ThrobColor = LocalInstanceManager.CurrentGameWave.ThrobColor;
                     // Set the parallax elements
                     LocalInstanceManager.Background.SetParallaxElement(
                         LocalInstanceManager.CurrentGameWave.ParallaxElementTop, true);
