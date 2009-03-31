@@ -335,6 +335,14 @@ namespace Duologue.Screens
             if (LocalInstanceManager.Players == null)
                 LocalInstanceManager.InitializePlayers();
 
+            int playerCount = 0;
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+            {
+                // Figure out the number of players before hand
+                if (activePlayers[i])
+                    playerCount++;
+            }
+
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
                 LocalInstanceManager.Players[i].Active = activePlayers[i];
@@ -347,7 +355,8 @@ namespace Duologue.Screens
                         profiles[i],
                         ColorState.GetColorStates()[0],
                         GetPlayerStartPos(i),
-                        offsetModifiers[i]);
+                        offsetModifiers[i],
+                        playerCount);
 
                     LocalInstanceManager.Scores[i].SetScore(0);
                     LocalInstanceManager.Scores[i].SetPositions(

@@ -65,6 +65,8 @@ namespace Duologue.PlayObjects
         private const float maxBlinkTimer = 0.25f;
         private const float vibrationTimeOnDeath = 500f;
 
+        private const byte alphaIfOtherPlayers = 150;
+
         /// <summary>
         /// The time it takes to finish death sequence
         /// </summary>
@@ -98,6 +100,7 @@ namespace Duologue.PlayObjects
         // The beam
         private SpriteObject beam;
         private SpriteObject beamBase;
+        private int numPlayers;
         //private SpriteObject shot;
 
         // Tread items
@@ -298,6 +301,7 @@ namespace Duologue.PlayObjects
         /// <param name="currentColorState">The current color state</param>
         /// <param name="startPos">The starting position of the player</param>
         /// <param name="orientation">The starting orientation of the player</param>
+        /// <param name="numOfPlayers">The number of players this game</param>
         public void Initialize(
             PlayerColors playerColor,
             PlayerIndex playerIndex,
@@ -305,7 +309,8 @@ namespace Duologue.PlayObjects
             GamerProfile gamerProfile,
             ColorState currentColorState,
             Vector2 startPos,
-            Vector2 orientation)
+            Vector2 orientation,
+            int numOfPlayers)
         {
             // Set up the player data
             PlayerColor = playerColor;
@@ -316,6 +321,7 @@ namespace Duologue.PlayObjects
             Position = startPos;
             lastPosition = startPos;
             colorState = currentColorState;
+            numPlayers = numOfPlayers;
 
             myPadHelper = LocalInstanceManager.GamePadHelpers[myPlayerIndexNum];
 
@@ -1166,7 +1172,10 @@ namespace Duologue.PlayObjects
 
             DrawPlayerTank(null);
 
-            DrawPlayerLight(null);
+            if (numPlayers <= 1)
+                DrawPlayerLight(null);
+            else
+                DrawPlayerLight(alphaIfOtherPlayers);
 
             DrawPlayerCannon(null);
 
