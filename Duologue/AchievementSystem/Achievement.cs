@@ -42,6 +42,11 @@ namespace Duologue.AchievementSystem
         /// The icon for this achievement
         /// </summary>
         public Texture2D Icon;
+
+        /// <summary>
+        /// The greyed out icon
+        /// </summary>
+        public Texture2D IconGrey;
         /// <summary>
         /// The weight of this achievement
         /// </summary>

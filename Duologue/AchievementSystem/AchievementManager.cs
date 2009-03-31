@@ -31,6 +31,15 @@ namespace Duologue.AchievementSystem
     public enum Achievements
     {
         RolledScore,
+        Kilokillage,
+        Exterminator,
+        TourOfDuty,
+        BFF,
+        WetFeet,
+        Experienced,
+        NoEndInSight,
+        KeyParty,
+        Seriously,
     }
     /// <summary>
     /// This is a game component that implements IUpdateable.
