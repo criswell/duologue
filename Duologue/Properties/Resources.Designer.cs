@@ -97,7 +97,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contains game assets released under Creative Commons and Microsoft Public Licenses..
+        ///   Looks up a localized string similar to Contains game assets released under Creative Commons and Microsoft Permissive Licenses..
         /// </summary>
         internal static string Intro_Legal1 {
             get {
