@@ -18,6 +18,8 @@ using Mimicware.Graphics;
 using Mimicware.Manager;
 using Mimicware.Debug;
 using Mimicware.Fx;
+// Duologue
+using Duologue.Audio;
 #endregion
 
 namespace Duologue
@@ -37,9 +39,12 @@ namespace Duologue
         #region Constants
         private const string filename_Background = "background-{0:00}";
         private const string filename_Cloud = "Background/clouds-{0:D2}";
+        private const string filename_Throb = "Background/throb-corner";
         private const int numBackgrounds = 5;
         private const int numClouds = 4;
         private const int totalNumPossibleLayers = 5;
+
+        private const float maxThrobAlpha = 0.5f;
         #endregion
 
         #region Fields
@@ -72,6 +77,9 @@ namespace Duologue
         private Vector2[] center_BottomClouds;
         private float[] cloudLayerSpeedOffsets;
         private float[] cloudLayerAlphaModifiers;
+
+        // Throb items
+        private Texture2D texture_Throb;
         #endregion
 
         #region Properties
@@ -117,12 +125,24 @@ namespace Duologue
         {
             get { return emptyParallax; }
         }
+
+        /// <summary>
+        /// Set to the color of the throb
+        /// </summary>
+        public Color ThrobColor;
+
+        /// <summary>
+        /// Whether or not the throb is enabled
+        /// </summary>
+        public bool EnableThrob;
         #endregion
 
         #region Constructor / Init / Load
         public Background(Game game)
             : base(game)
         {
+            ThrobColor = Color.WhiteSmoke;
+            EnableThrob = false;
             localGame = Game;
         }
 
@@ -171,6 +191,8 @@ namespace Duologue
             {
                 texture_Clouds[i] = assets.LoadTexture2D(String.Format(filename_Cloud, i + 1));
             }
+
+            texture_Throb = assets.LoadTexture2D(filename_Throb);
 
             #region Layer definitions (hard coded bullshit)
             // Set up the layer stuff- lots of hardcoded nastiness, can't be helped
@@ -365,6 +387,59 @@ namespace Duologue
                     se);
             }
         }
+
+        private void DrawThrob(GameTime gameTime)
+        {
+            float bp = (float)ServiceLocator.GetService<AudioManager>().BeatPercentage();
+            float intensity = ServiceLocator.GetService<IntensityNotifier>().Intensity;
+            Color c = new Color(ThrobColor, intensity * bp * maxThrobAlpha);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Throb,
+                Vector2.Zero,
+                Vector2.Zero,
+                null,
+                c,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AddititiveTop);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Throb,
+                (float)InstanceManager.DefaultViewport.Width * Vector2.UnitX,
+                (float)texture_Throb.Width * Vector2.UnitX,
+                null,
+                c,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AddititiveTop,
+                SpriteEffects.FlipHorizontally);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Throb,
+                (float)InstanceManager.DefaultViewport.Height * Vector2.UnitY,
+                (float)texture_Throb.Height * Vector2.UnitY,
+                null,
+                c,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AddititiveTop,
+                SpriteEffects.FlipVertically);
+
+            InstanceManager.RenderSprite.Draw(
+                texture_Throb,
+                (float)InstanceManager.DefaultViewport.Height * Vector2.UnitY + (float)InstanceManager.DefaultViewport.Width * Vector2.UnitX,
+                Vector2.Zero,
+                null,
+                c,
+                MathHelper.Pi,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AddititiveTop);
+        }
         #endregion
 
         #region Public methods
@@ -496,6 +571,8 @@ namespace Duologue
                     1f);
             }
 
+            if(EnableThrob)
+                DrawThrob(gameTime);
             DrawParallax(gameTime);
             base.Draw(gameTime);
         }
