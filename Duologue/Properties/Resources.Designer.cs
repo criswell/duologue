@@ -61,24 +61,6 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rolled the score back to all zeros.
-        /// </summary>
-        internal static string Achievement_Desc_RolledScore {
-            get {
-                return ResourceManager.GetString("Achievement_Desc_RolledScore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rolled the score.
-        /// </summary>
-        internal static string Achievement_Name_RolledScore {
-            get {
-                return ResourceManager.GetString("Achievement_Name_RolledScore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to PlayerUI/game-over_en_US.
         /// </summary>
         internal static string Filename_GameOver {
@@ -201,6 +183,186 @@ namespace Duologue.Properties {
         internal static string MainMenu_Play {
             get {
                 return ResourceManager.GetString("MainMenu_Play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complete the campaign in co-op.
+        /// </summary>
+        internal static string Medal_Desc_BFF {
+            get {
+                return ResourceManager.GetString("Medal_Desc_BFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completed 50% of the campaign.
+        /// </summary>
+        internal static string Medal_Desc_Experienced {
+            get {
+                return ResourceManager.GetString("Medal_Desc_Experienced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Killed every enemy type.
+        /// </summary>
+        internal static string Medal_Desc_Exterminator {
+            get {
+                return ResourceManager.GetString("Medal_Desc_Exterminator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play 50% of campaign in 4 player co-op.
+        /// </summary>
+        internal static string Medal_Desc_KeyParty {
+            get {
+                return ResourceManager.GetString("Medal_Desc_KeyParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Killed 1000 enemies.
+        /// </summary>
+        internal static string Medal_Desc_Kilokillage {
+            get {
+                return ResourceManager.GetString("Medal_Desc_Kilokillage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gotten past wave 100 of Infinite Mode.
+        /// </summary>
+        internal static string Medal_Desc_NoEndInSight {
+            get {
+                return ResourceManager.GetString("Medal_Desc_NoEndInSight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rolled the score back to all zeros.
+        /// </summary>
+        internal static string Medal_Desc_RolledScore {
+            get {
+                return ResourceManager.GetString("Medal_Desc_RolledScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Killed 39,516 enemies.
+        /// </summary>
+        internal static string Medal_Desc_Seriously {
+            get {
+                return ResourceManager.GetString("Medal_Desc_Seriously", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completed the campaign in single player.
+        /// </summary>
+        internal static string Medal_Desc_TourOfDuty {
+            get {
+                return ResourceManager.GetString("Medal_Desc_TourOfDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completed 25% of the campaign.
+        /// </summary>
+        internal static string Medal_Desc_WetFeet {
+            get {
+                return ResourceManager.GetString("Medal_Desc_WetFeet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BFF.
+        /// </summary>
+        internal static string Medal_Name_BFF {
+            get {
+                return ResourceManager.GetString("Medal_Name_BFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Experienced.
+        /// </summary>
+        internal static string Medal_Name_Experienced {
+            get {
+                return ResourceManager.GetString("Medal_Name_Experienced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exterminator.
+        /// </summary>
+        internal static string Medal_Name_Exterminator {
+            get {
+                return ResourceManager.GetString("Medal_Name_Exterminator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key party.
+        /// </summary>
+        internal static string Medal_Name_KeyParty {
+            get {
+                return ResourceManager.GetString("Medal_Name_KeyParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kilokillage.
+        /// </summary>
+        internal static string Medal_Name_Kilokillage {
+            get {
+                return ResourceManager.GetString("Medal_Name_Kilokillage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No end in sight.
+        /// </summary>
+        internal static string Medal_Name_NoEndInSight {
+            get {
+                return ResourceManager.GetString("Medal_Name_NoEndInSight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rolled the score.
+        /// </summary>
+        internal static string Medal_Name_RolledScore {
+            get {
+                return ResourceManager.GetString("Medal_Name_RolledScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seriously?.
+        /// </summary>
+        internal static string Medal_Name_Seriously {
+            get {
+                return ResourceManager.GetString("Medal_Name_Seriously", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tour of duty.
+        /// </summary>
+        internal static string Medal_Name_TourOfDuty {
+            get {
+                return ResourceManager.GetString("Medal_Name_TourOfDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wet feet.
+        /// </summary>
+        internal static string Medal_Name_WetFeet {
+            get {
+                return ResourceManager.GetString("Medal_Name_WetFeet", resourceCulture);
             }
         }
         

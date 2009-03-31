@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Achievement_Desc_RolledScore" xml:space="preserve">
-    <value>Rolled the score back to all zeros</value>
-  </data>
-  <data name="Achievement_Name_RolledScore" xml:space="preserve">
-    <value>Rolled the score</value>
-  </data>
   <data name="Filename_GameOver" xml:space="preserve">
     <value>PlayerUI/game-over_en_US</value>
   </data>
@@ -164,6 +158,66 @@
   </data>
   <data name="MainMenu_Play" xml:space="preserve">
     <value>Enlist for the war!</value>
+  </data>
+  <data name="Medal_Desc_BFF" xml:space="preserve">
+    <value>Complete the campaign in co-op</value>
+  </data>
+  <data name="Medal_Desc_Experienced" xml:space="preserve">
+    <value>Completed 50% of the campaign</value>
+  </data>
+  <data name="Medal_Desc_Exterminator" xml:space="preserve">
+    <value>Killed every enemy type</value>
+  </data>
+  <data name="Medal_Desc_KeyParty" xml:space="preserve">
+    <value>Play 50% of campaign in 4 player co-op</value>
+  </data>
+  <data name="Medal_Desc_Kilokillage" xml:space="preserve">
+    <value>Killed 1000 enemies</value>
+  </data>
+  <data name="Medal_Desc_NoEndInSight" xml:space="preserve">
+    <value>Gotten past wave 100 of Infinite Mode</value>
+  </data>
+  <data name="Medal_Desc_RolledScore" xml:space="preserve">
+    <value>Rolled the score back to all zeros</value>
+  </data>
+  <data name="Medal_Desc_Seriously" xml:space="preserve">
+    <value>Killed 39,516 enemies</value>
+  </data>
+  <data name="Medal_Desc_TourOfDuty" xml:space="preserve">
+    <value>Completed the campaign in single player</value>
+  </data>
+  <data name="Medal_Desc_WetFeet" xml:space="preserve">
+    <value>Completed 25% of the campaign</value>
+  </data>
+  <data name="Medal_Name_BFF" xml:space="preserve">
+    <value>BFF</value>
+  </data>
+  <data name="Medal_Name_Experienced" xml:space="preserve">
+    <value>Experienced</value>
+  </data>
+  <data name="Medal_Name_Exterminator" xml:space="preserve">
+    <value>Exterminator</value>
+  </data>
+  <data name="Medal_Name_KeyParty" xml:space="preserve">
+    <value>Key party</value>
+  </data>
+  <data name="Medal_Name_Kilokillage" xml:space="preserve">
+    <value>Kilokillage</value>
+  </data>
+  <data name="Medal_Name_NoEndInSight" xml:space="preserve">
+    <value>No end in sight</value>
+  </data>
+  <data name="Medal_Name_RolledScore" xml:space="preserve">
+    <value>Rolled the score</value>
+  </data>
+  <data name="Medal_Name_Seriously" xml:space="preserve">
+    <value>Seriously?</value>
+  </data>
+  <data name="Medal_Name_TourOfDuty" xml:space="preserve">
+    <value>Tour of duty</value>
+  </data>
+  <data name="Medal_Name_WetFeet" xml:space="preserve">
+    <value>Wet feet</value>
   </data>
   <data name="PauseScreen_ExitMainMenu" xml:space="preserve">
     <value>Extract to Main Menu</value>

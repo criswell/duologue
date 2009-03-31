@@ -101,8 +101,8 @@ namespace Duologue.AchievementSystem
 
             // Rolled Score
             achievements[(int)Achievements.RolledScore] = new Achievement(
-                Resources.Achievement_Name_RolledScore,
-                Resources.Achievement_Desc_RolledScore);
+                Resources.Medal_Name_RolledScore,
+                Resources.Medal_Desc_RolledScore);
         }
 
         /// <summary>
