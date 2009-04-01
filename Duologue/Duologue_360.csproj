@@ -108,6 +108,7 @@
     <Compile Include="PlayObjects\Enemy_Mirthworm.cs" />
     <Compile Include="PlayObjects\Enemy_ProtoNora.cs" />
     <Compile Include="PlayObjects\Enemy_Pyre.cs" />
+    <Compile Include="PlayObjects\Enemy_Roggles.cs" />
     <Compile Include="PlayObjects\Enemy_RollingRock.cs" />
     <Compile Include="PlayObjects\Enemy_Spitter.cs" />
     <Compile Include="PlayObjects\Enemy_StaticGloop.cs" />
