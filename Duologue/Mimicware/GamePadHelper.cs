@@ -22,7 +22,6 @@ namespace Mimicware
         protected PlayerIndex player;
         protected float gamePadTimer = 0f;
         protected float durationInMs = 0f;
-        //protected bool shaking = false;
 
         protected float chirpStepTimer = 0f;
         protected float chirpChange = 0f;
@@ -39,21 +38,11 @@ namespace Mimicware
             // TODO: Construct any child components here
         }
 
-
-        /*public void ShakeIt(float milliseconds, float lowSpeed, float highSpeed)
-        {
-            durationInMs = milliseconds;
-            GamePad.SetVibration(player, lowSpeed, highSpeed);
-            shaking = true;
-            Enabled = true;
-        }*/
-
         public void ChirpIt(float milliseconds, float startSpeed, float endSpeed)
         {
             durationInMs = milliseconds;
             chirpChange = (endSpeed - startSpeed) * chirpStepTime / durationInMs;
             chirpAmount = startSpeed;
-            //shaking = true;
             chirping = true;
             Enabled = true;
         }
@@ -76,19 +65,6 @@ namespace Mimicware
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            /*if (shaking && !chirping)
-            {
-                gamePadTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (gamePadTimer > durationInMs)
-                {
-                    GamePad.SetVibration(player, 0f, 0f);
-                    shaking = false;
-                    gamePadTimer = 0f;
-                    durationInMs = 0f;
-                    Enabled = false;
-                }
-            }
-            else*/
             if (chirping)
             {
                 GamePad.SetVibration(player, chirpAmount, chirpAmount);
@@ -105,7 +81,6 @@ namespace Mimicware
                     // If the gamepad isn't ready to shut vibration off, we need to
                     // keep trying until it is
                     waitingForPad = !GamePad.SetVibration(player, 0f, 0f);
-                    //shaking = false;
                     chirping = false;
                     gamePadTimer = 0f;
                     durationInMs = 0f;
