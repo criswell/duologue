@@ -137,6 +137,7 @@ namespace Duologue.Screens
                 TypesOfPlayObjects.Enemy_AnnMoeba,
                 TypesOfPlayObjects.Enemy_ProtoNora,
                 //TypesOfPlayObjects.Enemy_RollingRock,
+                TypesOfPlayObjects.Enemy_Maggot,
             };
 
             currentPlayObjectIndex = 0;
@@ -292,6 +293,15 @@ namespace Duologue.Screens
                     break;
                 case TypesOfPlayObjects.Player:
                     currentPlayObject = new Player();
+                    break;
+                case TypesOfPlayObjects.Enemy_Maggot:
+                    currentPlayObject = new Enemy_Maggot();
+                    break;
+                case TypesOfPlayObjects.Enemy_ProtoNora:
+                    currentPlayObject = new Enemy_ProtoNora();
+                    break;
+                case TypesOfPlayObjects.Enemy_AnnMoeba:
+                    currentPlayObject = new Enemy_AnnMoeba();
                     break;
                 default:
                     // Player Bullet

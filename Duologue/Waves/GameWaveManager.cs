@@ -169,7 +169,7 @@ namespace Duologue.Waves
 
             // Randomize the background and parallax elements
             thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);
-            thisWave.ThrobColor =  new Color(
+            thisWave.ThrobColor = new Color(
                 (byte)MWMathHelper.GetRandomInRange(0, 255),
                 (byte)MWMathHelper.GetRandomInRange(0, 255),
                 (byte)MWMathHelper.GetRandomInRange(0, 255));
@@ -217,7 +217,7 @@ namespace Duologue.Waves
                     thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;*/
                 //thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
                 //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
-                thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
                 thisWave.Wavelets[thisWave.CurrentWavelet].ColorPolarities[i] = ColorState.RandomPolarity();
             }
@@ -225,6 +225,7 @@ namespace Duologue.Waves
             /*thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[59] = TypesOfPlayObjects.Enemy_Pyre;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[59] = MathHelper.TwoPi;*/
 
+            /*
             thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[39] = TypesOfPlayObjects.Enemy_ProtoNora;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[39] = 2;
             thisWave.Wavelets[thisWave.CurrentWavelet].ColorPolarities[39] = ColorPolarity.Positive;
@@ -234,7 +235,7 @@ namespace Duologue.Waves
             thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[38] = 2;
             thisWave.Wavelets[thisWave.CurrentWavelet].ColorPolarities[38] = ColorPolarity.Negative;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[38] = MathHelper.TwoPi;
-
+            */
 
             return thisWave;
         }
