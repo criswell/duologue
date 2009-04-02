@@ -79,7 +79,12 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPointMultiplier = 50;
+        private const int realHitPointMultiplier = 20;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 15;
         #endregion
 
         #region Fields
@@ -172,7 +177,7 @@ namespace Duologue.PlayObjects
             rotation_InnerRing = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
             rotation_OuterRing = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
 
-            Radius = RealSize.Length() * radiusMultiplier;
+            Radius = RealSize.Length() * radiusMultiplier * 0.5f;
 
             currentState = SpawnerState.Moving;
             speed = 0f;
@@ -427,6 +432,17 @@ namespace Duologue.PlayObjects
 
         public override bool UpdateOffset(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
+            }
             return true;
         }
 
@@ -437,6 +453,28 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet && 
+                (currentState == SpawnerState.FlareUp || currentState == SpawnerState.FlareDown))
+            {
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    MyManager.TriggerPoints(
+                        ((PlayerBullet)pobj).MyPlayerIndex,
+                        myPointValue + hitPointMultiplier * StartHitPoints,
+                        Position);
+                    //audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Current);
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, Color.DarkOrange);
+                    Alive = false;
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(texture_Base, color_Current, Position, rotation_OuterRing);
+                    //audio.soundEffects.PlayEffect(EffectID.CokeBottle);
+                }
+            }
             return true;
         }
         #endregion
