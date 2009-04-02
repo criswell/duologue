@@ -44,13 +44,13 @@ namespace Duologue.PlayObjects
 
         private const float scale_InnerRing = 0.68f;
 
-        private const float delta_InnerRingNormal = MathHelper.PiOver4 * -0.2f;
-        private const float delta_InnerRingFlee = MathHelper.PiOver4;
-        private const float delta_OuterRingNormal = MathHelper.PiOver4 * 0.1f;
-        private const float delta_OuterRingFlee = MathHelper.PiOver4 * -0.7f;
+        private const float delta_InnerRingNormal = MathHelper.PiOver4 * -0.034f;
+        private const float delta_InnerRingFlee = MathHelper.PiOver4 * 0.09f;
+        private const float delta_OuterRingNormal = MathHelper.PiOver4 * 0.02f;
+        private const float delta_OuterRingFlee = MathHelper.PiOver4 * -0.05f;
 
         private const float maxSpeed = 2.4f;
-        private const float accel = 0.05f;
+        private const float accel = 0.026f;
 
         private const float fleeSpeed = 5.3f;
 
@@ -64,8 +64,8 @@ namespace Duologue.PlayObjects
 
         private const double timeBetweenColorSwitches = 0.33;
         private const double timeToThink = 0.202;
-        private const double timeFlareUp = 0.15;
-        private const double timeFlareDown = 0.05;
+        private const double timeFlareUp = 0.25;
+        private const double timeFlareDown = 0.1;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -513,6 +513,11 @@ namespace Duologue.PlayObjects
             {
                 timer_Flare = 0;
                 currentState = SpawnerState.Moving;
+                if (MWMathHelper.CoinToss())
+                    ColorPolarity = ColorPolarity.Positive;
+                else
+                    ColorPolarity = ColorPolarity.Negative;
+                color_Current = GetMyColor(ColorState.Light);
             }
         }
 
