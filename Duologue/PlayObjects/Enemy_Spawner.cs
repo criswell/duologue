@@ -49,10 +49,10 @@ namespace Duologue.PlayObjects
         private const float delta_OuterRingNormal = MathHelper.PiOver4 * 0.1f;
         private const float delta_OuterRingFlee = MathHelper.PiOver4 * -0.7f;
 
-        private const float maxSpeed = 4f;
-        private const float accel = 0.25f;
+        private const float maxSpeed = 2.4f;
+        private const float accel = 0.05f;
 
-        private const float fleeSpeed = 9.3f;
+        private const float fleeSpeed = 5.3f;
 
         private const double maxFleeDistanceMultiplier = 7.0;
         private const double minFleeDistanceMultiplier = 3.0;
@@ -242,11 +242,11 @@ namespace Duologue.PlayObjects
             {
                 nextPosition = new Vector2(
                     (float)MWMathHelper.GetRandomInRange(
-                        (double)InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent,
-                        (double)InstanceManager.DefaultViewport.Width - (double)InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent),
+                        InstanceManager.DefaultViewport.TitleSafeArea.X,
+                        InstanceManager.DefaultViewport.TitleSafeArea.Right),
                     (float)MWMathHelper.GetRandomInRange(
-                        (double)InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent,
-                        (double)InstanceManager.DefaultViewport.Height - (double)InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent));
+                        InstanceManager.DefaultViewport.TitleSafeArea.Y,
+                        InstanceManager.DefaultViewport.TitleSafeArea.Bottom));
             }
             else
             {
@@ -344,7 +344,7 @@ namespace Duologue.PlayObjects
 
             int place = 0;
             bool added = false;
-            while (place < LocalInstanceManager.MaxNumberOfEnemiesOnScreen)
+            while (place < LocalInstanceManager.CurrentNumberEnemies)
             {
                 if (LocalInstanceManager.Enemies[place] == null)
                 {
@@ -477,6 +477,7 @@ namespace Duologue.PlayObjects
                 speed = 0;
                 timer_Thinking = 0;
                 currentState = SpawnerState.Scanning;
+                GetNextPosition(Vector2.Zero);
             }
         }
 
