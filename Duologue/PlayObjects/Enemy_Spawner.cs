@@ -64,6 +64,20 @@ namespace Duologue.PlayObjects
 
         private const double timeBetweenColorSwitches = 0.33;
         private const double timeToThink = 0.202;
+        private const double timeFlareUp = 0.15;
+        private const double timeFlareDown = 0.05;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 100;
+
+        /// <summary>
+        /// This is both the minimum number of hit points it is possible for this boss to have
+        /// as well as the step-size for each additional hitpoint requested.
+        /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
+        /// </summary>
+        private const int realHitPointMultiplier = 50;
         #endregion
 
         #region Fields
@@ -92,6 +106,7 @@ namespace Duologue.PlayObjects
 
         private double timer_ColorSwitchCountdown;
         private double timer_Thinking;
+        private double timer_Flare;
         private TypesOfPlayObjects[] possibleNigglets;
         private List<TypesOfPlayObjects> weightedNiggletList;
         #endregion
@@ -128,10 +143,10 @@ namespace Duologue.PlayObjects
             ColorPolarity = startColorPolarity;
             if (hitPoints == null)
             {
-                hitPoints = 0;
+                hitPoints = 1;
             }
             StartHitPoints = (int)hitPoints;
-            CurrentHitPoints = (int)hitPoints;
+            CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
             //audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
@@ -290,6 +305,116 @@ namespace Duologue.PlayObjects
         private void SpawnNigglet(GameTime gameTime)
         {
             weightedNiggletList.Clear();
+            weightedNiggletList.AddRange(possibleNigglets);
+
+            // Now, run through the living critters and see if we have any sorts of modifiers
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                if (LocalInstanceManager.Enemies[i].Alive)
+                {
+                    switch (LocalInstanceManager.Enemies[i].MyType)
+                    {
+                        case TypesOfPlayObjects.Enemy_KingGloop:
+                            for (int t = 0; t < weightedNiggletList.Count; t++)
+                            {
+                                weightedNiggletList.Add(TypesOfPlayObjects.Enemy_Gloop);
+                            }
+                            break;
+                        case TypesOfPlayObjects.Enemy_Pyre:
+                            for (int t = 0; t < weightedNiggletList.Count; t++)
+                            {
+                                weightedNiggletList.Add(TypesOfPlayObjects.Enemy_Ember);
+                            }
+                            break;
+                        case TypesOfPlayObjects.Enemy_UncleanRot:
+                            for (int t = 0; t < weightedNiggletList.Count; t++)
+                            {
+                                weightedNiggletList.Add(TypesOfPlayObjects.Enemy_StaticGloop);
+                            }
+                            break;
+                        default:
+                            // Nada
+                            break;
+                    }
+                }
+            }
+
+            // Figure out what to spawn, and where to spawn it in the list
+            TypesOfPlayObjects po = weightedNiggletList[
+                MWMathHelper.GetRandomInRange(0, weightedNiggletList.Count)];
+
+            int place = 0;
+            bool added = false;
+            while (place < LocalInstanceManager.MaxNumberOfEnemiesOnScreen)
+            {
+                if (LocalInstanceManager.Enemies[place] == null)
+                {
+                    SpawnThisNigglet(po, place);
+                    added = true;
+                    break;
+                }
+                else if (!LocalInstanceManager.Enemies[place].Alive)
+                {
+                    SpawnThisNigglet(po, place);
+                    added = true;
+                    break;
+                }
+
+                place++;
+            }
+            if (added && place > LocalInstanceManager.CurrentNumberEnemies)
+                LocalInstanceManager.CurrentNumberEnemies = place;
+
+        }
+
+        private void SpawnThisNigglet(TypesOfPlayObjects po, int place)
+        {
+            switch (po)
+            {
+                case TypesOfPlayObjects.Enemy_Buzzsaw:
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_Buzzsaw(MyManager);
+                    break;
+                case TypesOfPlayObjects.Enemy_Ember:
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_Ember(MyManager);
+                    break;
+                case TypesOfPlayObjects.Enemy_Gloop:
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_Gloop(MyManager);
+                    break;
+                case TypesOfPlayObjects.Enemy_Maggot:
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_Maggot(MyManager);
+                    break;
+                case TypesOfPlayObjects.Enemy_Mirthworm:
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_Mirthworm(MyManager);
+                    break;
+                case TypesOfPlayObjects.Enemy_Roggles:
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_Roggles(MyManager);
+                    break;
+                case TypesOfPlayObjects.Enemy_Spitter:
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_Spitter(MyManager);
+                    break;
+                case TypesOfPlayObjects.Enemy_StaticGloop:
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_StaticGloop(MyManager);
+                    break;
+                default:
+                    // Default to wiggles
+                    LocalInstanceManager.Enemies[place] =
+                        new Enemy_Wiggles(MyManager);
+                    break;
+            }
+            LocalInstanceManager.Enemies[place].Initialize(
+                Position,
+                Orientation,
+                ColorState,
+                ColorPolarity,
+                StartHitPoints);
         }
         #endregion
 
@@ -362,23 +487,45 @@ namespace Duologue.PlayObjects
             if (timer_Thinking > timeToThink)
             {
                 timer_Thinking = 0;
-                SpawnNigglet(gameTime);
+                timer_Flare = 0;
+                currentState = SpawnerState.FlareUp;
             }
         }
 
         private void Update_Fleeing(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            Position += fleeSpeed * Orientation;
+            travelLength += fleeSpeed;
+            if (travelLength > totalTravelLength)
+            {
+                travelLength = 0;
+                speed = 0;
+                GetNextPosition(Vector2.Zero);
+                currentState = SpawnerState.Moving;
+            }
         }
 
         private void Update_FlareDown(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            size_Flare = (maxFlareSzie - minFlareSize) * (float)(1.0 - timer_Flare / timeFlareUp) + minFlareSize;
+            timer_Flare += gameTime.ElapsedGameTime.TotalSeconds;
+            if (timer_Flare > timeFlareDown)
+            {
+                timer_Flare = 0;
+                currentState = SpawnerState.Moving;
+            }
         }
 
         private void Update_FlareUp(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            size_Flare = (maxFlareSzie - minFlareSize) * (float)(timer_Flare / timeFlareUp) + minFlareSize;
+            timer_Flare += gameTime.ElapsedGameTime.TotalSeconds;
+            if (timer_Flare > timeFlareUp)
+            {
+                timer_Flare = 0;
+                SpawnNigglet(gameTime);
+                currentState = SpawnerState.FlareDown;
+            }
         }
         #endregion
 
