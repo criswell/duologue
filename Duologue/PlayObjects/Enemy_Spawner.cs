@@ -651,11 +651,6 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            if (!Alive)
-            {
-                float j = 0;
-                float i = 1f / j;
-            }
             timer_ColorSwitchCountdown += gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timer_ColorSwitchCountdown > timeBetweenColorSwitches)
