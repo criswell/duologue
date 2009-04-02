@@ -49,6 +49,7 @@ namespace Duologue.PlayObjects
         Enemy_RollingRock,
         Enemy_Maggot,
         Enemy_Roggles,
+        Enemy_Spawner,
     }
 
     /// <summary>

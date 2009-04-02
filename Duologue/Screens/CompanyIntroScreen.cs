@@ -139,6 +139,7 @@ namespace Duologue.Screens
                 //TypesOfPlayObjects.Enemy_RollingRock,
                 TypesOfPlayObjects.Enemy_Maggot,
                 TypesOfPlayObjects.Enemy_Roggles,
+                TypesOfPlayObjects.Enemy_Spawner,
             };
 
             currentPlayObjectIndex = 0;
