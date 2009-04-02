@@ -173,8 +173,8 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Wiggles;
             MajorType = MajorPlayObjectType.Enemy;
-            baseLayer = LocalInstanceManager.BlitLayer_EnemyBase;
-            outlineLayer = LocalInstanceManager.BlitLayer_EnemyBase - 0.1f;
+            baseLayer = 0f;
+            outlineLayer = 0f;
             RealSize = new Vector2(82, 90);
             startedMoving = false;
             Initialized = false;

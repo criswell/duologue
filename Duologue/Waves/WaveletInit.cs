@@ -89,6 +89,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_Roggles:
                             Init_Roggles(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_Spawner:
+                            Init_Spawner(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -105,6 +108,11 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_Spawner(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Spawner(manager);
+        }
+
         private static void Init_Roggles(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_Roggles(manager);
