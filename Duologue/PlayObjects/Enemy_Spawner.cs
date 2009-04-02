@@ -50,7 +50,9 @@ namespace Duologue.PlayObjects
         private const float delta_OuterRingFlee = MathHelper.PiOver4 * -0.05f;
 
         private const float maxSpeed = 2.4f;
+        private const float minSpeed = 1.25f;
         private const float accel = 0.026f;
+        private const double percentSlowDown = 0.75;
 
         private const float fleeSpeed = 5.3f;
 
@@ -466,8 +468,16 @@ namespace Duologue.PlayObjects
 
         private void Update_Moving(GameTime gameTime)
         {
-            if (speed < maxSpeed)
-                speed += accel;
+            if (travelLength / totalTravelLength < percentSlowDown)
+            {
+                if (speed < maxSpeed)
+                    speed += accel;
+            }
+            else
+            {
+                if (speed > minSpeed)
+                    speed -= accel;
+            }
 
             Position += speed * Orientation;
             travelLength += speed;
@@ -489,6 +499,11 @@ namespace Duologue.PlayObjects
                 timer_Thinking = 0;
                 timer_Flare = 0;
                 currentState = SpawnerState.FlareUp;
+                if (MWMathHelper.CoinToss())
+                    ColorPolarity = ColorPolarity.Positive;
+                else
+                    ColorPolarity = ColorPolarity.Negative;
+                color_Current = GetMyColor(ColorState.Light);
             }
         }
 
@@ -513,11 +528,6 @@ namespace Duologue.PlayObjects
             {
                 timer_Flare = 0;
                 currentState = SpawnerState.Moving;
-                if (MWMathHelper.CoinToss())
-                    ColorPolarity = ColorPolarity.Positive;
-                else
-                    ColorPolarity = ColorPolarity.Negative;
-                color_Current = GetMyColor(ColorState.Light);
             }
         }
 
