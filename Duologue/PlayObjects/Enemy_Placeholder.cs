@@ -39,7 +39,7 @@ namespace Duologue.PlayObjects
             // Set the RealSize by hand
             RealSize = Vector2.Zero;
             Radius = 0f;
-            Initialized = false;
+            Initialized = true;
             Alive = false;
         }
 
@@ -52,21 +52,22 @@ namespace Duologue.PlayObjects
         {
             // I'm just a placeholder, so I'm never alive
             Alive = false;
+            Initialized = true;
         }
 
         public override bool StartOffset()
         {
-            return true;
+            return false;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            return true;
+            return false;
         }
 
         public override bool ApplyOffset()
         {
-            return true;
+            return false;
         }
 
         public override String[] GetFilenames()
@@ -76,7 +77,7 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            return true;
+            return false;
         }
 
         public override void Draw(GameTime gameTime)

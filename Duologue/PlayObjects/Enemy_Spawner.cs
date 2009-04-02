@@ -79,7 +79,7 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPointMultiplier = 20;
+        private const int realHitPointMultiplier = 10;
 
         /// <summary>
         /// The multiplier for point value tweaks based upon hitpoints
@@ -147,7 +147,7 @@ namespace Duologue.PlayObjects
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
-            if (hitPoints == null)
+            if (hitPoints == null || hitPoints == 0)
             {
                 hitPoints = 1;
             }
@@ -465,7 +465,7 @@ namespace Duologue.PlayObjects
                         Position);
                     //audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Current);
-                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, Color.DarkOrange);
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Base);
                     Alive = false;
                     return false;
                 }
@@ -651,6 +651,11 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
+            if (!Alive)
+            {
+                float j = 0;
+                float i = 1f / j;
+            }
             timer_ColorSwitchCountdown += gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timer_ColorSwitchCountdown > timeBetweenColorSwitches)
