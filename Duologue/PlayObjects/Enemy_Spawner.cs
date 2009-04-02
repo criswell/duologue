@@ -122,7 +122,6 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Spawner;
             MajorType = MajorPlayObjectType.Enemy;
-            Initialized = false;
 
             // Set the RealSize by hand
             RealSize = new Vector2(110, 110);

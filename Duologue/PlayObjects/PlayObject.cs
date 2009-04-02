@@ -50,6 +50,7 @@ namespace Duologue.PlayObjects
         Enemy_Maggot,
         Enemy_Roggles,
         Enemy_Spawner,
+        Enemy_Placeholder,
     }
 
     /// <summary>
