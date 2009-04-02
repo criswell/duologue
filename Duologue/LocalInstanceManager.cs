@@ -314,27 +314,6 @@ namespace Duologue
 
         #region Layer and Draw Order information
         /// <remarks>
-        /// -----------
-        /// BLIT LAYERS
-        /// -----------
-        /// 1.0f        -       Background
-        ///             -       Beam, shot items
-        /// 0.9f
-        /// 0.8f        -       Spinner (default)
-        /// 0.7f        -       Enemies (default)
-        /// 0.6f        -       Enemies (additional elements)
-        /// 0.5f        -       Players (default)
-        /// 0.4f        -       Players (additional elements, tracks, etc)
-        /// 0.3f
-        /// 0.2f
-        /// 0.1f
-        /// 0.0f
-        /// </remarks>
-
-        public const float BlitLayer_EnemyBase = 0.7f;
-        public const float BlitLayer_PlayerBase = 0.5f;
-
-        /// <remarks>
         /// ----------
         /// DRAW ORDER
         /// ----------
