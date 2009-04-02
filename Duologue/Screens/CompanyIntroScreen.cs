@@ -308,6 +308,9 @@ namespace Duologue.Screens
                 case TypesOfPlayObjects.Enemy_Roggles:
                     currentPlayObject = new Enemy_Roggles();
                     break;
+                case TypesOfPlayObjects.Enemy_Spawner:
+                    currentPlayObject = new Enemy_Spawner();
+                    break;
                 default:
                     // Player Bullet
                     currentPlayObject = new PlayerBullet();
