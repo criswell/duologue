@@ -188,7 +188,10 @@ namespace Duologue.AchievementSystem
 
                 // Dispose the container.
                 container.Dispose();
-                return true;
+                if (achievementData.DataVersion == dataVersion)
+                    return true;
+                else
+                    return false; // Yeah, so we nuke their medals... should only happen during development
             }
             else
             {
