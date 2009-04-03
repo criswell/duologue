@@ -158,17 +158,25 @@ namespace Duologue.AchievementSystem
                     dataLoaded = true;
                 }
 
-                SyncUpAchievementData();
+                SyncUpAchievementDataAfterLoad();
             }
         }
         #endregion
 
         #region Private Methods
-        private void SyncUpAchievementData()
+        private void SyncUpAchievementDataAfterLoad()
         {
             for (int i = 0; i < possibleAchievements; i++)
             {
                 achievements[i].Unlocked = achievementData.MedalEarned[i];
+            }
+        }
+
+        private void SyncUpAchievementDataBeforeSave()
+        {
+            for (int i = 0; i < possibleAchievements; i++)
+            {
+                achievementData.MedalEarned[i] = achievements[i].Unlocked;
             }
         }
 
@@ -395,7 +403,22 @@ namespace Duologue.AchievementSystem
         /// </summary>
         public void AchievementRolledScore()
         {
-            UnlockAchievement(Achievements.HeavyRoller);
+            if(!Guide.IsTrialMode)
+                UnlockAchievement(Achievements.HeavyRoller);
+        }
+        #endregion
+
+        #region Other Public Methods
+        /// <summary>
+        /// Call at the end of the game to save the achievement storage data
+        /// </summary>
+        public void SaveStorageData()
+        {
+            if (!Guide.IsTrialMode && storageDeviceIsSet && dataLoaded)
+            {
+                SyncUpAchievementDataBeforeSave();
+                SaveAchievementData();
+            }
         }
         #endregion
 
