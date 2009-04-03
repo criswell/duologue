@@ -532,7 +532,7 @@ namespace Duologue.Screens
                     StorageDevice device = Guide.EndShowStorageDeviceSelector(guideResult);
                     if (device.IsConnected)
                     {
-                        LocalInstanceManager.AchievementManager.InitSaveGame(device);
+                        LocalInstanceManager.AchievementManager.InitStorageData(device);
                         startPressed = true;
                         currentState = MainMenuState.MainMenu;
                     }

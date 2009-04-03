@@ -4,6 +4,8 @@
 #region Using statements
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 // XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -60,6 +62,9 @@ namespace Duologue.AchievementSystem
         private const string filename_TourOfDuty = "Medals/tour_of_duty";
         private const string filename_WetFeet = "Medals/wet_feet";
         private const string filename_GreyExtension = "-grey";
+        private const string filename_SavedData = "medal_data.sav";
+
+        private const string containerName = "Duologue";
 
         private const int possibleAchievements = 20;
         private const float lifetime = 0.001f;
@@ -74,6 +79,19 @@ namespace Duologue.AchievementSystem
         private float timeSinceStart;
         private Achievement currentDisplayed;
         private List<int> orderedAchievementList;
+        private StorageDevice storageDevice;
+        private bool storageDeviceIsSet;
+        private AchievementData achievementData;
+        private bool dataLoaded;
+
+        /// <summary>
+        /// Since every play object in the game is not a destructable enemy,
+        /// we have to have a lookup table for converting them to the proper
+        /// index.
+        /// </summary>
+        private int[] enemyObjectLookupTable;
+        private int maxNumEnemies;
+        private int dataVersion;
         #endregion
 
         #region Properties
@@ -86,6 +104,8 @@ namespace Duologue.AchievementSystem
             achievements = new Achievement[possibleAchievements];
             orderedAchievementList = new List<int>(possibleAchievements);
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
+            storageDeviceIsSet = false;
+            dataVersion = 1;
         }
 
         /// <summary>
@@ -103,17 +123,128 @@ namespace Duologue.AchievementSystem
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
 
+            GenerateEnemyList();
             GenerateAchievements();
 
             base.LoadContent();
         }
 
-        public void InitSaveGame(StorageDevice device)
+        public void InitStorageData(StorageDevice device)
         {
+            storageDevice = device;
+            storageDeviceIsSet = true;
+            if (!Guide.IsTrialMode)
+            {
+                // Try to load the game
+                if (!LoadAchievementData())
+                {
+                    // Let's creat a new save data
+                    achievementData = new AchievementData();
+                    achievementData.EnemyTypesKilled = new bool[maxNumEnemies];
+                    for (int i = 0; i < maxNumEnemies; i++)
+                    {
+                        achievementData.EnemyTypesKilled[i] = false;
+                    }
+                    achievementData.MedalEarned = new bool[possibleAchievements];
+                    for (int i = 0; i < possibleAchievements; i++)
+                    {
+                        achievementData.MedalEarned[i] = false;
+                    }
+                    achievementData.NumberOfEnemiesKilled = 0;
+
+                    achievementData.DataVersion = dataVersion;
+
+                    SaveAchievementData();
+                }
+            }
         }
         #endregion
 
         #region Private Methods
+        private bool LoadAchievementData()
+        {
+            // Open a storage container.
+            StorageContainer container =
+                storageDevice.OpenContainer(containerName);
+
+            // Get the path of the save game.
+            string filename = Path.Combine(container.Path, filename_SavedData);
+
+            // Check to see whether the save exists.
+            if (File.Exists(filename))
+            {
+                Console.WriteLine(filename);
+
+                // Open the file.
+                FileStream stream = File.Open(filename, FileMode.OpenOrCreate,
+                    FileAccess.Read);
+
+                // Read the data from the file.
+                XmlSerializer serializer = new XmlSerializer(typeof(AchievementData));
+                achievementData = (AchievementData)serializer.Deserialize(stream);
+
+                // Close the file.
+                stream.Close();
+
+                // Dispose the container.
+                container.Dispose();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void SaveAchievementData()
+        {
+            // Open a storage container.
+            StorageContainer container =
+                storageDevice.OpenContainer(containerName);
+
+            // Get the path of the save game.
+            string filename = Path.Combine(container.Path, filename_SavedData);
+
+            Console.WriteLine(filename);
+
+            // Open the file, creating it if necessary.
+            FileStream stream = File.Open(filename, FileMode.OpenOrCreate);
+
+            // Convert the object to XML data and put it in the stream.
+            XmlSerializer serializer = new XmlSerializer(typeof(AchievementData));
+            serializer.Serialize(stream, achievementData);
+
+            // Close the file.
+            stream.Close();
+
+            // Dispose the container, to commit changes.
+            container.Dispose();
+        }
+
+        private void GenerateEnemyList()
+        {
+            enemyObjectLookupTable = new int[25]; // Probably should be bigger
+
+            // We need to only populate this list with the destructable enemy types
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_AnnMoeba] = 0;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Buzzsaw] = 1;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Ember] = 2;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Gloop] = 3;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_KingGloop] = 4;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Maggot] = 5;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Mirthworm] = 6;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_ProtoNora] = 7;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Pyre] = 8;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Roggles] = 9;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Spawner] = 10;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Spitter] = 11;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_StaticGloop] = 12;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_UncleanRot] = 13;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Wiggles] = 14;
+
+            maxNumEnemies = 15;
+        }
+
         private void GenerateAchievements()
         {
             // Rolled Score
