@@ -187,6 +187,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Press Start.
+        /// </summary>
+        internal static string MainMenu_PressStart {
+            get {
+                return ResourceManager.GetString("MainMenu_PressStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complete the campaign in co-op.
         /// </summary>
         internal static string Medal_Desc_BFF {

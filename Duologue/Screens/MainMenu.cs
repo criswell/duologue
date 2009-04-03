@@ -30,6 +30,7 @@ namespace Duologue.Screens
     {
         MainMenu,
         GameSelect,
+        PressStart,
     }
     /// <summary>
     /// This is a game component that implements IUpdateable.
@@ -77,6 +78,11 @@ namespace Duologue.Screens
         private Vector2[] shadowOffsetsSelected;
 
         private bool initialized;
+
+        // Start stuff
+        private bool startPressed;
+        private PlayerIndex playerWhoPressedStart;
+        private IAsyncResult guideResult;
         #endregion
 
         #region Properties
@@ -125,6 +131,7 @@ namespace Duologue.Screens
             shadowOffsetsSelected[3] = new Vector2(2f, -2f);
 
             initialized = false;
+            startPressed = false;
         }
 
         /// <summary>
@@ -144,7 +151,7 @@ namespace Duologue.Screens
 
             ResetMenuItems();
 
-            currentState = MainMenuState.MainMenu;
+            currentState = MainMenuState.PressStart;
             currentSelection = 0;
 
             base.Initialize();
@@ -459,6 +466,22 @@ namespace Duologue.Screens
             else if (currentSelection < 0)
                 currentSelection = mis.Count - 1;
         }
+
+
+        private void DrawPressStart(GameTime gameTime)
+        {
+            Vector2 temp = font.MeasureString(Resources.MainMenu_PressStart);
+
+            InstanceManager.RenderSprite.DrawString(
+                font,
+                Resources.MainMenu_PressStart,
+                new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f),
+                Color.Tan,
+                Vector2.One,
+                temp / 2f);
+        }
         #endregion
 
         #region Public Methods
@@ -485,49 +508,83 @@ namespace Duologue.Screens
         {
             LocalInstanceManager.WindowManager.Update(gameTime);
 
-            if (currentState == MainMenuState.MainMenu)
-                InnerUpdate(mainMenuItems);
+            if (currentState == MainMenuState.PressStart)
+            {
+                if (startPressed && guideResult.IsCompleted)
+                {
+                    StorageDevice device = Guide.EndShowStorageDeviceSelector(guideResult);
+                    if (device.IsConnected)
+                    {
+                        LocalInstanceManager.AchievementManager.InitSaveGame(device);
+                        startPressed = true;
+                        currentState = MainMenuState.MainMenu;
+                    }
+                    else
+                    {
+                        startPressed = false;
+                        currentState = MainMenuState.PressStart;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
+                    {
+                        if(InstanceManager.InputManager.ButtonPressed(Buttons.Start, (PlayerIndex)i))
+                        {
+                            startPressed = true;
+                            playerWhoPressedStart = (PlayerIndex)i;
+                            guideResult = Guide.BeginShowStorageDeviceSelector(playerWhoPressedStart, null, null);
+                        }
+                    }
+                }
+            }
             else
             {
-                if (CheckButtonB())
-                    currentState = MainMenuState.MainMenu;
-                else
-                    InnerUpdate(gameSelectItems);
-            }
 
-            // Our debug sequence can happen in any menu
-            switch (debugSequence)
-            {
-                case 3:
-                    // the fourth and final button is X for logger
-                    if (InstanceManager.InputManager.ButtonPressed(Buttons.X))
-                    {
-                        debugSequence = 0;
-                        ((DuologueGame)myGame).Debug = !((DuologueGame)myGame).Debug;
-                        InstanceManager.Logger.LogEntry("MainMenu.Update() - Debugging toggle");
-                    }
-                    else if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
-                    {
-                        // Or RB if we want the color state test
-                        debugSequence = 0;
-                        LocalInstanceManager.CurrentGameState = GameState.ColorStateTest;
-                    }
-                    break;
-                case 2:
-                    // the third button is Y
-                    if (InstanceManager.InputManager.ButtonPressed(Buttons.Y))
-                        debugSequence = 3;
-                    break;
-                case 1:
-                    // the second button is RB
-                    if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
-                        debugSequence = 2;
-                    break;
-                default:
-                    // the first button is LB
-                    if (InstanceManager.InputManager.ButtonPressed(Buttons.LeftShoulder))
-                        debugSequence = 1;
-                    break;
+                if (currentState == MainMenuState.MainMenu)
+                    InnerUpdate(mainMenuItems);
+                else
+                {
+                    if (CheckButtonB())
+                        currentState = MainMenuState.MainMenu;
+                    else
+                        InnerUpdate(gameSelectItems);
+                }
+
+                // Our debug sequence can happen in any menu
+                switch (debugSequence)
+                {
+                    case 3:
+                        // the fourth and final button is X for logger
+                        if (InstanceManager.InputManager.ButtonPressed(Buttons.X))
+                        {
+                            debugSequence = 0;
+                            ((DuologueGame)myGame).Debug = !((DuologueGame)myGame).Debug;
+                            InstanceManager.Logger.LogEntry("MainMenu.Update() - Debugging toggle");
+                        }
+                        else if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
+                        {
+                            // Or RB if we want the color state test
+                            debugSequence = 0;
+                            LocalInstanceManager.CurrentGameState = GameState.ColorStateTest;
+                        }
+                        break;
+                    case 2:
+                        // the third button is Y
+                        if (InstanceManager.InputManager.ButtonPressed(Buttons.Y))
+                            debugSequence = 3;
+                        break;
+                    case 1:
+                        // the second button is RB
+                        if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
+                            debugSequence = 2;
+                        break;
+                    default:
+                        // the first button is LB
+                        if (InstanceManager.InputManager.ButtonPressed(Buttons.LeftShoulder))
+                            debugSequence = 1;
+                        break;
+                }
             }
             
             base.Update(gameTime);
@@ -541,12 +598,20 @@ namespace Duologue.Screens
                 initialized = true;
             }
 
-            LocalInstanceManager.WindowManager.Draw(gameTime);
+            if (currentState == MainMenuState.PressStart)
+            {
+                DrawPressStart(gameTime);
+            }
+            else
+            {
 
-            if (currentState == MainMenuState.MainMenu)
-                DrawMenu(mainMenuItems, gameTime);
-            else if (currentState == MainMenuState.GameSelect)
-                DrawMenu(gameSelectItems, gameTime);
+                LocalInstanceManager.WindowManager.Draw(gameTime);
+
+                if (currentState == MainMenuState.MainMenu)
+                    DrawMenu(mainMenuItems, gameTime);
+                else if (currentState == MainMenuState.GameSelect)
+                    DrawMenu(gameSelectItems, gameTime);
+            }
             base.Draw(gameTime);
         }
         #endregion

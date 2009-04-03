@@ -159,6 +159,9 @@
   <data name="MainMenu_Play" xml:space="preserve">
     <value>Enlist for the war!</value>
   </data>
+  <data name="MainMenu_PressStart" xml:space="preserve">
+    <value>Press Start</value>
+  </data>
   <data name="Medal_Desc_BFF" xml:space="preserve">
     <value>Complete the campaign in co-op</value>
   </data>

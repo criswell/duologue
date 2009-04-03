@@ -107,6 +107,10 @@ namespace Duologue.AchievementSystem
 
             base.LoadContent();
         }
+
+        public void InitSaveGame(StorageDevice device)
+        {
+        }
         #endregion
 
         #region Private Methods
