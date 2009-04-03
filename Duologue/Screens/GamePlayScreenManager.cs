@@ -179,6 +179,7 @@ namespace Duologue.Screens
             intensityCounter = 0f;
             intensityTimer = 0f;
             LocalInstanceManager.Background.EnableThrob = false;
+            LocalInstanceManager.AchievementManager.SaveStorageData();
             base.ScreenExit(gameTime);
         }
         #endregion

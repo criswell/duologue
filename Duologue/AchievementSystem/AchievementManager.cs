@@ -66,7 +66,7 @@ namespace Duologue.AchievementSystem
 
         private const string containerName = "Duologue";
 
-        private const int possibleAchievements = 20;
+        private const int possibleAchievements = 10;
         private const float lifetime = 0.001f;
         #endregion
 
@@ -105,7 +105,7 @@ namespace Duologue.AchievementSystem
             orderedAchievementList = new List<int>(possibleAchievements);
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             storageDeviceIsSet = false;
-            dataVersion = 1;
+            dataVersion = 2;
         }
 
         /// <summary>
