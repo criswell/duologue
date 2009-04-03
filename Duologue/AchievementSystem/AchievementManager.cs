@@ -464,14 +464,13 @@ namespace Duologue.AchievementSystem
                 {
                     achievementData.EnemyTypesKilled[enemyObjectLookupTable[(int)po]] = true;
                     // See if that was all we were lacking
-                    int enemyCount = maxNumEnemies-1;
+                    int enemyCount = 0;
                     for (int i = 0; i < maxNumEnemies; i++)
                     {
                         if (!achievementData.EnemyTypesKilled[i])
-                            break;
-                        enemyCount--;
+                            enemyCount++;
                     }
-                    if (enemyCount < 1)
+                    if (enemyCount > 0)
                         AchievementExterminator();
                 }
             }
