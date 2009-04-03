@@ -198,8 +198,8 @@ namespace Duologue.PlayObjects
             if (buzzBase.Height/radiusDivisor > Radius)
                 Radius = buzzBase.Height/radiusDivisor;
 
-            baseLayer = LocalInstanceManager.BlitLayer_EnemyBase;
-            bladesLayer = LocalInstanceManager.BlitLayer_EnemyBase + 0.1f;
+            baseLayer = 0f;
+            bladesLayer = 0f;
 
             isFleeing = false;
 

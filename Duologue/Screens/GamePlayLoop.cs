@@ -217,7 +217,7 @@ namespace Duologue.Screens
                             LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints[i]);
                         livingEnemies++;
                     }
-                    else if(LocalInstanceManager.Enemies[i].Alive)
+                    else if (LocalInstanceManager.Enemies[i].Alive)
                     {
                         dumb = LocalInstanceManager.Enemies[i].StartOffset();
                         // Update each enemy with player objects
@@ -242,10 +242,11 @@ namespace Duologue.Screens
                         }
                         dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
                         livingEnemies++;
-                    }
 
-                    LocalInstanceManager.Enemies[i].Update(gameTime);
-                    LocalInstanceManager.Enemies[i].InnerUpdate(gameTime);
+
+                        LocalInstanceManager.Enemies[i].Update(gameTime);
+                        LocalInstanceManager.Enemies[i].InnerUpdate(gameTime);
+                    }
                 }
             }
 

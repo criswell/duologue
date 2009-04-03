@@ -64,18 +64,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="enemy-floater-eye.png">
-      <Name>enemy-floater-eye</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="enemy-floater.png">
-      <Name>enemy-floater</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="beam-base.png">
       <Name>beam-base</Name>
       <Importer>TextureImporter</Importer>
@@ -1472,13 +1460,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="cred.avi">
-      <Name>cred</Name>
-      <Importer>AviVidImporter</Importer>
-      <Processor>VidProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Medals\bff-grey.png">
       <Name>bff-grey</Name>
       <Importer>TextureImporter</Importer>
@@ -1583,6 +1564,33 @@
   <ItemGroup>
     <Compile Include="Background\throb-corner.png">
       <Name>throb-corner</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enemies\spawner\flare.png">
+      <Name>flare</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\spawner\spawner-base.png">
+      <Name>spawner-base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\spawner\spawner-lights1.png">
+      <Name>spawner-lights1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\spawner\spawner-lights2.png">
+      <Name>spawner-lights2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\spawner\spawner-lights3.png">
+      <Name>spawner-lights3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

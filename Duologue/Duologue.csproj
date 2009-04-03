@@ -121,13 +121,17 @@
     <Compile Include="ParticleEffects\Steam.cs" />
     <Compile Include="PlayObjects\Enemy.cs" />
     <Compile Include="PlayObjects\Enemy_AnnMoeba.cs" />
+    <Compile Include="PlayObjects\Enemy_Maggot.cs" />
     <Compile Include="PlayObjects\Enemy_Mirthworm.cs" />
     <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />
     <Compile Include="PlayObjects\Enemy_Ember.cs" />
     <Compile Include="PlayObjects\Enemy_Gloop.cs" />
     <Compile Include="PlayObjects\Enemy_GloopKing.cs" />
+    <Compile Include="PlayObjects\Enemy_Placeholder.cs" />
     <Compile Include="PlayObjects\Enemy_ProtoNora.cs" />
+    <Compile Include="PlayObjects\Enemy_Roggles.cs" />
     <Compile Include="PlayObjects\Enemy_RollingRock.cs" />
+    <Compile Include="PlayObjects\Enemy_Spawner.cs" />
     <Compile Include="PlayObjects\Enemy_Spitter.cs" />
     <Compile Include="PlayObjects\Enemy_StaticGloop.cs" />
     <Compile Include="PlayObjects\Enemy_Pyre.cs" />

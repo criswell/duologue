@@ -958,7 +958,7 @@ namespace Duologue.PlayObjects
                 c,
                 TreadRotation,
                 1f,
-                LocalInstanceManager.BlitLayer_PlayerBase);
+                0f);
 
 
             // Base
@@ -970,7 +970,7 @@ namespace Duologue.PlayObjects
                 c,
                 BaseRotation,
                 1f,
-                LocalInstanceManager.BlitLayer_PlayerBase);
+                0f);
         }
 
         /// <summary>
@@ -1046,7 +1046,7 @@ namespace Duologue.PlayObjects
                 c,
                 CannonRotation,
                 1f,
-                LocalInstanceManager.BlitLayer_PlayerBase,
+                0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
         }
 
@@ -1070,7 +1070,7 @@ namespace Duologue.PlayObjects
                 c,
                 TreadRotation,
                 1f,
-                LocalInstanceManager.BlitLayer_PlayerBase,
+                0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
 
 
@@ -1083,7 +1083,7 @@ namespace Duologue.PlayObjects
                 c,
                 BaseRotation,
                 1f,
-                LocalInstanceManager.BlitLayer_PlayerBase,
+                0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
 
             // Shine
@@ -1095,7 +1095,7 @@ namespace Duologue.PlayObjects
                 c,
                 0f,
                 1f,
-                LocalInstanceManager.BlitLayer_PlayerBase,
+                0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
         }
 

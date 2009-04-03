@@ -83,6 +83,18 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_ProtoNora:
                             Init_ProtoNora(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_Maggot:
+                            Init_Maggot(i, manager);
+                            break;
+                        case TypesOfPlayObjects.Enemy_Roggles:
+                            Init_Roggles(i, manager);
+                            break;
+                        case TypesOfPlayObjects.Enemy_Spawner:
+                            Init_Spawner(i, manager);
+                            break;
+                        case TypesOfPlayObjects.Enemy_Placeholder:
+                            Init_Placeholder(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -99,6 +111,26 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_Placeholder(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Placeholder(manager);
+        }
+
+        private static void Init_Spawner(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Spawner(manager);
+        }
+
+        private static void Init_Roggles(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Roggles(manager);
+        }
+
+        private static void Init_Maggot(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Maggot(manager);
+        }
+
         private static void Init_ProtoNora(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_ProtoNora(manager);
