@@ -226,7 +226,7 @@ namespace Duologue.AchievementSystem
 
         private void GenerateEnemyList()
         {
-            enemyObjectLookupTable = new int[25]; // Probably should be bigger
+            enemyObjectLookupTable = new int[25]; // Probably should be bigger than possible enemies to allow for growth
 
             // We need to only populate this list with the destructable enemy types
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_AnnMoeba] = 0;
