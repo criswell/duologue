@@ -46,6 +46,7 @@ namespace Duologue.Screens
 
         private const int windowOffsetX = 30;
         private const int windowOffsetY = 10;
+        private const double startThrobTime = 1.1;
         #endregion
 
         #region Fields
@@ -83,6 +84,7 @@ namespace Duologue.Screens
         private bool startPressed;
         private PlayerIndex playerWhoPressedStart;
         private IAsyncResult guideResult;
+        private double timer_StartThrob;
         #endregion
 
         #region Properties
@@ -153,6 +155,7 @@ namespace Duologue.Screens
 
             currentState = MainMenuState.PressStart;
             currentSelection = 0;
+            timer_StartThrob = 0;
 
             base.Initialize();
         }
@@ -470,6 +473,10 @@ namespace Duologue.Screens
 
         private void DrawPressStart(GameTime gameTime)
         {
+            timer_StartThrob += gameTime.ElapsedRealTime.TotalSeconds;
+            if (timer_StartThrob > startThrobTime)
+                timer_StartThrob = 0;
+
             Vector2 temp = font.MeasureString(Resources.MainMenu_PressStart);
 
             InstanceManager.RenderSprite.DrawString(
@@ -478,7 +485,17 @@ namespace Duologue.Screens
                 new Vector2(
                     InstanceManager.DefaultViewport.Width / 2f,
                     InstanceManager.DefaultViewport.Height / 2f),
-                Color.Tan,
+                Color.White,
+                Vector2.One,
+                temp / 2f);
+
+            InstanceManager.RenderSprite.DrawString(
+                font,
+                Resources.MainMenu_PressStart,
+                new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f),
+                new Color(Color.Tan, (float)(timer_StartThrob/startThrobTime)),
                 Vector2.One,
                 temp / 2f);
         }

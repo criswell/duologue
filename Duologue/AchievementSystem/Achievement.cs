@@ -16,6 +16,13 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Duologue.AchievementSystem
 {
+    [Serializable]
+    public struct AchievementData
+    {
+        public bool[] MedalEarned;
+        public int NumberOfEnemiesKilled;
+        public bool[] EnemyTypesKilled;
+    }
     /// <summary>
     /// Represents an individual achievement in the game
     /// </summary>
