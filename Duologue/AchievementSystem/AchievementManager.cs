@@ -68,6 +68,11 @@ namespace Duologue.AchievementSystem
 
         private const int possibleAchievements = 10;
         private const float lifetime = 0.001f;
+
+        #region Achievement Constants
+        private const int number_Kilokillage = 1000;
+        private const int number_Seriously = 39516;
+        #endregion
         #endregion
 
         #region Fields
@@ -402,11 +407,29 @@ namespace Duologue.AchievementSystem
 
         #region Achievement calls
         /// <summary>
-        /// Unlock "Rolled Score" achievement
+        /// Unlock "Rolled Score" medal
         /// </summary>
         public void AchievementRolledScore()
         {
             UnlockAchievement(Achievements.HeavyRoller);
+        }
+
+        /// <summary>
+        /// Unlock "Kilokillage" medal (this is private as the achievement manager
+        /// is the only place where this data is tracked)
+        /// </summary>
+        private void AchievementKilokillage()
+        {
+            UnlockAchievement(Achievements.Kilokillage);
+        }
+
+        /// <summary>
+        /// Unlocks "Exterminator" medal (this is private as the achievement manager
+        /// is the only place where this data is tracked)
+        /// </summary>
+        private void AchievementExterminator()
+        {
+            UnlockAchievement(Achievements.Exterminator);
         }
         #endregion
 
@@ -420,6 +443,33 @@ namespace Duologue.AchievementSystem
             {
                 SyncUpAchievementDataBeforeSave();
                 SaveAchievementData();
+            }
+        }
+
+        public void EnemyDeathCount(TypesOfPlayObjects po)
+        {
+            if (!Guide.IsTrialMode && dataLoaded)
+            {
+                achievementData.NumberOfEnemiesKilled++;
+                if (!achievementData.MedalEarned[(int)Achievements.Kilokillage]
+                    && achievementData.NumberOfEnemiesKilled >= number_Kilokillage)
+                {
+                    AchievementKilokillage();
+                }
+                if (!achievementData.EnemyTypesKilled[enemyObjectLookupTable[(int)po]])
+                {
+                    achievementData.EnemyTypesKilled[enemyObjectLookupTable[(int)po]] = true;
+                    // See if that was all we were lacking
+                    int enemyCount = maxNumEnemies-1;
+                    for (int i = 0; i < maxNumEnemies; i++)
+                    {
+                        if (!achievementData.EnemyTypesKilled[i])
+                            break;
+                        enemyCount--;
+                    }
+                    if (enemyCount < 1)
+                        AchievementExterminator();
+                }
             }
         }
         #endregion
