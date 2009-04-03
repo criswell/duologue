@@ -387,12 +387,15 @@ namespace Duologue.AchievementSystem
         /// <param name="i">The achievement enum</param>
         private void UnlockAchievement(Achievements i)
         {
-            int j = (int)i;
-            if (!achievements[j].Unlocked)
+            if (!Guide.IsTrialMode)
             {
-                achievements[j].Displayed = false;
-                achievements[j].Unlocked = true;
-                unlockedYetToDisplay.Enqueue(achievements[j]);
+                int j = (int)i;
+                if (!achievements[j].Unlocked)
+                {
+                    achievements[j].Displayed = false;
+                    achievements[j].Unlocked = true;
+                    unlockedYetToDisplay.Enqueue(achievements[j]);
+                }
             }
         }
         #endregion
@@ -403,8 +406,7 @@ namespace Duologue.AchievementSystem
         /// </summary>
         public void AchievementRolledScore()
         {
-            if(!Guide.IsTrialMode)
-                UnlockAchievement(Achievements.HeavyRoller);
+            UnlockAchievement(Achievements.HeavyRoller);
         }
         #endregion
 
