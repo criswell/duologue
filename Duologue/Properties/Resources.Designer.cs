@@ -187,6 +187,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Press Start.
+        /// </summary>
+        internal static string MainMenu_PressStart {
+            get {
+                return ResourceManager.GetString("MainMenu_PressStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complete the campaign in co-op.
         /// </summary>
         internal static string Medal_Desc_BFF {
@@ -214,6 +223,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rolled the score back to all zeros.
+        /// </summary>
+        internal static string Medal_Desc_HeavyRoller {
+            get {
+                return ResourceManager.GetString("Medal_Desc_HeavyRoller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play 50% of campaign in 4 player co-op.
         /// </summary>
         internal static string Medal_Desc_KeyParty {
@@ -237,15 +255,6 @@ namespace Duologue.Properties {
         internal static string Medal_Desc_NoEndInSight {
             get {
                 return ResourceManager.GetString("Medal_Desc_NoEndInSight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rolled the score back to all zeros.
-        /// </summary>
-        internal static string Medal_Desc_RolledScore {
-            get {
-                return ResourceManager.GetString("Medal_Desc_RolledScore", resourceCulture);
             }
         }
         
@@ -304,6 +313,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rolled the score.
+        /// </summary>
+        internal static string Medal_Name_HeavyRoller {
+            get {
+                return ResourceManager.GetString("Medal_Name_HeavyRoller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key party.
         /// </summary>
         internal static string Medal_Name_KeyParty {
@@ -327,15 +345,6 @@ namespace Duologue.Properties {
         internal static string Medal_Name_NoEndInSight {
             get {
                 return ResourceManager.GetString("Medal_Name_NoEndInSight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rolled the score.
-        /// </summary>
-        internal static string Medal_Name_RolledScore {
-            get {
-                return ResourceManager.GetString("Medal_Name_RolledScore", resourceCulture);
             }
         }
         

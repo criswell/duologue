@@ -159,6 +159,9 @@
   <data name="MainMenu_Play" xml:space="preserve">
     <value>Enlist for the war!</value>
   </data>
+  <data name="MainMenu_PressStart" xml:space="preserve">
+    <value>Press Start</value>
+  </data>
   <data name="Medal_Desc_BFF" xml:space="preserve">
     <value>Complete the campaign in co-op</value>
   </data>
@@ -168,6 +171,9 @@
   <data name="Medal_Desc_Exterminator" xml:space="preserve">
     <value>Killed every enemy type</value>
   </data>
+  <data name="Medal_Desc_HeavyRoller" xml:space="preserve">
+    <value>Rolled the score back to all zeros</value>
+  </data>
   <data name="Medal_Desc_KeyParty" xml:space="preserve">
     <value>Play 50% of campaign in 4 player co-op</value>
   </data>
@@ -176,9 +182,6 @@
   </data>
   <data name="Medal_Desc_NoEndInSight" xml:space="preserve">
     <value>Gotten past wave 100 of Infinite Mode</value>
-  </data>
-  <data name="Medal_Desc_RolledScore" xml:space="preserve">
-    <value>Rolled the score back to all zeros</value>
   </data>
   <data name="Medal_Desc_Seriously" xml:space="preserve">
     <value>Killed 39,516 enemies</value>
@@ -198,6 +201,9 @@
   <data name="Medal_Name_Exterminator" xml:space="preserve">
     <value>Exterminator</value>
   </data>
+  <data name="Medal_Name_HeavyRoller" xml:space="preserve">
+    <value>Rolled the score</value>
+  </data>
   <data name="Medal_Name_KeyParty" xml:space="preserve">
     <value>Key party</value>
   </data>
@@ -206,9 +212,6 @@
   </data>
   <data name="Medal_Name_NoEndInSight" xml:space="preserve">
     <value>No end in sight</value>
-  </data>
-  <data name="Medal_Name_RolledScore" xml:space="preserve">
-    <value>Rolled the score</value>
   </data>
   <data name="Medal_Name_Seriously" xml:space="preserve">
     <value>Seriously?</value>
