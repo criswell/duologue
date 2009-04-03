@@ -155,6 +155,7 @@ namespace Duologue.AchievementSystem
                     achievementData.DataVersion = dataVersion;
 
                     SaveAchievementData();
+                    dataLoaded = true;
                 }
             }
         }
@@ -188,6 +189,7 @@ namespace Duologue.AchievementSystem
 
                 // Dispose the container.
                 container.Dispose();
+                dataLoaded = true;
                 if (achievementData.DataVersion == dataVersion)
                     return true;
                 else
