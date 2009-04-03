@@ -30,7 +30,7 @@ namespace Duologue.AchievementSystem
 {
     public enum Achievements
     {
-        RolledScore,
+        HeavyRoller,
         Kilokillage,
         Exterminator,
         TourOfDuty,
@@ -47,9 +47,22 @@ namespace Duologue.AchievementSystem
     public class AchievementManager : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
+        private const string filename_Font = "Fonts/inero-28";
+        private const string filename_Background = "Medals/background";
+        private const string filename_BFF = "Medals/bff";
+        private const string filename_Experienced = "Medals/experienced";
+        private const string filename_Exterminator = "Medals/exterminator";
+        private const string filename_HeavyRoller = "Medals/heavy_roller";
+        private const string filename_KeyParty = "Medals/key_party";
+        private const string filename_Kilokillage = "Medals/kilokillage";
+        private const string filename_NoEndInSight = "Medals/no_end_in_sight";
+        private const string filename_Seriously = "Medals/seriously";
+        private const string filename_TourOfDuty = "Medals/tour_of_duty";
+        private const string filename_WetFeet = "Medals/wet_feet";
+        private const string filename_GreyExtension = "-grey";
+
         private const int possibleAchievements = 20;
         private const float lifetime = 0.001f;
-        private const string fontfilename = "Fonts/inero-28";
         #endregion
 
         #region Fields
@@ -60,6 +73,7 @@ namespace Duologue.AchievementSystem
         private Vector2 centerPos;
         private float timeSinceStart;
         private Achievement currentDisplayed;
+        private List<int> orderedAchievementList;
         #endregion
 
         #region Properties
@@ -70,8 +84,8 @@ namespace Duologue.AchievementSystem
             : base(game)
         {
             achievements = new Achievement[possibleAchievements];
+            orderedAchievementList = new List<int>(possibleAchievements);
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
-            GenerateAchievements();
         }
 
         /// <summary>
@@ -87,7 +101,10 @@ namespace Duologue.AchievementSystem
         }
         protected override void LoadContent()
         {
-            font = InstanceManager.AssetManager.LoadSpriteFont(fontfilename);
+            font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
+
+            GenerateAchievements();
+
             base.LoadContent();
         }
         #endregion
@@ -95,14 +112,115 @@ namespace Duologue.AchievementSystem
         #region Private Methods
         private void GenerateAchievements()
         {
-            // FIXME
-            // When we do this "for real" we want to pre-populate this with achievements
-            // the player already has
-
             // Rolled Score
-            achievements[(int)Achievements.RolledScore] = new Achievement(
-                Resources.Medal_Name_RolledScore,
-                Resources.Medal_Desc_RolledScore);
+            achievements[(int)Achievements.HeavyRoller] = new Achievement(
+                Resources.Medal_Name_HeavyRoller,
+                Resources.Medal_Desc_HeavyRoller);
+            achievements[(int)Achievements.HeavyRoller].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_HeavyRoller);
+            achievements[(int)Achievements.HeavyRoller].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_HeavyRoller + filename_GreyExtension);
+            achievements[(int)Achievements.HeavyRoller].Weight = 1;
+            orderedAchievementList.Add((int)Achievements.HeavyRoller);
+
+            // Kilokillage
+            achievements[(int)Achievements.Kilokillage] = new Achievement(
+                Resources.Medal_Name_Kilokillage,
+                Resources.Medal_Desc_Kilokillage);
+            achievements[(int)Achievements.Kilokillage].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_Kilokillage);
+            achievements[(int)Achievements.Kilokillage].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_Kilokillage + filename_GreyExtension);
+            achievements[(int)Achievements.Kilokillage].Weight = 2;
+            orderedAchievementList.Add((int)Achievements.Kilokillage);
+
+            // Exterminator
+            achievements[(int)Achievements.Exterminator] = new Achievement(
+                Resources.Medal_Name_Exterminator,
+                Resources.Medal_Desc_Exterminator);
+            achievements[(int)Achievements.Exterminator].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_Exterminator);
+            achievements[(int)Achievements.Exterminator].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_Exterminator + filename_GreyExtension);
+            achievements[(int)Achievements.Exterminator].Weight = 3;
+            orderedAchievementList.Add((int)Achievements.Exterminator);
+
+            // Tour of duty
+            achievements[(int)Achievements.TourOfDuty] = new Achievement(
+                Resources.Medal_Name_TourOfDuty,
+                Resources.Medal_Desc_TourOfDuty);
+            achievements[(int)Achievements.TourOfDuty].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_TourOfDuty);
+            achievements[(int)Achievements.TourOfDuty].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_TourOfDuty + filename_GreyExtension);
+            achievements[(int)Achievements.TourOfDuty].Weight = 4;
+            orderedAchievementList.Add((int)Achievements.TourOfDuty);
+
+            // BFF
+            achievements[(int)Achievements.BFF] = new Achievement(
+                Resources.Medal_Name_BFF,
+                Resources.Medal_Desc_BFF);
+            achievements[(int)Achievements.BFF].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_BFF);
+            achievements[(int)Achievements.BFF].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_BFF + filename_GreyExtension);
+            achievements[(int)Achievements.BFF].Weight = 5;
+            orderedAchievementList.Add((int)Achievements.BFF);
+
+            // Wet feet
+            achievements[(int)Achievements.WetFeet] = new Achievement(
+                Resources.Medal_Name_WetFeet,
+                Resources.Medal_Desc_WetFeet);
+            achievements[(int)Achievements.WetFeet].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_WetFeet);
+            achievements[(int)Achievements.WetFeet].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_WetFeet + filename_GreyExtension);
+            achievements[(int)Achievements.WetFeet].Weight = 6;
+            orderedAchievementList.Add((int)Achievements.WetFeet);
+
+            // Experienced
+            achievements[(int)Achievements.Experienced] = new Achievement(
+                Resources.Medal_Name_Experienced,
+                Resources.Medal_Desc_Experienced);
+            achievements[(int)Achievements.Experienced].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_Experienced);
+            achievements[(int)Achievements.Experienced].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_Experienced + filename_GreyExtension);
+            achievements[(int)Achievements.Experienced].Weight = 7;
+            orderedAchievementList.Add((int)Achievements.Experienced);
+
+            // No end in sight
+            achievements[(int)Achievements.NoEndInSight] = new Achievement(
+                Resources.Medal_Name_NoEndInSight,
+                Resources.Medal_Desc_NoEndInSight);
+            achievements[(int)Achievements.NoEndInSight].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_NoEndInSight);
+            achievements[(int)Achievements.NoEndInSight].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_NoEndInSight + filename_GreyExtension);
+            achievements[(int)Achievements.NoEndInSight].Weight = 8;
+            orderedAchievementList.Add((int)Achievements.NoEndInSight);
+
+            // Key party
+            achievements[(int)Achievements.KeyParty] = new Achievement(
+                Resources.Medal_Name_KeyParty,
+                Resources.Medal_Desc_KeyParty);
+            achievements[(int)Achievements.KeyParty].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_KeyParty);
+            achievements[(int)Achievements.KeyParty].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_KeyParty + filename_GreyExtension);
+            achievements[(int)Achievements.KeyParty].Weight = 9;
+            orderedAchievementList.Add((int)Achievements.KeyParty);
+
+            // Seriously?
+            achievements[(int)Achievements.Seriously] = new Achievement(
+                Resources.Medal_Name_Seriously,
+                Resources.Medal_Desc_Seriously);
+            achievements[(int)Achievements.Seriously].Icon =
+                InstanceManager.AssetManager.LoadTexture2D(filename_Seriously);
+            achievements[(int)Achievements.Seriously].IconGrey =
+                InstanceManager.AssetManager.LoadTexture2D(filename_Seriously + filename_GreyExtension);
+            achievements[(int)Achievements.Seriously].Weight = 10;
+            orderedAchievementList.Add((int)Achievements.Seriously);
         }
 
         /// <summary>
@@ -127,7 +245,7 @@ namespace Duologue.AchievementSystem
         /// </summary>
         public void AchievementRolledScore()
         {
-            UnlockAchievement(Achievements.RolledScore);
+            UnlockAchievement(Achievements.HeavyRoller);
         }
         #endregion
 
