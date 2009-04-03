@@ -446,6 +446,10 @@ namespace Duologue.AchievementSystem
             }
         }
 
+        /// <summary>
+        /// Called when an enemy has been killed
+        /// </summary>
+        /// <param name="po">The enemy type that was killed</param>
         public void EnemyDeathCount(TypesOfPlayObjects po)
         {
             if (!Guide.IsTrialMode && dataLoaded)
