@@ -157,11 +157,21 @@ namespace Duologue.AchievementSystem
                     SaveAchievementData();
                     dataLoaded = true;
                 }
+
+                SyncUpAchievementData();
             }
         }
         #endregion
 
         #region Private Methods
+        private void SyncUpAchievementData()
+        {
+            for (int i = 0; i < possibleAchievements; i++)
+            {
+                achievements[i].Unlocked = achievementData.MedalEarned[i];
+            }
+        }
+
         private bool LoadAchievementData()
         {
             // Open a storage container.
