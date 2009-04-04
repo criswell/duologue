@@ -205,7 +205,17 @@ namespace Duologue.AchievementSystem
 
                 // Read the data from the file.
                 XmlSerializer serializer = new XmlSerializer(typeof(AchievementData));
-                achievementData = (AchievementData)serializer.Deserialize(stream);
+                try
+                {
+                    achievementData = (AchievementData)serializer.Deserialize(stream);
+                }
+                catch
+                {
+                    stream.Close();
+                    container.Dispose();
+                    dataLoaded = false;
+                    return false;
+                }
 
                 // Close the file.
                 stream.Close();
@@ -385,12 +395,14 @@ namespace Duologue.AchievementSystem
             achievements[(int)Achievements.Seriously].Weight = 10;
             orderedAchievementList.Add((int)Achievements.Seriously);
         }
+        #endregion
 
+        #region Achievement calls
         /// <summary>
-        /// Internal- called when an achievement is unlocked
+        /// Called when an achievement is unlocked
         /// </summary>
         /// <param name="i">The achievement enum</param>
-        private void UnlockAchievement(Achievements i)
+        public void UnlockAchievement(Achievements i)
         {
             if (!Guide.IsTrialMode)
             {
@@ -402,34 +414,6 @@ namespace Duologue.AchievementSystem
                     unlockedYetToDisplay.Enqueue(achievements[j]);
                 }
             }
-        }
-        #endregion
-
-        #region Achievement calls
-        /// <summary>
-        /// Unlock "Rolled Score" medal
-        /// </summary>
-        public void AchievementRolledScore()
-        {
-            UnlockAchievement(Achievements.HeavyRoller);
-        }
-
-        /// <summary>
-        /// Unlock "Kilokillage" medal (this is private as the achievement manager
-        /// is the only place where this data is tracked)
-        /// </summary>
-        private void AchievementKilokillage()
-        {
-            UnlockAchievement(Achievements.Kilokillage);
-        }
-
-        /// <summary>
-        /// Unlocks "Exterminator" medal (this is private as the achievement manager
-        /// is the only place where this data is tracked)
-        /// </summary>
-        private void AchievementExterminator()
-        {
-            UnlockAchievement(Achievements.Exterminator);
         }
         #endregion
 
@@ -458,7 +442,13 @@ namespace Duologue.AchievementSystem
                 if (!achievementData.MedalEarned[(int)Achievements.Kilokillage]
                     && achievementData.NumberOfEnemiesKilled >= number_Kilokillage)
                 {
-                    AchievementKilokillage();
+                    UnlockAchievement(Achievements.Kilokillage);
+                }
+
+                if (!achievementData.MedalEarned[(int)Achievements.Seriously]
+                    && achievementData.NumberOfEnemiesKilled >= number_Seriously)
+                {
+                    UnlockAchievement(Achievements.Seriously);
                 }
                 if (!achievementData.EnemyTypesKilled[enemyObjectLookupTable[(int)po]])
                 {
@@ -471,7 +461,7 @@ namespace Duologue.AchievementSystem
                             enemyCount++;
                     }
                     if (enemyCount > 0)
-                        AchievementExterminator();
+                        UnlockAchievement(Achievements.Exterminator);
                 }
             }
         }

@@ -300,7 +300,7 @@ namespace Duologue.UI
                 AddPointlet(points, (Vector2)pointPos);
             if (score > maxScore)
             {
-                LocalInstanceManager.AchievementManager.AchievementRolledScore();
+                LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.HeavyRoller);
                 score -= maxScore;
                 scrollingScore = 0;
             }
