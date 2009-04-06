@@ -26,6 +26,7 @@ using Duologue.UI;
 using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.State;
+using Duologue.AchievementSystem;
 #endregion
 
 namespace Duologue.Waves
@@ -50,6 +51,9 @@ namespace Duologue.Waves
         /// The maxium number for major wave numbers
         /// </summary>
         public const int MaxMajorNumber = 999;
+
+        private const float medal_WetFeet = 0.25f;
+        private const float medal_Experienced = 0.5f;
         #endregion
 
         #region Fields
@@ -101,6 +105,7 @@ namespace Duologue.Waves
             }
             catch
             {
+                LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.TourOfDuty);
                 throw;
             }
         }

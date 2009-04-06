@@ -27,7 +27,7 @@ namespace Duologue.AchievementSystem
     /// <summary>
     /// Represents an individual achievement in the game
     /// </summary>
-    class Achievement
+    public class Achievement
     {
         #region Properties
         /// <summary>
