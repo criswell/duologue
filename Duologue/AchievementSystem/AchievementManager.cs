@@ -43,6 +43,7 @@ namespace Duologue.AchievementSystem
         KeyParty,
         Seriously,
     }
+
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -69,6 +70,16 @@ namespace Duologue.AchievementSystem
         private const int possibleAchievements = 10;
         private const float lifetime = 0.001f;
 
+        private float iconVerticalSize = 80f;
+
+        private float horizSpacing = 8f;
+        private float vertSpacing = 5f;
+
+        private float timePercent_FadeIn = 0.08f;
+        private float timePercent_FadeOut = 0.85f;
+
+        private float minSize = 0.7f;
+
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
         private const int number_Seriously = 39516;
@@ -88,6 +99,7 @@ namespace Duologue.AchievementSystem
         private bool storageDeviceIsSet;
         private AchievementData achievementData;
         private bool dataLoaded;
+        private Texture2D texture_Background;
 
         /// <summary>
         /// Since every play object in the game is not a destructable enemy,
@@ -97,9 +109,21 @@ namespace Duologue.AchievementSystem
         private int[] enemyObjectLookupTable;
         private int maxNumEnemies;
         private int dataVersion;
+
+        private float alpha_Achievement;
+        private float size_Achievement;
+        private Color color_Text;
+        private Color color_Border;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets the current medal list
+        /// </summary>
+        public Achievement[] Medals
+        {
+            get { return achievements; }
+        }
         #endregion
 
         #region Constructor / Init / Load
@@ -111,6 +135,10 @@ namespace Duologue.AchievementSystem
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             storageDeviceIsSet = false;
             dataVersion = 2;
+            alpha_Achievement = 0;
+            size_Achievement = 0;
+            color_Text = Color.Bisque;
+            color_Border = Color.SlateBlue;
         }
 
         /// <summary>
@@ -127,6 +155,7 @@ namespace Duologue.AchievementSystem
         protected override void LoadContent()
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
+            texture_Background = InstanceManager.AssetManager.LoadTexture2D(filename_Background);
 
             GenerateEnemyList();
             GenerateAchievements();
@@ -481,6 +510,23 @@ namespace Duologue.AchievementSystem
                 {
                     currentDisplayed.Displayed = true;
                     currentDisplayed = null;
+                    size_Achievement = 0f;
+                    alpha_Achievement = 0f;
+                }
+                else if (timeSinceStart / lifetime < timePercent_FadeIn)
+                {
+                    alpha_Achievement = (timeSinceStart / lifetime) / timePercent_FadeIn;
+                    size_Achievement = (1f - minSize) * (timeSinceStart / lifetime) / timePercent_FadeIn + minSize;
+                }
+                else if (timeSinceStart / lifetime > timePercent_FadeOut)
+                {
+                    alpha_Achievement = 1f - (timeSinceStart / lifetime);
+                    size_Achievement = 1f;
+                }
+                else
+                {
+                    size_Achievement = 1f;
+                    alpha_Achievement = 1f;
                 }
             }
             else if (unlockedYetToDisplay.Count > 0)
@@ -498,17 +544,55 @@ namespace Duologue.AchievementSystem
 
             if (currentDisplayed != null)
             {
-                Vector2 size = font.MeasureString(currentDisplayed.Name);
+                Vector2 textSize = font.MeasureString(currentDisplayed.Name);
+                float imageSize = iconVerticalSize / (float)currentDisplayed.Icon.Height;
+                Vector2 borderSize = new Vector2(
+                    (textSize.X + currentDisplayed.Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
+                    (currentDisplayed.Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);
+
                 if (centerPos == Vector2.Zero)
                 {
                     centerPos = new Vector2(
-                        InstanceManager.DefaultViewport.Width / 2f - size.X/2f,
-                        (float)InstanceManager.DefaultViewport.Height - 2 * size.Y);
+                        InstanceManager.DefaultViewport.Width / 2f - borderSize.X/2f,
+                        (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom - borderSize.Y);
                 }
+                // Draw border
+                render.Draw(
+                    texture_Background,
+                    centerPos,
+                    Vector2.Zero,
+                    null,
+                    new Color(color_Border, alpha_Achievement),
+                    0f,
+                    borderSize * size_Achievement,
+                    0f,
+                    RenderSpriteBlendMode.AbsoluteTop);
+                    
+
+                // Draw text
                 render.DrawString(font,
                     currentDisplayed.Name,
-                    centerPos,
-                    Color.White);
+                    centerPos
+                        + Vector2.UnitX * (2f * horizSpacing + (float)currentDisplayed.Icon.Width * iconVerticalSize)
+                        + Vector2.UnitY * vertSpacing,
+                    new Color(color_Text, alpha_Achievement),
+                    Vector2.One * size_Achievement,
+                    Vector2.Zero,
+                    RenderSpriteBlendMode.AbsoluteTop);
+
+                // Draw icon
+                render.Draw(
+                    currentDisplayed.Icon,
+                    centerPos
+                        + Vector2.UnitX * horizSpacing
+                        + Vector2.UnitY * vertSpacing,
+                    Vector2.Zero,
+                    null,
+                    new Color(Color.White, alpha_Achievement),
+                    0,
+                    size_Achievement * imageSize,
+                    0,
+                    RenderSpriteBlendMode.AbsoluteTop);
             }
             base.Draw(gameTime);
         }
