@@ -114,6 +114,9 @@ namespace Duologue.AchievementSystem
         private float size_Achievement;
         private Color color_Text;
         private Color color_Border;
+        private Vector2 textSize;
+        private Vector2 borderSize;
+        private float imageSize;
         #endregion
 
         #region Properties
@@ -496,6 +499,83 @@ namespace Duologue.AchievementSystem
                 }
             }
         }
+
+        /// <summary>
+        /// Draw a medal on the screen
+        /// </summary>
+        /// <param name="medal">The medal to display</param>
+        /// <param name="position">The position of the medal. X will be the middle of the medal, Y will be the upper limit</param>
+        /// <param name="unlocked">If it's unlocked or not</param>
+        public void DrawMedal(Achievement medal, Vector2 position, bool unlocked)
+        {
+            textSize = font.MeasureString(medal.Name);
+            imageSize = iconVerticalSize / (float)medal.Icon.Height;
+            borderSize = new Vector2(
+                (textSize.X + medal.Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
+                (medal.Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);
+
+            centerPos = new Vector2(
+                position.X - (float)texture_Background.Width * borderSize.X / 2f,
+                position.Y - (float)texture_Background.Height * borderSize.Y);
+
+            Console.WriteLine(centerPos);
+
+            // Draw border
+            render.Draw(
+                texture_Background,
+                centerPos,
+                Vector2.Zero,
+                null,
+                new Color(color_Border, alpha_Achievement),
+                0f,
+                borderSize * size_Achievement,
+                0f,
+                RenderSpriteBlendMode.AbsoluteTop);
+
+
+            // Draw text
+            render.DrawString(font,
+                medal.Name,
+                centerPos
+                    + Vector2.UnitX * (2f * horizSpacing + (float)medal.Icon.Width * size_Achievement * imageSize)
+                    + Vector2.UnitY * (vertSpacing + (float)medal.Icon.Height * size_Achievement * imageSize * 0.5f - textSize.Y / 2f),
+                new Color(color_Text, alpha_Achievement),
+                Vector2.One * size_Achievement,
+                Vector2.Zero,
+                RenderSpriteBlendMode.AbsoluteTop);
+
+            // Draw icon
+            if (unlocked)
+            {
+                render.Draw(
+                    medal.Icon,
+                    centerPos
+                        + Vector2.UnitX * horizSpacing
+                        + Vector2.UnitY * vertSpacing,
+                    Vector2.Zero,
+                    null,
+                    new Color(Color.White, alpha_Achievement),
+                    0,
+                    size_Achievement * imageSize,
+                    0,
+                    RenderSpriteBlendMode.AbsoluteTop);
+            }
+            else
+            {
+                render.Draw(
+                    medal.IconGrey,
+                    centerPos
+                        + Vector2.UnitX * horizSpacing
+                        + Vector2.UnitY * vertSpacing,
+                    Vector2.Zero,
+                    null,
+                    new Color(Color.White, alpha_Achievement),
+                    0,
+                    size_Achievement * imageSize,
+                    0,
+                    RenderSpriteBlendMode.AbsoluteTop);
+            }
+        }
         #endregion
 
         #region Update / Draw
@@ -558,9 +638,15 @@ namespace Duologue.AchievementSystem
 
             if (currentDisplayed != null && currentDisplayed.Displayed == false)
             {
-                Vector2 textSize = font.MeasureString(currentDisplayed.Name);
+                DrawMedal(
+                    currentDisplayed,
+                    new Vector2(
+                        InstanceManager.DefaultViewport.Width / 2f,
+                        (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom),
+                    true);
+                /*textSize = font.MeasureString(currentDisplayed.Name);
                 float imageSize = iconVerticalSize / (float)currentDisplayed.Icon.Height;
-                Vector2 borderSize = new Vector2(
+                borderSize = new Vector2(
                     (textSize.X + currentDisplayed.Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
                     (currentDisplayed.Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);
 
@@ -606,7 +692,7 @@ namespace Duologue.AchievementSystem
                     0,
                     size_Achievement * imageSize,
                     0,
-                    RenderSpriteBlendMode.AbsoluteTop);
+                    RenderSpriteBlendMode.AbsoluteTop);*/
             }
             base.Draw(gameTime);
         }
