@@ -130,7 +130,6 @@ namespace Duologue.Waves
                 if (lastMajorNo > MaxMajorNumber)
                 {
                     lastMajorNo = 0;
-                    // FIXME: Need an achievement here, I think
                 }
             }
             k[0] = lastMajorNo;
