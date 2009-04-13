@@ -437,7 +437,7 @@ namespace Mimicware.Graphics
         internal void DrawString(
             SpriteFont font,
             string text,
-            Vector2 vector2,
+            Vector2 position,
             Color color,
             Vector2 scale,
             Vector2 cent,
@@ -446,7 +446,7 @@ namespace Mimicware.Graphics
             SpriteObject sobj = new SpriteObject(
                 font,
                 text,
-                vector2,
+                position,
                 color);
             sobj.Scale = scale;
             sobj.Center = cent;

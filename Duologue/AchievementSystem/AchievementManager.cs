@@ -68,7 +68,7 @@ namespace Duologue.AchievementSystem
         private const string containerName = "Duologue";
 
         private const int possibleAchievements = 10;
-        private const float lifetime = 0.001f;
+        private const float lifetime = 0.128f;
 
         private float iconVerticalSize = 80f;
 
@@ -135,8 +135,8 @@ namespace Duologue.AchievementSystem
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             storageDeviceIsSet = false;
             dataVersion = 2;
-            alpha_Achievement = 0;
-            size_Achievement = 0;
+            alpha_Achievement = 1f;
+            size_Achievement = 1f;
             color_Text = Color.Bisque;
             color_Border = Color.SlateBlue;
         }
@@ -441,6 +441,8 @@ namespace Duologue.AchievementSystem
                     achievements[j].Displayed = false;
                     achievements[j].Unlocked = true;
                     unlockedYetToDisplay.Enqueue(achievements[j]);
+                    this.Enabled = true;
+                    this.Visible = true;
                 }
             }
         }
@@ -506,14 +508,15 @@ namespace Duologue.AchievementSystem
             if (currentDisplayed != null)
             {
                 timeSinceStart += (float)gameTime.ElapsedRealTime.TotalSeconds;
+                //Console.WriteLine("{0} < {1}", timeSinceStart, lifetime);
                 if (timeSinceStart > lifetime)
                 {
                     currentDisplayed.Displayed = true;
                     currentDisplayed = null;
-                    size_Achievement = 0f;
-                    alpha_Achievement = 0f;
+                    //size_Achievement = 0f;
+                    //alpha_Achievement = 0f;
                 }
-                else if (timeSinceStart / lifetime < timePercent_FadeIn)
+                /*else if (timeSinceStart / lifetime < timePercent_FadeIn)
                 {
                     alpha_Achievement = (timeSinceStart / lifetime) / timePercent_FadeIn;
                     size_Achievement = (1f - minSize) * (timeSinceStart / lifetime) / timePercent_FadeIn + minSize;
@@ -522,7 +525,7 @@ namespace Duologue.AchievementSystem
                 {
                     alpha_Achievement = 1f - (timeSinceStart / lifetime);
                     size_Achievement = 1f;
-                }
+                }*/
                 else
                 {
                     size_Achievement = 1f;
@@ -534,6 +537,12 @@ namespace Duologue.AchievementSystem
                 currentDisplayed = unlockedYetToDisplay.Dequeue();
                 timeSinceStart = 0f;
             }
+            /*else
+            {
+                this.Enabled = false;
+                this.Visible = false;
+            }*/
+
             base.Update(gameTime);
         }
 
@@ -541,21 +550,31 @@ namespace Duologue.AchievementSystem
         {
             if (render == null)
                 render = InstanceManager.RenderSprite;
+            
 
             if (currentDisplayed != null)
             {
+                render.Draw(
+                    texture_Background,
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    null,
+                    color_Border,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AbsoluteTop);
+
                 Vector2 textSize = font.MeasureString(currentDisplayed.Name);
                 float imageSize = iconVerticalSize / (float)currentDisplayed.Icon.Height;
                 Vector2 borderSize = new Vector2(
                     (textSize.X + currentDisplayed.Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
                     (currentDisplayed.Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);
 
-                if (centerPos == Vector2.Zero)
-                {
-                    centerPos = new Vector2(
-                        InstanceManager.DefaultViewport.Width / 2f - borderSize.X/2f,
-                        (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom - borderSize.Y);
-                }
+                centerPos = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f - (float)texture_Background.Width * borderSize.X / 2f,
+                    (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom - (float)texture_Background.Height * borderSize.Y);
+
                 // Draw border
                 render.Draw(
                     texture_Background,
@@ -573,12 +592,14 @@ namespace Duologue.AchievementSystem
                 render.DrawString(font,
                     currentDisplayed.Name,
                     centerPos
-                        + Vector2.UnitX * (2f * horizSpacing + (float)currentDisplayed.Icon.Width * iconVerticalSize)
-                        + Vector2.UnitY * vertSpacing,
+                        + Vector2.UnitX * (2f * horizSpacing + (float)currentDisplayed.Icon.Width * size_Achievement * imageSize)
+                        + Vector2.UnitY * (vertSpacing + (float)currentDisplayed.Icon.Height * size_Achievement * imageSize * 0.5f - textSize.Y/2f),
                     new Color(color_Text, alpha_Achievement),
                     Vector2.One * size_Achievement,
                     Vector2.Zero,
                     RenderSpriteBlendMode.AbsoluteTop);
+
+                //Console.WriteLine((float)currentDisplayed.Icon );
 
                 // Draw icon
                 render.Draw(

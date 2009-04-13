@@ -219,7 +219,10 @@ namespace Duologue
             bulletParticle.DrawOrder = 8;
 
             achievements = new AchievementManager(this);
+            achievements.Enabled = true;
+            achievements.Visible = true;
             this.Components.Add(achievements);
+            achievements.DrawOrder = 300;
 
             pauseScreen = new PauseScreen(this);
             pauseScreen.Enabled = false;

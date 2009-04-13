@@ -59,6 +59,10 @@ namespace Duologue.Waves
         #endregion
 
         #region Properties
+        public int TotalNumberOfWaves
+        {
+            get { return numberOfWaves; }
+        }
         #endregion
 
         #region Constructor
