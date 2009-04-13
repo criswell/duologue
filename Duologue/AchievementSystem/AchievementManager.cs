@@ -516,7 +516,7 @@ namespace Duologue.AchievementSystem
                     //size_Achievement = 0f;
                     //alpha_Achievement = 0f;
                 }
-                /*else if (timeSinceStart / lifetime < timePercent_FadeIn)
+                else if (timeSinceStart / lifetime < timePercent_FadeIn)
                 {
                     alpha_Achievement = (timeSinceStart / lifetime) / timePercent_FadeIn;
                     size_Achievement = (1f - minSize) * (timeSinceStart / lifetime) / timePercent_FadeIn + minSize;
@@ -525,7 +525,7 @@ namespace Duologue.AchievementSystem
                 {
                     alpha_Achievement = 1f - (timeSinceStart / lifetime);
                     size_Achievement = 1f;
-                }*/
+                }
                 else
                 {
                     size_Achievement = 1f;
