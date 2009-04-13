@@ -554,17 +554,6 @@ namespace Duologue.AchievementSystem
 
             if (currentDisplayed != null)
             {
-                render.Draw(
-                    texture_Background,
-                    Vector2.Zero,
-                    Vector2.Zero,
-                    null,
-                    color_Border,
-                    0f,
-                    1f,
-                    0f,
-                    RenderSpriteBlendMode.AbsoluteTop);
-
                 Vector2 textSize = font.MeasureString(currentDisplayed.Name);
                 float imageSize = iconVerticalSize / (float)currentDisplayed.Icon.Height;
                 Vector2 borderSize = new Vector2(
