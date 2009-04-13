@@ -518,8 +518,6 @@ namespace Duologue.AchievementSystem
                 position.X - (float)texture_Background.Width * borderSize.X / 2f,
                 position.Y - (float)texture_Background.Height * borderSize.Y);
 
-            Console.WriteLine(centerPos);
-
             // Draw border
             render.Draw(
                 texture_Background,
@@ -588,14 +586,11 @@ namespace Duologue.AchievementSystem
             if (currentDisplayed != null)
             {
                 timeSinceStart += (float)gameTime.ElapsedRealTime.TotalSeconds;
-                //Console.WriteLine("{0} < {1}  ... {2}", timeSinceStart, lifetime, gameTime.ElapsedRealTime.TotalSeconds);
                 if (timeSinceStart > lifetime)
                 {
                     currentDisplayed.Displayed = true;
                     currentDisplayed = null;
                     timeSinceStart = 0;
-                    //size_Achievement = 0f;
-                    //alpha_Achievement = 0f;
                 }
                 else
                 {
@@ -621,11 +616,6 @@ namespace Duologue.AchievementSystem
                 currentDisplayed = unlockedYetToDisplay.Dequeue();
                 timeSinceStart = 0f;
             }
-            /*else
-            {
-                this.Enabled = false;
-                this.Visible = false;
-            }*/
 
             base.Update(gameTime);
         }
@@ -644,56 +634,7 @@ namespace Duologue.AchievementSystem
                         InstanceManager.DefaultViewport.Width / 2f,
                         (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom),
                     true);
-                /*textSize = font.MeasureString(currentDisplayed.Name);
-                float imageSize = iconVerticalSize / (float)currentDisplayed.Icon.Height;
-                borderSize = new Vector2(
-                    (textSize.X + currentDisplayed.Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
-                    (currentDisplayed.Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);
-
-                centerPos = new Vector2(
-                    InstanceManager.DefaultViewport.Width / 2f - (float)texture_Background.Width * borderSize.X / 2f,
-                    (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom - (float)texture_Background.Height * borderSize.Y);
-
-                // Draw border
-                render.Draw(
-                    texture_Background,
-                    centerPos,
-                    Vector2.Zero,
-                    null,
-                    new Color(color_Border, alpha_Achievement),
-                    0f,
-                    borderSize * size_Achievement,
-                    0f,
-                    RenderSpriteBlendMode.AbsoluteTop);
-                    
-
-                // Draw text
-                render.DrawString(font,
-                    currentDisplayed.Name,
-                    centerPos
-                        + Vector2.UnitX * (2f * horizSpacing + (float)currentDisplayed.Icon.Width * size_Achievement * imageSize)
-                        + Vector2.UnitY * (vertSpacing + (float)currentDisplayed.Icon.Height * size_Achievement * imageSize * 0.5f - textSize.Y/2f),
-                    new Color(color_Text, alpha_Achievement),
-                    Vector2.One * size_Achievement,
-                    Vector2.Zero,
-                    RenderSpriteBlendMode.AbsoluteTop);
-
-                //Console.WriteLine((float)currentDisplayed.Icon );
-
-                // Draw icon
-                render.Draw(
-                    currentDisplayed.Icon,
-                    centerPos
-                        + Vector2.UnitX * horizSpacing
-                        + Vector2.UnitY * vertSpacing,
-                    Vector2.Zero,
-                    null,
-                    new Color(Color.White, alpha_Achievement),
-                    0,
-                    size_Achievement * imageSize,
-                    0,
-                    RenderSpriteBlendMode.AbsoluteTop);*/
-            }
+           }
             base.Draw(gameTime);
         }
         #endregion
