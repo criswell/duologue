@@ -68,15 +68,15 @@ namespace Duologue.AchievementSystem
         private const string containerName = "Duologue";
 
         private const int possibleAchievements = 10;
-        private const float lifetime = 0.128f;
+        private const float lifetime = 0.033f;
 
         private float iconVerticalSize = 80f;
 
         private float horizSpacing = 8f;
         private float vertSpacing = 5f;
 
-        private float timePercent_FadeIn = 0.08f;
-        private float timePercent_FadeOut = 0.85f;
+        private float timePercent_FadeIn = 0.15f;
+        private float timePercent_FadeOut = 0.9f;
 
         private float minSize = 0.7f;
 
@@ -508,28 +508,32 @@ namespace Duologue.AchievementSystem
             if (currentDisplayed != null)
             {
                 timeSinceStart += (float)gameTime.ElapsedRealTime.TotalSeconds;
-                //Console.WriteLine("{0} < {1}", timeSinceStart, lifetime);
+                //Console.WriteLine("{0} < {1}  ... {2}", timeSinceStart, lifetime, gameTime.ElapsedRealTime.TotalSeconds);
                 if (timeSinceStart > lifetime)
                 {
                     currentDisplayed.Displayed = true;
                     currentDisplayed = null;
+                    timeSinceStart = 0;
                     //size_Achievement = 0f;
                     //alpha_Achievement = 0f;
                 }
-                else if (timeSinceStart / lifetime < timePercent_FadeIn)
-                {
-                    alpha_Achievement = (timeSinceStart / lifetime) / timePercent_FadeIn;
-                    size_Achievement = (1f - minSize) * (timeSinceStart / lifetime) / timePercent_FadeIn + minSize;
-                }
-                else if (timeSinceStart / lifetime > timePercent_FadeOut)
-                {
-                    alpha_Achievement = 1f - (timeSinceStart / lifetime);
-                    size_Achievement = 1f;
-                }
                 else
                 {
-                    size_Achievement = 1f;
-                    alpha_Achievement = 1f;
+                    if (timeSinceStart / lifetime < timePercent_FadeIn)
+                    {
+                        alpha_Achievement = (timeSinceStart / lifetime) / timePercent_FadeIn;
+                        size_Achievement = (1f - minSize) * (timeSinceStart / lifetime) / timePercent_FadeIn + minSize;
+                    }
+                    else if (timeSinceStart / lifetime > timePercent_FadeOut)
+                    {
+                        alpha_Achievement = 1f - (timeSinceStart / lifetime);
+                        size_Achievement = 1f;
+                    }
+                    else
+                    {
+                        size_Achievement = 1f;
+                        alpha_Achievement = 1f;
+                    }
                 }
             }
             else if (unlockedYetToDisplay.Count > 0)
@@ -552,7 +556,7 @@ namespace Duologue.AchievementSystem
                 render = InstanceManager.RenderSprite;
             
 
-            if (currentDisplayed != null)
+            if (currentDisplayed != null && currentDisplayed.Displayed == false)
             {
                 Vector2 textSize = font.MeasureString(currentDisplayed.Name);
                 float imageSize = iconVerticalSize / (float)currentDisplayed.Icon.Height;

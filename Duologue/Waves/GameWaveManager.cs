@@ -94,15 +94,6 @@ namespace Duologue.Waves
         /// </summary>
         private GameWave GetWave(int lastMajorNumber, int lastMinorNumber)
         {
-            if ((float)lastMajorNumber / (float)waveDef.TotalNumberOfWaves > medal_WetFeet)
-            {
-                LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.WetFeet);
-            }
-            if ((float)lastMajorNumber / (float)waveDef.TotalNumberOfWaves > medal_Experienced)
-            {
-                LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.Experienced);
-            }
-
             int[] k = IncrementWaveNumbers(lastMajorNumber, lastMinorNumber);
             GameWave temp;
             try
@@ -110,6 +101,15 @@ namespace Duologue.Waves
                 temp = waveDef.GetWave(k[0], k[1]);
                 lastMajorNumber = k[0];
                 lastMinorNumber = k[1];
+                Console.WriteLine("{0} / {1} = {2}", temp.MajorWaveNumber, waveDef.TotalNumberOfWaves, (float)temp.MajorWaveNumber / (float)waveDef.TotalNumberOfWaves);
+                if ((float)temp.MajorWaveNumber / (float)waveDef.TotalNumberOfWaves > medal_WetFeet)
+                {
+                    LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.WetFeet);
+                }
+                if ((float)temp.MajorWaveNumber / (float)waveDef.TotalNumberOfWaves > medal_Experienced)
+                {
+                    LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.Experienced);
+                }
                 return temp;
             }
             catch
