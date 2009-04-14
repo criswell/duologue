@@ -19,5 +19,6 @@ namespace Duologue.State
         Credits,
         Exit,
         CompanyIntro,
+        MedalCase,
     }
 }

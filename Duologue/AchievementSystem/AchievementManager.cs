@@ -117,6 +117,8 @@ namespace Duologue.AchievementSystem
         private Vector2 textSize;
         private Vector2 borderSize;
         private float imageSize;
+
+        private bool medalCaseScreen;
         #endregion
 
         #region Properties
@@ -142,6 +144,7 @@ namespace Duologue.AchievementSystem
             size_Achievement = 1f;
             color_Text = Color.Bisque;
             color_Border = Color.SlateBlue;
+            medalCaseScreen = false;
         }
 
         /// <summary>
@@ -452,6 +455,22 @@ namespace Duologue.AchievementSystem
         #endregion
 
         #region Other Public Methods
+        /// <summary>
+        /// Enable the medal screen
+        /// </summary>
+        public void EnableMedalScreen()
+        {
+            medalCaseScreen = true;
+        }
+
+        /// <summary>
+        /// Disable the medal screen
+        /// </summary>
+        public void DisableMedalScreen()
+        {
+            medalCaseScreen = false;
+        }
+
         /// <summary>
         /// Call at the end of the game to save the achievement storage data
         /// </summary>

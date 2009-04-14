@@ -111,6 +111,7 @@ namespace Duologue
         public EndCinematicScreenManager endCinematicScreenManager;
         public CreditsScreenManager creditsScreenManager;
         public CompanyIntroScreenManager companyIntroScreenManager;
+        public MedalCaseScreenManager medalCaseScreenManager;
 
         /// <summary>
         /// The dispatch table for game state changes
@@ -315,6 +316,11 @@ namespace Duologue
             creditsScreenManager = new CreditsScreenManager(this);
             this.Components.Add(creditsScreenManager);
             dispatchTable.Add(GameState.Credits, creditsScreenManager);
+
+            // Medal case screen
+            medalCaseScreenManager = new MedalCaseScreenManager(this);
+            this.Components.Add(medalCaseScreenManager);
+            dispatchTable.Add(GameState.MedalCase, medalCaseScreenManager);
 
             // Ensure that everything in the dispatch is disabled
             foreach (GameScreen scr in dispatchTable.Values)
