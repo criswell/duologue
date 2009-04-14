@@ -139,6 +139,7 @@
     <Compile Include="Screens\MainGameLogo.cs" />
     <Compile Include="Screens\MainMenu.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
+    <Compile Include="Screens\MedalCaseScreenManager.cs" />
     <Compile Include="Screens\MenuItem.cs" />
     <Compile Include="Screens\PlayerSelect.cs" />
     <Compile Include="Screens\PlayerSelectScreen.cs" />
