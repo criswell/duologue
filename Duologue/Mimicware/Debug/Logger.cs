@@ -106,7 +106,8 @@ namespace Mimicware.Debug
                 font,
                 "Log:",
                 startingPos,
-                Color.Bisque);
+                Color.Bisque,
+                RenderSpriteBlendMode.AbsoluteTop);
 
             for (int i = 0; i < Log.Length; i++)
             {
@@ -114,7 +115,8 @@ namespace Mimicware.Debug
                     font,
                     Log[i],
                     startingPos + new Vector2(0f, fontSize.Y * i + 1),
-                    Color.White);
+                    Color.White,
+                    RenderSpriteBlendMode.AbsoluteTop);
             }
             base.Draw(gameTime);
         }

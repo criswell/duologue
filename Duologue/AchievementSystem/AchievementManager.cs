@@ -229,7 +229,7 @@ namespace Duologue.AchievementSystem
             // Check to see whether the save exists.
             if (File.Exists(filename))
             {
-                Console.WriteLine(filename);
+                InstanceManager.Logger.LogEntry(filename);
 
                 // Open the file.
                 FileStream stream = File.Open(filename, FileMode.OpenOrCreate,
@@ -275,7 +275,7 @@ namespace Duologue.AchievementSystem
             // Get the path of the save game.
             string filename = Path.Combine(container.Path, filename_SavedData);
 
-            Console.WriteLine(filename);
+            InstanceManager.Logger.LogEntry(filename);
 
             // Open the file, creating it if necessary.
             FileStream stream = File.Open(filename, FileMode.OpenOrCreate);
