@@ -52,6 +52,7 @@ namespace Duologue.AchievementSystem
         #region Constants
         private const string filename_Font = "Fonts/inero-28";
         private const string filename_Background = "Medals/background";
+        private const string filename_CaseBackground = "Medals/medal-case-background";
         private const string filename_BFF = "Medals/bff";
         private const string filename_Experienced = "Medals/experienced";
         private const string filename_Exterminator = "Medals/exterminator";
@@ -70,15 +71,15 @@ namespace Duologue.AchievementSystem
         private const int possibleAchievements = 10;
         private const float lifetime = 0.033f;
 
-        private float iconVerticalSize = 80f;
+        private const float iconVerticalSize = 80f;
 
-        private float horizSpacing = 8f;
-        private float vertSpacing = 5f;
+        private const float horizSpacing = 8f;
+        private const float vertSpacing = 5f;
 
-        private float timePercent_FadeIn = 0.15f;
-        private float timePercent_FadeOut = 0.9f;
+        private const float timePercent_FadeIn = 0.15f;
+        private const float timePercent_FadeOut = 0.9f;
 
-        private float minSize = 0.7f;
+        private const float minSize = 0.7f;
 
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
@@ -100,6 +101,7 @@ namespace Duologue.AchievementSystem
         private AchievementData achievementData;
         private bool dataLoaded;
         private Texture2D texture_Background;
+        private Texture2D texture_CaseBackground;
 
         /// <summary>
         /// Since every play object in the game is not a destructable enemy,
@@ -162,6 +164,7 @@ namespace Duologue.AchievementSystem
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
             texture_Background = InstanceManager.AssetManager.LoadTexture2D(filename_Background);
+            texture_CaseBackground = InstanceManager.AssetManager.LoadTexture2D(filename_CaseBackground);
 
             GenerateEnemyList();
             GenerateAchievements();
@@ -610,6 +613,8 @@ namespace Duologue.AchievementSystem
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (medalCaseScreen)
+                UpdateCaseScreen(gameTime);
             if (currentDisplayed != null)
             {
                 timeSinceStart += (float)gameTime.ElapsedRealTime.TotalSeconds;
@@ -651,7 +656,9 @@ namespace Duologue.AchievementSystem
         {
             if (render == null)
                 render = InstanceManager.RenderSprite;
-            
+
+            if (medalCaseScreen)
+                DrawCaseScreen(gameTime);
 
             if (currentDisplayed != null && currentDisplayed.Displayed == false)
             {
@@ -662,6 +669,31 @@ namespace Duologue.AchievementSystem
                         (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom));
            }
             base.Draw(gameTime);
+        }
+        #endregion
+
+        #region Private update/draw
+        private void UpdateCaseScreen(GameTime gameTime)
+        {
+            if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
+            {
+                LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+            }
+        }
+
+        private void DrawCaseScreen(GameTime gameTime)
+        {
+            render.Draw(
+                texture_CaseBackground,
+                Vector2.Zero,
+                Vector2.Zero,
+                null,
+                Color.White,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlend);
+
         }
         #endregion
     }

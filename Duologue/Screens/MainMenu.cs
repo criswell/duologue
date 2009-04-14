@@ -146,7 +146,7 @@ namespace Duologue.Screens
                 mi.Invisible = false;
 
             // Turn off those items we don't support yet
-            mainMenuItems[menuAchievements].Invisible = true;
+            //mainMenuItems[menuAchievements].Invisible = true;
 
             foreach (MenuItem mi in gameSelectItems)
                 mi.Invisible = false;
@@ -253,6 +253,11 @@ namespace Duologue.Screens
                 {
                     LocalInstanceManager.CurrentGameState = GameState.Credits;
                     
+                }
+                else if (currentSelection == menuAchievements)
+                {
+                    LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+                    LocalInstanceManager.CurrentGameState = GameState.MedalCase;
                 }
             }
             else
