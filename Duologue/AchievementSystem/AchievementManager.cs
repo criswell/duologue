@@ -83,8 +83,8 @@ namespace Duologue.AchievementSystem
 
         private const float minSize = 0.7f;
 
-        private const float delta_LayerOffset = 0.5557f;
-        private const float multiplyer_LayerOffset = 1.4f;
+        private const float delta_LayerOffset = 0.32416f;
+        private const float multiplyer_LayerOffset = 2.4f;
 
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
