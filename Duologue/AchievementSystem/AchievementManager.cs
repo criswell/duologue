@@ -166,6 +166,16 @@ namespace Duologue.AchievementSystem
             GenerateEnemyList();
             GenerateAchievements();
 
+            // set the text size
+            Vector2 temp;
+            textSize = Vector2.Zero;
+            for (int i = 0; i < achievements.Length; i++)
+            {
+                temp = font.MeasureString(achievements[i].Name);
+                if (temp.X > textSize.X)
+                    textSize = temp;
+            }
+
             base.LoadContent();
         }
 
@@ -524,10 +534,8 @@ namespace Duologue.AchievementSystem
         /// </summary>
         /// <param name="medal">The medal to display</param>
         /// <param name="position">The position of the medal. X will be the middle of the medal, Y will be the upper limit</param>
-        /// <param name="unlocked">If it's unlocked or not</param>
-        public void DrawMedal(Achievement medal, Vector2 position, bool unlocked)
+        public void DrawMedal(Achievement medal, Vector2 position)
         {
-            textSize = font.MeasureString(medal.Name);
             imageSize = iconVerticalSize / (float)medal.Icon.Height;
             borderSize = new Vector2(
                 (textSize.X + medal.Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
@@ -562,7 +570,7 @@ namespace Duologue.AchievementSystem
                 RenderSpriteBlendMode.AbsoluteTop);
 
             // Draw icon
-            if (unlocked)
+            if (medal.Unlocked)
             {
                 render.Draw(
                     medal.Icon,
