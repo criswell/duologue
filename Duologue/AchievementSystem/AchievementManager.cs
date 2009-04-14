@@ -44,6 +44,14 @@ namespace Duologue.AchievementSystem
         Seriously,
     }
 
+    public enum MedalCaseState
+    {
+        InitialPause,
+        InitialFadeIn,
+        ButtonFadeIn,
+        Steady,
+    }
+
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -55,6 +63,7 @@ namespace Duologue.AchievementSystem
         private const string filename_CaseForeground = "Medals/medal-case-background";
         private const string filename_CaseBackgrounds = "Medals/medal-case-l{0}";
         private const int number_CaseBackgrounds = 2;
+        private const string filename_CaseUI = "Medals/medal-case-ui";
         private const string filename_BFF = "Medals/bff";
         private const string filename_Experienced = "Medals/experienced";
         private const string filename_Exterminator = "Medals/exterminator";
@@ -86,6 +95,17 @@ namespace Duologue.AchievementSystem
         private const float delta_LayerOffset = 0.32416f;
         private const float multiplyer_LayerOffset = 2.4f;
 
+        private const float offsetX_UI = 435f + 7f;
+        private const float offsetY_UI = 326.5f + 7f;
+
+        private const int numberMedalsWide = 4;
+        private const int numberMedalsHigh = 3;
+
+        private const float offsetY_Medals = -300f;
+
+        private const double time_FadeIn = 0.6;
+        private const double time_Pause = 0.5;
+
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
         private const int number_Seriously = 39516;
@@ -109,6 +129,13 @@ namespace Duologue.AchievementSystem
         private Texture2D texture_CaseForeground;
         private Texture2D[] texture_CaseBackgrounds;
         private float[] offset_CaseBackgrounds;
+        private Texture2D texture_CaseUI;
+        private Vector2 pos_ScreenCenter;
+        private Vector2 pos_PositionUI;
+        private Vector2 pos_MedalsStart;
+
+        private MedalCaseState currentState;
+        private double timer_MedalScreen;
 
         /// <summary>
         /// Since every play object in the game is not a destructable enemy,
@@ -172,6 +199,7 @@ namespace Duologue.AchievementSystem
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
             texture_Background = InstanceManager.AssetManager.LoadTexture2D(filename_Background);
             texture_CaseForeground = InstanceManager.AssetManager.LoadTexture2D(filename_CaseForeground);
+            texture_CaseUI = InstanceManager.AssetManager.LoadTexture2D(filename_CaseUI);
 
             texture_CaseBackgrounds = new Texture2D[number_CaseBackgrounds];
             offset_CaseBackgrounds = new float[number_CaseBackgrounds];
@@ -194,6 +222,8 @@ namespace Duologue.AchievementSystem
                 if (temp.X > textSize.X)
                     textSize = temp;
             }
+
+            pos_ScreenCenter = Vector2.Zero;
 
             base.LoadContent();
         }
@@ -233,6 +263,19 @@ namespace Duologue.AchievementSystem
         #endregion
 
         #region Private Methods
+        private void SetPositions()
+        {
+            pos_ScreenCenter = new Vector2(
+                InstanceManager.DefaultViewport.Width / 2f,
+                InstanceManager.DefaultViewport.Height / 2f);
+            pos_PositionUI = new Vector2(
+                pos_ScreenCenter.X - offsetX_UI,
+                pos_ScreenCenter.Y - offsetY_UI);
+            pos_MedalsStart = new Vector2(
+                pos_ScreenCenter.X - (numberMedalsWide * textSize.X + (numberMedalsWide - 1) * horizSpacing) / 2f,
+                pos_ScreenCenter.Y - (numberMedalsHigh * textSize.Y + (numberMedalsHigh - 1) * vertSpacing) / 2f + offsetY_Medals);
+        }
+
         private void SyncUpAchievementDataAfterLoad()
         {
             for (int i = 0; i < possibleAchievements; i++)
@@ -490,6 +533,8 @@ namespace Duologue.AchievementSystem
         public void EnableMedalScreen()
         {
             medalCaseScreen = true;
+            currentState = MedalCaseState.InitialPause;
+            timer_MedalScreen = 0;
         }
 
         /// <summary>
@@ -673,6 +718,9 @@ namespace Duologue.AchievementSystem
             if (render == null)
                 render = InstanceManager.RenderSprite;
 
+            if (pos_ScreenCenter == Vector2.Zero)
+                SetPositions();
+
             if (medalCaseScreen)
                 DrawCaseScreen(gameTime);
 
@@ -691,6 +739,30 @@ namespace Duologue.AchievementSystem
         #region Private update/draw
         private void UpdateCaseScreen(GameTime gameTime)
         {
+            timer_MedalScreen += gameTime.ElapsedRealTime.TotalSeconds;
+
+            switch (currentState)
+            {
+                case MedalCaseState.InitialFadeIn:
+                    if (timer_MedalScreen > time_FadeIn)
+                    {
+                        timer_MedalScreen = 0;
+                        currentState = MedalCaseState.Steady;
+                    }
+                    break;
+                case MedalCaseState.ButtonFadeIn:
+                    break;
+                case MedalCaseState.InitialPause:
+                    if (timer_MedalScreen > time_Pause)
+                    {
+                        timer_MedalScreen = 0;
+                        currentState = MedalCaseState.InitialFadeIn;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
             for (int i = 0; i < number_CaseBackgrounds; i++)
             {
                 offset_CaseBackgrounds[i] += delta_LayerOffset * multiplyer_LayerOffset * (i + 1);
@@ -743,6 +815,34 @@ namespace Duologue.AchievementSystem
                 0f,
                 RenderSpriteBlendMode.Multiplicative);
 
+            switch (currentState)
+            {
+                case MedalCaseState.InitialFadeIn:
+                    DrawUIBase(new Color(Color.White,
+                            (float)timer_MedalScreen / (float)time_FadeIn));
+                    break;
+                case MedalCaseState.ButtonFadeIn:
+                    break;
+                case MedalCaseState.InitialPause:
+                    break;
+                default:
+                    DrawUIBase(Color.White);
+                    break;
+            }
+        }
+
+        private void DrawUIBase(Color color)
+        {
+            render.Draw(
+                texture_CaseUI,
+                pos_PositionUI,
+                Vector2.Zero,
+                null,
+                color,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
         }
         #endregion
     }
