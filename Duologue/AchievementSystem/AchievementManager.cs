@@ -105,6 +105,7 @@ namespace Duologue.AchievementSystem
 
         private const double time_FadeIn = 0.6;
         private const double time_Pause = 0.5;
+        private const double time_PerButtonFade = 0.2;
 
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
@@ -136,6 +137,7 @@ namespace Duologue.AchievementSystem
 
         private MedalCaseState currentState;
         private double timer_MedalScreen;
+        private int currentSelection;
 
         /// <summary>
         /// Since every play object in the game is not a destructable enemy,
@@ -535,6 +537,9 @@ namespace Duologue.AchievementSystem
             medalCaseScreen = true;
             currentState = MedalCaseState.InitialPause;
             timer_MedalScreen = 0;
+            currentSelection = 0;
+            alpha_Achievement = 1f;
+            size_Achievement = 1f;
         }
 
         /// <summary>
@@ -747,10 +752,20 @@ namespace Duologue.AchievementSystem
                     if (timer_MedalScreen > time_FadeIn)
                     {
                         timer_MedalScreen = 0;
-                        currentState = MedalCaseState.Steady;
+                        currentState = MedalCaseState.ButtonFadeIn;
                     }
                     break;
                 case MedalCaseState.ButtonFadeIn:
+                    if (timer_MedalScreen > time_PerButtonFade)
+                    {
+                        timer_MedalScreen = 0;
+                        currentSelection++;
+                        if (currentSelection > achievements.Length - 1)
+                        {
+                            currentSelection = achievements.Length - 1;
+                            currentState = MedalCaseState.Steady;
+                        }
+                    }
                     break;
                 case MedalCaseState.InitialPause:
                     if (timer_MedalScreen > time_Pause)
@@ -822,6 +837,27 @@ namespace Duologue.AchievementSystem
                             (float)timer_MedalScreen / (float)time_FadeIn));
                     break;
                 case MedalCaseState.ButtonFadeIn:
+                    DrawUIBase(Color.White);
+                    float x = 0;
+                    float y = 0;
+                    int w = 1;
+                    for (int i = 0; i < currentSelection; i++)
+                    {
+                        alpha_Achievement = 1f;
+                        DrawMedal(achievements[i],
+                            pos_MedalsStart + Vector2.UnitX * x + Vector2.UnitY * y + Vector2.UnitX * textSize.X / 2f);
+                        x += textSize.X + horizSpacing;
+                        w++;
+                        if (w > numberMedalsWide)
+                        {
+                            x = 0;
+                            w = 0;
+                            y += textSize.Y + vertSpacing;
+                        }
+                    }
+                    alpha_Achievement = (float)timer_MedalScreen / (float)time_PerButtonFade;
+                    DrawMedal(achievements[currentSelection],
+                        pos_MedalsStart + Vector2.UnitX * x + Vector2.UnitY * y + Vector2.UnitX * textSize.X / 2f);
                     break;
                 case MedalCaseState.InitialPause:
                     break;
