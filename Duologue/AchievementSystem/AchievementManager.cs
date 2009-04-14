@@ -52,7 +52,9 @@ namespace Duologue.AchievementSystem
         #region Constants
         private const string filename_Font = "Fonts/inero-28";
         private const string filename_Background = "Medals/background";
-        private const string filename_CaseBackground = "Medals/medal-case-background";
+        private const string filename_CaseForeground = "Medals/medal-case-background";
+        private const string filename_CaseBackgrounds = "Medals/medal-case-l{0}";
+        private const int number_CaseBackgrounds = 2;
         private const string filename_BFF = "Medals/bff";
         private const string filename_Experienced = "Medals/experienced";
         private const string filename_Exterminator = "Medals/exterminator";
@@ -81,6 +83,9 @@ namespace Duologue.AchievementSystem
 
         private const float minSize = 0.7f;
 
+        private const float delta_LayerOffset = 0.5557f;
+        private const float multiplyer_LayerOffset = 1.4f;
+
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
         private const int number_Seriously = 39516;
@@ -101,7 +106,9 @@ namespace Duologue.AchievementSystem
         private AchievementData achievementData;
         private bool dataLoaded;
         private Texture2D texture_Background;
-        private Texture2D texture_CaseBackground;
+        private Texture2D texture_CaseForeground;
+        private Texture2D[] texture_CaseBackgrounds;
+        private float[] offset_CaseBackgrounds;
 
         /// <summary>
         /// Since every play object in the game is not a destructable enemy,
@@ -164,7 +171,16 @@ namespace Duologue.AchievementSystem
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
             texture_Background = InstanceManager.AssetManager.LoadTexture2D(filename_Background);
-            texture_CaseBackground = InstanceManager.AssetManager.LoadTexture2D(filename_CaseBackground);
+            texture_CaseForeground = InstanceManager.AssetManager.LoadTexture2D(filename_CaseForeground);
+
+            texture_CaseBackgrounds = new Texture2D[number_CaseBackgrounds];
+            offset_CaseBackgrounds = new float[number_CaseBackgrounds];
+            for (int i = 0; i < number_CaseBackgrounds; i++)
+            {
+                texture_CaseBackgrounds[i] = InstanceManager.AssetManager.LoadTexture2D(
+                    String.Format(filename_CaseBackgrounds, i));
+                offset_CaseBackgrounds[i] = 0;
+            }
 
             GenerateEnemyList();
             GenerateAchievements();
@@ -675,6 +691,15 @@ namespace Duologue.AchievementSystem
         #region Private update/draw
         private void UpdateCaseScreen(GameTime gameTime)
         {
+            for (int i = 0; i < number_CaseBackgrounds; i++)
+            {
+                offset_CaseBackgrounds[i] += delta_LayerOffset * multiplyer_LayerOffset * (i + 1);
+                if (offset_CaseBackgrounds[i] > texture_CaseBackgrounds[i].Width)
+                    offset_CaseBackgrounds[i] = 0;
+                else if (offset_CaseBackgrounds[i] < 0)
+                    offset_CaseBackgrounds[i] = (float)texture_CaseBackgrounds[i].Width;
+            }
+
             if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
             {
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
@@ -683,8 +708,32 @@ namespace Duologue.AchievementSystem
 
         private void DrawCaseScreen(GameTime gameTime)
         {
+            for (int i = 0; i < number_CaseBackgrounds; i++)
+            {
+                render.Draw(
+                    texture_CaseBackgrounds[i],
+                    Vector2.Zero,
+                    Vector2.UnitX * offset_CaseBackgrounds[i],
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+
+                render.Draw(
+                    texture_CaseBackgrounds[i],
+                    Vector2.UnitX * ((float)texture_CaseBackgrounds[i].Width - offset_CaseBackgrounds[i]),
+                    Vector2.Zero,
+                    null,
+                    Color.White,
+                    0f,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+            }
             render.Draw(
-                texture_CaseBackground,
+                texture_CaseForeground,
                 Vector2.Zero,
                 Vector2.Zero,
                 null,
@@ -692,7 +741,7 @@ namespace Duologue.AchievementSystem
                 0f,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlend);
+                RenderSpriteBlendMode.Multiplicative);
 
         }
         #endregion
