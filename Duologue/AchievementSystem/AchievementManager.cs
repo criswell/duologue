@@ -659,8 +659,7 @@ namespace Duologue.AchievementSystem
                     currentDisplayed,
                     new Vector2(
                         InstanceManager.DefaultViewport.Width / 2f,
-                        (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom),
-                    true);
+                        (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom));
            }
             base.Draw(gameTime);
         }
