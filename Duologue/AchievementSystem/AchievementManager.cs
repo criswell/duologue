@@ -1218,7 +1218,17 @@ namespace Duologue.AchievementSystem
                         color_Shadow,
                         offset_Shadow,
                         RenderSpriteBlendMode.AbsoluteTop);
-                    if(!achievements[currentSelection].Unlocked)
+                    if (Guide.IsTrialMode)
+                    {
+                        temp = font_MedalDesc.MeasureString(Resources.MedalCase_TrialMode);
+                        render.DrawString(
+                            font_MedalDisplay,
+                            Resources.MedalCase_TrialMode,
+                            pos_MedalDesc - Vector2.UnitX * temp.X + Vector2.UnitY * (font_MedalDesc.LineSpacing + spacing_VertTextToText),
+                            color_Locked,
+                            RenderSpriteBlendMode.AbsoluteTop);
+                    }
+                    else if (!achievements[currentSelection].Unlocked)
                     {
                         temp = font_MedalDesc.MeasureString(Resources.MedalCase_Locked);
                         render.DrawString(

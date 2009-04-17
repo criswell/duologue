@@ -394,6 +394,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Purchase the full game to earn medals!.
+        /// </summary>
+        internal static string MedalCase_TrialMode {
+            get {
+                return ResourceManager.GetString("MedalCase_TrialMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extract to Main Menu.
         /// </summary>
         internal static string PauseScreen_ExitMainMenu {
