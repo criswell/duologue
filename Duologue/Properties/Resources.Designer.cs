@@ -124,7 +124,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Achievements.
+        ///   Looks up a localized string similar to Medal Case.
         /// </summary>
         internal static string MainMenu_Achievements {
             get {

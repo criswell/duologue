@@ -58,7 +58,7 @@ namespace Duologue.AchievementSystem
     public class AchievementManager : Microsoft.Xna.Framework.DrawableGameComponent
     {
         #region Constants
-        private const string filename_Font = "Fonts/inero-28";
+        private const string filename_Font = "Fonts/inero-small";
         private const string filename_Background = "Medals/background";
         private const string filename_CaseForeground = "Medals/medal-case-background";
         private const string filename_CaseBackgrounds = "Medals/medal-case-l{0}";
@@ -95,15 +95,14 @@ namespace Duologue.AchievementSystem
         private const float delta_LayerOffset = 0.32416f;
         private const float multiplyer_LayerOffset = 2.4f;
 
-        private const float width_Medal = 204f;
-        private const float offsetX_MedalStart = 30f;
-        private const float offsetY_MedalStart = 72f;
+        private const float offsetX_MedalStart = 20f;
+        private const float offsetY_MedalStart = 175f;
 
         private const float offsetX_UI = 435f + 7f;
         private const float offsetY_UI = 326.5f + 7f;
 
-        private const int numberMedalsWide = 4;
-        private const int numberMedalsHigh = 3;
+        private const int numberMedalsWide = 3;
+        private const int numberMedalsHigh = 4;
 
         private const float offsetY_Medals = -300f;
 
@@ -156,6 +155,8 @@ namespace Duologue.AchievementSystem
         private float size_Achievement;
         private Color color_Text;
         private Color color_Border;
+        private Color color_BorderLocked;
+        private Color color_BorderSelected;
         private Vector2 textSize;
         private Vector2 borderSize;
         private float imageSize;
@@ -185,7 +186,9 @@ namespace Duologue.AchievementSystem
             alpha_Achievement = 1f;
             size_Achievement = 1f;
             color_Text = Color.Bisque;
-            color_Border = Color.SlateBlue;
+            color_Border = Color.White;
+            color_BorderLocked = Color.DarkSlateGray;
+            color_BorderSelected = Color.OrangeRed;
             medalCaseScreen = false;
         }
 
@@ -620,26 +623,63 @@ namespace Duologue.AchievementSystem
         /// <param name="position">The position of the medal. X will be the middle of the medal, Y will be the upper limit</param>
         public void DrawMedal(Achievement medal, Vector2 position)
         {
+            DrawMedal(medal, position, false);
+        }
+
+        /// <summary>
+        /// Draw a medal on the screen
+        /// </summary>
+        /// <param name="medal">The medal to display</param>
+        /// <param name="position">The position of the medal. X will be the middle of the medal, Y will be the upper limit</param>
+        /// <param name="isSelected">True if the medal has been selected</param>
+        public void DrawMedal(Achievement medal, Vector2 position, bool isSelected)
+        {
             imageSize = iconVerticalSize / (float)medal.Icon.Height;
-            /*borderSize = new Vector2(
-                (textSize.X + medal.Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
-                (medal.Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);*/
 
             centerPos = new Vector2(
                 position.X - (float)texture_Background.Width * borderSize.X / 2f,
                 position.Y - (float)texture_Background.Height * borderSize.Y);
 
             // Draw border
-            render.Draw(
-                texture_Background,
-                centerPos,
-                Vector2.Zero,
-                null,
-                new Color(color_Border, alpha_Achievement),
-                0f,
-                borderSize * size_Achievement,
-                0f,
-                RenderSpriteBlendMode.AbsoluteTop);
+            if (isSelected)
+            {
+                render.Draw(
+                    texture_Background,
+                    centerPos,
+                    Vector2.Zero,
+                    null,
+                    new Color(color_BorderSelected, alpha_Achievement),
+                    0f,
+                    borderSize * size_Achievement,
+                    0f,
+                    RenderSpriteBlendMode.AbsoluteTop);
+            }
+            else if (medal.Unlocked)
+            {
+                render.Draw(
+                    texture_Background,
+                    centerPos,
+                    Vector2.Zero,
+                    null,
+                    new Color(color_Border, alpha_Achievement),
+                    0f,
+                    borderSize * size_Achievement,
+                    0f,
+                    RenderSpriteBlendMode.AbsoluteTop);
+            }
+            else
+            {
+                render.Draw(
+                    texture_Background,
+                    centerPos,
+                    Vector2.Zero,
+                    null,
+                    new Color(color_BorderLocked, alpha_Achievement),
+                    0f,
+                    borderSize * size_Achievement,
+                    0f,
+                    RenderSpriteBlendMode.AbsoluteTop);
+            }
 
 
             // Draw text
@@ -779,7 +819,7 @@ namespace Duologue.AchievementSystem
                         currentSelection++;
                         if (currentSelection > achievements.Length - 1)
                         {
-                            currentSelection = achievements.Length - 1;
+                            currentSelection = 0;
                             currentState = MedalCaseState.Steady;
                         }
                     }
@@ -848,6 +888,10 @@ namespace Duologue.AchievementSystem
                 0f,
                 RenderSpriteBlendMode.Multiplicative);
 
+            float x = 0;
+            float y = 0;
+            int w = 1;
+
             switch (currentState)
             {
                 case MedalCaseState.InitialFadeIn:
@@ -856,15 +900,8 @@ namespace Duologue.AchievementSystem
                     break;
                 case MedalCaseState.ButtonFadeIn:
                     DrawUIBase(Color.White);
-                    float x = 0;
-                    float y = 0;
-                    int w = 1;
                     for (int i = 0; i < currentSelection; i++)
                     {
-                        //imageSize = iconVerticalSize / (float)achievements[i].Icon.Height;
-                        /*borderSize = new Vector2(
-                            (textSize.X + achievements[i].Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
-                            (achievements[i].Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);*/
 
                         alpha_Achievement = 1f;
                         DrawMedal(achievements[i],
@@ -876,7 +913,7 @@ namespace Duologue.AchievementSystem
                         if (w > numberMedalsWide)
                         {
                             x = 0;
-                            w = 0;
+                            w = 1;
                             y += borderSize.Y * (float)texture_Background.Height + vertSpacing;
                         }
                     }
@@ -889,6 +926,24 @@ namespace Duologue.AchievementSystem
                 case MedalCaseState.InitialPause:
                     break;
                 default:
+                    alpha_Achievement = 1f;
+                    for (int i = 0; i < achievements.Length; i++)
+                    {
+
+                        DrawMedal(achievements[i],
+                            pos_MedalsStart + Vector2.UnitX * x +
+                            Vector2.UnitY * y +
+                            Vector2.UnitX * borderSize.X * (float)texture_Background.Width / 2f,
+                            currentSelection == i);
+                        x += borderSize.X * (float)texture_Background.Width + horizSpacing;
+                        w++;
+                        if (w > numberMedalsWide)
+                        {
+                            x = 0;
+                            w = 1;
+                            y += borderSize.Y * (float)texture_Background.Height + vertSpacing;
+                        }
+                    }
                     DrawUIBase(Color.White);
                     break;
             }
