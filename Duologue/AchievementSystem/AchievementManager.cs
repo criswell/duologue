@@ -114,6 +114,8 @@ namespace Duologue.AchievementSystem
         private const float offsetY_MedalCaseIcon = -35f;
         private const float offset_IconShadow = 8f;
 
+        private const float offsetY_Stats = -60f;
+
         private const int numberMedalsWide = 3;
         private const int numberMedalsHigh = 4;
 
@@ -126,6 +128,7 @@ namespace Duologue.AchievementSystem
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
         private const int number_Seriously = 39516;
+        private const int number_MaxEnemiesKilled = 39999;
         #endregion
         #endregion
 
@@ -186,11 +189,17 @@ namespace Duologue.AchievementSystem
         private Color color_MedalDesc;
         private Color color_Shadow;
         private Color color_Locked;
+        private Color color_Stats;
+        private Color color_ShadowStats;
         private Vector2 pos_FullMedalIcon;
         private Vector2 pos_Title;
         private Vector2 pos_MedalName;
         private Vector2 pos_MedalDesc;
+        private Vector2 pos_Stats;
         private Vector2[] offset_Shadow;
+        private Vector2[] offset_ShadowSmaller;
+
+        private int numberOfEnemyTypesKilled;
         #endregion
 
         #region Properties
@@ -224,12 +233,19 @@ namespace Duologue.AchievementSystem
             color_MedalName = Color.OldLace;
             color_MedalDesc = Color.LightCyan;
             color_Locked = Color.SaddleBrown;
+            color_Stats = Color.DarkCyan;
+            color_ShadowStats = Color.Cornsilk;
             offset_Shadow = new Vector2[]
             {
                 Vector2.One,
                 -1 * Vector2.One,
                 new Vector2(-1,1),
                 new Vector2(1,-1)
+            };
+
+            offset_ShadowSmaller = new Vector2[]
+            {
+                Vector2.One
             };
             medalCaseScreen = false;
         }
@@ -451,6 +467,10 @@ namespace Duologue.AchievementSystem
             pos_FullMedalIcon = new Vector2(
                 pos_ScreenCenter.X + offsetX_UI + offsetX_MedalCaseIcon,
                 pos_ScreenCenter.Y + offsetY_UI + offsetY_MedalCaseIcon);
+
+            pos_Stats = new Vector2(
+                pos_MedalsStart.X,
+                pos_ScreenCenter.Y + offsetY_UI + offsetY_Stats);
 
             pos_MedalName = new Vector2(
                 pos_FullMedalIcon.X - achievements[0].IconGrey.Width - spacing_HorizTextIcon,
@@ -731,6 +751,13 @@ namespace Duologue.AchievementSystem
             currentSelection = 0;
             alpha_Achievement = 1f;
             size_Achievement = 1f;
+            // Compute the number of enemies killed
+            numberOfEnemyTypesKilled = 0;
+            for (int i = 0; i < maxNumEnemies; i++)
+            {
+                if (achievementData.EnemyTypesKilled[i])
+                    numberOfEnemyTypesKilled++;
+            }
         }
 
         /// <summary>
@@ -1239,6 +1266,15 @@ namespace Duologue.AchievementSystem
                             color_Locked,
                             RenderSpriteBlendMode.AbsoluteTop);
                     }
+                    // Draw the stats
+                    render.DrawString(
+                        font_MedalDisplay,
+                        String.Format(Resources.MedalCase_Stats, numberOfEnemyTypesKilled, maxNumEnemies, achievementData.NumberOfEnemiesKilled),
+                        pos_Stats,
+                        color_Stats,
+                        color_ShadowStats,
+                        offset_ShadowSmaller,
+                        RenderSpriteBlendMode.AbsoluteTop);
                     break;
             }
         }

@@ -385,6 +385,24 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I can count to potato, but I can&apos;t count that high.
+        /// </summary>
+        internal static string MedalCase_Potato {
+            get {
+                return ResourceManager.GetString("MedalCase_Potato", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enemy types killed: {0}/{1}  Total enemies killed: {2}.
+        /// </summary>
+        internal static string MedalCase_Stats {
+            get {
+                return ResourceManager.GetString("MedalCase_Stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Medal Display Case.
         /// </summary>
         internal static string MedalCase_Title {
