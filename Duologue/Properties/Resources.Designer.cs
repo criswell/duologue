@@ -385,7 +385,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I can count to potato, but I can&apos;t count that high.
+        ///   Looks up a localized string similar to 1 + Potato.
         /// </summary>
         internal static string MedalCase_Potato {
             get {

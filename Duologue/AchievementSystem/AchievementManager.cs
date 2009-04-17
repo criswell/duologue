@@ -128,6 +128,9 @@ namespace Duologue.AchievementSystem
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
         private const int number_Seriously = 39516;
+        /// <summary>
+        /// Past this point, we stop counting
+        /// </summary>
         private const int number_MaxEnemiesKilled = 39999;
         #endregion
         #endregion
@@ -789,6 +792,9 @@ namespace Duologue.AchievementSystem
             if (!Guide.IsTrialMode && dataLoaded)
             {
                 achievementData.NumberOfEnemiesKilled++;
+                if (achievementData.NumberOfEnemiesKilled > number_MaxEnemiesKilled)
+                    achievementData.NumberOfEnemiesKilled = number_MaxEnemiesKilled;
+
                 if (!achievementData.MedalEarned[(int)Achievements.Kilokillage]
                     && achievementData.NumberOfEnemiesKilled >= number_Kilokillage)
                 {
@@ -1267,14 +1273,36 @@ namespace Duologue.AchievementSystem
                             RenderSpriteBlendMode.AbsoluteTop);
                     }
                     // Draw the stats
-                    render.DrawString(
-                        font_MedalDisplay,
-                        String.Format(Resources.MedalCase_Stats, numberOfEnemyTypesKilled, maxNumEnemies, achievementData.NumberOfEnemiesKilled),
-                        pos_Stats,
-                        color_Stats,
-                        color_ShadowStats,
-                        offset_ShadowSmaller,
-                        RenderSpriteBlendMode.AbsoluteTop);
+                    if (achievementData.NumberOfEnemiesKilled < number_MaxEnemiesKilled)
+                    {
+                        render.DrawString(
+                            font_MedalDisplay,
+                            String.Format(Resources.MedalCase_Stats,
+                                numberOfEnemyTypesKilled,
+                                maxNumEnemies,
+                                achievementData.NumberOfEnemiesKilled),
+                            pos_Stats,
+                            color_Stats,
+                            color_ShadowStats,
+                            offset_ShadowSmaller,
+                            RenderSpriteBlendMode.AbsoluteTop);
+                    }
+                    else
+                    {
+                        // Woot easter egg!
+                        render.DrawString(
+                            font_MedalDisplay,
+                            String.Format(Resources.MedalCase_Stats, 
+                                numberOfEnemyTypesKilled,
+                                maxNumEnemies,
+                                Resources.MedalCase_Potato),
+                            pos_Stats,
+                            color_Stats,
+                            color_ShadowStats,
+                            offset_ShadowSmaller,
+                            RenderSpriteBlendMode.AbsoluteTop);
+
+                    }
                     break;
             }
         }
