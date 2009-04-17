@@ -454,6 +454,7 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(
                         Position + offset_Globules[MWMathHelper.GetRandomInRange(0, numberOfGlobules - 1)],
                         color_Current);
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/

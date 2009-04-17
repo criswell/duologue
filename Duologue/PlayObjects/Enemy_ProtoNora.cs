@@ -307,6 +307,7 @@ namespace Duologue.PlayObjects
                 {
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     Alive = false;
                     for (int i = 0; i < numberOfGlobules; i++)
                     {

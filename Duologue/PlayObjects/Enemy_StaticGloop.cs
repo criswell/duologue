@@ -477,6 +477,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0 && !isDying)
                 {
                     isDying = true;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     timeSinceStart = 0.0;
                     deathRotation = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
                     TriggerShieldDisintegration(gloopletDeath, currentColors[0], Position, 0f);

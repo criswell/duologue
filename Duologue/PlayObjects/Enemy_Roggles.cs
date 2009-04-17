@@ -590,6 +590,7 @@ namespace Duologue.PlayObjects
                     currentFrame = 0;
                     timeSinceStart = 0;
                     Alive = false;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     //WigglesDeath
                     //AudioManager am = ServiceLocator.GetService<AudioManager>();

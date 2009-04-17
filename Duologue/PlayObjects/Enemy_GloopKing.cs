@@ -414,6 +414,7 @@ namespace Duologue.PlayObjects
                 {
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
                     currentState = GloopKingState.Dying;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     timeSinceStart = 0.0;
                     currentFrame = 0;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);

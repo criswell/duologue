@@ -396,6 +396,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     Alive = false;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     // Fire off explosions for each frame, if we can
                     for (int i = 0; i < numberOfFrames; i++)
                     {

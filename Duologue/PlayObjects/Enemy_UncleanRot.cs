@@ -473,6 +473,7 @@ namespace Duologue.PlayObjects
                     }
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
                     Alive = false;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     //audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
                     return false;
                 }

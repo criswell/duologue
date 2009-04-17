@@ -423,6 +423,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, c);
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     audio.PlayEffect(EffectID.BuzzDeath);

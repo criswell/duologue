@@ -375,6 +375,7 @@ namespace Duologue.PlayObjects
                 {
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
                     isDying = true;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     timeSinceStart = 0.0;
                     deathRotation = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
                     TriggerShieldDisintegration(gloopletDeath, currentColor, Position, 0f);

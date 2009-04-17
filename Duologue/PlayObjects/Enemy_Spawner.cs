@@ -467,6 +467,7 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Current);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Base);
                     Alive = false;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     return false;
                 }
                 else

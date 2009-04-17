@@ -419,6 +419,7 @@ namespace Duologue.PlayObjects
                     else
                     {
                         Alive = false;
+                        LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     }
                 }
             }

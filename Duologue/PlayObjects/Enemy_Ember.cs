@@ -540,6 +540,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     Alive = false;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(
                             Position, emberColors[currentEmberColor]);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);

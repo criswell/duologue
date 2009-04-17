@@ -813,10 +813,10 @@ namespace Duologue.AchievementSystem
                     int enemyCount = 0;
                     for (int i = 0; i < maxNumEnemies; i++)
                     {
-                        if (!achievementData.EnemyTypesKilled[i])
+                        if (achievementData.EnemyTypesKilled[i])
                             enemyCount++;
                     }
-                    if (enemyCount > 0)
+                    if (enemyCount >= maxNumEnemies)
                         UnlockAchievement(Achievements.Exterminator);
                 }
             }

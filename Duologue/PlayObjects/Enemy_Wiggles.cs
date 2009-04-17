@@ -664,6 +664,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     CurrentState = WigglesState.Dying;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     currentFrame = 0;
                     timeSinceStart = 0;
                     currentTimePerFrameDying = startTimePerFrameDying;
