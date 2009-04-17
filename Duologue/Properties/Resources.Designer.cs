@@ -376,6 +376,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Medal Case.
+        /// </summary>
+        internal static string MedalCase_Title {
+            get {
+                return ResourceManager.GetString("MedalCase_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extract to Main Menu.
         /// </summary>
         internal static string PauseScreen_ExitMainMenu {

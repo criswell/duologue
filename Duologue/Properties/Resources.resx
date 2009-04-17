@@ -162,6 +162,9 @@
   <data name="MainMenu_PressStart" xml:space="preserve">
     <value>Press Start</value>
   </data>
+  <data name="MedalCase_Title" xml:space="preserve">
+    <value>Medal Case</value>
+  </data>
   <data name="Medal_Desc_BFF" xml:space="preserve">
     <value>Complete the campaign in co-op</value>
   </data>

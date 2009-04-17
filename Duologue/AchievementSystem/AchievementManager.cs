@@ -59,6 +59,9 @@ namespace Duologue.AchievementSystem
     {
         #region Constants
         private const string filename_Font = "Fonts/inero-small";
+        private const string filename_FontTitle = "Fonts/inero-50";
+        private const string filename_FontMedalName = "Fonts/inero-40";
+        private const string filename_FontMedalDesc = "Fonts/inero-28";
         private const string filename_Background = "Medals/background";
         private const string filename_CaseForeground = "Medals/medal-case-background";
         private const string filename_CaseBackgrounds = "Medals/medal-case-l{0}";
@@ -101,6 +104,8 @@ namespace Duologue.AchievementSystem
         private const float offsetX_UI = 435f + 7f;
         private const float offsetY_UI = 326.5f + 7f;
 
+        private const float offsetY_MedalCaseTitle = -2f;
+
         private const int numberMedalsWide = 3;
         private const int numberMedalsHigh = 4;
 
@@ -117,7 +122,10 @@ namespace Duologue.AchievementSystem
         #endregion
 
         #region Fields
-        private SpriteFont font;
+        private SpriteFont font_MedalDisplay;
+        private SpriteFont font_Title;
+        private SpriteFont font_MedalName;
+        private SpriteFont font_MedalDesc;
         private RenderSprite render;
         private Achievement[] achievements;
         private Queue<Achievement> unlockedYetToDisplay;
@@ -162,6 +170,17 @@ namespace Duologue.AchievementSystem
         private float imageSize;
 
         private bool medalCaseScreen;
+
+        // The following have to do with various UI elements on the medal case
+        private Color color_Title;
+        private Color color_MedalName;
+        private Color color_MedalDesc;
+        private Color color_Shadow;
+        private Vector2 pos_FullMedalIcon;
+        private Vector2 pos_Title;
+        private Vector2 pos_MedalName;
+        private Vector2 pos_MedalDesc;
+        private Vector2[] offset_Shadow;
         #endregion
 
         #region Properties
@@ -186,9 +205,20 @@ namespace Duologue.AchievementSystem
             alpha_Achievement = 1f;
             size_Achievement = 1f;
             color_Text = Color.Bisque;
-            color_Border = Color.White;
+            color_Border = Color.LightCyan;
             color_BorderLocked = Color.DarkSlateGray;
             color_BorderSelected = Color.OrangeRed;
+            color_Title = Color.White;
+            color_Shadow = Color.Black;
+            color_MedalName = Color.LightSteelBlue;
+            color_MedalDesc = Color.LightSkyBlue;
+            offset_Shadow = new Vector2[]
+            {
+                Vector2.One,
+                -1 * Vector2.One,
+                new Vector2(-1,1),
+                new Vector2(1,-1)
+            };
             medalCaseScreen = false;
         }
 
@@ -205,7 +235,9 @@ namespace Duologue.AchievementSystem
         }
         protected override void LoadContent()
         {
-            font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
+            font_MedalDisplay = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
+            font_Title = InstanceManager.AssetManager.LoadSpriteFont(filename_FontTitle);
+
             texture_Background = InstanceManager.AssetManager.LoadTexture2D(filename_Background);
             texture_CaseForeground = InstanceManager.AssetManager.LoadTexture2D(filename_CaseForeground);
             texture_CaseUI = InstanceManager.AssetManager.LoadTexture2D(filename_CaseUI);
@@ -227,7 +259,7 @@ namespace Duologue.AchievementSystem
             textSize = Vector2.Zero;
             for (int i = 0; i < achievements.Length; i++)
             {
-                temp = font.MeasureString(achievements[i].Name);
+                temp = font_MedalDisplay.MeasureString(achievements[i].Name);
                 if (temp.X > textSize.X)
                     textSize = temp;
             }
@@ -272,6 +304,114 @@ namespace Duologue.AchievementSystem
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Checks to see if the "menu down" controll was triggered
+        /// </summary>
+        private bool IsMenuDown()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Down) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Down))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Down == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Down == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y < 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y >= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if we wanna move left
+        /// </summary>
+        private bool IsMenuLeft()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Left) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Left))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Left == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Left == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.X < 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.X >= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if we wanna move left
+        /// </summary>
+        private bool IsMenuRight()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Right) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Right))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Right == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Right == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.X > 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.X <= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
+        /// <summary>
+        /// Checks to see if the "menu up" control was triggered
+        /// </summary>
+        private bool IsMenuUp()
+        {
+            bool pressed = false;
+
+            for (int i = 0; i < InstanceManager.InputManager.CurrentGamePadStates.Length; i++)
+            {
+                if (InstanceManager.InputManager.CurrentKeyboardStates[i].IsKeyDown(Keys.Up) &&
+                    InstanceManager.InputManager.LastKeyboardStates[i].IsKeyUp(Keys.Up))
+                {
+                    pressed = true;
+                    break;
+                }
+                if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Up == ButtonState.Pressed &&
+                    InstanceManager.InputManager.LastGamePadStates[i].DPad.Up == ButtonState.Released) ||
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y > 0 &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y <= 0))
+                {
+                    pressed = true;
+                    break;
+                }
+            }
+            return pressed;
+        }
+
         private void SetPositions()
         {
             imageSize = iconVerticalSize / (float)achievements[0].Icon.Height;
@@ -288,12 +428,11 @@ namespace Duologue.AchievementSystem
             pos_MedalsStart = new Vector2(
                 pos_PositionUI.X + offsetX_MedalStart,
                 pos_PositionUI.Y + offsetY_MedalStart);
-                /*
-                pos_ScreenCenter.X - 
-                (numberMedalsWide * borderSize.X * (float)texture_Background.Width + (numberMedalsWide - 1) * horizSpacing) / 2f,
-                pos_ScreenCenter.Y - 
-                (numberMedalsHigh * borderSize.Y * (float)texture_Background.Height + (numberMedalsHigh - 1) * vertSpacing) / 2f + offsetY_Medals);
-                 */
+
+            Vector2 temp = font_Title.MeasureString(Resources.MedalCase_Title);
+            pos_Title = new Vector2(
+                pos_ScreenCenter.X - temp.X,
+                pos_PositionUI.Y + offsetY_MedalCaseTitle);
         }
 
         private void SyncUpAchievementDataAfterLoad()
@@ -683,7 +822,7 @@ namespace Duologue.AchievementSystem
 
 
             // Draw text
-            render.DrawString(font,
+            render.DrawString(font_MedalDisplay,
                 medal.Name,
                 centerPos
                     + Vector2.UnitX * (2f * horizSpacing + (float)medal.Icon.Width * size_Achievement * imageSize)
@@ -845,10 +984,32 @@ namespace Duologue.AchievementSystem
                     offset_CaseBackgrounds[i] = (float)texture_CaseBackgrounds[i].Width;
             }
 
-            if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
+            if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back) ||
+                InstanceManager.InputManager.NewButtonPressed(Buttons.B))
             {
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
             }
+            else if (IsMenuUp())
+            {
+                currentSelection -= numberMedalsWide;
+            }
+            else if (IsMenuDown())
+            {
+                currentSelection += numberMedalsWide;
+            }
+            else if (IsMenuLeft())
+            {
+                currentSelection--;
+            }
+            else if (IsMenuRight())
+            {
+                currentSelection++;
+            }
+
+            if (currentSelection < 0)
+                currentSelection = 0;
+            else if (currentSelection > achievements.Length - 1)
+                currentSelection = achievements.Length - 1;
         }
 
         private void DrawCaseScreen(GameTime gameTime)
@@ -945,6 +1106,14 @@ namespace Duologue.AchievementSystem
                         }
                     }
                     DrawUIBase(Color.White);
+                    render.DrawString(
+                        font_Title,
+                        Resources.MedalCase_Title,
+                        pos_Title,
+                        color_Title,
+                        color_Shadow,
+                        offset_Shadow,
+                        RenderSpriteBlendMode.AbsoluteTop);
                     break;
             }
         }
