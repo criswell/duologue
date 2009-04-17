@@ -221,8 +221,8 @@ namespace Duologue.AchievementSystem
             color_BorderSelected = Color.OrangeRed;
             color_Title = Color.White;
             color_Shadow = new Color(Color.Black, 128);
-            color_MedalName = Color.LightCyan;
-            color_MedalDesc = Color.LightSkyBlue;
+            color_MedalName = Color.OldLace;
+            color_MedalDesc = Color.LightCyan;
             color_Locked = Color.SaddleBrown;
             offset_Shadow = new Vector2[]
             {
