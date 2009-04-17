@@ -127,6 +127,8 @@ namespace Duologue.AchievementSystem
         private const double time_Pause = 0.5;
         private const double time_PerButtonFade = 0.1;
 
+        private const float volume_MenuBeep = 0.25f;
+
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
         private const int number_Seriously = 39516;
@@ -1095,7 +1097,7 @@ namespace Duologue.AchievementSystem
                 currentSelection = achievements.Length - 1;
 
             if (lastSelection != currentSelection)
-                sfx_MenuMove.Play();
+                sfx_MenuMove.Play(volume_MenuBeep);
         }
 
         private void DrawCaseScreen(GameTime gameTime)
