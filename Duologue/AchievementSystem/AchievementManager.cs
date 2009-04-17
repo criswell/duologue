@@ -95,6 +95,10 @@ namespace Duologue.AchievementSystem
         private const float delta_LayerOffset = 0.32416f;
         private const float multiplyer_LayerOffset = 2.4f;
 
+        private const float width_Medal = 204f;
+        private const float offsetX_MedalStart = 30f;
+        private const float offsetY_MedalStart = 72f;
+
         private const float offsetX_UI = 435f + 7f;
         private const float offsetY_UI = 326.5f + 7f;
 
@@ -103,9 +107,9 @@ namespace Duologue.AchievementSystem
 
         private const float offsetY_Medals = -300f;
 
-        private const double time_FadeIn = 0.6;
+        private const double time_FadeIn = 0.2;
         private const double time_Pause = 0.5;
-        private const double time_PerButtonFade = 0.2;
+        private const double time_PerButtonFade = 0.1;
 
         #region Achievement Constants
         private const int number_Kilokillage = 1000;
@@ -267,6 +271,11 @@ namespace Duologue.AchievementSystem
         #region Private Methods
         private void SetPositions()
         {
+            imageSize = iconVerticalSize / (float)achievements[0].Icon.Height;
+            borderSize = new Vector2(
+                (textSize.X + achievements[0].Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
+                (achievements[0].Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);
+
             pos_ScreenCenter = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f,
                 InstanceManager.DefaultViewport.Height / 2f);
@@ -274,8 +283,14 @@ namespace Duologue.AchievementSystem
                 pos_ScreenCenter.X - offsetX_UI,
                 pos_ScreenCenter.Y - offsetY_UI);
             pos_MedalsStart = new Vector2(
-                pos_ScreenCenter.X - (numberMedalsWide * textSize.X + (numberMedalsWide - 1) * horizSpacing) / 2f,
-                pos_ScreenCenter.Y - (numberMedalsHigh * textSize.Y + (numberMedalsHigh - 1) * vertSpacing) / 2f + offsetY_Medals);
+                pos_PositionUI.X + offsetX_MedalStart,
+                pos_PositionUI.Y + offsetY_MedalStart);
+                /*
+                pos_ScreenCenter.X - 
+                (numberMedalsWide * borderSize.X * (float)texture_Background.Width + (numberMedalsWide - 1) * horizSpacing) / 2f,
+                pos_ScreenCenter.Y - 
+                (numberMedalsHigh * borderSize.Y * (float)texture_Background.Height + (numberMedalsHigh - 1) * vertSpacing) / 2f + offsetY_Medals);
+                 */
         }
 
         private void SyncUpAchievementDataAfterLoad()
@@ -606,9 +621,9 @@ namespace Duologue.AchievementSystem
         public void DrawMedal(Achievement medal, Vector2 position)
         {
             imageSize = iconVerticalSize / (float)medal.Icon.Height;
-            borderSize = new Vector2(
+            /*borderSize = new Vector2(
                 (textSize.X + medal.Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
-                (medal.Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);
+                (medal.Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);*/
 
             centerPos = new Vector2(
                 position.X - (float)texture_Background.Width * borderSize.X / 2f,
@@ -744,7 +759,9 @@ namespace Duologue.AchievementSystem
         #region Private update/draw
         private void UpdateCaseScreen(GameTime gameTime)
         {
-            timer_MedalScreen += gameTime.ElapsedRealTime.TotalSeconds;
+            timer_MedalScreen += gameTime.ElapsedGameTime.TotalSeconds;
+
+            //Console.WriteLine(timer_MedalScreen);
 
             switch (currentState)
             {
@@ -771,6 +788,7 @@ namespace Duologue.AchievementSystem
                     if (timer_MedalScreen > time_Pause)
                     {
                         timer_MedalScreen = 0;
+                        currentSelection = 0;
                         currentState = MedalCaseState.InitialFadeIn;
                     }
                     break;
@@ -843,21 +861,30 @@ namespace Duologue.AchievementSystem
                     int w = 1;
                     for (int i = 0; i < currentSelection; i++)
                     {
+                        //imageSize = iconVerticalSize / (float)achievements[i].Icon.Height;
+                        /*borderSize = new Vector2(
+                            (textSize.X + achievements[i].Icon.Width * imageSize + 3f * horizSpacing) / (float)texture_Background.Width,
+                            (achievements[i].Icon.Height * imageSize + 2f * vertSpacing) / (float)texture_Background.Height);*/
+
                         alpha_Achievement = 1f;
                         DrawMedal(achievements[i],
-                            pos_MedalsStart + Vector2.UnitX * x + Vector2.UnitY * y + Vector2.UnitX * textSize.X / 2f);
-                        x += textSize.X + horizSpacing;
+                            pos_MedalsStart + Vector2.UnitX * x + 
+                            Vector2.UnitY * y + 
+                            Vector2.UnitX * borderSize.X * (float)texture_Background.Width / 2f);
+                        x += borderSize.X * (float)texture_Background.Width + horizSpacing;
                         w++;
                         if (w > numberMedalsWide)
                         {
                             x = 0;
                             w = 0;
-                            y += textSize.Y + vertSpacing;
+                            y += borderSize.Y * (float)texture_Background.Height + vertSpacing;
                         }
                     }
                     alpha_Achievement = (float)timer_MedalScreen / (float)time_PerButtonFade;
                     DrawMedal(achievements[currentSelection],
-                        pos_MedalsStart + Vector2.UnitX * x + Vector2.UnitY * y + Vector2.UnitX * textSize.X / 2f);
+                        pos_MedalsStart + Vector2.UnitX * x + 
+                        Vector2.UnitY * y + 
+                        Vector2.UnitX * borderSize.X * (float)texture_Background.Width / 2f);
                     break;
                 case MedalCaseState.InitialPause:
                     break;
