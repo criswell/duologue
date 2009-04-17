@@ -537,7 +537,15 @@ namespace Duologue.AchievementSystem
             InstanceManager.Logger.LogEntry(filename);
 
             // Open the file, creating it if necessary.
-            FileStream stream = File.Open(filename, FileMode.OpenOrCreate);
+            FileStream stream;
+            if (File.Exists(filename))
+            {
+                stream = File.Open(filename, FileMode.Truncate);
+            }
+            else
+            {
+                stream = File.Open(filename, FileMode.CreateNew);
+            }
 
             // Convert the object to XML data and put it in the stream.
             XmlSerializer serializer = new XmlSerializer(typeof(AchievementData));
