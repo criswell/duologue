@@ -166,7 +166,7 @@
     <value>(Not yet earned)</value>
   </data>
   <data name="MedalCase_Potato" xml:space="preserve">
-    <value>1 + Potato</value>
+    <value>Potato+1</value>
   </data>
   <data name="MedalCase_Stats" xml:space="preserve">
     <value>Enemy types killed: {0}/{1}  Total enemies killed: {2}</value>
