@@ -83,7 +83,7 @@ namespace Duologue.AchievementSystem
         private const string containerName = "Duologue";
 
         private const int possibleAchievements = 10;
-        private const float lifetime = 0.033f;
+        private const float lifetime = 3.5f;
 
         private const float iconVerticalSize = 80f;
 
@@ -910,7 +910,7 @@ namespace Duologue.AchievementSystem
                 UpdateCaseScreen(gameTime);
             if (currentDisplayed != null)
             {
-                timeSinceStart += (float)gameTime.ElapsedRealTime.TotalSeconds;
+                timeSinceStart += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (timeSinceStart > lifetime)
                 {
                     currentDisplayed.Displayed = true;
