@@ -170,6 +170,7 @@ namespace Duologue.AchievementSystem
         private float alpha_Achievement;
         private float size_Achievement;
         private Color color_Text;
+        private Color color_TextLocked;
         private Color color_Border;
         private Color color_BorderLocked;
         private Color color_BorderSelected;
@@ -214,6 +215,7 @@ namespace Duologue.AchievementSystem
             alpha_Achievement = 1f;
             size_Achievement = 1f;
             color_Text = Color.Bisque;
+            color_TextLocked = Color.Tomato;
             color_Border = Color.LightCyan;
             color_BorderLocked = Color.DarkSlateGray;
             color_BorderSelected = Color.OrangeRed;
@@ -843,18 +845,6 @@ namespace Duologue.AchievementSystem
                     RenderSpriteBlendMode.AbsoluteTop);
             }
 
-
-            // Draw text
-            render.DrawString(font_MedalDisplay,
-                medal.Name,
-                centerPos
-                    + Vector2.UnitX * (2f * horizSpacing + (float)medal.Icon.Width * size_Achievement * imageSize)
-                    + Vector2.UnitY * (vertSpacing + (float)medal.Icon.Height * size_Achievement * imageSize * 0.5f - textSize.Y / 2f),
-                new Color(color_Text, alpha_Achievement),
-                Vector2.One * size_Achievement,
-                Vector2.Zero,
-                RenderSpriteBlendMode.AbsoluteTop);
-
             // Draw icon
             if (medal.Unlocked)
             {
@@ -870,6 +860,16 @@ namespace Duologue.AchievementSystem
                     size_Achievement * imageSize,
                     0,
                     RenderSpriteBlendMode.AbsoluteTop);
+                // Draw text
+                render.DrawString(font_MedalDisplay,
+                    medal.Name,
+                    centerPos
+                        + Vector2.UnitX * (2f * horizSpacing + (float)medal.Icon.Width * size_Achievement * imageSize)
+                        + Vector2.UnitY * (vertSpacing + (float)medal.Icon.Height * size_Achievement * imageSize * 0.5f - textSize.Y / 2f),
+                    new Color(color_Text, alpha_Achievement),
+                    Vector2.One * size_Achievement,
+                    Vector2.Zero,
+                    RenderSpriteBlendMode.AbsoluteTop);
             }
             else
             {
@@ -884,6 +884,16 @@ namespace Duologue.AchievementSystem
                     0,
                     size_Achievement * imageSize,
                     0,
+                    RenderSpriteBlendMode.AbsoluteTop);
+                // Draw text
+                render.DrawString(font_MedalDisplay,
+                    medal.Name,
+                    centerPos
+                        + Vector2.UnitX * (2f * horizSpacing + (float)medal.Icon.Width * size_Achievement * imageSize)
+                        + Vector2.UnitY * (vertSpacing + (float)medal.Icon.Height * size_Achievement * imageSize * 0.5f - textSize.Y / 2f),
+                    new Color(color_TextLocked, alpha_Achievement),
+                    Vector2.One * size_Achievement,
+                    Vector2.Zero,
                     RenderSpriteBlendMode.AbsoluteTop);
             }
         }
