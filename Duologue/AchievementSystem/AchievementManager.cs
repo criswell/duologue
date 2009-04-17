@@ -521,6 +521,7 @@ namespace Duologue.AchievementSystem
             }
             else
             {
+                container.Dispose();
                 return false;
             }
         }

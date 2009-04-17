@@ -553,9 +553,16 @@ namespace Duologue.Screens
                     {
                         if(InstanceManager.InputManager.ButtonPressed(Buttons.Start, (PlayerIndex)i))
                         {
-                            startPressed = true;
-                            playerWhoPressedStart = (PlayerIndex)i;
-                            guideResult = Guide.BeginShowStorageDeviceSelector(playerWhoPressedStart, null, null);
+                            try
+                            {
+                                playerWhoPressedStart = (PlayerIndex)i;
+                                guideResult = Guide.BeginShowStorageDeviceSelector(playerWhoPressedStart, null, null);
+                                startPressed = true;
+                                break;
+                            }
+                            catch
+                            {
+                            }
                         }
                     }
                 }
