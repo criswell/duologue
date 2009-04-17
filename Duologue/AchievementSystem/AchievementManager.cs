@@ -90,6 +90,10 @@ namespace Duologue.AchievementSystem
         private const float horizSpacing = 8f;
         private const float vertSpacing = 5f;
 
+        private const float spacing_HorizTextIcon = 20f;
+        private const float spacing_VertTextBottomWindow = 100f;
+        private const float spacing_VertTextToText = 15f;
+
         private const float timePercent_FadeIn = 0.15f;
         private const float timePercent_FadeOut = 0.9f;
 
@@ -105,6 +109,10 @@ namespace Duologue.AchievementSystem
         private const float offsetY_UI = 326.5f + 7f;
 
         private const float offsetY_MedalCaseTitle = -2f;
+
+        private const float offsetX_MedalCaseIcon = -35f;
+        private const float offsetY_MedalCaseIcon = -35f;
+        private const float offset_IconShadow = 8f;
 
         private const int numberMedalsWide = 3;
         private const int numberMedalsHigh = 4;
@@ -176,6 +184,7 @@ namespace Duologue.AchievementSystem
         private Color color_MedalName;
         private Color color_MedalDesc;
         private Color color_Shadow;
+        private Color color_Locked;
         private Vector2 pos_FullMedalIcon;
         private Vector2 pos_Title;
         private Vector2 pos_MedalName;
@@ -209,9 +218,10 @@ namespace Duologue.AchievementSystem
             color_BorderLocked = Color.DarkSlateGray;
             color_BorderSelected = Color.OrangeRed;
             color_Title = Color.White;
-            color_Shadow = Color.Black;
+            color_Shadow = new Color(Color.Black, 128);
             color_MedalName = Color.LightSteelBlue;
             color_MedalDesc = Color.LightSkyBlue;
+            color_Locked = Color.SaddleBrown;
             offset_Shadow = new Vector2[]
             {
                 Vector2.One,
@@ -237,6 +247,8 @@ namespace Duologue.AchievementSystem
         {
             font_MedalDisplay = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
             font_Title = InstanceManager.AssetManager.LoadSpriteFont(filename_FontTitle);
+            font_MedalName = InstanceManager.AssetManager.LoadSpriteFont(filename_FontMedalName);
+            font_MedalDesc = InstanceManager.AssetManager.LoadSpriteFont(filename_FontMedalDesc);
 
             texture_Background = InstanceManager.AssetManager.LoadTexture2D(filename_Background);
             texture_CaseForeground = InstanceManager.AssetManager.LoadTexture2D(filename_CaseForeground);
@@ -433,6 +445,17 @@ namespace Duologue.AchievementSystem
             pos_Title = new Vector2(
                 pos_ScreenCenter.X - temp.X,
                 pos_PositionUI.Y + offsetY_MedalCaseTitle);
+
+            pos_FullMedalIcon = new Vector2(
+                pos_ScreenCenter.X + offsetX_UI + offsetX_MedalCaseIcon,
+                pos_ScreenCenter.Y + offsetY_UI + offsetY_MedalCaseIcon);
+
+            pos_MedalName = new Vector2(
+                pos_FullMedalIcon.X - achievements[0].IconGrey.Width - spacing_HorizTextIcon,
+                pos_FullMedalIcon.Y - font_MedalName.LineSpacing - spacing_VertTextBottomWindow - spacing_VertTextToText - font_MedalDisplay.LineSpacing);
+            pos_MedalDesc = new Vector2(
+                pos_MedalName.X,
+                pos_MedalName.Y + font_MedalName.LineSpacing + spacing_VertTextToText);
         }
 
         private void SyncUpAchievementDataAfterLoad()
@@ -1106,6 +1129,7 @@ namespace Duologue.AchievementSystem
                         }
                     }
                     DrawUIBase(Color.White);
+                    // Draw the title
                     render.DrawString(
                         font_Title,
                         Resources.MedalCase_Title,
@@ -1114,6 +1138,78 @@ namespace Duologue.AchievementSystem
                         color_Shadow,
                         offset_Shadow,
                         RenderSpriteBlendMode.AbsoluteTop);
+                    // Draw the icon
+                    render.Draw(
+                        achievements[currentSelection].IconGrey,
+                        pos_FullMedalIcon + Vector2.One * offset_IconShadow,
+                        new Vector2(
+                            achievements[currentSelection].IconGrey.Width,
+                            achievements[currentSelection].IconGrey.Height),
+                        null,
+                        color_Shadow,
+                        0f,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AbsoluteTop);
+                    if (achievements[currentSelection].Unlocked)
+                    {
+                        render.Draw(
+                            achievements[currentSelection].Icon,
+                            pos_FullMedalIcon,
+                            new Vector2(
+                                achievements[currentSelection].Icon.Width,
+                                achievements[currentSelection].Icon.Height),
+                            null,
+                            Color.White,
+                            0f,
+                            1f,
+                            0f,
+                            RenderSpriteBlendMode.AbsoluteTop);
+                    }
+                    else
+                    {
+                        render.Draw(
+                            achievements[currentSelection].IconGrey,
+                            pos_FullMedalIcon,
+                            new Vector2(
+                                achievements[currentSelection].IconGrey.Width,
+                                achievements[currentSelection].IconGrey.Height),
+                            null,
+                            Color.White,
+                            0f,
+                            1f,
+                            0f,
+                            RenderSpriteBlendMode.AbsoluteTop);
+                    }
+                    // Draw the text
+                    Vector2 temp = font_MedalName.MeasureString(achievements[currentSelection].Name);
+                    render.DrawString(
+                        font_MedalName,
+                        achievements[currentSelection].Name,
+                        pos_MedalName - Vector2.UnitX * temp.X,
+                        color_MedalName,
+                        color_Shadow,
+                        offset_Shadow,
+                        RenderSpriteBlendMode.AbsoluteTop);
+                    temp = font_MedalDesc.MeasureString(achievements[currentSelection].Description);
+                    render.DrawString(
+                        font_MedalDesc,
+                        achievements[currentSelection].Description,
+                        pos_MedalDesc - Vector2.UnitX * temp.X,
+                        color_MedalDesc,
+                        color_Shadow,
+                        offset_Shadow,
+                        RenderSpriteBlendMode.AbsoluteTop);
+                    if(!achievements[currentSelection].Unlocked)
+                    {
+                        temp = font_MedalDesc.MeasureString(Resources.MedalCase_Locked);
+                        render.DrawString(
+                            font_MedalDisplay,
+                            Resources.MedalCase_Locked,
+                            pos_MedalDesc - Vector2.UnitX * temp.X + Vector2.UnitY * (font_MedalDesc.LineSpacing + spacing_VertTextToText),
+                            color_Locked,
+                            RenderSpriteBlendMode.AbsoluteTop);
+                    }
                     break;
             }
         }

@@ -139,7 +139,7 @@
     <value>Loading...</value>
   </data>
   <data name="MainMenu_Achievements" xml:space="preserve">
-    <value>Medal Case</value>
+    <value>Medal Display Case</value>
   </data>
   <data name="MainMenu_Credits" xml:space="preserve">
     <value>Credits</value>
@@ -162,8 +162,11 @@
   <data name="MainMenu_PressStart" xml:space="preserve">
     <value>Press Start</value>
   </data>
+  <data name="MedalCase_Locked" xml:space="preserve">
+    <value>(Not yet earned)</value>
+  </data>
   <data name="MedalCase_Title" xml:space="preserve">
-    <value>Medal Case</value>
+    <value>Medal Display Case</value>
   </data>
   <data name="Medal_Desc_BFF" xml:space="preserve">
     <value>Complete the campaign in co-op</value>

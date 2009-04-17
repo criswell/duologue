@@ -124,7 +124,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Medal Case.
+        ///   Looks up a localized string similar to Medal Display Case.
         /// </summary>
         internal static string MainMenu_Achievements {
             get {
@@ -376,7 +376,16 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Medal Case.
+        ///   Looks up a localized string similar to (Not yet earned).
+        /// </summary>
+        internal static string MedalCase_Locked {
+            get {
+                return ResourceManager.GetString("MedalCase_Locked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medal Display Case.
         /// </summary>
         internal static string MedalCase_Title {
             get {
