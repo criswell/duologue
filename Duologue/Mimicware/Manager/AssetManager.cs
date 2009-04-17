@@ -21,6 +21,7 @@ namespace Mimicware.Manager
         #region Fields
         private Dictionary<string, Texture2D> graphicAssets;
         private Dictionary<string, SpriteFont> fontAssets;
+        private Dictionary<string, SoundEffect> soundAssets;
         private ContentManager content;
         #endregion
 
@@ -39,6 +40,7 @@ namespace Mimicware.Manager
             content = ContentManager;
             graphicAssets = new Dictionary<string,Texture2D>();
             fontAssets = new Dictionary<string, SpriteFont>();
+            soundAssets = new Dictionary<string, SoundEffect>();
         }
         #endregion
 
@@ -72,6 +74,21 @@ namespace Mimicware.Manager
                 fontAssets.Add(filename, content.Load<SpriteFont>(filename));
             }
             return fontAssets[filename];
+        }
+
+        /// <summary>
+        /// Load a sound effect
+        /// </summary>
+        /// <param name="filename">The filename of the asset to load</param>
+        /// <returns>The sound effect</returns>
+        public SoundEffect LoadSoundEffect(string filename)
+        {
+            Console.WriteLine(filename);
+            if (!soundAssets.ContainsKey(filename))
+            {
+                soundAssets.Add(filename, content.Load<SoundEffect>(filename));
+            }
+            return soundAssets[filename];
         }
         #endregion
     }

@@ -80,6 +80,8 @@ namespace Duologue.AchievementSystem
         private const string filename_GreyExtension = "-grey";
         private const string filename_SavedData = "medal_data.sav";
 
+        private const string filename_MenuMoveBeep = "Audio/PlayerEffects/menu_move_beep";
+
         private const string containerName = "Duologue";
 
         private const int possibleAchievements = 10;
@@ -203,6 +205,8 @@ namespace Duologue.AchievementSystem
         private Vector2[] offset_ShadowSmaller;
 
         private int numberOfEnemyTypesKilled;
+
+        private SoundEffect sfx_MenuMove;
         #endregion
 
         #region Properties
@@ -270,6 +274,9 @@ namespace Duologue.AchievementSystem
             font_Title = InstanceManager.AssetManager.LoadSpriteFont(filename_FontTitle);
             font_MedalName = InstanceManager.AssetManager.LoadSpriteFont(filename_FontMedalName);
             font_MedalDesc = InstanceManager.AssetManager.LoadSpriteFont(filename_FontMedalDesc);
+
+            // Dear Glen, Sorry for the InstanceManager usage, this will go away next game, Love Sam
+            sfx_MenuMove = InstanceManager.AssetManager.LoadSoundEffect(filename_MenuMoveBeep);
 
             texture_Background = InstanceManager.AssetManager.LoadTexture2D(filename_Background);
             texture_CaseForeground = InstanceManager.AssetManager.LoadTexture2D(filename_CaseForeground);
@@ -1059,6 +1066,7 @@ namespace Duologue.AchievementSystem
                     offset_CaseBackgrounds[i] = (float)texture_CaseBackgrounds[i].Width;
             }
 
+            int lastSelection = currentSelection;
             if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back) ||
                 InstanceManager.InputManager.NewButtonPressed(Buttons.B))
             {
@@ -1085,6 +1093,9 @@ namespace Duologue.AchievementSystem
                 currentSelection = 0;
             else if (currentSelection > achievements.Length - 1)
                 currentSelection = achievements.Length - 1;
+
+            if (lastSelection != currentSelection)
+                sfx_MenuMove.Play();
         }
 
         private void DrawCaseScreen(GameTime gameTime)
