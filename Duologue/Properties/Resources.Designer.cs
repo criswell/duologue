@@ -250,7 +250,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gotten past wave 100 of Infinite Mode.
+        ///   Looks up a localized string similar to Passed wave 100 of Infinite Mode.
         /// </summary>
         internal static string Medal_Desc_NoEndInSight {
             get {

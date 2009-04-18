@@ -196,7 +196,7 @@
     <value>Killed 1000 enemies</value>
   </data>
   <data name="Medal_Desc_NoEndInSight" xml:space="preserve">
-    <value>Gotten past wave 100 of Infinite Mode</value>
+    <value>Passed wave 100 of Infinite Mode</value>
   </data>
   <data name="Medal_Desc_Seriously" xml:space="preserve">
     <value>Killed 39,516 enemies</value>
