@@ -155,6 +155,11 @@ namespace Duologue.PlayObjects
         {
             GraphicsDevice = device;
         }
+
+        public virtual String[] GetSFXFilenames()
+        {
+            return new String[] { };
+        }
         #endregion
 
         #region Abstract methods

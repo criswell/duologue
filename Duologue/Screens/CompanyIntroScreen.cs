@@ -32,7 +32,8 @@ namespace Duologue.Screens
         Stablize,
         MottoFadeIn,
         Wait,
-        Loading,
+        LoadingTextures,
+        LoadingSFX,
         FadeOut,
         Blank
     }
@@ -105,8 +106,9 @@ namespace Duologue.Screens
         private Vector2 position_Loading;
         private Vector2 loadingSize;
 
-        // Pre-cached texture
+        // Pre-cached stuff
         private Texture2D tempTexture;
+        private SoundEffect tempSFX;
         #endregion
 
         #region Properties
@@ -222,7 +224,7 @@ namespace Duologue.Screens
         }
 
 
-        private void LoadData(double currentTimer)
+        private void LoadTextureData(double currentTimer)
         {
             if (currentFilenameIndex < currentFilenames.Length)
             {
@@ -236,7 +238,37 @@ namespace Duologue.Screens
                 if (currentPlayObjectIndex < playObjects.Length)
                 {
                     // load up the next play object
-                    SetCurrentFilenames();
+                    SetCurrentTextureFilenames();
+                }
+                else
+                {
+                    // We're all done
+                    //VoidSpinner();
+
+                    // Go on to the sound effects
+                    timeSinceSwitch = 0;
+                    currentFilenameIndex = currentFilenames.Length;
+                    currentPlayObjectIndex = 0;
+                    myState = IntroState.LoadingSFX;
+                }
+            }
+        }
+
+        private void LoadSFXData(double currentTime)
+        {
+            if (currentFilenameIndex < currentFilenames.Length)
+            {
+                // pre-cache next sfx
+                tempSFX =
+                    InstanceManager.AssetManager.LoadSoundEffect(currentFilenames[currentFilenameIndex]);
+                currentFilenameIndex++;
+            }
+            else
+            {
+                if (currentPlayObjectIndex < playObjects.Length)
+                {
+                    // Load up the next play object
+                    SetCurrentSFXFilenames();
                 }
                 else
                 {
@@ -248,7 +280,18 @@ namespace Duologue.Screens
             }
         }
 
-        private void SetCurrentFilenames()
+        private void SetCurrentSFXFilenames()
+        {
+            // Get the current play object
+            GetCurrentPlayObject();
+            currentPlayObjectIndex++;
+
+            // Get the filenames
+            currentFilenames = currentPlayObject.GetSFXFilenames();
+            currentFilenameIndex = 0;
+        }
+
+        private void SetCurrentTextureFilenames()
         {
             // Get the current play object
             GetCurrentPlayObject();
@@ -605,9 +648,9 @@ namespace Duologue.Screens
                         LocalInstanceManager.Background.SetParallaxElement(
                             myEmptyPE, true);
                         currentPlayObjectIndex = 0;
-                        SetCurrentFilenames();
+                        SetCurrentTextureFilenames();
                         TriggerLoadingSpinner();
-                        myState = IntroState.Loading;
+                        myState = IntroState.LoadingTextures;
                     }
                     break;
                 case IntroState.FadeOut:
@@ -624,9 +667,12 @@ namespace Duologue.Screens
                         myManager.Exit();
                     }
                     break;
+                case IntroState.LoadingSFX:
+                    LoadSFXData(timeSinceSwitch);
+                    break;
                 default:
                     // Default is loading
-                    LoadData(timeSinceSwitch);
+                    LoadTextureData(timeSinceSwitch);
                     break;
             }
 

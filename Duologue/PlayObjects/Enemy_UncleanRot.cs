@@ -47,6 +47,8 @@ namespace Duologue.PlayObjects
         private const string filename_Skullcap = "Enemies/unclean_rot/skullcap-{0}";
         private const string filename_Static = "Enemies/unclean_rot/static-{0:D2}";
 
+        private const string filename_Scream = "Audio/UncleanRot/scream";
+
         private const int numFrames_Body = 9;
         private const int numFrames_Tongue = 6;
         private const int numFrames_Static = 10;
@@ -179,6 +181,8 @@ namespace Duologue.PlayObjects
         private Texture2D[] texture_Skullcap;
         private Texture2D[] texture_Static;
 
+        private SoundEffect sfx_Scream;
+
         private Color[] color_Steady;
         private Color[] color_CurrentColors;
         private Color[] color_Static;
@@ -258,6 +262,7 @@ namespace Duologue.PlayObjects
             texture_Skullcap = new Texture2D[numFrames_Body];
             texture_OutlineTongue = new Texture2D[numFrames_Tongue];
             texture_Static = new Texture2D[numFrames_Static];
+            sfx_Scream = InstanceManager.AssetManager.LoadSoundEffect(filename_Scream);
 
             for (int i = 0; i < numFrames_Body; i++)
             {
@@ -354,6 +359,14 @@ namespace Duologue.PlayObjects
             }
 
             return filenames;
+        }
+
+        public override string[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_Scream
+            };
         }
         public override bool StartOffset()
         {
@@ -807,6 +820,7 @@ namespace Duologue.PlayObjects
                         ColorPolarity = ColorPolarity.Positive;
                     SetCurrentColors();
                     MyEnemyType = EnemyType.Standard;
+                    sfx_Scream.Play();
                 }
                 else
                 {
