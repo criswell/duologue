@@ -48,6 +48,7 @@ namespace Duologue.PlayObjects
         private const string filename_Static = "Enemies/unclean_rot/static-{0:D2}";
 
         private const string filename_Scream = "Audio/UncleanRot/scream";
+        private const string filename_FaceOn = "Audio/UncleanRot/face_on";
 
         private const int numFrames_Body = 9;
         private const int numFrames_Tongue = 6;
@@ -182,6 +183,7 @@ namespace Duologue.PlayObjects
         private Texture2D[] texture_Static;
 
         private SoundEffect sfx_Scream;
+        private SoundEffect sfx_FaceOn;
 
         private Color[] color_Steady;
         private Color[] color_CurrentColors;
@@ -263,6 +265,7 @@ namespace Duologue.PlayObjects
             texture_OutlineTongue = new Texture2D[numFrames_Tongue];
             texture_Static = new Texture2D[numFrames_Static];
             sfx_Scream = InstanceManager.AssetManager.LoadSoundEffect(filename_Scream);
+            sfx_FaceOn = InstanceManager.AssetManager.LoadSoundEffect(filename_FaceOn);
 
             for (int i = 0; i < numFrames_Body; i++)
             {
@@ -365,7 +368,8 @@ namespace Duologue.PlayObjects
         {
             return new String[]
             {
-                filename_Scream
+                filename_Scream,
+                filename_FaceOn
             };
         }
         public override bool StartOffset()
@@ -825,6 +829,7 @@ namespace Duologue.PlayObjects
                 else
                 {
                     currentState = RotState.FadeIn;
+                    sfx_FaceOn.Play();
                 }
             }
         }
