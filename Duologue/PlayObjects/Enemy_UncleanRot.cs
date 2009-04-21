@@ -142,6 +142,12 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const int myShieldPointValue = 10;
 
+        /// <summary>
+        /// Volume settings
+        /// </summary>
+        private const float volume_FaceOn = 0.1f;
+        private const float volume_Scream = 0.9f;
+
         #region Forces/Attractions/Repulsions
         /// <summary>
         /// Standard repulsion of the enemy ships when too close
@@ -785,8 +791,6 @@ namespace Duologue.PlayObjects
                     color_ScreamBase = ColorState.Medium;
                     color_ScreamSkullcap = ColorState.Dark;
                     numberOfTongueRolls = 0;
-                    // FIXME AUDIO
-                    // Need some sort of scream sound here
                 }
             }
         }
@@ -824,12 +828,12 @@ namespace Duologue.PlayObjects
                         ColorPolarity = ColorPolarity.Positive;
                     SetCurrentColors();
                     MyEnemyType = EnemyType.Standard;
-                    sfx_Scream.Play();
+                    sfx_Scream.Play(volume_Scream);
                 }
                 else
                 {
                     currentState = RotState.FadeIn;
-                    sfx_FaceOn.Play();
+                    sfx_FaceOn.Play(volume_FaceOn);
                 }
             }
         }

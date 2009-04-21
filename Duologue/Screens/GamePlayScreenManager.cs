@@ -277,13 +277,13 @@ namespace Duologue.Screens
             // Spawn a pointlet
             LocalInstanceManager.Scores[(int)pindex].AddScore(pointValueM, startPos);
 
-            InstanceManager.Logger.LogEntry(String.Format(
+            /*InstanceManager.Logger.LogEntry(String.Format(
                 "P{0} enemy hit- MP{1}, BP{2}, SC{3}- INT{4}",
                 ((int)pindex).ToString(),
                 pointValue.ToString(),
                 bp.ToString(),
                 pointValueM.ToString(),
-                intensityCounter.ToString()));
+                intensityCounter.ToString()));*/
 
             // update intensity
             if (bp > minBeatPercent)
