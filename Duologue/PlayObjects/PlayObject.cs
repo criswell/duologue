@@ -182,7 +182,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// Get the filenames for the images I need to have pre-cached
         /// </summary>
-        public abstract String[] GetFilenames();
+        public abstract String[] GetTextureFilenames();
 
         /// <summary>
         /// Triggers a hit between objects

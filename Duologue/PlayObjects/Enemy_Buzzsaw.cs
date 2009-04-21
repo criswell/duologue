@@ -278,7 +278,7 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public overrides
-        public override string[] GetFilenames()
+        public override string[] GetTextureFilenames()
         {
             return new String[]
             {

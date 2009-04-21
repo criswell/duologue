@@ -164,7 +164,7 @@ namespace Duologue.PlayObjects
             Initialized = true;
         }
 
-        public override string[] GetFilenames()
+        public override string[] GetTextureFilenames()
         {
             return new String[]
             {

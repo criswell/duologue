@@ -298,7 +298,7 @@ namespace Duologue.Screens
             currentPlayObjectIndex++;
 
             // Get the filenames
-            currentFilenames = currentPlayObject.GetFilenames();
+            currentFilenames = currentPlayObject.GetTextureFilenames();
             currentFilenameIndex = 0;            
         }
 

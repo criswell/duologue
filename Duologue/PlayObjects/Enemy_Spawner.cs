@@ -226,7 +226,7 @@ namespace Duologue.PlayObjects
             Initialized = true;
         }
 
-        public override String[] GetFilenames()
+        public override String[] GetTextureFilenames()
         {
             String[] filenames = new String[numOfLightLevels + 2];
 

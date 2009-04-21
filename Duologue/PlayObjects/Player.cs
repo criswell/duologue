@@ -730,7 +730,7 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public Overrides
-        public override string[] GetFilenames()
+        public override string[] GetTextureFilenames()
         {
             /* The player object is such a bear to initialize, and yet its
              * assets get loaded only once per game, that we're going to be

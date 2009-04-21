@@ -70,7 +70,7 @@ namespace Duologue.PlayObjects
             return false;
         }
 
-        public override String[] GetFilenames()
+        public override String[] GetTextureFilenames()
         {
             return new String[] { };
         }

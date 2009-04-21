@@ -245,7 +245,7 @@ namespace Duologue.PlayObjects
             Alive = true;
         }
 
-        public override string[] GetFilenames()
+        public override string[] GetTextureFilenames()
         {
             return new String[]
             {
