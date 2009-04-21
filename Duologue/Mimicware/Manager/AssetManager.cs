@@ -83,7 +83,6 @@ namespace Mimicware.Manager
         /// <returns>The sound effect</returns>
         public SoundEffect LoadSoundEffect(string filename)
         {
-            Console.WriteLine(filename);
             if (!soundAssets.ContainsKey(filename))
             {
                 soundAssets.Add(filename, content.Load<SoundEffect>(filename));

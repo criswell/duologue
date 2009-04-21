@@ -190,6 +190,8 @@ namespace Duologue.PlayObjects
 
         private SoundEffect sfx_Scream;
         private SoundEffect sfx_FaceOn;
+        private SoundEffectInstance sfxi_Scream;
+        private SoundEffectInstance sfxi_FaceOn;
 
         private Color[] color_Steady;
         private Color[] color_CurrentColors;
@@ -828,12 +830,12 @@ namespace Duologue.PlayObjects
                         ColorPolarity = ColorPolarity.Positive;
                     SetCurrentColors();
                     MyEnemyType = EnemyType.Standard;
-                    sfx_Scream.Play(volume_Scream);
+                    sfxi_Scream = sfx_Scream.Play(volume_Scream);
                 }
                 else
                 {
                     currentState = RotState.FadeIn;
-                    sfx_FaceOn.Play(volume_FaceOn);
+                    sfxi_FaceOn = sfx_FaceOn.Play(volume_FaceOn);
                 }
             }
         }
