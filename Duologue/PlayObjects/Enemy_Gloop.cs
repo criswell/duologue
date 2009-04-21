@@ -31,6 +31,8 @@ namespace Duologue.PlayObjects
         private const string filename_gloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const string filename_gloopletDeath = "Enemies/gloop/glooplet-death";
 
+        private const string filename_bubbles = "Audio/Gloop/bubbles1";
+
         private const double minSize = 0.5;
         private const double maxSize = 1.0;
 
@@ -43,6 +45,12 @@ namespace Duologue.PlayObjects
         private const byte shieldAlpha = 128;
         private const int defaultHighlightAlphaDelta = 10;
         private double highlightTimer = 0.04;
+
+        /// <summary>
+        /// The min and max bubble volume
+        /// </summary>
+        private const double minBubbleVolume = 0.0005;
+        private const double maxBubbleVolume = 0.005;
 
         private const float deathLifetime = 0.7f;
 
@@ -111,6 +119,11 @@ namespace Duologue.PlayObjects
         private float nearestLeaderRadius;
         private Enemy nearestLeaderObject;
         private Vector2 lastDirection;
+
+        // Sound
+        private SoundEffect sfx_Bubble;
+        private SoundEffectInstance sfxi_Bubble;
+        private float volume_CurrentBubble;
         #endregion
 
         #region Properties
@@ -169,6 +182,10 @@ namespace Duologue.PlayObjects
                 gloopletHighlight.Width / 2f,
                 gloopletHighlight.Height - 1f);
 
+            sfx_Bubble = InstanceManager.AssetManager.LoadSoundEffect(filename_bubbles);
+            volume_CurrentBubble = (float)minBubbleVolume;
+            sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+
             scale = (float)MWMathHelper.GetRandomInRange(minSize, maxSize);
 
             Radius = (glooplet.Width/2f) * scale * radiusMultiplier;
@@ -190,13 +207,21 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public Overrides
-        public override string[] GetTextureFilenames()
+        public override String[] GetTextureFilenames()
         {
             return new String[]
             {
                 filename_glooplet,
                 filename_gloopletDeath,
                 filename_gloopletHighlight
+            };
+        }
+
+        public override String[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_bubbles,
             };
         }
 
@@ -478,6 +503,13 @@ namespace Duologue.PlayObjects
                         highlightAlpha = minHighlightAlpha;
                         highlightAlphaDelta = defaultHighlightAlphaDelta;
                     }
+                }
+
+                if (sfxi_Bubble.State == SoundState.Stopped || sfxi_Bubble.State == SoundState.Paused)
+                {
+                    volume_CurrentBubble = (float)MWMathHelper.GetRandomInRange(minBubbleVolume, maxBubbleVolume);
+                    sfxi_Bubble.Volume = volume_CurrentBubble;
+                    sfxi_Bubble.Play();
                 }
             }
         }
