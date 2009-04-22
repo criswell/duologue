@@ -45,7 +45,7 @@ namespace Duologue.Waves
         /// <summary>
         /// The maximum number for minor wave numbers
         /// </summary>
-        public const int MaxMinorNumber = 5;
+        public const int MaxMinorNumber = 3;
 
         /// <summary>
         /// The maxium number for major wave numbers

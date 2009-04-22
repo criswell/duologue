@@ -26,8 +26,21 @@ namespace Duologue
 {
     public struct ParallaxElement
     {
+        /// <summary>
+        /// The intensity of the element determines how many layers of clouds to display.
+        /// </summary>
+        /// <remarks>At present, this can be between 0-4.</remarks>
         public int Intensity;
+        /// <summary>
+        /// The tint of the element.
+        /// </summary>
         public Color Tint;
+        /// <summary>
+        /// The relative speed of the element.
+        /// </summary>
+        /// <remarks>
+        /// This speed will be affected by the offsets of each layer, and will be applied per call to Update(..) (roughly every 1/60th of a second).
+        /// </remarks>
         public float Speed;
     }
 
@@ -527,7 +540,8 @@ namespace Duologue
                     InstanceManager.GraphicsDevice.Viewport.Height / 2f);
                 InstanceManager.Logger.LogEntry(screenCenter.ToString());
             }
-            if(topParallaxChange || bottomParallaxChange || currentTopParallax.Intensity>0)
+            if (topParallaxChange || bottomParallaxChange ||
+                  currentTopParallax.Intensity > 0 || currentBottomParallax.Intensity > 0)
                 UpdateParallax(gameTime);
             base.Update(gameTime);
         }
