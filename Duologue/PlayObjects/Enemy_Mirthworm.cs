@@ -39,6 +39,8 @@ namespace Duologue.PlayObjects
         private const string filename_Glooplet = "Enemies/gloop/glooplet";
         private const string filename_Highlight = "Enemies/gloop/glooplet-highlight";
         private const string filename_Death = "Enemies/gloop/glooplet-death";
+        private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode";
+        private const float volume_Splat = 0.025f;
 
         private const int numberOfWormBits = 4;
 
@@ -106,6 +108,8 @@ namespace Duologue.PlayObjects
         private int nextDead;
 
         private Vector2 offset;
+        // Sound stuff
+        private SoundEffect sfx_Explode;
         #endregion
 
         #region Constructor/Init
@@ -160,6 +164,7 @@ namespace Duologue.PlayObjects
             texture_Glooplet = InstanceManager.AssetManager.LoadTexture2D(filename_Glooplet);
             texture_Highlight = InstanceManager.AssetManager.LoadTexture2D(filename_Highlight);
             texture_Death = InstanceManager.AssetManager.LoadTexture2D(filename_Death);
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_SplatExplode);
 
             center_Glooplet = new Vector2(
                 texture_Glooplet.Width / 2f, texture_Glooplet.Height / 2f);
@@ -210,6 +215,13 @@ namespace Duologue.PlayObjects
                 (float)MWMathHelper.GetRandomInRange(-.5, .5));
             temp.Normalize();
             return temp;
+        }
+        public override string[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_SplatExplode
+            };
         }
         #endregion
 
@@ -291,6 +303,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     dying = true;
+                    sfx_Explode.Play(volume_Splat);
                     timeSinceSwitch = timeBetweenDeaths;
                     nextDead = numberOfWormBits - 1;
                     MyManager.TriggerPoints(
