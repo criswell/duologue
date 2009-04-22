@@ -36,10 +36,15 @@ namespace Duologue.Screens
         #region Constants
         private const float playerMovementModifier_X = 4f;
         private const float playerMovementModifier_Y = -4f;
+
+        private const string filename_BeamIn = "Audio/PlayerEffects/beam-in";
+        private const float volume_BeamIn = 0.5f;
         #endregion
 
         #region Fields
         private GamePlayScreenManager myManager;
+        private SoundEffect sfx_BeamIn;
+        private SoundEffectInstance sfxi_BeamIn;
         #endregion
 
         #region Properties
@@ -70,6 +75,7 @@ namespace Duologue.Screens
 
         protected override void LoadContent()
         {
+            sfx_BeamIn = InstanceManager.AssetManager.LoadSoundEffect(filename_BeamIn);
             base.LoadContent();
         }
         #endregion
@@ -78,6 +84,18 @@ namespace Duologue.Screens
         #endregion
 
         #region Public Methods
+        public void PlayBeamIn()
+        {
+            try
+            {
+                sfxi_BeamIn.Volume = volume_BeamIn;
+                sfxi_BeamIn.Play();
+            }
+            catch
+            {
+                sfxi_BeamIn = sfx_BeamIn.Play(volume_BeamIn);
+            }
+        }
         #endregion
 
         #region Update / Draw

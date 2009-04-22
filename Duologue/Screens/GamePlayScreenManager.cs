@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 // XNA
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -277,14 +278,6 @@ namespace Duologue.Screens
             // Spawn a pointlet
             LocalInstanceManager.Scores[(int)pindex].AddScore(pointValueM, startPos);
 
-            /*InstanceManager.Logger.LogEntry(String.Format(
-                "P{0} enemy hit- MP{1}, BP{2}, SC{3}- INT{4}",
-                ((int)pindex).ToString(),
-                pointValue.ToString(),
-                bp.ToString(),
-                pointValueM.ToString(),
-                intensityCounter.ToString()));*/
-
             // update intensity
             if (bp > minBeatPercent)
             {
@@ -386,6 +379,7 @@ namespace Duologue.Screens
                     launchedFirstWave = true;
                     GetNextWave();
                     nextState = GamePlayState.InitPlayerSpawn;
+                    gamePlayLoop.PlayBeamIn();
                     break;
                 case GamePlayState.Delay:
                     if (PercentComplete >= 1f)

@@ -398,14 +398,18 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0 && !isDying)
                 {
-                    //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
                     isDying = true;
+                    try
+                    {
+                        sfxi_Bubble.Stop();
+                    }
+                    catch { }
+
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     timeSinceStart = 0.0;
                     deathRotation = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
                     TriggerShieldDisintegration(gloopletDeath, currentColor, Position, 0f);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
                     return false;
                 }
                 else
