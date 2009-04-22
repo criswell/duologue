@@ -32,7 +32,7 @@ namespace Duologue.PlayObjects
         private const string filename_Bubble = "Enemies/iridescent_bubble";
 
         private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode";
-        private const float volume_Splat = 0.025f;
+        private const float volume_Splat = 0.25f;
 
         private const float radiusMultiplier = 0.4f;
 

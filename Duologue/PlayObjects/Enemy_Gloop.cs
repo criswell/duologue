@@ -49,8 +49,8 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The min and max bubble volume
         /// </summary>
-        private const double minBubbleVolume = 0.0005;
-        private const double maxBubbleVolume = 0.005;
+        private const double minBubbleVolume = 0.01;
+        private const double maxBubbleVolume = 0.08;
 
         private const float deathLifetime = 0.7f;
 

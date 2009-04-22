@@ -33,11 +33,11 @@ namespace Duologue.PlayObjects
         private const string filename_Bubble = "Enemies/iridescent_bubble";
         private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode-short";
         private const string filename_Bloop = "Audio/AnnMoeba/strange-bubbles";
-        private const double volume_MinBloop = 0.001;
-        private const double volume_MaxBloop = 0.02;
+        private const double volume_MinBloop = 0.05;
+        private const double volume_MaxBloop = 0.2;
         private const int maxChanceOfBloopSound = 200;
         private const int chanceOfBloopSound = 20;
-        private const float volume_Splat = 0.025f;
+        private const float volume_Splat = 0.15f;
 
         private const float bubbleScale = 0.43f;
 

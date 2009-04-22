@@ -146,7 +146,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// Volume settings
         /// </summary>
-        private const float volume_FaceOn = 0.1f;
+        private const float volume_FaceOn = 0.4f;
         private const float volume_Scream = 0.9f;
         private const float volume_Explosions = 0.9f;
 
