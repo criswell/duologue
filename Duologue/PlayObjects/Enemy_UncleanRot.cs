@@ -49,6 +49,7 @@ namespace Duologue.PlayObjects
 
         private const string filename_Scream = "Audio/UncleanRot/scream";
         private const string filename_FaceOn = "Audio/UncleanRot/face_on";
+        private const string filename_Explosion = "Audio/PlayerEffects/multiple-explosions-short";
 
         private const int numFrames_Body = 9;
         private const int numFrames_Tongue = 6;
@@ -147,6 +148,7 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const float volume_FaceOn = 0.1f;
         private const float volume_Scream = 0.9f;
+        private const float volume_Explosions = 0.9f;
 
         #region Forces/Attractions/Repulsions
         /// <summary>
@@ -192,6 +194,7 @@ namespace Duologue.PlayObjects
         private SoundEffect sfx_FaceOn;
         private SoundEffectInstance sfxi_Scream;
         private SoundEffectInstance sfxi_FaceOn;
+        private SoundEffect sfx_Explode;
 
         private Color[] color_Steady;
         private Color[] color_CurrentColors;
@@ -274,6 +277,7 @@ namespace Duologue.PlayObjects
             texture_Static = new Texture2D[numFrames_Static];
             sfx_Scream = InstanceManager.AssetManager.LoadSoundEffect(filename_Scream);
             sfx_FaceOn = InstanceManager.AssetManager.LoadSoundEffect(filename_FaceOn);
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_Explosion);
 
             for (int i = 0; i < numFrames_Body; i++)
             {
@@ -377,7 +381,8 @@ namespace Duologue.PlayObjects
             return new String[]
             {
                 filename_Scream,
-                filename_FaceOn
+                filename_FaceOn,
+                filename_Explosion
             };
         }
         public override bool StartOffset()
@@ -490,6 +495,19 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
+                    try
+                    {
+                        sfxi_FaceOn.Stop();
+                    }
+                    catch { }
+                    
+                    try
+                    {
+                        sfxi_Scream.Stop();
+                    }
+                    catch { }
+
+                    sfx_Explode.Play(volume_Explosions);
                     for (int i = 0; i < 4; i++)
                     {
                         LocalInstanceManager.EnemyExplodeSystem.AddParticles(

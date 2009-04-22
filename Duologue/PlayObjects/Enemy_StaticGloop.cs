@@ -40,6 +40,9 @@ namespace Duologue.PlayObjects
         private const string filename_static = "Enemies/gloop/static";
         private const string filename_gloopletDeath = "Enemies/gloop/static-death";
 
+        private const string filename_Explosion = "Audio/PlayerEffects/zzzt-pop";
+        private const float volume_Explosion = 0.3f;
+
         private const float defaultSize = 0.8f;
 
         private const float radiusMultiplier = 0.8f;
@@ -175,6 +178,9 @@ namespace Duologue.PlayObjects
         private float nearestLeaderRadius;
         private Enemy nearestLeaderObject;
         private Vector2 lastDirection;
+
+        // Sound
+        private SoundEffect sfx_Explosion;
         #endregion
 
         #region Properties
@@ -222,6 +228,7 @@ namespace Duologue.PlayObjects
             glooplet = InstanceManager.AssetManager.LoadTexture2D(filename_glooplet);
             gloopletDeath = InstanceManager.AssetManager.LoadTexture2D(filename_gloopletDeath);
             gloopletStatic = InstanceManager.AssetManager.LoadTexture2D(filename_static);
+            sfx_Explosion = InstanceManager.AssetManager.LoadSoundEffect(filename_Explosion);
 
             gloopletCenter = new Vector2(
                 glooplet.Width / 2f,
@@ -300,6 +307,13 @@ namespace Duologue.PlayObjects
                 filename_glooplet,
                 filename_gloopletDeath,
                 filename_static
+            };
+        }
+        public override string[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_Explosion
             };
         }
 
@@ -477,6 +491,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0 && !isDying)
                 {
                     isDying = true;
+                    sfx_Explosion.Play(volume_Explosion);
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     timeSinceStart = 0.0;
                     deathRotation = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);

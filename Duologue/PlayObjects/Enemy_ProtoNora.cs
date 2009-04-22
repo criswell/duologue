@@ -31,6 +31,9 @@ namespace Duologue.PlayObjects
         private const string filename_GloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const string filename_Bubble = "Enemies/iridescent_bubble";
 
+        private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode";
+        private const float volume_Splat = 0.025f;
+
         private const float radiusMultiplier = 0.4f;
 
         private const int numberOfGlobules = 5;
@@ -98,6 +101,9 @@ namespace Duologue.PlayObjects
 
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
+
+        // Sound stuff
+        private SoundEffect sfx_Explode;
         #endregion
 
         #region Constructor / Init
@@ -146,6 +152,8 @@ namespace Duologue.PlayObjects
             center_Highlight = new Vector2(
                 texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
 
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_SplatExplode);
+
             Radius = RealSize.Length() * 0.5f * radiusMultiplier;
             currentPhi = MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
             rotation_Bubble = 0;
@@ -171,6 +179,13 @@ namespace Duologue.PlayObjects
                 filename_Glooplet,
                 filename_GloopletHighlight,
                 filename_Bubble
+            };
+        }
+        public override string[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_SplatExplode
             };
         }
         #endregion
@@ -306,6 +321,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
+                    sfx_Explode.Play(volume_Splat);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     Alive = false;
