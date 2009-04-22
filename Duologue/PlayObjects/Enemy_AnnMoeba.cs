@@ -32,6 +32,11 @@ namespace Duologue.PlayObjects
         private const string filename_Death = "Enemies/gloop/glooplet-death";
         private const string filename_Bubble = "Enemies/iridescent_bubble";
         private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode-short";
+        private const string filename_Bloop = "Audio/AnnMoeba/strange-bubbles";
+        private const double volume_MinBloop = 0.001;
+        private const double volume_MaxBloop = 0.02;
+        private const int maxChanceOfBloopSound = 200;
+        private const int chanceOfBloopSound = 20;
         private const float volume_Splat = 0.025f;
 
         private const float bubbleScale = 0.43f;
@@ -160,6 +165,8 @@ namespace Duologue.PlayObjects
         private bool isFleeing;
         // Sound stuff
         private SoundEffect sfx_Explode;
+        private SoundEffect sfx_Bloop;
+        private SoundEffectInstance sfxi_Bloop;
         #endregion
 
         #region Constructor / Init
@@ -220,6 +227,7 @@ namespace Duologue.PlayObjects
                 texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
 
             sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_SplatExplode);
+            sfx_Bloop = InstanceManager.AssetManager.LoadSoundEffect(filename_Bloop);
 
             mainScale = (float)MWMathHelper.GetRandomInRange(minScale, maxScale);
             scale_Globules = new float[numberOfGlobules];
@@ -265,7 +273,8 @@ namespace Duologue.PlayObjects
         {
             return new String[]
             {
-                filename_SplatExplode
+                filename_SplatExplode,
+                filename_Bloop
             };
         }
         #endregion
@@ -550,6 +559,23 @@ namespace Duologue.PlayObjects
                 bubbleRotation = 0;
             else if (bubbleRotation < 0)
                 bubbleRotation = (float)MathHelper.TwoPi;
+
+            // Do any bloops as needed
+            if (MWMathHelper.GetRandomInRange(0, maxChanceOfBloopSound) == chanceOfBloopSound)
+            {
+                try
+                {
+                    if (sfxi_Bloop.State != SoundState.Playing)
+                    {
+                        sfxi_Bloop.Volume = (float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop);
+                        sfxi_Bloop.Play();
+                    }
+                }
+                catch
+                {
+                    sfxi_Bloop = sfx_Bloop.Play((float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop));
+                }
+            }
 
             ComputeGlobuleOffsets();
         }
