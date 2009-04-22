@@ -31,6 +31,8 @@ namespace Duologue.PlayObjects
         private const string filename_GloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const string filename_Death = "Enemies/gloop/glooplet-death";
         private const string filename_Bubble = "Enemies/iridescent_bubble";
+        private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode-short";
+        private const float volume_Splat = 0.025f;
 
         private const float bubbleScale = 0.43f;
 
@@ -156,6 +158,8 @@ namespace Duologue.PlayObjects
         private Enemy nearestLeaderObject;
 
         private bool isFleeing;
+        // Sound stuff
+        private SoundEffect sfx_Explode;
         #endregion
 
         #region Constructor / Init
@@ -215,6 +219,8 @@ namespace Duologue.PlayObjects
             center_Highlight = new Vector2(
                 texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
 
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_SplatExplode);
+
             mainScale = (float)MWMathHelper.GetRandomInRange(minScale, maxScale);
             scale_Globules = new float[numberOfGlobules];
             offset_Globules = new Vector2[numberOfGlobules];
@@ -253,6 +259,13 @@ namespace Duologue.PlayObjects
                 filename_Glooplet,
                 filename_GloopletHighlight,
                 filename_Bubble
+            };
+        }
+        public override string[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_SplatExplode
             };
         }
         #endregion
@@ -450,6 +463,7 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
+                    sfx_Explode.Play(volume_Splat);
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, color_Bubble);
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(
                         Position + offset_Globules[MWMathHelper.GetRandomInRange(0, numberOfGlobules - 1)],
