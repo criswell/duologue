@@ -33,6 +33,9 @@ namespace Duologue.PlayObjects
         private const string filename_Death = "Enemies/gloop/glooplet-death";
         private const string filename_Bubble = "Enemies/iridescent_bubble";
 
+        private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode";
+        private const float volume_Splat = 0.025f;
+
         private const int numberOfWormBits = 4;
 
         private const float maxSize = 0.6f;
@@ -107,6 +110,9 @@ namespace Duologue.PlayObjects
         private int nextDead;
 
         private Vector2 offset;
+
+        // Sound stuff
+        private SoundEffect sfx_Explode;
         #endregion
 
         #region Constructor/Init
@@ -169,6 +175,8 @@ namespace Duologue.PlayObjects
                 texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
             center_Bubble = new Vector2(
                 texture_Bubble.Width / 2f, texture_Bubble.Height / 2f);
+
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_SplatExplode);
 
             rotation_Bubble = (float)MWMathHelper.GetRandomInRange(0, MathHelper.TwoPi);
 
@@ -239,6 +247,14 @@ namespace Duologue.PlayObjects
                 filename_Highlight
             };
         }
+
+        public override string[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_SplatExplode
+            };
+        }
         public override bool StartOffset()
         {
             offset = Vector2.Zero;
@@ -307,6 +323,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     dying = true;
+                    sfx_Explode.Play(volume_Splat);
                     timeSinceSwitch = timeBetweenDeaths;
                     nextDead = numberOfWormBits - 1;
                     MyManager.TriggerPoints(
@@ -419,6 +436,7 @@ namespace Duologue.PlayObjects
                     else
                     {
                         Alive = false;
+                        //sfx_Explode.Play(volume_Splat);
                         LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     }
                 }
