@@ -77,6 +77,10 @@ namespace Duologue.Waves
 
             Wavelet[] Wavelets;
 
+            // PLEASE NOTE: If you go past the GameWaveManager.MaxMinorNumber or .MaxMajorNumber
+            // your wave/wavelet will be ignored!
+            // Currently MaxMinorNumber is 5 and MaxMajorNumber is 999
+
             #region WaveDef (1-1) "The LZ is hot!"
             #region Metadata
             Waves[GetIndex(1, 1)] = new GameWave();
