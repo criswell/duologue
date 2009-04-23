@@ -108,8 +108,8 @@ namespace Duologue.Waves
             try
             {
                 temp = waveDef.GetWave(k[0], k[1]);
-                lastMajorNumber = k[0];
-                lastMinorNumber = k[1];
+                lastMajorNumber = temp.MajorWaveNumber; //k[0];
+                lastMinorNumber = temp.MinorWaveNumber; // k[1];
                 return temp;
             }
             catch
@@ -291,6 +291,7 @@ namespace Duologue.Waves
             }
             else
             {
+
                 temp = GetWave(CurrentMajorNumber, CurrentMinorNumber);
                 CurrentMajorNumber = temp.MajorWaveNumber;
                 CurrentMinorNumber = temp.MinorWaveNumber;

@@ -171,7 +171,7 @@ namespace Duologue.Screens
         /// <summary>
         /// Generate the position
         /// </summary>
-        private void SetPostion()
+        private void SetPosition()
         {
             float center = InstanceManager.DefaultViewport.Width / 2f;
             float xOffset = center;
@@ -575,7 +575,10 @@ namespace Duologue.Screens
                 else
                 {
                     if (CheckButtonB())
+                    {
                         currentState = MainMenuState.MainMenu;
+                        LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
+                    }
                     else
                         InnerUpdate(gameSelectItems);
                 }
@@ -623,7 +626,7 @@ namespace Duologue.Screens
         {
             if (position == Vector2.Zero)
             {
-                SetPostion();
+                SetPosition();
                 initialized = true;
             }
 

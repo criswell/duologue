@@ -302,7 +302,7 @@ namespace Duologue.Waves
                     + MathHelper.PiOver2;
             }
             #endregion
-            // Second wavelet
+            // Second wavelet FIXME PROBLEM HERE GET A NULL EXCEPTION FOR THIS DEF?
             #region
             Wavelets[1] = new Wavelet(8, 0, ColorPolarity.Negative);
             Wavelets[1].SongID = SongID.Ultrafix;

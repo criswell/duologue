@@ -596,24 +596,28 @@ namespace Duologue.PlayObjects
                 {
 
                     // Next do any player offset
-                    if (nearestPlayerRadius < minPlayerDistanceMultiplier * (this.Radius + nearestPlayerObject.Radius))
+                    try
                     {
-                        float modifier = playerAttract;
-                        if (inBeam)
-                            modifier = playerAttractAccel;
+                        if (nearestPlayerRadius < minPlayerDistanceMultiplier * (this.Radius + nearestPlayerObject.Radius))
+                        {
+                            float modifier = playerAttract;
+                            if (inBeam)
+                                modifier = playerAttractAccel;
 
-                        nearestPlayer.Normalize();
+                            nearestPlayer.Normalize();
 
-                        if (!isFleeing)
-                            nearestPlayer = Vector2.Negate(nearestPlayer);
+                            if (!isFleeing)
+                                nearestPlayer = Vector2.Negate(nearestPlayer);
 
-                        offset += modifier * nearestPlayer;
-                        CurrentState = WigglesState.Running;
+                            offset += modifier * nearestPlayer;
+                            CurrentState = WigglesState.Running;
+                        }
+                        else
+                        {
+                            CurrentState = WigglesState.Walking;
+                        }
                     }
-                    else
-                    {
-                        CurrentState = WigglesState.Walking;
-                    }
+                    catch { }
                 }
 
                 // Next apply the offset permanently
