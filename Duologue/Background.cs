@@ -50,7 +50,7 @@ namespace Duologue
     public class Background : DrawableGameComponent
     {
         #region Constants
-        private const string filename_Background = "background-{0:00}";
+        private const string filename_Background = "background-0{0}";
         private const string filename_Cloud = "Background/clouds-{0:D2}";
         private const string filename_Throb = "Background/throb-corner";
         private const int numBackgrounds = 5;
