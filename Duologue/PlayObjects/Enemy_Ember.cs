@@ -218,6 +218,7 @@ namespace Duologue.PlayObjects
         private float nearestLeaderRadius;
         private Enemy nearestLeaderObject;
         private Vector2 lastDirection;
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -258,7 +259,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
-            //audio = ServiceLocator.GetService<AudioManager>();
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
@@ -556,6 +557,7 @@ namespace Duologue.PlayObjects
                         0f);
                     //MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
                     /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    audio.PlayEffect(EffectID.CokeBottle);
                     return true;
                 }
             }
