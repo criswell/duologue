@@ -20,6 +20,7 @@ using Mimicware.Manager;
 // Duologue
 using Duologue.State;
 using Duologue.Screens;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.PlayObjects
@@ -158,6 +159,9 @@ namespace Duologue.PlayObjects
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
         private Vector2 lastDirection;
+
+        // Sound
+        private AudioManager audio;
         #endregion
 
         #region Constructor / Init
@@ -194,7 +198,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
-            //audio = ServiceLocator.GetService<AudioManager>();
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
@@ -417,6 +421,7 @@ namespace Duologue.PlayObjects
                         0f);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
                     /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    audio.PlayEffect(EffectID.CokeBottle);
                     return true;
                 }
             }

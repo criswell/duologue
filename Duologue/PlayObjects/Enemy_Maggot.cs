@@ -113,6 +113,7 @@ namespace Duologue.PlayObjects
 
         // Sound stuff
         private SoundEffect sfx_Explode;
+        private AudioManager audio;
         #endregion
 
         #region Constructor/Init
@@ -158,7 +159,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
-            //audio = ServiceLocator.GetService<AudioManager>();
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
@@ -337,6 +338,7 @@ namespace Duologue.PlayObjects
                 {
                     TriggerShieldDisintegration(texture_Death, color_Dark, Position, 0f);
                     //audio.soundEffects.PlayEffect(EffectID.CokeBottle);
+                    audio.PlayEffect(EffectID.CokeBottle);
                 }
             }
             return true;

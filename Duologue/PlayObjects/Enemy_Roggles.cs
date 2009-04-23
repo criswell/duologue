@@ -207,7 +207,6 @@ namespace Duologue.PlayObjects
             }
 
             walkingSpeed = (float)MWMathHelper.GetRandomInRange(minWalkingSpeed, maxWalkingSpeed);
-
             LoadAndInitialize();
         }
 

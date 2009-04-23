@@ -140,6 +140,9 @@ namespace Duologue.PlayObjects
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
         private Vector2 lastDirection;
+
+        // sound
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -179,6 +182,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
+            audio = ServiceLocator.GetService<AudioManager)();
             LoadAndInitialize();
         }
 
@@ -426,6 +430,7 @@ namespace Duologue.PlayObjects
                     TriggerShieldDisintegration(kingShield, currentColor, Position, 0f);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
                     /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    audio.PlayEffect(EffectID.CokeBottle);
                     return true;
                 }
             }

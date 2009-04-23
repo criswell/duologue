@@ -116,6 +116,9 @@ namespace Duologue.PlayObjects
         private double timer_Flare;
         private TypesOfPlayObjects[] possibleNigglets;
         private List<TypesOfPlayObjects> weightedNiggletList;
+
+        // Sound
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -153,7 +156,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
-            //audio = ServiceLocator.GetService<AudioManager>();
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
@@ -474,6 +477,7 @@ namespace Duologue.PlayObjects
                 {
                     TriggerShieldDisintegration(texture_Base, color_Current, Position, rotation_OuterRing);
                     //audio.soundEffects.PlayEffect(EffectID.CokeBottle);
+                    audio.PlayEffect(EffectID.CokeBottle);
                 }
             }
             return true;
