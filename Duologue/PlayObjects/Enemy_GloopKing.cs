@@ -182,7 +182,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
-            audio = ServiceLocator.GetService<AudioManager)();
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
