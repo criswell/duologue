@@ -48,9 +48,7 @@ namespace Duologue.Waves
     public class WaveDefinitions
     {
         #region Constants
-        private const int numberOfMinorWaves = 3;
-        private const int numberOfMajorWaves = 2;
-        private const int numberOfWaves = numberOfMajorWaves * numberOfMinorWaves;
+        private const int numberOfWaves = 2;
         #endregion
 
         #region Fields
