@@ -309,11 +309,12 @@ namespace Duologue.Waves
         /// </summary>
         private int GetIndex(int MajorNum, int MinorNum)
         {
-            if (MinorNum > 4)
-                MinorNum = 4;
+            if (MinorNum > GameWaveManager.MaxMinorNumber - 1)
+                MinorNum = GameWaveManager.MaxMinorNumber - 1;
             else if (MinorNum < 1)
                 MinorNum = 1;
-            int index = (MajorNum * 4) - 5 + MinorNum;
+            int index = (MajorNum * (GameWaveManager.MaxMinorNumber - 1)) -
+                GameWaveManager.MaxMinorNumber + MinorNum;
             if (index >= numberOfWaves)
                 throw new WavesOutOfRangeException();
             return index;
