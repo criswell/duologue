@@ -48,7 +48,8 @@ namespace Duologue.Waves
     public class WaveDefinitions
     {
         #region Constants
-        private const int numberOfWaves = 2;
+        private const int maxNumberOfMajorWaves = 2;
+        private const int numberOfWaves = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
         #endregion
 
         #region Fields
@@ -502,12 +503,14 @@ namespace Duologue.Waves
         /// </summary>
         private int GetIndex(int MajorNum, int MinorNum)
         {
-            if (MinorNum > GameWaveManager.MaxMinorNumber - 1)
-                MinorNum = GameWaveManager.MaxMinorNumber - 1;
+            //Console.Write("Requested {0}-{1} : Set to ", MajorNum, MinorNum);
+            if (MinorNum > GameWaveManager.MaxMinorNumber)
+                MinorNum = GameWaveManager.MaxMinorNumber;
             else if (MinorNum < 1)
                 MinorNum = 1;
-            int index = (MajorNum * (GameWaveManager.MaxMinorNumber - 1)) -
-                GameWaveManager.MaxMinorNumber + MinorNum;
+            int index = MajorNum * GameWaveManager.MaxMinorNumber -
+                GameWaveManager.MaxMinorNumber + MinorNum - 1;
+            //Console.WriteLine("{0}-{1} i={2} out of {3}", MajorNum, MinorNum, index, numberOfWaves);
             if (index >= numberOfWaves)
                 throw new WavesOutOfRangeException();
             return index;
