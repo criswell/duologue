@@ -20,6 +20,7 @@ using Mimicware.Manager;
 // Duologue
 using Duologue.State;
 using Duologue.Screens;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.PlayObjects
@@ -181,6 +182,7 @@ namespace Duologue.PlayObjects
 
         // Sound
         private SoundEffect sfx_Explosion;
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -219,7 +221,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
-            //audio = ServiceLocator.GetService<AudioManager>();
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
@@ -504,6 +506,7 @@ namespace Duologue.PlayObjects
                 {
                     TriggerShieldDisintegration(gloopletDeath, new Color(currentColors[0], shieldAlpha), Position, 0f);
                     /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    audio.PlayEffect(EffectID.CokeBottle);
                     return true;
                 }
             }
