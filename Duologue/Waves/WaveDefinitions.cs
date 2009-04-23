@@ -204,12 +204,12 @@ namespace Duologue.Waves
             Waves[GetIndex(1, 2)].Wavelets = Wavelets;
             #endregion
 
-            #region WaveDef (1-3) "Reinforcements arive.."
+            #region WaveDef (1-3) "Wave after wave..."
             #region Metadata
             Waves[GetIndex(1, 3)] = new GameWave();
             Waves[GetIndex(1, 3)].Background = 0;
-            Waves[GetIndex(1, 3)].ThrobColor = Color.Tomato;
-            Waves[GetIndex(1, 3)].ColorState = 1;
+            Waves[GetIndex(1, 3)].ThrobColor = Color.Red;
+            Waves[GetIndex(1, 3)].ColorState = 0;
             Waves[GetIndex(1, 3)].MajorWaveNumber = 1;
             Waves[GetIndex(1, 3)].MinorWaveNumber = 3;
             Waves[GetIndex(1, 3)].ParallaxElementTop = new ParallaxElement();
@@ -220,7 +220,108 @@ namespace Duologue.Waves
             Waves[GetIndex(1, 3)].ParallaxElementBottom.Intensity = 1;
             Waves[GetIndex(1, 3)].ParallaxElementBottom.Tint = new Color(172, 131, 22);
             Waves[GetIndex(1, 3)].ParallaxElementBottom.Speed = -0.6f;
-            Waves[GetIndex(1, 3)].Name = "Reinforcements arive..";
+            Waves[GetIndex(1, 3)].Name = "Wave after wave...";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(24, 4);
+            Wavelets[0].SongID = SongID.Ultrafix;
+            for (int i = 0; i < 24; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[0].StartAngle[i] = (float)i * MathHelper.TwoPi / 24f;
+                Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(16, 4);
+            Wavelets[1].SongID = SongID.Ultrafix;
+            for (int i = 0; i < 16; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                Wavelets[1].StartAngle[i] = (float)i * MathHelper.TwoPi / 16f;
+                Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(16, 4);
+            Wavelets[2].SongID = SongID.Ultrafix;
+            for (int i = 0; i < 16; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                else
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+                Wavelets[2].StartAngle[i] = (float)i * MathHelper.TwoPi / 16f;
+            }
+            #endregion
+
+            Waves[GetIndex(1, 3)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (2-1) "TODO"
+            #region Metadata
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(2, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (2-2) "TODO"
+            #region Metadata
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(2, 2)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (2-3) "Reinforcements arive.."
+            #region Metadata
+            Waves[GetIndex(2, 3)] = new GameWave();
+            Waves[GetIndex(2, 3)].Background = 0;
+            Waves[GetIndex(2, 3)].ThrobColor = Color.Tomato;
+            Waves[GetIndex(2, 3)].ColorState = 1;
+            Waves[GetIndex(2, 3)].MajorWaveNumber = 2;
+            Waves[GetIndex(2, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(2, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(2, 3)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(2, 3)].ParallaxElementTop.Tint = new Color(172, 131, 22);
+            Waves[GetIndex(2, 3)].ParallaxElementTop.Speed = 0.9f;
+            Waves[GetIndex(2, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(2, 3)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(2, 3)].ParallaxElementBottom.Tint = new Color(172, 131, 22);
+            Waves[GetIndex(2, 3)].ParallaxElementBottom.Speed = -0.9f;
+            Waves[GetIndex(2, 3)].Name = "Reinforcements arive..";
             #endregion
 
             Wavelets = new Wavelet[3];
@@ -278,7 +379,7 @@ namespace Duologue.Waves
             }
             #endregion
 
-            Waves[GetIndex(1, 3)].Wavelets = Wavelets;
+            Waves[GetIndex(2, 3)].Wavelets = Wavelets;
             #endregion
         }
         #endregion
