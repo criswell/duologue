@@ -100,11 +100,11 @@ namespace Duologue.Waves
 
             if ((float)lastMajorNumber / (float)waveDef.TotalNumberOfWaves > medal_WetFeet)
             {
-                LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.WetFeet);
+                LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.WetFeet);
             }
             if ((float)lastMajorNumber / (float)waveDef.TotalNumberOfWaves > medal_Experienced)
             {
-                LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.Experienced);
+                LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.Experienced);
             }
 
             int[] k = IncrementWaveNumbers(lastMajorNumber, lastMinorNumber);
@@ -118,7 +118,7 @@ namespace Duologue.Waves
             }
             catch
             {
-                LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.TourOfDuty);
+                LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.TourOfDuty);
                 throw;
             }
         }
