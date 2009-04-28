@@ -176,7 +176,7 @@ namespace Duologue.PlayObjects
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
-            if (hitPoints == null)
+            if (hitPoints == null || (int)hitPoints == 0)
             {
                 hitPoints = 1;
             }
