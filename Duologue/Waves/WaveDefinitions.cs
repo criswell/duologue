@@ -340,11 +340,33 @@ namespace Duologue.Waves
 
             #region WaveDef (2-2) "Buzzsaw backlash"
             #region Metadata
+            Waves[GetIndex(2, 2)] = new GameWave();
+            Waves[GetIndex(2, 2)].Background = 1;
+            Waves[GetIndex(2, 2)].ThrobColor = Color.Azure;
+            Waves[GetIndex(2, 2)].ColorState = 0;
+            Waves[GetIndex(2, 2)].MajorWaveNumber = 2;
+            Waves[GetIndex(2, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(2, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(2, 2)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(2, 2)].ParallaxElementTop.Tint = Color.Olive;
+            Waves[GetIndex(2, 2)].ParallaxElementTop.Speed = 0.6f;
+            Waves[GetIndex(2, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(2, 2)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(2, 2)].ParallaxElementBottom.Tint = Color.CadetBlue;
+            Waves[GetIndex(2, 2)].ParallaxElementBottom.Speed = -0.65f;
+            Waves[GetIndex(2, 2)].Name = "Buzzsaw backlash";
             #endregion
 
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(8, 0, ColorPolarity.Positive);
+            Wavelets[0].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[0].StartAngle[i] = (float)i * BAAAAAAAAAAAAAAFUUUUUUUUUUUUuu
+            }
             #endregion
             // Second wavelet
             #region
