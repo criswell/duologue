@@ -25,6 +25,13 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
+    public enum MetalToothState
+    {
+        Running,
+        Spawning,
+        Fading
+    }
+
     public class Enemy_MetalTooth :Enemy
     {
         #region Constants
@@ -32,17 +39,36 @@ namespace Duologue.PlayObjects
         private const string filename_Blades = "Enemies/MetalTooth-blades";
         private const string filename_Shine = "Enemies/MetalTooth-shine";
 
+        private const float maxSpeed = 2.4f;
+        private const float minSpeed = 1.25f;
+        private const float accel = 0.026f;
+        private const double percentSlowDown = 0.75;
+
+        private const float fleeSpeed = 5.3f;
+
+        private const double maxFleeDistanceMultiplier = 7.0;
+        private const double minFleeDistanceMultiplier = 3.0;
+
         // Deltas
         private const float delta_Rotation = 0.01f;
         private const float delta_ShineOffsetX = -0f;
         private const float delta_ShineOffsetY = -12f;
 
         /// <summary>
+        /// The number of explosions when I die
+        /// </summary>
+        private int numberOfExplosions = 6;
+        /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
         private const int realHitPointMultiplier = 10;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 15;
 
         /// <summary>
         /// The hit point array
@@ -55,6 +81,16 @@ namespace Duologue.PlayObjects
             (byte)224, 
             (byte)255
         };
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 1000;
+
+        /// <summary>
+        /// The point value when my shields disintegrate if I were it at perfect beat
+        /// </summary>
+        private const int myShieldPointValue = 10;
         #endregion
 
         #region Properties
@@ -73,11 +109,17 @@ namespace Duologue.PlayObjects
 
         private Color[] myColor;
         private int currentColor;
+        private Color shieldColor;
 
         // Animation stuff
         private float rotation_Blades;
         private float rotation_Eye;
         private double timeSinceSwitch;
+        private MetalToothState currentState;
+        private Vector2 nextPosition;
+        private float travelLength;
+        private float totalTravelLength;
+        private float speed;
 
         // Audio stuff
         private AudioManager audio;
@@ -151,43 +193,122 @@ namespace Duologue.PlayObjects
 
             currentColor = 0;
 
+            SetShieldColor();
+
             rotation_Blades = 0f;
             rotation_Eye = 0f;
             timeSinceSwitch = 0.0;
+
+            currentState = MetalToothState.Running;
+            GetNextPosition(Vector2.Zero);
 
             Initialized = true;
             Alive = true;
         }
         #endregion
 
+        #region Private methods
+        private void GetNextPosition(Vector2 vector2)
+        {
+            if (vector2 == Vector2.Zero)
+            {
+                nextPosition = new Vector2(
+                    (float)MWMathHelper.GetRandomInRange(
+                        InstanceManager.DefaultViewport.TitleSafeArea.X,
+                        InstanceManager.DefaultViewport.TitleSafeArea.Right),
+                    (float)MWMathHelper.GetRandomInRange(
+                        InstanceManager.DefaultViewport.TitleSafeArea.Y,
+                        InstanceManager.DefaultViewport.TitleSafeArea.Bottom));
+            }
+            else
+            {
+                vector2.Normalize();
+                float distance = (float)MWMathHelper.GetRandomInRange(
+                    minFleeDistanceMultiplier * Radius, maxFleeDistanceMultiplier * Radius);
+
+                nextPosition = Position + distance * vector2;
+            }
+
+            Orientation = nextPosition - Position;
+            totalTravelLength = Orientation.Length();
+            Orientation.Normalize();
+            travelLength = 0;
+        }
+
+        private void SetShieldColor()
+        {
+            shieldColor = GetMyColor(ColorState.Dark);
+            int alphaIndex = (int)MathHelper.Lerp(0, myColor.Length - 1, ((float)CurrentHitPoints / (float)StartHitPoints));
+            shieldColor.A = hitPointArray[alphaIndex];
+        }
+        #endregion
+
         #region Public overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
+            }
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
-        }
+            CurrentHitPoints--;
+            if (CurrentHitPoints <= 0)
+            {
+                MyManager.TriggerPoints(
+                    ((PlayerBullet)pobj).MyPlayerIndex,
+                    myPointValue + hitPointMultiplier * StartHitPoints,
+                    Position);
+                Vector2 temp;
+                for (int i = 0; i < numberOfExplosions; i++)
+                {
+                    temp = new Vector2(
+                        (float)MWMathHelper.GetRandomInRange(-1.0, 1.0),
+                        (float)MWMathHelper.GetRandomInRange(-1.0, 1.0));
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                        Position + temp * center_Base, myColor[currentColor]);
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                        Position + temp * center_Base, Color.WhiteSmoke);
+                }
+                Alive = false;
+                LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                audio.PlayEffect(EffectID.BuzzDeath);
+                return false;
+            }
+            else
+            {
+                TriggerShieldDisintegration(texture_Shine, myColor[currentColor], Position, 0f);
+                MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
+                audio.PlayEffect(EffectID.CokeBottle);
+                SetShieldColor();
+            }
+            return true;
+        }        
         #endregion
 
         #region Draw/Update
         public override void Draw(GameTime gameTime)
         {
-            Color s = myColor[currentColor];
-            int alphaIndex = (int)MathHelper.Lerp(0, myColor.Length - 1, ((float)CurrentHitPoints / (float)StartHitPoints));
-            
             // Draw blades
             InstanceManager.RenderSprite.Draw(
                 texture_Blades,
@@ -216,10 +337,11 @@ namespace Duologue.PlayObjects
                 Position + offset_Shine,
                 center_Shine,
                 null,
-                myColor[currentColor],
+                shieldColor,
                 0f,
                 1f,
-                0f);
+                0f,
+                RenderSpriteBlendMode.Addititive);
         }
 
         public override void Update(GameTime gameTime)
@@ -231,6 +353,56 @@ namespace Duologue.PlayObjects
                 rotation_Blades = 0f;
             else if (rotation_Blades < 0f)
                 rotation_Blades = MathHelper.TwoPi;
+
+            switch (currentState)
+            {
+                case MetalToothState.Fading:
+                    Update_Fading();
+                    break;
+                case MetalToothState.Spawning:
+                    Update_Spawning();
+                    break;
+                default:
+                    Update_Running();
+                    break;
+            }
+        }
+        #endregion
+
+        #region Private Updates
+        private void Update_Running()
+        {
+            if (travelLength / totalTravelLength < percentSlowDown)
+            {
+                if (speed < maxSpeed)
+                    speed += accel;
+            }
+            else
+            {
+                if (speed > minSpeed)
+                    speed -= accel;
+            }
+
+            Position += speed * Orientation;
+            travelLength += speed;
+            if (travelLength > totalTravelLength)
+            {
+                travelLength = 0;
+                speed = 0;
+                //timer_Thinking = 0;
+                currentState = MetalToothState.Fading;
+                GetNextPosition(Vector2.Zero);
+            }
+        }
+
+        private void Update_Spawning()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Update_Fading()
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
