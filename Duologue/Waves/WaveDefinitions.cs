@@ -335,7 +335,7 @@ namespace Duologue.Waves
             }
             #endregion
 
-            Waves[GetIndex(1, 2)].Wavelets = Wavelets;
+            Waves[GetIndex(2, 1)].Wavelets = Wavelets;
             #endregion
 
             #region WaveDef (2-2) "Buzzsaw backlash"
@@ -395,17 +395,17 @@ namespace Duologue.Waves
             #region
             Wavelets[2] = new Wavelet(8, 0);
             Wavelets[2].SongID = SongID.Ultrafix;
-            for (int i = 0; i < Wavelets[1].Enemies.Length/2f; i++)
+            for (int i = 0; i < Wavelets[2].Enemies.Length/2f; i++)
             {
-                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
-                Wavelets[1].StartAngle[i] = i * MathHelper.PiOver2 + MathHelper.PiOver4;
-                Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[2].StartAngle[i] = i * MathHelper.PiOver2 + MathHelper.PiOver4;
+                Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
             }
-            for (int i = (int)(Wavelets[1].Enemies.Length / 2f); i < Wavelets[1].Enemies.Length; i++)
+            for (int i = (int)(Wavelets[2].Enemies.Length / 2f); i < Wavelets[2].Enemies.Length; i++)
             {
-                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
-                Wavelets[1].StartAngle[i] = i * MathHelper.PiOver2 + MathHelper.PiOver4;
-                Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[2].StartAngle[i] = i * MathHelper.PiOver2 + MathHelper.PiOver4;
+                Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
             }
             #endregion
 
