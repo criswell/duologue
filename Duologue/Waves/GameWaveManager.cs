@@ -94,6 +94,10 @@ namespace Duologue.Waves
         /// </summary>
         private GameWave GetWave(int lastMajorNumber, int lastMinorNumber)
         {
+            InstanceManager.Logger.LogEntry(
+                String.Format("Current progress: {0}",
+                    (float)lastMajorNumber / (float)waveDef.TotalNumberOfWaves));
+
             if ((float)lastMajorNumber / (float)waveDef.TotalNumberOfWaves > medal_WetFeet)
             {
                 LocalInstanceManager.AchievementManager.UnlockAchievement(Achievements.WetFeet);
