@@ -98,6 +98,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_MetalTooth:
                             Init_MetalTooth(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_MiniSaw:
+                            Init_MiniSaw(i, manager);
+                            break;
                         default:
                             // Squat, for now
                             break;
@@ -114,6 +117,11 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_MiniSaw(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_MiniSaw(manager);
+        }
+
         private static void Init_MetalTooth(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_MetalTooth(manager);

@@ -123,6 +123,7 @@
     <Compile Include="PlayObjects\Enemy_AnnMoeba.cs" />
     <Compile Include="PlayObjects\Enemy_Maggot.cs" />
     <Compile Include="PlayObjects\Enemy_MetalTooth.cs" />
+    <Compile Include="PlayObjects\Enemy_MiniSaw.cs" />
     <Compile Include="PlayObjects\Enemy_Mirthworm.cs" />
     <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />
     <Compile Include="PlayObjects\Enemy_Ember.cs" />
