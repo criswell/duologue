@@ -66,7 +66,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The maximum distance I'm comfortable with being to the leader
         /// </summary>
-        private const float leaderDistanceMaxMultiplier = 1.9f;
+        private const float leaderDistanceMaxMultiplier = 1.5f;
 
         /// <summary>
         /// Attraction to the leader (from a distance)

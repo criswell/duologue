@@ -452,6 +452,7 @@ namespace Duologue.PlayObjects
 
         private void Update_Spawning()
         {
+            bool foundOne = false;
             // Run through the other enemy objects, looking for dead ones
             for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
             {
@@ -464,12 +465,13 @@ namespace Duologue.PlayObjects
                         ColorState.RandomPolarity(),
                         (int)(StartHitPoints / (float)realHitPointMultiplier));
                     numberSpawned++;
+                    foundOne = true;
                     break;
                 }
             }
 
             // If no more dead ones, resume movement, else go back to fade
-            if (numberSpawned > 0 && numberSpawned < maxNumberToSpawnAtOnce)
+            if (numberSpawned > 0 && numberSpawned < maxNumberToSpawnAtOnce && foundOne)
             {
                 currentColor = 0;
                 currentState = MetalToothState.Fading;
