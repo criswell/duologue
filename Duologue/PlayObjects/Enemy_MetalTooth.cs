@@ -52,6 +52,8 @@ namespace Duologue.PlayObjects
 
         private const double timePerColorChange = 0.1f;
 
+        private const float radiusMultiplier = 0.87f;
+
         // Deltas
         private const float delta_Rotation = 0.07f;
         private const float delta_ShineOffsetX = -0f;
@@ -193,7 +195,7 @@ namespace Duologue.PlayObjects
             center_BaseLower = new Vector2(
                 texture_BaseLower.Width * 0.5f, texture_BaseLower.Height * 0.5f);
 
-            Radius = center_BaseLower.X;
+            Radius = center_Blades.X * radiusMultiplier;
 
             myColor = new Color[]
             {

@@ -194,7 +194,6 @@ namespace Duologue.PlayObjects
 
                     if (!currentColorState.SameColor(baseColor, c))
                     {
-                        Alive = false;
                         return TriggerHit(pobj);
                     }
                     else
@@ -219,7 +218,8 @@ namespace Duologue.PlayObjects
         {
             if (pobj.MajorType == MajorPlayObjectType.Enemy)
             {
-                Alive = pobj.TriggerHit(this);
+                Alive = false;
+                return pobj.TriggerHit(this);
             }
             return Alive;
         }

@@ -175,7 +175,7 @@ namespace Duologue.Waves
             int NumEnemies = 20;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelets = new Wavelet[NumWavelets];
-            int hitsToKillEnemy = 0;
+            int hitsToKillEnemy = 5;
             thisWave.Wavelets[thisWave.CurrentWavelet] =
                 new Wavelet(NumEnemies, hitsToKillEnemy);
 
@@ -245,6 +245,10 @@ namespace Duologue.Waves
             thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[thisWave.NumEnemies - 1] = MathHelper.Pi;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[thisWave.NumEnemies - 1] = 2;
+
+            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 2] = TypesOfPlayObjects.Enemy_AnnMoeba;
+            thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[thisWave.NumEnemies - 2] = 0;
+            thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[thisWave.NumEnemies - 2] = 2;
 
             /*
             thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[39] = TypesOfPlayObjects.Enemy_ProtoNora;
