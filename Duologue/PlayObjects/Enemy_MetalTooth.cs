@@ -39,11 +39,19 @@ namespace Duologue.PlayObjects
         private const string filename_BaseLower = "Enemies/MetalTooth-base-lower";
         private const string filename_Blades = "Enemies/MetalTooth-blades";
         private const string filename_Shine = "Enemies/MetalTooth-shine";
+        private const string filename_Dwoop = "Audio/PlayerEffects/dwoop";
+
+        private const float volume_Dwoop = 0.25f;
 
         private const float maxSpeed = 2.4f;
         private const float minSpeed = 1.25f;
         private const float accel = 0.026f;
         private const double percentSlowDown = 0.75;
+
+        /// <summary>
+        /// The maximum number of babbys to spawn at a given time
+        /// </summary>
+        private const int maxNumberToSpawnAtOnce = 4;
 
         /// <summary>
         /// This is the multiplier applied to my radius that determines how far away
@@ -131,9 +139,11 @@ namespace Duologue.PlayObjects
         private float travelLength;
         private float totalTravelLength;
         private float speed;
+        private int numberSpawned;
 
         // Audio stuff
         private AudioManager audio;
+        private SoundEffect sfx_Dwoop;
         #endregion
 
         #region Constructor / Init
@@ -198,6 +208,8 @@ namespace Duologue.PlayObjects
                 texture_Shine.Width * 0.5f, texture_Shine.Height * 0.5f);
             center_BaseLower = new Vector2(
                 texture_BaseLower.Width * 0.5f, texture_BaseLower.Height * 0.5f);
+
+            sfx_Dwoop = InstanceManager.AssetManager.LoadSoundEffect(filename_Dwoop);
 
             Radius = center_Blades.X * radiusMultiplier;
 
@@ -432,6 +444,7 @@ namespace Duologue.PlayObjects
                 speed = 0;
                 //timer_Thinking = 0;
                 currentState = MetalToothState.Fading;
+                numberSpawned = 0;
                 GetNextPosition(Vector2.Zero);
             }
             timeSinceSwitch = 0.0;
@@ -439,7 +452,6 @@ namespace Duologue.PlayObjects
 
         private void Update_Spawning()
         {
-            bool pardonMyFart = false;
             // Run through the other enemy objects, looking for dead ones
             for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
             {
@@ -451,13 +463,13 @@ namespace Duologue.PlayObjects
                         ColorState,
                         ColorState.RandomPolarity(),
                         (int)(StartHitPoints / (float)realHitPointMultiplier));
-                    pardonMyFart = true;
+                    numberSpawned++;
                     break;
                 }
             }
 
             // If no more dead ones, resume movement, else go back to fade
-            if (pardonMyFart)
+            if (numberSpawned > 0 && numberSpawned < maxNumberToSpawnAtOnce)
             {
                 currentColor = 0;
                 currentState = MetalToothState.Fading;
@@ -481,6 +493,7 @@ namespace Duologue.PlayObjects
                 {
                     currentColor = myColor.Length - 1;
                     currentState = MetalToothState.Spawning;
+                    sfx_Dwoop.Play(volume_Dwoop);
                 }
             }
         }

@@ -34,7 +34,7 @@ namespace Duologue.PlayObjects
 
         private const float scale_Blades = 0.75f;
         private const float scale_Gloop = 0.35f;
-        private const double fadeInTime = 1f;
+        private const double fadeInTime = 0.85f;
 
         private const float bladeRotateSpeed = -0.1f;
 
