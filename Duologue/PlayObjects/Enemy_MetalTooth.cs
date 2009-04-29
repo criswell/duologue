@@ -36,6 +36,7 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const string filename_Base = "Enemies/MetalTooth-base";
+        private const string filename_BaseLower = "Enemies/MetalTooth-base-lower";
         private const string filename_Blades = "Enemies/MetalTooth-blades";
         private const string filename_Shine = "Enemies/MetalTooth-shine";
 
@@ -44,13 +45,15 @@ namespace Duologue.PlayObjects
         private const float accel = 0.026f;
         private const double percentSlowDown = 0.75;
 
-        private const float fleeSpeed = 5.3f;
+        //private const float fleeSpeed = 5.3f;
 
         private const double maxFleeDistanceMultiplier = 7.0;
         private const double minFleeDistanceMultiplier = 3.0;
 
+        private const double timePerColorChange = 0.1f;
+
         // Deltas
-        private const float delta_Rotation = 0.01f;
+        private const float delta_Rotation = 0.07f;
         private const float delta_ShineOffsetX = -0f;
         private const float delta_ShineOffsetY = -12f;
 
@@ -101,9 +104,11 @@ namespace Duologue.PlayObjects
         private Texture2D texture_Base;
         private Texture2D texture_Blades;
         private Texture2D texture_Shine;
+        private Texture2D texture_BaseLower;
 
         private Vector2 offset_Shine;
         private Vector2 center_Base;
+        private Vector2 center_BaseLower;
         private Vector2 center_Blades;
         private Vector2 center_Shine;
 
@@ -168,6 +173,7 @@ namespace Duologue.PlayObjects
                 filename_Base,
                 filename_Blades,
                 filename_Shine,
+                filename_BaseLower,
             };
         }
 
@@ -176,6 +182,7 @@ namespace Duologue.PlayObjects
             texture_Base = InstanceManager.AssetManager.LoadTexture2D(filename_Base);
             texture_Blades = InstanceManager.AssetManager.LoadTexture2D(filename_Blades);
             texture_Shine = InstanceManager.AssetManager.LoadTexture2D(filename_Shine);
+            texture_BaseLower = InstanceManager.AssetManager.LoadTexture2D(filename_BaseLower);
 
             center_Base = new Vector2(
                 texture_Base.Width * 0.5f, texture_Base.Height * 0.5f);
@@ -183,6 +190,10 @@ namespace Duologue.PlayObjects
                 texture_Blades.Width * 0.5f, texture_Blades.Height * 0.5f);
             center_Shine = new Vector2(
                 texture_Shine.Width * 0.5f, texture_Shine.Height * 0.5f);
+            center_BaseLower = new Vector2(
+                texture_BaseLower.Width * 0.5f, texture_BaseLower.Height * 0.5f);
+
+            Radius = center_BaseLower.X;
 
             myColor = new Color[]
             {
@@ -214,11 +225,11 @@ namespace Duologue.PlayObjects
             {
                 nextPosition = new Vector2(
                     (float)MWMathHelper.GetRandomInRange(
-                        InstanceManager.DefaultViewport.TitleSafeArea.X,
-                        InstanceManager.DefaultViewport.TitleSafeArea.Right),
+                        InstanceManager.DefaultViewport.TitleSafeArea.X + center_BaseLower.X,
+                        InstanceManager.DefaultViewport.TitleSafeArea.Right - center_BaseLower.X),
                     (float)MWMathHelper.GetRandomInRange(
-                        InstanceManager.DefaultViewport.TitleSafeArea.Y,
-                        InstanceManager.DefaultViewport.TitleSafeArea.Bottom));
+                        InstanceManager.DefaultViewport.TitleSafeArea.Y + center_BaseLower.Y,
+                        InstanceManager.DefaultViewport.TitleSafeArea.Bottom - center_BaseLower.Y));
             }
             else
             {
@@ -261,6 +272,7 @@ namespace Duologue.PlayObjects
                     // We're on them, kill em
                     return pobj.TriggerHit(this);
                 }
+                rotation_Eye = MWMathHelper.ComputeAngleAgainstX(Vector2.Negate(vToPlayer)) + MathHelper.PiOver2;
             }
             return true;
         }
@@ -317,6 +329,17 @@ namespace Duologue.PlayObjects
                 null,
                 Color.White,
                 rotation_Blades,
+                1f,
+                0f);
+
+            // Draw lower base
+            InstanceManager.RenderSprite.Draw(
+                texture_BaseLower,
+                Position,
+                center_BaseLower,
+                null,
+                Color.White,
+                0f,
                 1f,
                 0f);
 
@@ -393,16 +416,31 @@ namespace Duologue.PlayObjects
                 currentState = MetalToothState.Fading;
                 GetNextPosition(Vector2.Zero);
             }
+            timeSinceSwitch = 0.0;
         }
 
         private void Update_Spawning()
         {
-            throw new NotImplementedException();
+            // Run through the other enemy objects, looking for dead ones
+
+            // If no more dead ones, resume movement, else go back to fade
+            //FIXME
+            currentColor = 0;
+            currentState = MetalToothState.Running;
         }
 
         private void Update_Fading()
         {
-            throw new NotImplementedException();
+            if (timeSinceSwitch > timePerColorChange)
+            {
+                timeSinceSwitch = 0.0;
+                currentColor++;
+                if (currentColor >= myColor.Length)
+                {
+                    currentColor = myColor.Length - 1;
+                    currentState = MetalToothState.Spawning;
+                }
+            }
         }
         #endregion
     }
