@@ -135,6 +135,7 @@ namespace Duologue.PlayObjects
 
             // Set the RealSize by hand
             RealSize = new Vector2(110, 110);
+            Solid = false;
             Initialized = false;
             Alive = false;
         }

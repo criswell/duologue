@@ -74,6 +74,12 @@ namespace Duologue.PlayObjects
         public bool IsFirm;
 
         /// <summary>
+        /// Determines if this play object is considered "solid". If it isn't solid, then
+        /// objects (like bullets) will just pass through it
+        /// </summary>
+        public bool Solid = true;
+
+        /// <summary>
         /// The type of play object this play object is
         /// </summary>
         public TypesOfPlayObjects MyType;
