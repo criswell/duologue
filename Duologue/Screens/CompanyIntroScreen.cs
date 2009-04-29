@@ -143,6 +143,7 @@ namespace Duologue.Screens
                 TypesOfPlayObjects.Enemy_Roggles,
                 TypesOfPlayObjects.Enemy_Spawner,
                 TypesOfPlayObjects.Enemy_MetalTooth,
+                TypesOfPlayObjects.Enemy_MiniSaw,
             };
 
             currentPlayObjectIndex = 0;
@@ -357,6 +358,9 @@ namespace Duologue.Screens
                     break;
                 case TypesOfPlayObjects.Enemy_MetalTooth:
                     currentPlayObject = new Enemy_MetalTooth();
+                    break;
+                case TypesOfPlayObjects.Enemy_MiniSaw:
+                    currentPlayObject = new Enemy_MiniSaw();
                     break;
                 default:
                     // Player Bullet

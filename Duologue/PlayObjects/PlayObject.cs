@@ -52,6 +52,7 @@ namespace Duologue.PlayObjects
         Enemy_Spawner,
         Enemy_Placeholder,
         Enemy_MetalTooth,
+        Enemy_MiniSaw,
     }
 
     /// <summary>
