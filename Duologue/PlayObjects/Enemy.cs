@@ -199,6 +199,15 @@ namespace Duologue.PlayObjects
             shieldEndSize = (float)MWMathHelper.GetRandomInRange(
                 minEndShieldSizeMultiplier, maxEndShieldSizeMultiplier);
         }
+
+        /// <summary>
+        /// Call this to clear any inner triggers such as bullet explosions and shield disintigrations
+        /// </summary>
+        public void ClearInnerTriggers()
+        {
+            currentFrame = maxNumBulletFrames;
+            shieldTimer = shieldLifetime;
+        }
         #endregion
 
         #region Inner Update

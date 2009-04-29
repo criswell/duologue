@@ -45,7 +45,11 @@ namespace Duologue.PlayObjects
         private const float accel = 0.026f;
         private const double percentSlowDown = 0.75;
 
-        //private const float fleeSpeed = 5.3f;
+        /// <summary>
+        /// This is the multiplier applied to my radius that determines how far away
+        /// to spawn a babby
+        /// </summary>
+        private const float spawnDistanceMultiplier = 1.5f;
 
         private const double maxFleeDistanceMultiplier = 7.0;
         private const double minFleeDistanceMultiplier = 3.0;
@@ -254,6 +258,19 @@ namespace Duologue.PlayObjects
             int alphaIndex = (int)MathHelper.Lerp(0, myColor.Length - 1, ((float)CurrentHitPoints / (float)StartHitPoints));
             shieldColor.A = hitPointArray[alphaIndex];
         }
+
+        private Vector2 GetBabbySpawnPosition()
+        {
+            Vector2 temp;
+
+            temp = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-1.0, 1.0),
+                (float)MWMathHelper.GetRandomInRange(-1.0, 1.0));
+            temp.Normalize();
+            temp = temp * spawnDistanceMultiplier * Radius;
+
+            return temp + Position;
+        }
         #endregion
 
         #region Public overrides
@@ -412,7 +429,6 @@ namespace Duologue.PlayObjects
             travelLength += speed;
             if (travelLength > totalTravelLength)
             {
-                travelLength = 0;
                 speed = 0;
                 //timer_Thinking = 0;
                 currentState = MetalToothState.Fading;
@@ -423,12 +439,36 @@ namespace Duologue.PlayObjects
 
         private void Update_Spawning()
         {
+            bool pardonMyFart = false;
             // Run through the other enemy objects, looking for dead ones
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                if (!LocalInstanceManager.Enemies[i].Alive)
+                {
+                    LocalInstanceManager.Enemies[i].Initialize(
+                        GetBabbySpawnPosition(),
+                        GetBabbySpawnPosition(),
+                        ColorState,
+                        ColorState.RandomPolarity(),
+                        (int)(StartHitPoints / (float)realHitPointMultiplier));
+                    pardonMyFart = true;
+                    break;
+                }
+            }
 
             // If no more dead ones, resume movement, else go back to fade
-            //FIXME
-            currentColor = 0;
-            currentState = MetalToothState.Running;
+            if (pardonMyFart)
+            {
+                currentColor = 0;
+                currentState = MetalToothState.Fading;
+                timeSinceSwitch = 0.0;
+            }
+            else
+            {
+                currentColor = 0;
+                currentState = MetalToothState.Running;
+                timeSinceSwitch = 0.0;
+            }
         }
 
         private void Update_Fading()

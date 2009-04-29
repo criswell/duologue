@@ -34,7 +34,7 @@ namespace Duologue.PlayObjects
 
         private const float scale_Blades = 0.75f;
         private const float scale_Gloop = 0.35f;
-        private const double fadeInTime = 0.2f;
+        private const double fadeInTime = 1f;
 
         private const float bladeRotateSpeed = -0.1f;
 
@@ -160,6 +160,7 @@ namespace Duologue.PlayObjects
             timer = 0.0;
             upspin = false;
             myColor = GetMyColor(ColorState.Medium);
+            ClearInnerTriggers();
 
             if(!Initialized)
                 LoadAndInitialize();
