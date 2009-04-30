@@ -134,6 +134,7 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Buzzsaw;
             MajorType = MajorPlayObjectType.Enemy;
+            MyEnemyType = EnemyType.Leader;
             Initialized = false;
             shineOffset = new Vector2(delta_ShineOffsetX, delta_ShineOffsetY);
 
