@@ -49,7 +49,7 @@ namespace Duologue.Waves
     {
         #region Constants
         private const int maxNumberOfMajorWaves = 3;
-        private const int numberOfWaves = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
+        private const int numberOfWavelets = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
         #endregion
 
         #region Fields
@@ -60,9 +60,14 @@ namespace Duologue.Waves
         #endregion
 
         #region Properties
-        public int TotalNumberOfWaves
+        public int TotalNumberOfWavelets
         {
-            get { return numberOfWaves; }
+            get { return numberOfWavelets; }
+        }
+
+        public int TotalNumberOfMajorWaves
+        {
+            get { return maxNumberOfMajorWaves; }
         }
         #endregion
 
@@ -74,7 +79,7 @@ namespace Duologue.Waves
         {
             // For now, this is all in-memory, we may eventually want to dump this crap to a file
             // FIXME
-            Waves = new GameWave[numberOfWaves];
+            Waves = new GameWave[numberOfWavelets];
 
             Wavelet[] Wavelets;
 
@@ -1014,7 +1019,7 @@ namespace Duologue.Waves
             int index = MajorNum * GameWaveManager.MaxMinorNumber -
                 GameWaveManager.MaxMinorNumber + MinorNum - 1;
             //Console.WriteLine("{0}-{1} i={2} out of {3}", MajorNum, MinorNum, index, numberOfWaves);
-            if (index >= numberOfWaves)
+            if (index >= numberOfWavelets)
                 throw new WavesOutOfRangeException();
             return index;
         }
