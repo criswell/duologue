@@ -51,7 +51,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// How far we can go outside the screen before we should stop
         /// </summary>
-        private const float outsideScreenMultiplier = 3.85f;
+        private const float outsideScreenMultiplier = 5f;
 
         #region Force Interactions
         /// <summary>

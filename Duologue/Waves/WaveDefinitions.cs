@@ -48,7 +48,7 @@ namespace Duologue.Waves
     public class WaveDefinitions
     {
         #region Constants
-        private const int maxNumberOfMajorWaves = 2;
+        private const int maxNumberOfMajorWaves = 3;
         private const int numberOfWaves = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
         #endregion
 
@@ -142,13 +142,13 @@ namespace Duologue.Waves
             Waves[GetIndex(1, 2)].MajorWaveNumber = 1;
             Waves[GetIndex(1, 2)].MinorWaveNumber = 2;
             Waves[GetIndex(1, 2)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(1, 2)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(1, 2)].ParallaxElementTop.Intensity = 1;
             Waves[GetIndex(1, 2)].ParallaxElementTop.Tint = new Color(172, 131, 22);
-            Waves[GetIndex(1, 2)].ParallaxElementTop.Speed = 0.6f;
+            Waves[GetIndex(1, 2)].ParallaxElementTop.Speed = 0.5f;
             Waves[GetIndex(1, 2)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(1, 2)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(1, 2)].ParallaxElementBottom.Intensity = 1;
             Waves[GetIndex(1, 2)].ParallaxElementBottom.Tint = new Color(131, 100, 17);
-            Waves[GetIndex(1, 2)].ParallaxElementBottom.Speed = -0.6f;
+            Waves[GetIndex(1, 2)].ParallaxElementBottom.Speed = -0.5f;
             Waves[GetIndex(1, 2)].Name = "Mr. Wiggles was his name...";
             #endregion
 
@@ -207,11 +207,11 @@ namespace Duologue.Waves
             Waves[GetIndex(1, 3)].MajorWaveNumber = 1;
             Waves[GetIndex(1, 3)].MinorWaveNumber = 3;
             Waves[GetIndex(1, 3)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(1, 3)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(1, 3)].ParallaxElementTop.Intensity = 1;
             Waves[GetIndex(1, 3)].ParallaxElementTop.Tint = new Color(172, 131, 22);
-            Waves[GetIndex(1, 3)].ParallaxElementTop.Speed = 0.7f;
+            Waves[GetIndex(1, 3)].ParallaxElementTop.Speed = 0.6f;
             Waves[GetIndex(1, 3)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(1, 3)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(1, 3)].ParallaxElementBottom.Intensity = 1;
             Waves[GetIndex(1, 3)].ParallaxElementBottom.Tint = new Color(131, 100, 17);
             Waves[GetIndex(1, 3)].ParallaxElementBottom.Speed = -0.65f;
             Waves[GetIndex(1, 3)].Name = "...and death was his game";
@@ -503,6 +503,204 @@ namespace Duologue.Waves
             #endregion
 
             Waves[GetIndex(2, 3)].Wavelets = Wavelets;
+            #endregion
+            #endregion
+
+            #region Wave 3
+            #region WaveDef (3-1) "Buzzsaw lead-up"
+            #region Metadata
+            Waves[GetIndex(3, 1)] = new GameWave();
+            Waves[GetIndex(3, 1)].Background = 1;
+            Waves[GetIndex(3, 1)].ThrobColor = new Color(255, 0, 204);
+            Waves[GetIndex(3, 1)].ColorState = 0;
+            Waves[GetIndex(3, 1)].MajorWaveNumber = 3;
+            Waves[GetIndex(3, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(3, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(3, 1)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(3, 1)].ParallaxElementTop.Tint = new Color(5, 205, 255);
+            Waves[GetIndex(3, 1)].ParallaxElementTop.Speed = 0.7f;
+            Waves[GetIndex(3, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(3, 1)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(3, 1)].ParallaxElementBottom.Tint = new Color(255, 199, 5);
+            Waves[GetIndex(3, 1)].ParallaxElementBottom.Speed = -0.75f;
+            Waves[GetIndex(3, 1)].Name = "Buzzsaw lead-up";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Positive);
+            Wavelets[0].SongID = SongID.Ultrafix;
+            Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[0] = MathHelper.PiOver4;
+            Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[1] = MathHelper.Pi;
+            Wavelets[0].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[2] = MathHelper.PiOver2 * 3f;
+            Wavelets[0].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[3] = MathHelper.PiOver4 * 5f;
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Negative);
+            Wavelets[1].SongID = SongID.Ultrafix;
+            Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[0] = MathHelper.PiOver4;
+            Wavelets[1].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[1] = 0f;
+            Wavelets[1].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[2] = MathHelper.PiOver2;
+            Wavelets[1].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[3] = MathHelper.PiOver4 * 5f;
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(10, 0);
+            Wavelets[2].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[2].StartAngle[i] = (float)i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+            }
+            #endregion
+
+            Waves[GetIndex(3, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (3-2) "...something is coming"
+            #region Metadata
+            Waves[GetIndex(3, 2)] = new GameWave();
+            Waves[GetIndex(3, 2)].Background = 1;
+            Waves[GetIndex(3, 2)].ThrobColor = new Color(168, 0, 255);
+            Waves[GetIndex(3, 2)].ColorState = 0;
+            Waves[GetIndex(3, 2)].MajorWaveNumber = 3;
+            Waves[GetIndex(3, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(3, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(3, 2)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(3, 2)].ParallaxElementTop.Tint = new Color(5, 255, 170);
+            Waves[GetIndex(3, 2)].ParallaxElementTop.Speed = 0.7f;
+            Waves[GetIndex(3, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(3, 2)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(3, 2)].ParallaxElementBottom.Tint = new Color(255, 158, 5);
+            Waves[GetIndex(3, 2)].ParallaxElementBottom.Speed = -0.75f;
+            Waves[GetIndex(3, 2)].Name = "...something is coming";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Positive);
+            Wavelets[0].SongID = SongID.Ultrafix;
+            Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[0] = 3f * MathHelper.PiOver4;
+            Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[1] = MathHelper.Pi;
+            Wavelets[0].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[2] = MathHelper.PiOver2 * 3f;
+            Wavelets[0].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[3] = MathHelper.PiOver4 * 7f;
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Negative);
+            Wavelets[1].SongID = SongID.Ultrafix;
+            Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[0] = 3f * MathHelper.PiOver4;
+            Wavelets[1].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[1] = MathHelper.Pi;
+            Wavelets[1].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[2] = MathHelper.PiOver2;
+            Wavelets[1].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[3] = MathHelper.PiOver4 * 7f;
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(10, 0);
+            Wavelets[2].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[2].StartAngle[i] = (float)i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+            }
+            #endregion
+
+            Waves[GetIndex(3, 2)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (3-3) "Metal Tooth attacks!
+            #region Metadata
+            Waves[GetIndex(3, 3)] = new GameWave();
+            Waves[GetIndex(3, 3)].Background = 1;
+            Waves[GetIndex(3, 3)].ThrobColor = new Color(84, 0, 255);
+            Waves[GetIndex(3, 3)].ColorState = 0;
+            Waves[GetIndex(3, 3)].MajorWaveNumber = 3;
+            Waves[GetIndex(3, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(3, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(3, 3)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(3, 3)].ParallaxElementTop.Tint = new Color(5, 255, 170);
+            Waves[GetIndex(3, 3)].ParallaxElementTop.Speed = 0.7f;
+            Waves[GetIndex(3, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(3, 3)].ParallaxElementBottom.Intensity = 4;
+            Waves[GetIndex(3, 3)].ParallaxElementBottom.Tint = new Color(255, 99, 5);
+            Waves[GetIndex(3, 3)].ParallaxElementBottom.Speed = -0.75f;
+            Waves[GetIndex(3, 3)].Name = "Metal Tooth attacks!";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Positive);
+            Wavelets[0].SongID = SongID.Ultrafix;
+            Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[0] = MathHelper.PiOver4;
+            Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[1] = MathHelper.Pi;
+            Wavelets[0].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[2] = MathHelper.PiOver2 * 3f;
+            Wavelets[0].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[0].StartAngle[3] = MathHelper.PiOver4 * 5f;
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Negative);
+            Wavelets[1].SongID = SongID.Ultrafix;
+            Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[0] = MathHelper.PiOver4;
+            Wavelets[1].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[1] = 0f;
+            Wavelets[1].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[2] = MathHelper.PiOver2;
+            Wavelets[1].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
+            Wavelets[1].StartAngle[3] = MathHelper.PiOver4 * 5f;
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(20, 0);
+            Wavelets[2].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[2].Enemies.Length - 1; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
+                Wavelets[2].StartAngle[i] = 3f * MathHelper.PiOver2 + (float)i * (MathHelper.PiOver4 / (float)Wavelets[2].Enemies.Length);
+            }
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Positive;
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 3;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 7f * MathHelper.PiOver4;
+            #endregion
+
+            Waves[GetIndex(3, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
 

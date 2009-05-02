@@ -131,6 +131,8 @@ namespace Mimicware
         /// </summary>
         internal static bool CoinToss()
         {
+            if (rand == null)
+                rand = new Random();
             return rand.Next(0, 2) == 0;
         }
 
