@@ -56,6 +56,14 @@ namespace Duologue.PlayObjects
 
         private const float radiusMultiplier = 0.8f;
         private const float outlineScale = 1.1f;
+
+        #region Force interactions
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        #endregion
         #endregion
 
         #region Properties
@@ -73,7 +81,14 @@ namespace Duologue.PlayObjects
         private Vector2 center_eye;
         private Vector2 offset_eye;
         private Vector2 offset_highlight;
-        private Color color_eye;
+        private Color eyeColor;
+        private Color myColor;
+
+        // Movement stuff
+        private Vector2 offset;
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
+        private bool isFleeing;
         #endregion
 
         #region Constructor / Init
@@ -128,16 +143,18 @@ namespace Duologue.PlayObjects
 
             if (MWMathHelper.CoinToss())
             {
-                color_eye = new Color(85, 145, 36);
+                eyeColor = new Color(85, 145, 36);
             }
             else
             {
-                color_eye = new Color(142, 109, 42);
+                eyeColor = new Color(142, 109, 42);
             }
             offset_eye = Vector2.Zero;
+            myColor = GetMyColor(ColorState.Light);
 
             Radius = RealSize.X / 2f * radiusMultiplier;
             Initialized = true;
+            isFleeing = false;
             Alive = true;
         }
 
@@ -157,12 +174,63 @@ namespace Duologue.PlayObjects
         #region Movement overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestPlayer = Vector2.Zero;
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = len;
+                    nearestPlayer = vToPlayer;
+                }
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
+
+                // Beam handling
+                int temp = ((Player)pobj).IsInBeam(this);
+                isFleeing = false;
+                if (temp != 0)
+                {
+                    if (temp == -1)
+                    {
+                        isFleeing = true;
+                        LocalInstanceManager.Steam.AddParticles(Position, myColor);
+                    }
+                }
+            }
+            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                // Enemy
+                Vector2 vToEnemy = pobj.Position - this.Position;
+                float len = vToEnemy.Length();
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // Too close, BTFO
+                    if (len == 0f)
+                    {
+                        // Well, bah, we're on top of each other!
+                        vToEnemy = new Vector2(
+                            (float)InstanceManager.Random.NextDouble() - 0.5f,
+                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                    }
+                    vToEnemy = Vector2.Negate(vToEnemy);
+                    vToEnemy.Normalize();
+                    offset += standardEnemyRepulse * vToEnemy;
+                }
+            }
+            return true;
         }
 
         public override bool ApplyOffset()
@@ -209,7 +277,7 @@ namespace Duologue.PlayObjects
                 Position + offset_eye,
                 center_eye,
                 null,
-                color_eye,
+                eyeColor,
                 0f,
                 scale_eyePupil,
                 0f,
@@ -221,7 +289,7 @@ namespace Duologue.PlayObjects
                 Position,
                 center_body,
                 null,
-                Color.DarkSlateGray,
+                myColor,
                 0f,
                 1f,
                 0f,
