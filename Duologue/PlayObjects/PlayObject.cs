@@ -53,6 +53,7 @@ namespace Duologue.PlayObjects
         Enemy_Placeholder,
         Enemy_MetalTooth,
         Enemy_MiniSaw,
+        Enemy_GloopPrince,
     }
 
     /// <summary>
