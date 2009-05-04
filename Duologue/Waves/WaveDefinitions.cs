@@ -1148,12 +1148,12 @@ namespace Duologue.Waves
                 if (MWMathHelper.IsEven(i))
                 {
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 }
                 else
                 {
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 }
                 Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)(Wavelets[1].Enemies.Length - 6);
             }
@@ -1180,12 +1180,12 @@ namespace Duologue.Waves
                 if (MWMathHelper.IsEven(i))
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 }
                 else
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 }
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)(Wavelets[2].Enemies.Length - 6);
             }
