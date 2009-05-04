@@ -149,7 +149,7 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const float volume_FaceOn = 0.4f;
         private const float volume_Scream = 0.9f;
-        private const float volume_Explosions = 0.9f;
+        private const float volume_Explosions = 0.97f;
 
         #region Forces/Attractions/Repulsions
         /// <summary>

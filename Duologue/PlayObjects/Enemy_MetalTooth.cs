@@ -40,8 +40,10 @@ namespace Duologue.PlayObjects
         private const string filename_Blades = "Enemies/MetalTooth-blades";
         private const string filename_Shine = "Enemies/MetalTooth-shine";
         private const string filename_Dwoop = "Audio/PlayerEffects/dwoop";
+        private const string filename_Explosion = "Audio/PlayerEffects/multiple-explosions-short";
 
         private const float volume_Dwoop = 0.25f;
+        private const float volume_Explosions = 0.97f;
 
         private const float maxSpeed = 2.4f;
         private const float minSpeed = 1.25f;
@@ -144,6 +146,7 @@ namespace Duologue.PlayObjects
         // Audio stuff
         private AudioManager audio;
         private SoundEffect sfx_Dwoop;
+        private SoundEffect sfx_Explode;
         #endregion
 
         #region Constructor / Init
@@ -193,6 +196,15 @@ namespace Duologue.PlayObjects
             };
         }
 
+        public override String[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_Dwoop,
+                filename_Explosion
+            };
+        }
+
         public void LoadAndInitialize()
         {
             texture_Base = InstanceManager.AssetManager.LoadTexture2D(filename_Base);
@@ -210,6 +222,7 @@ namespace Duologue.PlayObjects
                 texture_BaseLower.Width * 0.5f, texture_BaseLower.Height * 0.5f);
 
             sfx_Dwoop = InstanceManager.AssetManager.LoadSoundEffect(filename_Dwoop);
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_Explosion);
 
             Radius = center_Blades.X * radiusMultiplier;
 
@@ -335,7 +348,8 @@ namespace Duologue.PlayObjects
                 }
                 Alive = false;
                 LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
-                audio.PlayEffect(EffectID.BuzzDeath);
+                //audio.PlayEffect(EffectID.BuzzDeath);
+                sfx_Explode.Play(volume_Explosions);
                 return false;
             }
             else

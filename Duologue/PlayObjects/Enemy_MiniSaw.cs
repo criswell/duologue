@@ -345,20 +345,20 @@ namespace Duologue.PlayObjects
                 nearestLeader.Normalize();
 
                 offset += standardWanderSpeed * nearestLeader;
+
+                // Check boundaries - Once we move off the screen after spawned, we just die
+                if ((this.Position.X < -1 * RealSize.X * outsideScreenMultiplier ||
+                    this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier ||
+                    this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier ||
+                    this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier) &&
+                    !spawning)
+                {
+                    Alive = false;
+                    return false;
+                }
             }
             this.Position += offset;
             Orientation = offset;
-
-            // Check boundaries - Once we move off the screen after spawned, we just die
-            if ((this.Position.X < -1 * RealSize.X * outsideScreenMultiplier ||
-                this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier ||
-                this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier ||
-                this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier) &&
-                !spawning)
-            {
-                Alive = false;
-                return false;
-            }
 
             return true;
         }
