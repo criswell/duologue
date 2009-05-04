@@ -101,6 +101,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_MiniSaw:
                             Init_MiniSaw(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_GloopPrince:
+                            Init_GloopPrince(i, manager);
+                            break;
                         default:
                             // Throw a fit, this silent fail means we get null enemies!
                             throw new Exception("Hey, fool, check your wave defs for null set enemies!");
@@ -118,6 +121,11 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_GloopPrince(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_GloopPrince(manager);
+        }
+
         private static void Init_MiniSaw(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_MiniSaw(manager);

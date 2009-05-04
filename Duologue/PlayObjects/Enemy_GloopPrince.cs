@@ -43,6 +43,11 @@ namespace Duologue.PlayObjects
         private const int realHitPointMultiplier = 2;
 
         /// <summary>
+        /// How far we can go outside the screen before we should stop
+        /// </summary>
+        private const float outsideScreenMultiplier = 2.5f;
+
+        /// <summary>
         /// The scale of the pupil
         /// </summary>
         private const float scale_eyePupil = 0.9f;
@@ -50,7 +55,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The max offset of the pupil
         /// </summary>
-        private const float scale_eyeOffset = 60f;
+        private const float scale_eyeOffset = 20f;
 
         private const float verticalOffsetHighlight = -30f;
 
@@ -63,6 +68,15 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const float standardEnemyRepulse = 5f;
 
+        private const float minComfortDistance = 5.4f;
+        private const float maxComfortDistance = 11.2f;
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float maxPlayerAttract = 2.1f;
+
+        private const float walkingSpeed = 1.3f;
         #endregion
         #endregion
 
@@ -80,7 +94,6 @@ namespace Duologue.PlayObjects
         private Vector2 center_highlight;
         private Vector2 center_eye;
         private Vector2 offset_eye;
-        private Vector2 offset_highlight;
         private Color eyeColor;
         private Color myColor;
 
@@ -88,7 +101,9 @@ namespace Duologue.PlayObjects
         private Vector2 offset;
         private Vector2 nearestPlayer;
         private float nearestPlayerRadius;
-        private bool isFleeing;
+        private float minDistance;
+        private float maxDistance;
+        private bool upSpin;
         #endregion
 
         #region Constructor / Init
@@ -113,7 +128,10 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             Position = startPos;
-            Orientation = startOrientation;
+            if (startOrientation == Vector2.Zero)
+                Orientation = GetStartingVector();
+            else
+                Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             if (hitPoints == null || (int)hitPoints == 0)
@@ -150,11 +168,15 @@ namespace Duologue.PlayObjects
                 eyeColor = new Color(142, 109, 42);
             }
             offset_eye = Vector2.Zero;
-            myColor = GetMyColor(ColorState.Light);
+            myColor = GetMyColor(ColorState.Medium);
 
             Radius = RealSize.X / 2f * radiusMultiplier;
+
+            minDistance = Radius * minComfortDistance;
+            maxDistance = Radius * maxComfortDistance;
+
             Initialized = true;
-            isFleeing = false;
+            upSpin = false;
             Alive = true;
         }
 
@@ -200,12 +222,11 @@ namespace Duologue.PlayObjects
 
                 // Beam handling
                 int temp = ((Player)pobj).IsInBeam(this);
-                isFleeing = false;
                 if (temp != 0)
                 {
                     if (temp == -1)
                     {
-                        isFleeing = true;
+                        upSpin = true;
                         LocalInstanceManager.Steam.AddParticles(Position, myColor);
                     }
                 }
@@ -235,12 +256,77 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            if (nearestPlayer.Length() > 0f)
+            {
+                // Check if we're too far away
+                if (nearestPlayerRadius >= maxDistance)
+                {
+                    // Too far away, let's get closer
+                    upSpin = false;
+                    nearestPlayer.Normalize();
+                    offset += maxPlayerAttract * Vector2.Negate(nearestPlayer);
+                    offset_eye = scale_eyeOffset * Vector2.Negate(nearestPlayer);
+                    //offset += leaderAttractFromDistance * Vector2.Negate(nearestLeader);
+                }
+                else if (nearestPlayerRadius < minDistance)
+                {
+                    // Too close, let's GTFO
+                    upSpin = true;
+                    nearestPlayer.Normalize();
+                    offset += standardEnemyRepulse * nearestPlayer;
+                    offset_eye = scale_eyeOffset * nearestPlayer;
+                }
+                else if (nearestPlayerRadius < maxDistance &&
+                    nearestPlayerRadius >= minDistance)
+                {
+                    // Sweet spot, let's move around here
+                    Vector2 temp = new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                    temp.Normalize();
+
+                    if (!upSpin)
+                        nearestPlayer = Vector2.Negate(nearestPlayer);
+                    nearestPlayer.Normalize();
+                    nearestPlayer += temp;
+
+                    offset += maxPlayerAttract * nearestPlayer;
+                    offset_eye = scale_eyeOffset * nearestPlayer;
+                    //offset += rotateSpeedLeader * nearestLeader;
+                }
+            }
+            else
+            {
+                // If not near leader, move according to orientation
+                nearestPlayer = Orientation;
+
+                nearestPlayer.Normalize();
+
+                offset += walkingSpeed * nearestPlayer;
+            }
+
+            this.Position += offset;
+            Orientation = offset;
+            Orientation.Normalize();
+
+            if (offset_eye.Y < 0)
+                offset_eye.Y = 0;
+
+            // Check boundaries
+            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
+                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
+
+            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
+
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
         }
         #endregion
 
@@ -310,7 +396,33 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // blah
+        }
+        #endregion
+
+        #region Private stuff
+        /// <summary>
+        /// Returns a vector pointing to the origin
+        /// </summary>
+        private Vector2 GetVectorPointingAtOrigin()
+        {
+            Vector2 sc = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            return sc - Position;
+        }
+
+        /// <summary>
+        /// Get a starting vector for this dude
+        /// </summary>
+        private Vector2 GetStartingVector()
+        {
+            // Just aim at the center of screen for now
+            Vector2 temp = GetVectorPointingAtOrigin() + new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-.5, .5),
+                (float)MWMathHelper.GetRandomInRange(-.5, .5));
+            temp.Normalize();
+            return temp;
         }
         #endregion
     }
