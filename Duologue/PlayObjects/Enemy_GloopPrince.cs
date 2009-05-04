@@ -34,6 +34,19 @@ namespace Duologue.PlayObjects
         private const string filename_body = "Enemies/gloop/prince-gloop-body";
         private const string filename_base = "Enemies/gloop/prince-gloop-base";
         private const string filename_eye = "Enemies/gloop/king-gloop-eye";
+        private const string filename_Explosion = "Audio/PlayerEffects/splat-explode-short";
+
+        private const float volume_Explosions = 0.97f;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 5;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 2;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -104,6 +117,10 @@ namespace Duologue.PlayObjects
         private float minDistance;
         private float maxDistance;
         private bool upSpin;
+
+        // Audio stuff
+        private AudioManager audio;
+        private SoundEffect sfx_Explode;
         #endregion
 
         #region Constructor / Init
@@ -140,7 +157,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
-            //audio = ServiceLocator.GetService<AudioManager>();
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
@@ -151,6 +168,7 @@ namespace Duologue.PlayObjects
             texture_death = InstanceManager.AssetManager.LoadTexture2D(filename_gloopletDeath);
             texture_eye = InstanceManager.AssetManager.LoadTexture2D(filename_eye);
             texture_highlight = InstanceManager.AssetManager.LoadTexture2D(filename_gloopletHighlight);
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_Explosion);
 
             center_body = new Vector2(
                 texture_base.Width / 2f, texture_base.Height / 2f);
@@ -326,6 +344,25 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, myColor);
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                    Alive = false;
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
+                    sfx_Explode.Play(volume_Explosions);
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(texture_death, myColor, Position, 0f);
+                    audio.PlayEffect(EffectID.CokeBottle);
+                    return true;
+                }
+            }
             return true;
         }
         #endregion
