@@ -1040,12 +1040,12 @@ namespace Duologue.Waves
                 if (MWMathHelper.IsEven(i))
                 {
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 }
                 else
                 {
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 }
                 Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)(Wavelets[1].Enemies.Length - 4);
             }
@@ -1072,12 +1072,12 @@ namespace Duologue.Waves
                 if (MWMathHelper.IsEven(i))
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 }
                 else
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 }
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)(Wavelets[2].Enemies.Length - 6);
             }
@@ -1179,12 +1179,12 @@ namespace Duologue.Waves
                 if (MWMathHelper.IsEven(i))
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
-                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 }
                 else
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
-                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 }
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)(Wavelets[2].Enemies.Length - 6);
             }
@@ -1298,7 +1298,7 @@ namespace Duologue.Waves
             }
             Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
             Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 1] = MathHelper.Pi;
-            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 2;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 4;
             #endregion
             // Second wavelet
             #region
@@ -1311,7 +1311,7 @@ namespace Duologue.Waves
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
             Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 1] = 0;
-            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 2;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 4;
             #endregion
             // Third wavelet
             #region
@@ -1331,14 +1331,14 @@ namespace Duologue.Waves
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
                 }
             }
-            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
-            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = MathHelper.Pi;
-            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 2;
-            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Positive;
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = MathHelper.Pi;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 2] = 4;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 2] = ColorPolarity.Positive;
 
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 0;
-            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 2;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 4;
             Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Negative;
             #endregion
 
@@ -1432,7 +1432,7 @@ namespace Duologue.Waves
                 Wavelets[2].StartAngle[i] = i * MathHelper.Pi / (float)Wavelets[2].Enemies.Length + 3f * MathHelper.PiOver4;
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_KingGloop;
-            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = MathHelper.Pi;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 5f * MathHelper.PiOver4;
             Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 5;
             #endregion
 
