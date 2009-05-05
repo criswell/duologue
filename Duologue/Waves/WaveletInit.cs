@@ -107,7 +107,6 @@ namespace Duologue.Waves
                         default:
                             // Throw a fit, this silent fail means we get null enemies!
                             throw new Exception("Hey, fool, check your wave defs for null set enemies!");
-                            break;
                     }
                 }
                 

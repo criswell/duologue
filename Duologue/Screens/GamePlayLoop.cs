@@ -280,12 +280,13 @@ namespace Duologue.Screens
             {
                 if (myManager.CurrentState == GamePlayState.Playing)
                     LocalInstanceManager.CurrentGameWave.CurrentWavelet++;
-                // FIXME, uh, we might want some sort of loading bar here....
+
                 if (!WaveletInit.Initialize(myManager))
                 {
                     // No further wavelets, move up to next wave
                     LocalInstanceManager.CurrentGameWave.CurrentWavelet--;
                     myManager.GetNextWave();
+                    myManager.SetNextMusic();
                     WaveletInit.Initialize(myManager);
                 }
                 else
