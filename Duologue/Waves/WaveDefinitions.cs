@@ -48,7 +48,7 @@ namespace Duologue.Waves
     public class WaveDefinitions
     {
         #region Constants
-        private const int maxNumberOfMajorWaves = 5;
+        private const int maxNumberOfMajorWaves = 6;
         private const int numberOfWavelets = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
         #endregion
 
@@ -1100,7 +1100,6 @@ namespace Duologue.Waves
             #endregion
 
             #region WaveDef (5-3) "Oppugn in the peat"
-            #endregion
             #region Metadata
             Waves[GetIndex(5, 3)] = new GameWave();
             Waves[GetIndex(5, 3)].Background = 2;
@@ -1206,6 +1205,178 @@ namespace Duologue.Waves
             #endregion
 
             Waves[GetIndex(5, 3)].Wavelets = Wavelets;
+            #endregion
+            #endregion
+
+            #region Wave 6 (Boss)
+            #region WaveDef (6-1) "Land of the Gloops"
+            #region Metadata
+            Waves[GetIndex(6, 1)] = new GameWave();
+            Waves[GetIndex(6, 1)].Background = 2;
+            Waves[GetIndex(6, 1)].ThrobColor = new Color(121, 255, 9);
+            Waves[GetIndex(6, 1)].ColorState = 2;
+            Waves[GetIndex(6, 1)].MajorWaveNumber = 6;
+            Waves[GetIndex(6, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(6, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(6, 1)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(6, 1)].ParallaxElementTop.Tint = new Color(255, 242, 95);
+            Waves[GetIndex(6, 1)].ParallaxElementTop.Speed = -0.3f;
+            Waves[GetIndex(6, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(6, 1)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(6, 1)].ParallaxElementBottom.Tint = new Color(116, 9, 225); 
+            Waves[GetIndex(6, 1)].ParallaxElementBottom.Speed = 0.2f;
+            Waves[GetIndex(6, 1)].Name = "Land of the Gloops";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Negative);
+            Wavelets[0].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                Wavelets[0].StartAngle[i] = i * MathHelper.PiOver4 / 4f;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Positive);
+            Wavelets[1].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                Wavelets[1].StartAngle[i] = i * MathHelper.PiOver4 / 4f + MathHelper.Pi;
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(4, 0);
+            Wavelets[2].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                Wavelets[2].StartAngle[i] = i * MathHelper.PiOver2;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+            }
+            #endregion
+
+            Waves[GetIndex(6, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (6-2) "Through the Gloop Court"
+            #region Metadata
+            Waves[GetIndex(6, 2)] = new GameWave();
+            Waves[GetIndex(6, 2)].Background = 2;
+            Waves[GetIndex(6, 2)].ThrobColor = new Color(121, 255, 9);
+            Waves[GetIndex(6, 2)].ColorState = 2;
+            Waves[GetIndex(6, 2)].MajorWaveNumber = 6;
+            Waves[GetIndex(6, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(6, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(6, 2)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(6, 2)].ParallaxElementTop.Tint = new Color(116, 9, 225);
+            Waves[GetIndex(6, 2)].ParallaxElementTop.Speed = -0.3f;
+            Waves[GetIndex(6, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(6, 2)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(6, 2)].ParallaxElementBottom.Tint = new Color(255, 242, 95);
+            Waves[GetIndex(6, 2)].ParallaxElementBottom.Speed = 0.2f;
+            Waves[GetIndex(6, 2)].Name = "Through the Gloop Court";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(20, 0, ColorPolarity.Negative);
+            Wavelets[0].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[0].Enemies.Length - 1; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                Wavelets[0].StartAngle[i] = MathHelper.Pi;
+            }
+            Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 1] = MathHelper.Pi;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 2;
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(20, 0, ColorPolarity.Positive);
+            Wavelets[1].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[1].Enemies.Length - 1; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                Wavelets[1].StartAngle[i] = 0;
+            }
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 1] = 0;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 2;
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(40, 0);
+            Wavelets[2].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[2].StartAngle[i] = MathHelper.Pi;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+                else
+                {
+                    Wavelets[2].StartAngle[i] = 0;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+            }
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = MathHelper.Pi;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 2;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Positive;
+
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 0;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 2;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Negative;
+            #endregion
+
+            Waves[GetIndex(6, 2)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (6-3) "King Gloop"
+            #region Metadata
+            Waves[GetIndex(6, 3)] = new GameWave();
+            Waves[GetIndex(6, 3)].Background = 2;
+            Waves[GetIndex(6, 3)].ThrobColor = new Color(121, 255, 9);
+            Waves[GetIndex(6, 3)].ColorState = 2;
+            Waves[GetIndex(6, 3)].MajorWaveNumber = 6;
+            Waves[GetIndex(6, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(6, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(6, 3)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(6, 3)].ParallaxElementTop.Tint = new Color(255, 242, 95);
+            Waves[GetIndex(6, 3)].ParallaxElementTop.Speed = -0.3f;
+            Waves[GetIndex(6, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(6, 3)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(6, 3)].ParallaxElementBottom.Tint = new Color(116, 9, 225); 
+            Waves[GetIndex(6, 3)].ParallaxElementBottom.Speed = 0.2f;
+            Waves[GetIndex(6, 3)].Name = "King Gloop";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(6, 3)].Wavelets = Wavelets;
+            #endregion
             #endregion
 
             #region Commented out wave defs
