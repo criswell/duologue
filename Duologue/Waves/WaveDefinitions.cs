@@ -1595,7 +1595,7 @@ namespace Duologue.Waves
                 {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                     Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / 2f;
-                    Wavelets[0].StartHitPoints[i] = 1;
+                    Wavelets[0].StartHitPoints[i] = 2;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
                     else
@@ -1619,7 +1619,7 @@ namespace Duologue.Waves
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                     Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / 2f;
-                    Wavelets[1].StartHitPoints[i] = 1;
+                    Wavelets[1].StartHitPoints[i] = 2;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
                     else
@@ -1656,7 +1656,7 @@ namespace Duologue.Waves
                 {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                     Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 2f;
-                    Wavelets[2].StartHitPoints[i] = 1;
+                    Wavelets[2].StartHitPoints[i] = 2;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
                     else
@@ -1711,7 +1711,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Positive);
+            Wavelets[0] = new Wavelet(2, 0, ColorPolarity.Positive);
             Wavelets[0].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -1879,7 +1879,7 @@ namespace Duologue.Waves
                     else
                         Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
                 }
-                else if (i > 4 && i < 10)
+                else if (i > 4 && i < 8)
                 {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
                     Wavelets[2].StartAngle[i] = 0;
@@ -1956,7 +1956,7 @@ namespace Duologue.Waves
                     if (MWMathHelper.IsEven(i))
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
                     else
-                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
                     Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / 20f;
                     Wavelets[0].StartHitPoints[i] = 2;
@@ -1976,7 +1976,10 @@ namespace Duologue.Waves
             for (int i = (int)(Wavelets[1].Enemies.Length / 2f) - 1; i < Wavelets[1].Enemies.Length; i++)
             {
                 if (i == Wavelets[1].Enemies.Length - 2)
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+                    Wavelets[1].StartHitPoints[i] = 5;
+                }
                 else if (i == Wavelets[1].Enemies.Length - 1)
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                 else
@@ -1998,7 +2001,10 @@ namespace Duologue.Waves
             for (int i = (int)(Wavelets[2].Enemies.Length / 2f) - 1; i < Wavelets[2].Enemies.Length; i++)
             {
                 if (i == Wavelets[2].Enemies.Length - 2)
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+                    Wavelets[2].StartHitPoints[i] = 5;
+                }
                 else if (i == Wavelets[2].Enemies.Length - 1)
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                 else
