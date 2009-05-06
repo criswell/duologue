@@ -261,6 +261,9 @@
   <data name="PlayerSelect_PressStart" xml:space="preserve">
     <value>Press "Start" when ready</value>
   </data>
+  <data name="ScoreUI_ExtraLife" xml:space="preserve">
+    <value>Extra Life!</value>
+  </data>
   <data name="ScoreUI_GameOver" xml:space="preserve">
     <value>Game Over</value>
   </data>

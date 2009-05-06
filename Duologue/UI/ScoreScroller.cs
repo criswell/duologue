@@ -37,6 +37,10 @@ namespace Duologue.UI
         /// </summary>
         private const string fontFilename = "Fonts/inero-40";
         private const string smallFontFilename = "Fonts/inero-28";
+        private const string filename_LifeUp = "Audio/PlayerEffects/life-up";
+        private const float volume_LifeUp = 1f;
+        private const double timeToDisplayLifeUp = 1.2f;
+        private const double timePerLifeUpBlink = 0.1f;
         //private const string livesDot = "PlayerUI\\live-dot";
         private const int defaultLives = 4;
         private const int maxScore = 9999999;
@@ -45,6 +49,16 @@ namespace Duologue.UI
         private const float timeToMovePointlet = 1f;
         private const int minPointletAlpha = 150;
         private const int maxPointletAlpha = 225;
+
+        /// <summary>
+        /// Extra lifes rewarded at multiples of this
+        /// </summary>
+        private const float extraLifeAt = 5000f;
+
+        /// <summary>
+        /// The maximum number of lives we can have
+        /// </summary>
+        private const int maxLives = 999;
         #endregion
 
         #region Fields
@@ -87,6 +101,11 @@ namespace Duologue.UI
         /// </summary>
         private Player associatedPlayer;
         private int myPlayerNumber;
+        private SoundEffect sfx_LifeUp;
+        private SoundEffectInstance sfxi_LifeUp;
+        private double timeSinceLifeUpColorChange;
+        private double timeSinceLifeUpSpawn;
+        private bool currentLifeUpColorIsDark = true;
         #endregion
 
         #region Properties
@@ -219,6 +238,9 @@ namespace Duologue.UI
             if (Assets == null)
                 Assets = InstanceManager.AssetManager;
 
+            sfx_LifeUp = Assets.LoadSoundEffect(filename_LifeUp);
+            sfxi_LifeUp = null;
+
             scoreFont = Assets.LoadSpriteFont(fontFilename);
             playerFont = Assets.LoadSpriteFont(smallFontFilename);
 
@@ -237,6 +259,9 @@ namespace Duologue.UI
             scoreSize = scoreFont.MeasureString(maxScore.ToString());
 
             scoreSize.Y += playerTextSize.Y;
+
+            timeSinceLifeUpSpawn = timeToDisplayLifeUp + 1.0;
+            timeSinceLifeUpColorChange = 0.0;
 
             //life = Assets.LoadTexture2D(livesDot);
             base.LoadContent();
@@ -303,6 +328,25 @@ namespace Duologue.UI
                 LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.HeavyRoller);
                 score -= maxScore;
                 scrollingScore = 0;
+            }
+
+            if (score % extraLifeAt == 0)
+            {
+                timeSinceLifeUpSpawn = 0.0;
+                timeSinceLifeUpColorChange = 0.0;
+                lives++;
+                if (lives > maxLives)
+                    lives = maxLives;
+                if (sfxi_LifeUp == null)
+                {
+                    sfxi_LifeUp = sfx_LifeUp.Play(volume_LifeUp);
+                }
+                else
+                {
+                    if (sfxi_LifeUp.State == SoundState.Playing)
+                        sfxi_LifeUp.Stop();
+                    sfxi_LifeUp.Play();
+                }
             }
         }
 
@@ -422,6 +466,17 @@ namespace Duologue.UI
                 }
             }
 
+            if (timeSinceLifeUpSpawn < timeToDisplayLifeUp)
+            {
+                timeSinceLifeUpSpawn += gameTime.ElapsedGameTime.TotalSeconds;
+                timeSinceLifeUpColorChange += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timeSinceLifeUpColorChange > timePerLifeUpBlink)
+                {
+                    currentLifeUpColorIsDark = !currentLifeUpColorIsDark;
+                    timeSinceLifeUpColorChange = 0.0;
+                }
+            }
+
             base.Update(gameTime);
         }
 
@@ -472,6 +527,23 @@ namespace Duologue.UI
                     origin + new Vector2(playerTextSize.X, 0f),
                     associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
                     RenderSpriteBlendMode.AbsoluteTop);
+                if (timeSinceLifeUpSpawn < timeToDisplayLifeUp)
+                {
+                    if (currentLifeUpColorIsDark)
+                        Render.DrawString(
+                            playerFont,
+                            Resources.ScoreUI_ExtraLife,
+                            origin + Vector2.UnitX * (playerTextSize.X + 5f * playerFontCharSize.X),
+                            associatedPlayer.PlayerColor.Colors[PlayerColors.Dark],
+                            RenderSpriteBlendMode.AbsoluteTop);
+                    else
+                        Render.DrawString(
+                            playerFont,
+                            Resources.ScoreUI_ExtraLife,
+                            origin + Vector2.UnitX * (playerTextSize.X + 5f * playerFontCharSize.X),
+                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                            RenderSpriteBlendMode.AbsoluteTop);
+                }
             }
             else
             {

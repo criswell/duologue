@@ -493,6 +493,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extra Life!.
+        /// </summary>
+        internal static string ScoreUI_ExtraLife {
+            get {
+                return ResourceManager.GetString("ScoreUI_ExtraLife", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Over.
         /// </summary>
         internal static string ScoreUI_GameOver {
