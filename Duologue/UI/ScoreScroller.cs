@@ -53,7 +53,7 @@ namespace Duologue.UI
         /// <summary>
         /// Extra lifes rewarded at multiples of this
         /// </summary>
-        private const float extraLifeAt = 5000f;
+        private const int extraLifeAt = 5000;
 
         /// <summary>
         /// The maximum number of lives we can have
@@ -106,6 +106,7 @@ namespace Duologue.UI
         private double timeSinceLifeUpColorChange;
         private double timeSinceLifeUpSpawn;
         private bool currentLifeUpColorIsDark = true;
+        private int nextExtraLifeAt;
         #endregion
 
         #region Properties
@@ -330,10 +331,11 @@ namespace Duologue.UI
                 scrollingScore = 0;
             }
 
-            if (score % extraLifeAt == 0)
+            if (score >= nextExtraLifeAt)
             {
                 timeSinceLifeUpSpawn = 0.0;
                 timeSinceLifeUpColorChange = 0.0;
+                nextExtraLifeAt += extraLifeAt;
                 lives++;
                 if (lives > maxLives)
                     lives = maxLives;
@@ -385,6 +387,7 @@ namespace Duologue.UI
         {
             score = p;
             scrollingScore = p;
+            nextExtraLifeAt = p + extraLifeAt;
         }
 
         /// <summary>
