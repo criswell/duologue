@@ -440,5 +440,11 @@ namespace Duologue
             Render.Run();
             base.Draw(gameTime);
         }
+
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            LocalInstanceManager.AchievementManager.SaveStorageData();
+            base.OnExiting(sender, args);
+        }
     }
 }
