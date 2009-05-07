@@ -107,6 +107,8 @@ namespace Duologue.UI
         private double timeSinceLifeUpSpawn;
         private bool currentLifeUpColorIsDark = true;
         private int nextExtraLifeAt;
+        private Vector2 size_ExtraLife;
+        private Vector2 offset_ExtraLife;
         #endregion
 
         #region Properties
@@ -263,6 +265,10 @@ namespace Duologue.UI
 
             timeSinceLifeUpSpawn = timeToDisplayLifeUp + 1.0;
             timeSinceLifeUpColorChange = 0.0;
+
+            size_ExtraLife = playerFont.MeasureString(Resources.ScoreUI_ExtraLife);
+            offset_ExtraLife = Vector2.UnitY * -2f * size_ExtraLife.Y +
+                Vector2.UnitX * size_ExtraLife.X / -2f;
 
             //life = Assets.LoadTexture2D(livesDot);
             base.LoadContent();
@@ -536,14 +542,14 @@ namespace Duologue.UI
                         Render.DrawString(
                             playerFont,
                             Resources.ScoreUI_ExtraLife,
-                            origin + Vector2.UnitX * (playerTextSize.X + 5f * playerFontCharSize.X),
+                            associatedPlayer.Position + offset_ExtraLife,
                             associatedPlayer.PlayerColor.Colors[PlayerColors.Dark],
                             RenderSpriteBlendMode.AbsoluteTop);
                     else
                         Render.DrawString(
                             playerFont,
                             Resources.ScoreUI_ExtraLife,
-                            origin + Vector2.UnitX * (playerTextSize.X + 5f * playerFontCharSize.X),
+                            associatedPlayer.Position + offset_ExtraLife,
                             associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
                             RenderSpriteBlendMode.AbsoluteTop);
                 }
