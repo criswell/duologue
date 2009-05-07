@@ -2275,6 +2275,47 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
+            #region Wave 10
+            #region WaveDef (10-1) "Rampant volcanism"
+            #region Metadata
+            Waves[GetIndex(10, 1)] = new GameWave();
+            Waves[GetIndex(10, 1)].Background = 0;
+            Waves[GetIndex(10, 1)].ThrobColor = new Color(255, 0, 162);
+            Waves[GetIndex(10, 1)].ColorState = 1;
+            Waves[GetIndex(10, 1)].MajorWaveNumber = 10;
+            Waves[GetIndex(10, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(10, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(10, 1)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(10, 1)].ParallaxElementTop.Tint = new Color(255, 240, 0);
+            Waves[GetIndex(10, 1)].ParallaxElementTop.Speed = 0.4f;
+            Waves[GetIndex(10, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(10, 1)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(10, 1)].ParallaxElementBottom.Tint = new Color(255, 240, 0);
+            Waves[GetIndex(10, 1)].ParallaxElementBottom.Speed = 0.3f;
+            Waves[GetIndex(10, 1)].Name = "Rampant volcanism";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(10, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (10-2)
+            #endregion
+
+            #region WaveDef (10-3)
+            #endregion
+            #endregion
+
             #region Commented out wave defs
             /*
             #region WaveDef (3-1) "Wave after wave..."
