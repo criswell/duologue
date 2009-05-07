@@ -2275,6 +2275,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
+            /*
             #region Wave 10
             #region WaveDef (10-1) "Rampant volcanism"
             #region Metadata
@@ -2315,6 +2316,7 @@ namespace Duologue.Waves
             #region WaveDef (10-3)
             #endregion
             #endregion
+            */
 
             #region Commented out wave defs
             /*
