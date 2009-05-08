@@ -45,8 +45,19 @@ namespace Duologue.PlayObjects
 
         private const float radiusMultiplier = 0.9f;
 
+        private const float rotate_Max = MathHelper.PiOver4;
+        private const float rotate_Min = -MathHelper.PiOver4;
+
+        private const float outsideScreenMultiplier = 2.1f;
+
+        private const double timeToStopScreaming = 0.1f;
+
         #region Force interactions
-        private const float 
+        private const float standardSpeed = 3.5f;
+        private const float lightAttractSpeed = 4.5f;
+        private const float lightRepulseSpeed = 2.95f;
+
+        private const float minMovement = 2.5f;
         #endregion
         #endregion
 
@@ -70,6 +81,8 @@ namespace Duologue.PlayObjects
 
         // State related
         private bool hasSpawned;
+        private bool stopThatInfernalScreamingWoman;
+        private double timer_stopScreaming;
 
         // Player tracking & movement related
         private Player trackedPlayerObject;
@@ -94,8 +107,8 @@ namespace Duologue.PlayObjects
             MyEnemyType = EnemyType.Follower;
             Initialized = false;
 
-            // Set the RealSize by hand
-            RealSize = new Vector2(46, 90);
+            // Set the RealSize by hand, set this at max
+            RealSize = new Vector2(90, 90);
         }
 
         public override void Initialize(
@@ -117,6 +130,8 @@ namespace Duologue.PlayObjects
             CurrentHitPoints = (int)hitPoints;
 
             hasSpawned = false;
+            stopThatInfernalScreamingWoman = false;
+            timer_stopScreaming = 0.0;
             Alive = true;
 
             if (!Initialized)
@@ -147,6 +162,8 @@ namespace Duologue.PlayObjects
             Radius = center_Body.X * radiusMultiplier;
 
             sfx_Scream = InstanceManager.AssetManager.LoadSoundEffect(filename_Scream);
+
+            ClearSmokeParticles();
 
             Initialized = true;
         }
@@ -201,7 +218,7 @@ namespace Duologue.PlayObjects
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            if (pobj.MajorType == MajorPlayObjectType.Player)
+            if (pobj.MajorType == MajorPlayObjectType.Player && !stopThatInfernalScreamingWoman)
             {
                 // Player
                 Vector2 vToPlayer = this.Position - pobj.Position;
@@ -210,7 +227,7 @@ namespace Duologue.PlayObjects
                 if (len < this.Radius + pobj.Radius)
                 {
                     // We're on them, kill em and asplode ourselves
-                    Alive = false;
+                    stopThatInfernalScreamingWoman = true;
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, myColor);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, altColor);
                     return pobj.TriggerHit(this);
@@ -255,15 +272,70 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            if (trackedPlayerObject != null)
+            if (!stopThatInfernalScreamingWoman)
             {
-                // We only alter our tragectory when we have a player to go after
+                if (trackedPlayerObject != null)
+                {
+                    // We only alter our tragectory when we have a player to go after
+                    trackedPlayerVector.Normalize();
+                    trackedPlayerVector = Vector2.Negate(trackedPlayerVector);
+                    if (Orientation == Vector2.Zero)
+                    {
+                        Orientation = trackedPlayerVector;
+                    }
+                    // YEEEOUZAH
+                    Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
+                        MathHelper.Lerp(rotate_Min, rotate_Max,
+                            MWMathHelper.LimitToRange(MWMathHelper.ComputeAngleAgainstX(trackedPlayerVector, Orientation),
+                                0, MathHelper.Pi) / MathHelper.Pi));
 
+                    offset += Vector2.Normalize(Orientation) * standardSpeed;
+
+                    if (inBeam && !isFleeing)
+                    {
+                        offset += Vector2.Normalize(Orientation) * lightAttractSpeed;
+                    }
+                    else
+                    {
+                        offset += Vector2.Normalize(Orientation) * standardSpeed;
+                    }
+
+                    if (isFleeing)
+                    {
+                        offset += Vector2.Negate(Vector2.Normalize(Orientation)) * lightRepulseSpeed;
+                    }
+                }
+                else if (hasSpawned)
+                {
+                    // If there's no player, but we've spawned, we keep moving in last tragectory
+                    if (Orientation == Vector2.Zero)
+                    {
+                        // Hmmm, okay, just aim at the center of the screen
+                        Orientation = GetStartingVector();
+                    }
+                    offset += Orientation * standardSpeed;
+                }
+
+                if (offset.Length() >= minMovement)
+                {
+                    Position += offset;
+                    offset.Normalize();
+                    Orientation = offset;
+                }
+
+                // Check boundaries - Once we move off the screen after spawned, we just die
+                if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier ||
+                    this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier ||
+                    this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier ||
+                    this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+                {
+                    if (hasSpawned && !stopThatInfernalScreamingWoman)
+                    {
+                        stopThatInfernalScreamingWoman = true;
+                    }
+                }
             }
-            else if (hasSpawned)
-            {
-                // If there's no player, but we've spawned, we keep moving in last tragectory
-            }
+
             return true;
         }
 
@@ -273,15 +345,93 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
+        #region Private methods
+        /// <summary>
+        /// Returns a vector pointing to the origin
+        /// </summary>
+        private Vector2 GetVectorPointingAtOrigin()
+        {
+            Vector2 sc = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            return sc - Position;
+        }
+
+        /// <summary>
+        /// Get a starting vector for this dude
+        /// </summary>
+        private Vector2 GetStartingVector()
+        {
+            // Just aim at the center of screen for now
+            Vector2 temp = GetVectorPointingAtOrigin() + new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-.5, .5),
+                (float)MWMathHelper.GetRandomInRange(-.5, .5));
+            temp.Normalize();
+            return temp;
+        }
+
+        private void ClearSmokeParticles()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Private Draw / Update
+        private void DrawSmokeParticles(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            if (!stopThatInfernalScreamingWoman)
+            {
+                // Draw code
+            }
+
+            DrawSmokeParticles(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            if (stopThatInfernalScreamingWoman)
+            {
+                // We're dying here, need to shut off the screaming
+                timer_stopScreaming += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer_stopScreaming > timeToStopScreaming)
+                {
+                    Alive = false;
+                    hasSpawned = false;
+                    stopThatInfernalScreamingWoman = false;
+                    timer_stopScreaming = 0.0;
+                    ClearSmokeParticles();
+                    try
+                    {
+                        sfxi_Scream.Stop();
+                    }
+                    catch { }
+                }
+                else
+                {
+                    float vol = MathHelper.Lerp(volume_Min, volume_Max, (float)(timer_stopScreaming / timeToStopScreaming));
+                    if (sfxi_Scream == null)
+                    {
+                        sfxi_Scream = sfx_Scream.Play(vol);
+                    }
+                    else
+                    {
+                        sfxi_Scream.Volume = vol;
+                        if (sfxi_Scream.State != SoundState.Playing)
+                            sfxi_Scream.Play();
+                    }
+                }
+            }
+            else
+            {
+                // Proceed as normal
+            }
         }
         #endregion
     }
