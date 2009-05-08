@@ -37,6 +37,7 @@ namespace Duologue.PlayObjects
         private const string filename_Scream = "Audio/PlayerEffects/flycket-scream";
         private const float volume_Max = 0.65f;
         private const float volume_Min = 0.01f;
+        private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
         private const float alpha_MaxSmokeParticles = 0.75f;
         private const float alpha_MinSmokeParticles = 0.01f;
         private const float scale_MinSmokeParticle = 0.9f;
@@ -44,6 +45,8 @@ namespace Duologue.PlayObjects
         private const float delta_StateSmokeParticles = 0.04f;
         private const float delta_VerticalSmokeParticleOffset = -0.84f;
         private const float delta_Rotation = MathHelper.PiOver4 / 8f;
+
+        private const float scale_LastFire = 1.02f;
 
         private const float radiusMultiplier = 0.9f;
 
@@ -53,6 +56,17 @@ namespace Duologue.PlayObjects
         private const float outsideScreenMultiplier = 2.1f;
 
         private const double timeToStopScreaming = 0.1f;
+        private const double timeToSwitchFire = 0.1f;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 10;
+
+        /// <summary>
+        /// The multiplier for point value tweaks based upon hitpoints
+        /// </summary>
+        private const int hitPointMultiplier = 2;
 
         #region Force interactions
         private const float standardSpeed = 3.5f;
@@ -76,15 +90,21 @@ namespace Duologue.PlayObjects
         private float[] rotation_SmokeParticles;
         private Color myColor;
         private Color altColor;
+        private float rotation;
 
         // Sound related
         private SoundEffect sfx_Scream;
         private SoundEffectInstance sfxi_Scream;
+        private SoundEffect sfx_Explode;
+        private AudioManager audio;
 
         // State related
         private bool hasSpawned;
         private bool stopThatInfernalScreamingWoman;
         private double timer_stopScreaming;
+        private int currentFire;
+        private int lastFire;
+        private double timer_SinceFireSwitch;
 
         // Player tracking & movement related
         private Player trackedPlayerObject;
@@ -136,6 +156,11 @@ namespace Duologue.PlayObjects
             timer_stopScreaming = 0.0;
             Alive = true;
 
+            timer_SinceFireSwitch = 0.0;
+            currentFire = 0;
+            lastFire = 1;
+            rotation = 0f;
+
             if (!Initialized)
                 LoadAndInitialize();
 
@@ -166,6 +191,8 @@ namespace Duologue.PlayObjects
             Radius = center_Body.X * radiusMultiplier;
 
             sfx_Scream = InstanceManager.AssetManager.LoadSoundEffect(filename_Scream);
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_Explode);
+            audio = ServiceLocator.GetService<AudioManager>();
 
             // set up the smoke particles
             position_SmokeParticles = new Vector2[numberOfSmokeParticles];
@@ -328,6 +355,7 @@ namespace Duologue.PlayObjects
                     Position += offset;
                     offset.Normalize();
                     Orientation = offset;
+                    rotation = MWMathHelper.ComputeAngleAgainstX(Orientation) + MathHelper.PiOver2;
                 }
 
                 // Check boundaries - Once we move off the screen after spawned, we just die
@@ -348,7 +376,27 @@ namespace Duologue.PlayObjects
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet)
+            {
+                CurrentHitPoints--;
+                if (CurrentHitPoints <= 0)
+                {
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, myColor);
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, altColor);
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                    stopThatInfernalScreamingWoman = true;
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
+                    sfx_Explode.Play();
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(texture_Body, myColor, Position, 0f);
+                    audio.PlayEffect(EffectID.CokeBottle);
+                    return true;
+                }
+            }
+            return true;
         }
         #endregion
 
@@ -391,12 +439,49 @@ namespace Duologue.PlayObjects
         #region Private Draw / Update
         private void DrawSmokeParticles(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < numberOfFireFrames; i++)
+            {
+                if (state_SmokeParticles[i] > 0)
+                {
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Smoke,
+                        position_SmokeParticles[i],
+                        center_Smoke,
+                        null,
+                        new Color(altColor, MathHelper.Lerp(alpha_MinSmokeParticles, alpha_MaxSmokeParticles, state_SmokeParticles[i])),
+                        rotation_SmokeParticles[i],
+                        MathHelper.Lerp(scale_MinSmokeParticle, scale_MaxSmokeParticle, state_SmokeParticles[i]),
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                }
+            }
         }
 
         private void UpdateSmokeParticles(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < numberOfSmokeParticles; i++)
+            {
+                state_SmokeParticles[i] -= delta_StateSmokeParticles;
+                if (state_SmokeParticles[i] < 0f)
+                {
+                    if (stopThatInfernalScreamingWoman)
+                        state_SmokeParticles[i] = 0f;
+                    else
+                    {
+                        state_SmokeParticles[i] = 1f;
+                        position_SmokeParticles[i] = Position;
+                    }
+                }
+                else
+                {
+                    position_SmokeParticles[i] += Vector2.UnitY * delta_VerticalSmokeParticleOffset;
+                    rotation_SmokeParticles[i] += delta_Rotation;
+                    if (rotation_SmokeParticles[i] < 0)
+                        rotation_SmokeParticles[i] = MathHelper.TwoPi;
+                    else if (rotation_SmokeParticles[i] > MathHelper.TwoPi)
+                        rotation_SmokeParticles[i] = 0;
+                }
+            }
         }
         #endregion
 
@@ -405,7 +490,48 @@ namespace Duologue.PlayObjects
         {
             if (!stopThatInfernalScreamingWoman)
             {
-                // Draw code
+                // Draw the fire first
+                InstanceManager.RenderSprite.Draw(
+                    texture_Fire[currentFire],
+                    Position,
+                    center_Body,
+                    null,
+                    Color.White,
+                    rotation,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+                InstanceManager.RenderSprite.Draw(
+                    texture_Fire[lastFire],
+                    Position,
+                    center_Body,
+                    null,
+                    new Color(Color.White, MathHelper.Lerp(0, 1f, (float)(timer_SinceFireSwitch / timeToSwitchFire))),
+                    rotation,
+                    scale_LastFire,
+                    0f,
+                    RenderSpriteBlendMode.Addititive);
+                // Draw the wings and base
+                InstanceManager.RenderSprite.Draw(
+                    texture_Wings,
+                    Position,
+                    center_Body,
+                    null,
+                    Color.White,
+                    rotation,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+                InstanceManager.RenderSprite.Draw(
+                    texture_Body,
+                    Position,
+                    center_Body,
+                    null,
+                    myColor,
+                    rotation,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
             }
 
             DrawSmokeParticles(gameTime);
@@ -447,6 +573,15 @@ namespace Duologue.PlayObjects
             }
             else
             {
+                timer_SinceFireSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer_SinceFireSwitch > timeToSwitchFire)
+                {
+                    timer_SinceFireSwitch = 0.0;
+                    lastFire = currentFire;
+                    currentFire++;
+                    if (currentFire >= numberOfFireFrames)
+                        currentFire = 0;
+                }
                 // Proceed as normal
                 if (sfxi_Scream == null)
                     sfxi_Scream = sfx_Scream.Play(volume_Max);
