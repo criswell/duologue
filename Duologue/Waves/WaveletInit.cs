@@ -104,6 +104,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_GloopPrince:
                             Init_GloopPrince(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_Flycket:
+                            Init_Flycket(i, manager);
+                            break;
                         default:
                             // Throw a fit, this silent fail means we get null enemies!
                             throw new Exception("Hey, fool, check your wave defs for null set enemies!");
@@ -120,6 +123,11 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_Flycket(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Flycket(manager);
+        }
+
         private static void Init_GloopPrince(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_GloopPrince(manager);

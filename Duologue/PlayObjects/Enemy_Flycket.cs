@@ -28,9 +28,37 @@ namespace Duologue.PlayObjects
     public class Enemy_Flycket : Enemy
     {
         #region Constants
+        private const string filename_Body = "Enemies/flycket-body";
+        private const string filename_Wings = "Enemies/flycket-wings";
+        private const string filename_Fire = "Enemies/flycket-fire{0}";
+        private const int numberOfFireFrames = 3;
+        private const string filename_Smoke = "Enemies/spitter/spit-1"; // We only use one of these
+        private const int numberOfSmokeParticles = 5;
+        private const string filename_Scream = "Audio/PlayerEffects/flycket-scream";
+        private const float volume_Max = 0.65f;
+        private const float volume_Min = 0.01f;
+        private const float alpha_MaxSmokeParticles = 0.75f;
+        private const float alpha_MinSmokeParticles = 0.01f;
+        private const float scale_MinSmokeParticle = 0.9f;
+        private const float scale_MaxSmokeParticle = 2.0f;
+        private const float delta_ScaleSmokeParticles = 0.04f;
         #endregion
 
         #region Fields
+        // Image related items
+        private Texture2D texture_Body;
+        private Texture2D texture_Wings;
+        private Texture2D[] texture_Fire;
+        private Texture2D texture_Smoke;
+        private Vector2 center_Body;
+        private Vector2 center_Smoke;
+        private Vector2[] position_SmokeParticles;
+        private float[] scale_SmokeParticles;
+        private float[] alpha_SmokeParticles;
+
+        // Sound related
+        private SoundEffect sfx_Scream;
+        private SoundEffectInstance sfxi_Scream;
         #endregion
 
         #region Properties
@@ -42,6 +70,13 @@ namespace Duologue.PlayObjects
         public Enemy_Flycket(GamePlayScreenManager manager) :
             base(manager)
         {
+            MyType = TypesOfPlayObjects.Enemy_Flycket;
+            MajorType = MajorPlayObjectType.Enemy;
+            MyEnemyType = EnemyType.Follower;
+            Initialized = false;
+
+            // Set the RealSize by hand
+            RealSize = new Vector2(46, 90);
         }
 
         public override void Initialize(
@@ -54,9 +89,32 @@ namespace Duologue.PlayObjects
             throw new NotImplementedException();
         }
 
-        public override string[] GetTextureFilenames()
+        public override String[] GetTextureFilenames()
         {
-            throw new NotImplementedException();
+            String[] filenames = new String[3 + numberOfFireFrames];
+
+            int i;
+            for (i = 0; i < numberOfFireFrames; i++)
+            {
+                filenames[i] = String.Format(filename_Fire, (i + 1));
+            }
+
+            i++;
+            filenames[i] = filename_Body;
+            i++;
+            filenames[i] = filename_Wings;
+            i++;
+            filenames[i] = filename_Smoke;
+
+            return filenames;
+        }
+
+        public override String[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_Scream,
+            };
         }
         #endregion
 

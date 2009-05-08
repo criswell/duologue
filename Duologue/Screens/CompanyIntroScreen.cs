@@ -145,6 +145,7 @@ namespace Duologue.Screens
                 TypesOfPlayObjects.Enemy_MetalTooth,
                 TypesOfPlayObjects.Enemy_MiniSaw,
                 TypesOfPlayObjects.Enemy_GloopPrince,
+                TypesOfPlayObjects.Enemy_Flycket,
             };
 
             currentPlayObjectIndex = 0;
