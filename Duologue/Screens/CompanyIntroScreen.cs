@@ -364,6 +364,12 @@ namespace Duologue.Screens
                 case TypesOfPlayObjects.Enemy_MiniSaw:
                     currentPlayObject = new Enemy_MiniSaw();
                     break;
+                case TypesOfPlayObjects.Enemy_Flycket:
+                    currentPlayObject = new Enemy_Flycket();
+                    break;
+                case TypesOfPlayObjects.Enemy_GloopPrince:
+                    currentPlayObject = new Enemy_GloopPrince();
+                    break;
                 default:
                     // Player Bullet
                     currentPlayObject = new PlayerBullet();
