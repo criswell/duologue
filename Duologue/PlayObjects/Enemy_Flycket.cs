@@ -41,7 +41,9 @@ namespace Duologue.PlayObjects
         private const float alpha_MinSmokeParticles = 0.01f;
         private const float scale_MinSmokeParticle = 0.9f;
         private const float scale_MaxSmokeParticle = 2.0f;
-        private const float delta_ScaleSmokeParticles = 0.04f;
+        private const float delta_StateSmokeParticles = 0.04f;
+        private const float delta_VerticalSmokeParticleOffset = -0.84f;
+        private const float delta_Rotation = MathHelper.PiOver4 / 8f;
 
         private const float radiusMultiplier = 0.9f;
 
@@ -70,8 +72,8 @@ namespace Duologue.PlayObjects
         private Vector2 center_Body;
         private Vector2 center_Smoke;
         private Vector2[] position_SmokeParticles;
-        private float[] scale_SmokeParticles;
-        private float[] alpha_SmokeParticles;
+        private float[] state_SmokeParticles;
+        private float[] rotation_SmokeParticles;
         private Color myColor;
         private Color altColor;
 
@@ -136,6 +138,8 @@ namespace Duologue.PlayObjects
 
             if (!Initialized)
                 LoadAndInitialize();
+
+            ClearSmokeParticles();
         }
 
         private void LoadAndInitialize()
@@ -163,7 +167,10 @@ namespace Duologue.PlayObjects
 
             sfx_Scream = InstanceManager.AssetManager.LoadSoundEffect(filename_Scream);
 
-            ClearSmokeParticles();
+            // set up the smoke particles
+            position_SmokeParticles = new Vector2[numberOfSmokeParticles];
+            state_SmokeParticles = new float[numberOfSmokeParticles];
+            rotation_SmokeParticles = new float[numberOfSmokeParticles];
 
             Initialized = true;
         }
@@ -372,12 +379,22 @@ namespace Duologue.PlayObjects
 
         private void ClearSmokeParticles()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < numberOfSmokeParticles; i++)
+            {
+                position_SmokeParticles[i] = Vector2.Zero;
+                state_SmokeParticles[i] = 0f;
+                rotation_SmokeParticles[i] = 0f;
+            }
         }
         #endregion
 
         #region Private Draw / Update
         private void DrawSmokeParticles(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UpdateSmokeParticles(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
@@ -431,6 +448,17 @@ namespace Duologue.PlayObjects
             else
             {
                 // Proceed as normal
+                if (sfxi_Scream == null)
+                    sfxi_Scream = sfx_Scream.Play(volume_Max);
+                
+                if (sfxi_Scream.State != SoundState.Playing)
+                    sfxi_Scream.Play();
+
+                // Adjust the scream according to where we are on the screen
+                sfxi_Scream.Pan = MathHelper.Lerp(1f, -1f,
+                    ((float)InstanceManager.DefaultViewport.Width - Position.X) / (float)InstanceManager.DefaultViewport.Width);
+
+                UpdateSmokeParticles(gameTime);
             }
         }
         #endregion
