@@ -212,7 +212,6 @@ namespace Duologue.PlayObjects
                 filenames[i] = String.Format(filename_Fire, (i + 1));
             }
 
-            i++;
             filenames[i] = filename_Body;
             i++;
             filenames[i] = filename_Wings;
