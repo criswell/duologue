@@ -86,6 +86,28 @@ namespace Duologue.PlayObjects
             ColorPolarity startColorPolarity,
             int? hitPoints)
         {
+            Position = startPos;
+            Orientation = GetStartingVector();
+            ColorState = currentColorState;
+            ColorPolarity = startColorPolarity;
+            if (hitPoints == null)
+            {
+                hitPoints = 0;
+            }
+            StartHitPoints = (int)hitPoints;
+            CurrentHitPoints = (int)hitPoints;
+
+            if (!Initialized)
+                LoadAndInitialize();
+        }
+
+        private Vector2 GetStartingVector()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void LoadAndInitialize()
+        {
             throw new NotImplementedException();
         }
 
