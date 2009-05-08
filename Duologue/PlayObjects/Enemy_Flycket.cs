@@ -227,6 +227,7 @@ namespace Duologue.PlayObjects
             return new String[]
             {
                 filename_Scream,
+                filename_Explode,
             };
         }
         #endregion
