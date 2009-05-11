@@ -33,8 +33,8 @@ namespace Duologue.PlayObjects
         private const string filename_Flame = "Enemies/static-king-{0}";
         private const int frames_Flame = 4;
         private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
-        private const float scale_MaxFlame = 0.48f;
-        private const float scale_MinFlame = 0.29f;
+        private const float scale_MaxFlame = 0.68f;
+        private const float scale_MinFlame = 0.39f;
         private const float alpha_MaxFlame = 0.8f;
         private const float alpha_MinFlame = 0.05f;
         private const float scale_MaxBody = 1.1f;
@@ -62,8 +62,8 @@ namespace Duologue.PlayObjects
         private const double timePerColor = 0.1;
 
         #region Force interactions
-        private const float standardSpeed = 1.4f;
-        private const float lightAttractSpeed = 2.5f;
+        private const float standardSpeed = 2.1f;
+        private const float lightAttractSpeed = 3.5f;
         private const float lightRepulseSpeed = 1.1f;
 
         private const float minMovement = 1.39f;
