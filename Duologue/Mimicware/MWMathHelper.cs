@@ -48,8 +48,11 @@ namespace Mimicware
         {
             float dotVector = Vector2.Dot(vector, Vector2.UnitX);
             float rotation = (float)Math.Acos((double)(dotVector / vector.Length()));
+            if (float.IsNaN(rotation))
+                rotation = 0;
             if (vector.Y < 0)
                 rotation *= -1;
+
             return rotation;
         }
 
@@ -63,6 +66,35 @@ namespace Mimicware
         {
             return ComputeAngleAgainstX(vector - origin);
         }
+
+        /*
+        /// <summary>
+        /// Given a vector and an origin, computes the angle between them
+        /// </summary>
+        /// <param name="vector">The vector</param>
+        /// <param name="origin">The origin</param>
+        /// <returns>Float, angle in radians</returns>
+        public static float ComputeAngleAgainstX(Vector2 v1, Vector2 v2)
+        {
+            float angle;
+            // turn vectors into unit vectors   
+            v1.Normalize();
+            v2.Normalize();
+
+            angle = (float)Math.Acos(Vector2.Dot(v1, v2));
+            // if no noticable rotation is available return zero rotation  
+            // this way we avoid Cross product artifacts   
+            if (Math.Abs(angle) < 0.0001)
+                return 0;
+            angle *= Signal(v1, v2);
+
+            return angle;
+        }
+
+        public static int Signal(Vector2 v1, Vector2 v2)
+        {
+            return (v1.Y * v2.X - v2.Y * v1.X) > 0 ? 1 : -1;
+        }*/
 
         /// <summary>
         /// Given a range, return a random double in that range

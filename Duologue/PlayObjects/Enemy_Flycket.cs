@@ -35,23 +35,24 @@ namespace Duologue.PlayObjects
         private const string filename_Smoke = "Enemies/spitter/spit-1"; // We only use one of these
         private const int numberOfSmokeParticles = 5;
         private const string filename_Scream = "Audio/PlayerEffects/flycket-scream";
-        private const float volume_Max = 0.65f;
+        private const float volume_Max = 0.15f;
         private const float volume_Min = 0.01f;
         private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
-        private const float alpha_MaxSmokeParticles = 0.75f;
+        private const float alpha_MaxSmokeParticles = 0.55f;
         private const float alpha_MinSmokeParticles = 0.01f;
         private const float scale_MinSmokeParticle = 0.9f;
         private const float scale_MaxSmokeParticle = 2.0f;
-        private const float delta_StateSmokeParticles = 0.04f;
+        private const float delta_StateSmokeParticles = 0.02f;
         private const float delta_VerticalSmokeParticleOffset = -0.84f;
+        private const float distance_SmokeSpawn = 8f;
         private const float delta_Rotation = MathHelper.PiOver4 / 8f;
 
         private const float scale_LastFire = 1.02f;
 
         private const float radiusMultiplier = 0.9f;
 
-        private const float rotate_Max = MathHelper.PiOver4;
-        private const float rotate_Min = -MathHelper.PiOver4;
+        private const float rotate_Max = MathHelper.PiOver4 * 0.0099f;
+        //private const float rotate_Min = -MathHelper.PiOver4;
 
         private const float outsideScreenMultiplier = 2.1f;
 
@@ -69,11 +70,11 @@ namespace Duologue.PlayObjects
         private const int hitPointMultiplier = 2;
 
         #region Force interactions
-        private const float standardSpeed = 3.5f;
-        private const float lightAttractSpeed = 4.5f;
-        private const float lightRepulseSpeed = 2.95f;
+        private const float standardSpeed = 2.5f;
+        private const float lightAttractSpeed = 3.5f;
+        private const float lightRepulseSpeed = 1.75f;
 
-        private const float minMovement = 2.5f;
+        private const float minMovement = 1.5f;
         #endregion
         #endregion
 
@@ -88,6 +89,7 @@ namespace Duologue.PlayObjects
         private Vector2[] position_SmokeParticles;
         private float[] state_SmokeParticles;
         private float[] rotation_SmokeParticles;
+        private bool[] deltaSign_SmokeParticles;
         private Color myColor;
         private Color altColor;
         private float rotation;
@@ -198,6 +200,7 @@ namespace Duologue.PlayObjects
             position_SmokeParticles = new Vector2[numberOfSmokeParticles];
             state_SmokeParticles = new float[numberOfSmokeParticles];
             rotation_SmokeParticles = new float[numberOfSmokeParticles];
+            deltaSign_SmokeParticles = new bool[numberOfSmokeParticles];
 
             Initialized = true;
         }
@@ -310,6 +313,7 @@ namespace Duologue.PlayObjects
             {
                 if (trackedPlayerObject != null)
                 {
+                    hasSpawned = true;
                     // We only alter our tragectory when we have a player to go after
                     trackedPlayerVector.Normalize();
                     trackedPlayerVector = Vector2.Negate(trackedPlayerVector);
@@ -317,11 +321,16 @@ namespace Duologue.PlayObjects
                     {
                         Orientation = trackedPlayerVector;
                     }
-                    // YEEEOUZAH
-                    Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
-                        MathHelper.Lerp(rotate_Min, rotate_Max,
-                            MWMathHelper.LimitToRange(MWMathHelper.ComputeAngleAgainstX(trackedPlayerVector, Orientation),
-                                0, MathHelper.Pi) / MathHelper.Pi));
+                    
+                    float angle = MWMathHelper.ComputeAngleAgainstX(trackedPlayerVector, Orientation);
+                    if (angle > rotate_Max)
+                        angle = rotate_Max;
+                    else if (angle < -rotate_Max)
+                        angle = -rotate_Max;
+
+                    if(angle != 0)
+                        Orientation = Vector2.Transform(Orientation, 
+                            Matrix.CreateRotationZ(angle));
 
                     offset += Vector2.Normalize(Orientation) * standardSpeed;
 
@@ -368,7 +377,12 @@ namespace Duologue.PlayObjects
                     {
                         stopThatInfernalScreamingWoman = true;
                     }
-                }
+                } /*else if (!hasSpawned &&
+                    ((this.Position.X > 0 && this.Position.X < InstanceManager.DefaultViewport.Width) ||
+                    (this.Position.Y > 0 && this.Position.Y < InstanceManager.DefaultViewport.Height)))
+                {
+                    hasSpawned = true;
+                }*/
             }
 
             return true;
@@ -430,8 +444,9 @@ namespace Duologue.PlayObjects
             for (int i = 0; i < numberOfSmokeParticles; i++)
             {
                 position_SmokeParticles[i] = Vector2.Zero;
-                state_SmokeParticles[i] = 0f;
+                state_SmokeParticles[i] = MathHelper.Lerp(0f, 1f, i / (float)numberOfSmokeParticles);
                 rotation_SmokeParticles[i] = 0f;
+                deltaSign_SmokeParticles[i] = MWMathHelper.CoinToss();
             }
         }
         #endregion
@@ -469,13 +484,18 @@ namespace Duologue.PlayObjects
                     else
                     {
                         state_SmokeParticles[i] = 1f;
-                        position_SmokeParticles[i] = Position;
+                        deltaSign_SmokeParticles[i] = MWMathHelper.CoinToss();
+                        position_SmokeParticles[i] = Position + Vector2.Normalize(Vector2.Negate(Orientation)) * distance_SmokeSpawn;
                     }
                 }
                 else
                 {
                     position_SmokeParticles[i] += Vector2.UnitY * delta_VerticalSmokeParticleOffset;
-                    rotation_SmokeParticles[i] += delta_Rotation;
+                    if(deltaSign_SmokeParticles[i])
+                        rotation_SmokeParticles[i] += delta_Rotation;
+                    else
+                        rotation_SmokeParticles[i] -= delta_Rotation;
+
                     if (rotation_SmokeParticles[i] < 0)
                         rotation_SmokeParticles[i] = MathHelper.TwoPi;
                     else if (rotation_SmokeParticles[i] > MathHelper.TwoPi)
@@ -583,15 +603,18 @@ namespace Duologue.PlayObjects
                         currentFire = 0;
                 }
                 // Proceed as normal
-                if (sfxi_Scream == null)
-                    sfxi_Scream = sfx_Scream.Play(volume_Max);
-                
-                if (sfxi_Scream.State != SoundState.Playing)
-                    sfxi_Scream.Play();
+                if (hasSpawned)
+                {
+                    if (sfxi_Scream == null)
+                        sfxi_Scream = sfx_Scream.Play(volume_Max);
 
-                // Adjust the scream according to where we are on the screen
-                sfxi_Scream.Pan = MathHelper.Lerp(1f, -1f,
-                    ((float)InstanceManager.DefaultViewport.Width - Position.X) / (float)InstanceManager.DefaultViewport.Width);
+                    if (sfxi_Scream.State != SoundState.Playing)
+                        sfxi_Scream.Play();
+
+                    // Adjust the scream according to where we are on the screen
+                    sfxi_Scream.Pan = MathHelper.Lerp(1f, -1f,
+                        ((float)InstanceManager.DefaultViewport.Width - Position.X) / (float)InstanceManager.DefaultViewport.Width);
+                }
 
                 UpdateSmokeParticles(gameTime);
             }
