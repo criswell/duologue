@@ -34,6 +34,19 @@ namespace Duologue.UI
     /// </summary>
     public class Tutorial : Microsoft.Xna.Framework.DrawableGameComponent
     {
+        #region Constants
+        private const string filename_PopUpWindow = "PlayerUI/pop-up-window";
+        private const string filename_Font = "Fonts\\inero-28";
+        #endregion
+
+        #region Fields
+        private Texture2D texture_PopUpWindow;
+        private Vector2 center_PopUpWindow;
+        private SpriteFont font;
+        private Vector2 fontSize;
+        #endregion
+
+        #region Constructor / Init
         public Tutorial(Game game)
             : base(game)
         {
@@ -51,6 +64,22 @@ namespace Duologue.UI
             base.Initialize();
         }
 
+        protected override void LoadContent()
+        {
+            texture_PopUpWindow = InstanceManager.AssetManager.LoadTexture2D(filename_PopUpWindow);
+            center_PopUpWindow = new Vector2(
+                texture_PopUpWindow.Width / 2f, texture_PopUpWindow.Height / 2f);
+
+            font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
+            fontSize = font.MeasureString("0");
+            base.LoadContent();
+        }
+        #endregion
+
+        #region Public Methods
+        #endregion
+
+        #region Update / Draw
         /// <summary>
         /// Allows the game component to update itself.
         /// </summary>
@@ -66,5 +95,6 @@ namespace Duologue.UI
         {
             base.Draw(gameTime);
         }
+        #endregion
     }
 }

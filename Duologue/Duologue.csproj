@@ -190,6 +190,7 @@
     <Compile Include="UI\Pointlet.cs" />
     <Compile Include="UI\ScoreScroller.cs" />
     <Compile Include="UI\Spinner.cs" />
+    <Compile Include="UI\Tutorial.cs" />
     <Compile Include="UI\WaveDisplay.cs" />
     <Compile Include="UI\WindowManager.cs" />
     <Compile Include="Waves\GameWave.cs" />
