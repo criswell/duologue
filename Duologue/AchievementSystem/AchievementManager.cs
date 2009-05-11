@@ -229,7 +229,7 @@ namespace Duologue.AchievementSystem
             orderedAchievementList = new List<int>(possibleAchievements);
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             storageDeviceIsSet = false;
-            dataVersion = 6;
+            dataVersion = 7;
             alpha_Achievement = 1f;
             size_Achievement = 1f;
             color_Text = Color.Bisque;
@@ -617,8 +617,9 @@ namespace Duologue.AchievementSystem
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_MiniSaw] = 16;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_GloopPrince] = 17;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Flycket] = 18;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Flambi] = 19;
 
-            maxNumEnemies = 19;
+            maxNumEnemies = 20;
         }
 
         private void GenerateAchievements()
