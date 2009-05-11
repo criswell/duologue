@@ -35,7 +35,7 @@ namespace Duologue.PlayObjects
         private const string filename_Smoke = "Enemies/spitter/spit-1"; // We only use one of these
         private const int numberOfSmokeParticles = 5;
         private const string filename_Scream = "Audio/PlayerEffects/flycket-scream";
-        private const float volume_Max = 0.15f;
+        private const float volume_Max = 0.55f;
         private const float volume_Min = 0.01f;
         private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
         private const float alpha_MaxSmokeParticles = 0.55f;
