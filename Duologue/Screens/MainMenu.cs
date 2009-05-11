@@ -318,6 +318,12 @@ namespace Duologue.Screens
                     pressed = true;
                     break;
                 }
+                if (InstanceManager.InputManager.CurrentGamePadStates[i].Buttons.Start == ButtonState.Pressed &&
+                   InstanceManager.InputManager.LastGamePadStates[i].Buttons.Start == ButtonState.Released)
+                {
+                    pressed = true;
+                    break;
+                }
             }
             return pressed;
         }
