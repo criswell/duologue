@@ -28,26 +28,6 @@ namespace Duologue.PlayObjects
     public class Enemy_Flambi : Enemy
     {
         #region Constants
-        /*private const string filename_Body = "Enemies/flycket-body";
-        private const string filename_Wings = "Enemies/flycket-wings";
-        private const string filename_Fire = "Enemies/flycket-fire{0}";
-        private const int numberOfFireFrames = 3;
-        private const string filename_Smoke = "Enemies/spitter/spit-1"; // We only use one of these
-        private const int numberOfSmokeParticles = 5;
-        private const string filename_Scream = "Audio/PlayerEffects/flycket-scream";
-        private const float volume_Max = 0.55f;
-        private const float volume_Min = 0.01f;
-        private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
-        private const float alpha_MaxSmokeParticles = 0.55f;
-        private const float alpha_MinSmokeParticles = 0.01f;
-        private const float scale_MinSmokeParticle = 0.9f;
-        private const float scale_MaxSmokeParticle = 2.0f;
-        private const float delta_StateSmokeParticles = 0.02f;
-        private const float delta_VerticalSmokeParticleOffset = -0.84f;
-        private const float distance_SmokeSpawn = 8f;
-        private const float delta_Rotation = MathHelper.PiOver4 / 8f;
-
-        private const float scale_LastFire = 1.02f;*/
         private const string filename_Body = "Enemies/spitter/spit-{0}";
         private const int frames_Body = 3;
         private const string filename_Flame = "Enemies/static-king-{0}";
@@ -66,12 +46,8 @@ namespace Duologue.PlayObjects
         private const float radiusMultiplier = 1.01f;
 
         private const float rotate_Max = MathHelper.PiOver4 * 0.01f;
-        //private const float rotate_Min = -MathHelper.PiOver4;
 
         private const float outsideScreenMultiplier = 2.1f;
-
-        //private const double timeToStopScreaming = 0.1f;
-        //private const double timeToSwitchFire = 0.1f;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -94,16 +70,6 @@ namespace Duologue.PlayObjects
 
         #region Fields
         // Image related items
-        /*private Texture2D texture_Body;
-        private Texture2D texture_Wings;
-        private Texture2D[] texture_Fire;
-        private Texture2D texture_Smoke;
-        private Vector2 center_Body;
-        private Vector2 center_Smoke;
-        private Vector2[] position_SmokeParticles;
-        private float[] state_SmokeParticles;
-        private float[] rotation_SmokeParticles;
-        private bool[] deltaSign_SmokeParticles;*/
         private Texture2D[] texture_Body;
         private Vector2[] center_Body;
         private Texture2D[] texture_Flame;
@@ -114,21 +80,13 @@ namespace Duologue.PlayObjects
         private Color bodyColor;
         private Color flameColor;
         private Color altColor;
-        /*private float rotation;*/
 
         // Sound related
-        //private SoundEffect sfx_Scream;
-        //private SoundEffectInstance sfxi_Scream;
         private SoundEffect sfx_Explode;
         private AudioManager audio;
 
         // State related
         private bool hasSpawned;
-        //private bool stopThatInfernalScreamingWoman;
-        //private double timer_stopScreaming;
-        //private int currentFire;
-        //private int lastFire;
-        //private double timer_SinceFireSwitch;
 
         // Player tracking & movement related
         private Player trackedPlayerObject;
