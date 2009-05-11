@@ -65,7 +65,7 @@ namespace Duologue.PlayObjects
 
         private const float radiusMultiplier = 1.01f;
 
-        private const float rotate_Max = MathHelper.PiOver4 * 0.0099f;
+        private const float rotate_Max = MathHelper.PiOver4 * 0.01f;
         //private const float rotate_Min = -MathHelper.PiOver4;
 
         private const float outsideScreenMultiplier = 2.1f;
@@ -84,11 +84,11 @@ namespace Duologue.PlayObjects
         private const int hitPointMultiplier = 2;
 
         #region Force interactions
-        private const float standardSpeed = 1.1f;
+        private const float standardSpeed = 1.4f;
         private const float lightAttractSpeed = 2.5f;
         private const float lightRepulseSpeed = 1.1f;
 
-        private const float minMovement = 1.1f;
+        private const float minMovement = 1.39f;
         #endregion
         #endregion
 
