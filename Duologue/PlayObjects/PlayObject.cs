@@ -56,6 +56,7 @@ namespace Duologue.PlayObjects
         Enemy_GloopPrince,
         Enemy_Flycket,
         Enemy_Flambi,
+        Enemy_Firefly,
     }
 
     /// <summary>

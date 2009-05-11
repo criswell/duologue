@@ -618,8 +618,9 @@ namespace Duologue.AchievementSystem
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_GloopPrince] = 17;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Flycket] = 18;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Flambi] = 19;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Firefly] = 20;
 
-            maxNumEnemies = 20;
+            maxNumEnemies = 21;
         }
 
         private void GenerateAchievements()

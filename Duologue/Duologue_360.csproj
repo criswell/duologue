@@ -102,6 +102,7 @@
     <Compile Include="PlayObjects\Enemy_AnnMoeba.cs" />
     <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />
     <Compile Include="PlayObjects\Enemy_Ember.cs" />
+    <Compile Include="PlayObjects\Enemy_Firefly.cs" />
     <Compile Include="PlayObjects\Enemy_Flambi.cs" />
     <Compile Include="PlayObjects\Enemy_Flycket.cs" />
     <Compile Include="PlayObjects\Enemy_Gloop.cs" />
