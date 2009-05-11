@@ -157,8 +157,10 @@ namespace Duologue.Screens
                         }
 
                         // Button handling
-                        if (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].Triggers.Left > 0 &&
-                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].Triggers.Left == 0)
+                        if ((InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].Triggers.Left > 0 &&
+                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].Triggers.Left == 0) ||
+                           (InstanceManager.InputManager.CurrentGamePadStates[(int)p.MyPlayerIndex].Triggers.Right > 0 &&
+                            InstanceManager.InputManager.LastGamePadStates[(int)p.MyPlayerIndex].Triggers.Right == 0))
                         {
                             // Swap color
                             p.SwapColors();
