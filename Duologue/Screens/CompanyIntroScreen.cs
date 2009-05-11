@@ -377,6 +377,7 @@ namespace Duologue.Screens
                     break;
                 case TypesOfPlayObjects.Enemy_Firefly:
                     currentPlayObject = new Enemy_Firefly();
+                    break;
                 default:
                     // Player Bullet
                     currentPlayObject = new PlayerBullet();

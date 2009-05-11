@@ -229,7 +229,7 @@ namespace Duologue.AchievementSystem
             orderedAchievementList = new List<int>(possibleAchievements);
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             storageDeviceIsSet = false;
-            dataVersion = 7;
+            dataVersion = 8;
             alpha_Achievement = 1f;
             size_Achievement = 1f;
             color_Text = Color.Bisque;
