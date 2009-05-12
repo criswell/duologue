@@ -130,8 +130,10 @@ namespace Duologue.Screens
             gameOver.DrawOrder = 200;
 
             tutorialManager = new Tutorial(game);
-            tutorialManager.DrawOrder = 201;
+            tutorialManager.Enabled = false;
+            tutorialManager.Visible = false;
             localGame.Components.Add(tutorialManager);
+            tutorialManager.DrawOrder = 201;
 
             initialized = false;
         }
