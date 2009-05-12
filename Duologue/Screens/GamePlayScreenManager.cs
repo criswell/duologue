@@ -89,6 +89,8 @@ namespace Duologue.Screens
         private SongID lastSongID;
 
         private bool launchedFirstWave;
+
+        private Tutorial tutorialManager;
         #endregion
 
         #region Properties
@@ -126,6 +128,10 @@ namespace Duologue.Screens
             gameOver.Visible = false;
             localGame.Components.Add(gameOver);
             gameOver.DrawOrder = 200;
+
+            tutorialManager = new Tutorial(game);
+            tutorialManager.DrawOrder = 201;
+            localGame.Components.Add(tutorialManager);
 
             initialized = false;
         }
@@ -326,6 +332,9 @@ namespace Duologue.Screens
                         LocalInstanceManager.CurrentGameWave.ParallaxElementTop, true);
                     LocalInstanceManager.Background.SetParallaxElement(
                         LocalInstanceManager.CurrentGameWave.ParallaxElementBottom, false);
+
+                    // Call the tutorial if needed
+                    tutorialManager.NewLevel();
 
                     // Set up the exit stuff
                     currentState = GamePlayState.Delay;
