@@ -29,6 +29,12 @@ using Duologue.State;
 
 namespace Duologue.UI
 {
+    public struct TutorialEntry
+    {
+        public string Text;
+        public Vector2 TextSize;
+    }
+
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -43,7 +49,7 @@ namespace Duologue.UI
         private Texture2D texture_PopUpWindow;
         private Vector2 center_PopUpWindow;
         private SpriteFont font;
-        private Vector2 fontSize;
+        private TutorialEntry[] theEntries;
         #endregion
 
         #region Constructor / Init
@@ -71,12 +77,24 @@ namespace Duologue.UI
                 texture_PopUpWindow.Width / 2f, texture_PopUpWindow.Height / 2f);
 
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
-            fontSize = font.MeasureString("0");
+
+            theEntries = new TutorialEntry[3];
+            theEntries[0].Text = Resources.Tutorial_1;
+            theEntries[1].Text = Resources.Tutorial_2;
+            theEntries[2].Text = Resources.Tutorial_3;
+            for (int i = 0; i < theEntries.Length; i++)
+            {
+                theEntries[i].TextSize = font.MeasureString(theEntries[i].Text);
+            }
+
             base.LoadContent();
         }
         #endregion
 
         #region Public Methods
+        #endregion
+
+        #region Private Methods
         #endregion
 
         #region Update / Draw
