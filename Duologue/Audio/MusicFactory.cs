@@ -224,12 +224,21 @@ namespace Duologue.Audio
         protected const string UFS7 = "synth-7";
         protected const string UFS8 = "synth-8";
 
+        //WinOne Song constants
+        protected const string WinOneWaves = "Content\\Audio\\WinOne.xwb";
+        protected const string WinOneSounds = "Content\\Audio\\WinOne.xsb";
+        protected const string W1B1 = "beat-1";
+        protected const string W1B2 = "beat-2";
+        protected const string W1B3 = "beat-3";
+        protected const string W1B4 = "beat-4";
+
         protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
         public Song Dance8ths;
         public Song LandOfSand16ths;
         public Song Credits;
         public Song Ultrafix;
+        public Song WinOne;
 
         public MusicFactory(AudioManager manager)
         {
@@ -309,12 +318,25 @@ namespace Duologue.Audio
             Ultrafix = new Song(manager.Game, UFSounds, UFWaves, UFarr, UFvolumes);
             Ultrafix.beater.lengthOfBeat = 500f;
 
+            //WinOne
+            string[,] W1arr = {
+                                  {W1B1, W1B2, W1B3, W1B4},
+                              };
+
+            bool[,] W1volumes = {
+                                    {on},
+                                };
+
+            WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves, W1arr, W1volumes);
+            WinOne.beater.lengthOfBeat = 500f;
+
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);
             manager.Game.Components.Add(Dance8ths);
             manager.Game.Components.Add(LandOfSand16ths);
             manager.Game.Components.Add(Credits);
             manager.Game.Components.Add(Ultrafix);
+            manager.Game.Components.Add(WinOne);
         }
 
     }
