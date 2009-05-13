@@ -816,13 +816,20 @@ namespace Duologue.AchievementSystem
         /// </remarks>
         public bool DisplayTutorial(int timesPlayedBeforeTutorialStops)
         {
-            achievementData.NumberOfGamesPlayed++;
-            if (achievementData.NumberOfGamesPlayed >= int.MaxValue - 100)
+            if (!Guide.IsTrialMode)
             {
-                // OMG WALLHAX
-                achievementData.NumberOfGamesPlayed = int.MaxValue - 100;
+                achievementData.NumberOfGamesPlayed++;
+                if (achievementData.NumberOfGamesPlayed >= int.MaxValue - 100)
+                {
+                    // OMG WALLHAX
+                    achievementData.NumberOfGamesPlayed = int.MaxValue - 100;
+                }
+                return (achievementData.NumberOfGamesPlayed <= timesPlayedBeforeTutorialStops);
             }
-            return (achievementData.NumberOfGamesPlayed <= timesPlayedBeforeTutorialStops);
+            else
+            {
+                return true;
+            }
         }
 
         /// <summary>
