@@ -2259,7 +2259,7 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(50, 0, ColorPolarity.Positive);
+            Wavelets[2] = new Wavelet(60, 2, ColorPolarity.Positive);
             Wavelets[2].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
