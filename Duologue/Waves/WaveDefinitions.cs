@@ -177,7 +177,7 @@ namespace Duologue.Waves
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 Wavelets[1].StartAngle[i] = (float)i * MathHelper.PiOver2 / (float)Wavelets[1].Enemies.Length
-                    + 5f * MathHelper.PiOver2;
+                    + 3f * MathHelper.PiOver2;
             }
             #endregion
             // Third wavelet
@@ -188,15 +188,15 @@ namespace Duologue.Waves
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
-                Wavelets[2].StartAngle[i] = (float)i * MathHelper.PiOver2 / Wavelets[2].Enemies.Length / 2f
+                Wavelets[2].StartAngle[i] = (float)i * MathHelper.PiOver2 / (Wavelets[2].Enemies.Length / 2f)
                     + MathHelper.PiOver2;
             }
             for (int i = (int)(Wavelets[2].Enemies.Length / 2f); i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
-                Wavelets[2].StartAngle[i] = (float)i * MathHelper.PiOver2 / Wavelets[2].Enemies.Length / 2f
-                    + 5f * MathHelper.PiOver2;
+                Wavelets[2].StartAngle[i] = (float)i * MathHelper.PiOver2 / (Wavelets[2].Enemies.Length / 2f)
+                    + 3f * MathHelper.PiOver2;
             }
             #endregion
 
@@ -252,13 +252,13 @@ namespace Duologue.Waves
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
-                Wavelets[2].StartAngle[i] = (float)i * MathHelper.PiOver2 / Wavelets[2].Enemies.Length / 2f;
+                Wavelets[2].StartAngle[i] = (float)i * MathHelper.PiOver2 / (Wavelets[2].Enemies.Length / 2f);
             }
             for (int i = (int)(Wavelets[2].Enemies.Length / 2f); i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
-                Wavelets[2].StartAngle[i] = (float)i * MathHelper.PiOver2 / Wavelets[2].Enemies.Length / 2f
+                Wavelets[2].StartAngle[i] = (float)i * MathHelper.PiOver2 / (Wavelets[2].Enemies.Length / 2f)
                     + MathHelper.TwoPi;
             }
             #endregion
@@ -317,7 +317,7 @@ namespace Duologue.Waves
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
 
                 Wavelets[1].StartAngle[i] = (float)i * MathHelper.Pi / Wavelets[0].Enemies.Length +
-                    5f * MathHelper.PiOver2;
+                    3f * MathHelper.PiOver2;
             }
             #endregion
             // Third wavelet
