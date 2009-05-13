@@ -57,7 +57,7 @@ namespace Duologue.UI
 
         private const double time_ScaleVert = 0.2f;
         private const double time_ScaleHoriz = 0.6f;
-        private const double time_Steady = 2f;
+        private const double time_Steady = 3.5f;
         private const double time_InScaleHoriz = 0.3f;
         private const double time_OffDelay = 0.1f;
 
@@ -97,7 +97,7 @@ namespace Duologue.UI
             : base(game)
         {
             // TODO: Construct any child components here
-            color_Window = Color.White;
+            color_Window = new Color(182, 96, 255);
             color_Text = Color.PowderBlue;
             color_TextShadow = Color.Black;
 
@@ -177,7 +177,7 @@ namespace Duologue.UI
                     Enabled = true;
                 }
             }
-            else if (lastEntryCount < theEntries.Length - 1)
+            else if (lastEntryCount < theEntries.Length)
             {
                 requestedToBeDisplayed.Enqueue(theEntries[lastEntryCount]);
                 lastEntryCount++;

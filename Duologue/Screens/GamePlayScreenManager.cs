@@ -89,8 +89,6 @@ namespace Duologue.Screens
         private SongID lastSongID;
 
         private bool launchedFirstWave;
-
-        private Tutorial tutorialManager;
         #endregion
 
         #region Properties
@@ -108,6 +106,8 @@ namespace Duologue.Screens
         {
             get { return Math.Min(timeSinceStart / delayLifetime, 1f); }
         }
+
+        public Tutorial TutorialManager;
         #endregion
 
         #region Constructor / Init
@@ -129,11 +129,11 @@ namespace Duologue.Screens
             localGame.Components.Add(gameOver);
             gameOver.DrawOrder = 200;
 
-            tutorialManager = new Tutorial(game);
-            tutorialManager.Enabled = false;
-            tutorialManager.Visible = false;
-            localGame.Components.Add(tutorialManager);
-            tutorialManager.DrawOrder = 300;
+            TutorialManager = new Tutorial(game);
+            TutorialManager.Enabled = false;
+            TutorialManager.Visible = false;
+            localGame.Components.Add(TutorialManager);
+            TutorialManager.DrawOrder = 300;
 
             initialized = false;
         }
@@ -189,6 +189,7 @@ namespace Duologue.Screens
             intensityTimer = 0f;
             LocalInstanceManager.Background.EnableThrob = false;
             LocalInstanceManager.AchievementManager.SaveStorageData();
+            TutorialManager.Reset();
             base.ScreenExit(gameTime);
         }
         #endregion
@@ -300,6 +301,12 @@ namespace Duologue.Screens
             }
         }
 
+        public void NextTutorial()
+        {
+            if (launchedFirstWave)
+                TutorialManager.NewLevel();
+        }
+
         /// <summary>
         /// Get the next wave
         /// </summary>
@@ -334,9 +341,6 @@ namespace Duologue.Screens
                         LocalInstanceManager.CurrentGameWave.ParallaxElementTop, true);
                     LocalInstanceManager.Background.SetParallaxElement(
                         LocalInstanceManager.CurrentGameWave.ParallaxElementBottom, false);
-
-                    // Call the tutorial if needed
-                    tutorialManager.NewLevel();
 
                     // Set up the exit stuff
                     currentState = GamePlayState.Delay;
