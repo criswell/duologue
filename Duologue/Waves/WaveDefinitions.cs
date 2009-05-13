@@ -48,7 +48,7 @@ namespace Duologue.Waves
     public class WaveDefinitions
     {
         #region Constants
-        private const int maxNumberOfMajorWaves = 9;
+        private const int maxNumberOfMajorWaves = 10;
         private const int numberOfWavelets = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
         #endregion
 
@@ -2272,6 +2272,153 @@ namespace Duologue.Waves
             #endregion
 
             Waves[GetIndex(9, 3)].Wavelets = Wavelets;
+            #endregion
+            #endregion
+
+            #region Wave 10
+            #region WaveDef (10-1) "AnnMoebic Dysentery"
+            #region Metadata
+            Waves[GetIndex(10, 1)] = new GameWave();
+            Waves[GetIndex(10, 1)].Background = 3;
+            Waves[GetIndex(10, 1)].ThrobColor = new Color(119, 203, 191);
+            Waves[GetIndex(10, 1)].ColorState = 0;
+            Waves[GetIndex(10, 1)].MajorWaveNumber = 10;
+            Waves[GetIndex(10, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(10, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(10, 1)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(10, 1)].ParallaxElementTop.Tint = new Color(170, 255, 170);
+            Waves[GetIndex(10, 1)].ParallaxElementTop.Speed = 0.4f;
+            Waves[GetIndex(10, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(10, 1)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(10, 1)].ParallaxElementBottom.Tint = new Color(170, 255, 170);
+            Waves[GetIndex(10, 1)].ParallaxElementBottom.Speed = 0.3f;
+            Waves[GetIndex(10, 1)].Name = "AnnMoebic Dysentery";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(10, 0, ColorPolarity.Negative);
+            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[0].StartAngle[i] = 0;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(20, 0, ColorPolarity.Positive);
+            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 1; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[1].StartAngle[i] = 0;
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(40, 0);
+            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[2].StartAngle[i] = 0;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            #endregion
+
+            Waves[GetIndex(10, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (10-2) "Benthopelagic Bestiary"
+            #region Metadata
+            Waves[GetIndex(10, 2)] = new GameWave();
+            Waves[GetIndex(10, 2)].Background = 3;
+            Waves[GetIndex(10, 2)].ThrobColor = new Color(119, 203, 191);
+            Waves[GetIndex(10, 2)].ColorState = 2;
+            Waves[GetIndex(10, 2)].MajorWaveNumber = 10;
+            Waves[GetIndex(10, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(10, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(10, 2)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(10, 2)].ParallaxElementTop.Tint = new Color(203, 238, 169);
+            Waves[GetIndex(10, 2)].ParallaxElementTop.Speed = 0.4f;
+            Waves[GetIndex(10, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(10, 2)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(10, 2)].ParallaxElementBottom.Tint = new Color(203, 238, 169);
+            Waves[GetIndex(10, 2)].ParallaxElementBottom.Speed = 0.3f;
+            Waves[GetIndex(10, 2)].Name = "Benthopelagic Bestiary";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(40, 0);
+            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[0].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+
+                if (i / 4f == i / 4)
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                else
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(40, 0);
+            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[1].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+
+                if (i / 4f == i / 4)
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                else if (i / 3f == i / 3)
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                else
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(40, 0);
+            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[2].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+
+                if (i / 4f == i / 4)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                else if (i / 3f == i / 3)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                else if (i / 5f == i / 5)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                else
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+            }
+            #endregion
+
+            Waves[GetIndex(10, 2)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (10-3) "Attenuated Turbidity"
             #endregion
             #endregion
 
