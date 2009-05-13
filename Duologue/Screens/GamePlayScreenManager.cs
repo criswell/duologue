@@ -133,7 +133,7 @@ namespace Duologue.Screens
             tutorialManager.Enabled = false;
             tutorialManager.Visible = false;
             localGame.Components.Add(tutorialManager);
-            tutorialManager.DrawOrder = 201;
+            tutorialManager.DrawOrder = 300;
 
             initialized = false;
         }

@@ -68,7 +68,7 @@ namespace Duologue.UI
         private const int numberOfTimesToDisplayTutorial = 5;
 
         private const float width_MinPopup = 10f;
-        private const float width_ExtraPopup = 20f;
+        private const float width_ExtraPopup = 50f;
 
         private const float offset_WindowVert = -25f;
         private const float offset_ShadowScale = 2f;
@@ -170,6 +170,7 @@ namespace Duologue.UI
                 if (LocalInstanceManager.AchievementManager.DisplayTutorial(numberOfTimesToDisplayTutorial))
                 {
                     // Cool, we can display the tutorial
+                    InstanceManager.Logger.LogEntry(String.Format("Tutorial to display: {0}", theEntries[lastEntryCount].Text));
                     requestedToBeDisplayed.Enqueue(theEntries[lastEntryCount]);
                     lastEntryCount++;
                     Visible = true;
@@ -190,8 +191,9 @@ namespace Duologue.UI
         private void SetPosition()
         {
             position = new Vector2(
-                InstanceManager.GraphicsDevice.DisplayMode.Width / 2f,
-                InstanceManager.GraphicsDevice.DisplayMode.TitleSafeArea.Bottom - center_PopUpWindow.Y + offset_WindowVert);
+                InstanceManager.DefaultViewport.Width / 2f,
+                (float)InstanceManager.DefaultViewport.TitleSafeArea.Bottom - center_PopUpWindow.Y + offset_WindowVert);
+            InstanceManager.Logger.LogEntry(String.Format("Tutorial pos: {0}", position));
         }
         /// <summary>
         /// Draw the window at a specified size
