@@ -231,10 +231,61 @@ namespace Duologue.Audio
         protected const string W1B2 = "beat-2";
         protected const string W1B3 = "beat-3";
         protected const string W1B4 = "beat-4";
-        protected const string W1sbA = "synth_beatA-01";
-        protected const string W1sbB = "synth_beatB-01";
-        protected const string W1rA = "raveA";
-        protected const string W1rB = "raveB";
+        protected const string W1sbA01 = "synth_beatA-01";
+        protected const string W1sbA02 = "synth_beatA-02";
+        protected const string W1sbA03 = "synth_beatA-03";
+        protected const string W1sbA04 = "synth_beatA-04";
+        protected const string W1sbA05 = "synth_beatA-05";
+        protected const string W1sbA06 = "synth_beatA-06";
+        protected const string W1sbA07 = "synth_beatA-07";
+        protected const string W1sbA08 = "synth_beatA-08";
+        protected const string W1sbA09 = "synth_beatA-09";
+        protected const string W1sbA10 = "synth_beatA-10";
+        protected const string W1sbA11 = "synth_beatA-11";
+        protected const string W1sbA12 = "synth_beatA-12";
+        protected const string W1sbA13 = "synth_beatA-13";
+        protected const string W1sbA14 = "synth_beatA-14";
+        protected const string W1sbA15 = "synth_beatA-15";
+        protected const string W1sbA16 = "synth_beatA-16";
+        protected const string W1sbB01 = "synth_beatB-01";
+        protected const string W1sbB02 = "synth_beatB-02";
+        protected const string W1sbB03 = "synth_beatB-03";
+        protected const string W1sbB04 = "synth_beatB-04";
+        protected const string W1sbB05 = "synth_beatB-05";
+        protected const string W1sbB06 = "synth_beatB-06";
+        protected const string W1sbB07 = "synth_beatB-07";
+        protected const string W1sbB08 = "synth_beatB-08";
+        protected const string W1sbB09 = "synth_beatB-09";
+        protected const string W1sbB10 = "synth_beatB-10";
+        protected const string W1sbB11 = "synth_beatB-11";
+        protected const string W1sbB12 = "synth_beatB-12";
+        protected const string W1sbB13 = "synth_beatB-13";
+        protected const string W1sbB14 = "synth_beatB-14";
+        protected const string W1sbB15 = "synth_beatB-15";
+        protected const string W1sbB16 = "synth_beatB-16";
+
+        protected const string W1rA1 = "raveA-1";
+        protected const string W1rA2 = "raveA-2";
+        protected const string W1rA3 = "raveA-3";
+        protected const string W1rA4 = "raveA-4";
+        protected const string W1rA5 = "raveA-5";
+        protected const string W1rB01 = "raveB-01";
+        protected const string W1rB02 = "raveB-02";
+        protected const string W1rB03 = "raveB-03";
+        protected const string W1rB04 = "raveB-04";
+        protected const string W1rB05 = "raveB-05";
+        protected const string W1rB06 = "raveB-06";
+        protected const string W1rB07 = "raveB-07";
+        protected const string W1rB08 = "raveB-08";
+        protected const string W1rB09 = "raveB-09";
+        protected const string W1rB10 = "raveB-10";
+        protected const string W1rB11 = "raveB-11";
+        protected const string W1rB12 = "raveB-12";
+        protected const string W1rB13 = "raveB-13";
+        protected const string W1rB14 = "raveB-14";
+        protected const string W1rB15 = "raveB-15";
+        protected const string W1rB16 = "raveB-16";
+        protected const string W1rB17 = "raveB-17";
         protected const string W1oA01 = "orionA-1";
         protected const string W1oA02 = "orionA-2";
         protected const string W1oA03 = "orionA-3";
@@ -350,18 +401,36 @@ namespace Duologue.Audio
 
             //WinOne
             string[,] W1arr = {
-                      {W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4},
-                      {W1oA01, W1oA02, W1oA03, W1oA04, W1oA05, W1oA06, W1oA07, W1oA08}
-                                  
+                      {W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4,
+                       W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4,
+                       W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4,
+                       W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4},
+
+                      {W1oA01, W1oA02, W1oA03, W1oA04, W1oA05, W1oA06, W1oA07, W1oA08,
+                       W1oA01, W1oA02, W1oA03, W1oA04, W1oA05, W1oA06, W1oA07, W1oA08,
+                       W1oB01, W1oB02, W1oB03, W1oB04, W1oB05, W1oB06, W1oB07, W1oB08, 
+                       W1oB09, W1oB10, W1oB11, W1oB12, W1oB13, W1oB14, W1oB15, W1oB16 },
+
+                      {W1sbA01, W1sbA02, W1sbA03, W1sbA04, W1sbA05, W1sbA06, W1sbA07, W1sbA08, 
+                       W1sbA09, W1sbA10, W1sbA11, W1sbA12, W1sbA13, W1sbA14, W1sbA15, W1sbA16,
+                       W1sbB01, W1sbB02, W1sbB03, W1sbB04, W1sbB05, W1sbB06, W1sbB07, W1sbB08, 
+                       W1sbB09, W1sbB10, W1sbB11, W1sbB12, W1sbB13, W1sbB14, W1sbB15, W1sbB16},
+
+                      {W1rA1, W1rA2, W1rA3, W1rA4, W1rA1, W1rA2, W1rA3, W1rA4, 
+                       W1rA1, W1rA2, W1rA3, W1rA4, W1rA1, W1rA2, W1rA3, W1rA4, 
+                       W1rB01, W1rB02, W1rB03, W1rB04, W1rB05, W1rB06, W1rB07, W1rB08, 
+                       W1rB09, W1rB10, W1rB11, W1rB12, W1rB13, W1rB14, W1rB15, W1rB16},
                               };
 
             bool[,] W1volumes = {
-                                    {on, off},
-                                    {on, on}
+                                    {on, off, off, off},
+                                    {on, on, off, off},
+                                    {on, on, on, off},
+                                    {on, on, on, on}
                                 };
 
             WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves, W1arr, W1volumes);
-            WinOne.beater.lengthOfBeat = 500f;
+            WinOne.beater.lengthOfBeat = 450f;
 
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);
