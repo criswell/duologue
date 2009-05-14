@@ -231,6 +231,36 @@ namespace Duologue.Audio
         protected const string W1B2 = "beat-2";
         protected const string W1B3 = "beat-3";
         protected const string W1B4 = "beat-4";
+        protected const string W1sbA = "synth_beatA-01";
+        protected const string W1sbB = "synth_beatB-01";
+        protected const string W1rA = "raveA";
+        protected const string W1rB = "raveB";
+        protected const string W1oA01 = "orionA-1";
+        protected const string W1oA02 = "orionA-2";
+        protected const string W1oA03 = "orionA-3";
+        protected const string W1oA04 = "orionA-4";
+        protected const string W1oA05 = "orionA-5";
+        protected const string W1oA06 = "orionA-6";
+        protected const string W1oA07 = "orionA-7";
+        protected const string W1oA08 = "orionA-8";
+        protected const string W1oA09 = "orionA-9";
+        protected const string W1oB01 = "orionB-01";
+        protected const string W1oB02 = "orionB-02";
+        protected const string W1oB03 = "orionB-03";
+        protected const string W1oB04 = "orionB-04";
+        protected const string W1oB05 = "orionB-05";
+        protected const string W1oB06 = "orionB-06";
+        protected const string W1oB07 = "orionB-07";
+        protected const string W1oB08 = "orionB-08";
+        protected const string W1oB09 = "orionB-09";
+        protected const string W1oB10 = "orionB-10";
+        protected const string W1oB11 = "orionB-11";
+        protected const string W1oB12 = "orionB-12";
+        protected const string W1oB13 = "orionB-13";
+        protected const string W1oB14 = "orionB-14";
+        protected const string W1oB15 = "orionB-15";
+        protected const string W1oB16 = "orionB-16";
+        protected const string W1oB17 = "orionB-17";
 
         protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
@@ -320,11 +350,14 @@ namespace Duologue.Audio
 
             //WinOne
             string[,] W1arr = {
-                                  {W1B1, W1B2, W1B3, W1B4},
+                      {W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4},
+                      {W1oA01, W1oA02, W1oA03, W1oA04, W1oA05, W1oA06, W1oA07, W1oA08}
+                                  
                               };
 
             bool[,] W1volumes = {
-                                    {on},
+                                    {on, off},
+                                    {on, on}
                                 };
 
             WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves, W1arr, W1volumes);
