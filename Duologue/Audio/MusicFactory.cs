@@ -312,6 +312,40 @@ namespace Duologue.Audio
         protected const string W1oB15 = "orionB-15";
         protected const string W1oB16 = "orionB-16";
         protected const string W1oB17 = "orionB-17";
+        protected const string W1jA01 = "jamA-01";
+        protected const string W1jA02 = "jamA-02";
+        protected const string W1jA03 = "jamA-03";
+        protected const string W1jA04 = "jamA-04";
+        protected const string W1jA05 = "jamA-05";
+        protected const string W1jA06 = "jamA-06";
+        protected const string W1jA07 = "jamA-07";
+        protected const string W1jA08 = "jamA-08";
+        protected const string W1jA09 = "jamA-09";
+        protected const string W1jA10 = "jamA-10";
+        protected const string W1jA11 = "jamA-11";
+        protected const string W1jA12 = "jamA-12";
+        protected const string W1jA13 = "jamA-13";
+        protected const string W1jA14 = "jamA-14";
+        protected const string W1jA15 = "jamA-15";
+        protected const string W1jA16 = "jamA-16";
+        protected const string W1jA17 = "jamA-17";
+        protected const string W1jB01 = "jamB-01";
+        protected const string W1jB02 = "jamB-02";
+        protected const string W1jB03 = "jamB-03";
+        protected const string W1jB04 = "jamB-04";
+        protected const string W1jB05 = "jamB-05";
+        protected const string W1jB06 = "jamB-06";
+        protected const string W1jB07 = "jamB-07";
+        protected const string W1jB08 = "jamB-08";
+        protected const string W1jB09 = "jamB-09";
+        protected const string W1jB10 = "jamB-10";
+        protected const string W1jB11 = "jamB-11";
+        protected const string W1jB12 = "jamB-12";
+        protected const string W1jB13 = "jamB-13";
+        protected const string W1jB14 = "jamB-14";
+        protected const string W1jB15 = "jamB-15";
+        protected const string W1jB16 = "jamB-16";
+        protected const string W1jB17 = "jamB-17";
 
         protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
@@ -420,13 +454,20 @@ namespace Duologue.Audio
                        W1rA1, W1rA2, W1rA3, W1rA4, W1rA1, W1rA2, W1rA3, W1rA4, 
                        W1rB01, W1rB02, W1rB03, W1rB04, W1rB05, W1rB06, W1rB07, W1rB08, 
                        W1rB09, W1rB10, W1rB11, W1rB12, W1rB13, W1rB14, W1rB15, W1rB16},
+                                                            
+                      {W1jA01, W1jA02, W1jA03, W1jA04, W1jA05, W1jA06, W1jA07, W1jA08, 
+                       W1jA09, W1jA10, W1jA11, W1jA12, W1jA13, W1jA14, W1jA15, W1jA16,
+                       W1jB01, W1jB02, W1jB03, W1jB04, W1jB05, W1jB06, W1jB07, W1jB08, 
+                       W1jB09, W1jB10, W1jB11, W1jB12, W1jB13, W1jB14, W1jB15, W1jB16},
+
                               };
 
             bool[,] W1volumes = {
-                                    {on, off, off, off},
-                                    {on, on, off, off},
-                                    {on, on, on, off},
-                                    {on, on, on, on}
+                                    {on, off, off, off, off},
+                                    {on, on, off, off, off},
+                                    {on, on, on, off, off},
+                                    {on, on, on, on, off},
+                                    {on, on, on, off, on}
                                 };
 
             WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves, W1arr, W1volumes);
