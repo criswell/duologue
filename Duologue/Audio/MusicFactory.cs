@@ -264,6 +264,8 @@ namespace Duologue.Audio
         protected const string W1sbB15 = "synth_beatB-15";
         protected const string W1sbB16 = "synth_beatB-16";
 
+        protected const string W1breath = "breath";
+
         protected const string W1rA1 = "raveA-1";
         protected const string W1rA2 = "raveA-2";
         protected const string W1rA3 = "raveA-3";
@@ -460,14 +462,17 @@ namespace Duologue.Audio
                        W1jB01, W1jB02, W1jB03, W1jB04, W1jB05, W1jB06, W1jB07, W1jB08, 
                        W1jB09, W1jB10, W1jB11, W1jB12, W1jB13, W1jB14, W1jB15, W1jB16},
 
+                       {"","","","","","","","","","","","","","",W1breath,"",
+                           "","","","","","","","","","","","","","","",""},
+
                               };
 
             bool[,] W1volumes = {
-                                    {on, off, off, off, off},
-                                    {on, on, off, off, off},
-                                    {on, on, on, off, off},
-                                    {on, on, on, on, off},
-                                    {on, on, on, off, on}
+                                    {on, off, off, off, off, off},
+                                    {on, on, off, off, off, on},
+                                    {on, on, on, off, off, on},
+                                    {on, on, on, on, off, off},
+                                    {on, on, on, off, on, off}
                                 };
 
             WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves, W1arr, W1volumes);

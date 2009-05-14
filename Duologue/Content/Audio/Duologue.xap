@@ -264,7 +264,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+            Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -5486,8 +5486,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 3301040244;
-    Bank Last Revised High = 30003886;
+    Bank Last Revised Low = 3181800964;
+    Bank Last Revised High = 30004441;
 
     Wave
     {
@@ -7420,6 +7420,811 @@ Wave Bank
             Last Modified High = 30003867;
         }
     }
+
+    Wave
+    {
+        Name = jamB-17;
+        File = winone\jamB-17.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 300236;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3189515352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-01;
+        File = winone\jamA-01.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 697640352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-02;
+        File = winone\jamA-02.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 698890352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-03;
+        File = winone\jamA-03.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75696;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 700140352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-04;
+        File = winone\jamA-04.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 701077852;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-05;
+        File = winone\jamA-05.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 701546602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-06;
+        File = winone\jamA-06.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 702171602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-07;
+        File = winone\jamA-07.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 702640352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-08;
+        File = winone\jamA-08.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75696;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 703577852;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-09;
+        File = winone\jamA-09.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 704046602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-10;
+        File = winone\jamA-10.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 704671602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-11;
+        File = winone\jamA-11.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 705296602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-12;
+        File = winone\jamA-12.wav;
+        Build Settings Last Modified Low = 3647327852;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 706077852;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-13;
+        File = winone\jamA-13.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 706859102;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-14;
+        File = winone\jamA-14.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75696;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 707327852;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-15;
+        File = winone\jamA-15.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 708109102;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-16;
+        File = winone\jamA-16.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 708577852;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamA-17;
+        File = winone\jamA-17.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 308992;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 709515352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-01;
+        File = winone\jamB-01.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3178734102;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-02;
+        File = winone\jamB-02.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3179827852;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-03;
+        File = winone\jamB-03.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75696;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3180452852;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-04;
+        File = winone\jamB-04.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3181390352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-05;
+        File = winone\jamB-05.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3182015352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-06;
+        File = winone\jamB-06.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3182796602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-07;
+        File = winone\jamB-07.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3183421602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-08;
+        File = winone\jamB-08.wav;
+        Build Settings Last Modified Low = 3647484102;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75696;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3184046602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-09;
+        File = winone\jamB-09.wav;
+        Build Settings Last Modified Low = 3647640352;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3184515352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-10;
+        File = winone\jamB-10.wav;
+        Build Settings Last Modified Low = 3647640352;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3185296602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-11;
+        File = winone\jamB-11.wav;
+        Build Settings Last Modified Low = 3647640352;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3185921602;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-12;
+        File = winone\jamB-12.wav;
+        Build Settings Last Modified Low = 3647640352;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3186390352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-13;
+        File = winone\jamB-13.wav;
+        Build Settings Last Modified Low = 3647640352;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3187015352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-14;
+        File = winone\jamB-14.wav;
+        Build Settings Last Modified Low = 3647640352;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75696;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3187640352;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-15;
+        File = winone\jamB-15.wav;
+        Build Settings Last Modified Low = 3647640352;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3188109102;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = jamB-16;
+        File = winone\jamB-16.wav;
+        Build Settings Last Modified Low = 3647640352;
+        Build Settings Last Modified High = 30004438;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75700;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3188734102;
+            Last Modified High = 30004438;
+        }
+    }
+
+    Wave
+    {
+        Name = breath;
+        File = winone\breath.wav;
+        Build Settings Last Modified Low = 3007269714;
+        Build Settings Last Modified High = 30004441;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 696320;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3348612900;
+            Last Modified High = 30003850;
+        }
+    }
 }
 
 Sound Bank
@@ -8265,7 +9070,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -8323,7 +9128,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -8381,7 +9186,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -8439,7 +9244,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -8497,7 +9302,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -8996,7 +9801,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -9085,7 +9890,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -9143,7 +9948,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -9201,7 +10006,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -9259,7 +10064,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -9317,7 +10122,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -9375,7 +10180,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -9433,7 +10238,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -9982,7 +10787,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10039,7 +10844,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10096,7 +10901,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10153,7 +10958,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10210,7 +11015,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10267,7 +11072,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10324,7 +11129,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10381,7 +11186,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10438,7 +11243,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10495,7 +11300,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10552,7 +11357,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10609,7 +11414,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10666,7 +11471,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10723,7 +11528,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10780,7 +11585,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10837,7 +11642,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10894,7 +11699,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -10951,7 +11756,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11008,7 +11813,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11065,7 +11870,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11122,7 +11927,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11179,7 +11984,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11236,7 +12041,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11293,7 +12098,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11350,7 +12155,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11918,7 +12723,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -11975,7 +12780,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12032,7 +12837,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12089,7 +12894,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12146,7 +12951,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12203,7 +13008,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12260,7 +13065,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12317,7 +13122,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12374,7 +13179,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12431,7 +13236,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12488,7 +13293,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12545,7 +13350,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12602,7 +13407,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12659,7 +13464,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12716,7 +13521,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12773,7 +13578,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12830,7 +13635,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12887,7 +13692,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -12944,7 +13749,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13001,7 +13806,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13058,7 +13863,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13115,7 +13920,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13172,7 +13977,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13229,7 +14034,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13286,7 +14091,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13343,7 +14148,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13400,7 +14205,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13457,7 +14262,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13514,7 +14319,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13571,7 +14376,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13628,7 +14433,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13685,7 +14490,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13742,7 +14547,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13799,7 +14604,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13856,7 +14661,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13913,7 +14718,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -13970,7 +14775,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14027,7 +14832,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14084,7 +14889,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14141,7 +14946,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14198,7 +15003,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14255,7 +15060,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14312,7 +15117,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14369,7 +15174,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14426,7 +15231,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14483,7 +15288,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14540,7 +15345,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14597,7 +15402,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14654,7 +15459,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14711,7 +15516,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14768,7 +15573,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14825,7 +15630,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14882,7 +15687,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14939,7 +15744,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -14996,7 +15801,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15053,7 +15858,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15110,7 +15915,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15167,7 +15972,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15224,7 +16029,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15281,7 +16086,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15338,7 +16143,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15395,7 +16200,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15452,7 +16257,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15509,7 +16314,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15566,7 +16371,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15623,7 +16428,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15680,7 +16485,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15737,7 +16542,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15794,7 +16599,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15851,7 +16656,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15908,7 +16713,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -15965,7 +16770,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16022,7 +16827,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16079,7 +16884,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16136,7 +16941,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16193,7 +16998,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16250,7 +17055,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16307,7 +17112,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16364,7 +17169,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16421,7 +17226,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16478,7 +17283,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16535,7 +17340,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16592,7 +17397,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16649,7 +17454,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16706,7 +17511,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16763,7 +17568,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16820,7 +17625,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16877,7 +17682,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16934,7 +17739,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -16991,7 +17796,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17048,7 +17853,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17105,7 +17910,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17162,7 +17967,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17219,7 +18024,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17276,7 +18081,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17333,7 +18138,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17390,7 +18195,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17447,7 +18252,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17504,7 +18309,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17561,7 +18366,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17618,7 +18423,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17675,7 +18480,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17732,7 +18537,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17789,7 +18594,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17846,7 +18651,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17903,7 +18708,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -17960,7 +18765,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -18017,7 +18822,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -18074,7 +18879,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -18131,7 +18936,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -18188,7 +18993,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -18245,7 +19050,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -20554,7 +21359,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -22763,7 +23568,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -22820,7 +23625,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -22877,7 +23682,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -22934,7 +23739,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -22991,7 +23796,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23048,7 +23853,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23105,7 +23910,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23162,7 +23967,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23219,7 +24024,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23276,7 +24081,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23333,7 +24138,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23390,7 +24195,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23447,7 +24252,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23504,7 +24309,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23561,7 +24366,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23618,7 +24423,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23675,7 +24480,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23732,7 +24537,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23789,7 +24594,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23846,7 +24651,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23903,7 +24708,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -23960,7 +24765,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24017,7 +24822,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24074,7 +24879,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24131,7 +24936,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24188,7 +24993,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24245,7 +25050,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24302,7 +25107,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24359,7 +25164,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24416,7 +25221,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24473,7 +25278,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24530,7 +25335,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24587,7 +25392,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24644,7 +25449,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24701,7 +25506,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24758,7 +25563,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24815,7 +25620,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24872,7 +25677,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24929,7 +25734,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -24986,7 +25791,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25043,7 +25848,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25100,7 +25905,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25157,7 +25962,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25214,7 +26019,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25271,7 +26076,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25328,7 +26133,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25385,7 +26190,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25442,7 +26247,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25499,7 +26304,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25556,7 +26361,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25613,7 +26418,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25670,7 +26475,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25727,7 +26532,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25784,7 +26589,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25841,7 +26646,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25898,7 +26703,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -25955,7 +26760,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26012,7 +26817,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26069,7 +26874,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26126,7 +26931,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26183,7 +26988,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26240,7 +27045,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26297,7 +27102,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26354,7 +27159,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26411,7 +27216,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26468,7 +27273,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26525,7 +27330,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26582,7 +27387,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26639,7 +27444,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26696,7 +27501,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26753,7 +27558,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26810,7 +27615,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26867,7 +27672,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26924,7 +27729,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -26981,7 +27786,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27038,7 +27843,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27095,7 +27900,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27152,7 +27957,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27209,7 +28014,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27266,7 +28071,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27323,7 +28128,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27380,7 +28185,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27437,7 +28242,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -27494,7 +28299,2002 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::62132983-3983-4351-9e2a-07cfc872693a;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-17;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-17;
+                    Entry Index = 84;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-01;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-01;
+                    Entry Index = 85;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-02;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-02;
+                    Entry Index = 86;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-03;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-03;
+                    Entry Index = 87;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-04;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-04;
+                    Entry Index = 88;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-05;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-05;
+                    Entry Index = 89;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-06;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-06;
+                    Entry Index = 90;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-07;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-07;
+                    Entry Index = 91;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-08;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-08;
+                    Entry Index = 92;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-09;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-09;
+                    Entry Index = 93;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-10;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-10;
+                    Entry Index = 94;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-11;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-11;
+                    Entry Index = 95;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-12;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-12;
+                    Entry Index = 96;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-13;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-13;
+                    Entry Index = 97;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-14;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-14;
+                    Entry Index = 98;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-15;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-15;
+                    Entry Index = 99;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-16;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-16;
+                    Entry Index = 100;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamA-17;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamA-17;
+                    Entry Index = 101;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-01;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-01;
+                    Entry Index = 102;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-02;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-02;
+                    Entry Index = 103;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-03;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-03;
+                    Entry Index = 104;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-04;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-04;
+                    Entry Index = 105;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-05;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-05;
+                    Entry Index = 106;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-06;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-06;
+                    Entry Index = 107;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-07;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-07;
+                    Entry Index = 108;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-08;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-08;
+                    Entry Index = 109;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-09;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-09;
+                    Entry Index = 110;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-10;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-10;
+                    Entry Index = 111;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-11;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-11;
+                    Entry Index = 112;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-12;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-12;
+                    Entry Index = 113;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-13;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-13;
+                    Entry Index = 114;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-14;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-14;
+                    Entry Index = 115;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-15;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-15;
+                    Entry Index = 116;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = jamB-16;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = jamB-16;
+                    Entry Index = 117;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = breath;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Volume;
+        }
+
+        Track
+        {
+            Volume = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WinOne;
+                    Bank Index = 9;
+                    Entry Name = breath;
+                    Entry Index = 118;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = Volume;
+                RPC Curve Name = 1::cce0e636-3638-460e-8c5f-6c79f66d0ecb;
             }
         }
     }
@@ -29174,6 +31974,706 @@ Sound Bank
         {
             Name = synth_beatB-15;
             Index = 83;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-17;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-17;
+            Index = 84;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-01;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-01;
+            Index = 85;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-02;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-02;
+            Index = 86;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-03;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-03;
+            Index = 87;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-04;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-04;
+            Index = 88;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-05;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-05;
+            Index = 89;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-06;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-06;
+            Index = 90;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-07;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-07;
+            Index = 91;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-08;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-08;
+            Index = 92;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-09;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-09;
+            Index = 93;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-10;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-10;
+            Index = 94;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-11;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-11;
+            Index = 95;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-12;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-12;
+            Index = 96;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-13;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-13;
+            Index = 97;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-14;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-14;
+            Index = 98;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-15;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-15;
+            Index = 99;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-16;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-16;
+            Index = 100;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamA-17;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamA-17;
+            Index = 101;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-01;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-01;
+            Index = 102;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-02;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-02;
+            Index = 103;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-03;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-03;
+            Index = 104;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-04;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-04;
+            Index = 105;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-05;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-05;
+            Index = 106;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-06;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-06;
+            Index = 107;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-07;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-07;
+            Index = 108;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-08;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-08;
+            Index = 109;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-09;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-09;
+            Index = 110;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-10;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-10;
+            Index = 111;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-11;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-11;
+            Index = 112;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-12;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-12;
+            Index = 113;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-13;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-13;
+            Index = 114;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-14;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-14;
+            Index = 115;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-15;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-15;
+            Index = 116;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = jamB-16;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = jamB-16;
+            Index = 117;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = breath;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = breath;
+            Index = 118;
             Weight Min = 0;
             Weight Max = 255;
         }
