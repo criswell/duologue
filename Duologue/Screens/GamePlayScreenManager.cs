@@ -106,6 +106,8 @@ namespace Duologue.Screens
         {
             get { return Math.Min(timeSinceStart / delayLifetime, 1f); }
         }
+
+        public Tutorial TutorialManager;
         #endregion
 
         #region Constructor / Init
@@ -126,6 +128,12 @@ namespace Duologue.Screens
             gameOver.Visible = false;
             localGame.Components.Add(gameOver);
             gameOver.DrawOrder = 200;
+
+            TutorialManager = new Tutorial(game);
+            TutorialManager.Enabled = false;
+            TutorialManager.Visible = false;
+            localGame.Components.Add(TutorialManager);
+            TutorialManager.DrawOrder = 300;
 
             initialized = false;
         }
@@ -181,6 +189,7 @@ namespace Duologue.Screens
             intensityTimer = 0f;
             LocalInstanceManager.Background.EnableThrob = false;
             LocalInstanceManager.AchievementManager.SaveStorageData();
+            TutorialManager.Reset();
             base.ScreenExit(gameTime);
         }
         #endregion
@@ -290,6 +299,12 @@ namespace Duologue.Screens
                     intensityCounter = 0f;
                 }
             }
+        }
+
+        public void NextTutorial()
+        {
+            if (launchedFirstWave)
+                TutorialManager.NewLevel();
         }
 
         /// <summary>

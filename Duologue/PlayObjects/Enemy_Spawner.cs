@@ -85,6 +85,11 @@ namespace Duologue.PlayObjects
         /// The multiplier for point value tweaks based upon hitpoints
         /// </summary>
         private const int hitPointMultiplier = 15;
+
+        /// <summary>
+        /// How far we can go outside the screen before we should stop
+        /// </summary>
+        private const float outsideScreenMultiplier = 1.1f;
         #endregion
 
         #region Fields
@@ -271,6 +276,7 @@ namespace Duologue.PlayObjects
             Orientation = nextPosition - Position;
             totalTravelLength = Orientation.Length();
             Orientation.Normalize();
+
             travelLength = 0;
         }
 
@@ -512,6 +518,41 @@ namespace Duologue.PlayObjects
 
         private void Update_Moving(GameTime gameTime)
         {
+            // Check boundaries
+            if (Position.X < -RealSize.X * outsideScreenMultiplier)
+            {
+                Position.X = -RealSize.X * outsideScreenMultiplier;
+                travelLength = 0;
+                speed = 0;
+                timer_Thinking = 0;
+                GetNextPosition(Vector2.Zero);
+            }
+            else if (Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+            {
+                Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
+                travelLength = 0;
+                speed = 0;
+                timer_Thinking = 0;
+                GetNextPosition(Vector2.Zero);
+            }
+
+            if (Position.Y < -RealSize.Y * outsideScreenMultiplier)
+            {
+                Position.Y = -RealSize.Y * outsideScreenMultiplier;
+                travelLength = 0;
+                speed = 0;
+                timer_Thinking = 0;
+                GetNextPosition(Vector2.Zero);
+            }
+            else if (Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
+            {
+                Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
+                travelLength = 0;
+                speed = 0;
+                timer_Thinking = 0;
+                GetNextPosition(Vector2.Zero);
+            }
+
             if (travelLength / totalTravelLength < percentSlowDown)
             {
                 if (speed < maxSpeed)

@@ -23,6 +23,7 @@ namespace Duologue.AchievementSystem
         public int NumberOfEnemiesKilled;
         public bool[] EnemyTypesKilled;
         public int DataVersion;
+        public int NumberOfGamesPlayed;
     }
     /// <summary>
     /// Represents an individual achievement in the game

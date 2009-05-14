@@ -102,6 +102,7 @@
     <Compile Include="PlayObjects\Enemy_AnnMoeba.cs" />
     <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />
     <Compile Include="PlayObjects\Enemy_Ember.cs" />
+    <Compile Include="PlayObjects\Enemy_Firefly.cs" />
     <Compile Include="PlayObjects\Enemy_Flambi.cs" />
     <Compile Include="PlayObjects\Enemy_Flycket.cs" />
     <Compile Include="PlayObjects\Enemy_Gloop.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="UI\Pointlet.cs" />
     <Compile Include="UI\ScoreScroller.cs" />
     <Compile Include="UI\Spinner.cs" />
+    <Compile Include="UI\Tutorial.cs" />
     <Compile Include="UI\WaveDisplay.cs" />
     <Compile Include="UI\WindowManager.cs" />
     <Compile Include="Waves\GameWave.cs" />

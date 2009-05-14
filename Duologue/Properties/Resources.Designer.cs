@@ -518,5 +518,32 @@ namespace Duologue.Properties {
                 return ResourceManager.GetString("ScoreUI_Lives", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use the Left Stick to move and the Right Stick to fire..
+        /// </summary>
+        internal static string Tutorial_1 {
+            get {
+                return ResourceManager.GetString("Tutorial_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use the Left and Right Triggers to swap cannon and light colors..
+        /// </summary>
+        internal static string Tutorial_2 {
+            get {
+                return ResourceManager.GetString("Tutorial_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use the light to ward off opposite colored enemies..
+        /// </summary>
+        internal static string Tutorial_3 {
+            get {
+                return ResourceManager.GetString("Tutorial_3", resourceCulture);
+            }
+        }
     }
 }

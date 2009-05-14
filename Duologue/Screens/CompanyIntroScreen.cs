@@ -147,6 +147,7 @@ namespace Duologue.Screens
                 TypesOfPlayObjects.Enemy_GloopPrince,
                 TypesOfPlayObjects.Enemy_Flycket,
                 TypesOfPlayObjects.Enemy_Flambi,
+                TypesOfPlayObjects.Enemy_Firefly,
             };
 
             currentPlayObjectIndex = 0;
@@ -373,6 +374,9 @@ namespace Duologue.Screens
                     break;
                 case TypesOfPlayObjects.Enemy_Flambi:
                     currentPlayObject = new Enemy_Flambi();
+                    break;
+                case TypesOfPlayObjects.Enemy_Firefly:
+                    currentPlayObject = new Enemy_Firefly();
                     break;
                 default:
                     // Player Bullet

@@ -87,7 +87,7 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            
+            Alive = false;
         }
     }
 }

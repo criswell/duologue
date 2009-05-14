@@ -290,10 +290,12 @@ namespace Duologue.Screens
                     myManager.GetNextWave();
                     myManager.SetNextMusic();
                     WaveletInit.Initialize(myManager);
+                    myManager.NextTutorial();
                 }
                 else
                 {
                     myManager.SetNextMusic();
+                    myManager.NextTutorial();
                 }
             }
 

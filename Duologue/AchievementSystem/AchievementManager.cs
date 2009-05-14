@@ -229,7 +229,7 @@ namespace Duologue.AchievementSystem
             orderedAchievementList = new List<int>(possibleAchievements);
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             storageDeviceIsSet = false;
-            dataVersion = 7;
+            dataVersion = 9;
             alpha_Achievement = 1f;
             size_Achievement = 1f;
             color_Text = Color.Bisque;
@@ -335,6 +335,8 @@ namespace Duologue.AchievementSystem
                     achievementData.NumberOfEnemiesKilled = 0;
 
                     achievementData.DataVersion = dataVersion;
+
+                    achievementData.NumberOfGamesPlayed = 0;
 
                     SaveAchievementData();
                     dataLoaded = true;
@@ -618,8 +620,9 @@ namespace Duologue.AchievementSystem
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_GloopPrince] = 17;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Flycket] = 18;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Flambi] = 19;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Firefly] = 20;
 
-            maxNumEnemies = 20;
+            maxNumEnemies = 21;
         }
 
         private void GenerateAchievements()
@@ -798,6 +801,34 @@ namespace Duologue.AchievementSystem
             {
                 SyncUpAchievementDataBeforeSave();
                 SaveAchievementData();
+            }
+        }
+
+        /// <summary>
+        /// Call this at the begining of a game to determine if we should display
+        /// the tutorial or not.
+        /// </summary>
+        /// <param name="timesPlayedBeforeTutorialStops">How many times we should play the game before we stop
+        /// showing the tutorial</param>
+        /// <remarks>
+        /// This is effectively equivalent for checking the following
+        ///   (numberOfTimesWevePlayed <= timesPlayedBeforeTutorialStops)
+        /// </remarks>
+        public bool DisplayTutorial(int timesPlayedBeforeTutorialStops)
+        {
+            if (!Guide.IsTrialMode)
+            {
+                achievementData.NumberOfGamesPlayed++;
+                if (achievementData.NumberOfGamesPlayed >= int.MaxValue - 100)
+                {
+                    // OMG WALLHAX
+                    achievementData.NumberOfGamesPlayed = int.MaxValue - 100;
+                }
+                return (achievementData.NumberOfGamesPlayed <= timesPlayedBeforeTutorialStops);
+            }
+            else
+            {
+                return true;
             }
         }
 
