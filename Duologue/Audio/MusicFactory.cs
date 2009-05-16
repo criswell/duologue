@@ -224,12 +224,138 @@ namespace Duologue.Audio
         protected const string UFS7 = "synth-7";
         protected const string UFS8 = "synth-8";
 
+        //WinOne Song constants
+        protected const string WinOneWaves = "Content\\Audio\\WinOne.xwb";
+        protected const string WinOneSounds = "Content\\Audio\\WinOne.xsb";
+        protected const string W1B1 = "beat-1";
+        protected const string W1B2 = "beat-2";
+        protected const string W1B3 = "beat-3";
+        protected const string W1B4 = "beat-4";
+        protected const string W1sbA01 = "synth_beatA-01";
+        protected const string W1sbA02 = "synth_beatA-02";
+        protected const string W1sbA03 = "synth_beatA-03";
+        protected const string W1sbA04 = "synth_beatA-04";
+        protected const string W1sbA05 = "synth_beatA-05";
+        protected const string W1sbA06 = "synth_beatA-06";
+        protected const string W1sbA07 = "synth_beatA-07";
+        protected const string W1sbA08 = "synth_beatA-08";
+        protected const string W1sbA09 = "synth_beatA-09";
+        protected const string W1sbA10 = "synth_beatA-10";
+        protected const string W1sbA11 = "synth_beatA-11";
+        protected const string W1sbA12 = "synth_beatA-12";
+        protected const string W1sbA13 = "synth_beatA-13";
+        protected const string W1sbA14 = "synth_beatA-14";
+        protected const string W1sbA15 = "synth_beatA-15";
+        protected const string W1sbA16 = "synth_beatA-16";
+        protected const string W1sbB01 = "synth_beatB-01";
+        protected const string W1sbB02 = "synth_beatB-02";
+        protected const string W1sbB03 = "synth_beatB-03";
+        protected const string W1sbB04 = "synth_beatB-04";
+        protected const string W1sbB05 = "synth_beatB-05";
+        protected const string W1sbB06 = "synth_beatB-06";
+        protected const string W1sbB07 = "synth_beatB-07";
+        protected const string W1sbB08 = "synth_beatB-08";
+        protected const string W1sbB09 = "synth_beatB-09";
+        protected const string W1sbB10 = "synth_beatB-10";
+        protected const string W1sbB11 = "synth_beatB-11";
+        protected const string W1sbB12 = "synth_beatB-12";
+        protected const string W1sbB13 = "synth_beatB-13";
+        protected const string W1sbB14 = "synth_beatB-14";
+        protected const string W1sbB15 = "synth_beatB-15";
+        protected const string W1sbB16 = "synth_beatB-16";
+
+        protected const string W1breath = "breath";
+
+        protected const string W1rA1 = "raveA-1";
+        protected const string W1rA2 = "raveA-2";
+        protected const string W1rA3 = "raveA-3";
+        protected const string W1rA4 = "raveA-4";
+        protected const string W1rA5 = "raveA-5";
+        protected const string W1rB01 = "raveB-01";
+        protected const string W1rB02 = "raveB-02";
+        protected const string W1rB03 = "raveB-03";
+        protected const string W1rB04 = "raveB-04";
+        protected const string W1rB05 = "raveB-05";
+        protected const string W1rB06 = "raveB-06";
+        protected const string W1rB07 = "raveB-07";
+        protected const string W1rB08 = "raveB-08";
+        protected const string W1rB09 = "raveB-09";
+        protected const string W1rB10 = "raveB-10";
+        protected const string W1rB11 = "raveB-11";
+        protected const string W1rB12 = "raveB-12";
+        protected const string W1rB13 = "raveB-13";
+        protected const string W1rB14 = "raveB-14";
+        protected const string W1rB15 = "raveB-15";
+        protected const string W1rB16 = "raveB-16";
+        protected const string W1rB17 = "raveB-17";
+        protected const string W1oA01 = "orionA-1";
+        protected const string W1oA02 = "orionA-2";
+        protected const string W1oA03 = "orionA-3";
+        protected const string W1oA04 = "orionA-4";
+        protected const string W1oA05 = "orionA-5";
+        protected const string W1oA06 = "orionA-6";
+        protected const string W1oA07 = "orionA-7";
+        protected const string W1oA08 = "orionA-8";
+        protected const string W1oA09 = "orionA-9";
+        protected const string W1oB01 = "orionB-01";
+        protected const string W1oB02 = "orionB-02";
+        protected const string W1oB03 = "orionB-03";
+        protected const string W1oB04 = "orionB-04";
+        protected const string W1oB05 = "orionB-05";
+        protected const string W1oB06 = "orionB-06";
+        protected const string W1oB07 = "orionB-07";
+        protected const string W1oB08 = "orionB-08";
+        protected const string W1oB09 = "orionB-09";
+        protected const string W1oB10 = "orionB-10";
+        protected const string W1oB11 = "orionB-11";
+        protected const string W1oB12 = "orionB-12";
+        protected const string W1oB13 = "orionB-13";
+        protected const string W1oB14 = "orionB-14";
+        protected const string W1oB15 = "orionB-15";
+        protected const string W1oB16 = "orionB-16";
+        protected const string W1oB17 = "orionB-17";
+        protected const string W1jA01 = "jamA-01";
+        protected const string W1jA02 = "jamA-02";
+        protected const string W1jA03 = "jamA-03";
+        protected const string W1jA04 = "jamA-04";
+        protected const string W1jA05 = "jamA-05";
+        protected const string W1jA06 = "jamA-06";
+        protected const string W1jA07 = "jamA-07";
+        protected const string W1jA08 = "jamA-08";
+        protected const string W1jA09 = "jamA-09";
+        protected const string W1jA10 = "jamA-10";
+        protected const string W1jA11 = "jamA-11";
+        protected const string W1jA12 = "jamA-12";
+        protected const string W1jA13 = "jamA-13";
+        protected const string W1jA14 = "jamA-14";
+        protected const string W1jA15 = "jamA-15";
+        protected const string W1jA16 = "jamA-16";
+        protected const string W1jA17 = "jamA-17";
+        protected const string W1jB01 = "jamB-01";
+        protected const string W1jB02 = "jamB-02";
+        protected const string W1jB03 = "jamB-03";
+        protected const string W1jB04 = "jamB-04";
+        protected const string W1jB05 = "jamB-05";
+        protected const string W1jB06 = "jamB-06";
+        protected const string W1jB07 = "jamB-07";
+        protected const string W1jB08 = "jamB-08";
+        protected const string W1jB09 = "jamB-09";
+        protected const string W1jB10 = "jamB-10";
+        protected const string W1jB11 = "jamB-11";
+        protected const string W1jB12 = "jamB-12";
+        protected const string W1jB13 = "jamB-13";
+        protected const string W1jB14 = "jamB-14";
+        protected const string W1jB15 = "jamB-15";
+        protected const string W1jB16 = "jamB-16";
+        protected const string W1jB17 = "jamB-17";
+
         protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
         public Song Dance8ths;
         public Song LandOfSand16ths;
         public Song Credits;
         public Song Ultrafix;
+        public Song WinOne;
 
         public MusicFactory(AudioManager manager)
         {
@@ -309,12 +435,56 @@ namespace Duologue.Audio
             Ultrafix = new Song(manager.Game, UFSounds, UFWaves, UFarr, UFvolumes);
             Ultrafix.beater.lengthOfBeat = 500f;
 
+            //WinOne
+            string[,] W1arr = {
+                      {W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4,
+                       W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4,
+                       W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4,
+                       W1B1, W1B2, W1B3, W1B4, W1B1, W1B2, W1B3, W1B4},
+
+                      {W1oA01, W1oA02, W1oA03, W1oA04, W1oA05, W1oA06, W1oA07, W1oA08,
+                       W1oA01, W1oA02, W1oA03, W1oA04, W1oA05, W1oA06, W1oA07, W1oA08,
+                       W1oB01, W1oB02, W1oB03, W1oB04, W1oB05, W1oB06, W1oB07, W1oB08, 
+                       W1oB09, W1oB10, W1oB11, W1oB12, W1oB13, W1oB14, W1oB15, W1oB16 },
+
+                      {W1sbA01, W1sbA02, W1sbA03, W1sbA04, W1sbA05, W1sbA06, W1sbA07, W1sbA08, 
+                       W1sbA09, W1sbA10, W1sbA11, W1sbA12, W1sbA13, W1sbA14, W1sbA15, W1sbA16,
+                       W1sbB01, W1sbB02, W1sbB03, W1sbB04, W1sbB05, W1sbB06, W1sbB07, W1sbB08, 
+                       W1sbB09, W1sbB10, W1sbB11, W1sbB12, W1sbB13, W1sbB14, W1sbB15, W1sbB16},
+
+                      {W1rA1, W1rA2, W1rA3, W1rA4, W1rA1, W1rA2, W1rA3, W1rA4, 
+                       W1rA1, W1rA2, W1rA3, W1rA4, W1rA1, W1rA2, W1rA3, W1rA4, 
+                       W1rB01, W1rB02, W1rB03, W1rB04, W1rB05, W1rB06, W1rB07, W1rB08, 
+                       W1rB09, W1rB10, W1rB11, W1rB12, W1rB13, W1rB14, W1rB15, W1rB16},
+                                                            
+                      {W1jA01, W1jA02, W1jA03, W1jA04, W1jA05, W1jA06, W1jA07, W1jA08, 
+                       W1jA09, W1jA10, W1jA11, W1jA12, W1jA13, W1jA14, W1jA15, W1jA16,
+                       W1jB01, W1jB02, W1jB03, W1jB04, W1jB05, W1jB06, W1jB07, W1jB08, 
+                       W1jB09, W1jB10, W1jB11, W1jB12, W1jB13, W1jB14, W1jB15, W1jB16},
+
+                       {"","","","","","","","","","","","","","",W1breath,"",
+                           "","","","","","","","","","","","","","","",""},
+
+                              };
+
+            bool[,] W1volumes = {
+                                    {on, off, off, off, off, off},
+                                    {on, on, off, off, off, on},
+                                    {on, on, on, off, off, on},
+                                    {on, on, on, on, off, off},
+                                    {on, on, on, off, on, off}
+                                };
+
+            WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves, W1arr, W1volumes);
+            WinOne.beater.lengthOfBeat = 450f;
+
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);
             manager.Game.Components.Add(Dance8ths);
             manager.Game.Components.Add(LandOfSand16ths);
             manager.Game.Components.Add(Credits);
             manager.Game.Components.Add(Ultrafix);
+            manager.Game.Components.Add(WinOne);
         }
 
     }

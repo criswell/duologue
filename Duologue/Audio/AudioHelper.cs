@@ -178,7 +178,10 @@ namespace Duologue.Audio
             }
             else
             {
-                soundBanks[q.SoundBankName].PlayCue(q.CueName);
+                if (q.CueName != "") //allow for intentional "empty" calls
+                {
+                    soundBanks[q.SoundBankName].PlayCue(q.CueName);
+                }
             }
         }
 
