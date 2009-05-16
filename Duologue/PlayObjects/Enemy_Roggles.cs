@@ -179,6 +179,7 @@ namespace Duologue.PlayObjects
             startedMoving = false;
             Initialized = false;
             Alive = false;
+            OffscreenArrow = true;
         }
 
         public override void Initialize(

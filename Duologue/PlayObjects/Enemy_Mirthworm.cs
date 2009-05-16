@@ -130,6 +130,7 @@ namespace Duologue.PlayObjects
             RealSize = new Vector2(83, 83);
             Initialized = false;
             Alive = false;
+            OffscreenArrow = true;
         }
 
         public override void Initialize(

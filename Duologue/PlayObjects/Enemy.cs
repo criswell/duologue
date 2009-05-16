@@ -35,6 +35,8 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const string filename_bulletHit = "bullet-hit-0{0}"; // FIXME, silliness
+        private const string filename_OffScreenArrowMeat = "Enemies/offscreen-arrow-meat";
+        private const string filename_OffScreenArrowOutline = "Enemies/offscreen-arrow-outline";
         private const int maxNumBulletFrames = 6;
         private const float bulletLifetime = 0.05f;
         private const byte bulletAlpha = 200;
@@ -47,6 +49,8 @@ namespace Duologue.PlayObjects
         private const double minEndShieldSizeMultiplier = 0.2;
         private const double maxEndShieldSizeMultiplier = 0.7;
         private const byte maxShieldAlpha = 255;
+        private const double timeBetweenColorSwitched = 0.15;
+        private const float arrowPositionPercentage = 0.95f;
         #endregion
 
         #region Fields
@@ -71,6 +75,20 @@ namespace Duologue.PlayObjects
         private float shieldSpeed;
         private float shieldSize;
         private float shieldEndSize;
+
+        // Arrow stuff
+        private Texture2D texture_ArrowOutline;
+        private Texture2D texture_ArrowMeat;
+        private Vector2 center_Arrow;
+        private Vector2 pos_Arrow;
+        private float rotation_Arrow;
+        private float scale_Arrow;
+        private bool displayArrow;
+        private Vector4 arrowScreenBoundaries;
+        private bool hasSpawned;
+        private Color[] color_Arrow;
+        private int currentArrowColor;
+        private double timer_ColorSwitch;
         #endregion
 
         #region Properties
@@ -113,6 +131,11 @@ namespace Duologue.PlayObjects
         /// The type of the enemy. Defaults to standard
         /// </summary>
         public EnemyType MyEnemyType = EnemyType.Standard;
+
+        /// <summary>
+        /// Set this to true if we want to use offscreen arrows
+        /// </summary>
+        public bool OffscreenArrow = false;
         #endregion
 
         #region Constructor
@@ -137,6 +160,26 @@ namespace Duologue.PlayObjects
                 bulletFrames[0].Width / 2f,
                 bulletFrames[0].Height / 2f);
             currentFrame = maxNumBulletFrames;
+
+            pos_Arrow = Vector2.Zero;
+            texture_ArrowMeat = InstanceManager.AssetManager.LoadTexture2D(
+                filename_OffScreenArrowMeat);
+            texture_ArrowOutline = InstanceManager.AssetManager.LoadTexture2D(
+                filename_OffScreenArrowOutline);
+            center_Arrow = new Vector2(
+                texture_ArrowMeat.Width / 2f, texture_ArrowMeat.Height / 2f);
+            displayArrow = false;
+            scale_Arrow = 0;
+            hasSpawned = false;
+
+            currentArrowColor = -1;
+            timer_ColorSwitch = 0;
+
+            arrowScreenBoundaries = new Vector4(
+                (float)(InstanceManager.DefaultViewport.Width - InstanceManager.DefaultViewport.Width * arrowPositionPercentage),
+                (float)(InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.Height * arrowPositionPercentage),
+                (float)(InstanceManager.DefaultViewport.Width * arrowPositionPercentage),
+                (float)(InstanceManager.DefaultViewport.Height * arrowPositionPercentage));
         }
 
         /// <summary>
@@ -210,7 +253,7 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
-        #region Inner Update
+        #region Inner Update / Draw
         public void InnerUpdate(GameTime gameTime)
         {
             // Update the bullet explosion
@@ -231,6 +274,66 @@ namespace Duologue.PlayObjects
                 shieldRotation += shieldRotationDelta;
                 shieldSize = 1f + (shieldTimer / shieldLifetime) * shieldEndSize;
                 shieldPos += shieldSpeed * shieldDirection;
+            }
+
+            // Arrow
+            if (currentArrowColor < 0)
+            {
+                currentArrowColor = 0;
+                color_Arrow = new Color[]
+                {
+                    Color.TransparentBlack,
+                    GetMyColor(ColorState.Light),
+                    GetMyColor(ColorState.Medium),
+                    GetMyColor(ColorState.Dark)
+                };
+                timer_ColorSwitch = 0;
+            }
+
+            if (OffscreenArrow)
+            {
+                timer_ColorSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer_ColorSwitch > timeBetweenColorSwitched)
+                {
+                    currentArrowColor++;
+                    timer_ColorSwitch = 0;
+                    if (currentArrowColor >= color_Arrow.Length)
+                        currentArrowColor = 0;
+                }
+
+                pos_Arrow = Position;
+                displayArrow = false;
+                rotation_Arrow = 0;
+
+                if (Position.X < -Radius && hasSpawned)
+                {
+                    displayArrow = true;
+                    rotation_Arrow = 3f * MathHelper.PiOver2;
+                    pos_Arrow.X = arrowScreenBoundaries.X;
+                }
+                else if (Position.X > InstanceManager.DefaultViewport.Width + Radius && hasSpawned)
+                {
+                    displayArrow = true;
+                    rotation_Arrow = -3f * MathHelper.PiOver2;
+                    pos_Arrow.X = arrowScreenBoundaries.Z;
+                }
+
+                if (Position.Y < -Radius && hasSpawned)
+                {
+                    displayArrow = true;
+                    pos_Arrow.Y = arrowScreenBoundaries.Y;
+                }
+                else if (Position.Y > InstanceManager.DefaultViewport.Height + Radius && hasSpawned)
+                {
+                    displayArrow = true;
+                    rotation_Arrow = MathHelper.Pi;
+                    pos_Arrow.Y = arrowScreenBoundaries.W;
+                }
+
+                if (!hasSpawned &&
+                    (Position.X > Radius && Position.X < InstanceManager.DefaultViewport.Width + Radius &&
+                    Position.Y > Radius && Position.Y < InstanceManager.DefaultViewport.Height + Radius))
+                    hasSpawned = true;
             }
         }
 
@@ -266,6 +369,34 @@ namespace Duologue.PlayObjects
                     shieldSize,
                     1f,
                     RenderSpriteBlendMode.AlphaBlendTop);
+            }
+
+            // Arrow
+            if (displayArrow)
+            {
+                if (scale_Arrow == 0)
+                    scale_Arrow = RealSize.X / texture_ArrowMeat.Width;
+
+                InstanceManager.RenderSprite.Draw(
+                    texture_ArrowOutline,
+                    pos_Arrow,
+                    center_Arrow,
+                    null,
+                    Color.White,
+                    rotation_Arrow,
+                    scale_Arrow,
+                    0f,
+                    RenderSpriteBlendMode.AbsoluteTop);
+                InstanceManager.RenderSprite.Draw(
+                    texture_ArrowMeat,
+                    pos_Arrow,
+                    center_Arrow,
+                    null,
+                    color_Arrow[currentArrowColor],
+                    rotation_Arrow,
+                    scale_Arrow,
+                    0f,
+                    RenderSpriteBlendMode.AbsoluteTop);
             }
         }
 

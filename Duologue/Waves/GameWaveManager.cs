@@ -172,7 +172,7 @@ namespace Duologue.Waves
 
             // ERE I AM JH
             int NumWavelets = 1;
-            int NumEnemies = 4;
+            int NumEnemies = 15;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelets = new Wavelet[NumWavelets];
             int hitsToKillEnemy = 0;
@@ -235,7 +235,7 @@ namespace Duologue.Waves
                 //thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
                 //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                 if(MWMathHelper.IsEven(i))
-                    thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                    thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 else
                     thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Flambi;
                 thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
