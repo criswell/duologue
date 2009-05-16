@@ -66,8 +66,10 @@ namespace Duologue.PlayObjects
 
         private const double timeBetweenColorSwitches = 0.33;
         private const double timeToThink = 0.202;
-        private const double timeFlareUp = 0.25;
+        private const double timeFlareUp = 0.5;
         private const double timeFlareDown = 0.1;
+
+        private const double shieldCoolOffTime = 0.2;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -104,6 +106,8 @@ namespace Duologue.PlayObjects
         private float rotation_OuterRing;
 
         private SpawnerState currentState;
+
+        private double shieldCoolOff;
 
         private Vector2 nextPosition;
         private float travelLength;
@@ -230,6 +234,8 @@ namespace Duologue.PlayObjects
             };
 
             weightedNiggletList = new List<TypesOfPlayObjects>();
+
+            shieldCoolOff = 0;
 
             Alive = true;
             Initialized = true;
@@ -464,7 +470,8 @@ namespace Duologue.PlayObjects
         public override bool TriggerHit(PlayObject pobj)
         {
             if (pobj.MajorType == MajorPlayObjectType.PlayerBullet && 
-                (currentState == SpawnerState.FlareUp || currentState == SpawnerState.FlareDown))
+                (currentState == SpawnerState.FlareUp || currentState == SpawnerState.FlareDown)
+                && shieldCoolOff >= shieldCoolOffTime)
             {
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
@@ -584,11 +591,6 @@ namespace Duologue.PlayObjects
                 timer_Thinking = 0;
                 timer_Flare = 0;
                 currentState = SpawnerState.FlareUp;
-                if (MWMathHelper.CoinToss())
-                    ColorPolarity = ColorPolarity.Positive;
-                else
-                    ColorPolarity = ColorPolarity.Negative;
-                color_Current = GetMyColor(ColorState.Light);
             }
         }
 
@@ -613,6 +615,11 @@ namespace Duologue.PlayObjects
             {
                 timer_Flare = 0;
                 currentState = SpawnerState.Moving;
+                if (MWMathHelper.CoinToss())
+                    ColorPolarity = ColorPolarity.Positive;
+                else
+                    ColorPolarity = ColorPolarity.Negative;
+                color_Current = GetMyColor(ColorState.Light);
             }
         }
 
@@ -705,6 +712,10 @@ namespace Duologue.PlayObjects
                 timer_ColorSwitchCountdown = 0;
                 SetLightColors();
             }
+
+            shieldCoolOff += gameTime.ElapsedGameTime.TotalSeconds;
+            if (shieldCoolOff > shieldCoolOffTime)
+                shieldCoolOff = shieldCoolOffTime;
 
             Update_Rotate();
 
