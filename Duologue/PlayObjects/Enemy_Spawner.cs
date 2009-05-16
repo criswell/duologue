@@ -69,7 +69,7 @@ namespace Duologue.PlayObjects
         private const double timeFlareUp = 0.5;
         private const double timeFlareDown = 0.1;
 
-        private const double shieldCoolOffTime = 0.2;
+        private const double shieldCoolOffTime = 0.3;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat

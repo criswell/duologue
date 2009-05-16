@@ -2311,7 +2311,7 @@ namespace Duologue.Waves
             #region
             Wavelets[1] = new Wavelet(20, 0, ColorPolarity.Positive);
             Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
-            for (int i = 1; i < Wavelets[1].Enemies.Length; i++)
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
                 Wavelets[1].StartAngle[i] = 0;
@@ -2420,6 +2420,36 @@ namespace Duologue.Waves
             #endregion
 
             #region WaveDef (10-3) "Attenuated Turbidity"
+            #region Metadata
+            Waves[GetIndex(10, 3)] = new GameWave();
+            Waves[GetIndex(10, 3)].Background = 3;
+            Waves[GetIndex(10, 3)].ThrobColor = new Color(119, 203, 191);
+            Waves[GetIndex(10, 3)].ColorState = 2;
+            Waves[GetIndex(10, 3)].MajorWaveNumber = 10;
+            Waves[GetIndex(10, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(10, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(10, 3)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(10, 3)].ParallaxElementTop.Tint = new Color(203, 238, 169);
+            Waves[GetIndex(10, 3)].ParallaxElementTop.Speed = 0.4f;
+            Waves[GetIndex(10, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(10, 3)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(10, 3)].ParallaxElementBottom.Tint = new Color(203, 238, 169);
+            Waves[GetIndex(10, 3)].ParallaxElementBottom.Speed = 0.3f;
+            Waves[GetIndex(10, 3)].Name = "Benthopelagic Bestiary";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(10, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
 
