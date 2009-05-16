@@ -1789,7 +1789,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(30, 0);
+            Wavelets[0] = new Wavelet(20, 0);
             Wavelets[0].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -1817,14 +1817,14 @@ namespace Duologue.Waves
                     else
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
-                    Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / 25f;
+                    Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / 15f;
                     Wavelets[0].StartHitPoints[i] = 2;
                 }
             }
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(30, 0);
+            Wavelets[1] = new Wavelet(25, 0);
             Wavelets[1].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
@@ -1858,14 +1858,14 @@ namespace Duologue.Waves
                     else
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
-                    Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / 25f;
+                    Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / 20f;
                     Wavelets[1].StartHitPoints[i] = 2;
                 }
             }
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(40, 0);
+            Wavelets[2] = new Wavelet(30, 0);
             Wavelets[2].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -1899,7 +1899,7 @@ namespace Duologue.Waves
                     else
                         Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
-                    Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 30f;
+                    Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 25f;
                     Wavelets[2].StartHitPoints[i] = 2;
                 }
             }
@@ -1965,7 +1965,7 @@ namespace Duologue.Waves
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(40, 0);
+            Wavelets[1] = new Wavelet(30, 0);
             Wavelets[1].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[1].Enemies.Length/2f; i++)
             {
@@ -1990,7 +1990,7 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(60, 0);
+            Wavelets[2] = new Wavelet(35, 0);
             Wavelets[2].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[2].Enemies.Length / 2f; i++)
             {
@@ -2298,6 +2298,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            // FIXME WE CRASH AFTER THIS WAVELET
             Wavelets[0] = new Wavelet(10, 0, ColorPolarity.Negative);
             Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
