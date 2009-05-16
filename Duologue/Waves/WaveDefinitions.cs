@@ -2298,7 +2298,6 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            // FIXME WE CRASH AFTER THIS WAVELET
             Wavelets[0] = new Wavelet(10, 0, ColorPolarity.Negative);
             Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
@@ -2386,8 +2385,6 @@ namespace Duologue.Waves
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
 
                 if (i / 4f == i / 4)
-                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
-                else if (i / 3f == i / 3)
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                 else
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2405,10 +2402,10 @@ namespace Duologue.Waves
                 else
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
 
-                if (i / 4f == i / 4)
-                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
-                else if (i / 3f == i / 3)
+                if (i >= Wavelets[2].Enemies.Length-2)
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                else if (i / 4f == i / 4)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 else if (i / 5f == i / 5)
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 else
@@ -2441,12 +2438,66 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(40, 1, ColorPolarity.Negative);
+            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[0].StartAngle[i] = 0;
+            }
+            Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 15;
+            Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 1] = MathHelper.PiOver2 * 3f;
+            Wavelets[0].ColorPolarities[Wavelets[0].Enemies.Length - 1] = ColorPolarity.Positive;
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(40, 0);
+            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[1].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+
+                if (i / 4f == i / 4)
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                else if (i / 3f == i / 3)
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                else
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+            }
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[1].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 15;
+            Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 1] = MathHelper.Pi;
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(40, 0);
+            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[2].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+
+                if (i >= Wavelets[2].Enemies.Length - 2) {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+                    Wavelets[2].StartHitPoints[i] = 15;
+                }
+                else if (i / 4f == i / 4)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                else if (i / 3f == i / 3)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                else if (i / 5f == i / 5)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                else
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+            }
             #endregion
 
             Waves[GetIndex(10, 3)].Wavelets = Wavelets;
