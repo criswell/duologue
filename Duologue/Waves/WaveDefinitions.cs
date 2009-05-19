@@ -48,7 +48,7 @@ namespace Duologue.Waves
     public class WaveDefinitions
     {
         #region Constants
-        private const int maxNumberOfMajorWaves = 13;
+        private const int maxNumberOfMajorWaves = 14;
         private const int numberOfWavelets = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
         #endregion
 
@@ -3059,7 +3059,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 13
+            #region Wave 13 - Flambi used
             #region WaveDef (13-1) "Rampant volcanism"
             #region Metadata
             Waves[GetIndex(13, 1)] = new GameWave();
@@ -3302,6 +3302,47 @@ namespace Duologue.Waves
             #endregion
 
             Waves[GetIndex(13, 3)].Wavelets = Wavelets;
+            #endregion
+            #endregion
+
+            #region Wave 14 (Boss)
+            #region WaveDef (14-1) "Screamin' Meanies"
+            #region Metadata
+            Waves[GetIndex(13, 3)] = new GameWave();
+            Waves[GetIndex(13, 3)].Background = 0;
+            Waves[GetIndex(13, 3)].ThrobColor = new Color(255, 0, 162);
+            Waves[GetIndex(13, 3)].ColorState = 1;
+            Waves[GetIndex(13, 3)].MajorWaveNumber = 13;
+            Waves[GetIndex(13, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(13, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(13, 3)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(13, 3)].ParallaxElementTop.Tint = new Color(255, 138, 0);
+            Waves[GetIndex(13, 3)].ParallaxElementTop.Speed = -0.6f;
+            Waves[GetIndex(13, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(13, 3)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(13, 3)].ParallaxElementBottom.Tint = new Color(255, 138, 0);
+            Waves[GetIndex(13, 3)].ParallaxElementBottom.Speed = 0.5f;
+            Waves[GetIndex(13, 3)].Name = "Cult of Helios";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(13, 3)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (14-2)
+            #endregion
+
+            #region WaveDef (14-3)
             #endregion
             #endregion
 
