@@ -81,7 +81,7 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPointMultiplier = 15;
+        private const int realHitPointMultiplier = 5;
 
         /// <summary>
         /// The multiplier for point value tweaks based upon hitpoints
