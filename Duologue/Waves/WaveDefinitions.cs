@@ -3305,7 +3305,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 14 (Boss)
+            #region Wave 14 (Boss) - Flambi used
             #region WaveDef (14-1) "Screamin' Meanies"
             #region Metadata
             Waves[GetIndex(14, 1)] = new GameWave();
@@ -3384,7 +3384,131 @@ namespace Duologue.Waves
             Waves[GetIndex(14, 1)].Wavelets = Wavelets;
             #endregion
 
-            #region WaveDef (14-2)
+            #region WaveDef (14-2) "Phaeton, rediscovered"
+            #region Metadata
+            Waves[GetIndex(14, 2)] = new GameWave();
+            Waves[GetIndex(14, 2)].Background = 0;
+            Waves[GetIndex(14, 2)].ThrobColor = new Color(255, 0, 162);
+            Waves[GetIndex(14, 2)].ColorState = 1;
+            Waves[GetIndex(14, 2)].MajorWaveNumber = 14;
+            Waves[GetIndex(14, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(14, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(14, 2)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(14, 2)].ParallaxElementTop.Tint = new Color(255, 66, 0);
+            Waves[GetIndex(14, 2)].ParallaxElementTop.Speed = -0.6f;
+            Waves[GetIndex(14, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(14, 2)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(14, 2)].ParallaxElementBottom.Tint = new Color(255, 138, 0);
+            Waves[GetIndex(14, 2)].ParallaxElementBottom.Speed = 0.5f;
+            Waves[GetIndex(14, 2)].Name = "Phaeton, rediscovered";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(30, 0);
+            Wavelets[0].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[0].StartHitPoints[i] = 2;
+                }
+                else
+                {
+                    if (i / 3f == i / 3)
+                    {
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                        Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                    }
+                    else if (i / 4f == i / 4)
+                    {
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                        Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                    }
+                    else if (i >= Wavelets[0].Enemies.Length - 4)
+                    {
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
+                        Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                        Wavelets[0].StartHitPoints[i] = 2;
+                    }
+                    else
+                    {
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                        Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                    }
+                }
+                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(40, 0);
+            Wavelets[1].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+
+                if (i <= 15)
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                }
+                else if (i == 16)
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Flambi;
+                }
+                else if (i > 16 && i < 25)
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                }
+                else if (i >= 25 && i < 33)
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                }
+                else
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                }
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(40, 2);
+            Wavelets[2].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+
+                if (i / 3f == i / 3)
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                }
+                else if (i / 5f == i / 5)
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
+                }
+                else if (i > Wavelets[2].Enemies.Length - 3)
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Flambi;
+                }
+                else
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                }
+            }
+            #endregion
+
+            Waves[GetIndex(14, 2)].Wavelets = Wavelets;
             #endregion
 
             #region WaveDef (14-3)

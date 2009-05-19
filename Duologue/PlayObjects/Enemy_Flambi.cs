@@ -430,7 +430,7 @@ namespace Duologue.PlayObjects
                     Position,
                     center_Flame[i],
                     null,
-                    new Color(flameColor, MathHelper.Lerp(alpha_MinFlame, alpha_MaxFlame, state_Flame[i])),
+                    new Color(flameColor, MathHelper.Lerp(alpha_MaxFlame, alpha_MinFlame, state_Flame[i])),
                     rotation_Flame[i],
                     MathHelper.Lerp(scale_MaxFlame, scale_MinFlame, state_Flame[i]),
                     0f,
