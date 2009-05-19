@@ -2824,6 +2824,239 @@ namespace Duologue.Waves
             #endregion
 
             #region Wave 12 (Boss)
+            #region Wave (12-1) "Peleus and Thetis begat Achilles"
+            #region Metadata
+            Waves[GetIndex(12, 1)] = new GameWave();
+            Waves[GetIndex(12, 1)].Background = 3;
+            Waves[GetIndex(12, 1)].ThrobColor = new Color(119, 203, 191);
+            Waves[GetIndex(12, 1)].ColorState = 2;
+            Waves[GetIndex(12, 1)].MajorWaveNumber = 12;
+            Waves[GetIndex(12, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(12, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(12, 1)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(12, 1)].ParallaxElementTop.Tint = new Color(0, 167, 83);
+            Waves[GetIndex(12, 1)].ParallaxElementTop.Speed = 0.5f;
+            Waves[GetIndex(12, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(12, 1)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(12, 1)].ParallaxElementBottom.Tint = new Color(0, 167, 83);
+            Waves[GetIndex(12, 1)].ParallaxElementBottom.Speed = 0.5f;
+            Waves[GetIndex(12, 1)].Name = "Peleus and Thetis begat Achilles";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(50, 2);
+            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[0].StartAngle[i] = 0;
+                Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+            }
+            for (int i = Wavelets[0].Enemies.Length - 4; i < Wavelets[0].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+                else
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
+                Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / 4f;
+                Wavelets[0].StartHitPoints[i] = 20;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(50, 2);
+            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[1].StartAngle[i] = MathHelper.TwoPi;
+                Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_KingGloop;
+            Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 1] = ColorPolarity.Positive;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 20;
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(50, 2);
+            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[2].StartAngle[i] = 0;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            for (int i = Wavelets[2].Enemies.Length - 4; i < Wavelets[2].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
+                else
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 4f;
+                Wavelets[2].StartHitPoints[i] = 10;
+            }
+            #endregion
+
+            Waves[GetIndex(12, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region Wave (12-2) "Enter ProtoNora"
+            #region Metadata
+            Waves[GetIndex(12, 2)] = new GameWave();
+            Waves[GetIndex(12, 2)].Background = 3;
+            Waves[GetIndex(12, 2)].ThrobColor = new Color(119, 203, 191);
+            Waves[GetIndex(12, 2)].ColorState = 2;
+            Waves[GetIndex(12, 2)].MajorWaveNumber = 12;
+            Waves[GetIndex(12, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(12, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(12, 2)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(12, 2)].ParallaxElementTop.Tint = new Color(0, 112, 55);
+            Waves[GetIndex(12, 2)].ParallaxElementTop.Speed = 0.5f;
+            Waves[GetIndex(12, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(12, 2)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(12, 2)].ParallaxElementBottom.Tint = new Color(0, 112, 55);
+            Waves[GetIndex(12, 2)].ParallaxElementBottom.Speed = 0.5f;
+            Waves[GetIndex(12, 2)].Name = "Enter ProtoNora";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(50, 0);
+            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[0].StartAngle[i] = 0;
+                Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+            }
+            Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_ProtoNora;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 4;
+            Wavelets[0].ColorPolarities[Wavelets[0].Enemies.Length - 1] = ColorPolarity.Negative;
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(50, 2);
+            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[1].StartAngle[i] = MathHelper.TwoPi;
+                Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_ProtoNora;
+            Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 1] = ColorPolarity.Positive;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 5;
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(50, 0);
+            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[2].StartAngle[i] = 0;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            for (int i = Wavelets[2].Enemies.Length - 3; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
+                Wavelets[2].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f;
+                Wavelets[2].StartHitPoints[i] = 5;
+            }
+            #endregion
+
+            Waves[GetIndex(12, 2)].Wavelets = Wavelets;
+            #endregion
+
+            #region Wave (12-3) "ProtoNora Infection"
+            #region Metadata
+            Waves[GetIndex(12, 3)] = new GameWave();
+            Waves[GetIndex(12, 3)].Background = 3;
+            Waves[GetIndex(12, 3)].ThrobColor = new Color(119, 203, 191);
+            Waves[GetIndex(12, 3)].ColorState = 2;
+            Waves[GetIndex(12, 3)].MajorWaveNumber = 12;
+            Waves[GetIndex(12, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(12, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(12, 3)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(12, 3)].ParallaxElementTop.Tint = new Color(0, 34, 112);
+            Waves[GetIndex(12, 3)].ParallaxElementTop.Speed = 0.5f;
+            Waves[GetIndex(12, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(12, 3)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(12, 3)].ParallaxElementBottom.Tint = new Color(0, 34, 122);
+            Waves[GetIndex(12, 3)].ParallaxElementBottom.Speed = 0.5f;
+            Waves[GetIndex(12, 3)].Name = "ProtoNora Infection";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(50, 0);
+            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[0].StartAngle[i] = 0;
+                Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+            }
+            for (int i = Wavelets[0].Enemies.Length - 3; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
+                Wavelets[0].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f + MathHelper.Pi;
+                Wavelets[0].StartHitPoints[i] = 5;
+                Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(50, 2);
+            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[1].StartAngle[i] = MathHelper.TwoPi;
+                Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            for (int i = Wavelets[1].Enemies.Length - 3; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
+                Wavelets[1].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f + MathHelper.PiOver4 * 5f;
+                Wavelets[1].StartHitPoints[i] = 5;
+                Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(50, 2);
+            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[2].StartAngle[i] = 0;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            for (int i = Wavelets[2].Enemies.Length - 5; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
+                Wavelets[2].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f;
+                Wavelets[2].StartHitPoints[i] = 5;
+            }
+            #endregion
+
+            Waves[GetIndex(12, 3)].Wavelets = Wavelets;
+            #endregion
             #endregion
 
             /*
