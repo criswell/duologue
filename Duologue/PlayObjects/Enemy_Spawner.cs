@@ -69,7 +69,7 @@ namespace Duologue.PlayObjects
         private const double timeFlareUp = 0.5;
         private const double timeFlareDown = 0.1;
 
-        private const double shieldCoolOffTime = 0.3;
+        private const double shieldCoolOffTime = 0.2;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -474,6 +474,7 @@ namespace Duologue.PlayObjects
                 && shieldCoolOff >= shieldCoolOffTime)
             {
                 CurrentHitPoints--;
+                shieldCoolOff = 0;
                 if (CurrentHitPoints <= 0)
                 {
                     MyManager.TriggerPoints(
