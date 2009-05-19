@@ -3308,35 +3308,80 @@ namespace Duologue.Waves
             #region Wave 14 (Boss)
             #region WaveDef (14-1) "Screamin' Meanies"
             #region Metadata
-            Waves[GetIndex(13, 3)] = new GameWave();
-            Waves[GetIndex(13, 3)].Background = 0;
-            Waves[GetIndex(13, 3)].ThrobColor = new Color(255, 0, 162);
-            Waves[GetIndex(13, 3)].ColorState = 1;
-            Waves[GetIndex(13, 3)].MajorWaveNumber = 13;
-            Waves[GetIndex(13, 3)].MinorWaveNumber = 3;
-            Waves[GetIndex(13, 3)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(13, 3)].ParallaxElementTop.Intensity = 2;
-            Waves[GetIndex(13, 3)].ParallaxElementTop.Tint = new Color(255, 138, 0);
-            Waves[GetIndex(13, 3)].ParallaxElementTop.Speed = -0.6f;
-            Waves[GetIndex(13, 3)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(13, 3)].ParallaxElementBottom.Intensity = 1;
-            Waves[GetIndex(13, 3)].ParallaxElementBottom.Tint = new Color(255, 138, 0);
-            Waves[GetIndex(13, 3)].ParallaxElementBottom.Speed = 0.5f;
-            Waves[GetIndex(13, 3)].Name = "Cult of Helios";
+            Waves[GetIndex(14, 1)] = new GameWave();
+            Waves[GetIndex(14, 1)].Background = 0;
+            Waves[GetIndex(14, 1)].ThrobColor = new Color(255, 0, 162);
+            Waves[GetIndex(14, 1)].ColorState = 1;
+            Waves[GetIndex(14, 1)].MajorWaveNumber = 14;
+            Waves[GetIndex(14, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(14, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(14, 1)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(14, 1)].ParallaxElementTop.Tint = new Color(255, 66, 0);
+            Waves[GetIndex(14, 1)].ParallaxElementTop.Speed = -0.6f;
+            Waves[GetIndex(14, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(14, 1)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(14, 1)].ParallaxElementBottom.Tint = new Color(255, 138, 0);
+            Waves[GetIndex(14, 1)].ParallaxElementBottom.Speed = 0.5f;
+            Waves[GetIndex(14, 1)].Name = "Screamin' Meanies";
             #endregion
 
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(10, 0);
+            Wavelets[0].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                if(MWMathHelper.IsEven(i))
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
+                else
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                Wavelets[0].ColorPolarities[i] = ColorState.RandomPolarity();
+                Wavelets[0].StartAngle[i] = i * MathHelper.PiOver2 / (float)Wavelets[0].Enemies.Length + MathHelper.PiOver2;
+            }
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(15, 0);
+            Wavelets[1].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                if(MWMathHelper.IsEven(i)) 
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
+                    Wavelets[1].ColorPolarities[i] = ColorState.RandomPolarity();
+                } else 
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                Wavelets[1].StartAngle[i] = i * MathHelper.PiOver2 / (float)Wavelets[1].Enemies.Length + MathHelper.PiOver2 * 3f;
+            }
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(20, 0);
+            Wavelets[2].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                {
+                    if (i > 12)
+                        Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
+                    else
+                        Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                    Wavelets[2].ColorPolarities[i] = ColorState.RandomPolarity();
+                }
+                else
+                {
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                }
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+            }
             #endregion
 
-            Waves[GetIndex(13, 3)].Wavelets = Wavelets;
+            Waves[GetIndex(14, 1)].Wavelets = Wavelets;
             #endregion
 
             #region WaveDef (14-2)
