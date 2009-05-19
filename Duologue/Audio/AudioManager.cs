@@ -66,7 +66,7 @@ namespace Duologue.Audio
             songMap.Add(SongID.Dance8ths, music.Dance8ths);
             songMap.Add(SongID.LandOfSand16ths, music.LandOfSand16ths);
             songMap.Add(SongID.Credits, music.Credits);
-            songMap.Add(SongID.Ultrafix, music.WinOne);
+            songMap.Add(SongID.Ultrafix, music.Ultrafix);
             songMap.Add(SongID.WinOne, music.WinOne);
 
             base.Initialize();
