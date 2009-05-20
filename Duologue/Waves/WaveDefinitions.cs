@@ -4224,7 +4224,7 @@ namespace Duologue.Waves
             Waves[GetIndex(17, 1)].Wavelets = Wavelets;
             #endregion
 
-            #region WaveDef (17-2)
+            #region WaveDef (17-2) "Dvalinn calms Duneyrr and Durapror"
             #region Metadata
             Waves[GetIndex(17, 2)] = new GameWave();
             Waves[GetIndex(17, 2)].Background = 1;
@@ -4233,27 +4233,114 @@ namespace Duologue.Waves
             Waves[GetIndex(17, 2)].MajorWaveNumber = 17;
             Waves[GetIndex(17, 2)].MinorWaveNumber = 2;
             Waves[GetIndex(17, 2)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(17, 2)].ParallaxElementTop.Intensity = 4;
-            Waves[GetIndex(17, 2)].ParallaxElementTop.Tint = new Color(111, 112, 96);
+            Waves[GetIndex(17, 2)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(17, 2)].ParallaxElementTop.Tint = new Color(111, 112, 193);
             Waves[GetIndex(17, 2)].ParallaxElementTop.Speed = 0.7f;
             Waves[GetIndex(17, 2)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(17, 2)].ParallaxElementBottom.Intensity = 4;
-            Waves[GetIndex(17, 2)].ParallaxElementBottom.Tint = new Color(111, 112, 193);
+            Waves[GetIndex(17, 2)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(17, 2)].ParallaxElementBottom.Tint = new Color(111, 112, 96);
             Waves[GetIndex(17, 2)].ParallaxElementBottom.Speed = -0.7f;
-            Waves[GetIndex(17, 2)].Name = "Dainn alive";
+            Waves[GetIndex(17, 2)].Name = "Dvalinn calms Duneyrr and Durapror";
             #endregion
 
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(40, 0);
+            Wavelets[0] = new Wavelet(40, 3);
             Wavelets[0].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].StartAngle[i] = i * 3f * MathHelper.PiOver2 / (float)Wavelets[0].Enemies.Length - MathHelper.PiOver4;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+
+                if (i / 4f == i / 4)
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+                }
+                else if (i /5f == i / 5f)
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                }
+                else
+                {
+                    if (MWMathHelper.IsEven(i))
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
+                    else
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                }
+            }
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(40, 3);
+            Wavelets[1].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                if (i < Wavelets[1].Enemies.Length / 2f)
+                {
+                    Wavelets[1].StartAngle[i] = 0;
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                    if (MWMathHelper.IsEven(i))
+                    {
+                        Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                        Wavelets[1].StartHitPoints[i] = 0;
+                    }
+                    else
+                        Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
+                }
+                else
+                {
+                    Wavelets[1].StartAngle[i] = MathHelper.Pi;
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                    if (MWMathHelper.IsEven(i))
+                    {
+                        Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                        Wavelets[1].StartHitPoints[i] = 0;
+                    }
+                    else
+                        Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                }
+            }
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 2] = ColorPolarity.Negative;
+            Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 2] = MathHelper.Pi;
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 1] = ColorPolarity.Positive;
+            Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 1] = 0;
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(40, 3);
+            Wavelets[2].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+                Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                else
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+            }
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_MetalTooth;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 2] = ColorPolarity.Negative;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = 3f * MathHelper.PiOver4;
+            
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Positive;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 7f * MathHelper.PiOver4;
+            
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 3] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 3] = ColorPolarity.Negative;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 3] = MathHelper.PiOver4;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 3] = 0;
+
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 4] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 4] = ColorPolarity.Positive;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 4] = 5f * MathHelper.PiOver4;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 4] = 0;
             #endregion
 
             Waves[GetIndex(17, 2)].Wavelets = Wavelets;
