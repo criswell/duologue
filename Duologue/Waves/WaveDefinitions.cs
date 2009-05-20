@@ -3711,7 +3711,7 @@ namespace Duologue.Waves
             {
                 Wavelets[i] = new Wavelet(20 + i * 20, 3);
                 Wavelets[i].SongID = SongID.Ultrafix;
-                for (int j = 0; j < Wavelets[i].Enemies.Length; i++)
+                for (int j = 0; j < Wavelets[i].Enemies.Length; j++)
                 {
                     Wavelets[i].Enemies[j] = TypesOfPlayObjects.Enemy_Buzzsaw;
                     Wavelets[i].StartAngle[j] = j * MathHelper.TwoPi / (float)Wavelets[i].Enemies.Length;
@@ -4346,7 +4346,42 @@ namespace Duologue.Waves
             Waves[GetIndex(17, 2)].Wavelets = Wavelets;
             #endregion
 
-            #region WaveDef (17-3)
+            #region WaveDef (17-3) "Loving the Alien"
+            #region Metadata
+            Waves[GetIndex(17, 3)] = new GameWave();
+            Waves[GetIndex(17, 3)].Background = 0;
+            Waves[GetIndex(17, 3)].ThrobColor = new Color(209, 216, 136);
+            Waves[GetIndex(17, 3)].ColorState = 1;
+            Waves[GetIndex(17, 3)].MajorWaveNumber = 17;
+            Waves[GetIndex(17, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(17, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(17, 3)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(17, 3)].ParallaxElementTop.Tint = new Color(111, 112, 193);
+            Waves[GetIndex(17, 3)].ParallaxElementTop.Speed = 1.2f;
+            Waves[GetIndex(17, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(17, 3)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(17, 3)].ParallaxElementBottom.Tint = new Color(111, 112, 96);
+            Waves[GetIndex(17, 3)].ParallaxElementBottom.Speed = -1.2f;
+            Waves[GetIndex(17, 3)].Name = "Loving the Alien";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(40, 0);
+            Wavelets[0].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+            }
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(17, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
 
