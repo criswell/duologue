@@ -3598,13 +3598,175 @@ namespace Duologue.Waves
             #endregion
 
             #region Wave 15
-            #region WaveDef (15-1)
+            #region WaveDef (15-1) "Anunnaki alchemist"
+            #region Metadata
+            Waves[GetIndex(15, 1)] = new GameWave();
+            Waves[GetIndex(15, 1)].Background = 1;
+            Waves[GetIndex(15, 1)].ThrobColor = new Color(255, 0, 222);
+            Waves[GetIndex(15, 1)].ColorState = 2;
+            Waves[GetIndex(15, 1)].MajorWaveNumber = 15;
+            Waves[GetIndex(15, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(15, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(15, 1)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(15, 1)].ParallaxElementTop.Tint = new Color(96, 46, 64);
+            Waves[GetIndex(15, 1)].ParallaxElementTop.Speed = -0.3f;
+            Waves[GetIndex(15, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(15, 1)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(15, 1)].ParallaxElementBottom.Tint = new Color(96, 181, 64);
+            Waves[GetIndex(15, 1)].ParallaxElementBottom.Speed = 0.7f;
+            Waves[GetIndex(15, 1)].Name = "Anunnaki alchemist";
             #endregion
 
-            #region WaveDef (15-2)
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(30, 3);
+            Wavelets[0].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                }
+                else
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                }
+
+                if (i < Wavelets[0].Enemies.Length / 2f)
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(30, 3);
+            Wavelets[1].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                }
+                else
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                }
+
+                if (i < Wavelets[1].Enemies.Length / 2f)
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(30, 3);
+            Wavelets[2].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                else
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+            }
             #endregion
 
-            #region WaveDef (15-3)
+            Waves[GetIndex(15, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (15-2) "Ninhursag's silk spinners"
+            #region Metadata
+            Waves[GetIndex(15, 2)] = new GameWave();
+            Waves[GetIndex(15, 2)].Background = 1;
+            Waves[GetIndex(15, 2)].ThrobColor = new Color(255, 0, 222);
+            Waves[GetIndex(15, 2)].ColorState = 2;
+            Waves[GetIndex(15, 2)].MajorWaveNumber = 15;
+            Waves[GetIndex(15, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(15, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(15, 2)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(15, 2)].ParallaxElementTop.Tint = new Color(96, 181, 64);
+            Waves[GetIndex(15, 2)].ParallaxElementTop.Speed = -0.3f;
+            Waves[GetIndex(15, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(15, 2)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(15, 2)].ParallaxElementBottom.Tint = new Color(96, 46, 64);
+            Waves[GetIndex(15, 2)].ParallaxElementBottom.Speed = 0.7f;
+            Waves[GetIndex(15, 2)].Name = "Ninhursag's silk spinners";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // Wavelets
+            #region
+            for (int i = 0; i < Wavelets.Length; i++)
+            {
+                Wavelets[i] = new Wavelet(20 + i * 20, 3);
+                Wavelets[i].SongID = SongID.Ultrafix;
+                for (int j = 0; j < Wavelets[i].Enemies.Length; i++)
+                {
+                    Wavelets[i].Enemies[j] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    Wavelets[i].StartAngle[j] = j * MathHelper.TwoPi / (float)Wavelets[i].Enemies.Length;
+                    if (MWMathHelper.IsEven(j))
+                    {
+                        if (MWMathHelper.IsEven(i))
+                            Wavelets[i].ColorPolarities[j] = ColorPolarity.Positive;
+                        else
+                            Wavelets[i].ColorPolarities[j] = ColorPolarity.Negative;
+                    }
+                    else
+                    {
+                        if (!MWMathHelper.IsEven(i))
+                            Wavelets[i].ColorPolarities[j] = ColorPolarity.Positive;
+                        else
+                            Wavelets[i].ColorPolarities[j] = ColorPolarity.Negative;
+                    }
+                }
+            }            
+            #endregion
+
+            Waves[GetIndex(15, 2)].Wavelets = Wavelets;
+            #endregion
+
+            #region WaveDef (15-3) "Ninmah, Nintu and Nin-ki"
+            #region Metadata
+            Waves[GetIndex(15, 3)] = new GameWave();
+            Waves[GetIndex(15, 3)].Background = 1;
+            Waves[GetIndex(15, 3)].ThrobColor = new Color(255, 0, 222);
+            Waves[GetIndex(15, 3)].ColorState = 1;
+            Waves[GetIndex(15, 3)].MajorWaveNumber = 15;
+            Waves[GetIndex(15, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(15, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(15, 3)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(15, 3)].ParallaxElementTop.Tint = new Color(96, 46, 64);
+            Waves[GetIndex(15, 3)].ParallaxElementTop.Speed = -0.6f;
+            Waves[GetIndex(15, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(15, 3)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(15, 3)].ParallaxElementBottom.Tint = new Color(96, 181, 64);
+            Waves[GetIndex(15, 3)].ParallaxElementBottom.Speed = 1.4f;
+            Waves[GetIndex(15, 3)].Name = "Ninmah, Nintu and Nin-ki";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(15, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
 
