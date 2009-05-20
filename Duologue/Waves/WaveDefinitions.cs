@@ -4372,13 +4372,62 @@ namespace Duologue.Waves
             Wavelets[0].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
+                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].StartAngle.Length;
+                if (i / 4f == i / 4)
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
+                }
+                else
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                }
             }
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(40, 0);
+            Wavelets[1].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].StartAngle.Length + MathHelper.PiOver4;
+                if (i / 4f == i / 4)
+                {
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
+                }
+                else
+                {
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                }
+            }
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(50, 3);
+            Wavelets[2].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[2].StartAngle[i] = 0;
+                }
+                else
+                {
+                    Wavelets[2].StartAngle[i] = MathHelper.Pi;
+                }
+            }
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_UncleanRot;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 2] = ColorPolarity.Positive;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = 0;
+
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_UncleanRot;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Negative;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = MathHelper.Pi;
             #endregion
 
             Waves[GetIndex(17, 3)].Wavelets = Wavelets;
