@@ -3758,12 +3758,80 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(40, 3);
+            Wavelets[0].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+                }
+                else
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
+                    Wavelets[0].StartAngle[i] = MathHelper.Pi;
+                }
+                Wavelets[0].ColorPolarities[i] = ColorState.RandomPolarity();
+            }
+            Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
+            Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 1] = MathHelper.Pi;
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(40, 3);
+            Wavelets[1].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
+                }
+                else
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
+                    if (i > Wavelets[1].Enemies.Length / 2f)
+                        Wavelets[1].StartAngle[i] = MathHelper.Pi;
+                    else
+                        Wavelets[1].StartAngle[i] = 0;
+                }
+                Wavelets[1].ColorPolarities[i] = ColorState.RandomPolarity();
+            }
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
+            Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 1] = MathHelper.Pi;
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_MetalTooth;
+            Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 2] = 0;
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(50, 3);
+            Wavelets[2].SongID = SongID.Ultrafix;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                if (i > Wavelets[2].Enemies.Length - 5)
+                {
+                    Wavelets[2].StartAngle[i] = (Wavelets[2].Enemies.Length - i) * MathHelper.TwoPi/4f;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_MetalTooth;
+                    if (MWMathHelper.IsEven(i))
+                        Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                    else
+                        Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+                else
+                {
+                    Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+                    if (MWMathHelper.IsEven(i))
+                    {
+                        Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    }
+                    else
+                    {
+                        Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
+                    }
+                    Wavelets[2].ColorPolarities[i] = ColorState.RandomPolarity();
+                }
+            }
             #endregion
 
             Waves[GetIndex(15, 3)].Wavelets = Wavelets;
