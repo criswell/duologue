@@ -3839,6 +3839,153 @@ namespace Duologue.Waves
             #endregion
 
             #region Wave 16
+            #region Wavedef (16-1) "Abzu remnants"
+            #region Metadata
+            Waves[GetIndex(16, 1)] = new GameWave();
+            Waves[GetIndex(16, 1)].Background = 3;
+            Waves[GetIndex(16, 1)].ThrobColor = new Color(255, 212, 255);
+            Waves[GetIndex(16, 1)].ColorState = 0;
+            Waves[GetIndex(16, 1)].MajorWaveNumber = 16;
+            Waves[GetIndex(16, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(16, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(16, 1)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(16, 1)].ParallaxElementTop.Tint = new Color(255, 181, 126);
+            Waves[GetIndex(16, 1)].ParallaxElementTop.Speed = 0.2f;
+            Waves[GetIndex(16, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(16, 1)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(16, 1)].ParallaxElementBottom.Tint = new Color(255, 181, 126);
+            Waves[GetIndex(16, 1)].ParallaxElementBottom.Speed = 0.2f;
+            Waves[GetIndex(16, 1)].Name = "Abzu remnants";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(30, 2);
+            Wavelets[0].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                if (i > Wavelets[0].Enemies.Length - 4)
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    Wavelets[0].StartAngle[i] = 0;
+                    Wavelets[0].ColorPolarities[i] = ColorState.RandomPolarity();
+                }
+                else
+                {
+                    Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+                    if (MWMathHelper.IsEven(i))
+                    {
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                        Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                    }
+                    else
+                    {
+                        Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                        Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                    }
+                }
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(40, 2);
+            Wavelets[1].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
+                if (i > Wavelets[1].Enemies.Length / 2f)
+                {
+                    if (MWMathHelper.IsEven(i))
+                    {
+                        Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                        Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    }
+                    else
+                    {
+                        Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                        Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    }
+                }
+                else
+                {
+                    if (MWMathHelper.IsEven(i))
+                    {
+                        Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                        Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    }
+                    else
+                    {
+                        Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                        Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                    }
+                }
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(50, 3, ColorPolarity.Positive);
+            Wavelets[2].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                if (i > Wavelets[2].Enemies.Length - 3)
+                {
+                    Wavelets[2].StartAngle[i] = (Wavelets[2].Enemies.Length - i) * MathHelper.Pi;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
+                }
+                else
+                {
+                    Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)(Wavelets[2].Enemies.Length - 3);
+                    if (MWMathHelper.IsEven(i))
+                    {
+                        Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    }
+                    else
+                    {
+                        Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                    }
+                }
+            }
+            #endregion
+
+            Waves[GetIndex(16, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region Wavedef (16-2) "What Isimud beheld"
+            #region Metadata
+            Waves[GetIndex(16, 2)] = new GameWave();
+            Waves[GetIndex(16, 2)].Background = 2;
+            Waves[GetIndex(16, 2)].ThrobColor = new Color(255, 212, 255);
+            Waves[GetIndex(16, 2)].ColorState = 0;
+            Waves[GetIndex(16, 2)].MajorWaveNumber = 16;
+            Waves[GetIndex(16, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(16, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(16, 2)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(16, 2)].ParallaxElementTop.Tint = new Color(255, 181, 126);
+            Waves[GetIndex(16, 2)].ParallaxElementTop.Speed = 0.2f;
+            Waves[GetIndex(16, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(16, 2)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(16, 2)].ParallaxElementBottom.Tint = new Color(255, 181, 126);
+            Waves[GetIndex(16, 2)].ParallaxElementBottom.Speed = 0.2f;
+            Waves[GetIndex(16, 2)].Name = "What Isimud beheld";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(16, 2)].Wavelets = Wavelets;
+            #endregion
+
+            #region Wavedef (16-3)
+            #endregion
             #endregion
 
             #region Wave 17
