@@ -48,7 +48,7 @@ namespace Duologue.Waves
     public class WaveDefinitions
     {
         #region Constants
-        private const int maxNumberOfMajorWaves = 15;
+        private const int maxNumberOfMajorWaves = 16;
         private const int numberOfWavelets = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
         #endregion
 
@@ -3973,18 +3973,141 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(30, 0);
+            Wavelets[0].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                if(Wavelets[0].StartAngle[i] >= MathHelper.PiOver2 && Wavelets[0].StartAngle[i] <= MathHelper.PiOver2 *3f)
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+            }
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(40, 0);
+            Wavelets[1].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                if (Wavelets[1].StartAngle[i] >= 0 && Wavelets[1].StartAngle[i] <= MathHelper.Pi)
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+            }
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(35, 2);
+            Wavelets[2].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+                if (i > Wavelets[2].Enemies.Length - 2)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Flambi;
+                else
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+
+                if (Wavelets[2].StartAngle[i] >= 0 && Wavelets[2].StartAngle[i] <= MathHelper.Pi)
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+            }
             #endregion
 
             Waves[GetIndex(16, 2)].Wavelets = Wavelets;
             #endregion
 
-            #region Wavedef (16-3)
+            #region Wavedef (16-3) "Apsu and Tiamat"
+            #region Metadata
+            Waves[GetIndex(16, 3)] = new GameWave();
+            Waves[GetIndex(16, 3)].Background = 3;
+            Waves[GetIndex(16, 3)].ThrobColor = new Color(136, 181, 216);
+            Waves[GetIndex(16, 3)].ColorState = 2;
+            Waves[GetIndex(16, 3)].MajorWaveNumber = 16;
+            Waves[GetIndex(16, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(16, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(16, 3)].ParallaxElementTop.Intensity = 1;
+            Waves[GetIndex(16, 3)].ParallaxElementTop.Tint = new Color(136, 181, 126);
+            Waves[GetIndex(16, 3)].ParallaxElementTop.Speed = 0.2f;
+            Waves[GetIndex(16, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(16, 3)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(16, 3)].ParallaxElementBottom.Tint = new Color(136, 181, 126);
+            Waves[GetIndex(16, 3)].ParallaxElementBottom.Speed = 0.2f;
+            Waves[GetIndex(16, 3)].Name = "Apsu and Tiamat";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(30, 0);
+            Wavelets[0].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].StartAngle[i] = i * MathHelper.Pi / Wavelets[0].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                else
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(30, 0);
+            Wavelets[1].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.Pi / Wavelets[1].Enemies.Length + MathHelper.Pi;
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                else
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(50, 2);
+            Wavelets[2].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[2].StartAngle[i] = i * MathHelper.Pi / (float)Wavelets[2].Enemies.Length + 7f * MathHelper.PiOver4;
+                }
+                else
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[2].StartAngle[i] = i * MathHelper.Pi / (float)Wavelets[2].Enemies.Length + 3f * MathHelper.PiOver4;
+                }
+            }
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_KingGloop;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 2] = ColorPolarity.Positive;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = MathHelper.Pi;
+
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_Pyre;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Negative;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 0;
+            #endregion
+
+            Waves[GetIndex(16, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
 
