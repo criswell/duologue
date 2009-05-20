@@ -727,7 +727,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Negative);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
@@ -737,7 +737,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Positive);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
@@ -747,7 +747,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(8, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -777,7 +777,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Negative);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
@@ -787,7 +787,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Positive);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
@@ -797,7 +797,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(8, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -827,7 +827,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(6, 0);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -846,7 +846,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(6, 0);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -866,7 +866,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(9, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -911,7 +911,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(12, 0);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -929,7 +929,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(16, 0);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length - 4; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -960,7 +960,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(18, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length - 6; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -1015,7 +1015,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(12, 0);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -1034,7 +1034,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(16, 0);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length - 4; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -1066,7 +1066,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(18, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length - 6; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -1122,7 +1122,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(12, 0);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -1141,7 +1141,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(16, 0);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length - 6; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -1173,7 +1173,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(18, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length - 6; i++)
             {
                 if (MWMathHelper.IsEven(i))
@@ -1232,7 +1232,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Negative);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
@@ -1242,7 +1242,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Positive);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
@@ -1252,7 +1252,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(4, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
@@ -1290,7 +1290,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(20, 0, ColorPolarity.Negative);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length - 1; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
@@ -1303,7 +1303,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(20, 0, ColorPolarity.Positive);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length - 1; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
@@ -1316,7 +1316,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(40, 0);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
@@ -1368,7 +1368,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(25, 0);
-            Wavelets[0].SongID = SongID.Dance8ths;
+            Wavelets[0].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[0].Enemies.Length - 1; i++)
             {
                 if (i < 20)
@@ -1394,7 +1394,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(30, 0);
-            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[1].Enemies.Length - 1; i++)
             {
                 if (i < 24)
@@ -1425,7 +1425,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(50, 0, ColorPolarity.Negative);
-            Wavelets[2].SongID = SongID.Dance8ths;
+            Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length - 1; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
@@ -3457,23 +3457,23 @@ namespace Duologue.Waves
 
                 if (i <= 15)
                 {
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
                 }
                 else if (i == 16)
                 {
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Flambi;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Flambi;
                 }
                 else if (i > 16 && i < 25)
                 {
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                 }
                 else if (i >= 25 && i < 33)
                 {
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
                 }
                 else
                 {
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 }
             }
             #endregion
