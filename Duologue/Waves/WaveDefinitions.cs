@@ -2654,7 +2654,7 @@ namespace Duologue.Waves
             #region
             Wavelets[0] = new Wavelet(50, 0);
             Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
-            for (int i = 0; i < Wavelets[0].Enemies.Length - 20; i++)
+            for (int i = 0; i < Wavelets[0].Enemies.Length - 10; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
                 Wavelets[0].StartAngle[i] = 0;
@@ -2663,7 +2663,7 @@ namespace Duologue.Waves
                 else
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
             }
-            for (int i = Wavelets[0].Enemies.Length - 20; i < Wavelets[0].Enemies.Length; i++)
+            for (int i = Wavelets[0].Enemies.Length - 10; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / 20f;
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
@@ -2682,7 +2682,7 @@ namespace Duologue.Waves
             #region
             Wavelets[1] = new Wavelet(50, 0);
             Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
-            for (int i = 0; i < Wavelets[1].Enemies.Length - 20; i++)
+            for (int i = 0; i < Wavelets[1].Enemies.Length - 10; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
                 Wavelets[1].StartAngle[i] = 0;
@@ -2691,10 +2691,13 @@ namespace Duologue.Waves
                 else
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
             }
-            for (int i = Wavelets[1].Enemies.Length - 20; i < Wavelets[1].Enemies.Length; i++)
+            for (int i = Wavelets[1].Enemies.Length - 10; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / 20f;
-                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                else
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 if ((Wavelets[1].StartAngle[i] < MathHelper.PiOver4 || Wavelets[1].StartAngle[i] > 7f * MathHelper.PiOver4) ||
                     (Wavelets[1].StartAngle[i] >= 3f * MathHelper.PiOver4 && Wavelets[1].StartAngle[i] < 5f * MathHelper.PiOver4))
                 {
@@ -2727,7 +2730,10 @@ namespace Duologue.Waves
             for (int i = Wavelets[2].Enemies.Length - 20; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 20f;
-                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                else
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 if (Wavelets[2].StartAngle[i] < 3f * MathHelper.PiOver4 || Wavelets[2].StartAngle[i] > 7f * MathHelper.PiOver4)
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
