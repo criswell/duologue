@@ -50,10 +50,19 @@ namespace Duologue.PlayObjects
         private const double time_FreakOut = 0.5f;
         private const double time_FreakBlip = 0.08f;
 
+        private const double shieldCoolOffTime = 0.2;
+
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 1000;
+
         /// <summary>
         /// The multiplier for point value tweaks based upon hitpoints
         /// </summary>
         private const int hitPointMultiplier = 2;
+
+        private const float radiusMultiplier = 0.8f;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -79,6 +88,49 @@ namespace Duologue.PlayObjects
 
         private const float verticalOffsetHighlight = -30f;
         private const float verticalOffsetFlameCenter = 30f;
+
+        /// <summary>
+        /// How far we can go outside the screen before we should stop
+        /// </summary>
+        private const float outsideScreenMultiplier = 3;
+
+        #region Force interactions
+        /// <summary>
+        /// Standard repulsion of the enemy ships when too close
+        /// </summary>
+        private const float standardEnemyRepulse = 5f;
+
+        /// <summary>
+        /// Min number of how many of our radius size away we're comfortable with the player
+        /// </summary>
+        private const float minPlayerComfortRadiusMultiplier = 3.4f;
+
+        /// <summary>
+        /// Max number of our radius we're comfortable with the player
+        /// </summary>
+        private const float maxPlayerComfortRadiusMultiplier = 5.1f;
+
+        /// <summary>
+        /// The player attract modifier
+        /// </summary>
+        private const float playerAttract = 2.1f;
+
+        /// <summary>
+        /// The minimum movement required before we register motion
+        /// </summary>
+        private const float minMovement = 2f;
+
+        /// <summary>
+        /// The repulsion from the player if the player gets too close
+        /// this should be lower than attract so that the player can bump into them
+        /// </summary>
+        private const float playerRepulse = 1.5f;
+
+        /// <summary>
+        /// The rotate speed
+        /// </summary>
+        private const float rotateSpeed = 0.3f;
+        #endregion
         #endregion
 
         #region Fields
@@ -111,6 +163,16 @@ namespace Duologue.PlayObjects
         private float[] rotation_Flames;
         private int[] currentFlameFrame;
         private double timerFreakBlip;
+        private double shieldCoolOff;
+
+        // Movement stuff
+        private Vector2 offset;
+        private Vector2 nearestPlayer;
+        private float nearestPlayerRadius;
+        private bool isFleeing;
+
+        // Audio stuff
+        private AudioManager audio;
         #endregion
 
         #region Constructor / Init
@@ -148,7 +210,7 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints * realHitPointMultiplier;
             CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
-            //audio = ServiceLocator.GetService<AudioManager>();
+            audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
@@ -197,6 +259,8 @@ namespace Duologue.PlayObjects
                 0, 1, 2
             };
 
+            Radius = radiusMultiplier * texture_Body[0].Width / 2f;
+
             rotation_Tenticle = new float[]
             {
                 0,
@@ -221,6 +285,7 @@ namespace Duologue.PlayObjects
             // Set up state stuff
             currentState = LahmuState.Spawning;
             timeSinceStateChange = 0;
+            shieldCoolOff = 0;
             rotation_Flames = new float[numberOfFlames];
             spawnStateFlames = new float[numberOfFlames];
             currentFlameFrame = new int[numberOfFlames];
@@ -265,22 +330,171 @@ namespace Duologue.PlayObjects
         #region Public movement overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            offset = Vector2.Zero;
+            nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
+            nearestPlayer = Vector2.Zero;
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < nearestPlayerRadius)
+                {
+                    nearestPlayerRadius = len;
+                    nearestPlayer = vToPlayer;
+                }
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
+
+                // Beam handling
+                int temp = ((Player)pobj).IsInBeam(this);
+                isFleeing = false;
+                if (temp != 0)
+                {
+                    if (temp == -1)
+                    {
+                        isFleeing = true;
+                        LocalInstanceManager.Steam.AddParticles(Position, currentLayerColors[0]);
+                    }
+                }
+                return true;
+            }
+            else if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            {
+                // Enemy
+                Vector2 vToEnemy = pobj.Position - this.Position;
+                float len = vToEnemy.Length();
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // Too close, BTFO
+                    if (len == 0f)
+                    {
+                        // Well, bah, we're on top of each other!
+                        vToEnemy = new Vector2(
+                            (float)InstanceManager.Random.NextDouble() - 0.5f,
+                            (float)InstanceManager.Random.NextDouble() - 0.5f);
+                    }
+                    vToEnemy = Vector2.Negate(vToEnemy);
+                    vToEnemy.Normalize();
+                    offset += standardEnemyRepulse * vToEnemy;
+                }
+
+                return true;
+            }
+            else
+            {
+                // Other
+
+                return true;
+            }
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            if (nearestPlayer.Length() > 0f)
+            {
+                // 1st priority is the player
+                if (nearestPlayerRadius >= maxPlayerComfortRadiusMultiplier * Radius)
+                {
+                    // If we're outside our comfort radius, bear down on the player
+                    // like a mad man
+                    nearestPlayer.Normalize();
+
+                    if (!isFleeing)
+                        nearestPlayer = Vector2.Negate(nearestPlayer);
+
+                    offset += playerAttract * nearestPlayer;
+                }
+                else if (nearestPlayerRadius < maxPlayerComfortRadiusMultiplier * Radius &&
+                    nearestPlayerRadius >= minPlayerComfortRadiusMultiplier * Radius)
+                {
+                    // We're in our comfort zone, we just orbit the player
+                    nearestPlayer.Normalize();
+
+                    nearestPlayer = new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+
+                    offset += rotateSpeed * nearestPlayer;
+                }
+                else
+                {
+                    // We're too close to the player for comfort, let's BTFO
+                    nearestPlayer.Normalize();
+
+                    offset += playerRepulse * nearestPlayer;
+                }
+            }
+            else
+            {
+                // If no near player or leader, move in previous direction
+                nearestPlayer = Orientation;
+
+                nearestPlayer.Normalize();
+
+                offset += playerAttract * nearestPlayer;
+            }
+
+            // Next apply the offset permanently
+            if (offset.Length() >= minMovement)
+            {
+                this.Position += offset;
+                Orientation = new Vector2(-offset.Y, offset.X);
+            }
+
+            // Check boundaries
+            if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
+                this.Position.X = -1 * RealSize.X * outsideScreenMultiplier;
+            else if (this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
+                this.Position.X = InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier;
+
+            if (this.Position.Y < -1 * RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = -1 * RealSize.Y * outsideScreenMultiplier;
+            else if (this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier)
+                this.Position.Y = InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier;
+
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet
+                && shieldCoolOff >= shieldCoolOffTime)
+            {
+                CurrentHitPoints--;
+                shieldCoolOff = 0;
+                if (CurrentHitPoints <= 0)
+                {
+                    Alive = false;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                            Position, currentLayerColors[1]);
+                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                        Position, eyeColor[currentEyeColor]);
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
+                    /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(
+                        texture_Flame[0],
+                        currentLayerColors[1],
+                        Position,
+                        0f);
+                    //MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
+                    /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
+                    audio.PlayEffect(EffectID.CokeBottle);
+                    return true;
+                }
+            }
+            return true;
         }
         #endregion
 
@@ -396,6 +610,10 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
+            shieldCoolOff += gameTime.ElapsedGameTime.TotalSeconds;
+            if (shieldCoolOff > shieldCoolOffTime)
+                shieldCoolOff = shieldCoolOffTime;
+
             timeSinceStateChange += gameTime.ElapsedGameTime.TotalSeconds;
             if (currentState == LahmuState.Spawning)
             {
