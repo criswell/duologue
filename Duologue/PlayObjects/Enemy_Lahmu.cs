@@ -45,6 +45,11 @@ namespace Duologue.PlayObjects
         private const string filename_gloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const int frames_Flame = 4;
 
+        private const double time_Spawning = 1f;
+        private const double time_Moving = 4f;
+        private const double time_FreakOut = 0.5f;
+        private const double time_FreakBlip = 0.08f;
+
         /// <summary>
         /// The multiplier for point value tweaks based upon hitpoints
         /// </summary>
@@ -55,12 +60,17 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPointMultiplier = 2;
+        private const int realHitPointMultiplier = 100;
 
         /// <summary>
         /// The scale of the pupil
         /// </summary>
         private const float scale_eyePupil = 0.9f;
+
+        private const float max_ScaleFlame = 1.1f;
+        private const float min_ScaleFlame = 0.01f;
+        private const int numberOfFlames = 10;
+        private const float delta_SpawnFlameState = 0.07f;
 
         /// <summary>
         /// The max offset of the pupil
@@ -68,6 +78,7 @@ namespace Duologue.PlayObjects
         private const float scale_eyeOffset = 20f;
 
         private const float verticalOffsetHighlight = -30f;
+        private const float verticalOffsetFlameCenter = 30f;
         #endregion
 
         #region Fields
@@ -96,6 +107,10 @@ namespace Duologue.PlayObjects
         // State information
         private LahmuState currentState;
         private double timeSinceStateChange;
+        private float[] spawnStateFlames;
+        private float[] rotation_Flames;
+        private int[] currentFlameFrame;
+        private double timerFreakBlip;
         #endregion
 
         #region Constructor / Init
@@ -159,7 +174,7 @@ namespace Duologue.PlayObjects
                     String.Format(filename_Flame, (i + 1)));
             }
             center_Flame = new Vector2(
-                texture_Flame[0].Width / 2f, texture_Flame[0].Height / 2f);
+                texture_Flame[0].Width / 2f, texture_Flame[0].Height / 2f + verticalOffsetFlameCenter);
 
             texture_Outline = new Texture2D[frames_Tenticles];
             texture_Body = new Texture2D[frames_Tenticles];
@@ -206,6 +221,15 @@ namespace Duologue.PlayObjects
             // Set up state stuff
             currentState = LahmuState.Spawning;
             timeSinceStateChange = 0;
+            rotation_Flames = new float[numberOfFlames];
+            spawnStateFlames = new float[numberOfFlames];
+            currentFlameFrame = new int[numberOfFlames];
+            for (int i = 0; i < numberOfFlames; i++)
+            {
+                rotation_Flames[i] = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
+                spawnStateFlames[i] = (float)MWMathHelper.GetRandomInRange(0, 1.0);
+                currentFlameFrame[i] = MWMathHelper.GetRandomInRange(0, texture_Flame.Length);
+            }
 
             Initialized = true;
             Alive = true;
@@ -270,11 +294,32 @@ namespace Duologue.PlayObjects
                 GetMyColor(ColorState.Light)
             };
         }
+
         #endregion
 
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
+            float scale = 1f;
+            if (currentState == LahmuState.Spawning)
+            {
+                scale = (float)(timeSinceStateChange / time_Spawning);
+                // Draw the spawning flames
+                for (int i = 0; i < numberOfFlames; i++)
+                {
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Flame[currentFlameFrame[i]],
+                        Position,
+                        center_Flame,
+                        null,
+                        new Color(currentLayerColors[currentLayerColors.Length - 1], MathHelper.Lerp(0, 0.7f, spawnStateFlames[i])),
+                        rotation_Flames[i],
+                        MathHelper.Lerp(max_ScaleFlame, min_ScaleFlame, spawnStateFlames[i]),
+                        0f,
+                        RenderSpriteBlendMode.AddititiveTop);
+                }
+            }
+
             // Draw tenticles
             for (int i = 0; i < currentFrame_Tenticles.Length; i++)
             {
@@ -285,7 +330,7 @@ namespace Duologue.PlayObjects
                     null,
                     currentLayerColors[i],
                     rotation + rotation_Tenticle[i],
-                    1f,
+                    scale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
                 InstanceManager.RenderSprite.Draw(
@@ -295,7 +340,7 @@ namespace Duologue.PlayObjects
                     null,
                     Color.White,
                     rotation + rotation_Tenticle[i],
-                    1f,
+                    scale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
             }
@@ -308,19 +353,19 @@ namespace Duologue.PlayObjects
                 null,
                 Color.White,
                 0f,
-                1f,
+                scale,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
 
             // Pupil
             InstanceManager.RenderSprite.Draw(
                 texture_EyeBody,
-                Position + offset_eye,
+                Position + scale * offset_eye,
                 center_EyeBody,
                 null,
                 eyeColor[currentEyeColor],
                 0f,
-                scale_eyePupil,
+                scale_eyePupil * scale,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
 
@@ -332,26 +377,81 @@ namespace Duologue.PlayObjects
                 null,
                 currentLayerColors[currentLayerColors.Length - 1],
                 0f,
-                1f,
+                scale,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
 
             // Highlight
             InstanceManager.RenderSprite.Draw(
                 texture_Highlight,
-                Position + Vector2.UnitY * verticalOffsetHighlight,
+                Position + Vector2.UnitY * verticalOffsetHighlight * scale,
                 center_Highlight,
                 null,
                 Color.White,
                 0f,
-                1f,
+                scale,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            timeSinceStateChange += gameTime.ElapsedGameTime.TotalSeconds;
+            if (currentState == LahmuState.Spawning)
+            {
+                if (timeSinceStateChange > time_Spawning)
+                {
+                    timeSinceStateChange = 0;
+                    currentState = LahmuState.Moving;
+                }
+                else
+                {
+                    for (int i = 0; i < numberOfFlames; i++)
+                    {
+                        spawnStateFlames[i] += delta_SpawnFlameState;
+                        if (spawnStateFlames[i] > 1)
+                        {
+                            spawnStateFlames[i] = 0;
+                            rotation_Flames[i] = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);
+                            currentFlameFrame[i] = MWMathHelper.GetRandomInRange(0, texture_Flame.Length);
+                        }
+                    }
+                }
+            }
+            else if (currentState == LahmuState.FreakOut)
+            {
+                if (timeSinceStateChange > time_FreakOut)
+                {
+                    timeSinceStateChange = 0;
+                    timerFreakBlip = 0;
+                    currentState = LahmuState.Moving;
+                }
+                else
+                {
+                    timerFreakBlip += gameTime.ElapsedGameTime.TotalSeconds;
+                    if (timerFreakBlip > time_FreakBlip)
+                    {
+                        if (ColorPolarity == ColorPolarity.Negative)
+                            ColorPolarity = ColorPolarity.Positive;
+                        else
+                            ColorPolarity = ColorPolarity.Negative;
+                        timerFreakBlip = 0;
+                        SetCurrentColors();
+                        currentEyeColor++;
+                        if (currentEyeColor >= eyeColor.Length)
+                            currentEyeColor = 0;
+                    }
+                }
+            }
+            else
+            {
+                if (timeSinceStateChange > time_Moving)
+                {
+                    timeSinceStateChange = 0;
+                    timerFreakBlip = time_FreakBlip;
+                    currentState = LahmuState.FreakOut;
+                }
+            }
         }
         #endregion
     }
