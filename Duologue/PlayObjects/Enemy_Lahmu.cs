@@ -201,7 +201,7 @@ namespace Duologue.PlayObjects
             Position = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
 
-            Orientation = startOrientation;
+            Orientation = Vector2.Zero;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             if (hitPoints == null || (int)hitPoints == 0)
@@ -279,7 +279,7 @@ namespace Duologue.PlayObjects
                 new Color(49, 200, 76),
             };
             currentEyeColor = 0;
-
+            offset_eye = Vector2.Zero;
             SetCurrentColors();
 
             // Set up state stuff
@@ -441,6 +441,10 @@ namespace Duologue.PlayObjects
                 offset += playerAttract * nearestPlayer;
             }
 
+            offset_eye = scale_eyeOffset * Vector2.Negate(nearestPlayer);
+            if (offset_eye.Y < 0)
+                offset_eye.Y = 0;
+
             // Next apply the offset permanently
             if (offset.Length() >= minMovement)
             {
@@ -573,9 +577,9 @@ namespace Duologue.PlayObjects
 
             // Pupil
             InstanceManager.RenderSprite.Draw(
-                texture_EyeBody,
+                texture_EyePupil,
                 Position + scale * offset_eye,
-                center_EyeBody,
+                center_EyePupil,
                 null,
                 eyeColor[currentEyeColor],
                 0f,
@@ -641,7 +645,12 @@ namespace Duologue.PlayObjects
                 if (timeSinceStateChange > time_FreakOut)
                 {
                     timeSinceStateChange = 0;
+                    if (ColorPolarity == ColorPolarity.Negative)
+                        ColorPolarity = ColorPolarity.Positive;
+                    else
+                        ColorPolarity = ColorPolarity.Negative;
                     timerFreakBlip = 0;
+                    SetCurrentColors();
                     currentState = LahmuState.Moving;
                 }
                 else
