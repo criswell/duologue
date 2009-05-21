@@ -125,6 +125,7 @@
     <Compile Include="PlayObjects\Enemy_Flambi.cs" />
     <Compile Include="PlayObjects\Enemy_Flycket.cs" />
     <Compile Include="PlayObjects\Enemy_GloopPrince.cs" />
+    <Compile Include="PlayObjects\Enemy_Lahmu.cs" />
     <Compile Include="PlayObjects\Enemy_Maggot.cs" />
     <Compile Include="PlayObjects\Enemy_MetalTooth.cs" />
     <Compile Include="PlayObjects\Enemy_MiniSaw.cs" />

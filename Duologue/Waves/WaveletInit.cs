@@ -113,6 +113,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_Firefly:
                             Init_Firefly(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_Lahmu:
+                            Init_Lahmu(i, manager);
+                            break;
                         default:
                             // Throw a fit, this silent fail means we get null enemies!
                             throw new Exception("Hey, fool, check your wave defs for null set enemies!");
@@ -129,6 +132,11 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_Lahmu(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_Lahmu(manager);
+        }
+
         private static void Init_Firefly(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_Firefly(manager);
