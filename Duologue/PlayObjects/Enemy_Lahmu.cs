@@ -157,7 +157,6 @@ namespace Duologue.PlayObjects
         private float[] delta_RotationTentacle;
         private int[] currentFrame_Tentacles;
         private int[] delta_CurrentTentacleFrame;
-        private float rotation;
         private Vector2 offset_eye;
         private Color[] eyeColor;
         private int currentEyeColor;
@@ -287,7 +286,6 @@ namespace Duologue.PlayObjects
                 MathHelper.PiOver2
             };
 
-            rotation = 0;
             offset_eye = Vector2.Zero;
 
             eyeColor = new Color[]

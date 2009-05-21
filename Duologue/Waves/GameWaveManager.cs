@@ -247,7 +247,7 @@ namespace Duologue.Waves
 
             thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 1] = TypesOfPlayObjects.Enemy_Lahmu;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[thisWave.NumEnemies - 1] = MathHelper.Pi;
-            thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[thisWave.NumEnemies - 1] = 2;
+            thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[thisWave.NumEnemies - 1] = 0;
 
             //thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 2] = TypesOfPlayObjects.Enemy_Spawner;
             //thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[thisWave.NumEnemies - 2] = 0;
