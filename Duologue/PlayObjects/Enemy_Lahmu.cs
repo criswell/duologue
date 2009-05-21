@@ -37,7 +37,7 @@ namespace Duologue.PlayObjects
         #region Constants
         private const string filename_Body = "Enemies/end/tent-body{0}";
         private const string filename_Outline = "Enemies/end/tent-out{0}";
-        private const int frames_Tenticles = 3;
+        private const int frames_Tentacle = 3;
         private const string filename_EyeBase = "Enemies/gloop/prince-gloop-base";
         private const string filename_EyeBody = "Enemies/gloop/prince-gloop-body";
         private const string filename_EyePupil = "Enemies/gloop/king-gloop-eye";
@@ -52,6 +52,8 @@ namespace Duologue.PlayObjects
 
         private const double shieldCoolOffTime = 0.2;
 
+        private const double time_Tentacle = 0.05;
+
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
         /// </summary>
@@ -61,6 +63,8 @@ namespace Duologue.PlayObjects
         /// The multiplier for point value tweaks based upon hitpoints
         /// </summary>
         private const int hitPointMultiplier = 2;
+
+        private const int myShieldPointValue = 2;
 
         private const float radiusMultiplier = 0.8f;
 
@@ -148,8 +152,9 @@ namespace Duologue.PlayObjects
         private Vector2 center_EyeBody;
         private Vector2 center_EyePupil;
         private Vector2 center_Highlight;
-        private float[] rotation_Tenticle;
-        private int[] currentFrame_Tenticles;
+        private float[] rotation_Tentacle;
+        private float[] delta_RotationTentacle;
+        private int[] currentFrame_Tentacles;
         private float rotation;
         private Vector2 offset_eye;
         private Color[] eyeColor;
@@ -164,6 +169,7 @@ namespace Duologue.PlayObjects
         private int[] currentFlameFrame;
         private double timerFreakBlip;
         private double shieldCoolOff;
+        private double timeSinceTentacleWiggle;
 
         // Movement stuff
         private Vector2 offset;
@@ -238,9 +244,9 @@ namespace Duologue.PlayObjects
             center_Flame = new Vector2(
                 texture_Flame[0].Width / 2f, texture_Flame[0].Height / 2f + verticalOffsetFlameCenter);
 
-            texture_Outline = new Texture2D[frames_Tenticles];
-            texture_Body = new Texture2D[frames_Tenticles];
-            for (int i = 0; i < frames_Tenticles; i++)
+            texture_Outline = new Texture2D[frames_Tentacle];
+            texture_Body = new Texture2D[frames_Tentacle];
+            for (int i = 0; i < frames_Tentacle; i++)
             {
                 texture_Body[i] = InstanceManager.AssetManager.LoadTexture2D(
                     String.Format(filename_Body, (i + 1)));
@@ -254,14 +260,19 @@ namespace Duologue.PlayObjects
                 new Vector2(139f, 91f)
             };
 
-            currentFrame_Tenticles = new int[]
+            currentFrame_Tentacles = new int[]
             {
                 0, 1, 2
             };
 
+            delta_RotationTentacle = new float[]
+            {
+                MathHelper.PiOver4 * 0.01f, MathHelper.PiOver4 * 0.05f, MathHelper.PiOver4 * 0.1f
+            };
+
             Radius = radiusMultiplier * texture_Body[0].Width / 2f;
 
-            rotation_Tenticle = new float[]
+            rotation_Tentacle = new float[]
             {
                 0,
                 MathHelper.PiOver4,
@@ -285,6 +296,7 @@ namespace Duologue.PlayObjects
             // Set up state stuff
             currentState = LahmuState.Spawning;
             timeSinceStateChange = 0;
+            timeSinceTentacleWiggle = 0;
             shieldCoolOff = 0;
             rotation_Flames = new float[numberOfFlames];
             spawnStateFlames = new float[numberOfFlames];
@@ -302,9 +314,9 @@ namespace Duologue.PlayObjects
 
         public override String[] GetTextureFilenames()
         {
-            String[] filenames = new String[frames_Tenticles * 2 + 4 + frames_Flame];
+            String[] filenames = new String[frames_Tentacle * 2 + 4 + frames_Flame];
             int i = 0;
-            for (int t = 0; t < frames_Tenticles; t++)
+            for (int t = 0; t < frames_Tentacle; t++)
             {
                 filenames[i] = String.Format(filename_Body, (t + 1));
                 i++;
@@ -399,7 +411,7 @@ namespace Duologue.PlayObjects
 
         public override bool ApplyOffset()
         {
-            if (nearestPlayer.Length() > 0f)
+            if (nearestPlayer != Vector2.Zero && nearestPlayer.Length() > 0f)
             {
                 // 1st priority is the player
                 if (nearestPlayerRadius >= maxPlayerComfortRadiusMultiplier * Radius)
@@ -446,7 +458,7 @@ namespace Duologue.PlayObjects
                 offset_eye.Y = 0;
 
             // Next apply the offset permanently
-            if (offset.Length() >= minMovement)
+            if (offset != Vector2.Zero && offset.Length() >= minMovement)
             {
                 this.Position += offset;
                 Orientation = new Vector2(-offset.Y, offset.X);
@@ -488,11 +500,11 @@ namespace Duologue.PlayObjects
                 else
                 {
                     TriggerShieldDisintegration(
-                        texture_Flame[0],
+                        texture_Flame[MWMathHelper.GetRandomInRange(0, texture_Flame.Length)],
                         currentLayerColors[1],
                         Position,
                         0f);
-                    //MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
+                    MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myShieldPointValue, Position);
                     /*audio.soundEffects.PlayEffect(EffectID.CokeBottle);*/
                     audio.PlayEffect(EffectID.CokeBottle);
                     return true;
@@ -539,25 +551,25 @@ namespace Duologue.PlayObjects
             }
 
             // Draw tenticles
-            for (int i = 0; i < currentFrame_Tenticles.Length; i++)
+            for (int i = 0; i < currentFrame_Tentacles.Length; i++)
             {
                 InstanceManager.RenderSprite.Draw(
-                    texture_Body[currentFrame_Tenticles[i]],
+                    texture_Body[currentFrame_Tentacles[i]],
                     Position,
-                    center_Body[currentFrame_Tenticles[i]],
+                    center_Body[currentFrame_Tentacles[i]],
                     null,
                     currentLayerColors[i],
-                    rotation + rotation_Tenticle[i],
+                    rotation + rotation_Tentacle[i],
                     scale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
                 InstanceManager.RenderSprite.Draw(
-                    texture_Outline[currentFrame_Tenticles[i]],
+                    texture_Outline[currentFrame_Tentacles[i]],
                     Position,
-                    center_Body[currentFrame_Tenticles[i]],
+                    center_Body[currentFrame_Tentacles[i]],
                     null,
                     Color.White,
-                    rotation + rotation_Tenticle[i],
+                    rotation + rotation_Tentacle[i],
                     scale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
@@ -678,6 +690,21 @@ namespace Duologue.PlayObjects
                     timerFreakBlip = time_FreakBlip;
                     currentState = LahmuState.FreakOut;
                 }
+            }
+
+            // Update the tentacle rotations
+            timeSinceTentacleWiggle += gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeSinceTentacleWiggle > time_Tentacle)
+            {
+                for (int i = 0; i < currentFrame_Tentacles.Length; i++)
+                {
+                    rotation_Tentacle[i] += delta_RotationTentacle[i];
+                    if (rotation_Tentacle[i] > MathHelper.TwoPi)
+                        rotation_Tentacle[i] -= MathHelper.TwoPi;
+                    else if (rotation_Tentacle[i] < 0)
+                        rotation_Tentacle[i] += MathHelper.TwoPi;
+                }
+                timeSinceTentacleWiggle = 0;
             }
         }
         #endregion
