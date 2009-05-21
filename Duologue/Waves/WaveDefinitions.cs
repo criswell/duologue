@@ -4434,7 +4434,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 18
+            #region Wave 18 "Deny me and be doomed"
             #endregion
 
             #region Wave 19
