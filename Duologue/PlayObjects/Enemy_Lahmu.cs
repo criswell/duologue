@@ -52,7 +52,8 @@ namespace Duologue.PlayObjects
 
         private const double shieldCoolOffTime = 0.2;
 
-        private const double time_Tentacle = 0.05;
+        private const double time_TentacleRotate = 0.05;
+        private const double time_TentacleAnimation = 0.1;
 
         /// <summary>
         /// The point value I would be if I were hit at perfect beat
@@ -155,6 +156,7 @@ namespace Duologue.PlayObjects
         private float[] rotation_Tentacle;
         private float[] delta_RotationTentacle;
         private int[] currentFrame_Tentacles;
+        private int[] delta_CurrentTentacleFrame;
         private float rotation;
         private Vector2 offset_eye;
         private Color[] eyeColor;
@@ -169,6 +171,7 @@ namespace Duologue.PlayObjects
         private int[] currentFlameFrame;
         private double timerFreakBlip;
         private double shieldCoolOff;
+        private double timeSinceTentacleRotate;
         private double timeSinceTentacleWiggle;
 
         // Movement stuff
@@ -270,6 +273,11 @@ namespace Duologue.PlayObjects
                 MathHelper.PiOver4 * 0.01f, MathHelper.PiOver4 * 0.05f, MathHelper.PiOver4 * 0.1f
             };
 
+            delta_CurrentTentacleFrame = new int[]
+            {
+                1, 1, 1
+            };
+
             Radius = radiusMultiplier * texture_Body[0].Width / 2f;
 
             rotation_Tentacle = new float[]
@@ -296,6 +304,7 @@ namespace Duologue.PlayObjects
             // Set up state stuff
             currentState = LahmuState.Spawning;
             timeSinceStateChange = 0;
+            timeSinceTentacleRotate = 0;
             timeSinceTentacleWiggle = 0;
             shieldCoolOff = 0;
             rotation_Flames = new float[numberOfFlames];
@@ -559,7 +568,7 @@ namespace Duologue.PlayObjects
                     center_Body[currentFrame_Tentacles[i]],
                     null,
                     currentLayerColors[i],
-                    rotation + rotation_Tentacle[i],
+                    rotation_Tentacle[i],
                     scale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
@@ -569,7 +578,7 @@ namespace Duologue.PlayObjects
                     center_Body[currentFrame_Tentacles[i]],
                     null,
                     Color.White,
-                    rotation + rotation_Tentacle[i],
+                    rotation_Tentacle[i],
                     scale,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
@@ -626,11 +635,12 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            shieldCoolOff += gameTime.ElapsedGameTime.TotalSeconds;
+            double timePassed = gameTime.ElapsedGameTime.TotalSeconds;
+            shieldCoolOff += timePassed;
             if (shieldCoolOff > shieldCoolOffTime)
                 shieldCoolOff = shieldCoolOffTime;
 
-            timeSinceStateChange += gameTime.ElapsedGameTime.TotalSeconds;
+            timeSinceStateChange += timePassed;
             if (currentState == LahmuState.Spawning)
             {
                 if (timeSinceStateChange > time_Spawning)
@@ -667,7 +677,7 @@ namespace Duologue.PlayObjects
                 }
                 else
                 {
-                    timerFreakBlip += gameTime.ElapsedGameTime.TotalSeconds;
+                    timerFreakBlip += timePassed;
                     if (timerFreakBlip > time_FreakBlip)
                     {
                         if (ColorPolarity == ColorPolarity.Negative)
@@ -693,8 +703,8 @@ namespace Duologue.PlayObjects
             }
 
             // Update the tentacle rotations
-            timeSinceTentacleWiggle += gameTime.ElapsedGameTime.TotalSeconds;
-            if (timeSinceTentacleWiggle > time_Tentacle)
+            timeSinceTentacleRotate += timePassed;
+            if (timeSinceTentacleRotate > time_TentacleRotate)
             {
                 for (int i = 0; i < currentFrame_Tentacles.Length; i++)
                 {
@@ -703,6 +713,25 @@ namespace Duologue.PlayObjects
                         rotation_Tentacle[i] -= MathHelper.TwoPi;
                     else if (rotation_Tentacle[i] < 0)
                         rotation_Tentacle[i] += MathHelper.TwoPi;
+                }
+                timeSinceTentacleRotate = 0;
+            }
+            timeSinceTentacleWiggle += timePassed;
+            if (timeSinceTentacleWiggle > time_TentacleAnimation)
+            {
+                for (int i = 0; i < currentFrame_Tentacles.Length; i++)
+                {
+                    currentFrame_Tentacles[i] += delta_CurrentTentacleFrame[i];
+                    if (currentFrame_Tentacles[i] >= frames_Tentacle)
+                    {
+                        currentFrame_Tentacles[i] = frames_Tentacle - 1;
+                        delta_CurrentTentacleFrame[i] = -1;
+                    }
+                    else if (currentFrame_Tentacles[i] < 0)
+                    {
+                        currentFrame_Tentacles[i] = 0;
+                        delta_CurrentTentacleFrame[i] = 1;
+                    }
                 }
                 timeSinceTentacleWiggle = 0;
             }
