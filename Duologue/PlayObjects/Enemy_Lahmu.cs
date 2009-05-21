@@ -42,6 +42,7 @@ namespace Duologue.PlayObjects
         private const string filename_EyeBody = "Enemies/gloop/prince-gloop-body";
         private const string filename_EyePupil = "Enemies/gloop/king-gloop-eye";
         private const string filename_Flame = "Enemies/static-king-{0}";
+        private const string filename_gloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const int frames_Flame = 4;
 
         /// <summary>
@@ -55,6 +56,18 @@ namespace Duologue.PlayObjects
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
         private const int realHitPointMultiplier = 2;
+
+        /// <summary>
+        /// The scale of the pupil
+        /// </summary>
+        private const float scale_eyePupil = 0.9f;
+
+        /// <summary>
+        /// The max offset of the pupil
+        /// </summary>
+        private const float scale_eyeOffset = 20f;
+
+        private const float verticalOffsetHighlight = -30f;
         #endregion
 
         #region Fields
@@ -65,16 +78,20 @@ namespace Duologue.PlayObjects
         private Texture2D texture_EyeBase;
         private Texture2D texture_EyeBody;
         private Texture2D texture_EyePupil;
+        private Texture2D texture_Highlight;
         private Vector2[] center_Body;
         private Vector2 center_Flame;
         private Vector2 center_EyeBase;
         private Vector2 center_EyeBody;
         private Vector2 center_EyePupil;
+        private Vector2 center_Highlight;
         private float[] rotation_Tenticle;
         private int[] currentFrame_Tenticles;
         private float rotation;
         private Vector2 offset_eye;
-        private Color eyeColor;
+        private Color[] eyeColor;
+        private int currentEyeColor;
+        private Color[] currentLayerColors;
 
         // State information
         private LahmuState currentState;
@@ -125,12 +142,15 @@ namespace Duologue.PlayObjects
             texture_EyeBase = InstanceManager.AssetManager.LoadTexture2D(filename_EyeBase);
             texture_EyeBody = InstanceManager.AssetManager.LoadTexture2D(filename_EyeBody);
             texture_EyePupil = InstanceManager.AssetManager.LoadTexture2D(filename_EyePupil);
+            texture_Highlight = InstanceManager.AssetManager.LoadTexture2D(filename_gloopletHighlight);
             center_EyeBase = new Vector2(
                 texture_EyeBase.Width / 2f, texture_EyeBase.Height / 2f);
             center_EyeBody = new Vector2(
                 texture_EyeBody.Width / 2f, texture_EyeBody.Height / 2f);
             center_EyePupil = new Vector2(
                 texture_EyePupil.Width / 2f, texture_EyePupil.Height / 2f);
+            center_Highlight = new Vector2(
+                texture_Highlight.Width / 2f, texture_Highlight.Height / 2f);
 
             texture_Flame = new Texture2D[frames_Flame];
             for (int i = 0; i < frames_Flame; i++)
@@ -172,6 +192,17 @@ namespace Duologue.PlayObjects
             rotation = 0;
             offset_eye = Vector2.Zero;
 
+            eyeColor = new Color[]
+            {
+                new Color(160, 138,29),
+                new Color(95, 208, 228),
+                new Color(249, 85, 161),
+                new Color(49, 200, 76),
+            };
+            currentEyeColor = 0;
+
+            SetCurrentColors();
+
             // Set up state stuff
             currentState = LahmuState.Spawning;
             timeSinceStateChange = 0;
@@ -182,7 +213,7 @@ namespace Duologue.PlayObjects
 
         public override String[] GetTextureFilenames()
         {
-            String[] filenames = new String[frames_Tenticles * 2 + 3 + frames_Flame];
+            String[] filenames = new String[frames_Tenticles * 2 + 4 + frames_Flame];
             int i = 0;
             for (int t = 0; t < frames_Tenticles; t++)
             {
@@ -201,6 +232,8 @@ namespace Duologue.PlayObjects
             filenames[i] = filename_EyeBody;
             i++;
             filenames[i] = filename_EyePupil;
+            i++;
+            filenames[i] = filename_gloopletHighlight;
             return filenames;
         }
         #endregion
@@ -227,10 +260,93 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
+        #region Private methods
+        private void SetCurrentColors()
+        {
+            currentLayerColors = new Color[]
+            {
+                GetMyColor(ColorState.Dark),
+                GetMyColor(ColorState.Medium),
+                GetMyColor(ColorState.Light)
+            };
+        }
+        #endregion
+
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Draw tenticles
+            for (int i = 0; i < currentFrame_Tenticles.Length; i++)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    texture_Body[currentFrame_Tenticles[i]],
+                    Position,
+                    center_Body[currentFrame_Tenticles[i]],
+                    null,
+                    currentLayerColors[i],
+                    rotation + rotation_Tenticle[i],
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                InstanceManager.RenderSprite.Draw(
+                    texture_Outline[currentFrame_Tenticles[i]],
+                    Position,
+                    center_Body[currentFrame_Tenticles[i]],
+                    null,
+                    Color.White,
+                    rotation + rotation_Tenticle[i],
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
+
+            // Eye base
+            InstanceManager.RenderSprite.Draw(
+                texture_EyeBase,
+                Position,
+                center_EyeBase,
+                null,
+                Color.White,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            // Pupil
+            InstanceManager.RenderSprite.Draw(
+                texture_EyeBody,
+                Position + offset_eye,
+                center_EyeBody,
+                null,
+                eyeColor[currentEyeColor],
+                0f,
+                scale_eyePupil,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            // Body
+            InstanceManager.RenderSprite.Draw(
+                texture_EyeBody,
+                Position,
+                center_EyeBody,
+                null,
+                currentLayerColors[currentLayerColors.Length - 1],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            // Highlight
+            InstanceManager.RenderSprite.Draw(
+                texture_Highlight,
+                Position + Vector2.UnitY * verticalOffsetHighlight,
+                center_Highlight,
+                null,
+                Color.White,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
         }
 
         public override void Update(GameTime gameTime)
