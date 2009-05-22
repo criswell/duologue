@@ -56,6 +56,12 @@ namespace Duologue.PlayObjects
         private const double time_TentacleAnimation = 0.1;
 
         /// <summary>
+        /// This is the multiplier applied to my radius that determines how far away
+        /// to spawn a babby
+        /// </summary>
+        private const float spawnDistanceMultiplier = 0.5f;
+
+        /// <summary>
         /// The point value I would be if I were hit at perfect beat
         /// </summary>
         private const int myPointValue = 1000;
@@ -97,7 +103,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// How far we can go outside the screen before we should stop
         /// </summary>
-        private const float outsideScreenMultiplier = 3;
+        private const float outsideScreenMultiplier = 0.01f;
 
         #region Force interactions
         /// <summary>
@@ -134,7 +140,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The rotate speed
         /// </summary>
-        private const float rotateSpeed = 0.3f;
+        private const float rotateSpeed = 0.8f;
         #endregion
         #endregion
 
@@ -209,7 +215,10 @@ namespace Duologue.PlayObjects
             Position = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
 
-            Orientation = Vector2.Zero;
+            if (startOrientation == Vector2.Zero)
+                Orientation = GetStartingVector();
+            else
+                Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             if (hitPoints == null || (int)hitPoints == 0)
@@ -420,6 +429,9 @@ namespace Duologue.PlayObjects
         {
             if (nearestPlayer != Vector2.Zero && nearestPlayer.Length() > 0f)
             {
+                offset_eye = Vector2.Negate(nearestPlayer);
+                offset_eye.Normalize();
+                offset_eye = offset_eye * scale_eyeOffset;
                 // 1st priority is the player
                 if (nearestPlayerRadius >= maxPlayerComfortRadiusMultiplier * Radius)
                 {
@@ -458,18 +470,16 @@ namespace Duologue.PlayObjects
                 nearestPlayer.Normalize();
 
                 offset += playerAttract * nearestPlayer;
+
+                offset_eye = Vector2.Zero;
             }
 
-            offset_eye = scale_eyeOffset * Vector2.Negate(nearestPlayer);
+            this.Position += offset;
+            Orientation = offset;
+            Orientation.Normalize();
+
             if (offset_eye.Y < 0)
                 offset_eye.Y = 0;
-
-            // Next apply the offset permanently
-            if (offset != Vector2.Zero && offset.Length() >= minMovement)
-            {
-                this.Position += offset;
-                Orientation = new Vector2(-offset.Y, offset.X);
-            }
 
             // Check boundaries
             if (this.Position.X < -1 * RealSize.X * outsideScreenMultiplier)
@@ -522,6 +532,30 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private methods
+        /// <summary>
+        /// Returns a vector pointing to the origin
+        /// </summary>
+        private Vector2 GetVectorPointingAtOrigin()
+        {
+            Vector2 sc = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            return sc - Position;
+        }
+
+        /// <summary>
+        /// Get a starting vector for this dude
+        /// </summary>
+        private Vector2 GetStartingVector()
+        {
+            // Just aim at the center of screen for now
+            Vector2 temp = GetVectorPointingAtOrigin() + new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-.5, .5),
+                (float)MWMathHelper.GetRandomInRange(-.5, .5));
+            temp.Normalize();
+            return temp;
+        }
+
         private void SetCurrentColors()
         {
             currentLayerColors = new Color[]
@@ -532,6 +566,18 @@ namespace Duologue.PlayObjects
             };
         }
 
+        private Vector2 GetBabbySpawnPosition()
+        {
+            Vector2 temp;
+
+            temp = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-1.0, 1.0),
+                (float)MWMathHelper.GetRandomInRange(-1.0, 1.0));
+            temp.Normalize();
+            temp = temp * spawnDistanceMultiplier * Radius;
+
+            return temp + Position;
+        }
         #endregion
 
         #region Draw / Update
@@ -687,6 +733,30 @@ namespace Duologue.PlayObjects
                         currentEyeColor++;
                         if (currentEyeColor >= eyeColor.Length)
                             currentEyeColor = 0;
+                        // Run through the other enemy objects, looking for dead ones
+                        if (offset_eye != Vector2.Zero)
+                        {
+                            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+                            {
+                                if (!LocalInstanceManager.Enemies[i].Alive)
+                                {
+                                    if (MWMathHelper.CoinToss())
+                                        LocalInstanceManager.Enemies[i] =
+                                            new Enemy_Flycket(MyManager);
+                                    else
+                                        LocalInstanceManager.Enemies[i] =
+                                            new Enemy_Firefly(MyManager);
+
+                                    LocalInstanceManager.Enemies[i].Initialize(
+                                        GetBabbySpawnPosition(),
+                                        Vector2.Zero,
+                                        ColorState,
+                                        ColorPolarity,
+                                        (int)(StartHitPoints / (float)realHitPointMultiplier));
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -722,12 +792,12 @@ namespace Duologue.PlayObjects
                     currentFrame_Tentacles[i] += delta_CurrentTentacleFrame[i];
                     if (currentFrame_Tentacles[i] >= frames_Tentacle)
                     {
-                        currentFrame_Tentacles[i] = frames_Tentacle - 1;
+                        currentFrame_Tentacles[i] = frames_Tentacle - 2;
                         delta_CurrentTentacleFrame[i] = -1;
                     }
                     else if (currentFrame_Tentacles[i] < 0)
                     {
-                        currentFrame_Tentacles[i] = 0;
+                        currentFrame_Tentacles[i] = 1;
                         delta_CurrentTentacleFrame[i] = 1;
                     }
                 }
