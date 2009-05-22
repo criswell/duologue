@@ -30,6 +30,7 @@ namespace Duologue.PlayObjects
         Spawning,
         Moving,
         FreakOut,
+        Death,
     }
 
     public class Enemy_Lahmu : Enemy
@@ -44,6 +45,9 @@ namespace Duologue.PlayObjects
         private const string filename_Flame = "Enemies/static-king-{0}";
         private const string filename_gloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const int frames_Flame = 4;
+        private const string filename_SquidWalk = "Audio/PlayerEffects/squid-walk";
+
+        private const float volume_SquidWalk = 0.95f;
 
         private const double time_Spawning = 1f;
         private const double time_Moving = 4f;
@@ -187,6 +191,8 @@ namespace Duologue.PlayObjects
 
         // Audio stuff
         private AudioManager audio;
+        private SoundEffect sfx_SquidWalk;
+        private SoundEffectInstance sfxi_SquidWalk;
         #endregion
 
         #region Constructor / Init
@@ -307,6 +313,9 @@ namespace Duologue.PlayObjects
             currentEyeColor = 0;
             offset_eye = Vector2.Zero;
             SetCurrentColors();
+
+            sfx_SquidWalk = InstanceManager.AssetManager.LoadSoundEffect(filename_SquidWalk);
+            sfxi_SquidWalk = null;
 
             // Set up state stuff
             currentState = LahmuState.Spawning;
@@ -498,21 +507,27 @@ namespace Duologue.PlayObjects
         public override bool TriggerHit(PlayObject pobj)
         {
             if (pobj.MajorType == MajorPlayObjectType.PlayerBullet
-                && shieldCoolOff >= shieldCoolOffTime)
+                && shieldCoolOff >= shieldCoolOffTime && currentState != LahmuState.Death)
             {
                 CurrentHitPoints--;
                 shieldCoolOff = 0;
                 if (CurrentHitPoints <= 0)
                 {
-                    Alive = false;
-                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
-                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(
-                            Position, currentLayerColors[1]);
-                    LocalInstanceManager.EnemyExplodeSystem.AddParticles(
-                        Position, eyeColor[currentEyeColor]);
+                    try
+                    {
+                        sfxi_SquidWalk.Stop();
+                    }
+                    catch { }
+                    //Alive = false;
+                    //LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                    //LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                            //Position, currentLayerColors[1]);
+                    //LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                        //Position, eyeColor[currentEyeColor]);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
-                    /*audio.soundEffects.PlayEffect(EffectID.BuzzDeath);*/
-                    return false;
+
+                    currentState = LahmuState.Death;
+                    return true;
                 }
                 else
                 {
@@ -685,7 +700,11 @@ namespace Duologue.PlayObjects
                 shieldCoolOff = shieldCoolOffTime;
 
             timeSinceStateChange += timePassed;
-            if (currentState == LahmuState.Spawning)
+            if (currentState == LahmuState.Death)
+            {
+
+            } 
+            else if (currentState == LahmuState.Spawning)
             {
                 if (timeSinceStateChange > time_Spawning)
                 {
@@ -762,6 +781,24 @@ namespace Duologue.PlayObjects
             }
             else
             {
+                if (sfxi_SquidWalk == null)
+                {
+                    try
+                    {
+                        sfxi_SquidWalk = sfx_SquidWalk.Play(volume_SquidWalk);
+                    }
+                    catch { }
+                }
+                else if (sfxi_SquidWalk.State == SoundState.Stopped ||
+                    sfxi_SquidWalk.State == SoundState.Paused)
+                {
+                    try
+                    {
+                        sfxi_SquidWalk.Play();
+                    }
+                    catch { }
+                }
+
                 if (timeSinceStateChange > time_Moving)
                 {
                     timeSinceStateChange = 0;
