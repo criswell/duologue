@@ -4434,13 +4434,118 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 18 "Deny me and be doomed"
+            #region Wave 18
+            #region Wavedef (18-1) "Plane of Ginnungagap"
+            #region Metadata
+            Waves[GetIndex(18, 1)] = new GameWave();
+            Waves[GetIndex(18, 1)].Background = 1;
+            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(18, 1)].ColorState = 2;
+            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
+            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(20, 0);
+            Wavelets[0].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+                if ((Wavelets[0].StartAngle[i] >= 0 && Wavelets[0].StartAngle[i] <= MathHelper.PiOver4) ||
+                    (Wavelets[0].StartAngle[i] >= MathHelper.Pi && Wavelets[0].StartAngle[i] <= 3f * MathHelper.PiOver2))
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                }
+                else
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                }
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(20, 2);
+            Wavelets[1].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
+                if ((Wavelets[1].StartAngle[i] >= 0 && Wavelets[1].StartAngle[i] <= MathHelper.PiOver4) ||
+                    (Wavelets[1].StartAngle[i] >= MathHelper.Pi && Wavelets[1].StartAngle[i] <= 3f * MathHelper.PiOver2))
+                {
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                }
+                else
+                {
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                }
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(25, 2);
+            Wavelets[2].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                if (i / 3f == i / 3)
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                else
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+            }
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = MathHelper.PiOver2;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 4;
+            #endregion
+
+            Waves[GetIndex(18, 1)].Wavelets = Wavelets;
+            #endregion
+
+            #region Wavedef (18-2) "Omphalos"
+            #endregion
+
+            #region Wavedef (18-3) "Lahmu, the gatekeeper" (muddy)
+            #endregion
             #endregion
 
             #region Wave 19
+            #region Wavedef (19-1) "Deny me and be doomed"
+            #endregion
+
+            #region Wavedef (19-2) "Tamsin Gnosis"
+            #endregion
+
+            #region Wavedef (19-3) "Center of the Abzu" (water/swamp)
+            #endregion
             #endregion
 
             #region Wave 20 (END-GAME)
+            #region Wavedef (20-1) "End times"
+            #endregion
+
+            #region Wavedef (20-2) "Evening Star"
+            #endregion
+
+            #region Wavedef (20-3)
+            #endregion
             #endregion
         }
         #endregion
