@@ -4617,6 +4617,74 @@ namespace Duologue.Waves
             #endregion
 
             #region Wavedef (18-3) "Lahmu, the gatekeeper" (muddy)
+            #region Metadata
+            Waves[GetIndex(18, 3)] = new GameWave();
+            Waves[GetIndex(18, 3)].Background = 1;
+            Waves[GetIndex(18, 3)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(18, 3)].ColorState = 0;
+            Waves[GetIndex(18, 3)].MajorWaveNumber = 18;
+            Waves[GetIndex(18, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(18, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(18, 3)].ParallaxElementTop.Intensity = 2;
+            Waves[GetIndex(18, 3)].ParallaxElementTop.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(18, 3)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(18, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(18, 3)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(18, 3)].ParallaxElementBottom.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(18, 3)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(18, 3)].Name = "Lahmu, the gatekeeper";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(12, 2);
+            Wavelets[0].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+
+                if (i < Wavelets[0].Enemies.Length / 2f)
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                else
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+            }
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(12, 2);
+            Wavelets[1].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+
+                if (i < Wavelets[1].Enemies.Length / 2f)
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                else
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(10, 2, ColorPolarity.Negative);
+            Wavelets[2].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = 0;
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+            }
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_Lahmu;
+            #endregion
+
+            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
 
