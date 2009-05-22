@@ -46,13 +46,17 @@ namespace Duologue.PlayObjects
         private const string filename_gloopletHighlight = "Enemies/gloop/glooplet-highlight";
         private const int frames_Flame = 4;
         private const string filename_SquidWalk = "Audio/PlayerEffects/squid-walk";
+        private const string filename_BigBaddaBoom = "Audio/PlayerEffects/big-badda-boom";
 
         private const float volume_SquidWalk = 0.95f;
+        private const float volume_Boom = 1f;
 
         private const double time_Spawning = 1f;
         private const double time_Moving = 4f;
         private const double time_FreakOut = 0.5f;
         private const double time_FreakBlip = 0.08f;
+        private const double time_DeathBlip = 1.5f;
+        private const double time_TotalDeath = 8f;
 
         private const double shieldCoolOffTime = 0.2;
 
@@ -84,7 +88,7 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPointMultiplier = 100;
+        private const int realHitPointMultiplier = 50;
 
         /// <summary>
         /// The scale of the pupil
@@ -103,6 +107,8 @@ namespace Duologue.PlayObjects
 
         private const float verticalOffsetHighlight = -30f;
         private const float verticalOffsetFlameCenter = 30f;
+        private const double minOffsetLengthExplosions = 35.0;
+        private const double maxOffsetLengthExplosions = 75.0;
 
         /// <summary>
         /// How far we can go outside the screen before we should stop
@@ -145,6 +151,11 @@ namespace Duologue.PlayObjects
         /// The rotate speed
         /// </summary>
         private const float rotateSpeed = 0.8f;
+
+        /// <summary>
+        /// The rotate speed during death
+        /// </summary>
+        private const float deathRotateSpeed = 1.6f;
         #endregion
         #endregion
 
@@ -169,8 +180,11 @@ namespace Duologue.PlayObjects
         private int[] delta_CurrentTentacleFrame;
         private Vector2 offset_eye;
         private Color[] eyeColor;
+        private Color deathEyeColor;
         private int currentEyeColor;
         private Color[] currentLayerColors;
+        private float[] offset_Explosions;
+        private RenderSpriteBlendMode currentBlendMode;
 
         // State information
         private LahmuState currentState;
@@ -193,6 +207,8 @@ namespace Duologue.PlayObjects
         private AudioManager audio;
         private SoundEffect sfx_SquidWalk;
         private SoundEffectInstance sfxi_SquidWalk;
+        private SoundEffect sfx_Boom;
+        private SoundEffectInstance sfxi_Boom;
         #endregion
 
         #region Constructor / Init
@@ -314,8 +330,24 @@ namespace Duologue.PlayObjects
             offset_eye = Vector2.Zero;
             SetCurrentColors();
 
+            deathEyeColor = new Color(203, 0, 0);
+
+            offset_Explosions = new float[]
+            {
+                0f,
+                MathHelper.PiOver4 + MathHelper.PiOver4/2f,
+                MathHelper.PiOver4 * 3f - MathHelper.PiOver4/2f,
+                MathHelper.Pi,
+                MathHelper.PiOver4 * 5f + MathHelper.PiOver4/2f,
+                MathHelper.PiOver4 * 7f - MathHelper.PiOver4/2f
+            };
+
+            currentBlendMode = RenderSpriteBlendMode.AlphaBlendTop;
+
             sfx_SquidWalk = InstanceManager.AssetManager.LoadSoundEffect(filename_SquidWalk);
             sfxi_SquidWalk = null;
+            sfx_Boom = InstanceManager.AssetManager.LoadSoundEffect(filename_BigBaddaBoom);
+            sfxi_Boom = null;
 
             // Set up state stuff
             currentState = LahmuState.Spawning;
@@ -385,7 +417,7 @@ namespace Duologue.PlayObjects
                     nearestPlayerRadius = len;
                     nearestPlayer = vToPlayer;
                 }
-                if (len < this.Radius + pobj.Radius)
+                if (len < this.Radius + pobj.Radius && currentState != LahmuState.Spawning)
                 {
                     // We're on them, kill em
                     return pobj.TriggerHit(this);
@@ -461,7 +493,10 @@ namespace Duologue.PlayObjects
 
                     nearestPlayer = new Vector2(nearestPlayer.Y, -nearestPlayer.X);
 
-                    offset += rotateSpeed * nearestPlayer;
+                    if(currentState != LahmuState.Death)
+                        offset += rotateSpeed * nearestPlayer;
+                    else
+                        offset += deathRotateSpeed * nearestPlayer;
                 }
                 else
                 {
@@ -487,7 +522,7 @@ namespace Duologue.PlayObjects
             Orientation = offset;
             Orientation.Normalize();
 
-            if (offset_eye.Y < 0)
+            if (offset_eye.Y < 0 && currentState != LahmuState.Death)
                 offset_eye.Y = 0;
 
             // Check boundaries
@@ -518,12 +553,20 @@ namespace Duologue.PlayObjects
                         sfxi_SquidWalk.Stop();
                     }
                     catch { }
+                    try
+                    {
+                        sfxi_Boom = sfx_Boom.Play(volume_Boom);
+                    }
+                    catch { }
                     //Alive = false;
                     //LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(
                             //Position, currentLayerColors[1]);
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(
                         //Position, eyeColor[currentEyeColor]);
+                    timerFreakBlip = time_DeathBlip;
+                    timeSinceStateChange = 0;
+                    currentBlendMode = RenderSpriteBlendMode.AlphaBlend;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
 
                     currentState = LahmuState.Death;
@@ -630,7 +673,7 @@ namespace Duologue.PlayObjects
                     rotation_Tentacle[i],
                     scale,
                     0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    currentBlendMode);
                 InstanceManager.RenderSprite.Draw(
                     texture_Outline[currentFrame_Tentacles[i]],
                     Position,
@@ -640,20 +683,36 @@ namespace Duologue.PlayObjects
                     rotation_Tentacle[i],
                     scale,
                     0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    currentBlendMode);
             }
 
             // Eye base
-            InstanceManager.RenderSprite.Draw(
-                texture_EyeBase,
-                Position,
-                center_EyeBase,
-                null,
-                Color.White,
-                0f,
-                scale,
-                0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+            if (currentState != LahmuState.Death)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    texture_EyeBase,
+                    Position,
+                    center_EyeBase,
+                    null,
+                    Color.White,
+                    0f,
+                    scale,
+                    0f,
+                    currentBlendMode);
+            }
+            else
+            {
+                InstanceManager.RenderSprite.Draw(
+                    texture_EyeBase,
+                    Position,
+                    center_EyeBase,
+                    null,
+                    deathEyeColor,
+                    0f,
+                    scale,
+                    0f,
+                    currentBlendMode);
+            }
 
             // Pupil
             InstanceManager.RenderSprite.Draw(
@@ -665,31 +724,34 @@ namespace Duologue.PlayObjects
                 0f,
                 scale_eyePupil * scale,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                currentBlendMode);
 
             // Body
-            InstanceManager.RenderSprite.Draw(
-                texture_EyeBody,
-                Position,
-                center_EyeBody,
-                null,
-                currentLayerColors[currentLayerColors.Length - 1],
-                0f,
-                scale,
-                0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+            if (currentState != LahmuState.Death)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    texture_EyeBody,
+                    Position,
+                    center_EyeBody,
+                    null,
+                    currentLayerColors[currentLayerColors.Length - 1],
+                    0f,
+                    scale,
+                    0f,
+                    currentBlendMode);
 
-            // Highlight
-            InstanceManager.RenderSprite.Draw(
-                texture_Highlight,
-                Position + Vector2.UnitY * verticalOffsetHighlight * scale,
-                center_Highlight,
-                null,
-                Color.White,
-                0f,
-                scale,
-                0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                // Highlight
+                InstanceManager.RenderSprite.Draw(
+                    texture_Highlight,
+                    Position + Vector2.UnitY * verticalOffsetHighlight * scale,
+                    center_Highlight,
+                    null,
+                    Color.White,
+                    0f,
+                    scale,
+                    0f,
+                    currentBlendMode);
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -702,7 +764,82 @@ namespace Duologue.PlayObjects
             timeSinceStateChange += timePassed;
             if (currentState == LahmuState.Death)
             {
+                if (sfxi_Boom == null)
+                {
+                    try
+                    {
+                        sfxi_Boom = sfx_Boom.Play(volume_Boom);
+                    }
+                    catch { }
+                }
+                else if (sfxi_Boom.State == SoundState.Stopped ||
+                         sfxi_Boom.State == SoundState.Paused)
+                {
+                    try
+                    {
+                        sfxi_Boom.Play();
+                    }
+                    catch { }
+                }
 
+                if (timeSinceStateChange > time_TotalDeath)
+                {
+                    timeSinceStateChange = 0;
+                    try
+                    {
+                        sfxi_Boom.Stop();
+                    }
+                    catch { }
+                    try
+                    {
+                        sfxi_SquidWalk.Stop();
+                    }
+                    catch { }
+                    Alive = false;
+                }
+                else
+                {
+                    timerFreakBlip += timePassed;
+                    if (timerFreakBlip > time_DeathBlip)
+                    {
+                        if (ColorPolarity == ColorPolarity.Negative)
+                            ColorPolarity = ColorPolarity.Positive;
+                        else
+                            ColorPolarity = ColorPolarity.Negative;
+                        timerFreakBlip = 0;
+                        SetCurrentColors();
+                        currentEyeColor++;
+                        if (currentEyeColor >= eyeColor.Length)
+                            currentEyeColor = 0;
+                        // Fire off some explosions
+                        float additionalRotation = (float)MWMathHelper.GetRandomInRange(0, (double)MathHelper.TwoPi);
+                        Color tempColor;
+                        for (int i = 0; i < offset_Explosions.Length; i++)
+                        {
+                            if (MWMathHelper.CoinToss())
+                                tempColor = eyeColor[currentEyeColor];
+                            else
+                                tempColor = currentLayerColors[MWMathHelper.GetRandomInRange(0, currentLayerColors.Length)];
+
+                            if (MWMathHelper.CoinToss())
+                            {
+                                LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                                    Position + MWMathHelper.RotateVectorByRadians(
+                                       (float)MWMathHelper.GetRandomInRange(minOffsetLengthExplosions, maxOffsetLengthExplosions) *
+                                       Vector2.UnitX, additionalRotation + offset_Explosions[i]),
+                                    tempColor);
+                            }
+                            else
+                            {
+                                LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                                    Position + MWMathHelper.RotateVectorByRadians(
+                                       (float)MWMathHelper.GetRandomInRange(minOffsetLengthExplosions, maxOffsetLengthExplosions) *
+                                       Vector2.UnitX, additionalRotation + offset_Explosions[i]),
+                                    tempColor);
+                            }
+                        }
+                    }
+                }
             } 
             else if (currentState == LahmuState.Spawning)
             {
