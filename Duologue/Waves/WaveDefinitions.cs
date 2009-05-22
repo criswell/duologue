@@ -4438,7 +4438,7 @@ namespace Duologue.Waves
             #region Wavedef (18-1) "Plane of Ginnungagap"
             #region Metadata
             Waves[GetIndex(18, 1)] = new GameWave();
-            Waves[GetIndex(18, 1)].Background = 1;
+            Waves[GetIndex(18, 1)].Background = 4;
             Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
             Waves[GetIndex(18, 1)].ColorState = 2;
             Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
@@ -4520,6 +4520,100 @@ namespace Duologue.Waves
             #endregion
 
             #region Wavedef (18-2) "Omphalos"
+            #region Metadata
+            Waves[GetIndex(18, 2)] = new GameWave();
+            Waves[GetIndex(18, 2)].Background = 4;
+            Waves[GetIndex(18, 2)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(18, 2)].ColorState = 1;
+            Waves[GetIndex(18, 2)].MajorWaveNumber = 18;
+            Waves[GetIndex(18, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(18, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(18, 2)].ParallaxElementTop.Intensity = 3;
+            Waves[GetIndex(18, 2)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(18, 2)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(18, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(18, 2)].ParallaxElementBottom.Intensity = 1;
+            Waves[GetIndex(18, 2)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(18, 2)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(18, 2)].Name = "Omphalos";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            Wavelets[0] = new Wavelet(32, 2);
+            Wavelets[0].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+
+                if (i > (Wavelets[0].Enemies.Length - 2) / 2f)
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
+                    Wavelets[0].StartAngle[i] = MathHelper.PiOver4;
+                }
+                else
+                {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    Wavelets[0].StartAngle[i] = MathHelper.PiOver4 * 5f;
+                }
+            }
+            Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_MetalTooth;
+            Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 2] = MathHelper.PiOver4;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 2] = 3;
+
+            Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_Pyre;
+            Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 1] = MathHelper.PiOver4 * 5f;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 3;
+
+            #endregion
+            // Second wavelet
+            #region
+            Wavelets[1] = new Wavelet(50, 5);
+            Wavelets[1].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                if (i < Wavelets[1].Enemies.Length - 4)
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                else
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[1].StartAngle[i] = i * MathHelper.PiOver2 / (float)Wavelets[1].Enemies.Length;
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+                else
+                {
+                    Wavelets[1].StartAngle[i] = i * MathHelper.PiOver2 / (float)Wavelets[1].Enemies.Length + MathHelper.Pi;
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+            }
+            #endregion
+            // Third wavelet
+            #region
+            Wavelets[2] = new Wavelet(30, 5);
+            Wavelets[2].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                }
+                else
+                {
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                }
+            }
+            #endregion
+
+            Waves[GetIndex(18, 2)].Wavelets = Wavelets;
             #endregion
 
             #region Wavedef (18-3) "Lahmu, the gatekeeper" (muddy)
