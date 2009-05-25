@@ -3203,16 +3203,16 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[0] = new Wavelet(60, 2);
-            Wavelets[0].SongID = SongID.Dance8ths;
-            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            Wavelets[2] = new Wavelet(60, 2);
+            Wavelets[2].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
-                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
-                Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
                 if (MWMathHelper.IsEven(i))
-                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
                 else
-                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
             }
             #endregion
 
