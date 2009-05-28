@@ -1861,6 +1861,233 @@
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enemies\end\end-boss-body-0.png">
+      <Name>end-boss-body-0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-body-1.png">
+      <Name>end-boss-body-1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-body-2.png">
+      <Name>end-boss-body-2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye0-eyeball.png">
+      <Name>end-boss-eye0-eyeball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye0-outline.png">
+      <Name>end-boss-eye0-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye0-shade-lower.png">
+      <Name>end-boss-eye0-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye0-shade-middle.png">
+      <Name>end-boss-eye0-shade-middle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye0-shade-upper.png">
+      <Name>end-boss-eye0-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye1-eyeball.png">
+      <Name>end-boss-eye1-eyeball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye1-outline.png">
+      <Name>end-boss-eye1-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye1-shade-lower.png">
+      <Name>end-boss-eye1-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye1-shade-middle.png">
+      <Name>end-boss-eye1-shade-middle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye1-shade-upper.png">
+      <Name>end-boss-eye1-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye2-eyeball.png">
+      <Name>end-boss-eye2-eyeball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye2-outline.png">
+      <Name>end-boss-eye2-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye2-shade-lower.png">
+      <Name>end-boss-eye2-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye2-shade-middle.png">
+      <Name>end-boss-eye2-shade-middle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye2-shade-upper.png">
+      <Name>end-boss-eye2-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye3-eyeball.png">
+      <Name>end-boss-eye3-eyeball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye3-outline.png">
+      <Name>end-boss-eye3-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye3-shade-lower.png">
+      <Name>end-boss-eye3-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye3-shade-middle.png">
+      <Name>end-boss-eye3-shade-middle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye3-shade-upper.png">
+      <Name>end-boss-eye3-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye4-eyeball.png">
+      <Name>end-boss-eye4-eyeball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye4-outline.png">
+      <Name>end-boss-eye4-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye4-shade-lower.png">
+      <Name>end-boss-eye4-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye4-shade-middle.png">
+      <Name>end-boss-eye4-shade-middle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-eye4-shade-upper.png">
+      <Name>end-boss-eye4-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-spinner.png">
+      <Name>end-boss-spinner</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube0-base.png">
+      <Name>end-boss-tube0-base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube0-outline.png">
+      <Name>end-boss-tube0-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube0-shade-lower.png">
+      <Name>end-boss-tube0-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube0-shade-upper.png">
+      <Name>end-boss-tube0-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube1-base.png">
+      <Name>end-boss-tube1-base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube1-outline.png">
+      <Name>end-boss-tube1-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube1-shade-lower.png">
+      <Name>end-boss-tube1-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube1-shade-upper.png">
+      <Name>end-boss-tube1-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube2-base.png">
+      <Name>end-boss-tube2-base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube2-outline.png">
+      <Name>end-boss-tube2-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube2-shade-lower.png">
+      <Name>end-boss-tube2-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube2-shade-upper.png">
+      <Name>end-boss-tube2-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube3-base.png">
+      <Name>end-boss-tube3-base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube3-outline.png">
+      <Name>end-boss-tube3-outline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube3-shade-lower.png">
+      <Name>end-boss-tube3-shade-lower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Enemies\end\end-boss-tube3-shade-upper.png">
+      <Name>end-boss-tube3-shade-upper</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
