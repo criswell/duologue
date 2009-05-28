@@ -113,6 +113,7 @@
     <Compile Include="PlayObjects\Enemy_MetalTooth.cs" />
     <Compile Include="PlayObjects\Enemy_MiniSaw.cs" />
     <Compile Include="PlayObjects\Enemy_Mirthworm.cs" />
+    <Compile Include="PlayObjects\Enemy_Moloch.cs" />
     <Compile Include="PlayObjects\Enemy_Placeholder.cs" />
     <Compile Include="PlayObjects\Enemy_ProtoNora.cs" />
     <Compile Include="PlayObjects\Enemy_Pyre.cs" />

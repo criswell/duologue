@@ -229,7 +229,7 @@ namespace Duologue.AchievementSystem
             orderedAchievementList = new List<int>(possibleAchievements);
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             storageDeviceIsSet = false;
-            dataVersion = 10;
+            dataVersion = 11;
             alpha_Achievement = 1f;
             size_Achievement = 1f;
             color_Text = Color.Bisque;
@@ -622,8 +622,9 @@ namespace Duologue.AchievementSystem
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Flambi] = 19;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Firefly] = 20;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Lahmu] = 21;
+            enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Moloch] = 22;
 
-            maxNumEnemies = 22;
+            maxNumEnemies = 23;
         }
 
         private void GenerateAchievements()
