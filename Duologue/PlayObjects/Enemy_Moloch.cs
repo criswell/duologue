@@ -25,6 +25,31 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
+    public struct MolochBodyElement
+    {
+        public Texture2D Texture;
+        public float Rotation;
+        public float DeltaRotation;
+        public byte Alpha;
+    }
+
+    public struct EyeBallFrame
+    {
+        public Texture2D Base;
+        public Texture2D Outline;
+        public Texture2D ShadeLower;
+        public Texture2D ShadeMiddle;
+        public Texture2D ShadeUpper;
+    }
+
+    public struct TubeFrame
+    {
+        public Texture2D Base;
+        public Texture2D Outline;
+        public Texture2D Lower;
+        public Texture2D Upper;
+    }
+
     public class Enemy_Moloch : Enemy
     {
         #region Constants
@@ -57,6 +82,13 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Fields
+        // Image and animation related things
+        private MolochBodyElement[] body;
+        private EyeBallFrame[] eyes;
+        private TubeFrame[] tubes;
+        private Texture2D texture_Spinner;
+        private Texture2D texture_EyePupil;
+
         // Audio stuff
         private AudioManager audio;
         #endregion
@@ -101,7 +133,34 @@ namespace Duologue.PlayObjects
 
         private void LoadAndInitialize()
         {
-            throw new NotImplementedException();
+            body = new MolochBodyElement[frames_Body];
+            eyes = new EyeBallFrame[frames_Eye];
+            tubes = new TubeFrame[frames_Tube];
+
+            texture_EyePupil = InstanceManager.AssetManager.LoadTexture2D(filename_EyePupil);
+            texture_Spinner = InstanceManager.AssetManager.LoadTexture2D(filename_Spinner);
+
+            for (int i = 0; i < frames_Body; i++)
+            {
+                body[i].Texture = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_Body, i.ToString()));
+            }
+
+            for (int i = 0; i < frames_Eye; i++)
+            {
+                eyes[i].Base = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeBall, i.ToString()));
+                eyes[i].Outline = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeOutline, i.ToString()));
+                eyes[i].ShadeLower = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeShadeLower, i.ToString()));
+                eyes[i].ShadeMiddle = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeShadeMiddle, i.ToString()));
+                eyes[i].ShadeUpper = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeShadeUpper, i.ToString()));
+            }
+
+            for (int i = 0; i < frames_Tube; i++)
+            {
+                tubes[i].Base = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeBase, i.ToString()));
+                tubes[i].Outline = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeOutline, i.ToString()));
+                tubes[i].Lower = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeLower, i.ToString()));
+                tubes[i].Upper = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeUpper, i.ToString()));
+            }
         }
 
         public override String[] GetTextureFilenames()
