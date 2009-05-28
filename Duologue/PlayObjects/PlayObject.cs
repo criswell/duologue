@@ -58,6 +58,7 @@ namespace Duologue.PlayObjects
         Enemy_Flambi,
         Enemy_Firefly,
         Enemy_Lahmu,
+        Enemy_Moloch,
     }
 
     /// <summary>
