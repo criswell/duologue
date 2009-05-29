@@ -34,7 +34,7 @@ namespace Duologue.PlayObjects
         public float DeltaAlpha;
         public bool DeltaAlphaDirection;
         public int Color;
-        public double TimerColorChange;
+        //public double TimerColorChange;
     }
 
     public struct EyeBallFrame
@@ -73,6 +73,13 @@ namespace Duologue.PlayObjects
         Steady,
     }
 
+    public enum MolochEyeState
+    {
+        Open,
+        Closing,
+        Opening,
+    }
+
     public class Enemy_Moloch : Enemy
     {
         #region Constants
@@ -105,7 +112,7 @@ namespace Duologue.PlayObjects
         private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.01f;
 
         private const float minAlpha_Body = 0.1f;
-        private const float maxAlpha_Body = 1.0f;
+        private const float maxAlpha_Body = 0.91f;
         private const double minDeltaAlpha_Body = 0.0005;
         private const double maxDeltaAlpha_Body = 0.004;
 
@@ -114,8 +121,11 @@ namespace Duologue.PlayObjects
         private const float minScale_Spinner = 0.7889f;
 
         private const double totalTime_SpinnerColorChange = 1.02;
-        private const double totalTime_BodyColorChange = 2.51;
-        private const double totalTime_EyeBallBlinks = 2.4;
+        //private const double totalTime_BodyColorChange = 2.51;
+        private const double totalTime_EyeBallBlinkTick = 0.1;
+        private const double totalTime_EyeBallOpen = 1.5;
+
+        private const float radiusOfBody = 350f;
 
         /// <summary>
         /// The offset length of the tube base
@@ -129,7 +139,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The offset length of the pupil from center of eyeball
         /// </summary>
-        private const float offsetLength_Pupil = 35f;
+        private const float offsetLength_Pupil = 22f;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -161,7 +171,7 @@ namespace Duologue.PlayObjects
         private int color_Spinner;
         private Vector2 offset_Eye;
         private Vector2 offset_Pupil;
-        private float rotation_Eye;
+        //private float rotation_Eye;
         private int color_Pupil;
         private ColorPolarity polarity_EyeBall;
 
@@ -173,8 +183,9 @@ namespace Duologue.PlayObjects
         // State stuff
         private MolochState currentState;
         private double timer_SpinnerColorChange;
-        private double timer_EyeBallBlinks;
+        private double timer_EyeBall;
         private int currentEyeFrame;
+        private MolochEyeState currentEyeState;
 
         // Audio stuff
         private AudioManager audio;
@@ -208,7 +219,9 @@ namespace Duologue.PlayObjects
             // Starting variables are all ignored
 
             // Set Position
-            Position = Vector2.Zero;// -0.5f * RealSize;
+            Position = //Vector2.Zero;// -0.5f * RealSize;
+                new Vector2(
+                    (float)InstanceManager.DefaultViewport.Width, 0);
             // Set next position
 
             // Set state
@@ -262,12 +275,12 @@ namespace Duologue.PlayObjects
                 body[i].DeltaAlpha = (float)MWMathHelper.GetRandomInRange(minDeltaAlpha_Body, maxDeltaAlpha_Body);
                 body[i].DeltaAlphaDirection = MWMathHelper.CoinToss();
                 body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-                body[i].TimerColorChange = MWMathHelper.GetRandomInRange(0, totalTime_BodyColorChange);
+                //body[i].TimerColorChange = MWMathHelper.GetRandomInRange(0, totalTime_BodyColorChange);
             }
             center_Body = new Vector2(
                 body[0].Texture.Width / 2f, body[0].Texture.Height / 2f);
 
-            Radius = RealSize.X / 2f;
+            Radius = radiusOfBody;
 
             for (int i = 0; i < frames_Eye; i++)
             {
@@ -336,8 +349,9 @@ namespace Duologue.PlayObjects
             SetEyeOffsets();
             color_Pupil = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
             polarity_EyeBall = ColorPolarity.Positive;
-            timer_EyeBallBlinks = 0;
+            timer_EyeBall = 0;
             currentEyeFrame = 0;
+            currentEyeState = MolochEyeState.Open;
 
             Alive = true;
             Initialized = true;
@@ -408,7 +422,7 @@ namespace Duologue.PlayObjects
             offset_Eye = centerOfScreen - Position;
             offset_Eye.Normalize();
             offset_Eye = offset_Eye * offsetLength_EyeBall;
-            rotation_Eye = MWMathHelper.ComputeAngleAgainstX(offset_Eye);
+            //rotation_Eye = MWMathHelper.ComputeAngleAgainstX(offset_Eye) - MathHelper.PiOver4;
 
             // Aim the pupil
             if (nearestPlayer == null || vectorToNearestPlayer == Vector2.Zero)
@@ -558,7 +572,7 @@ namespace Duologue.PlayObjects
                 center_Eye,
                 null,
                 Color.White,
-                rotation_Eye,
+                0f,//rotation_Eye,
                 1f,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
@@ -580,7 +594,7 @@ namespace Duologue.PlayObjects
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Light, polarity_EyeBall),
-                rotation_Eye,
+                0f,//rotation_Eye,
                 1f,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
@@ -590,7 +604,7 @@ namespace Duologue.PlayObjects
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Medium, polarity_EyeBall),
-                rotation_Eye,
+                0f,//rotation_Eye,
                 1f,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
@@ -600,7 +614,7 @@ namespace Duologue.PlayObjects
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Dark, polarity_EyeBall),
-                rotation_Eye,
+                0f,//rotation_Eye,
                 1f,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);
@@ -611,7 +625,7 @@ namespace Duologue.PlayObjects
                 center_Eye,
                 null,
                 Color.White,
-                rotation_Eye,
+                0f,//rotation_Eye,
                 1f,
                 0f,
                 RenderSpriteBlendMode.AlphaBlendTop);            
@@ -631,12 +645,12 @@ namespace Duologue.PlayObjects
             // Body
             for (int i = 0; i < body.Length; i++)
             {
-                body[i].TimerColorChange += delta;
-                if (body[i].TimerColorChange > totalTime_BodyColorChange)
-                {
-                    body[i].TimerColorChange = 0;
-                    body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-                }
+                //body[i].TimerColorChange += delta;
+                //if (body[i].TimerColorChange > totalTime_BodyColorChange)
+                //{
+                    //body[i].TimerColorChange = 0;
+                    //body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+                //}
                 body[i].Rotation += body[i].DeltaRotation;
                 if (body[i].Rotation > MathHelper.TwoPi)
                     body[i].Rotation -= MathHelper.TwoPi;
@@ -656,9 +670,55 @@ namespace Duologue.PlayObjects
                 else if (body[i].Alpha < minAlpha_Body)
                 {
                     body[i].Alpha = minAlpha_Body;
+                    body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
                     body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
                 }
             }
+            // Eyeball
+            timer_EyeBall += delta;
+            switch (currentEyeState)
+            {
+                case MolochEyeState.Opening:
+                    if (timer_EyeBall > totalTime_EyeBallBlinkTick)
+                    {
+                        timer_EyeBall = 0;
+                        currentEyeFrame--;
+                        if (currentEyeFrame < 0)
+                        {
+                            currentEyeFrame = 0;
+                            currentEyeState = MolochEyeState.Open;
+                        }
+                    }
+                    break;
+                case MolochEyeState.Closing:
+                    if (timer_EyeBall > totalTime_EyeBallBlinkTick)
+                    {
+                        timer_EyeBall = 0;
+                        currentEyeFrame++;
+                        if (currentEyeFrame >= eyes.Length)
+                        {
+                            currentEyeFrame = eyes.Length - 1;
+                            if (polarity_EyeBall == ColorPolarity.Negative)
+                                polarity_EyeBall = ColorPolarity.Positive;
+                            else
+                                polarity_EyeBall = ColorPolarity.Negative;
+                            color_Pupil++;
+                            if (color_Pupil >= colorArray_TasteTheRainbow.Length)
+                                color_Pupil = 0;
+                            currentEyeState = MolochEyeState.Opening;
+                        }
+                    }
+                    break;
+                default:
+                    // Default is open
+                    if (timer_EyeBall > totalTime_EyeBallOpen)
+                    {
+                        timer_EyeBall = 0;
+                        currentEyeState = MolochEyeState.Closing;
+                    }
+                    break;
+            }
+
             #endregion
         }
         #endregion
