@@ -394,6 +394,16 @@ namespace Duologue.PlayObjects
             filenames[i] = filename_gloopletHighlight;
             return filenames;
         }
+
+        public override void CleanUp()
+        {
+            try
+            {
+                sfxi_SquidWalk.Stop();
+            }
+            catch { }
+            base.CleanUp();
+        }
         #endregion
 
         #region Public movement overrides

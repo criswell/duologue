@@ -174,6 +174,13 @@ namespace Duologue.PlayObjects
         {
             return new String[] { };
         }
+
+        /// <summary>
+        /// Call when the object needs to clean itself up
+        /// </summary>
+        public virtual void CleanUp()
+        {
+        }
         #endregion
 
         #region Abstract methods

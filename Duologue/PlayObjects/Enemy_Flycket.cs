@@ -232,6 +232,16 @@ namespace Duologue.PlayObjects
                 filename_Explode,
             };
         }
+
+        public override void CleanUp()
+        {
+            try
+            {
+                sfxi_Scream.Stop();
+            }
+            catch { }
+            base.CleanUp();
+        }
         #endregion
 
         #region Movement AI overrides

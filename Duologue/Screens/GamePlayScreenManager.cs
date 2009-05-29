@@ -179,6 +179,8 @@ namespace Duologue.Screens
             audio.FadeOut(
                 LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID);
 
+            CleanEnemies();
+
             gameWaveManager.Reset();
             LocalInstanceManager.Enemies = null;
             LocalInstanceManager.CurrentNumberEnemies = 0;
@@ -190,11 +192,22 @@ namespace Duologue.Screens
             LocalInstanceManager.Background.EnableThrob = false;
             LocalInstanceManager.AchievementManager.SaveStorageData();
             TutorialManager.Reset();
+
             base.ScreenExit(gameTime);
         }
         #endregion
 
         #region Private methods
+        private void CleanEnemies()
+        {
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                if (LocalInstanceManager.Enemies[i] != null ||
+                    LocalInstanceManager.Enemies[i].Initialized)
+                    LocalInstanceManager.Enemies[i].CleanUp();
+            }
+
+        }
         #endregion
 
         #region Public methods
@@ -262,6 +275,7 @@ namespace Duologue.Screens
                 }
 
                 // Run through and clean enemies
+                CleanEnemies();
                 LocalInstanceManager.Enemies = null;
                 LocalInstanceManager.CurrentNumberEnemies = 0;
 
