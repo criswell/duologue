@@ -33,6 +33,8 @@ namespace Duologue.PlayObjects
         public float Alpha;
         public float DeltaAlpha;
         public bool DeltaAlphaDirection;
+        public int Color;
+        public double TimerColorChange;
     }
 
     public struct EyeBallFrame
@@ -56,10 +58,13 @@ namespace Duologue.PlayObjects
     public struct TubeGuy
     {
         public int CurrentFrame;
-        public float Rotation;
+        public float Angle;
         public Vector2 Offset;
+        public float Rotation;
         public bool Alive;
         public double Timer;
+        public int HitPoints;
+        public ColorPolarity ColorPolarity;
     }
 
     public enum MolochState
@@ -97,18 +102,27 @@ namespace Duologue.PlayObjects
         private const string filename_EyePupil = "Enemies/gloop/king-gloop-eye";
 
         private const float delta_BodyRotation = MathHelper.PiOver4 * 0.4f;
+        private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.1f;
 
         private const float minAlpha = 0.1f;
         private const float maxAlpha = 1.0f;
         private const double minDeltaAlpha = 0.005;
         private const double maxDeltaAlpha = 0.04;
 
+        private const double totalTime_SpinnerColorChange = 1.02;
+        private const double totalTime_BodyColorChange = 1.51;
+
+        /// <summary>
+        /// The offset length of the tube base
+        /// </summary>
+        private const float offset_Tube = 350f;
+
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPointMultiplier = 75;
+        private const int realHitPoints = 75;
         #endregion
 
         #region Fields
@@ -123,7 +137,27 @@ namespace Duologue.PlayObjects
         private Vector2 center_Eye;
         private Vector2 center_Spinner;
         private Vector2 center_Pupil;
+        /// <summary>
+        /// The array of tube guys, contains the frame information, position, etc.
+        /// </summary>
         private TubeGuy[] tubes;
+        private float rotation_Spinner;
+        private float alpha_Spinner;
+        private float size_Spinner;
+        private Color[] colorArray_TasteTheRainbow;
+        private int color_Spinner;
+        private Vector2 offset_Eye;
+        private Vector2 offset_Pupil;
+        private float rotation_Eye;
+
+        // Relation to player stuff
+        private Vector2 vectorToNearestPlayer;
+        private Player nearestPlayer;
+        private Vector2 centerOfScreen;
+
+        // State stuff
+        private MolochState currentState;
+        private double timer_SpinnerColorChange;
 
         // Audio stuff
         private AudioManager audio;
@@ -154,24 +188,43 @@ namespace Duologue.PlayObjects
             ColorPolarity startColorPolarity, 
             int? hitPoints)
         {
-            // We say "fuck the requested starting pos"
+            // Starting variables are all ignored
 
-            // FIXME set position
+            // Set Position
+            Position = Vector2.Zero - 0.5f * RealSize;
+            // Set next position
 
+            // Set state
+            currentState = MolochState.Moving;
+            // Set color
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
-            if (hitPoints == null || (int)hitPoints == 0)
-            {
-                hitPoints = 1;
-            }
-            StartHitPoints = (int)hitPoints * realHitPointMultiplier;
-            CurrentHitPoints = (int)hitPoints * realHitPointMultiplier;
+            // Set hitpoints
+            StartHitPoints = realHitPoints;
+            CurrentHitPoints = realHitPoints;
             audio = ServiceLocator.GetService<AudioManager>();
             LoadAndInitialize();
         }
 
         private void LoadAndInitialize()
         {
+            // Set up the color array that will be used for all of the non-tub stuffs
+            colorArray_TasteTheRainbow = new Color[]
+            {
+                new Color(146, 203, 80),
+                new Color(76, 56, 80),
+                new Color(195, 94, 80),
+                new Color(22, 74, 32),
+                new Color(137, 22, 128),
+                new Color(8, 140, 128),
+                new Color(183,172,182),
+                new Color(255,135,39),
+                new Color(153,100,167),
+            };
+
+            centerOfScreen = new Vector2(
+                InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
+
             body = new MolochBodyElement[frames_Body];
             eyes = new EyeBallFrame[frames_Eye];
             tubeFrames = new TubeFrame[frames_Tube];
@@ -191,9 +244,13 @@ namespace Duologue.PlayObjects
                 body[i].Alpha = MathHelper.Lerp(minAlpha, maxAlpha, i/(float)frames_Body);
                 body[i].DeltaAlpha = (float)MWMathHelper.GetRandomInRange(minDeltaAlpha, maxDeltaAlpha);
                 body[i].DeltaAlphaDirection = MWMathHelper.CoinToss();
+                body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+                body[i].TimerColorChange = MWMathHelper.GetRandomInRange(0, totalTime_BodyColorChange);
             }
             center_Body = new Vector2(
                 body[0].Texture.Width / 2f, body[0].Texture.Height / 2f);
+
+            Radius = RealSize.X / 2f;
 
             for (int i = 0; i < frames_Eye; i++)
             {
@@ -239,10 +296,23 @@ namespace Duologue.PlayObjects
             {
                 tubes[i].Alive = true;
                 tubes[i].CurrentFrame = MWMathHelper.GetRandomInRange(0, frames_Tube);
-                tubes[i].Rotation = tempOffsets[i];
-                tubes[i].Offset = GetTubeOffset(tempOffsets[i]);
+                tubes[i].Angle = tempOffsets[i];
+                tubes[i].Offset = GetTubeOffset((double)tempOffsets[i]);
+                tubes[i].Rotation = GetTubeRotation(tempOffsets[i]);
+                tubes[i].HitPoints = StartHitPoints;
+                if(MWMathHelper.IsEven(i))
+                    tubes[i].ColorPolarity = ColorPolarity.Negative;
+                else
+                    tubes[i].ColorPolarity = ColorPolarity.Positive;
                 tubes[i].Timer = 0;
             }
+
+            // Set up spinner information
+            rotation_Spinner = 0;
+            size_Spinner = 1f;
+            alpha_Spinner = maxAlpha;
+            color_Spinner = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+            timer_SpinnerColorChange = 0;
 
             Alive = true;
             Initialized = true;
@@ -304,9 +374,26 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private methods
-        private Vector2 GetTubeOffset(float p)
+        /// <summary>
+        /// Given an angle, will get an offset for the tube
+        /// </summary>
+        private Vector2 GetTubeOffset(double angle)
         {
-            throw new NotImplementedException();
+            Vector2 offset = Vector2.Zero;
+
+            offset.X = offset_Tube * (float)Math.Cos(angle);
+            offset.Y = -offset_Tube * (float)Math.Sin(angle);
+
+            return offset;
+        }
+
+        /// <summary>
+        /// Given an angle, will get a rotation for the tube such
+        /// that it will always be facing away from the center
+        /// </summary>
+        private float GetTubeRotation(float p)
+        {
+            return MathHelper.PiOver2 - p;
         }
         #endregion
 
@@ -335,7 +422,84 @@ namespace Duologue.PlayObjects
         #region Draw/Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Draw the tubes
+            for (int i = 0; i < tubes.Length; i++)
+            {
+                #region Tube Draw
+                // Draw the base
+                InstanceManager.RenderSprite.Draw(
+                    tubeFrames[tubes[i].CurrentFrame].Base,
+                    Position + tubes[i].Offset,
+                    tubeFrames[tubes[i].CurrentFrame].Center,
+                    null,
+                    GetMyColor(ColorState.Dark, tubes[i].ColorPolarity),
+                    tubes[i].Rotation,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                // Draw the layers
+                InstanceManager.RenderSprite.Draw(
+                    tubeFrames[tubes[i].CurrentFrame].Lower,
+                    Position + tubes[i].Offset,
+                    tubeFrames[tubes[i].CurrentFrame].Center,
+                    null,
+                    GetMyColor(ColorState.Medium, tubes[i].ColorPolarity),
+                    tubes[i].Rotation,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                InstanceManager.RenderSprite.Draw(
+                    tubeFrames[tubes[i].CurrentFrame].Upper,
+                    Position + tubes[i].Offset,
+                    tubeFrames[tubes[i].CurrentFrame].Center,
+                    null,
+                    GetMyColor(ColorState.Light, tubes[i].ColorPolarity),
+                    tubes[i].Rotation,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                // Draw the outline
+                InstanceManager.RenderSprite.Draw(
+                    tubeFrames[tubes[i].CurrentFrame].Outline,
+                    Position + tubes[i].Offset,
+                    tubeFrames[tubes[i].CurrentFrame].Center,
+                    null,
+                    Color.White,
+                    tubes[i].Rotation,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                #endregion
+            }
+
+            // Draw the spinner
+            InstanceManager.RenderSprite.Draw(
+                texture_Spinner,
+                Position,
+                center_Spinner,
+                null,
+                new Color(colorArray_TasteTheRainbow[color_Spinner], alpha_Spinner),
+                rotation_Spinner,
+                size_Spinner,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            // Draw the body
+            for (int i = 0; i < body.Length; i++)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    body[i].Texture,
+                    Position,
+                    center_Body,
+                    null,
+                    new Color(colorArray_TasteTheRainbow[body[i].Color], body[i].Alpha),
+                    body[i].Rotation,
+                    1f,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
+
+            // Draw the eye
         }
 
         public override void Update(GameTime gameTime)

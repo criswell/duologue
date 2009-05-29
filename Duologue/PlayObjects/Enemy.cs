@@ -420,6 +420,16 @@ namespace Duologue.PlayObjects
 
             return c;
         }
+
+        public Color GetMyColor(int ColorStateLevel, ColorPolarity Polarity)
+        {
+            // FIXME, same as above
+            Color c = ColorState.Negative[ColorStateLevel];
+            if (Polarity == ColorPolarity.Positive)
+                c = ColorState.Positive[ColorStateLevel];
+
+            return c;
+        }
         #endregion
     }
 }
