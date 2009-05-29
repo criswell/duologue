@@ -111,11 +111,21 @@ namespace Duologue.PlayObjects
 
         private const double totalTime_SpinnerColorChange = 1.02;
         private const double totalTime_BodyColorChange = 1.51;
+        private const double totalTime_EyeBallBlinks = 2.4;
 
         /// <summary>
         /// The offset length of the tube base
         /// </summary>
-        private const float offset_Tube = 350f;
+        private const float offsetLength_Tube = 350f;
+
+        /// <summary>
+        /// The offset length of the eyeball from center of body
+        /// </summary>
+        private const float offsetLength_EyeBall = 175f;
+        /// <summary>
+        /// The offset length of the pupil from center of eyeball
+        /// </summary>
+        private const float offsetLength_Pupil = 15f;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -149,6 +159,8 @@ namespace Duologue.PlayObjects
         private Vector2 offset_Eye;
         private Vector2 offset_Pupil;
         private float rotation_Eye;
+        private int color_Pupil;
+        private ColorPolarity polarity_EyeBall;
 
         // Relation to player stuff
         private Vector2 vectorToNearestPlayer;
@@ -158,6 +170,8 @@ namespace Duologue.PlayObjects
         // State stuff
         private MolochState currentState;
         private double timer_SpinnerColorChange;
+        private double timer_EyeBallBlinks;
+        private int currentEyeFrame;
 
         // Audio stuff
         private AudioManager audio;
@@ -314,6 +328,15 @@ namespace Duologue.PlayObjects
             color_Spinner = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
             timer_SpinnerColorChange = 0;
 
+            // Set up a default eye stuff
+            vectorToNearestPlayer = Vector2.Zero;
+            nearestPlayer = null;
+            SetEyeOffsets();
+            color_Pupil = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+            polarity_EyeBall = ColorPolarity.Positive;
+            timer_EyeBallBlinks = 0;
+            currentEyeFrame = 0;
+
             Alive = true;
             Initialized = true;
         }
@@ -375,14 +398,40 @@ namespace Duologue.PlayObjects
 
         #region Private methods
         /// <summary>
+        /// Will set the current offsets for the eyeball and pupil
+        /// </summary>
+        private void SetEyeOffsets()
+        {
+            // Place eye ball with relation to center
+            offset_Eye = centerOfScreen - Position;
+            offset_Eye.Normalize();
+            offset_Eye = offset_Eye * offsetLength_EyeBall;
+            rotation_Eye = MathHelper.PiOver2 - MWMathHelper.ComputeAngleAgainstX(offset_Eye);
+
+            // Aim the pupil
+            if (nearestPlayer == null || vectorToNearestPlayer == Vector2.Zero)
+            {
+                // Aim at the center of screen
+                offset_Pupil = centerOfScreen - (Position + offset_Eye);
+            }
+            else
+            {
+                // Aim at the player
+                offset_Pupil = vectorToNearestPlayer - (Position + offset_Eye);
+            }
+            offset_Pupil.Normalize();
+            offset_Pupil = offset_Pupil * offsetLength_Pupil;
+        }
+
+        /// <summary>
         /// Given an angle, will get an offset for the tube
         /// </summary>
         private Vector2 GetTubeOffset(double angle)
         {
             Vector2 offset = Vector2.Zero;
 
-            offset.X = offset_Tube * (float)Math.Cos(angle);
-            offset.Y = -offset_Tube * (float)Math.Sin(angle);
+            offset.X = offsetLength_Tube * (float)Math.Cos(angle);
+            offset.Y = -offsetLength_Tube * (float)Math.Sin(angle);
 
             return offset;
         }
@@ -499,7 +548,73 @@ namespace Duologue.PlayObjects
                     RenderSpriteBlendMode.AlphaBlendTop);
             }
 
-            // Draw the eye
+            #region Draw the eye
+            // Draw the base
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].Base,
+                Position + offset_Eye,
+                center_Eye,
+                null,
+                Color.White,
+                rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            // Draw the pupil
+            InstanceManager.RenderSprite.Draw(
+                texture_EyePupil,
+                Position + offset_Eye + offset_Pupil,
+                center_Pupil,
+                null,
+                colorArray_TasteTheRainbow[color_Pupil],
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            // Draw the layers
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].ShadeLower,
+                Position + offset_Eye,
+                center_Eye,
+                null,
+                GetMyColor(ColorState.Light, polarity_EyeBall),
+                rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].ShadeMiddle,
+                Position + offset_Eye,
+                center_Eye,
+                null,
+                GetMyColor(ColorState.Medium, polarity_EyeBall),
+                rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].ShadeUpper,
+                Position + offset_Eye,
+                center_Eye,
+                null,
+                GetMyColor(ColorState.Dark, polarity_EyeBall),
+                rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            // Draw the outline
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].Outline,
+                Position + offset_Eye,
+                center_Eye,
+                null,
+                Color.White,
+                rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);            
+            #endregion
+
         }
 
         public override void Update(GameTime gameTime)
