@@ -50,6 +50,7 @@ namespace Duologue.PlayObjects
         public Texture2D Outline;
         public Texture2D Lower;
         public Texture2D Upper;
+        public Vector2 Center;
     }
 
     public struct TubeGuy
@@ -87,6 +88,10 @@ namespace Duologue.PlayObjects
         private const string filename_TubeShadeLower = "Enemies/end/end-boss-tube{0}-shade-lower";
         private const string filename_TubeShadeUpper = "Enemies/end/end-boss-tube{0}-shade-upper";
         private const int frames_Tube = 4;
+        private const string filename_TubeDeadBase = "Enemies/end/end-boss-tube-dead-base";
+        private const string filename_TubeDeadOutline = "Enemies/end/end-boss-tube-dead-outline";
+        private const string filename_TubeDeadShadeLower = "Enemies/end/end-boss-tube-dead-shade-lower";
+        private const string filename_TubeDeadShadeUpper = "Enemies/end/end-boss-tube-dead-shade-upper";
         private const float offset_TubeVerticalCenter = -10f;
 
         private const string filename_EyePupil = "Enemies/gloop/king-gloop-eye";
@@ -111,12 +116,12 @@ namespace Duologue.PlayObjects
         private MolochBodyElement[] body;
         private EyeBallFrame[] eyes;
         private TubeFrame[] tubes;
+        private TubeFrame tubeDead;
         private Texture2D texture_Spinner;
         private Texture2D texture_EyePupil;
         private Vector2 center_Body;
         private Vector2 center_Eye;
         private Vector2 center_Spinner;
-        private Vector2 center_Tube;
         private Vector2 center_Pupil;
 
         // Audio stuff
@@ -206,10 +211,16 @@ namespace Duologue.PlayObjects
                 tubes[i].Outline = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeOutline, i.ToString()));
                 tubes[i].Lower = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeLower, i.ToString()));
                 tubes[i].Upper = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeUpper, i.ToString()));
+                tubes[i].Center = new Vector2(
+                    tubes[i].Base.Width / 2f, (float)tubes[i].Base.Height + offset_TubeVerticalCenter);
             }
-            center_Tube = new Vector2(
-                tubes[0].Base.Width / 2f, (float)tubes[0].Base.Height + offset_TubeVerticalCenter);
 
+            tubeDead.Base = InstanceManager.AssetManager.LoadTexture2D(filename_TubeDeadBase);
+            tubeDead.Outline = InstanceManager.AssetManager.LoadTexture2D(filename_TubeDeadOutline);
+            tubeDead.Lower = InstanceManager.AssetManager.LoadTexture2D(filename_TubeDeadShadeLower);
+            tubeDead.Upper = InstanceManager.AssetManager.LoadTexture2D(filename_TubeDeadShadeUpper);
+            tubeDead.Center = new Vector2(
+                tubeDead.Base.Width / 2f, (float)tubeDead.Base.Height + offset_TubeVerticalCenter);
 
             Alive = true;
             Initialized = true;
