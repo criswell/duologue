@@ -104,10 +104,13 @@ namespace Duologue.PlayObjects
         private const float delta_BodyRotation = MathHelper.PiOver4 * 0.4f;
         private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.1f;
 
-        private const float minAlpha = 0.1f;
-        private const float maxAlpha = 1.0f;
-        private const double minDeltaAlpha = 0.005;
-        private const double maxDeltaAlpha = 0.04;
+        private const float minAlpha_Body = 0.1f;
+        private const float maxAlpha_Body = 1.0f;
+        private const double minDeltaAlpha_Body = 0.005;
+        private const double maxDeltaAlpha_Body = 0.04;
+
+        private const float minAlpha_Spinner = 0.001f;
+        private const float maxAlpha_Spinner = 0.5f;
 
         private const double totalTime_SpinnerColorChange = 1.02;
         private const double totalTime_BodyColorChange = 1.51;
@@ -125,7 +128,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The offset length of the pupil from center of eyeball
         /// </summary>
-        private const float offsetLength_Pupil = 15f;
+        private const float offsetLength_Pupil = 35f;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -255,8 +258,8 @@ namespace Duologue.PlayObjects
                 body[i].Texture = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_Body, i.ToString()));
                 body[i].Rotation = 0;
                 body[i].DeltaRotation = (1 + i) * delta_BodyRotation;
-                body[i].Alpha = MathHelper.Lerp(minAlpha, maxAlpha, i/(float)frames_Body);
-                body[i].DeltaAlpha = (float)MWMathHelper.GetRandomInRange(minDeltaAlpha, maxDeltaAlpha);
+                body[i].Alpha = MathHelper.Lerp(minAlpha_Body, maxAlpha_Body, i/(float)frames_Body);
+                body[i].DeltaAlpha = (float)MWMathHelper.GetRandomInRange(minDeltaAlpha_Body, maxDeltaAlpha_Body);
                 body[i].DeltaAlphaDirection = MWMathHelper.CoinToss();
                 body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
                 body[i].TimerColorChange = MWMathHelper.GetRandomInRange(0, totalTime_BodyColorChange);
@@ -324,7 +327,7 @@ namespace Duologue.PlayObjects
             // Set up spinner information
             rotation_Spinner = 0;
             size_Spinner = 1f;
-            alpha_Spinner = maxAlpha;
+            alpha_Spinner = maxAlpha_Spinner;
             color_Spinner = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
             timer_SpinnerColorChange = 0;
 
@@ -406,7 +409,7 @@ namespace Duologue.PlayObjects
             offset_Eye = centerOfScreen - Position;
             offset_Eye.Normalize();
             offset_Eye = offset_Eye * offsetLength_EyeBall;
-            rotation_Eye = MathHelper.PiOver2 - MWMathHelper.ComputeAngleAgainstX(offset_Eye);
+            rotation_Eye = MWMathHelper.ComputeAngleAgainstX(offset_Eye);
 
             // Aim the pupil
             if (nearestPlayer == null || vectorToNearestPlayer == Vector2.Zero)
