@@ -101,19 +101,20 @@ namespace Duologue.PlayObjects
 
         private const string filename_EyePupil = "Enemies/gloop/king-gloop-eye";
 
-        private const float delta_BodyRotation = MathHelper.PiOver4 * 0.4f;
-        private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.1f;
+        private const float delta_BodyRotation = MathHelper.PiOver4 * 0.005f;
+        private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.01f;
 
         private const float minAlpha_Body = 0.1f;
         private const float maxAlpha_Body = 1.0f;
-        private const double minDeltaAlpha_Body = 0.005;
-        private const double maxDeltaAlpha_Body = 0.04;
+        private const double minDeltaAlpha_Body = 0.0005;
+        private const double maxDeltaAlpha_Body = 0.004;
 
-        private const float minAlpha_Spinner = 0.001f;
-        private const float maxAlpha_Spinner = 0.5f;
+        private const float alpha_Spinner = 0.5f;
+        private const float maxScale_Spinner = 1.0f;
+        private const float minScale_Spinner = 0.7889f;
 
         private const double totalTime_SpinnerColorChange = 1.02;
-        private const double totalTime_BodyColorChange = 1.51;
+        private const double totalTime_BodyColorChange = 2.51;
         private const double totalTime_EyeBallBlinks = 2.4;
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The offset length of the eyeball from center of body
         /// </summary>
-        private const float offsetLength_EyeBall = 175f;
+        private const float offsetLength_EyeBall = 225f;
         /// <summary>
         /// The offset length of the pupil from center of eyeball
         /// </summary>
@@ -155,7 +156,6 @@ namespace Duologue.PlayObjects
         /// </summary>
         private TubeGuy[] tubes;
         private float rotation_Spinner;
-        private float alpha_Spinner;
         private float size_Spinner;
         private Color[] colorArray_TasteTheRainbow;
         private int color_Spinner;
@@ -326,8 +326,7 @@ namespace Duologue.PlayObjects
 
             // Set up spinner information
             rotation_Spinner = 0;
-            size_Spinner = 1f;
-            alpha_Spinner = maxAlpha_Spinner;
+            size_Spinner = maxScale_Spinner;
             color_Spinner = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
             timer_SpinnerColorChange = 0;
 
@@ -622,7 +621,45 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            
+            double delta = gameTime.ElapsedGameTime.TotalSeconds;
+            #region Visual updates
+            float bp = MathHelper.Clamp(((float)ServiceLocator.GetService<AudioManager>().BeatPercentage() - 0.5f) / 0.5f, 0, 1f);
+            // Spinner
+            size_Spinner = MathHelper.Lerp(minScale_Spinner, maxScale_Spinner, bp);
+            rotation_Spinner += delta_SpinnerRotation;
+
+            // Body
+            for (int i = 0; i < body.Length; i++)
+            {
+                body[i].TimerColorChange += delta;
+                if (body[i].TimerColorChange > totalTime_BodyColorChange)
+                {
+                    body[i].TimerColorChange = 0;
+                    body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+                }
+                body[i].Rotation += body[i].DeltaRotation;
+                if (body[i].Rotation > MathHelper.TwoPi)
+                    body[i].Rotation -= MathHelper.TwoPi;
+                if (body[i].Rotation < 0)
+                    body[i].Rotation = MathHelper.TwoPi + body[i].Rotation;
+
+                if (body[i].DeltaAlphaDirection)
+                    body[i].Alpha += body[i].DeltaAlpha;
+                else
+                    body[i].Alpha -= body[i].DeltaAlpha;
+
+                if (body[i].Alpha > maxAlpha_Body)
+                {
+                    body[i].Alpha = maxAlpha_Body;
+                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                }
+                else if (body[i].Alpha < minAlpha_Body)
+                {
+                    body[i].Alpha = minAlpha_Body;
+                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                }
+            }
+            #endregion
         }
         #endregion
     }
