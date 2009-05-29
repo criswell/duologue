@@ -115,7 +115,7 @@ namespace Duologue.PlayObjects
         // Image and animation related things
         private MolochBodyElement[] body;
         private EyeBallFrame[] eyes;
-        private TubeFrame[] tubes;
+        private TubeFrame[] tubeFrames;
         private TubeFrame tubeDead;
         private Texture2D texture_Spinner;
         private Texture2D texture_EyePupil;
@@ -123,6 +123,7 @@ namespace Duologue.PlayObjects
         private Vector2 center_Eye;
         private Vector2 center_Spinner;
         private Vector2 center_Pupil;
+        private TubeGuy[] tubes;
 
         // Audio stuff
         private AudioManager audio;
@@ -173,7 +174,7 @@ namespace Duologue.PlayObjects
         {
             body = new MolochBodyElement[frames_Body];
             eyes = new EyeBallFrame[frames_Eye];
-            tubes = new TubeFrame[frames_Tube];
+            tubeFrames = new TubeFrame[frames_Tube];
 
             texture_EyePupil = InstanceManager.AssetManager.LoadTexture2D(filename_EyePupil);
             center_Pupil = new Vector2(
@@ -207,12 +208,12 @@ namespace Duologue.PlayObjects
 
             for (int i = 0; i < frames_Tube; i++)
             {
-                tubes[i].Base = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeBase, i.ToString()));
-                tubes[i].Outline = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeOutline, i.ToString()));
-                tubes[i].Lower = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeLower, i.ToString()));
-                tubes[i].Upper = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeUpper, i.ToString()));
-                tubes[i].Center = new Vector2(
-                    tubes[i].Base.Width / 2f, (float)tubes[i].Base.Height + offset_TubeVerticalCenter);
+                tubeFrames[i].Base = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeBase, i.ToString()));
+                tubeFrames[i].Outline = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeOutline, i.ToString()));
+                tubeFrames[i].Lower = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeLower, i.ToString()));
+                tubeFrames[i].Upper = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeUpper, i.ToString()));
+                tubeFrames[i].Center = new Vector2(
+                    tubeFrames[i].Base.Width / 2f, (float)tubeFrames[i].Base.Height + offset_TubeVerticalCenter);
             }
 
             tubeDead.Base = InstanceManager.AssetManager.LoadTexture2D(filename_TubeDeadBase);
@@ -222,18 +223,48 @@ namespace Duologue.PlayObjects
             tubeDead.Center = new Vector2(
                 tubeDead.Base.Width / 2f, (float)tubeDead.Base.Height + offset_TubeVerticalCenter);
 
+            float[] tempOffsets = new float[]
+            {
+                0,
+                MathHelper.PiOver4,
+                MathHelper.PiOver2,
+                3f * MathHelper.PiOver4,
+                MathHelper.Pi,
+                5f * MathHelper.PiOver4,
+                3f * MathHelper.PiOver2,
+                7f * MathHelper.PiOver4
+            };
+            tubes = new TubeGuy[tempOffsets.Length];
+            for (int i = 0; i < tempOffsets.Length; i++)
+            {
+                tubes[i].Alive = true;
+                tubes[i].CurrentFrame = MWMathHelper.GetRandomInRange(0, frames_Tube);
+                tubes[i].Rotation = tempOffsets[i];
+                tubes[i].Offset = GetTubeOffset(tempOffsets[i]);
+                tubes[i].Timer = 0;
+            }
+
             Alive = true;
             Initialized = true;
         }
 
         public override String[] GetTextureFilenames()
         {
-            String[] filenames = new String[frames_Body + 5 * frames_Eye + 4 * frames_Tube + 2];
+            String[] filenames = new String[frames_Body + 5 * frames_Eye + 4 * frames_Tube + 6];
 
             int i = 0;
             filenames[i] = filename_EyePupil;
             i++;
             filenames[i] = filename_Spinner;
+            i++;
+
+            filenames[i] = filename_TubeDeadBase;
+            i++;
+            filenames[i] = filename_TubeDeadOutline;
+            i++;
+            filenames[i] = filename_TubeDeadShadeLower;
+            i++;
+            filenames[i] = filename_TubeDeadShadeUpper;
             i++;
 
             for (int t = 0; t < frames_Body; t++)
@@ -269,6 +300,13 @@ namespace Duologue.PlayObjects
             }
 
             return filenames;
+        }
+        #endregion
+
+        #region Private methods
+        private Vector2 GetTubeOffset(float p)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 
