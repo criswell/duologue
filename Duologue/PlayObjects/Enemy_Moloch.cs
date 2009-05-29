@@ -205,7 +205,7 @@ namespace Duologue.PlayObjects
             // Starting variables are all ignored
 
             // Set Position
-            Position = Vector2.Zero - 0.5f * RealSize;
+            Position = Vector2.Zero;// -0.5f * RealSize;
             // Set next position
 
             // Set state
@@ -449,22 +449,22 @@ namespace Duologue.PlayObjects
         #region Movement overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
         }
         #endregion
 
@@ -619,7 +619,7 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            
         }
         #endregion
     }
