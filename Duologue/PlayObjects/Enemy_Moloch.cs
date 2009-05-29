@@ -30,7 +30,9 @@ namespace Duologue.PlayObjects
         public Texture2D Texture;
         public float Rotation;
         public float DeltaRotation;
-        public byte Alpha;
+        public float Alpha;
+        public float DeltaAlpha;
+        public bool DeltaAlphaDirection;
     }
 
     public struct EyeBallFrame
@@ -50,28 +52,51 @@ namespace Duologue.PlayObjects
         public Texture2D Upper;
     }
 
+    public struct TubeGuy
+    {
+        public int CurrentFrame;
+        public float Rotation;
+        public Vector2 Offset;
+        public bool Alive;
+        public double Timer;
+    }
+
+    public enum MolochState
+    {
+        Moving,
+        Steady,
+    }
+
     public class Enemy_Moloch : Enemy
     {
         #region Constants
-        private string filename_Body = "Enemies/end/end-boss-body-{0}";
-        private int frames_Body = 3;
+        private const string filename_Body = "Enemies/end/end-boss-body-{0}";
+        private const int frames_Body = 3;
         
-        private string filename_EyeBall = "Enemies/end/end-boss-eye{0}-eyeball";
-        private string filename_EyeOutline = "Enemies/end/end-boss-eye{0}-outline";
-        private string filename_EyeShadeLower = "Enemies/end/end-boss-eye{0}-shade-lower";
-        private string filename_EyeShadeMiddle = "Enemies/end/end-boss-eye{0}-shade-middle";
-        private string filename_EyeShadeUpper = "Enemies/end/end-boss-eye{0}-shade-upper";
-        private int frames_Eye = 5;
+        private const string filename_EyeBall = "Enemies/end/end-boss-eye{0}-eyeball";
+        private const string filename_EyeOutline = "Enemies/end/end-boss-eye{0}-outline";
+        private const string filename_EyeShadeLower = "Enemies/end/end-boss-eye{0}-shade-lower";
+        private const string filename_EyeShadeMiddle = "Enemies/end/end-boss-eye{0}-shade-middle";
+        private const string filename_EyeShadeUpper = "Enemies/end/end-boss-eye{0}-shade-upper";
+        private const int frames_Eye = 5;
 
-        private string filename_Spinner = "Enemies/end/end-boss-spinner";
+        private const string filename_Spinner = "Enemies/end/end-boss-spinner";
 
-        private string filename_TubeBase = "Enemies/end/end-boss-tube{0}-base";
-        private string filename_TubeOutline = "Enemies/end/end-boss-tube{0}-outline";
-        private string filename_TubeShadeLower = "Enemies/end/end-boss-tube{0}-shade-lower";
-        private string filename_TubeShadeUpper = "Enemies/end/end-boss-tube{0}-shade-upper";
-        private int frames_Tube = 4;
+        private const string filename_TubeBase = "Enemies/end/end-boss-tube{0}-base";
+        private const string filename_TubeOutline = "Enemies/end/end-boss-tube{0}-outline";
+        private const string filename_TubeShadeLower = "Enemies/end/end-boss-tube{0}-shade-lower";
+        private const string filename_TubeShadeUpper = "Enemies/end/end-boss-tube{0}-shade-upper";
+        private const int frames_Tube = 4;
+        private const float offset_TubeVerticalCenter = -10f;
 
         private const string filename_EyePupil = "Enemies/gloop/king-gloop-eye";
+
+        private const float delta_BodyRotation = MathHelper.PiOver4 * 0.4f;
+
+        private const float minAlpha = 0.1f;
+        private const float maxAlpha = 1.0f;
+        private const double minDeltaAlpha = 0.005;
+        private const double maxDeltaAlpha = 0.04;
 
         /// <summary>
         /// This is both the minimum number of hit points it is possible for this boss to have
@@ -88,6 +113,11 @@ namespace Duologue.PlayObjects
         private TubeFrame[] tubes;
         private Texture2D texture_Spinner;
         private Texture2D texture_EyePupil;
+        private Vector2 center_Body;
+        private Vector2 center_Eye;
+        private Vector2 center_Spinner;
+        private Vector2 center_Tube;
+        private Vector2 center_Pupil;
 
         // Audio stuff
         private AudioManager audio;
@@ -108,7 +138,7 @@ namespace Duologue.PlayObjects
             Initialized = false;
 
             // Set the RealSize by hand, set this at max
-            RealSize = new Vector2(700, 700);
+            RealSize = new Vector2(1048, 1048);
         }
 
         public override void Initialize(
@@ -119,6 +149,9 @@ namespace Duologue.PlayObjects
             int? hitPoints)
         {
             // We say "fuck the requested starting pos"
+
+            // FIXME set position
+
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             if (hitPoints == null || (int)hitPoints == 0)
@@ -138,12 +171,23 @@ namespace Duologue.PlayObjects
             tubes = new TubeFrame[frames_Tube];
 
             texture_EyePupil = InstanceManager.AssetManager.LoadTexture2D(filename_EyePupil);
+            center_Pupil = new Vector2(
+                texture_EyePupil.Width / 2f, texture_EyePupil.Height / 2f);
             texture_Spinner = InstanceManager.AssetManager.LoadTexture2D(filename_Spinner);
+            center_Spinner = new Vector2(
+                texture_Spinner.Width / 2f, texture_Spinner.Height / 2f);
 
             for (int i = 0; i < frames_Body; i++)
             {
                 body[i].Texture = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_Body, i.ToString()));
+                body[i].Rotation = 0;
+                body[i].DeltaRotation = (1 + i) * delta_BodyRotation;
+                body[i].Alpha = MathHelper.Lerp(minAlpha, maxAlpha, i/(float)frames_Body);
+                body[i].DeltaAlpha = (float)MWMathHelper.GetRandomInRange(minDeltaAlpha, maxDeltaAlpha);
+                body[i].DeltaAlphaDirection = MWMathHelper.CoinToss();
             }
+            center_Body = new Vector2(
+                body[0].Texture.Width / 2f, body[0].Texture.Height / 2f);
 
             for (int i = 0; i < frames_Eye; i++)
             {
@@ -153,6 +197,8 @@ namespace Duologue.PlayObjects
                 eyes[i].ShadeMiddle = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeShadeMiddle, i.ToString()));
                 eyes[i].ShadeUpper = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeShadeUpper, i.ToString()));
             }
+            center_Eye = new Vector2(
+                eyes[0].Base.Width / 2f, eyes[0].Base.Height / 2f);
 
             for (int i = 0; i < frames_Tube; i++)
             {
@@ -161,6 +207,12 @@ namespace Duologue.PlayObjects
                 tubes[i].Lower = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeLower, i.ToString()));
                 tubes[i].Upper = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeShadeUpper, i.ToString()));
             }
+            center_Tube = new Vector2(
+                tubes[0].Base.Width / 2f, (float)tubes[0].Base.Height + offset_TubeVerticalCenter);
+
+
+            Alive = true;
+            Initialized = true;
         }
 
         public override String[] GetTextureFilenames()
