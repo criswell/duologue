@@ -8,7 +8,8 @@ using Mimicware;
 namespace Duologue.Audio
 {
 
-    public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths, Credits, Ultrafix, WinOne }
+    public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths, 
+        Credits, Ultrafix, WinOne, SecondChance }
 
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
@@ -68,6 +69,7 @@ namespace Duologue.Audio
             songMap.Add(SongID.Credits, music.Credits);
             songMap.Add(SongID.Ultrafix, music.Ultrafix);
             songMap.Add(SongID.WinOne, music.WinOne);
+            songMap.Add(SongID.SecondChance, music.SecondChance);
 
             base.Initialize();
         }

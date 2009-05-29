@@ -32,17 +32,6 @@ namespace Duologue.Audio
         protected const string Intensity4 = "organ";
         protected const string Intensity5 = "guitar";
 
-        //Land of Sand Song constants
-        protected const string landOfSandWaves = "Content\\Audio\\LandOfSand.xwb";
-        protected const string landOfSandSounds = "Content\\Audio\\LandOfSand.xsb";
-        protected const string LoSBassDrum = "BassDrum";
-        protected const string LoSHiHat = "HiHat";
-        protected const string LoSBassSynth = "BassSynth";
-        protected const string LoSStabs = "Stabs";
-        protected const string LoSMelody = "Melody";
-        protected const string LoSAccent = "Accent";
-        protected const string LoSToms = "Toms";
-
         //Dance8ths constants
         protected const string dance8thsWaves = "Content\\Audio\\Dance8ths.xwb";
         protected const string dance8thsSounds = "Content\\Audio\\Dance8ths.xsb";
@@ -349,6 +338,59 @@ namespace Duologue.Audio
         protected const string W1jB16 = "jamB-16";
         protected const string W1jB17 = "jamB-17";
 
+        //SecondChance Song constants
+        protected const string SecondChanceWaves = "Content\\Audio\\SecondChance.xwb";
+        protected const string SecondChanceSounds = "Content\\Audio\\SecondChance.xsb";
+        protected const string SCb01 = "beat-01";
+        protected const string SCb02 = "beat-02";
+        protected const string SCb03 = "beat-03";
+        protected const string SCb04 = "beat-04";
+        protected const string SCb05 = "beat-05";
+        protected const string SCb06 = "beat-06";
+        protected const string SCb07 = "beat-07";
+        protected const string SCb08 = "beat-08";
+        protected const string SCb09 = "beat-09";
+        protected const string SCb10 = "beat-10";
+        protected const string SCb11 = "beat-11";
+        protected const string SCb12 = "beat-12";
+        protected const string SCb13 = "beat-13";
+        protected const string SCb14 = "beat-14";
+        protected const string SCb15 = "beat-15";
+        protected const string SCb16 = "beat-16";
+        protected const string SCn01 = "nernt-01";
+        protected const string SCn02 = "nernt-02";
+        protected const string SCn03 = "nernt-03";
+        protected const string SCn04 = "nernt-04";
+        protected const string SCn05 = "nernt-05";
+        protected const string SCn06 = "nernt-06";
+        protected const string SCn07 = "nernt-07";
+        protected const string SCn08 = "nernt-08";
+        protected const string SCn09 = "nernt-09";
+        protected const string SCn10 = "nernt-10";
+        protected const string SCn11 = "nernt-11";
+        protected const string SCn12 = "nernt-12";
+        protected const string SCn13 = "nernt-13";
+        protected const string SCn14 = "nernt-14";
+        protected const string SCn15 = "nernt-15";
+        protected const string SCn16 = "nernt-16";
+        protected const string SCc01 = "cartoon-01";
+        protected const string SCc02 = "cartoon-02";
+        protected const string SCc03 = "cartoon-03";
+        protected const string SCc04 = "cartoon-04";
+        protected const string SCc05 = "cartoon-05";
+        protected const string SCc06 = "cartoon-06";
+        protected const string SCc07 = "cartoon-07";
+        protected const string SCc08 = "cartoon-08";
+        protected const string SCc09 = "cartoon-09";
+        protected const string SCc10 = "cartoon-10";
+        protected const string SCc11 = "cartoon-11";
+        protected const string SCc12 = "cartoon-12";
+        protected const string SCc13 = "cartoon-13";
+        protected const string SCc14 = "cartoon-14";
+        protected const string SCc15 = "cartoon-15";
+        protected const string SCc16 = "cartoon-16";
+
+
         protected static Dictionary<SongID, Song> songMap = new Dictionary<SongID, Song>();
         public Song SelectSong;
         public Song Dance8ths;
@@ -356,6 +398,7 @@ namespace Duologue.Audio
         public Song Credits;
         public Song Ultrafix;
         public Song WinOne;
+        public Song SecondChance;
 
         public MusicFactory(AudioManager manager)
         {
@@ -478,6 +521,26 @@ namespace Duologue.Audio
             WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves, W1arr, W1volumes);
             WinOne.beater.lengthOfBeat = 450f;
 
+            //SecondChance
+            string[,] SCarr = {
+              {SCb01, SCb02, SCb03, SCb04, SCb05, SCb06, SCb07, SCb08, 
+                  SCb09, SCb10, SCb11, SCb12, SCb13, SCb14, SCb15, SCb16 },
+              {SCn01, SCn02, SCn03, SCn04, SCn05, SCn06, SCn07, SCn08, 
+                  SCn09, SCn10, SCn11, SCn12, SCn13, SCn14, SCn15, SCn16 },
+              {SCc01, SCc02, SCc03, SCc04, SCc05, SCc06, SCc07, SCc08, 
+                  SCc09, SCc10, SCc11, SCc12, SCc13, SCc14, SCc15, SCc16 },
+                              };
+
+            bool[,] SCvolumes = {
+                      {on, off, off}, // One row per intensity
+                      {on, on, off},  // with a switch for each track
+                      {on, on, on},
+                                };
+
+            SecondChance = new Song(manager.Game, SecondChanceSounds, SecondChanceWaves, SCarr, SCvolumes);
+            SecondChance.beater.lengthOfBeat = 450f;
+
+
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);
             manager.Game.Components.Add(Dance8ths);
@@ -485,6 +548,7 @@ namespace Duologue.Audio
             manager.Game.Components.Add(Credits);
             manager.Game.Components.Add(Ultrafix);
             manager.Game.Components.Add(WinOne);
+            manager.Game.Components.Add(SecondChance);
         }
 
     }
