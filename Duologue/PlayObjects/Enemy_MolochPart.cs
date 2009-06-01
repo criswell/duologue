@@ -160,13 +160,21 @@ namespace Duologue.PlayObjects
                 else
                 {
                     TriggerShieldDisintegration(texture_Glooplet,
-                        GetMyColor(ColorState.Light),
-                        Position,
+                        GetMyColor(ColorState.Dark),
+                        Position + new Vector2(
+                                    (float)MWMathHelper.GetRandomInRange(-Radius / 2f, Radius / 2f),
+                                    (float)MWMathHelper.GetRandomInRange(-Radius / 2f, Radius / 2f)),
                         (float)MWMathHelper.GetRandomInRange(0, (double)MathHelper.TwoPi));
                     MyManager.TriggerPoints(
                         ((PlayerBullet)pobj).MyPlayerIndex,
                         myShieldValue,
                         Position);
+                    myMaster.TriggerShieldDisintegration(texture_Glooplet,
+                        GetMyColor(ColorState.Light),
+                        Position + new Vector2(
+                                    (float)MWMathHelper.GetRandomInRange(-Radius/2f, Radius/2f),
+                                    (float)MWMathHelper.GetRandomInRange(-Radius/2f, Radius/2f)),
+                        (float)MWMathHelper.GetRandomInRange(0, (double)MathHelper.TwoPi));
                     //audio.soundEffects.PlayEffect(EffectID.CokeBottle);
                     audio.PlayEffect(EffectID.CokeBottle);
                 }
