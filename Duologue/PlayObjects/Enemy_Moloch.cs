@@ -242,6 +242,10 @@ namespace Duologue.PlayObjects
             ColorPolarity startColorPolarity, 
             int? hitPoints)
         {
+            // Perform pre-checks
+            if (LocalInstanceManager.CurrentNumberEnemies < 30)
+                throw new Exception("MOLOCH NEEDS MOAR FODDER! (In order for Moloch to work, we need a minimum of 30 enemies in the enemy list. Note, you'll probably want them all Placeholders.)");
+
             // Starting variables are all ignored
 
             // Set Position
