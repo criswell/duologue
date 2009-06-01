@@ -116,7 +116,7 @@ namespace Duologue.PlayObjects
         private const float scale_Blob = 0.8f;
         private const float offsetY_BlobHighlight = -10f;
         private const float scale_BlobOutline = 0.82f;
-        private const int numberOfBlobsInShaft = 8;
+        private const int numberOfBlobsInShaft = 10;
 
         private const string filename_TubeExplode = "Audio/PlayerEffects/splat-explode";
         private const float volume_TubeExplode = 1f;
