@@ -28,11 +28,22 @@ namespace Duologue.PlayObjects
     class Enemy_MolochPart : Enemy
     {
         #region Constants
+        private const string filename_Glooplet = "Enemies/gloop/glooplet-death";
+
+        private const double shieldCoolOffTime = 0.4;
+        /// <summary>
+        /// The point value I would be if I were hit at perfect beat
+        /// </summary>
+        private const int myPointValue = 100;
         #endregion
 
         #region Fields
         private int parentIndex;
         private Enemy_Moloch myMaster;
+        private Texture2D texture_Glooplet;
+
+        private double shieldCoolOff;
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -81,47 +92,94 @@ namespace Duologue.PlayObjects
             }
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
+            texture_Glooplet = InstanceManager.AssetManager.LoadTexture2D(filename_Glooplet);
+            shieldCoolOff = 0;
+            audio = ServiceLocator.GetService<AudioManager>();
             Initialized = true;
             Alive = true;
         }
 
-        public override string[] GetTextureFilenames()
+        public override String[] GetTextureFilenames()
         {
-            throw new NotImplementedException();
+            return new String[]
+            {
+                filename_Glooplet,
+            };
         }
         #endregion
 
         #region Movement overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            Position = myMaster.GetTubePosition(parentIndex);
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
+            }
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            // Nothing. We just follow the stuff from our master
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            if (pobj.MajorType == MajorPlayObjectType.PlayerBullet &&
+                shieldCoolOff >= shieldCoolOffTime)
+            {
+                CurrentHitPoints--;
+                shieldCoolOff = 0;
+                if (CurrentHitPoints <= 0)
+                {
+                    MyManager.TriggerPoints(
+                        ((PlayerBullet)pobj).MyPlayerIndex,
+                        myPointValue,
+                        Position);
+                    myMaster.TriggerTubeDeath(parentIndex);
+                    Alive = false;
+                    return false;
+                }
+                else
+                {
+                    TriggerShieldDisintegration(texture_Glooplet,
+                        GetMyColor(ColorState.Light),
+                        Position,
+                        (float)MWMathHelper.GetRandomInRange(0, (double)MathHelper.TwoPi));
+                    //audio.soundEffects.PlayEffect(EffectID.CokeBottle);
+                    audio.PlayEffect(EffectID.CokeBottle);
+                }
+            }
+            return true;
         }
         #endregion
 
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Nada
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            shieldCoolOff += gameTime.ElapsedGameTime.TotalSeconds;
+            if (shieldCoolOff > shieldCoolOffTime)
+                shieldCoolOff = shieldCoolOffTime;
         }
         #endregion
     }

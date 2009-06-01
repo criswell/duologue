@@ -68,6 +68,12 @@ namespace Duologue.PlayObjects
         public bool MoveOut;
     }
 
+    public struct TubeDeath
+    {
+        public double Timer;
+        public int Index;
+    }
+
     public enum MolochState
     {
         Moving,
@@ -137,6 +143,7 @@ namespace Duologue.PlayObjects
         private const double totalTime_TubeRotationRampUp = 2.51;
         private const double totalTime_TubeAnimationTick = 0.5;
         private const double totalTime_EyeStareOrbit = 2.54;
+        private const double totalTime_TubeDeath = 1.1;
 
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
@@ -197,6 +204,7 @@ namespace Duologue.PlayObjects
         //private float rotation_Eye;
         private int color_Pupil;
         private ColorPolarity polarity_EyeBall;
+        private Queue<TubeDeath> tubeDeaths;
 
         // Relation to player stuff
         private Vector2 vectorToNearestPlayer;
@@ -379,6 +387,10 @@ namespace Duologue.PlayObjects
             timer_TubeRotation = 0;
             tubeRotationRampUp = true;
 
+            // The death tube queue will never be more than the length of the tubes
+            tubeDeaths = new Queue<TubeDeath>(tempOffsets.Length);
+            tubeDeaths.Clear();
+
             // Set up spinner information
             rotation_Spinner = 0;
             size_Spinner = maxScale_Spinner;
@@ -531,6 +543,25 @@ namespace Duologue.PlayObjects
         }
         #endregion
 
+        #region Public methods
+        public Vector2 GetTubePosition(int index)
+        {
+            return Position + tubes[index].Offset + tubeFrames[0].Base.Height * Vector2.Normalize(tubes[index].Offset);
+        }
+
+        public void TriggerTubeDeath(int index)
+        {
+            if (tubes[index].Alive)
+            {
+                tubes[index].Alive = false;
+                TubeDeath temp;
+                temp.Timer = 0;
+                temp.Index = index;
+                tubeDeaths.Enqueue(temp);
+            }
+        }
+        #endregion
+
         #region Draw/Update
         public override void Draw(GameTime gameTime)
         {
@@ -538,49 +569,98 @@ namespace Duologue.PlayObjects
             for (int i = 0; i < tubes.Length; i++)
             {
                 #region Tube Draw
-                // Draw the base
-                InstanceManager.RenderSprite.Draw(
-                    tubeFrames[tubes[i].CurrentFrame].Base,
-                    Position + tubes[i].Offset,
-                    tubeFrames[tubes[i].CurrentFrame].Center,
-                    null,
-                    GetMyColor(ColorState.Dark, tubes[i].ColorPolarity),
-                    tubes[i].Rotation,
-                    1f,
-                    0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
-                // Draw the layers
-                InstanceManager.RenderSprite.Draw(
-                    tubeFrames[tubes[i].CurrentFrame].Lower,
-                    Position + tubes[i].Offset,
-                    tubeFrames[tubes[i].CurrentFrame].Center,
-                    null,
-                    GetMyColor(ColorState.Medium, tubes[i].ColorPolarity),
-                    tubes[i].Rotation,
-                    1f,
-                    0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
-                InstanceManager.RenderSprite.Draw(
-                    tubeFrames[tubes[i].CurrentFrame].Upper,
-                    Position + tubes[i].Offset,
-                    tubeFrames[tubes[i].CurrentFrame].Center,
-                    null,
-                    GetMyColor(ColorState.Light, tubes[i].ColorPolarity),
-                    tubes[i].Rotation,
-                    1f,
-                    0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
-                // Draw the outline
-                InstanceManager.RenderSprite.Draw(
-                    tubeFrames[tubes[i].CurrentFrame].Outline,
-                    Position + tubes[i].Offset,
-                    tubeFrames[tubes[i].CurrentFrame].Center,
-                    null,
-                    Color.White,
-                    tubes[i].Rotation,
-                    1f,
-                    0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                if (tubes[i].Alive)
+                {
+                    // Draw the base
+                    InstanceManager.RenderSprite.Draw(
+                        tubeFrames[tubes[i].CurrentFrame].Base,
+                        Position + tubes[i].Offset,
+                        tubeFrames[tubes[i].CurrentFrame].Center,
+                        null,
+                        GetMyColor(ColorState.Dark, tubes[i].ColorPolarity),
+                        tubes[i].Rotation,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                    // Draw the layers
+                    InstanceManager.RenderSprite.Draw(
+                        tubeFrames[tubes[i].CurrentFrame].Lower,
+                        Position + tubes[i].Offset,
+                        tubeFrames[tubes[i].CurrentFrame].Center,
+                        null,
+                        GetMyColor(ColorState.Medium, tubes[i].ColorPolarity),
+                        tubes[i].Rotation,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                    InstanceManager.RenderSprite.Draw(
+                        tubeFrames[tubes[i].CurrentFrame].Upper,
+                        Position + tubes[i].Offset,
+                        tubeFrames[tubes[i].CurrentFrame].Center,
+                        null,
+                        GetMyColor(ColorState.Light, tubes[i].ColorPolarity),
+                        tubes[i].Rotation,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                    // Draw the outline
+                    InstanceManager.RenderSprite.Draw(
+                        tubeFrames[tubes[i].CurrentFrame].Outline,
+                        Position + tubes[i].Offset,
+                        tubeFrames[tubes[i].CurrentFrame].Center,
+                        null,
+                        Color.White,
+                        tubes[i].Rotation,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                }
+                else
+                {
+                    // Draw the base
+                    InstanceManager.RenderSprite.Draw(
+                        tubeDead.Base,
+                        Position + tubes[i].Offset,
+                        tubeDead.Center,
+                        null,
+                        GetMyColor(ColorState.Dark, tubes[i].ColorPolarity),
+                        tubes[i].Rotation,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                    // Draw the layers
+                    InstanceManager.RenderSprite.Draw(
+                        tubeDead.Lower,
+                        Position + tubes[i].Offset,
+                        tubeDead.Center,
+                        null,
+                        GetMyColor(ColorState.Medium, tubes[i].ColorPolarity),
+                        tubes[i].Rotation,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                    InstanceManager.RenderSprite.Draw(
+                        tubeDead.Upper,
+                        Position + tubes[i].Offset,
+                        tubeDead.Center,
+                        null,
+                        GetMyColor(ColorState.Light, tubes[i].ColorPolarity),
+                        tubes[i].Rotation,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                    // Draw the outline
+                    InstanceManager.RenderSprite.Draw(
+                        tubeDead.Outline,
+                        Position + tubes[i].Offset,
+                        tubeDead.Center,
+                        null,
+                        Color.White,
+                        tubes[i].Rotation,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop);
+                }
                 #endregion
             }
 

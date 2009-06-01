@@ -150,6 +150,7 @@ namespace Duologue.Screens
                 TypesOfPlayObjects.Enemy_Firefly,
                 TypesOfPlayObjects.Enemy_Lahmu,
                 TypesOfPlayObjects.Enemy_Moloch,
+                TypesOfPlayObjects.Enemy_MolochPart,
             };
 
             currentPlayObjectIndex = 0;
@@ -385,6 +386,9 @@ namespace Duologue.Screens
                     break;
                 case TypesOfPlayObjects.Enemy_Moloch:
                     currentPlayObject = new Enemy_Moloch();
+                    break;
+                case TypesOfPlayObjects.Enemy_MolochPart:
+                    currentPlayObject = new Enemy_MolochPart();
                     break;
                 default:
                     // Player Bullet
