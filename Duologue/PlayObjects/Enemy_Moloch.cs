@@ -68,12 +68,6 @@ namespace Duologue.PlayObjects
         public bool MoveOut;
     }
 
-    public struct TubeDeath
-    {
-        public double Timer;
-        public int Index;
-    }
-
     public enum MolochState
     {
         Moving,
@@ -121,6 +115,9 @@ namespace Duologue.PlayObjects
         private const float scale_BlobOutline = 0.82f;
         private const int numberOfBlobsInShaft = 8;
 
+        private const string filename_TubeExplode = "Audio/PlayerEffects/splat-explode";
+        private const float volume_TubeExplode = 1f;
+
         private const float delta_BodyRotation = MathHelper.PiOver4 * 0.005f;
         private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.01f;
 
@@ -135,6 +132,9 @@ namespace Duologue.PlayObjects
 
         private const float minDelta_TubeRotation = MathHelper.PiOver4 * 0.001f;
         private const float maxDelta_TubeRotation = MathHelper.PiOver4 * 0.03f;
+
+        private const float radius_TubeGuy = 111f;
+        private const float offset_TubeGuy = 200f;
 
         private const double totalTime_SpinnerColorChange = 1.02;
         //private const double totalTime_BodyColorChange = 2.51;
@@ -204,7 +204,6 @@ namespace Duologue.PlayObjects
         //private float rotation_Eye;
         private int color_Pupil;
         private ColorPolarity polarity_EyeBall;
-        private Queue<TubeDeath> tubeDeaths;
 
         // Relation to player stuff
         private Vector2 vectorToNearestPlayer;
@@ -223,6 +222,8 @@ namespace Duologue.PlayObjects
 
         // Audio stuff
         private AudioManager audio;
+        private SoundEffect sfx_TubeExplode;
+        private SoundEffectInstance sfxi_TubeExplode;
         #endregion
 
         #region Properties
@@ -387,10 +388,6 @@ namespace Duologue.PlayObjects
             timer_TubeRotation = 0;
             tubeRotationRampUp = true;
 
-            // The death tube queue will never be more than the length of the tubes
-            tubeDeaths = new Queue<TubeDeath>(tempOffsets.Length);
-            tubeDeaths.Clear();
-
             // Set up spinner information
             rotation_Spinner = 0;
             size_Spinner = maxScale_Spinner;
@@ -408,8 +405,19 @@ namespace Duologue.PlayObjects
             currentEyeState = MolochEyeState.Open;
             timer_EyeStare = 0;
 
+            // Load audio things
+            sfx_TubeExplode = InstanceManager.AssetManager.LoadSoundEffect(filename_TubeExplode);
+
             Alive = true;
             Initialized = true;
+        }
+
+        public override String[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_TubeExplode,
+            };
         }
 
         public override String[] GetTextureFilenames()
@@ -546,7 +554,7 @@ namespace Duologue.PlayObjects
         #region Public methods
         public Vector2 GetTubePosition(int index)
         {
-            return Position + tubes[index].Offset + tubeFrames[0].Base.Height * Vector2.Normalize(tubes[index].Offset);
+            return Position + tubes[index].Offset + offset_TubeGuy * Vector2.Normalize(tubes[index].Offset);
         }
 
         public void TriggerTubeDeath(int index)
@@ -554,10 +562,7 @@ namespace Duologue.PlayObjects
             if (tubes[index].Alive)
             {
                 tubes[index].Alive = false;
-                TubeDeath temp;
-                temp.Timer = 0;
-                temp.Index = index;
-                tubeDeaths.Enqueue(temp);
+                tubes[index].Timer = 0;
             }
         }
         #endregion
@@ -906,6 +911,7 @@ namespace Duologue.PlayObjects
                     minDelta_TubeRotation,
                     (float)(timer_TubeRotation / totalTime_TubeRotationRampUp));
 
+            #region SERIES OF TUBES
             for (int i = 0; i < tubes.Length; i++)
             {
                 tubes[i].Angle += delta_CurrentTubeRotation;
@@ -919,28 +925,73 @@ namespace Duologue.PlayObjects
                 }
                 tubes[i].Offset = GetTubeOffset((double)tubes[i].Angle);
                 tubes[i].Rotation = GetTubeRotation(tubes[i].Angle);
-                tubes[i].Timer += delta;
-                if (tubes[i].Timer > totalTime_TubeAnimationTick)
+                if (tubes[i].Alive)
                 {
-                    tubes[i].Timer = 0;
-                    if (tubes[i].MoveOut)
-                        tubes[i].CurrentFrame++;
-                    else
-                        tubes[i].CurrentFrame--;
-                    if (tubes[i].CurrentFrame >= tubeFrames.Length)
+                    tubes[i].Timer += delta;
+                    if (tubes[i].Timer > totalTime_TubeAnimationTick)
                     {
-                        // FIXME should fire here
-                        tubes[i].MoveOut = false;
-                        tubes[i].CurrentFrame = tubeFrames.Length - 1;
+                        tubes[i].Timer = 0;
+                        if (tubes[i].MoveOut)
+                            tubes[i].CurrentFrame++;
+                        else
+                            tubes[i].CurrentFrame--;
+                        if (tubes[i].CurrentFrame >= tubeFrames.Length)
+                        {
+                            // FIXME should fire here
+                            tubes[i].MoveOut = false;
+                            tubes[i].CurrentFrame = tubeFrames.Length - 1;
+                        }
+                        else if (tubes[i].CurrentFrame < 0)
+                        {
+                            tubes[i].MoveOut = true;
+                            tubes[i].CurrentFrame = 0;
+                        }
                     }
-                    else if (tubes[i].CurrentFrame < 0)
+                }
+                else
+                {
+                    if (tubes[i].Timer < totalTime_TubeDeath)
                     {
-                        tubes[i].MoveOut = true;
-                        tubes[i].CurrentFrame = 0;
+                        tubes[i].Timer += delta;
+                        Color c;
+                        switch(MWMathHelper.GetRandomInRange(0, 4))
+                        {
+                            case 0:
+                                c = GetMyColor(ColorState.Dark);
+                                break;
+                            case 1:
+                                c = GetMyColor(ColorState.Medium);
+                                break;
+                            case 2:
+                                c = GetMyColor(ColorState.Light);
+                                break;
+                            default:
+                                c = colorArray_TasteTheRainbow[MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length)];
+                                break;
+                        }
+                        if (MWMathHelper.CoinToss())
+                        {
+                            LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                                GetTubePosition(i) + new Vector2(
+                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy),
+                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy)),
+                                c);
+                        }
+                        else
+                        {
+                            LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                                GetTubePosition(i) + new Vector2(
+                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy),
+                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy)),
+                                c);
+                        }
                     }
                 }
             }
             #endregion
+
+            #endregion
+
         }
         #endregion
     }
