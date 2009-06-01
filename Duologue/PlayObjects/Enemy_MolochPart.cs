@@ -113,7 +113,7 @@ namespace Duologue.PlayObjects
         #region Movement overrides
         public override bool StartOffset()
         {
-            Position = myMaster.GetTubePosition(parentIndex);
+            Position = myMaster.GetPartPosition(parentIndex);
             return true;
         }
 
@@ -153,7 +153,7 @@ namespace Duologue.PlayObjects
                         ((PlayerBullet)pobj).MyPlayerIndex,
                         myPointValue,
                         Position);
-                    myMaster.TriggerTubeDeath(parentIndex);
+                    myMaster.TriggerPartDeath(parentIndex);
                     Alive = false;
                     return false;
                 }

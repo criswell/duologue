@@ -72,6 +72,9 @@ namespace Duologue.PlayObjects
     {
         Moving,
         Steady,
+        SpawningEye,
+        EyeDying,
+        GeneralDying,
     }
 
     public enum MolochEyeState
@@ -144,6 +147,7 @@ namespace Duologue.PlayObjects
         private const double totalTime_TubeAnimationTick = 0.5;
         private const double totalTime_EyeStareOrbit = 2.54;
         private const double totalTime_TubeDeath = 1.1;
+        private const double totalTime_EyeSpawn = 2.981;
 
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
@@ -160,7 +164,10 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The offset length of the eyeball from center of body
         /// </summary>
-        private const float offsetLength_EyeBall = 225f;
+        private const float minOffsetLength_EyeBall = 225f;
+
+        private const float maxOffsetLength_EyeBall = 450f;
+        private const float radius_Eyeball = 50f;
         /// <summary>
         /// The offset length of the pupil from center of eyeball
         /// </summary>
@@ -204,6 +211,9 @@ namespace Duologue.PlayObjects
         //private float rotation_Eye;
         private int color_Pupil;
         private ColorPolarity polarity_EyeBall;
+        private Enemy_MolochPart molochPart_Eye;
+        private float currentOffsetLength_EyeBall;
+        private RenderSpriteBlendMode currentBlendMode;
 
         // Relation to player stuff
         private Vector2 vectorToNearestPlayer;
@@ -219,6 +229,8 @@ namespace Duologue.PlayObjects
         private double timer_TubeRotation;
         private bool tubeRotationRampUp;
         private double timer_EyeStare;
+        private bool isEyeEngaged;
+        private double timer_EyeStateChange;
 
         // Audio stuff
         private AudioManager audio;
@@ -277,6 +289,7 @@ namespace Duologue.PlayObjects
 
         private void LoadAndInitialize()
         {
+            currentBlendMode = RenderSpriteBlendMode.AlphaBlendTop;
             // Set up the color array that will be used for all of the non-tub stuffs
             colorArray_TasteTheRainbow = new Color[]
             {
@@ -389,7 +402,7 @@ namespace Duologue.PlayObjects
                     i,
                     radius_TubeGuy);
                 LocalInstanceManager.Enemies[i].Initialize(
-                    GetTubePosition(i),
+                    GetPartPosition(i),
                     Vector2.Zero,
                     ColorState,
                     tubes[i].ColorPolarity,
@@ -415,7 +428,15 @@ namespace Duologue.PlayObjects
             timer_EyeBall = 0;
             currentEyeFrame = 0;
             currentEyeState = MolochEyeState.Open;
+            currentOffsetLength_EyeBall = minOffsetLength_EyeBall;
             timer_EyeStare = 0;
+            isEyeEngaged = false;
+            molochPart_Eye = new Enemy_MolochPart(
+                MyManager,
+                this,
+                -1,
+                radius_Eyeball);
+            timer_EyeStateChange = 0;
 
             // Load audio things
             sfx_TubeExplode = InstanceManager.AssetManager.LoadSoundEffect(filename_TubeExplode);
@@ -501,7 +522,7 @@ namespace Duologue.PlayObjects
             // Place eye ball with relation to center
             offset_Eye = centerOfScreen + localOffset - Position;
             offset_Eye.Normalize();
-            Vector2 temp_offset_Eye = offset_Eye * offsetLength_EyeBall;
+            Vector2 temp_offset_Eye = offset_Eye * currentOffsetLength_EyeBall;
             //rotation_Eye = MWMathHelper.ComputeAngleAgainstX(offset_Eye) - MathHelper.PiOver4;
 
             // Aim the pupil
@@ -565,34 +586,46 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Public methods
-        public Vector2 GetTubePosition(int index)
+        public Vector2 GetPartPosition(int index)
         {
-            return Position + tubes[index].Offset + offset_TubeGuy * Vector2.Normalize(tubes[index].Offset);
+            if (index >= 0)
+                return Position + tubes[index].Offset + offset_TubeGuy * Vector2.Normalize(tubes[index].Offset);
+            else
+            {
+                return Position + currentOffsetLength_EyeBall * offset_Eye;
+            }
         }
 
-        public void TriggerTubeDeath(int index)
+        public void TriggerPartDeath(int index)
         {
-            if (tubes[index].Alive)
+            if (index >= 0)
             {
-                tubes[index].Alive = false;
-                tubes[index].Timer = 0;
-                if (sfxi_TubeExplode == null)
+                if (tubes[index].Alive)
                 {
-                    try
+                    tubes[index].Alive = false;
+                    tubes[index].Timer = 0;
+                    if (sfxi_TubeExplode == null)
                     {
-                        sfxi_TubeExplode = sfx_TubeExplode.Play(volume_TubeExplode);
+                        try
+                        {
+                            sfxi_TubeExplode = sfx_TubeExplode.Play(volume_TubeExplode);
+                        }
+                        catch { }
                     }
-                    catch { }
-                }
-                else if (sfxi_TubeExplode.State == SoundState.Stopped ||
-                         sfxi_TubeExplode.State == SoundState.Paused)
-                {
-                    try
+                    else if (sfxi_TubeExplode.State == SoundState.Stopped ||
+                             sfxi_TubeExplode.State == SoundState.Paused)
                     {
-                        sfxi_TubeExplode.Play();
+                        try
+                        {
+                            sfxi_TubeExplode.Play();
+                        }
+                        catch { }
                     }
-                    catch { }
                 }
+            }
+            else
+            {
+                // We're dealing with the eye, should trigger death
             }
         }
         #endregion
@@ -616,7 +649,7 @@ namespace Duologue.PlayObjects
                         tubes[i].Rotation,
                         1f,
                         0f,
-                        RenderSpriteBlendMode.AlphaBlendTop);
+                        currentBlendMode);
                     // Draw the layers
                     InstanceManager.RenderSprite.Draw(
                         tubeFrames[tubes[i].CurrentFrame].Lower,
@@ -627,7 +660,7 @@ namespace Duologue.PlayObjects
                         tubes[i].Rotation,
                         1f,
                         0f,
-                        RenderSpriteBlendMode.AlphaBlendTop);
+                        currentBlendMode);
                     InstanceManager.RenderSprite.Draw(
                         tubeFrames[tubes[i].CurrentFrame].Upper,
                         Position + tubes[i].Offset,
@@ -637,7 +670,7 @@ namespace Duologue.PlayObjects
                         tubes[i].Rotation,
                         1f,
                         0f,
-                        RenderSpriteBlendMode.AlphaBlendTop);
+                        currentBlendMode);
                     // Draw the outline
                     InstanceManager.RenderSprite.Draw(
                         tubeFrames[tubes[i].CurrentFrame].Outline,
@@ -648,7 +681,7 @@ namespace Duologue.PlayObjects
                         tubes[i].Rotation,
                         1f,
                         0f,
-                        RenderSpriteBlendMode.AlphaBlendTop);
+                        currentBlendMode);
                 }
                 else
                 {
@@ -662,7 +695,7 @@ namespace Duologue.PlayObjects
                         tubes[i].Rotation,
                         1f,
                         0f,
-                        RenderSpriteBlendMode.AlphaBlendTop);
+                        currentBlendMode);
                     // Draw the layers
                     InstanceManager.RenderSprite.Draw(
                         tubeDead.Lower,
@@ -673,7 +706,7 @@ namespace Duologue.PlayObjects
                         tubes[i].Rotation,
                         1f,
                         0f,
-                        RenderSpriteBlendMode.AlphaBlendTop);
+                        currentBlendMode);
                     InstanceManager.RenderSprite.Draw(
                         tubeDead.Upper,
                         Position + tubes[i].Offset,
@@ -683,7 +716,7 @@ namespace Duologue.PlayObjects
                         tubes[i].Rotation,
                         1f,
                         0f,
-                        RenderSpriteBlendMode.AlphaBlendTop);
+                        currentBlendMode);
                     // Draw the outline
                     InstanceManager.RenderSprite.Draw(
                         tubeDead.Outline,
@@ -694,7 +727,7 @@ namespace Duologue.PlayObjects
                         tubes[i].Rotation,
                         1f,
                         0f,
-                        RenderSpriteBlendMode.AlphaBlendTop);
+                        currentBlendMode);
                 }
                 #endregion
             }
@@ -709,7 +742,7 @@ namespace Duologue.PlayObjects
                 rotation_Spinner,
                 size_Spinner,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                currentBlendMode);
 
             // Draw the body
             for (int i = 0; i < body.Length; i++)
@@ -723,7 +756,7 @@ namespace Duologue.PlayObjects
                     body[i].Rotation,
                     1f,
                     0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    currentBlendMode);
             }
 
             #region Draw the eye
@@ -733,29 +766,29 @@ namespace Duologue.PlayObjects
                 // Draw the outline
                 InstanceManager.RenderSprite.Draw(
                     texture_Blob,
-                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
+                    Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
                     center_Blob,
                     null,
                     Color.Black,
                     0f,
                     scale_BlobOutline,
                     0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    currentBlendMode);
                 // Draw the blob
                 InstanceManager.RenderSprite.Draw(
                     texture_Blob,
-                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
+                    Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
                     center_Blob,
                     null,
                     GetMyColor(ColorState.Dark, polarity_EyeBall),
                     0f,
                     scale_Blob,
                     0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);                
+                    currentBlendMode);                
                 // Draw the highlight
                 InstanceManager.RenderSprite.Draw(
                     texture_BlobHighlight,
-                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye +
+                    Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye +
                     offsetY_BlobHighlight * Vector2.UnitY,
                     center_BlobHighlight,
                     null,
@@ -763,72 +796,72 @@ namespace Duologue.PlayObjects
                     0f,
                     scale_Blob,
                     0f,
-                    RenderSpriteBlendMode.AlphaBlendTop);
+                    currentBlendMode);
             }
             // Draw the base
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].Base,
-                Position + offsetLength_EyeBall * offset_Eye,
+                Position + currentOffsetLength_EyeBall * offset_Eye,
                 center_Eye,
                 null,
                 Color.White,
                 0f,//rotation_Eye,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                currentBlendMode);
             // Draw the pupil
             InstanceManager.RenderSprite.Draw(
                 texture_EyePupil,
-                Position + offsetLength_EyeBall * offset_Eye + offset_Pupil,
+                Position + currentOffsetLength_EyeBall * offset_Eye + offset_Pupil,
                 center_Pupil,
                 null,
                 colorArray_TasteTheRainbow[color_Pupil],
                 0f,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                currentBlendMode);
             // Draw the layers
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].ShadeLower,
-                Position + offsetLength_EyeBall * offset_Eye,
+                Position + currentOffsetLength_EyeBall * offset_Eye,
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Light, polarity_EyeBall),
                 0f,//rotation_Eye,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                currentBlendMode);
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].ShadeMiddle,
-                Position + offsetLength_EyeBall * offset_Eye,
+                Position + currentOffsetLength_EyeBall * offset_Eye,
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Medium, polarity_EyeBall),
                 0f,//rotation_Eye,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                currentBlendMode);
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].ShadeUpper,
-                Position + offsetLength_EyeBall *  offset_Eye,
+                Position + currentOffsetLength_EyeBall *  offset_Eye,
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Dark, polarity_EyeBall),
                 0f,//rotation_Eye,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);
+                currentBlendMode);
             // Draw the outline
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].Outline,
-                Position + offsetLength_EyeBall * offset_Eye,
+                Position + currentOffsetLength_EyeBall * offset_Eye,
                 center_Eye,
                 null,
                 Color.White,
                 0f,//rotation_Eye,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlendTop);            
+                currentBlendMode);            
             #endregion
 
         }
@@ -836,44 +869,168 @@ namespace Duologue.PlayObjects
         public override void Update(GameTime gameTime)
         {
             double delta = gameTime.ElapsedGameTime.TotalSeconds;
-            #region Visual updates
             float bp = MathHelper.Clamp(((float)ServiceLocator.GetService<AudioManager>().BeatPercentage() - 0.5f) / 0.5f, 0, 1f);
             // Spinner
             size_Spinner = MathHelper.Lerp(minScale_Spinner, maxScale_Spinner, bp);
             rotation_Spinner += delta_SpinnerRotation;
 
-            // Body
-            for (int i = 0; i < body.Length; i++)
+            UpdateBody(delta);
+            UpdateEye(delta);
+            UpdateTubes(delta);
+
+            // Deal with the state
+            switch (currentState)
             {
-                //body[i].TimerColorChange += delta;
-                //if (body[i].TimerColorChange > totalTime_BodyColorChange)
-                //{
-                    //body[i].TimerColorChange = 0;
-                    //body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-                //}
-                body[i].Rotation += body[i].DeltaRotation;
-                if (body[i].Rotation > MathHelper.TwoPi)
-                    body[i].Rotation -= MathHelper.TwoPi;
-                if (body[i].Rotation < 0)
-                    body[i].Rotation = MathHelper.TwoPi + body[i].Rotation;
+                case MolochState.SpawningEye:
+                    timer_EyeStateChange += delta;
+                    if (timer_EyeStateChange > totalTime_EyeSpawn)
+                    {
+                        currentState = MolochState.Steady;
+                        timer_EyeStateChange = 0;
+                        currentOffsetLength_EyeBall = maxOffsetLength_EyeBall;
+                    }
+                    else
+                    {
+                        currentOffsetLength_EyeBall = MathHelper.Lerp(
+                            minOffsetLength_EyeBall, maxOffsetLength_EyeBall, (float)(timer_EyeStateChange / totalTime_EyeSpawn));
+                    }
+                    break;
+                case MolochState.EyeDying:
+                    break;
+                case MolochState.GeneralDying:
+                    break;
+                case MolochState.Moving:
+                    break;
+                default:
+                    // Steady
+                    break;
+            }
 
-                if (body[i].DeltaAlphaDirection)
-                    body[i].Alpha += body[i].DeltaAlpha;
-                else
-                    body[i].Alpha -= body[i].DeltaAlpha;
+        }
+        #endregion
 
-                if (body[i].Alpha > maxAlpha_Body)
+        #region Private update methods
+        private void UpdateTubes(double delta)
+        {
+            // Tube rotation
+            timer_TubeRotation += delta;
+            if (timer_TubeRotation > totalTime_TubeRotationRampUp)
+            {
+                timer_TubeRotation = 0;
+                tubeRotationRampUp = !tubeRotationRampUp;
+            }
+
+            if (tubeRotationRampUp)
+                delta_CurrentTubeRotation = MathHelper.Lerp(
+                    minDelta_TubeRotation,
+                    maxDelta_TubeRotation,
+                    (float)(timer_TubeRotation / totalTime_TubeRotationRampUp));
+            else
+                delta_CurrentTubeRotation = MathHelper.Lerp(
+                    maxDelta_TubeRotation,
+                    minDelta_TubeRotation,
+                    (float)(timer_TubeRotation / totalTime_TubeRotationRampUp));
+
+            int temp_NumTubesUp = 0;
+            for (int i = 0; i < tubes.Length; i++)
+            {
+                tubes[i].Angle += delta_CurrentTubeRotation;
+                if (tubes[i].Angle > MathHelper.TwoPi)
                 {
-                    body[i].Alpha = maxAlpha_Body;
-                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    tubes[i].Angle -= MathHelper.TwoPi;
                 }
-                else if (body[i].Alpha < minAlpha_Body)
+                else if (tubes[i].Angle < 0)
                 {
-                    body[i].Alpha = minAlpha_Body;
-                    body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    tubes[i].Angle += MathHelper.TwoPi;
+                }
+                tubes[i].Offset = GetTubeOffset((double)tubes[i].Angle);
+                tubes[i].Rotation = GetTubeRotation(tubes[i].Angle);
+                if (tubes[i].Alive)
+                {
+                    temp_NumTubesUp++;
+                    tubes[i].Timer += delta;
+                    if (tubes[i].Timer > totalTime_TubeAnimationTick)
+                    {
+                        tubes[i].Timer = 0;
+                        if (tubes[i].MoveOut)
+                            tubes[i].CurrentFrame++;
+                        else
+                            tubes[i].CurrentFrame--;
+                        if (tubes[i].CurrentFrame >= tubeFrames.Length)
+                        {
+                            // FIXME should fire here
+                            tubes[i].MoveOut = false;
+                            tubes[i].CurrentFrame = tubeFrames.Length - 1;
+                        }
+                        else if (tubes[i].CurrentFrame < 0)
+                        {
+                            tubes[i].MoveOut = true;
+                            tubes[i].CurrentFrame = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    if (tubes[i].Timer < totalTime_TubeDeath)
+                    {
+                        tubes[i].Timer += delta;
+                        Color c;
+                        switch (MWMathHelper.GetRandomInRange(0, 4))
+                        {
+                            case 0:
+                                c = GetMyColor(ColorState.Dark, tubes[i].ColorPolarity);
+                                break;
+                            case 1:
+                                c = GetMyColor(ColorState.Medium, tubes[i].ColorPolarity);
+                                break;
+                            case 2:
+                                c = GetMyColor(ColorState.Light, tubes[i].ColorPolarity);
+                                break;
+                            default:
+                                c = colorArray_TasteTheRainbow[MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length)];
+                                break;
+                        }
+                        if (MWMathHelper.CoinToss())
+                        {
+                            LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                                GetPartPosition(i) + new Vector2(
+                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy),
+                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy)),
+                                c);
+                        }
+                        else
+                        {
+                            LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                                GetPartPosition(i) + new Vector2(
+                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy),
+                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy)),
+                                c);
+                        }
+                    }
                 }
             }
+
+            if (temp_NumTubesUp == 0 && !isEyeEngaged)
+            {
+                // Well shit my bricks and call me Mary, the tubes are dead
+                isEyeEngaged = true;
+                // Spawn ourselves an eye part
+                molochPart_Eye.Initialize(
+                    Position + currentOffsetLength_EyeBall * offset_Eye,
+                    Vector2.Zero,
+                    ColorState,
+                    polarity_EyeBall,
+                    StartHitPoints);
+                LocalInstanceManager.Enemies[0].CleanUp();
+                LocalInstanceManager.Enemies[0] = molochPart_Eye;
+                timer_EyeStateChange = 0;
+                currentBlendMode = RenderSpriteBlendMode.AlphaBlend;
+                currentState = MolochState.SpawningEye;
+            }
+        }
+
+        private void UpdateEye(double delta)
+        {
             // Eyeball
             timer_EyeBall += delta;
             switch (currentEyeState)
@@ -905,6 +1062,10 @@ namespace Duologue.PlayObjects
                             color_Pupil++;
                             if (color_Pupil >= colorArray_TasteTheRainbow.Length)
                                 color_Pupil = 0;
+                            if (isEyeEngaged)
+                            {
+                                LocalInstanceManager.Enemies[0].ColorPolarity = polarity_EyeBall;
+                            }
                             currentEyeState = MolochEyeState.Opening;
                         }
                     }
@@ -922,106 +1083,42 @@ namespace Duologue.PlayObjects
             if (timer_EyeStare > totalTime_EyeStareOrbit)
                 timer_EyeStare -= totalTime_EyeStareOrbit;
             SetEyeOffsets();
-            // Tube rotation
-            timer_TubeRotation += delta;
-            if (timer_TubeRotation > totalTime_TubeRotationRampUp)
-            {
-                timer_TubeRotation = 0;
-                tubeRotationRampUp = !tubeRotationRampUp;
-            }
+        }
 
-            if (tubeRotationRampUp)
-                delta_CurrentTubeRotation = MathHelper.Lerp(
-                    minDelta_TubeRotation,
-                    maxDelta_TubeRotation,
-                    (float)(timer_TubeRotation / totalTime_TubeRotationRampUp));
-            else
-                delta_CurrentTubeRotation = MathHelper.Lerp(
-                    maxDelta_TubeRotation,
-                    minDelta_TubeRotation,
-                    (float)(timer_TubeRotation / totalTime_TubeRotationRampUp));
-
-            #region SERIES OF TUBES
-            for (int i = 0; i < tubes.Length; i++)
+        private void UpdateBody(double delta)
+        {
+            // Body
+            for (int i = 0; i < body.Length; i++)
             {
-                tubes[i].Angle += delta_CurrentTubeRotation;
-                if (tubes[i].Angle > MathHelper.TwoPi)
-                {
-                    tubes[i].Angle -= MathHelper.TwoPi;
-                }
-                else if (tubes[i].Angle < 0)
-                {
-                    tubes[i].Angle += MathHelper.TwoPi;
-                }
-                tubes[i].Offset = GetTubeOffset((double)tubes[i].Angle);
-                tubes[i].Rotation = GetTubeRotation(tubes[i].Angle);
-                if (tubes[i].Alive)
-                {
-                    tubes[i].Timer += delta;
-                    if (tubes[i].Timer > totalTime_TubeAnimationTick)
-                    {
-                        tubes[i].Timer = 0;
-                        if (tubes[i].MoveOut)
-                            tubes[i].CurrentFrame++;
-                        else
-                            tubes[i].CurrentFrame--;
-                        if (tubes[i].CurrentFrame >= tubeFrames.Length)
-                        {
-                            // FIXME should fire here
-                            tubes[i].MoveOut = false;
-                            tubes[i].CurrentFrame = tubeFrames.Length - 1;
-                        }
-                        else if (tubes[i].CurrentFrame < 0)
-                        {
-                            tubes[i].MoveOut = true;
-                            tubes[i].CurrentFrame = 0;
-                        }
-                    }
-                }
+                //body[i].TimerColorChange += delta;
+                //if (body[i].TimerColorChange > totalTime_BodyColorChange)
+                //{
+                //body[i].TimerColorChange = 0;
+                //body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+                //}
+                body[i].Rotation += body[i].DeltaRotation;
+                if (body[i].Rotation > MathHelper.TwoPi)
+                    body[i].Rotation -= MathHelper.TwoPi;
+                if (body[i].Rotation < 0)
+                    body[i].Rotation = MathHelper.TwoPi + body[i].Rotation;
+
+                if (body[i].DeltaAlphaDirection)
+                    body[i].Alpha += body[i].DeltaAlpha;
                 else
+                    body[i].Alpha -= body[i].DeltaAlpha;
+
+                if (body[i].Alpha > maxAlpha_Body)
                 {
-                    if (tubes[i].Timer < totalTime_TubeDeath)
-                    {
-                        tubes[i].Timer += delta;
-                        Color c;
-                        switch(MWMathHelper.GetRandomInRange(0, 4))
-                        {
-                            case 0:
-                                c = GetMyColor(ColorState.Dark, tubes[i].ColorPolarity);
-                                break;
-                            case 1:
-                                c = GetMyColor(ColorState.Medium, tubes[i].ColorPolarity);
-                                break;
-                            case 2:
-                                c = GetMyColor(ColorState.Light, tubes[i].ColorPolarity);
-                                break;
-                            default:
-                                c = colorArray_TasteTheRainbow[MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length)];
-                                break;
-                        }
-                        if (MWMathHelper.CoinToss())
-                        {
-                            LocalInstanceManager.EnemySplatterSystem.AddParticles(
-                                GetTubePosition(i) + new Vector2(
-                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy),
-                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy)),
-                                c);
-                        }
-                        else
-                        {
-                            LocalInstanceManager.EnemyExplodeSystem.AddParticles(
-                                GetTubePosition(i) + new Vector2(
-                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy),
-                                    (float)MWMathHelper.GetRandomInRange(-radius_TubeGuy, radius_TubeGuy)),
-                                c);
-                        }
-                    }
+                    body[i].Alpha = maxAlpha_Body;
+                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                }
+                else if (body[i].Alpha < minAlpha_Body)
+                {
+                    body[i].Alpha = minAlpha_Body;
+                    body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
                 }
             }
-            #endregion
-
-            #endregion
-
         }
         #endregion
     }
