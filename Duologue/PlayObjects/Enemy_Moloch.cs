@@ -65,6 +65,7 @@ namespace Duologue.PlayObjects
         public double Timer;
         public int HitPoints;
         public ColorPolarity ColorPolarity;
+        public bool MoveOut;
     }
 
     public enum MolochState
@@ -120,10 +121,21 @@ namespace Duologue.PlayObjects
         private const float maxScale_Spinner = 1.0f;
         private const float minScale_Spinner = 0.7889f;
 
+        private const float minDelta_TubeRotation = MathHelper.PiOver4 * 0.001f;
+        private const float maxDelta_TubeRotation = MathHelper.PiOver4 * 0.03f;
+
         private const double totalTime_SpinnerColorChange = 1.02;
         //private const double totalTime_BodyColorChange = 2.51;
         private const double totalTime_EyeBallBlinkTick = 0.1;
         private const double totalTime_EyeBallOpen = 1.5;
+        private const double totalTime_TubeRotationRampUp = 2.51;
+        private const double totalTime_TubeAnimationTick = 0.5;
+        private const double totalTime_EyeStareOrbit = 2.54;
+
+        private const float maxOrbit_X = 80f;
+        private const float maxOrbit_Y = 70f;
+        private const float multiplierOrbit_X = 3f;
+        private const float multiplierOrbit_Y = 2f;
 
         private const float radiusOfBody = 350f;
 
@@ -165,6 +177,7 @@ namespace Duologue.PlayObjects
         /// The array of tube guys, contains the frame information, position, etc.
         /// </summary>
         private TubeGuy[] tubes;
+        private float delta_CurrentTubeRotation;
         private float rotation_Spinner;
         private float size_Spinner;
         private Color[] colorArray_TasteTheRainbow;
@@ -186,6 +199,9 @@ namespace Duologue.PlayObjects
         private double timer_EyeBall;
         private int currentEyeFrame;
         private MolochEyeState currentEyeState;
+        private double timer_TubeRotation;
+        private bool tubeRotationRampUp;
+        private double timer_EyeStare;
 
         // Audio stuff
         private AudioManager audio;
@@ -335,7 +351,12 @@ namespace Duologue.PlayObjects
                 else
                     tubes[i].ColorPolarity = ColorPolarity.Positive;
                 tubes[i].Timer = 0;
+                tubes[i].MoveOut = true;
             }
+
+            delta_CurrentTubeRotation = minDelta_TubeRotation;
+            timer_TubeRotation = 0;
+            tubeRotationRampUp = true;
 
             // Set up spinner information
             rotation_Spinner = 0;
@@ -352,6 +373,7 @@ namespace Duologue.PlayObjects
             timer_EyeBall = 0;
             currentEyeFrame = 0;
             currentEyeState = MolochEyeState.Open;
+            timer_EyeStare = 0;
 
             Alive = true;
             Initialized = true;
@@ -418,8 +440,11 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void SetEyeOffsets()
         {
+            Vector2 localOffset = new Vector2(
+                maxOrbit_X * (float)Math.Sin(multiplierOrbit_X * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))),
+                maxOrbit_Y * (float)Math.Sin(multiplierOrbit_Y * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))));
             // Place eye ball with relation to center
-            offset_Eye = centerOfScreen - Position;
+            offset_Eye = centerOfScreen + localOffset - Position;
             offset_Eye.Normalize();
             offset_Eye = offset_Eye * offsetLength_EyeBall;
             //rotation_Eye = MWMathHelper.ComputeAngleAgainstX(offset_Eye) - MathHelper.PiOver4;
@@ -718,7 +743,63 @@ namespace Duologue.PlayObjects
                     }
                     break;
             }
+            timer_EyeStare += delta;
+            if (timer_EyeStare > totalTime_EyeStareOrbit)
+                timer_EyeStare -= totalTime_EyeStareOrbit;
+            SetEyeOffsets();
+            // Tube rotation
+            timer_TubeRotation += delta;
+            if (timer_TubeRotation > totalTime_TubeRotationRampUp)
+            {
+                timer_TubeRotation = 0;
+                tubeRotationRampUp = !tubeRotationRampUp;
+            }
 
+            if (tubeRotationRampUp)
+                delta_CurrentTubeRotation = MathHelper.Lerp(
+                    minDelta_TubeRotation,
+                    maxDelta_TubeRotation,
+                    (float)(timer_TubeRotation / totalTime_TubeRotationRampUp));
+            else
+                delta_CurrentTubeRotation = MathHelper.Lerp(
+                    maxDelta_TubeRotation,
+                    minDelta_TubeRotation,
+                    (float)(timer_TubeRotation / totalTime_TubeRotationRampUp));
+
+            for (int i = 0; i < tubes.Length; i++)
+            {
+                tubes[i].Angle += delta_CurrentTubeRotation;
+                if (tubes[i].Angle > MathHelper.TwoPi)
+                {
+                    tubes[i].Angle -= MathHelper.TwoPi;
+                }
+                else if (tubes[i].Angle < 0)
+                {
+                    tubes[i].Angle += MathHelper.TwoPi;
+                }
+                tubes[i].Offset = GetTubeOffset((double)tubes[i].Angle);
+                tubes[i].Rotation = GetTubeRotation(tubes[i].Angle);
+                tubes[i].Timer += delta;
+                if (tubes[i].Timer > totalTime_TubeAnimationTick)
+                {
+                    tubes[i].Timer = 0;
+                    if (tubes[i].MoveOut)
+                        tubes[i].CurrentFrame++;
+                    else
+                        tubes[i].CurrentFrame--;
+                    if (tubes[i].CurrentFrame >= tubeFrames.Length)
+                    {
+                        // FIXME should fire here
+                        tubes[i].MoveOut = false;
+                        tubes[i].CurrentFrame = tubeFrames.Length - 1;
+                    }
+                    else if (tubes[i].CurrentFrame < 0)
+                    {
+                        tubes[i].MoveOut = true;
+                        tubes[i].CurrentFrame = 0;
+                    }
+                }
+            }
             #endregion
         }
         #endregion
