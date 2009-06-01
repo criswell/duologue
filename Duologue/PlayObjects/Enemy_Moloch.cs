@@ -108,6 +108,12 @@ namespace Duologue.PlayObjects
         private const float offset_TubeVerticalCenter = -10f;
 
         private const string filename_EyePupil = "Enemies/gloop/king-gloop-eye";
+        private const string filename_EyeShaftBlob = "Enemies/gloop/glooplet";
+        private const string filename_EyeShaftHighlight = "Enemies/gloop/glooplet-highlight";
+        private const float scale_Blob = 0.8f;
+        private const float offsetY_BlobHighlight = -10f;
+        private const float scale_BlobOutline = 0.82f;
+        private const int numberOfBlobsInShaft = 8;
 
         private const float delta_BodyRotation = MathHelper.PiOver4 * 0.005f;
         private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.01f;
@@ -169,10 +175,14 @@ namespace Duologue.PlayObjects
         private TubeFrame tubeDead;
         private Texture2D texture_Spinner;
         private Texture2D texture_EyePupil;
+        private Texture2D texture_Blob;
+        private Texture2D texture_BlobHighlight;
         private Vector2 center_Body;
         private Vector2 center_Eye;
         private Vector2 center_Spinner;
         private Vector2 center_Pupil;
+        private Vector2 center_Blob;
+        private Vector2 center_BlobHighlight;
         /// <summary>
         /// The array of tube guys, contains the frame information, position, etc.
         /// </summary>
@@ -309,6 +319,13 @@ namespace Duologue.PlayObjects
             center_Eye = new Vector2(
                 eyes[0].Base.Width / 2f, eyes[0].Base.Height / 2f);
 
+            texture_Blob = InstanceManager.AssetManager.LoadTexture2D(filename_EyeShaftBlob);
+            texture_BlobHighlight = InstanceManager.AssetManager.LoadTexture2D(filename_EyeShaftHighlight);
+            center_Blob = new Vector2(
+                texture_Blob.Width / 2f, texture_Blob.Height / 2f);
+            center_BlobHighlight = new Vector2(
+                texture_BlobHighlight.Width / 2f, texture_BlobHighlight.Height / 2f);
+
             for (int i = 0; i < frames_Tube; i++)
             {
                 tubeFrames[i].Base = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_TubeBase, i.ToString()));
@@ -440,25 +457,26 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void SetEyeOffsets()
         {
+            // Lissajous curve for what he's looking at
             Vector2 localOffset = new Vector2(
                 maxOrbit_X * (float)Math.Sin(multiplierOrbit_X * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))),
                 maxOrbit_Y * (float)Math.Sin(multiplierOrbit_Y * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))));
             // Place eye ball with relation to center
             offset_Eye = centerOfScreen + localOffset - Position;
             offset_Eye.Normalize();
-            offset_Eye = offset_Eye * offsetLength_EyeBall;
+            Vector2 temp_offset_Eye = offset_Eye * offsetLength_EyeBall;
             //rotation_Eye = MWMathHelper.ComputeAngleAgainstX(offset_Eye) - MathHelper.PiOver4;
 
             // Aim the pupil
             if (nearestPlayer == null || vectorToNearestPlayer == Vector2.Zero)
             {
                 // Aim at the center of screen
-                offset_Pupil = centerOfScreen - (Position + offset_Eye);
+                offset_Pupil = centerOfScreen - (Position + temp_offset_Eye);
             }
             else
             {
                 // Aim at the player
-                offset_Pupil = vectorToNearestPlayer - (Position + offset_Eye);
+                offset_Pupil = vectorToNearestPlayer - (Position + temp_offset_Eye);
             }
             offset_Pupil.Normalize();
             offset_Pupil = offset_Pupil * offsetLength_Pupil;
@@ -590,10 +608,48 @@ namespace Duologue.PlayObjects
             }
 
             #region Draw the eye
+            // Draw the shaft
+            for (int i = 0; i < numberOfBlobsInShaft; i++)
+            {
+                // Draw the outline
+                InstanceManager.RenderSprite.Draw(
+                    texture_Blob,
+                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
+                    center_Blob,
+                    null,
+                    Color.Black,
+                    0f,
+                    scale_BlobOutline,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                // Draw the blob
+                InstanceManager.RenderSprite.Draw(
+                    texture_Blob,
+                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
+                    center_Blob,
+                    null,
+                    GetMyColor(ColorState.Dark, polarity_EyeBall),
+                    0f,
+                    scale_Blob,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);                
+                // Draw the highlight
+                InstanceManager.RenderSprite.Draw(
+                    texture_BlobHighlight,
+                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye +
+                    offsetY_BlobHighlight * Vector2.UnitY,
+                    center_BlobHighlight,
+                    null,
+                    Color.White,
+                    0f,
+                    scale_Blob,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
             // Draw the base
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].Base,
-                Position + offset_Eye,
+                Position + offsetLength_EyeBall * offset_Eye,
                 center_Eye,
                 null,
                 Color.White,
@@ -604,7 +660,7 @@ namespace Duologue.PlayObjects
             // Draw the pupil
             InstanceManager.RenderSprite.Draw(
                 texture_EyePupil,
-                Position + offset_Eye + offset_Pupil,
+                Position + offsetLength_EyeBall * offset_Eye + offset_Pupil,
                 center_Pupil,
                 null,
                 colorArray_TasteTheRainbow[color_Pupil],
@@ -615,7 +671,7 @@ namespace Duologue.PlayObjects
             // Draw the layers
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].ShadeLower,
-                Position + offset_Eye,
+                Position + offsetLength_EyeBall * offset_Eye,
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Light, polarity_EyeBall),
@@ -625,7 +681,7 @@ namespace Duologue.PlayObjects
                 RenderSpriteBlendMode.AlphaBlendTop);
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].ShadeMiddle,
-                Position + offset_Eye,
+                Position + offsetLength_EyeBall * offset_Eye,
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Medium, polarity_EyeBall),
@@ -635,7 +691,7 @@ namespace Duologue.PlayObjects
                 RenderSpriteBlendMode.AlphaBlendTop);
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].ShadeUpper,
-                Position + offset_Eye,
+                Position + offsetLength_EyeBall *  offset_Eye,
                 center_Eye,
                 null,
                 GetMyColor(ColorState.Dark, polarity_EyeBall),
@@ -646,7 +702,7 @@ namespace Duologue.PlayObjects
             // Draw the outline
             InstanceManager.RenderSprite.Draw(
                 eyes[currentEyeFrame].Outline,
-                Position + offset_Eye,
+                Position + offsetLength_EyeBall * offset_Eye,
                 center_Eye,
                 null,
                 Color.White,
