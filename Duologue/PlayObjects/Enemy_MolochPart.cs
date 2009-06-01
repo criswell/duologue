@@ -35,6 +35,8 @@ namespace Duologue.PlayObjects
         /// The point value I would be if I were hit at perfect beat
         /// </summary>
         private const int myPointValue = 100;
+
+        private const int myShieldValue = 15;
         #endregion
 
         #region Fields
@@ -161,6 +163,10 @@ namespace Duologue.PlayObjects
                         GetMyColor(ColorState.Light),
                         Position,
                         (float)MWMathHelper.GetRandomInRange(0, (double)MathHelper.TwoPi));
+                    MyManager.TriggerPoints(
+                        ((PlayerBullet)pobj).MyPlayerIndex,
+                        myShieldValue,
+                        Position);
                     //audio.soundEffects.PlayEffect(EffectID.CokeBottle);
                     audio.PlayEffect(EffectID.CokeBottle);
                 }

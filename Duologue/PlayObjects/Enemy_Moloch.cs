@@ -133,8 +133,8 @@ namespace Duologue.PlayObjects
         private const float minDelta_TubeRotation = MathHelper.PiOver4 * 0.001f;
         private const float maxDelta_TubeRotation = MathHelper.PiOver4 * 0.03f;
 
-        private const float radius_TubeGuy = 111f;
-        private const float offset_TubeGuy = 200f;
+        private const float radius_TubeGuy = 90f;
+        private const float offset_TubeGuy = 95f;
 
         private const double totalTime_SpinnerColorChange = 1.02;
         //private const double totalTime_BodyColorChange = 2.51;
@@ -171,7 +171,7 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPoints = 75;
+        private const int realHitPoints = 25;
         #endregion
 
         #region Fields
@@ -382,6 +382,18 @@ namespace Duologue.PlayObjects
                     tubes[i].ColorPolarity = ColorPolarity.Positive;
                 tubes[i].Timer = 0;
                 tubes[i].MoveOut = true;
+
+                LocalInstanceManager.Enemies[i] = new Enemy_MolochPart(
+                    MyManager,
+                    this,
+                    i,
+                    radius_TubeGuy);
+                LocalInstanceManager.Enemies[i].Initialize(
+                    GetTubePosition(i),
+                    Vector2.Zero,
+                    ColorState,
+                    tubes[i].ColorPolarity,
+                    StartHitPoints);
             }
 
             delta_CurrentTubeRotation = minDelta_TubeRotation;
@@ -407,6 +419,7 @@ namespace Duologue.PlayObjects
 
             // Load audio things
             sfx_TubeExplode = InstanceManager.AssetManager.LoadSoundEffect(filename_TubeExplode);
+            sfxi_TubeExplode = null;
 
             Alive = true;
             Initialized = true;
@@ -563,6 +576,23 @@ namespace Duologue.PlayObjects
             {
                 tubes[index].Alive = false;
                 tubes[index].Timer = 0;
+                if (sfxi_TubeExplode == null)
+                {
+                    try
+                    {
+                        sfxi_TubeExplode = sfx_TubeExplode.Play(volume_TubeExplode);
+                    }
+                    catch { }
+                }
+                else if (sfxi_TubeExplode.State == SoundState.Stopped ||
+                         sfxi_TubeExplode.State == SoundState.Paused)
+                {
+                    try
+                    {
+                        sfxi_TubeExplode.Play();
+                    }
+                    catch { }
+                }
             }
         }
         #endregion
@@ -957,13 +987,13 @@ namespace Duologue.PlayObjects
                         switch(MWMathHelper.GetRandomInRange(0, 4))
                         {
                             case 0:
-                                c = GetMyColor(ColorState.Dark);
+                                c = GetMyColor(ColorState.Dark, tubes[i].ColorPolarity);
                                 break;
                             case 1:
-                                c = GetMyColor(ColorState.Medium);
+                                c = GetMyColor(ColorState.Medium, tubes[i].ColorPolarity);
                                 break;
                             case 2:
-                                c = GetMyColor(ColorState.Light);
+                                c = GetMyColor(ColorState.Light, tubes[i].ColorPolarity);
                                 break;
                             default:
                                 c = colorArray_TasteTheRainbow[MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length)];
