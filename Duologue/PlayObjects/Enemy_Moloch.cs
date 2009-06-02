@@ -180,7 +180,7 @@ namespace Duologue.PlayObjects
         private const double totalTime_GeneralDeath = 7.123;
         private const double totalTime_Explosion = 0.81;
 
-        private const int chanceOfExternalExposion = 6;
+        private const int chanceOfExternalExposion = 5;
 
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
@@ -1361,6 +1361,31 @@ namespace Duologue.PlayObjects
                     break;
                 case MolochState.GeneralDying:
                     timer_GeneralState += delta;
+                    if (sfxi_EndBoom == null)
+                    {
+                        try
+                        {
+                            sfxi_EndBoom = sfx_EndBoom.Play(volume_EndBoom);
+                        }
+                        catch { }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            if (sfxi_EndBoom.State == SoundState.Paused ||
+                                sfxi_EndBoom.State == SoundState.Stopped)
+                            {
+                                sfxi_EndBoom.Play();
+                            }
+                        }
+                        catch { }
+                    }
+                    if (sfxi_EyeBallWobble != null)
+                    {
+                        if (sfxi_EyeBallWobble.State == SoundState.Playing)
+                            sfxi_EyeBallWobble.Stop();
+                    }
                     if (timer_GeneralState > totalTime_GeneralDeath)
                     {
                         timer_GeneralState = 0;
