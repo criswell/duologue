@@ -120,6 +120,8 @@ namespace Duologue.PlayObjects
 
         private const string filename_TubeExplode = "Audio/PlayerEffects/splat-explode";
         private const float volume_TubeExplode = 1f;
+        private const string filename_EyeBallWobble = "Audio/PlayerEffects/end-boss-wobble";
+        private const float volume_EyeBallWobble = 0.85f;
 
         private const float delta_BodyRotation = MathHelper.PiOver4 * 0.005f;
         private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.01f;
@@ -139,7 +141,7 @@ namespace Duologue.PlayObjects
         private const float radius_TubeGuy = 90f;
         private const float offset_TubeGuy = 95f;
 
-        private const double totalTime_SpinnerColorChange = 1.02;
+        //private const double totalTime_SpinnerColorChange = 1.02;
         //private const double totalTime_BodyColorChange = 2.51;
         private const double totalTime_EyeBallBlinkTick = 0.1;
         private const double totalTime_EyeBallOpen = 1.5;
@@ -148,6 +150,8 @@ namespace Duologue.PlayObjects
         private const double totalTime_EyeStareOrbit = 2.54;
         private const double totalTime_TubeDeath = 1.1;
         private const double totalTime_EyeSpawn = 2.981;
+        private const double totalTime_SteadyState = 6.5;
+        private const double totalTime_MovingState = 5.342;
 
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
@@ -222,7 +226,7 @@ namespace Duologue.PlayObjects
 
         // State stuff
         private MolochState currentState;
-        private double timer_SpinnerColorChange;
+        //private double timer_SpinnerColorChange;
         private double timer_EyeBall;
         private int currentEyeFrame;
         private MolochEyeState currentEyeState;
@@ -231,11 +235,16 @@ namespace Duologue.PlayObjects
         private double timer_EyeStare;
         private bool isEyeEngaged;
         private double timer_EyeStateChange;
+        private double timer_GeneralState;
+        private Vector2 position_Last;
+        private Vector2 position_Next;
 
         // Audio stuff
         private AudioManager audio;
         private SoundEffect sfx_TubeExplode;
         private SoundEffectInstance sfxi_TubeExplode;
+        private SoundEffect sfx_EyeBallWobble;
+        private SoundEffectInstance sfxi_EyeBallWobble;
         #endregion
 
         #region Properties
@@ -270,13 +279,15 @@ namespace Duologue.PlayObjects
             // Starting variables are all ignored
 
             // Set Position
-            Position = //Vector2.Zero;// -0.5f * RealSize;
-                new Vector2(
-                    (float)InstanceManager.DefaultViewport.Width, 0);
+            Position = Vector2.Zero - RealSize.Length() * Vector2.One;
+                /*new Vector2(
+                    (float)InstanceManager.DefaultViewport.Width, 0);*/
             // Set next position
 
             // Set state
             currentState = MolochState.Moving;
+            SetNextDestination();
+            timer_GeneralState = 0;
             // Set color
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
@@ -417,7 +428,7 @@ namespace Duologue.PlayObjects
             rotation_Spinner = 0;
             size_Spinner = maxScale_Spinner;
             color_Spinner = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-            timer_SpinnerColorChange = 0;
+            //timer_SpinnerColorChange = 0;
 
             // Set up a default eye stuff
             vectorToNearestPlayer = Vector2.Zero;
@@ -441,6 +452,8 @@ namespace Duologue.PlayObjects
             // Load audio things
             sfx_TubeExplode = InstanceManager.AssetManager.LoadSoundEffect(filename_TubeExplode);
             sfxi_TubeExplode = null;
+            sfx_EyeBallWobble = InstanceManager.AssetManager.LoadSoundEffect(filename_EyeBallWobble);
+            sfxi_EyeBallWobble = null;
 
             Alive = true;
             Initialized = true;
@@ -451,6 +464,7 @@ namespace Duologue.PlayObjects
             return new String[]
             {
                 filename_TubeExplode,
+                filename_EyeBallWobble,
             };
         }
 
@@ -507,6 +521,17 @@ namespace Duologue.PlayObjects
 
             return filenames;
         }
+
+        public override void CleanUp()
+        {
+            try
+            {
+                sfxi_EyeBallWobble.Stop();
+                sfxi_TubeExplode.Stop();
+            }
+            catch { }
+            base.CleanUp();
+        }
         #endregion
 
         #region Private methods
@@ -560,6 +585,109 @@ namespace Duologue.PlayObjects
         private float GetTubeRotation(float p)
         {
             return MathHelper.PiOver2 - p;
+        }
+
+        /// <summary>
+        /// Figure out where we're going next
+        /// </summary>
+        private void SetNextDestination()
+        {
+            position_Last = Position;
+
+            // Next position is dependent upon where we currently are
+            if (Position.X <= -RealSize.X || Position.X >= InstanceManager.DefaultViewport.Width + RealSize.X ||
+                Position.Y <= -RealSize.Y || Position.Y >= InstanceManager.DefaultViewport.Height + RealSize.Y)
+            {
+                // We're off the screen, we can go nearly anywhere
+                InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Offscreen to onscreen");
+                // Let's stick to corners
+                switch (MWMathHelper.GetRandomInRange(0, 4))
+                {
+                    case 0:
+                        // Upper left corner
+                        position_Next = Vector2.Zero;
+                        break;
+                    case 1:
+                        // Upper right corner
+                        position_Next = new Vector2(
+                            InstanceManager.DefaultViewport.Width, 0);
+                        break;
+                    case 2:
+                        // Lower right corner
+                        position_Next = new Vector2(
+                            InstanceManager.DefaultViewport.Width, InstanceManager.DefaultViewport.Height);
+                        break;
+                    default:
+                        // Lower left corner
+                        position_Next = new Vector2(
+                            0, InstanceManager.DefaultViewport.Height);
+                        break;
+                }
+                position_Last = position_Next - centerOfScreen;
+                position_Last.Normalize();
+                position_Last = position_Next + position_Last * RealSize.Length();
+            }
+            else if (MWMathHelper.CoinToss())
+            {
+                // aim off screen
+                InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Aim offscreen, location known");
+                position_Next = position_Last - centerOfScreen;
+                position_Next.Normalize();
+                position_Next = position_Last + position_Next * RealSize.Length();
+            }
+            else
+            {
+                // aim for another corner
+                if ((Position.X <= 2 || Position.X >= InstanceManager.DefaultViewport.Width - 2)
+                    && Position.Y >= 0 && Position.Y <= InstanceManager.DefaultViewport.Height)
+                {
+                    float x = 0;
+                    if (Position.X >= InstanceManager.DefaultViewport.Width - 2)
+                        x = InstanceManager.DefaultViewport.Width;
+                    // We're on a side
+                    if (Position.Y >= InstanceManager.DefaultViewport.Height/2f)
+                    {
+                        InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Side, moving up");
+                        // Aim for top corner
+                        position_Next = new Vector2(x, 0);
+                    }
+                    else
+                    {
+                        InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Side, moving down");
+                        // Aim for bottom corner
+                        position_Next = new Vector2(x, InstanceManager.DefaultViewport.Height);
+                    }
+                }
+                else if ((Position.Y <= 2 || Position.Y >= InstanceManager.DefaultViewport.Height - 2)
+                    && Position.X >= 0 && Position.X <= InstanceManager.DefaultViewport.Width)
+                {
+                    float y = 0;
+                    if (Position.Y >= InstanceManager.DefaultViewport.Height - 2)
+                        y = InstanceManager.DefaultViewport.Height;
+                    // We're on top or bottom
+                    if (Position.X <= InstanceManager.DefaultViewport.Width/2f)
+                    {
+                        InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Top/Bot, moving right");
+                        // Aim for right
+                        position_Next = new Vector2(InstanceManager.DefaultViewport.Width, y);
+                    }
+                    else
+                    {
+                        InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Top/Bot, moving left");
+                        // Aim for left
+                        position_Next = new Vector2(0, y);
+                    }
+                }
+                else
+                {
+                    // Dude, fuck, I don't know where we are...
+                    // Aim at nearest offscreen and GTFO
+                    InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Location unknown");
+                    position_Next = position_Last - centerOfScreen;
+                    position_Next.Normalize();
+                    position_Next = position_Last + position_Next * RealSize.Length();
+                }
+            }
         }
         #endregion
 
@@ -900,9 +1028,41 @@ namespace Duologue.PlayObjects
                 case MolochState.GeneralDying:
                     break;
                 case MolochState.Moving:
+                    // Reminder: We need to check if we're off screen at the final destination
+                    // if so, then we need to immediately get a new destination and remain
+                    // at moving
+                    timer_GeneralState += delta;
+                    if (timer_GeneralState <= totalTime_MovingState)
+                    {
+                        Position = new Vector2(
+                            MathHelper.Lerp(position_Last.X, position_Next.X, (float)(timer_GeneralState / totalTime_MovingState)),
+                            MathHelper.Lerp(position_Last.Y, position_Next.Y, (float)(timer_GeneralState / totalTime_MovingState)));
+                    }
+                    else
+                    {
+                        Position = position_Next;
+                        timer_GeneralState = 0;
+                        if (Position.X <= -RealSize.X || Position.X >= InstanceManager.DefaultViewport.Width + RealSize.X ||
+                            Position.Y <= -RealSize.Y || Position.Y >= InstanceManager.DefaultViewport.Height + RealSize.Y)
+                        {
+                            // offscreen, start again
+                            SetNextDestination();
+                        }
+                        else
+                        {
+                            currentState = MolochState.Steady;
+                        }
+                    }
                     break;
                 default:
                     // Steady
+                    timer_GeneralState += delta;
+                    if (timer_GeneralState > totalTime_SteadyState)
+                    {
+                        timer_GeneralState = 0;
+                        SetNextDestination();
+                        currentState = MolochState.Moving;
+                    }
                     break;
             }
 
@@ -1083,6 +1243,30 @@ namespace Duologue.PlayObjects
             if (timer_EyeStare > totalTime_EyeStareOrbit)
                 timer_EyeStare -= totalTime_EyeStareOrbit;
             SetEyeOffsets();
+            if (isEyeEngaged)
+            {
+                if (sfxi_EyeBallWobble == null)
+                {
+                    try
+                    {
+                        sfxi_EyeBallWobble = sfx_TubeExplode.Play(volume_EyeBallWobble);
+                    }
+                    catch { }
+                }
+                else
+                {
+                    try
+                    {
+                        if (sfxi_EyeBallWobble.State == SoundState.Paused ||
+                            sfxi_EyeBallWobble.State == SoundState.Stopped)
+                        {
+                            sfxi_EyeBallWobble.Play();
+                        }
+                    }
+                    catch
+                    { }
+                }
+            }
         }
 
         private void UpdateBody(double delta)
