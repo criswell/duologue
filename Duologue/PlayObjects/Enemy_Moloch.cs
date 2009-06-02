@@ -299,7 +299,7 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Moloch;
             MajorType = MajorPlayObjectType.Enemy;
-            MyEnemyType = EnemyType.Leader;
+            //MyEnemyType = EnemyType.Leader;
             Initialized = false;
 
             // Set the RealSize by hand, set this at max
@@ -612,6 +612,33 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private methods
+        private void SpawnTubeBabby(int index)
+        {
+            Vector2 pos = GetPartPosition(index);
+            if ((pos.X >= 0 && pos.X <= InstanceManager.DefaultViewport.Width) &&
+                (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
+            {
+                // We only proceed if we are on screen
+                for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+                {
+                    if (!LocalInstanceManager.Enemies[i].Alive)
+                    {
+                        LocalInstanceManager.Enemies[i] = new Enemy_Firefly(MyManager);
+                        LocalInstanceManager.Enemies[i].Initialize(
+                            pos,
+                            Vector2.Zero,
+                            ColorState,
+                            tubes[index].ColorPolarity,
+                            1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void SpawnEyeBabby()
+        {
+        }
         /// <summary>
         /// Will set the current offsets for the eyeball and pupil
         /// </summary>
@@ -1314,6 +1341,7 @@ namespace Duologue.PlayObjects
                     if (timer_GeneralState > totalTime_EyeDying)
                     {
                         currentState = MolochState.GeneralDying;
+                        LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                         timer_GeneralState = 0;
                         Position = position_Next;
                         InstanceManager.Logger.LogEntry(String.Format(
@@ -1531,6 +1559,7 @@ namespace Duologue.PlayObjects
                         if (tubes[i].CurrentFrame >= tubeFrames.Length)
                         {
                             // FIXME should fire here
+                            SpawnTubeBabby(i);
                             tubes[i].MoveOut = false;
                             tubes[i].CurrentFrame = tubeFrames.Length - 1;
                         }
