@@ -327,7 +327,6 @@ namespace Duologue.PlayObjects
 
             // Set state
             currentState = MolochState.Moving;
-            SetNextDestination();
             timer_GeneralState = 0;
             currentUpperLimit = numberOfBlobsInShaft;
             // Set color
@@ -359,6 +358,7 @@ namespace Duologue.PlayObjects
 
             centerOfScreen = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
+            SetNextDestination();
 
             body = new MolochBodyElement[frames_Body];
             eyes = new EyeBallFrame[frames_Eye];
@@ -594,7 +594,16 @@ namespace Duologue.PlayObjects
         {
             try
             {
+                sfxi_EndBoom.Stop();
+            }
+            catch { }
+            try
+            {
                 sfxi_EyeBallWobble.Stop();
+            }
+            catch { }
+            try
+            {
                 sfxi_TubeExplode.Stop();
             }
             catch { }
@@ -698,9 +707,9 @@ namespace Duologue.PlayObjects
 
         private void KickOffRandomExplosion()
         {
-            Vector2 temp = Position - centerOfScreen;
+            Vector2 temp = centerOfScreen - Position;
             temp.Normalize();
-            temp = (float)MWMathHelper.GetRandomInRange(0, (double)Radius) *
+            temp = (float)MWMathHelper.GetRandomInRange((double)Radius/2.0, (double)Radius) *
                     MWMathHelper.RotateVectorByRadians(
                     temp,
                     (float)MWMathHelper.GetRandomInRange((double)(-MathHelper.PiOver2), (double)MathHelper.PiOver2));
@@ -942,17 +951,22 @@ namespace Duologue.PlayObjects
                 // we need to get back on screen
                 position_Last = Position;
                 position_Next = Position;
-                if (Position.X < 0)
-                    position_Next.X = 0;
-                else if (Position.X > InstanceManager.DefaultViewport.Width)
-                    position_Next.X = InstanceManager.DefaultViewport.Width;
+                float tempOffsetX = (float)InstanceManager.DefaultViewport.Width - InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent;
+                float tempOffsetY = (float)InstanceManager.DefaultViewport.Height - InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
+                if (Position.X < tempOffsetX)
+                    position_Next.X = tempOffsetX;
+                else if (Position.X > InstanceManager.DefaultViewport.Width - tempOffsetX)
+                    position_Next.X = InstanceManager.DefaultViewport.Width - tempOffsetX;
 
-                if (Position.Y < 0)
-                    position_Next.Y = 0;
-                else if (Position.Y > InstanceManager.DefaultViewport.Height)
-                    position_Next.Y = InstanceManager.DefaultViewport.Height;
-                Console.WriteLine(position_Last.ToString());
-                Console.WriteLine(position_Next.ToString());
+                if (Position.Y < tempOffsetY)
+                    position_Next.Y = tempOffsetY;
+                else if (Position.Y > InstanceManager.DefaultViewport.Height - tempOffsetY)
+                    position_Next.Y = InstanceManager.DefaultViewport.Height - tempOffsetY;
+
+                InstanceManager.Logger.LogEntry(String.Format(
+                    "Death-Last: {0}", position_Last.ToString()));
+                InstanceManager.Logger.LogEntry(String.Format(
+                    "Death-Next: {0}", position_Next.ToString()));
             }
         }
         #endregion
@@ -1302,16 +1316,21 @@ namespace Duologue.PlayObjects
                         currentState = MolochState.GeneralDying;
                         timer_GeneralState = 0;
                         Position = position_Next;
-                    }
-                    if (timer_GeneralState <= totalTime_EyeDyingMove && position_Next != position_Last)
-                    {
-                        Position = new Vector2(
-                            MathHelper.Lerp(position_Last.X, position_Next.X, (float)(timer_GeneralState / totalTime_EyeDyingMove)),
-                            MathHelper.Lerp(position_Last.Y, position_Next.Y, (float)(timer_GeneralState / totalTime_EyeDyingMove)));
+                        InstanceManager.Logger.LogEntry(String.Format(
+                            "Enemy_Moloch>GeneralDying {0}", Position.ToString()));
                     }
                     else
                     {
-                        Position = position_Next;
+                        if (timer_GeneralState <= totalTime_EyeDyingMove && position_Next != position_Last)
+                        {
+                            Position = new Vector2(
+                                MathHelper.Lerp(position_Last.X, position_Next.X, (float)(timer_GeneralState / totalTime_EyeDyingMove)),
+                                MathHelper.Lerp(position_Last.Y, position_Next.Y, (float)(timer_GeneralState / totalTime_EyeDyingMove)));
+                        }
+                        else
+                        {
+                            Position = position_Next;
+                        }
                     }
                     if (sfxi_EndBoom == null)
                     {
@@ -1421,9 +1440,9 @@ namespace Duologue.PlayObjects
                 {
                     activeExplosions[i].Timer = 0;
                     activeExplosions[i].IsGloopType = MWMathHelper.CoinToss();
-                    activeExplosions[i].Position = Position - centerOfScreen;
+                    activeExplosions[i].Position = centerOfScreen - Position;
                     activeExplosions[i].Position.Normalize();
-                    activeExplosions[i].Position = (float)MWMathHelper.GetRandomInRange(0, (double)Radius) *
+                    activeExplosions[i].Position = (float)MWMathHelper.GetRandomInRange((double)Radius/2.0, (double)Radius) *
                         MWMathHelper.RotateVectorByRadians(
                         activeExplosions[i].Position,
                         (float)MWMathHelper.GetRandomInRange((double)(-MathHelper.PiOver2), (double)MathHelper.PiOver2));
