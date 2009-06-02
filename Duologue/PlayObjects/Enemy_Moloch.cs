@@ -84,6 +84,15 @@ namespace Duologue.PlayObjects
         Opening,
     }
 
+    public struct ExplosionElement
+    {
+        public bool IsGloopType;
+        public double Timer;
+        public Color Color;
+        public Vector2 Position;
+        public float Rotation;
+    }
+
     public class Enemy_Moloch : Enemy
     {
         #region Constants
@@ -117,6 +126,15 @@ namespace Duologue.PlayObjects
         private const float offsetY_BlobHighlight = -10f;
         private const float scale_BlobOutline = 0.82f;
         private const int numberOfBlobsInShaft = 10;
+
+        private const string filename_GloopDeath = "Enemies/gloop/glooplet-death";
+        private const float minScale_GloopDeath = 0.5f;
+        private const float maxScale_GloopDeath = 1.2f;
+        private const float minAlpha_GloopDeath = 0.3f;
+        private const float maxAlpha_GloopDeath = 0.9f;
+        private const string filename_BulletHits = "bullet-hit-0{0}";
+        private const int frames_BulletHits = 5;
+        private const int numberOfActiveExplosion = 15;
 
         private const string filename_TubeExplode = "Audio/PlayerEffects/splat-explode";
         private const float volume_TubeExplode = 1f;
@@ -159,6 +177,9 @@ namespace Duologue.PlayObjects
         private const double totalTime_EyeDying = 6.781;
         private const double totalTime_EyeDyingMove = 2.121;
         private const double totalTime_GeneralDeath = 7.123;
+        private const double totalTime_Explosion = 0.81;
+
+        private const int chanceOfExternalExposion = 6;
 
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
@@ -206,6 +227,10 @@ namespace Duologue.PlayObjects
         private Texture2D texture_EyePupil;
         private Texture2D texture_Blob;
         private Texture2D texture_BlobHighlight;
+        private Texture2D texture_GloopDeath;
+        private Texture2D[] texture_BulletHit;
+        private Vector2 center_GloopDeath;
+        private Vector2 center_BulletHit;
         private Vector2 center_Body;
         private Vector2 center_Eye;
         private Vector2 center_Spinner;
@@ -229,6 +254,7 @@ namespace Duologue.PlayObjects
         private Enemy_MolochPart molochPart_Eye;
         private float currentOffsetLength_EyeBall;
         private RenderSpriteBlendMode currentBlendMode;
+        private ExplosionElement[] activeExplosions;
 
         // Relation to player stuff
         private Vector2 vectorToNearestPlayer;
@@ -464,6 +490,30 @@ namespace Duologue.PlayObjects
                 radius_Eyeball);
             timer_EyeStateChange = 0;
 
+            // Set up the explosion stuff
+            texture_GloopDeath = InstanceManager.AssetManager.LoadTexture2D(filename_GloopDeath);
+            center_GloopDeath = new Vector2(
+                texture_GloopDeath.Width / 2f, texture_GloopDeath.Height / 2f);
+            texture_BulletHit = new Texture2D[frames_BulletHits];
+            for (int i = 0; i < frames_BulletHits; i++)
+            {
+                texture_BulletHit[i] = InstanceManager.AssetManager.LoadTexture2D(
+                    String.Format(filename_BulletHits, (i + 1).ToString()));
+            }
+            center_BulletHit = new Vector2(
+                texture_BulletHit[0].Width / 2f, texture_BulletHit[0].Height / 2f);
+
+            activeExplosions = new ExplosionElement[numberOfActiveExplosion];
+            for (int i = 0; i < numberOfActiveExplosion; i++)
+            {
+                activeExplosions[i].IsGloopType = MWMathHelper.CoinToss();
+                activeExplosions[i].Position = (float)MWMathHelper.GetRandomInRange(0, (double)Radius) *
+                    GetRandomUnitVector();
+                activeExplosions[i].Timer = MWMathHelper.GetRandomInRange(0, totalTime_Explosion);
+                activeExplosions[i].Color = GetRandomColor();
+                activeExplosions[i].Rotation = (float)MWMathHelper.GetRandomInRange(0, (double)MathHelper.TwoPi);
+            }
+
             // Load audio things
             sfx_TubeExplode = InstanceManager.AssetManager.LoadSoundEffect(filename_TubeExplode);
             sfxi_TubeExplode = null;
@@ -611,6 +661,38 @@ namespace Duologue.PlayObjects
                 (float)MWMathHelper.GetRandomInRange(-1.0, 1.0));
             temp.Normalize();
             return temp;
+        }
+
+        private Color GetRandomColor()
+        {
+            Color c;
+            if (MWMathHelper.CoinToss())
+            {
+                ColorPolarity p;
+                if (MWMathHelper.CoinToss())
+                    p = ColorPolarity.Negative;
+                else
+                    p = ColorPolarity.Positive;
+
+                switch (MWMathHelper.GetRandomInRange(0, 3))
+                {
+                    case 0:
+                        c = GetMyColor(ColorState.Dark, p);
+                        break;
+                    case 1:
+                        c = GetMyColor(ColorState.Medium, p);
+                        break;
+                    default:
+                        c = GetMyColor(ColorState.Light, p);
+                        break;
+                }
+            }
+            else
+            {
+                c = colorArray_TasteTheRainbow[MWMathHelper.GetRandomInRange(
+                    0, colorArray_TasteTheRainbow.Length)];
+            }
+            return c;
         }
 
         /// <summary>
@@ -1192,8 +1274,12 @@ namespace Duologue.PlayObjects
                         if (sfxi_EyeBallWobble.State == SoundState.Playing)
                             sfxi_EyeBallWobble.Stop();
                     }
+                    UpdateExplosions(delta);
                     break;
                 case MolochState.GeneralDying:
+                    timer_GeneralState += delta;
+
+                    UpdateExplosions(delta);
                     break;
                 case MolochState.Moving:
                     // Reminder: We need to check if we're off screen at the final destination
@@ -1240,6 +1326,27 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private update methods
+        private void UpdateExplosions(double delta)
+        {
+            for (int i = 0; i < numberOfActiveExplosion; i++)
+            {
+                activeExplosions[i].Timer += delta;
+                if (activeExplosions[i].Timer > totalTime_Explosion)
+                {
+                    activeExplosions[i].Timer = 0;
+                    activeExplosions[i].IsGloopType = MWMathHelper.CoinToss();
+                    activeExplosions[i].Position = Position - centerOfScreen;
+                    activeExplosions[i].Position.Normalize();
+                    activeExplosions[i].Position = (float)MWMathHelper.GetRandomInRange(0, (double)Radius) *
+                        MWMathHelper.RotateVectorByRadians(
+                        activeExplosions[i].Position,
+                        (float)MWMathHelper.GetRandomInRange((double)(-MathHelper.PiOver2), (double)MathHelper.PiOver2));
+                    activeExplosions[i].Color = GetRandomColor();
+                    activeExplosions[i].Rotation = (float)MWMathHelper.GetRandomInRange(0, (double)MathHelper.TwoPi);
+                }
+            }
+        }
+
         private void UpdateTubes(double delta)
         {
             // Tube rotation
