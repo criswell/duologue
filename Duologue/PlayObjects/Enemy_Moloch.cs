@@ -135,6 +135,7 @@ namespace Duologue.PlayObjects
         private const string filename_BulletHits = "bullet-hit-0{0}";
         private const int frames_BulletHits = 5;
         private const int numberOfActiveExplosion = 15;
+        private const int numberOfDeathCoughExplosions = 40;
 
         private const string filename_TubeExplode = "Audio/PlayerEffects/splat-explode";
         private const float volume_TubeExplode = 1f;
@@ -695,6 +696,28 @@ namespace Duologue.PlayObjects
             return c;
         }
 
+        private void KickOffRandomExplosion()
+        {
+            Vector2 temp = Position - centerOfScreen;
+            temp.Normalize();
+            temp = (float)MWMathHelper.GetRandomInRange(0, (double)Radius) *
+                    MWMathHelper.RotateVectorByRadians(
+                    temp,
+                    (float)MWMathHelper.GetRandomInRange((double)(-MathHelper.PiOver2), (double)MathHelper.PiOver2));
+            if (MWMathHelper.CoinToss())
+            {
+                LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                    Position + temp,
+                    GetRandomColor());
+            }
+            else
+            {
+                LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                    Position + temp,
+                    GetRandomColor());
+            }
+        }
+
         /// <summary>
         /// Figure out where we're going next
         /// </summary>
@@ -928,6 +951,8 @@ namespace Duologue.PlayObjects
                     position_Next.Y = 0;
                 else if (Position.Y > InstanceManager.DefaultViewport.Height)
                     position_Next.Y = InstanceManager.DefaultViewport.Height;
+                Console.WriteLine(position_Last.ToString());
+                Console.WriteLine(position_Next.ToString());
             }
         }
         #endregion
@@ -1200,6 +1225,45 @@ namespace Duologue.PlayObjects
             }
             #endregion
 
+            #region End Explosions
+            if (currentState == MolochState.EyeDying || currentState == MolochState.GeneralDying)
+            {
+                for (int i = 0; i < numberOfActiveExplosion; i++)
+                {
+                    if (activeExplosions[i].IsGloopType)
+                    {
+                        InstanceManager.RenderSprite.Draw(
+                            texture_GloopDeath,
+                            Position + activeExplosions[i].Position,
+                            center_GloopDeath,
+                            null,
+                            new Color(activeExplosions[i].Color, MathHelper.Lerp(
+                               maxAlpha_GloopDeath, minAlpha_GloopDeath,
+                               (float)(activeExplosions[i].Timer / totalTime_Explosion))),
+                            activeExplosions[i].Rotation,
+                            MathHelper.Lerp(
+                                minScale_GloopDeath, maxScale_GloopDeath,
+                                (float)(activeExplosions[i].Timer / totalTime_Explosion)),
+                            0f,
+                            currentBlendMode);
+                    }
+                    else
+                    {
+                        InstanceManager.RenderSprite.Draw(
+                            texture_BulletHit[(int)MathHelper.Lerp(0, frames_BulletHits-1,
+                                (float)(activeExplosions[i].Timer / totalTime_Explosion))],
+                            Position + activeExplosions[i].Position,
+                            center_BulletHit,
+                            null,
+                            activeExplosions[i].Color,
+                            activeExplosions[i].Rotation,
+                            1f,
+                            0f,
+                            currentBlendMode);
+                    }
+                }
+            }
+            #endregion
         }
 
         public override void Update(GameTime gameTime)
@@ -1239,7 +1303,7 @@ namespace Duologue.PlayObjects
                         timer_GeneralState = 0;
                         Position = position_Next;
                     }
-                    if (timer_GeneralState <= totalTime_EyeDyingMove)
+                    if (timer_GeneralState <= totalTime_EyeDyingMove && position_Next != position_Last)
                     {
                         Position = new Vector2(
                             MathHelper.Lerp(position_Last.X, position_Next.X, (float)(timer_GeneralState / totalTime_EyeDyingMove)),
@@ -1278,7 +1342,29 @@ namespace Duologue.PlayObjects
                     break;
                 case MolochState.GeneralDying:
                     timer_GeneralState += delta;
-
+                    if (timer_GeneralState > totalTime_GeneralDeath)
+                    {
+                        timer_GeneralState = 0;
+                        Alive = false;
+                        for (int i = 0; i < numberOfDeathCoughExplosions; i++)
+                            KickOffRandomExplosion();
+                        try
+                        {
+                            sfxi_EndBoom.Stop();
+                        }
+                        catch { }
+                        try
+                        {
+                            sfxi_EyeBallWobble.Stop();
+                        }
+                        catch { }
+                        try
+                        {
+                            sfxi_TubeExplode.Stop();
+                        }
+                        catch { }
+                        audio.PlayEffect(EffectID.PlayerExplosion);
+                    }
                     UpdateExplosions(delta);
                     break;
                 case MolochState.Moving:
@@ -1344,6 +1430,11 @@ namespace Duologue.PlayObjects
                     activeExplosions[i].Color = GetRandomColor();
                     activeExplosions[i].Rotation = (float)MWMathHelper.GetRandomInRange(0, (double)MathHelper.TwoPi);
                 }
+            }
+
+            if (MWMathHelper.GetRandomInRange(0, chanceOfExternalExposion) == 1)
+            {
+                KickOffRandomExplosion();
             }
         }
 
