@@ -135,7 +135,7 @@ namespace Duologue.PlayObjects
         private const string filename_BulletHits = "bullet-hit-0{0}";
         private const int frames_BulletHits = 5;
         private const int numberOfActiveExplosion = 15;
-        private const int numberOfDeathCoughExplosions = 40;
+        private const int numberOfDeathCoughExplosions = 60;
 
         private const string filename_TubeExplode = "Audio/PlayerEffects/splat-explode";
         private const float volume_TubeExplode = 1f;
