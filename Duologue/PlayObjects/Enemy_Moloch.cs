@@ -563,7 +563,7 @@ namespace Duologue.PlayObjects
             else
             {
                 // Aim at the player
-                offset_Pupil = vectorToNearestPlayer - (Position + temp_offset_Eye);
+                offset_Pupil = nearestPlayer.Position - (Position + temp_offset_Eye);
             }
             offset_Pupil.Normalize();
             offset_Pupil = offset_Pupil * offsetLength_Pupil;
@@ -700,11 +700,41 @@ namespace Duologue.PlayObjects
         #region Movement overrides
         public override bool StartOffset()
         {
+            vectorToNearestPlayer = Vector2.One * 3f * InstanceManager.DefaultViewport.Width;
+            nearestPlayer = null;
             return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < vectorToNearestPlayer.Length())
+                {
+                    vectorToNearestPlayer = vToPlayer;
+                    nearestPlayer = (Player)pobj;
+                }
+                if (len < this.Radius + pobj.Radius)
+                {
+                    // We're on them, kill em
+                    return pobj.TriggerHit(this);
+                }
+
+                // Beam handling
+                int temp = ((Player)pobj).IsInBeam(this);
+                //inBeam = false;
+                if (temp != 0)
+                {
+                    //inBeam = true;
+                    if (temp == -1)
+                    {
+                        LocalInstanceManager.Steam.AddParticles(Position, GetMyColor(ColorState.Light));
+                    }
+                }
+            }
             return true;
         }
 
