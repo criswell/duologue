@@ -642,7 +642,8 @@ namespace Duologue.PlayObjects
             else
             {
                 // aim for another corner
-                if ((Position.X <= 2 || Position.X >= InstanceManager.DefaultViewport.Width - 2)
+                if (((Position.X <= 2 && Position.X >= -2) 
+                    || (Position.X >= InstanceManager.DefaultViewport.Width - 2 && Position.X <= InstanceManager.DefaultViewport.Width + 2))
                     && Position.Y >= 0 && Position.Y <= InstanceManager.DefaultViewport.Height)
                 {
                     float x = (float)MWMathHelper.GetRandomInRange(0, 5);
@@ -662,7 +663,8 @@ namespace Duologue.PlayObjects
                         position_Next = new Vector2(x, InstanceManager.DefaultViewport.Height);
                     }
                 }
-                else if ((Position.Y <= 2 || Position.Y >= InstanceManager.DefaultViewport.Height - 2)
+                else if (((Position.Y <= 2 && Position.Y >=-2)
+                    || (Position.Y >= InstanceManager.DefaultViewport.Height - 2 && Position.Y <= InstanceManager.DefaultViewport.Height + 2))
                     && Position.X >= 0 && Position.X <= InstanceManager.DefaultViewport.Width)
                 {
                     float y = (float)MWMathHelper.GetRandomInRange(0, 5);
