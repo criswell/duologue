@@ -182,7 +182,11 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPoints = 25;
+        private const int realHitPoints = 35;
+
+        private const int eyeBallHitPoints = 40;
+
+        private const float offscreenMovementMultiplier = 0.35f;
         #endregion
 
         #region Fields
@@ -595,8 +599,8 @@ namespace Duologue.PlayObjects
             position_Last = Position;
 
             // Next position is dependent upon where we currently are
-            if (Position.X <= -RealSize.X || Position.X >= InstanceManager.DefaultViewport.Width + RealSize.X ||
-                Position.Y <= -RealSize.Y || Position.Y >= InstanceManager.DefaultViewport.Height + RealSize.Y)
+            if (Position.X <= -RealSize.X*offscreenMovementMultiplier || Position.X >= InstanceManager.DefaultViewport.Width + RealSize.X*offscreenMovementMultiplier ||
+                Position.Y <= -RealSize.Y*offscreenMovementMultiplier || Position.Y >= InstanceManager.DefaultViewport.Height + RealSize.Y *offscreenMovementMultiplier)
             {
                 // We're off the screen, we can go nearly anywhere
                 InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Offscreen to onscreen");
@@ -625,15 +629,15 @@ namespace Duologue.PlayObjects
                 }
                 position_Last = position_Next - centerOfScreen;
                 position_Last.Normalize();
-                position_Last = position_Next + position_Last * RealSize.Length();
+                position_Last = position_Next + position_Last * RealSize.Length() * offscreenMovementMultiplier;
             }
-            else if (MWMathHelper.CoinToss())
+            else if (MWMathHelper.GetRandomInRange(0, 3) == 1)
             {
                 // aim off screen
                 InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Aim offscreen, location known");
                 position_Next = position_Last - centerOfScreen;
                 position_Next.Normalize();
-                position_Next = position_Last + position_Next * RealSize.Length();
+                position_Next = position_Last + position_Next * RealSize.Length() * offscreenMovementMultiplier;
             }
             else
             {
@@ -641,9 +645,9 @@ namespace Duologue.PlayObjects
                 if ((Position.X <= 2 || Position.X >= InstanceManager.DefaultViewport.Width - 2)
                     && Position.Y >= 0 && Position.Y <= InstanceManager.DefaultViewport.Height)
                 {
-                    float x = 0;
+                    float x = (float)MWMathHelper.GetRandomInRange(0, 5);
                     if (Position.X >= InstanceManager.DefaultViewport.Width - 2)
-                        x = InstanceManager.DefaultViewport.Width;
+                        x = InstanceManager.DefaultViewport.Width - x;
                     // We're on a side
                     if (Position.Y >= InstanceManager.DefaultViewport.Height/2f)
                     {
@@ -661,9 +665,9 @@ namespace Duologue.PlayObjects
                 else if ((Position.Y <= 2 || Position.Y >= InstanceManager.DefaultViewport.Height - 2)
                     && Position.X >= 0 && Position.X <= InstanceManager.DefaultViewport.Width)
                 {
-                    float y = 0;
+                    float y = (float)MWMathHelper.GetRandomInRange(0, 5);
                     if (Position.Y >= InstanceManager.DefaultViewport.Height - 2)
-                        y = InstanceManager.DefaultViewport.Height;
+                        y = InstanceManager.DefaultViewport.Height - y;
                     // We're on top or bottom
                     if (Position.X <= InstanceManager.DefaultViewport.Width/2f)
                     {
@@ -685,7 +689,7 @@ namespace Duologue.PlayObjects
                     InstanceManager.Logger.LogEntry("Enemy_Moloch.SetNextDestination(): Location unknown");
                     position_Next = position_Last - centerOfScreen;
                     position_Next.Normalize();
-                    position_Next = position_Last + position_Next * RealSize.Length();
+                    position_Next = position_Last + position_Next * RealSize.Length() * offscreenMovementMultiplier;
                 }
             }
         }
@@ -1042,14 +1046,15 @@ namespace Duologue.PlayObjects
                     {
                         Position = position_Next;
                         timer_GeneralState = 0;
-                        if (Position.X <= -RealSize.X || Position.X >= InstanceManager.DefaultViewport.Width + RealSize.X ||
-                            Position.Y <= -RealSize.Y || Position.Y >= InstanceManager.DefaultViewport.Height + RealSize.Y)
+                        if (Position.X <= -RealSize.X * offscreenMovementMultiplier || Position.X >= InstanceManager.DefaultViewport.Width + RealSize.X * offscreenMovementMultiplier ||
+                            Position.Y <= -RealSize.Y * offscreenMovementMultiplier || Position.Y >= InstanceManager.DefaultViewport.Height + RealSize.Y * offscreenMovementMultiplier)
                         {
                             // offscreen, start again
                             SetNextDestination();
                         }
                         else
                         {
+                            InstanceManager.Logger.LogEntry("Enemy_Moloch>Setting steady state");
                             currentState = MolochState.Steady;
                         }
                     }
@@ -1061,6 +1066,7 @@ namespace Duologue.PlayObjects
                     {
                         timer_GeneralState = 0;
                         SetNextDestination();
+                        InstanceManager.Logger.LogEntry("Enemy_Moloch>Setting moving state");
                         currentState = MolochState.Moving;
                     }
                     break;
@@ -1180,7 +1186,7 @@ namespace Duologue.PlayObjects
                     Vector2.Zero,
                     ColorState,
                     polarity_EyeBall,
-                    StartHitPoints);
+                    eyeBallHitPoints);
                 LocalInstanceManager.Enemies[0].CleanUp();
                 LocalInstanceManager.Enemies[0] = molochPart_Eye;
                 timer_EyeStateChange = 0;
@@ -1249,7 +1255,7 @@ namespace Duologue.PlayObjects
                 {
                     try
                     {
-                        sfxi_EyeBallWobble = sfx_TubeExplode.Play(volume_EyeBallWobble);
+                        sfxi_EyeBallWobble = sfx_EyeBallWobble.Play(volume_EyeBallWobble);
                     }
                     catch { }
                 }
