@@ -163,6 +163,7 @@ namespace Duologue.PlayObjects
         private const float offset_TubeGuy = 95f;
         private const float offset_Asplosions = 10f;
         private const int numberOfExplosionsPerBlob = 5;
+        private const int numberOfShotsPerTube = 3;
 
         //private const double totalTime_SpinnerColorChange = 1.02;
         //private const double totalTime_BodyColorChange = 2.51;
@@ -615,6 +616,7 @@ namespace Duologue.PlayObjects
         private void SpawnTubeBabby(int index)
         {
             Vector2 pos = GetPartPosition(index);
+            int num = 0;
             if ((pos.X >= 0 && pos.X <= InstanceManager.DefaultViewport.Width) &&
                 (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
             {
@@ -630,7 +632,9 @@ namespace Duologue.PlayObjects
                             ColorState,
                             tubes[index].ColorPolarity,
                             1);
-                        break;
+                        num++;
+                        if(num >= numberOfShotsPerTube)
+                            break;
                     }
                 }
             }
