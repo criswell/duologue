@@ -122,6 +122,8 @@ namespace Duologue.PlayObjects
         private const float volume_TubeExplode = 1f;
         private const string filename_EyeBallWobble = "Audio/PlayerEffects/end-boss-wobble";
         private const float volume_EyeBallWobble = 0.85f;
+        private const string filename_EndBoom = "Audio/PlayerEffects/big-badda-boom";
+        private const float volume_EndBoom = 0.85f;
 
         private const float delta_BodyRotation = MathHelper.PiOver4 * 0.005f;
         private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.01f;
@@ -140,6 +142,8 @@ namespace Duologue.PlayObjects
 
         private const float radius_TubeGuy = 90f;
         private const float offset_TubeGuy = 95f;
+        private const float offset_Asplosions = 10f;
+        private const int numberOfExplosionsPerBlob = 5;
 
         //private const double totalTime_SpinnerColorChange = 1.02;
         //private const double totalTime_BodyColorChange = 2.51;
@@ -152,6 +156,9 @@ namespace Duologue.PlayObjects
         private const double totalTime_EyeSpawn = 2.981;
         private const double totalTime_SteadyState = 6.5;
         private const double totalTime_MovingState = 5.342;
+        private const double totalTime_EyeDying = 6.781;
+        private const double totalTime_EyeDyingMove = 2.121;
+        private const double totalTime_GeneralDeath = 7.123;
 
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
@@ -182,7 +189,7 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPoints = 35;
+        private const int realHitPoints = 25;
 
         private const int eyeBallHitPoints = 40;
 
@@ -242,6 +249,7 @@ namespace Duologue.PlayObjects
         private double timer_GeneralState;
         private Vector2 position_Last;
         private Vector2 position_Next;
+        private int currentUpperLimit;
 
         // Audio stuff
         private AudioManager audio;
@@ -249,6 +257,8 @@ namespace Duologue.PlayObjects
         private SoundEffectInstance sfxi_TubeExplode;
         private SoundEffect sfx_EyeBallWobble;
         private SoundEffectInstance sfxi_EyeBallWobble;
+        private SoundEffect sfx_EndBoom;
+        private SoundEffectInstance sfxi_EndBoom;
         #endregion
 
         #region Properties
@@ -292,6 +302,7 @@ namespace Duologue.PlayObjects
             currentState = MolochState.Moving;
             SetNextDestination();
             timer_GeneralState = 0;
+            currentUpperLimit = numberOfBlobsInShaft;
             // Set color
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
@@ -458,6 +469,8 @@ namespace Duologue.PlayObjects
             sfxi_TubeExplode = null;
             sfx_EyeBallWobble = InstanceManager.AssetManager.LoadSoundEffect(filename_EyeBallWobble);
             sfxi_EyeBallWobble = null;
+            sfx_EndBoom = InstanceManager.AssetManager.LoadSoundEffect(filename_EndBoom);
+            sfxi_EndBoom = null;
 
             Alive = true;
             Initialized = true;
@@ -589,6 +602,15 @@ namespace Duologue.PlayObjects
         private float GetTubeRotation(float p)
         {
             return MathHelper.PiOver2 - p;
+        }
+
+        private Vector2 GetRandomUnitVector()
+        {
+            Vector2 temp = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(-1.0, 1.0),
+                (float)MWMathHelper.GetRandomInRange(-1.0, 1.0));
+            temp.Normalize();
+            return temp;
         }
 
         /// <summary>
@@ -790,6 +812,40 @@ namespace Duologue.PlayObjects
             else
             {
                 // We're dealing with the eye, should trigger death
+                currentState = MolochState.EyeDying;
+                timer_GeneralState = 0;
+                // Splat the eyeball
+                LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                    Position + currentOffsetLength_EyeBall * offset_Eye + offset_Asplosions * GetRandomUnitVector(),
+                    colorArray_TasteTheRainbow[color_Pupil]);
+                LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                    Position + currentOffsetLength_EyeBall * offset_Eye + offset_Asplosions * GetRandomUnitVector(),
+                    GetMyColor(ColorState.Medium, polarity_EyeBall));
+                LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                    Position + currentOffsetLength_EyeBall * offset_Eye + offset_Asplosions * GetRandomUnitVector(),
+                    GetMyColor(ColorState.Light, polarity_EyeBall));
+                LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                    Position + currentOffsetLength_EyeBall * offset_Eye + offset_Asplosions * GetRandomUnitVector(),
+                    GetMyColor(ColorState.Medium, polarity_EyeBall));
+                LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                    Position + currentOffsetLength_EyeBall * offset_Eye + offset_Asplosions * GetRandomUnitVector(),
+                    colorArray_TasteTheRainbow[color_Pupil]);
+                LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                    Position + currentOffsetLength_EyeBall * offset_Eye + offset_Asplosions * GetRandomUnitVector(),
+                    GetMyColor(ColorState.Dark, polarity_EyeBall));
+                // Boundary checking, if we were killed while offscreen, even a little bit,
+                // we need to get back on screen
+                position_Last = Position;
+                position_Next = Position;
+                if (Position.X < 0)
+                    position_Next.X = 0;
+                else if (Position.X > InstanceManager.DefaultViewport.Width)
+                    position_Next.X = InstanceManager.DefaultViewport.Width;
+
+                if (Position.Y < 0)
+                    position_Next.Y = 0;
+                else if (Position.Y > InstanceManager.DefaultViewport.Height)
+                    position_Next.Y = InstanceManager.DefaultViewport.Height;
             }
         }
         #endregion
@@ -925,107 +981,141 @@ namespace Duologue.PlayObjects
 
             #region Draw the eye
             // Draw the shaft
-            for (int i = 0; i < numberOfBlobsInShaft; i++)
+            if (currentState != MolochState.GeneralDying)
             {
-                // Draw the outline
-                InstanceManager.RenderSprite.Draw(
-                    texture_Blob,
-                    Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
-                    center_Blob,
-                    null,
-                    Color.Black,
-                    0f,
-                    scale_BlobOutline,
-                    0f,
-                    currentBlendMode);
-                // Draw the blob
-                InstanceManager.RenderSprite.Draw(
-                    texture_Blob,
-                    Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
-                    center_Blob,
-                    null,
-                    GetMyColor(ColorState.Dark, polarity_EyeBall),
-                    0f,
-                    scale_Blob,
-                    0f,
-                    currentBlendMode);                
-                // Draw the highlight
-                InstanceManager.RenderSprite.Draw(
-                    texture_BlobHighlight,
-                    Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye +
-                    offsetY_BlobHighlight * Vector2.UnitY,
-                    center_BlobHighlight,
-                    null,
-                    Color.White,
-                    0f,
-                    scale_Blob,
-                    0f,
-                    currentBlendMode);
+                int upperLimit = numberOfBlobsInShaft;
+                if (currentState == MolochState.EyeDying)
+                {
+                    upperLimit = (int)MathHelper.Lerp((float)numberOfBlobsInShaft, 0, (float)(timer_GeneralState / totalTime_EyeDying));
+                    //Console.WriteLine("{0}, {1}", upperLimit, (float)(timer_EyeStateChange / totalTime_EyeDying));
+                }
+                for (int i = 0; i < upperLimit; i++)
+                {
+                    // Draw the outline
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Blob,
+                        Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
+                        center_Blob,
+                        null,
+                        Color.Black,
+                        0f,
+                        scale_BlobOutline,
+                        0f,
+                        currentBlendMode);
+                    // Draw the blob
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Blob,
+                        Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
+                        center_Blob,
+                        null,
+                        GetMyColor(ColorState.Dark, polarity_EyeBall),
+                        0f,
+                        scale_Blob,
+                        0f,
+                        currentBlendMode);
+                    // Draw the highlight
+                    InstanceManager.RenderSprite.Draw(
+                        texture_BlobHighlight,
+                        Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye +
+                        offsetY_BlobHighlight * Vector2.UnitY,
+                        center_BlobHighlight,
+                        null,
+                        Color.White,
+                        0f,
+                        scale_Blob,
+                        0f,
+                        currentBlendMode);
+                }
+                if (upperLimit < numberOfBlobsInShaft)
+                {
+                    for (int i = upperLimit; i < currentUpperLimit; i++)
+                    {
+                        for (int t = 0; t < numberOfExplosionsPerBlob; t++)
+                        {
+                            Color c = GetMyColor(ColorState.Medium, polarity_EyeBall);
+                            if (MWMathHelper.CoinToss())
+                                c = colorArray_TasteTheRainbow[color_Pupil];
+
+                            if (MWMathHelper.CoinToss())
+                                LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                                    Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye + offset_Asplosions * GetRandomUnitVector(),
+                                    c);
+                            else
+                                LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                                    Position + MathHelper.Lerp(0, currentOffsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye + offset_Asplosions * GetRandomUnitVector(),
+                                    c);
+                        }
+                    }
+                    currentUpperLimit = upperLimit;
+                }
+                if (currentState != MolochState.EyeDying)
+                {
+                    // Draw the base
+                    InstanceManager.RenderSprite.Draw(
+                        eyes[currentEyeFrame].Base,
+                        Position + currentOffsetLength_EyeBall * offset_Eye,
+                        center_Eye,
+                        null,
+                        Color.White,
+                        0f,//rotation_Eye,
+                        1f,
+                        0f,
+                        currentBlendMode);
+                    // Draw the pupil
+                    InstanceManager.RenderSprite.Draw(
+                        texture_EyePupil,
+                        Position + currentOffsetLength_EyeBall * offset_Eye + offset_Pupil,
+                        center_Pupil,
+                        null,
+                        colorArray_TasteTheRainbow[color_Pupil],
+                        0f,
+                        1f,
+                        0f,
+                        currentBlendMode);
+                    // Draw the layers
+                    InstanceManager.RenderSprite.Draw(
+                        eyes[currentEyeFrame].ShadeLower,
+                        Position + currentOffsetLength_EyeBall * offset_Eye,
+                        center_Eye,
+                        null,
+                        GetMyColor(ColorState.Light, polarity_EyeBall),
+                        0f,//rotation_Eye,
+                        1f,
+                        0f,
+                        currentBlendMode);
+                    InstanceManager.RenderSprite.Draw(
+                        eyes[currentEyeFrame].ShadeMiddle,
+                        Position + currentOffsetLength_EyeBall * offset_Eye,
+                        center_Eye,
+                        null,
+                        GetMyColor(ColorState.Medium, polarity_EyeBall),
+                        0f,//rotation_Eye,
+                        1f,
+                        0f,
+                        currentBlendMode);
+                    InstanceManager.RenderSprite.Draw(
+                        eyes[currentEyeFrame].ShadeUpper,
+                        Position + currentOffsetLength_EyeBall * offset_Eye,
+                        center_Eye,
+                        null,
+                        GetMyColor(ColorState.Dark, polarity_EyeBall),
+                        0f,//rotation_Eye,
+                        1f,
+                        0f,
+                        currentBlendMode);
+                    // Draw the outline
+                    InstanceManager.RenderSprite.Draw(
+                        eyes[currentEyeFrame].Outline,
+                        Position + currentOffsetLength_EyeBall * offset_Eye,
+                        center_Eye,
+                        null,
+                        Color.White,
+                        0f,//rotation_Eye,
+                        1f,
+                        0f,
+                        currentBlendMode);
+                }
             }
-            // Draw the base
-            InstanceManager.RenderSprite.Draw(
-                eyes[currentEyeFrame].Base,
-                Position + currentOffsetLength_EyeBall * offset_Eye,
-                center_Eye,
-                null,
-                Color.White,
-                0f,//rotation_Eye,
-                1f,
-                0f,
-                currentBlendMode);
-            // Draw the pupil
-            InstanceManager.RenderSprite.Draw(
-                texture_EyePupil,
-                Position + currentOffsetLength_EyeBall * offset_Eye + offset_Pupil,
-                center_Pupil,
-                null,
-                colorArray_TasteTheRainbow[color_Pupil],
-                0f,
-                1f,
-                0f,
-                currentBlendMode);
-            // Draw the layers
-            InstanceManager.RenderSprite.Draw(
-                eyes[currentEyeFrame].ShadeLower,
-                Position + currentOffsetLength_EyeBall * offset_Eye,
-                center_Eye,
-                null,
-                GetMyColor(ColorState.Light, polarity_EyeBall),
-                0f,//rotation_Eye,
-                1f,
-                0f,
-                currentBlendMode);
-            InstanceManager.RenderSprite.Draw(
-                eyes[currentEyeFrame].ShadeMiddle,
-                Position + currentOffsetLength_EyeBall * offset_Eye,
-                center_Eye,
-                null,
-                GetMyColor(ColorState.Medium, polarity_EyeBall),
-                0f,//rotation_Eye,
-                1f,
-                0f,
-                currentBlendMode);
-            InstanceManager.RenderSprite.Draw(
-                eyes[currentEyeFrame].ShadeUpper,
-                Position + currentOffsetLength_EyeBall *  offset_Eye,
-                center_Eye,
-                null,
-                GetMyColor(ColorState.Dark, polarity_EyeBall),
-                0f,//rotation_Eye,
-                1f,
-                0f,
-                currentBlendMode);
-            // Draw the outline
-            InstanceManager.RenderSprite.Draw(
-                eyes[currentEyeFrame].Outline,
-                Position + currentOffsetLength_EyeBall * offset_Eye,
-                center_Eye,
-                null,
-                Color.White,
-                0f,//rotation_Eye,
-                1f,
-                0f,
-                currentBlendMode);            
             #endregion
 
         }
@@ -1060,6 +1150,48 @@ namespace Duologue.PlayObjects
                     }
                     break;
                 case MolochState.EyeDying:
+                    timer_GeneralState += delta;
+                    if (timer_GeneralState > totalTime_EyeDying)
+                    {
+                        currentState = MolochState.GeneralDying;
+                        timer_GeneralState = 0;
+                        Position = position_Next;
+                    }
+                    if (timer_GeneralState <= totalTime_EyeDyingMove)
+                    {
+                        Position = new Vector2(
+                            MathHelper.Lerp(position_Last.X, position_Next.X, (float)(timer_GeneralState / totalTime_EyeDyingMove)),
+                            MathHelper.Lerp(position_Last.Y, position_Next.Y, (float)(timer_GeneralState / totalTime_EyeDyingMove)));
+                    }
+                    else
+                    {
+                        Position = position_Next;
+                    }
+                    if (sfxi_EndBoom == null)
+                    {
+                        try
+                        {
+                            sfxi_EndBoom = sfx_EndBoom.Play(volume_EndBoom);
+                        }
+                        catch { }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            if (sfxi_EndBoom.State == SoundState.Paused ||
+                                sfxi_EndBoom.State == SoundState.Stopped)
+                            {
+                                sfxi_EndBoom.Play();
+                            }
+                        }
+                        catch { }
+                    }
+                    if (sfxi_EyeBallWobble != null)
+                    {
+                        if (sfxi_EyeBallWobble.State == SoundState.Playing)
+                            sfxi_EyeBallWobble.Stop();
+                    }
                     break;
                 case MolochState.GeneralDying:
                     break;
