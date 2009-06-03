@@ -180,6 +180,7 @@ namespace Duologue.PlayObjects
         private const double totalTime_EyeDyingMove = 2.121;
         private const double totalTime_GeneralDeath = 7.123;
         private const double totalTime_Explosion = 0.81;
+        private const double totalTime_EyeShots = 1.4;
 
         private const int chanceOfExternalExposion = 5;
 
@@ -212,9 +213,9 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPoints = 20;
+        private const int realHitPoints = 16;
 
-        private const int eyeBallHitPoints = 40;
+        private const int eyeBallHitPoints = 30;
 
         private const float offscreenMovementMultiplier = 0.35f;
         #endregion
@@ -278,6 +279,7 @@ namespace Duologue.PlayObjects
         private Vector2 position_Last;
         private Vector2 position_Next;
         private int currentUpperLimit;
+        private double timer_EyeShot;
 
         // Audio stuff
         private AudioManager audio;
@@ -491,6 +493,7 @@ namespace Duologue.PlayObjects
                 -1,
                 radius_Eyeball);
             timer_EyeStateChange = 0;
+            timer_EyeShot = 0;
 
             // Set up the explosion stuff
             texture_GloopDeath = InstanceManager.AssetManager.LoadTexture2D(filename_GloopDeath);
@@ -613,6 +616,24 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private methods
+        private void SpawnBabby(Vector2 pos, ColorState cs, ColorPolarity cp)
+        {
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                if (!LocalInstanceManager.Enemies[i].Alive)
+                {
+                    LocalInstanceManager.Enemies[i] = new Enemy_Firefly(MyManager);
+                    LocalInstanceManager.Enemies[i].Initialize(
+                        pos,
+                        Vector2.Zero,
+                        cs,
+                        cp,
+                        1);
+                    break;
+                }
+            }
+        }
+
         private void SpawnTubeBabby(int index)
         {
             Vector2 pos = GetPartPosition(index) + offset_Shot * GetRandomUnitVector();
@@ -621,25 +642,26 @@ namespace Duologue.PlayObjects
                 (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
             {
                 // We only proceed if we are on screen
-                for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
-                {
-                    if (!LocalInstanceManager.Enemies[i].Alive)
-                    {
-                        LocalInstanceManager.Enemies[i] = new Enemy_Firefly(MyManager);
-                        LocalInstanceManager.Enemies[i].Initialize(
-                            pos,
-                            Vector2.Zero,
-                            ColorState,
-                            tubes[index].ColorPolarity,
-                            1);
-                        break;
-                    }
-                }
+                SpawnBabby(
+                    pos,
+                    ColorState,
+                    tubes[index].ColorPolarity);
             }
         }
 
         private void SpawnEyeBabby()
         {
+            Vector2 pos = GetPartPosition(-1);
+
+            if ((pos.X >= 0 && pos.X <= InstanceManager.DefaultViewport.Width) &&
+                (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
+            {
+                // We only proceed if we are on screen
+                SpawnBabby(
+                    pos,
+                    ColorState,
+                    polarity_EyeBall);
+            }
         }
         /// <summary>
         /// Will set the current offsets for the eyeball and pupil
@@ -1687,7 +1709,7 @@ namespace Duologue.PlayObjects
             if (timer_EyeStare > totalTime_EyeStareOrbit)
                 timer_EyeStare -= totalTime_EyeStareOrbit;
             SetEyeOffsets();
-            if (isEyeEngaged)
+            if (isEyeEngaged && currentState != MolochState.EyeDying && currentState != MolochState.GeneralDying)
             {
                 if (sfxi_EyeBallWobble == null)
                 {
@@ -1709,6 +1731,12 @@ namespace Duologue.PlayObjects
                     }
                     catch
                     { }
+                }
+                timer_EyeShot += delta;
+                if (timer_EyeShot >= totalTime_EyeShots)
+                {
+                    SpawnEyeBabby();
+                    timer_EyeShot = 0;
                 }
             }
         }
