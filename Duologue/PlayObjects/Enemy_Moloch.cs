@@ -134,8 +134,9 @@ namespace Duologue.PlayObjects
         private const float maxAlpha_GloopDeath = 0.9f;
         private const string filename_BulletHits = "bullet-hit-0{0}";
         private const int frames_BulletHits = 5;
-        private const int numberOfActiveExplosion = 15;
-        private const int numberOfDeathCoughExplosions = 60;
+        private const int numberOfActiveExplosion = 20;
+        private const int numberOfDeathCoughExplosions = 30;
+        private const int numberOfDeathCoughExternalExplosions = 30;
 
         private const string filename_TubeExplode = "Audio/PlayerEffects/splat-explode";
         private const float volume_TubeExplode = 1f;
@@ -143,6 +144,8 @@ namespace Duologue.PlayObjects
         private const float volume_EyeBallWobble = 0.85f;
         private const string filename_EndBoom = "Audio/PlayerEffects/big-badda-boom";
         private const float volume_EndBoom = 0.85f;
+        private const string filename_FinaleBoom = "Audio/PlayerEffects/end-boss-death-cough";
+        private const float volume_FinaleBoom = 0.95f;
 
         private const float delta_BodyRotation = MathHelper.PiOver4 * 0.005f;
         private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.01f;
@@ -774,6 +777,25 @@ namespace Duologue.PlayObjects
             {
                 LocalInstanceManager.EnemySplatterSystem.AddParticles(
                     Position + temp,
+                    GetRandomColor());
+            }
+        }
+
+        private void KickOffExternalRandomExplosion()
+        {
+            Vector2 temp = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(0, InstanceManager.DefaultViewport.Width),
+                (float)MWMathHelper.GetRandomInRange(0, InstanceManager.DefaultViewport.Height));
+            if (MWMathHelper.CoinToss())
+            {
+                LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                    temp,
+                    GetRandomColor());
+            }
+            else
+            {
+                LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                    temp,
                     GetRandomColor());
             }
         }
@@ -1444,6 +1466,8 @@ namespace Duologue.PlayObjects
                         Alive = false;
                         for (int i = 0; i < numberOfDeathCoughExplosions; i++)
                             KickOffRandomExplosion();
+                        for (int i = 0; i < numberOfDeathCoughExternalExplosions; i++)
+                            KickOffExternalRandomExplosion();
                         try
                         {
                             sfxi_EndBoom.Stop();
@@ -1746,33 +1770,36 @@ namespace Duologue.PlayObjects
             // Body
             for (int i = 0; i < body.Length; i++)
             {
-                //body[i].TimerColorChange += delta;
-                //if (body[i].TimerColorChange > totalTime_BodyColorChange)
-                //{
-                //body[i].TimerColorChange = 0;
-                //body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-                //}
                 body[i].Rotation += body[i].DeltaRotation;
                 if (body[i].Rotation > MathHelper.TwoPi)
                     body[i].Rotation -= MathHelper.TwoPi;
                 if (body[i].Rotation < 0)
                     body[i].Rotation = MathHelper.TwoPi + body[i].Rotation;
 
-                if (body[i].DeltaAlphaDirection)
-                    body[i].Alpha += body[i].DeltaAlpha;
-                else
-                    body[i].Alpha -= body[i].DeltaAlpha;
+                if (currentState != MolochState.GeneralDying)
+                {
+                    if (body[i].DeltaAlphaDirection)
+                        body[i].Alpha += body[i].DeltaAlpha;
+                    else
+                        body[i].Alpha -= body[i].DeltaAlpha;
 
-                if (body[i].Alpha > maxAlpha_Body)
-                {
-                    body[i].Alpha = maxAlpha_Body;
-                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    if (body[i].Alpha > maxAlpha_Body)
+                    {
+                        body[i].Alpha = maxAlpha_Body;
+                        body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    }
+                    else if (body[i].Alpha < minAlpha_Body)
+                    {
+                        body[i].Alpha = minAlpha_Body;
+                        body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+                        body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    }
                 }
-                else if (body[i].Alpha < minAlpha_Body)
+                else
                 {
-                    body[i].Alpha = minAlpha_Body;
-                    body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    body[i].Alpha -= body[i].DeltaAlpha;
+                    if (body[i].Alpha < minAlpha_Body)
+                        body[i].Alpha = minAlpha_Body;
                 }
             }
         }
