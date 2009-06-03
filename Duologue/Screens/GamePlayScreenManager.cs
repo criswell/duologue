@@ -176,8 +176,11 @@ namespace Duologue.Screens
         {
             AudioManager audio = ServiceLocator.GetService<AudioManager>();
             audio.FadeOut(lastSongID);
-            audio.FadeOut(
-                LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID);
+            if (LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID != lastSongID)
+            {
+                audio.FadeOut(
+                    LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID);
+            }
 
             CleanEnemies();
 
