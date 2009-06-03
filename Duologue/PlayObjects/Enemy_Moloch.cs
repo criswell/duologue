@@ -292,6 +292,7 @@ namespace Duologue.PlayObjects
         private SoundEffectInstance sfxi_EyeBallWobble;
         private SoundEffect sfx_EndBoom;
         private SoundEffectInstance sfxi_EndBoom;
+        private SoundEffect sfx_FinaleBoom;
         #endregion
 
         #region Properties
@@ -529,6 +530,7 @@ namespace Duologue.PlayObjects
             sfxi_EyeBallWobble = null;
             sfx_EndBoom = InstanceManager.AssetManager.LoadSoundEffect(filename_EndBoom);
             sfxi_EndBoom = null;
+            sfx_FinaleBoom = InstanceManager.AssetManager.LoadSoundEffect(filename_FinaleBoom);
 
             Alive = true;
             Initialized = true;
@@ -540,6 +542,7 @@ namespace Duologue.PlayObjects
             {
                 filename_TubeExplode,
                 filename_EyeBallWobble,
+                filename_FinaleBoom,
             };
         }
 
@@ -1468,6 +1471,11 @@ namespace Duologue.PlayObjects
                             KickOffRandomExplosion();
                         for (int i = 0; i < numberOfDeathCoughExternalExplosions; i++)
                             KickOffExternalRandomExplosion();
+                        try
+                        {
+                            sfx_FinaleBoom.Play(volume_FinaleBoom);
+                        }
+                        catch { }
                         try
                         {
                             sfxi_EndBoom.Stop();
