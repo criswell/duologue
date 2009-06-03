@@ -91,9 +91,6 @@ namespace Duologue.PlayObjects
         private SoundEffect sfx_Explode;
         private AudioManager audio;
 
-        // State related
-        private bool hasSpawned;
-
         // Player tracking & movement related
         private Player trackedPlayerObject;
         private Vector2 offset;
@@ -104,6 +101,10 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Set to true when the player has spawned
+        /// </summary>
+        public bool HasSpawned;
         #endregion
 
         #region Constructor/Init
@@ -139,7 +140,7 @@ namespace Duologue.PlayObjects
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
 
-            hasSpawned = false;
+            HasSpawned = false;
             Alive = true;
             timeSinceSwitch = 0;
             deltaBodyColor = 1;
@@ -230,7 +231,7 @@ namespace Duologue.PlayObjects
             trackedPlayerObject = null;
             trackedPlayerVector = Vector2.Zero;
             offset = Vector2.Zero;
-            if (hasSpawned)
+            if (HasSpawned)
             {
                 // If we've already gotten onto the screen, we want the nearest player
                 trackedPlayerDistance = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough
@@ -273,7 +274,7 @@ namespace Duologue.PlayObjects
                     }
                 }
 
-                if (hasSpawned)
+                if (HasSpawned)
                 {
                     // If we've already gotten onto the screen, we want the nearest player
                     if (len < trackedPlayerDistance)
@@ -301,7 +302,7 @@ namespace Duologue.PlayObjects
         {
             if (trackedPlayerObject != null)
             {
-                hasSpawned = true;
+                HasSpawned = true;
                 // We only alter our tragectory when we have a player to go after
                 trackedPlayerVector.Normalize();
                 trackedPlayerVector = Vector2.Negate(trackedPlayerVector);
@@ -336,7 +337,7 @@ namespace Duologue.PlayObjects
                     offset += Vector2.Negate(Vector2.Normalize(Orientation)) * lightRepulseSpeed;
                 }
             }
-            else if (hasSpawned)
+            else if (HasSpawned)
             {
                 // If there's no player, but we've spawned, we keep moving in last tragectory
                 if (Orientation == Vector2.Zero)
@@ -360,7 +361,7 @@ namespace Duologue.PlayObjects
                 this.Position.Y > InstanceManager.DefaultViewport.Height + RealSize.Y * outsideScreenMultiplier ||
                 this.Position.X > InstanceManager.DefaultViewport.Width + RealSize.X * outsideScreenMultiplier)
             {
-                if (hasSpawned)
+                if (HasSpawned)
                 {
                     Alive = false;
                 }

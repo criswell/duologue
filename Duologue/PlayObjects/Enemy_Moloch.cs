@@ -628,13 +628,15 @@ namespace Duologue.PlayObjects
             {
                 if (!LocalInstanceManager.Enemies[i].Alive)
                 {
-                    LocalInstanceManager.Enemies[i] = new Enemy_Firefly(MyManager);
-                    LocalInstanceManager.Enemies[i].Initialize(
+                    Enemy_Firefly temp = new Enemy_Firefly(MyManager);
+                    temp.Initialize(
                         pos,
                         Vector2.Zero,
                         cs,
                         cp,
                         1);
+                    temp.HasSpawned = true;
+                    LocalInstanceManager.Enemies[i] = temp;
                     break;
                 }
             }
