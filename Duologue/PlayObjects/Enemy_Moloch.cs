@@ -134,8 +134,9 @@ namespace Duologue.PlayObjects
         private const float maxAlpha_GloopDeath = 0.9f;
         private const string filename_BulletHits = "bullet-hit-0{0}";
         private const int frames_BulletHits = 5;
-        private const int numberOfActiveExplosion = 15;
-        private const int numberOfDeathCoughExplosions = 60;
+        private const int numberOfActiveExplosion = 20;
+        private const int numberOfDeathCoughExplosions = 30;
+        private const int numberOfDeathCoughExternalExplosions = 30;
 
         private const string filename_TubeExplode = "Audio/PlayerEffects/splat-explode";
         private const float volume_TubeExplode = 1f;
@@ -143,6 +144,8 @@ namespace Duologue.PlayObjects
         private const float volume_EyeBallWobble = 0.85f;
         private const string filename_EndBoom = "Audio/PlayerEffects/big-badda-boom";
         private const float volume_EndBoom = 0.85f;
+        private const string filename_FinaleBoom = "Audio/PlayerEffects/end-boss-death-cough";
+        private const float volume_FinaleBoom = 0.95f;
 
         private const float delta_BodyRotation = MathHelper.PiOver4 * 0.005f;
         private const float delta_SpinnerRotation = MathHelper.PiOver4 * 0.01f;
@@ -163,6 +166,7 @@ namespace Duologue.PlayObjects
         private const float offset_TubeGuy = 95f;
         private const float offset_Asplosions = 10f;
         private const int numberOfExplosionsPerBlob = 5;
+        private const float offset_Shot = 15f;
 
         //private const double totalTime_SpinnerColorChange = 1.02;
         //private const double totalTime_BodyColorChange = 2.51;
@@ -179,6 +183,7 @@ namespace Duologue.PlayObjects
         private const double totalTime_EyeDyingMove = 2.121;
         private const double totalTime_GeneralDeath = 7.123;
         private const double totalTime_Explosion = 0.81;
+        private const double totalTime_EyeShots = 1.4;
 
         private const int chanceOfExternalExposion = 5;
 
@@ -211,9 +216,9 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPoints = 25;
+        private const int realHitPoints = 16;
 
-        private const int eyeBallHitPoints = 40;
+        private const int eyeBallHitPoints = 30;
 
         private const float offscreenMovementMultiplier = 0.35f;
         #endregion
@@ -277,6 +282,7 @@ namespace Duologue.PlayObjects
         private Vector2 position_Last;
         private Vector2 position_Next;
         private int currentUpperLimit;
+        private double timer_EyeShot;
 
         // Audio stuff
         private AudioManager audio;
@@ -286,6 +292,7 @@ namespace Duologue.PlayObjects
         private SoundEffectInstance sfxi_EyeBallWobble;
         private SoundEffect sfx_EndBoom;
         private SoundEffectInstance sfxi_EndBoom;
+        private SoundEffect sfx_FinaleBoom;
         #endregion
 
         #region Properties
@@ -299,7 +306,7 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Moloch;
             MajorType = MajorPlayObjectType.Enemy;
-            MyEnemyType = EnemyType.Leader;
+            //MyEnemyType = EnemyType.Leader;
             Initialized = false;
 
             // Set the RealSize by hand, set this at max
@@ -490,6 +497,7 @@ namespace Duologue.PlayObjects
                 -1,
                 radius_Eyeball);
             timer_EyeStateChange = 0;
+            timer_EyeShot = 0;
 
             // Set up the explosion stuff
             texture_GloopDeath = InstanceManager.AssetManager.LoadTexture2D(filename_GloopDeath);
@@ -522,6 +530,7 @@ namespace Duologue.PlayObjects
             sfxi_EyeBallWobble = null;
             sfx_EndBoom = InstanceManager.AssetManager.LoadSoundEffect(filename_EndBoom);
             sfxi_EndBoom = null;
+            sfx_FinaleBoom = InstanceManager.AssetManager.LoadSoundEffect(filename_FinaleBoom);
 
             Alive = true;
             Initialized = true;
@@ -533,6 +542,7 @@ namespace Duologue.PlayObjects
             {
                 filename_TubeExplode,
                 filename_EyeBallWobble,
+                filename_FinaleBoom,
             };
         }
 
@@ -612,6 +622,53 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private methods
+        private void SpawnBabby(Vector2 pos, ColorState cs, ColorPolarity cp)
+        {
+            for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
+            {
+                if (!LocalInstanceManager.Enemies[i].Alive)
+                {
+                    LocalInstanceManager.Enemies[i] = new Enemy_Firefly(MyManager);
+                    LocalInstanceManager.Enemies[i].Initialize(
+                        pos,
+                        Vector2.Zero,
+                        cs,
+                        cp,
+                        1);
+                    break;
+                }
+            }
+        }
+
+        private void SpawnTubeBabby(int index)
+        {
+            Vector2 pos = GetPartPosition(index) + offset_Shot * GetRandomUnitVector();
+
+            if ((pos.X >= 0 && pos.X <= InstanceManager.DefaultViewport.Width) &&
+                (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
+            {
+                // We only proceed if we are on screen
+                SpawnBabby(
+                    pos,
+                    ColorState,
+                    tubes[index].ColorPolarity);
+            }
+        }
+
+        private void SpawnEyeBabby()
+        {
+            Vector2 pos = GetPartPosition(-1);
+
+            if ((pos.X >= 0 && pos.X <= InstanceManager.DefaultViewport.Width) &&
+                (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
+            {
+                // We only proceed if we are on screen
+                SpawnBabby(
+                    pos,
+                    ColorState,
+                    polarity_EyeBall);
+            }
+        }
         /// <summary>
         /// Will set the current offsets for the eyeball and pupil
         /// </summary>
@@ -723,6 +780,25 @@ namespace Duologue.PlayObjects
             {
                 LocalInstanceManager.EnemySplatterSystem.AddParticles(
                     Position + temp,
+                    GetRandomColor());
+            }
+        }
+
+        private void KickOffExternalRandomExplosion()
+        {
+            Vector2 temp = new Vector2(
+                (float)MWMathHelper.GetRandomInRange(0, InstanceManager.DefaultViewport.Width),
+                (float)MWMathHelper.GetRandomInRange(0, InstanceManager.DefaultViewport.Height));
+            if (MWMathHelper.CoinToss())
+            {
+                LocalInstanceManager.EnemyExplodeSystem.AddParticles(
+                    temp,
+                    GetRandomColor());
+            }
+            else
+            {
+                LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                    temp,
                     GetRandomColor());
             }
         }
@@ -1314,6 +1390,7 @@ namespace Duologue.PlayObjects
                     if (timer_GeneralState > totalTime_EyeDying)
                     {
                         currentState = MolochState.GeneralDying;
+                        LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                         timer_GeneralState = 0;
                         Position = position_Next;
                         InstanceManager.Logger.LogEntry(String.Format(
@@ -1392,6 +1469,13 @@ namespace Duologue.PlayObjects
                         Alive = false;
                         for (int i = 0; i < numberOfDeathCoughExplosions; i++)
                             KickOffRandomExplosion();
+                        for (int i = 0; i < numberOfDeathCoughExternalExplosions; i++)
+                            KickOffExternalRandomExplosion();
+                        try
+                        {
+                            sfx_FinaleBoom.Play(volume_FinaleBoom);
+                        }
+                        catch { }
                         try
                         {
                             sfxi_EndBoom.Stop();
@@ -1531,11 +1615,13 @@ namespace Duologue.PlayObjects
                         if (tubes[i].CurrentFrame >= tubeFrames.Length)
                         {
                             // FIXME should fire here
+                            SpawnTubeBabby(i);
                             tubes[i].MoveOut = false;
                             tubes[i].CurrentFrame = tubeFrames.Length - 1;
                         }
                         else if (tubes[i].CurrentFrame < 0)
                         {
+                            SpawnTubeBabby(i);
                             tubes[i].MoveOut = true;
                             tubes[i].CurrentFrame = 0;
                         }
@@ -1655,7 +1741,7 @@ namespace Duologue.PlayObjects
             if (timer_EyeStare > totalTime_EyeStareOrbit)
                 timer_EyeStare -= totalTime_EyeStareOrbit;
             SetEyeOffsets();
-            if (isEyeEngaged)
+            if (isEyeEngaged && currentState != MolochState.EyeDying && currentState != MolochState.GeneralDying)
             {
                 if (sfxi_EyeBallWobble == null)
                 {
@@ -1678,6 +1764,12 @@ namespace Duologue.PlayObjects
                     catch
                     { }
                 }
+                timer_EyeShot += delta;
+                if (timer_EyeShot >= totalTime_EyeShots)
+                {
+                    SpawnEyeBabby();
+                    timer_EyeShot = 0;
+                }
             }
         }
 
@@ -1686,33 +1778,36 @@ namespace Duologue.PlayObjects
             // Body
             for (int i = 0; i < body.Length; i++)
             {
-                //body[i].TimerColorChange += delta;
-                //if (body[i].TimerColorChange > totalTime_BodyColorChange)
-                //{
-                //body[i].TimerColorChange = 0;
-                //body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-                //}
                 body[i].Rotation += body[i].DeltaRotation;
                 if (body[i].Rotation > MathHelper.TwoPi)
                     body[i].Rotation -= MathHelper.TwoPi;
                 if (body[i].Rotation < 0)
                     body[i].Rotation = MathHelper.TwoPi + body[i].Rotation;
 
-                if (body[i].DeltaAlphaDirection)
-                    body[i].Alpha += body[i].DeltaAlpha;
-                else
-                    body[i].Alpha -= body[i].DeltaAlpha;
+                if (currentState != MolochState.GeneralDying)
+                {
+                    if (body[i].DeltaAlphaDirection)
+                        body[i].Alpha += body[i].DeltaAlpha;
+                    else
+                        body[i].Alpha -= body[i].DeltaAlpha;
 
-                if (body[i].Alpha > maxAlpha_Body)
-                {
-                    body[i].Alpha = maxAlpha_Body;
-                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    if (body[i].Alpha > maxAlpha_Body)
+                    {
+                        body[i].Alpha = maxAlpha_Body;
+                        body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    }
+                    else if (body[i].Alpha < minAlpha_Body)
+                    {
+                        body[i].Alpha = minAlpha_Body;
+                        body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+                        body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    }
                 }
-                else if (body[i].Alpha < minAlpha_Body)
+                else
                 {
-                    body[i].Alpha = minAlpha_Body;
-                    body[i].Color = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
-                    body[i].DeltaAlphaDirection = !body[i].DeltaAlphaDirection;
+                    body[i].Alpha -= body[i].DeltaAlpha;
+                    if (body[i].Alpha < minAlpha_Body)
+                        body[i].Alpha = minAlpha_Body;
                 }
             }
         }
