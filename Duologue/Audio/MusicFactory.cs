@@ -23,6 +23,159 @@ namespace Duologue.Audio
         protected const string creditsSounds = "Content\\Audio\\CreditsMenu.xsb";
         protected const string creditsCue = "credits";
 
+        //Superbowl Intro constants
+        protected const string sbiWaves = "Content\\Audio\\Superintro.xwb";
+        protected const string sbiSounds = "Content\\Audio\\Superintro.xsb";
+        protected const string sbIntro = "intro";
+
+        //Superbowl constants
+        protected const string sbWaves = "Content\\Audio\\Superbowl.xwb";
+        protected const string sbSounds = "Content\\Audio\\Superbowl.xsb";
+        protected const string sbSD1 = "solodrums-1";
+        protected const string sbSD2 = "solodrums-2";
+        protected const string sbSD3 = "solodrums-3";
+        protected const string sbSD4 = "solodrums-4";
+        protected const string sbSD5 = "solodrums-5";
+        protected const string sbSD6 = "solodrums-6";
+        protected const string sbSD7 = "solodrums-7";
+        protected const string sbSD8 = "solodrums-8";
+        protected const string sbBD1 = "backdrums-1";
+        protected const string sbBD2 = "backdrums-2";
+        protected const string sbBD3 = "backdrums-3";
+        protected const string sbBD4 = "backdrums-4";
+        protected const string sbBD5 = "backdrums-5";
+        protected const string sbBD6 = "backdrums-6";
+        protected const string sbBD7 = "backdrums-7";
+        protected const string sbBD8 = "backdrums-8";
+        protected const string sbB01 = "bass-01";
+        protected const string sbB02 = "bass-02";
+        protected const string sbB03 = "bass-03";
+        protected const string sbB04 = "bass-04";
+        protected const string sbB05 = "bass-05";
+        protected const string sbB06 = "bass-06";
+        protected const string sbB07 = "bass-07";
+        protected const string sbB08 = "bass-08";
+        protected const string sbB09 = "bass-09";
+        protected const string sbB10 = "bass-10";
+        protected const string sbB11 = "bass-11";
+        protected const string sbB12 = "bass-12";
+        protected const string sbB13 = "bass-13";
+        protected const string sbB14 = "bass-14";
+        protected const string sbB15 = "bass-15";
+        protected const string sbB16 = "bass-16";
+        protected const string sbB17 = "bass-17";
+        protected const string sbB18 = "bass-18";
+        protected const string sbB19 = "bass-19";
+        protected const string sbB20 = "bass-20";
+        protected const string sbB21 = "bass-21";
+        protected const string sbB22 = "bass-22";
+        protected const string sbB23 = "bass-23";
+        protected const string sbB24 = "bass-24";
+        protected const string sbB25 = "bass-25";
+        protected const string sbB26 = "bass-26";
+        protected const string sbB27 = "bass-27";
+        protected const string sbB28 = "bass-28";
+        protected const string sbB29 = "bass-29";
+        protected const string sbB30 = "bass-30";
+        protected const string sbB31 = "bass-31";
+        protected const string sbB32 = "bass-32";
+        protected const string sbB33 = "bass-33";
+        protected const string sbB34 = "bass-34";
+        protected const string sbB35 = "bass-35";
+        protected const string sbB36 = "bass-36";
+        protected const string sbB37 = "bass-37";
+        protected const string sbB38 = "bass-38";
+        protected const string sbB39 = "bass-39";
+        protected const string sbB40 = "bass-40";
+        protected const string sbB41 = "bass-41";
+        protected const string sbB42 = "bass-42";
+        protected const string sbB43 = "bass-43";
+        protected const string sbB44 = "bass-44";
+        protected const string sbB45 = "bass-45";
+        protected const string sbB46 = "bass-46";
+        protected const string sbB47 = "bass-47";
+        protected const string sbB48 = "bass-48";
+        protected const string sbB49 = "bass-49";
+        protected const string sbB50 = "bass-50";
+        protected const string sbB51 = "bass-51";
+        protected const string sbB52 = "bass-52";
+        protected const string sbB53 = "bass-53";
+        protected const string sbB54 = "bass-54";
+        protected const string sbB55 = "bass-55";
+        protected const string sbB56 = "bass-56";
+        protected const string sbB57 = "bass-57";
+        protected const string sbB58 = "bass-58";
+        protected const string sbB59 = "bass-59";
+        protected const string sbB60 = "bass-60";
+        protected const string sbB61 = "bass-61";
+        protected const string sbB62 = "bass-62";
+        protected const string sbB63 = "bass-63";
+        protected const string sbB64 = "bass-64";
+        protected const string sbBO01 = "buzzorgan-01";
+        protected const string sbBO02 = "buzzorgan-02";
+        protected const string sbBO03 = "buzzorgan-03";
+        protected const string sbBO04 = "buzzorgan-04";
+        protected const string sbBO05 = "buzzorgan-05";
+        protected const string sbBO06 = "buzzorgan-06";
+        protected const string sbBO07 = "buzzorgan-07";
+        protected const string sbBO08 = "buzzorgan-08";
+        protected const string sbBO09 = "buzzorgan-09";
+        protected const string sbBO10 = "buzzorgan-10";
+        protected const string sbBO11 = "buzzorgan-11";
+        protected const string sbBO12 = "buzzorgan-12";
+        protected const string sbBO13 = "buzzorgan-13";
+        protected const string sbBO14 = "buzzorgan-14";
+        protected const string sbBO15 = "buzzorgan-15";
+        protected const string sbBO16 = "buzzorgan-16";
+        protected const string sbBO17 = "buzzorgan-17";
+        protected const string sbBO18 = "buzzorgan-18";
+        protected const string sbBO19 = "buzzorgan-19";
+        protected const string sbBO20 = "buzzorgan-20";
+        protected const string sbBO21 = "buzzorgan-21";
+        protected const string sbBO22 = "buzzorgan-22";
+        protected const string sbBO23 = "buzzorgan-23";
+        protected const string sbBO24 = "buzzorgan-24";
+        protected const string sbBO25 = "buzzorgan-25";
+        protected const string sbBO26 = "buzzorgan-26";
+        protected const string sbBO27 = "buzzorgan-27";
+        protected const string sbBO28 = "buzzorgan-28";
+        protected const string sbBO29 = "buzzorgan-29";
+        protected const string sbBO30 = "buzzorgan-30";
+        protected const string sbBO31 = "buzzorgan-31";
+        protected const string sbBO32 = "buzzorgan-32";
+        protected const string sbBO33 = "buzzorgan-33";
+        protected const string sbBO34 = "buzzorgan-34";
+        protected const string sbBO35 = "buzzorgan-35";
+        protected const string sbBO36 = "buzzorgan-36";
+        protected const string sbBO37 = "buzzorgan-37";
+        protected const string sbBO38 = "buzzorgan-38";
+        protected const string sbBO39 = "buzzorgan-39";
+        protected const string sbBO40 = "buzzorgan-40";
+        protected const string sbBO41 = "buzzorgan-41";
+        protected const string sbBO42 = "buzzorgan-42";
+        protected const string sbBO43 = "buzzorgan-43";
+        protected const string sbBO44 = "buzzorgan-44";
+        protected const string sbBO45 = "buzzorgan-45";
+        protected const string sbBO46 = "buzzorgan-46";
+        protected const string sbBO47 = "buzzorgan-47";
+        protected const string sbBO48 = "buzzorgan-48";
+        protected const string sbBO49 = "buzzorgan-49";
+        protected const string sbBO50 = "buzzorgan-50";
+        protected const string sbBO51 = "buzzorgan-51";
+        protected const string sbBO52 = "buzzorgan-52";
+        protected const string sbBO53 = "buzzorgan-53";
+        protected const string sbBO54 = "buzzorgan-54";
+        protected const string sbBO55 = "buzzorgan-55";
+        protected const string sbBO56 = "buzzorgan-56";
+        protected const string sbBO57 = "buzzorgan-57";
+        protected const string sbBO58 = "buzzorgan-58";
+        protected const string sbBO59 = "buzzorgan-59";
+        protected const string sbBO60 = "buzzorgan-60";
+        protected const string sbBO61 = "buzzorgan-61";
+        protected const string sbBO62 = "buzzorgan-62";
+        protected const string sbBO63 = "buzzorgan-63";
+        protected const string sbBO64 = "buzzorgan-64";        
+        
         //Beat Effects Song constants
         protected const string beatEffectsWaves = "Content\\Audio\\Intensity.xwb";
         protected const string beatEffectsSounds = "Content\\Audio\\Intensity.xsb";
@@ -399,6 +552,8 @@ namespace Duologue.Audio
         public Song Ultrafix;
         public Song WinOne;
         public Song SecondChance;
+        public Song SuperbowlIntro;
+        public Song Superbowl;
 
         public MusicFactory(AudioManager manager)
         {
@@ -409,9 +564,64 @@ namespace Duologue.Audio
             string[] selectArr = { selectMenuCue };
             SelectSong = new Song(manager.Game, selectMenuSounds, selectMenuWaves, selectArr);
 
-            //CreditsSong
+            //Credits
             string[] creditsArr = { creditsCue };
             Credits = new Song(manager.Game, creditsSounds, creditsWaves, creditsArr);
+
+            //Superbowl Intro
+            string[] sbIntroArr = { sbIntro };
+            SuperbowlIntro = new Song(manager.Game, sbiSounds, sbiWaves, sbIntroArr);
+
+            //Superbowl (the loop)
+            string[,] SBarr = { 
+                                {
+                                    sbSD1, sbSD2, sbSD3, sbSD4, sbSD5, sbSD6, sbSD7, sbSD8, 
+                                    sbSD1, sbSD2, sbSD3, sbSD4, sbSD5, sbSD6, sbSD7, sbSD8, 
+                                    sbSD1, sbSD2, sbSD3, sbSD4, sbSD5, sbSD6, sbSD7, sbSD8, 
+                                    sbSD1, sbSD2, sbSD3, sbSD4, sbSD5, sbSD6, sbSD7, sbSD8, 
+                                    sbSD1, sbSD2, sbSD3, sbSD4, sbSD5, sbSD6, sbSD7, sbSD8, 
+                                    sbSD1, sbSD2, sbSD3, sbSD4, sbSD5, sbSD6, sbSD7, sbSD8, 
+                                    sbSD1, sbSD2, sbSD3, sbSD4, sbSD5, sbSD6, sbSD7, sbSD8, 
+                                    sbSD1, sbSD2, sbSD3, sbSD4, sbSD5, sbSD6, sbSD7, sbSD8
+                                },
+                                {
+                                    sbBD1, sbBD2, sbBD3, sbBD4, sbBD5, sbBD6, sbBD7, sbBD8, 
+                                    sbBD1, sbBD2, sbBD3, sbBD4, sbBD5, sbBD6, sbBD7, sbBD8, 
+                                    sbBD1, sbBD2, sbBD3, sbBD4, sbBD5, sbBD6, sbBD7, sbBD8, 
+                                    sbBD1, sbBD2, sbBD3, sbBD4, sbBD5, sbBD6, sbBD7, sbBD8, 
+                                    sbBD1, sbBD2, sbBD3, sbBD4, sbBD5, sbBD6, sbBD7, sbBD8, 
+                                    sbBD1, sbBD2, sbBD3, sbBD4, sbBD5, sbBD6, sbBD7, sbBD8, 
+                                    sbBD1, sbBD2, sbBD3, sbBD4, sbBD5, sbBD6, sbBD7, sbBD8, 
+                                    sbBD1, sbBD2, sbBD3, sbBD4, sbBD5, sbBD6, sbBD7, sbBD8
+                                },
+                                {
+                                    sbB01, sbB02, sbB03, sbB04, sbB05, sbB06, sbB07, sbB08, 
+                                    sbB09, sbB10, sbB11, sbB12, sbB13, sbB14, sbB15, sbB16, 
+                                    sbB17, sbB18, sbB19, sbB20, sbB21, sbB22, sbB23, sbB24, 
+                                    sbB25, sbB26, sbB27, sbB28, sbB29, sbB30, sbB31, sbB32, 
+                                    sbB33, sbB34, sbB35, sbB36, sbB37, sbB38, sbB39, sbB40, 
+                                    sbB41, sbB42, sbB43, sbB44, sbB45, sbB46, sbB47, sbB48, 
+                                    sbB49, sbB50, sbB51, sbB52, sbB53, sbB54, sbB55, sbB56, 
+                                    sbB57, sbB58, sbB59, sbB60, sbB61, sbB62, sbB63, sbB64 
+                                },
+                                {
+                                    sbBO01, sbBO02, sbBO03, sbBO04, sbBO05, sbBO06, sbBO07, sbBO08, 
+                                    sbBO09, sbBO10, sbBO11, sbBO12, sbBO13, sbBO14, sbBO15, sbBO16, 
+                                    sbBO17, sbBO18, sbBO19, sbBO20, sbBO21, sbBO22, sbBO23, sbBO24, 
+                                    sbBO25, sbBO26, sbBO27, sbBO28, sbBO29, sbBO30, sbBO31, sbBO32, 
+                                    sbBO33, sbBO34, sbBO35, sbBO36, sbBO37, sbBO38, sbBO39, sbBO40, 
+                                    sbBO41, sbBO42, sbBO43, sbBO44, sbBO45, sbBO46, sbBO47, sbBO48, 
+                                    sbBO49, sbBO50, sbBO51, sbBO52, sbBO53, sbBO54, sbBO55, sbBO56, 
+                                    sbBO57, sbBO58, sbBO59, sbBO60, sbBO61, sbBO62, sbBO63, sbBO64 
+                                }
+                              };
+            bool[,] SBVolumes = { 
+                                    { on, off, off, off },
+                                    { off, on, on, off },
+                                    { off, on, on, on }
+                                };
+            Superbowl = new Song(manager.Game, sbSounds, sbWaves, SBarr, SBVolumes);
+            Superbowl.beater.lengthOfBeat = 355f;
 
             //Dance8ths
             string[,] D8arr = { 
@@ -549,6 +759,8 @@ namespace Duologue.Audio
             manager.Game.Components.Add(Ultrafix);
             manager.Game.Components.Add(WinOne);
             manager.Game.Components.Add(SecondChance);
+            manager.Game.Components.Add(SuperbowlIntro);
+            manager.Game.Components.Add(Superbowl);
         }
 
     }
