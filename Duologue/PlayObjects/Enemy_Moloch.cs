@@ -163,7 +163,7 @@ namespace Duologue.PlayObjects
         private const float offset_TubeGuy = 95f;
         private const float offset_Asplosions = 10f;
         private const int numberOfExplosionsPerBlob = 5;
-        private const int numberOfShotsPerTube = 3;
+        private const float offset_Shot = 15f;
 
         //private const double totalTime_SpinnerColorChange = 1.02;
         //private const double totalTime_BodyColorChange = 2.51;
@@ -212,7 +212,7 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPoints = 25;
+        private const int realHitPoints = 20;
 
         private const int eyeBallHitPoints = 40;
 
@@ -615,8 +615,8 @@ namespace Duologue.PlayObjects
         #region Private methods
         private void SpawnTubeBabby(int index)
         {
-            Vector2 pos = GetPartPosition(index);
-            int num = 0;
+            Vector2 pos = GetPartPosition(index) + offset_Shot * GetRandomUnitVector();
+
             if ((pos.X >= 0 && pos.X <= InstanceManager.DefaultViewport.Width) &&
                 (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
             {
@@ -632,9 +632,7 @@ namespace Duologue.PlayObjects
                             ColorState,
                             tubes[index].ColorPolarity,
                             1);
-                        num++;
-                        if(num >= numberOfShotsPerTube)
-                            break;
+                        break;
                     }
                 }
             }
@@ -1569,6 +1567,7 @@ namespace Duologue.PlayObjects
                         }
                         else if (tubes[i].CurrentFrame < 0)
                         {
+                            SpawnTubeBabby(i);
                             tubes[i].MoveOut = true;
                             tubes[i].CurrentFrame = 0;
                         }
