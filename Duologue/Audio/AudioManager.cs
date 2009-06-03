@@ -9,7 +9,7 @@ namespace Duologue.Audio
 {
 
     public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths, 
-        Credits, Ultrafix, WinOne, SecondChance, SuperbowlIntro, Superbowl }
+        Credits, Ultrafix, WinOne, SecondChance, SuperbowlIntro, Superbowl, Tr8or }
 
     //keep from having to tweak floats and add levels in many places
     public struct Loudness
@@ -72,6 +72,7 @@ namespace Duologue.Audio
             songMap.Add(SongID.SecondChance, music.SecondChance);
             songMap.Add(SongID.SuperbowlIntro, music.SuperbowlIntro);
             songMap.Add(SongID.Superbowl, music.Superbowl);
+            songMap.Add(SongID.Tr8or, music.Tr8or);
 
             base.Initialize();
         }

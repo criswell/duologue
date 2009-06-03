@@ -35,6 +35,8 @@ namespace Duologue.Screens
         #endregion
 
         #region Fields
+        private AudioManager audio;
+
         #endregion
 
         #region Properties
@@ -61,6 +63,15 @@ namespace Duologue.Screens
 
             // Turn on achievement manager's medal screen
             LocalInstanceManager.AchievementManager.EnableMedalScreen();
+            audio = ServiceLocator.GetService<AudioManager>();
+            if (audio.SongIsPaused(SongID.Tr8or))
+            {
+                audio.ResumeSong(SongID.Tr8or);
+            }
+            else
+            {
+                audio.FadeIn(SongID.Tr8or);
+            }
 
             base.ScreenEntrance(gameTime);
         }
@@ -73,6 +84,7 @@ namespace Duologue.Screens
             // Turn on background
             LocalInstanceManager.Background.Enabled = true;
             LocalInstanceManager.Background.Visible = true;
+            audio.PauseSong(SongID.Tr8or);
 
             base.ScreenExit(gameTime);
         }

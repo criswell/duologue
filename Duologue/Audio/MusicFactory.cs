@@ -23,6 +23,11 @@ namespace Duologue.Audio
         protected const string creditsSounds = "Content\\Audio\\CreditsMenu.xsb";
         protected const string creditsCue = "credits";
 
+        //Medal Showcase Song Constants
+        protected const string tr8orWaves = "Content\\Audio\\tr8or.xwb";
+        protected const string tr8orSounds = "Content\\Audio\\tr8or.xsb";
+        protected const string tr8orCue = "tr8or";
+
         //Superbowl Intro constants
         protected const string sbiWaves = "Content\\Audio\\Superintro.xwb";
         protected const string sbiSounds = "Content\\Audio\\Superintro.xsb";
@@ -554,6 +559,7 @@ namespace Duologue.Audio
         public Song SecondChance;
         public Song SuperbowlIntro;
         public Song Superbowl;
+        public Song Tr8or;
 
         public MusicFactory(AudioManager manager)
         {
@@ -567,6 +573,10 @@ namespace Duologue.Audio
             //Credits
             string[] creditsArr = { creditsCue };
             Credits = new Song(manager.Game, creditsSounds, creditsWaves, creditsArr);
+
+            //Medals
+            string[] tr8orArr = { tr8orCue };
+            Tr8or = new Song(manager.Game, tr8orSounds, tr8orWaves, tr8orArr);
 
             //Superbowl Intro
             string[] sbIntroArr = { sbIntro };
@@ -761,6 +771,7 @@ namespace Duologue.Audio
             manager.Game.Components.Add(SecondChance);
             manager.Game.Components.Add(SuperbowlIntro);
             manager.Game.Components.Add(Superbowl);
+            manager.Game.Components.Add(Tr8or);
         }
 
     }
