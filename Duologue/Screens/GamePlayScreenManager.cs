@@ -226,7 +226,7 @@ namespace Duologue.Screens
                 if (initialized)
                 {
                     //FIXME what if some other song is playing?
-                    ServiceLocator.GetService<AudioManager>().FadeOut(lastSongID);
+                    //ServiceLocator.GetService<AudioManager>().FadeOut(lastSongID);
                     LocalInstanceManager.Enemies = null;
                     LocalInstanceManager.CurrentNumberEnemies = 0;
                 }
