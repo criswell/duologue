@@ -60,6 +60,7 @@ namespace Duologue.UI
 
         private const float selectOffset = 8;
         private const int numberOfOffsets = 4;
+        private const int konamiCodeLivesBonus = 100;
         #endregion
 
         #region Fields
@@ -371,27 +372,52 @@ namespace Duologue.UI
                         konamiCodeIndex++;
                         if (konamiCodeIndex >= konamiCode.Length)
                         {
-                            if (sfxi_LifeUp == null)
+                            bool addedScore = false;
+                            for (int i = 0; i < LocalInstanceManager.Scores.Length; i++)
                             {
-                                try
+                                if (LocalInstanceManager.Players[i].Active &&
+                                    LocalInstanceManager.Players[i].State != PlayerState.Dead &&
+                                    LocalInstanceManager.Players[i].State != PlayerState.Dying)
                                 {
-                                    sfxi_LifeUp = sfx_LifeUp.Play(volume_LifeUp);
+                                    LocalInstanceManager.Scores[i].SetLives(
+                                        LocalInstanceManager.Scores[i].Lives + konamiCodeLivesBonus);
+                                    addedScore = true;
                                 }
-                                catch { }
+                            }
+
+                            if (addedScore)
+                            {
+
+                                if (sfxi_LifeUp == null)
+                                {
+                                    try
+                                    {
+                                        sfxi_LifeUp = sfx_LifeUp.Play(volume_LifeUp);
+                                    }
+                                    catch { }
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        if (sfxi_LifeUp.State != SoundState.Playing)
+                                            sfxi_LifeUp.Play();
+                                    }
+                                    catch { }
+                                }
+                                InstanceManager.Logger.LogEntry(String.Format(
+                                    "Bing, K0n4m1 code! {0}", konamiCodeIndex));
+                                konamiCodeIndex = 0;
+                                konamiCodeDone = true;
                             }
                             else
                             {
-                                try
-                                {
-                                    if (sfxi_LifeUp.State != SoundState.Playing)
-                                        sfxi_LifeUp.Play();
-                                }
-                                catch { }
+                                InstanceManager.Logger.LogEntry(
+                                    "Tried to do K0n4m1 code, but no living players, sorry man..");
+                                konamiCodeIndex = 0;
+                                konamiCodeDone = false;
+
                             }
-                            InstanceManager.Logger.LogEntry(String.Format(
-                                "Bing, K0n4m1 code! {0}", konamiCodeIndex));
-                            konamiCodeIndex = 0;
-                            konamiCodeDone = true;
                         }
                     }
                 }
@@ -558,7 +584,6 @@ namespace Duologue.UI
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
 
             // Check for start, back, or B
-            // FIXME, the konamiCode should be less than whatever winds up being B
             if ((InstanceManager.InputManager.NewButtonPressed(Buttons.B) && konamiCodeIndex != 8) ||
                 InstanceManager.InputManager.NewButtonPressed(Buttons.Start) ||
                 InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
