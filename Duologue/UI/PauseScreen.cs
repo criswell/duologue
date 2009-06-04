@@ -39,6 +39,9 @@ namespace Duologue.UI
         private const string filename_fontTitle = "Fonts/inero-50";
         private const string filename_fontMenu = "Fonts/inero-40";
 
+        private const string filename_LifeUp = "Audio/PlayerEffects/life-up";
+        private const float volume_LifeUp = 1f;
+
         private const byte overlayAlpha = 192;
 
         private const byte maxTextRed = 255;
@@ -94,6 +97,13 @@ namespace Duologue.UI
         private Vector2[] shadowOffsets;
         private Vector2[] shadowOffsetsSelected;
         private int currentSelection;
+
+        // SHIT MY NIZZLE
+        private int konamiCodeIndex;
+        private Buttons[] konamiCode;
+        private bool konamiCodeDone;
+        private SoundEffect sfx_LifeUp;
+        private SoundEffectInstance sfxi_LifeUp;
         #endregion
 
         #region Properties
@@ -123,6 +133,20 @@ namespace Duologue.UI
             shadowOffsetsSelected[1] = -2 * Vector2.One;
             shadowOffsetsSelected[2] = new Vector2(-2f, 2f);
             shadowOffsetsSelected[3] = new Vector2(2f, -2f);
+
+            konamiCode = new Buttons[]
+            {
+                Buttons.DPadUp,
+                Buttons.DPadUp,
+                Buttons.DPadDown,
+                Buttons.DPadDown,
+                Buttons.DPadLeft,
+                Buttons.DPadRight,
+                Buttons.DPadLeft,
+                Buttons.DPadRight,
+                Buttons.B,
+                Buttons.A
+            };
 
             initialized = false;
         }
@@ -158,6 +182,9 @@ namespace Duologue.UI
 
             color_overlay = new Color(Color.DarkSlateGray, overlayAlpha);
 
+            sfx_LifeUp = InstanceManager.AssetManager.LoadSoundEffect(filename_LifeUp);
+            sfxi_LifeUp = null;
+
             base.LoadContent();
         }
         #endregion
@@ -180,6 +207,9 @@ namespace Duologue.UI
             {
                 JumbleTile(i);
             }
+
+            konamiCodeIndex = 0;
+            konamiCodeDone = false;
 
             // Setup the font stuff
             screenCenter = new Vector2(
@@ -312,9 +342,63 @@ namespace Duologue.UI
             mis[currentSelection].Selected = true;
 
             // See if we have a button down to select
-            if (CheckButtonA())
+            if (CheckButtonA() && konamiCodeIndex < 9)
             {
                 ParseSelected();
+            }
+
+            if (!konamiCodeDone)
+            {
+                bool nothingElsePushed = true;
+                // Check to make sure none of the other sequences were pressed
+                for (int i = 0; i < konamiCode.Length; i++)
+                {
+                    if (konamiCode[i] != konamiCode[konamiCodeIndex])
+                    {
+                        if (InstanceManager.InputManager.NewButtonPressed(konamiCode[i]))
+                        {
+                            nothingElsePushed = false;
+                            break;
+                        }
+                    }
+                }
+                if (nothingElsePushed)
+                {
+                    if (InstanceManager.InputManager.NewButtonPressed(konamiCode[konamiCodeIndex]))
+                    {
+                        InstanceManager.Logger.LogEntry(String.Format(
+                            "Cheat code: {0}-{1}", konamiCodeIndex.ToString(), konamiCode[konamiCodeIndex].ToString()));
+                        konamiCodeIndex++;
+                        if (konamiCodeIndex >= konamiCode.Length)
+                        {
+                            if (sfxi_LifeUp == null)
+                            {
+                                try
+                                {
+                                    sfxi_LifeUp = sfx_LifeUp.Play(volume_LifeUp);
+                                }
+                                catch { }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    if (sfxi_LifeUp.State != SoundState.Playing)
+                                        sfxi_LifeUp.Play();
+                                }
+                                catch { }
+                            }
+                            InstanceManager.Logger.LogEntry(String.Format(
+                                "Bing, K0n4m1 code! {0}", konamiCodeIndex));
+                            konamiCodeIndex = 0;
+                            konamiCodeDone = true;
+                        }
+                    }
+                }
+                else
+                {
+                        konamiCodeIndex = 0;
+                }
             }
 
             // Determine if we've got a new selection
@@ -454,8 +538,12 @@ namespace Duologue.UI
         #region Overrides
         protected override void OnEnabledChanged(object sender, EventArgs args)
         {
-            if(this.Enabled && initialized)
+            if (this.Enabled && initialized)
+            {
                 LocalInstanceManager.WindowManager.SetLocation(pauseMenuWindowLocation);
+                konamiCodeIndex = 0;
+                konamiCodeDone = false;
+            }
             base.OnEnabledChanged(sender, args);
         }
         #endregion
@@ -470,7 +558,8 @@ namespace Duologue.UI
             timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
 
             // Check for start, back, or B
-            if (InstanceManager.InputManager.NewButtonPressed(Buttons.B) ||
+            // FIXME, the konamiCode should be less than whatever winds up being B
+            if ((InstanceManager.InputManager.NewButtonPressed(Buttons.B) && konamiCodeIndex != 8) ||
                 InstanceManager.InputManager.NewButtonPressed(Buttons.Start) ||
                 InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
             {
