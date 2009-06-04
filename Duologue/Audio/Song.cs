@@ -226,6 +226,10 @@ namespace Duologue.Audio
                     hyper.Detach();
                 }
             }
+            if (null != fader)
+            {
+                fader = null;
+            }
             Enabled = false;
             playing = false;
             paused = false;

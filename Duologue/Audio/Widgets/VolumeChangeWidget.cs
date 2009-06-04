@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -100,6 +101,10 @@ namespace Duologue.Audio.Widgets
                     previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
                     VolumeChanging = false;
                     Volume += stepAmount;
+
+                    string message = "Change volume " + 
+                        parentSong.SoundBankName + " " + Volume.ToString();
+                    Debug.WriteLine(message);
 
                     for (int t = 0; t < song.TrackCount; t++)
                         song.Tracks[t].ChangeVolume(Volume);
