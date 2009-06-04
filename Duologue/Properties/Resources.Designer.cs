@@ -430,7 +430,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game Paused.
+        ///   Looks up a localized string similar to Game Pause.
         /// </summary>
         internal static string PauseScreen_GamePaused {
             get {
@@ -444,6 +444,15 @@ namespace Duologue.Properties {
         internal static string PauseScreen_ResumeGame {
             get {
                 return ResourceManager.GetString("PauseScreen_ResumeGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wave {0}-{1}.
+        /// </summary>
+        internal static string PauseScreen_WaveNum {
+            get {
+                return ResourceManager.GetString("PauseScreen_WaveNum", resourceCulture);
             }
         }
         

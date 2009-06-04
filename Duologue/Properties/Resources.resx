@@ -241,10 +241,13 @@
     <value>Extract to Main Menu</value>
   </data>
   <data name="PauseScreen_GamePaused" xml:space="preserve">
-    <value>Game Paused</value>
+    <value>Game Pause</value>
   </data>
   <data name="PauseScreen_ResumeGame" xml:space="preserve">
     <value>Resume the battle</value>
+  </data>
+  <data name="PauseScreen_WaveNum" xml:space="preserve">
+    <value>Wave {0}-{1}</value>
   </data>
   <data name="PlayerSelect_ConnectController" xml:space="preserve">
     <value>Connect controller</value>

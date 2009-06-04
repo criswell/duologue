@@ -38,6 +38,7 @@ namespace Duologue.UI
         private const string filename_overlay = "pause-overlay";
         private const string filename_fontTitle = "Fonts/inero-50";
         private const string filename_fontMenu = "Fonts/inero-40";
+        private const string filename_fontWaveNum = "Fonts\\inero-28";
 
         private const string filename_LifeUp = "Audio/PlayerEffects/life-up";
         private const float volume_LifeUp = 1f;
@@ -61,12 +62,15 @@ namespace Duologue.UI
         private const float selectOffset = 8;
         private const int numberOfOffsets = 4;
         private const int konamiCodeLivesBonus = 100;
+
+        private const float horizWaveNumOffset = 15f;
         #endregion
 
         #region Fields
         private Texture2D overlay;
         private SpriteFont fontTitle;
         private SpriteFont fontMenu;
+        private SpriteFont fontWaveNum;
 
         private int numberOfTiles;
         private Vector2 tileCounts;
@@ -89,6 +93,8 @@ namespace Duologue.UI
         private bool initialized;
 
         // Menu items
+        private Vector2 wavePosition;
+        private Vector2 waveSize;
         private Vector2 menuOffset;
         private List<MenuItem> pauseMenuItems;
         private int resumeGame;
@@ -178,6 +184,7 @@ namespace Duologue.UI
             overlay = InstanceManager.AssetManager.LoadTexture2D(filename_overlay);
             fontTitle = InstanceManager.AssetManager.LoadSpriteFont(filename_fontTitle);
             fontMenu = InstanceManager.AssetManager.LoadSpriteFont(filename_fontMenu);
+            fontWaveNum = InstanceManager.AssetManager.LoadSpriteFont(filename_fontWaveNum);
 
             numberOfTiles = -1;
 
@@ -272,6 +279,12 @@ namespace Duologue.UI
                 (int)position.Y - windowOffsetY,
                 (int)maxWidth + 2 * windowOffsetX,
                 (int)maxHeight + fontMenu.LineSpacing + (int)extraLineSpacing + 2 * windowOffsetY);
+
+            waveSize = fontWaveNum.MeasureString(Resources.PauseScreen_WaveNum);
+
+            wavePosition = new Vector2(
+                screenCenter.X - waveSize.X / 2f,
+                pauseMenuWindowLocation.Y - (extraLineSpacing + 2f * waveSize.Y));
 
             LocalInstanceManager.WindowManager.SetLocation(pauseMenuWindowLocation);
             initialized = true;
@@ -689,6 +702,25 @@ namespace Duologue.UI
             menuOffset.Y += fontTitle.LineSpacing + titleSpacing;
 
             DrawMenu(pauseMenuItems, gameTime, position + menuOffset);
+
+            InstanceManager.RenderSprite.DrawString(
+                fontWaveNum,
+                String.Format(
+                    Resources.PauseScreen_WaveNum,
+                    LocalInstanceManager.CurrentGameWave.MajorWaveNumber,
+                    LocalInstanceManager.CurrentGameWave.MinorWaveNumber),
+                    wavePosition,
+                Color.BlanchedAlmond,
+                RenderSpriteBlendMode.AlphaBlendTop);
+
+            InstanceManager.RenderSprite.DrawString(
+                fontWaveNum,
+                InstanceManager.Localization.Get(
+                    LocalInstanceManager.CurrentGameWave.Name),
+                wavePosition + Vector2.UnitX * (waveSize.X / 2f - fontWaveNum.MeasureString(InstanceManager.Localization.Get(LocalInstanceManager.CurrentGameWave.Name)).X/2f)
+                + Vector2.UnitY * fontWaveNum.LineSpacing,
+                Color.BlanchedAlmond,
+                RenderSpriteBlendMode.AlphaBlendTop);
 
             base.Draw(gameTime);
         }
