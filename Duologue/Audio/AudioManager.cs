@@ -25,6 +25,13 @@ namespace Duologue.Audio
     /// </summary>
     public class AudioManager : Microsoft.Xna.Framework.GameComponent, IService
     {
+        //constants for milliseconds per beat
+        public const float BPM120 = 1000f * 60f / 120f;
+        public const float BPM140 = (3433.039f / 8.000f);
+        //got 3433.039 by visual measure of one song, seems to be working
+        public const float BPM170 = 1000f * 60f / 170f;
+
+
         protected AudioHelper helper;
         protected SoundEffects soundEffects;
 

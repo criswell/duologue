@@ -11,7 +11,7 @@ namespace Duologue.Audio
 {
     public class Song : GameComponent
     {
-        private void these_are_the_cases_that_need_to_be_handled()
+        protected void these_are_the_cases_that_need_to_be_handled()
         {
             if (Managed)
             {
@@ -21,7 +21,7 @@ namespace Duologue.Audio
             if (!Managed)
             {
                 if (null == beater)
-                    beater = new BeatWidget(this, 1, 1);
+                    beater = new BeatWidget(this, 1);
                 if (null == hyper)
                     hyper = new IntensityWidget(this, new bool[1, 1]);
             }
@@ -139,10 +139,11 @@ namespace Duologue.Audio
         /// <param name="sbname">SoundBankName</param>
         /// <param name="wbname">WaveBankName</param>
         /// <param name="arrangement">arrangement in string[track#,cue#]=cueName form</param>
-        public Song(Game game, string sbname, string wbname, string[,] arrangement)
+        /// <param name="beatLength">length of beat in milliseconds</param>
+        public Song(Game game, string sbname, string wbname, string[,] arrangement, float beatLength)
             : this(game, sbname, wbname)
         {
-            beater = new BeatWidget(this, arrangement.GetLength(0), arrangement.GetLength(1));
+            beater = new BeatWidget(this, arrangement.GetLength(1), beatLength);
             managed = false;
             ArrayToTracks(arrangement);
             AudioHelper.Preload(this);
@@ -165,9 +166,10 @@ namespace Duologue.Audio
         /// <param name="wbname">WaveBankName</param>
         /// <param name="arrangement">arrangement in string[track#,cue#]=cueName form</param>
         /// <param name="intensityMap">intensityMap in bool[intensity,track number]=track.Enabled form</param>
+        /// <param name="beatLength">beatLength in milliseconds</param>
         public Song(Game game, string sbname, string wbname, string[,] arrangement,
-            bool[,] intensityMap)
-            : this(game, sbname, wbname, arrangement)
+            bool[,] intensityMap, float beatLength)
+            : this(game, sbname, wbname, arrangement, beatLength)
         {
             hyper = new IntensityWidget(this, intensityMap);
         }
@@ -205,7 +207,7 @@ namespace Duologue.Audio
             if (!Managed)
             {
                 if (null == beater)
-                    beater = new BeatWidget(this, 1, 1);
+                    beater = new BeatWidget(this, 1);
             }
 
             playing = true;
@@ -225,6 +227,10 @@ namespace Duologue.Audio
                 {
                     hyper.Detach();
                 }
+            }
+            if (null != fader)
+            {
+                fader = null;
             }
             Enabled = false;
             playing = false;

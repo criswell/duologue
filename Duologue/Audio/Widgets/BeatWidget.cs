@@ -9,23 +9,22 @@ namespace Duologue.Audio.Widgets
     public class BeatWidget
     {
         public int NumberOfBeats;
-        public int NumberOfTracks;
+        protected float lengthOfBeat;
+
         protected float beatTimer = 0f;
-        public float lengthOfBeat;
-        public int currentBeat = 0;
+        protected int currentBeat = 0;
         protected Song parentSong;
 
-        public BeatWidget(Song song, int tracks, int beats)
+        public BeatWidget(Song song, int beats)
         {
             parentSong = song;
             NumberOfBeats = beats;
-            NumberOfTracks = tracks;
-            lengthOfBeat = (3433.039f / 8.000f);
+            lengthOfBeat = AudioManager.BPM140;
             //FIXME: This only matches 140BPM
         }
 
-        public BeatWidget(Song song, int tracks, int beats, float beatLength)
-            : this(song, tracks, beats)
+        public BeatWidget(Song song, int beats, float beatLength)
+            : this(song, beats)
         {
             lengthOfBeat = beatLength;
         }
