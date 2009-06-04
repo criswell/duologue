@@ -4691,21 +4691,21 @@ namespace Duologue.Waves
             #region Wave 19
             #region Wavedef (19-1) "Deny me and be doomed"
             #region Metadata
-            Waves[GetIndex(18, 1)] = new GameWave();
-            Waves[GetIndex(18, 1)].Background = 4;
-            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
-            Waves[GetIndex(18, 1)].ColorState = 2;
-            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
-            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
-            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
-            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
-            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            Waves[GetIndex(19, 1)] = new GameWave();
+            Waves[GetIndex(19, 1)].Background = 4;
+            Waves[GetIndex(19, 1)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(19, 1)].ColorState = 2;
+            Waves[GetIndex(19, 1)].MajorWaveNumber = 19;
+            Waves[GetIndex(19, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(19, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(19, 1)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(19, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(19, 1)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(19, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(19, 1)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(19, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(19, 1)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(19, 1)].Name = "Deny me and be doomed";
             #endregion
 
             Wavelets = new Wavelet[3];
@@ -4719,26 +4719,26 @@ namespace Duologue.Waves
             #region
             #endregion
 
-            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
+            Waves[GetIndex(19, 1)].Wavelets = Wavelets;
             #endregion
 
             #region Wavedef (19-2) "Tamsin Gnosis"
             #region Metadata
-            Waves[GetIndex(18, 1)] = new GameWave();
-            Waves[GetIndex(18, 1)].Background = 4;
-            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
-            Waves[GetIndex(18, 1)].ColorState = 2;
-            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
-            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
-            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
-            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
-            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            Waves[GetIndex(19, 2)] = new GameWave();
+            Waves[GetIndex(19, 2)].Background = 4;
+            Waves[GetIndex(19, 2)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(19, 2)].ColorState = 2;
+            Waves[GetIndex(19, 2)].MajorWaveNumber = 19;
+            Waves[GetIndex(19, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(19, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(19, 2)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(19, 2)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(19, 2)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(19, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(19, 2)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(19, 2)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(19, 2)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(19, 2)].Name = "Tamsin Gnosis";
             #endregion
 
             Wavelets = new Wavelet[3];
@@ -4752,26 +4752,26 @@ namespace Duologue.Waves
             #region
             #endregion
 
-            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
+            Waves[GetIndex(19, 2)].Wavelets = Wavelets;
             #endregion
 
             #region Wavedef (19-3) "Center of the Abzu" (water/swamp)
             #region Metadata
-            Waves[GetIndex(18, 1)] = new GameWave();
-            Waves[GetIndex(18, 1)].Background = 4;
-            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
-            Waves[GetIndex(18, 1)].ColorState = 2;
-            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
-            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
-            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
-            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
-            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            Waves[GetIndex(19, 3)] = new GameWave();
+            Waves[GetIndex(19, 3)].Background = 4;
+            Waves[GetIndex(19, 3)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(19, 3)].ColorState = 2;
+            Waves[GetIndex(19, 3)].MajorWaveNumber = 19;
+            Waves[GetIndex(19, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(19, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(19, 3)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(19, 3)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(19, 3)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(19, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(19, 3)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(19, 3)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(19, 3)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(19, 3)].Name = "Center of the Abzu";
             #endregion
 
             Wavelets = new Wavelet[3];
@@ -4785,18 +4785,108 @@ namespace Duologue.Waves
             #region
             #endregion
 
-            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
+            Waves[GetIndex(19, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
 
             #region Wave 20 (END-GAME)
             #region Wavedef (20-1) "End times"
+            #region Metadata
+            Waves[GetIndex(20, 1)] = new GameWave();
+            Waves[GetIndex(20, 1)].Background = 4;
+            Waves[GetIndex(20, 1)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(20, 1)].ColorState = 2;
+            Waves[GetIndex(20, 1)].MajorWaveNumber = 20;
+            Waves[GetIndex(20, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(20, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(20, 1)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(20, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(20, 1)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(20, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(20, 1)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(20, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(20, 1)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(20, 1)].Name = "End times";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(20, 1)].Wavelets = Wavelets;
             #endregion
 
             #region Wavedef (20-2) "Evening Star"
+            #region Metadata
+            Waves[GetIndex(20, 2)] = new GameWave();
+            Waves[GetIndex(20, 2)].Background = 4;
+            Waves[GetIndex(20, 2)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(20, 2)].ColorState = 2;
+            Waves[GetIndex(20, 2)].MajorWaveNumber = 20;
+            Waves[GetIndex(20, 2)].MinorWaveNumber = 2;
+            Waves[GetIndex(20, 2)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(20, 2)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(20, 2)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(20, 2)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(20, 2)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(20, 2)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(20, 2)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(20, 2)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(20, 2)].Name = "Evening Star";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(20, 2)].Wavelets = Wavelets;
             #endregion
 
             #region Wavedef (20-3)
+            #region Metadata
+            Waves[GetIndex(18, 1)] = new GameWave();
+            Waves[GetIndex(18, 1)].Background = 4;
+            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(18, 1)].ColorState = 2;
+            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
+            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
         }

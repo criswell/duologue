@@ -206,6 +206,16 @@ namespace Duologue.PlayObjects
             Initialized = true;
             Alive = true;
         }
+
+        public override void CleanUp()
+        {
+            try
+            {
+                sfxi_Bubble.Stop();
+            }
+            catch { }
+            base.CleanUp();
+        }
         #endregion
 
         #region Public Overrides
