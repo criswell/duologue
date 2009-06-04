@@ -241,7 +241,7 @@
     <value>Extract to Main Menu</value>
   </data>
   <data name="PauseScreen_GamePaused" xml:space="preserve">
-    <value>Game Pause</value>
+    <value>Game Paused</value>
   </data>
   <data name="PauseScreen_ResumeGame" xml:space="preserve">
     <value>Resume the battle</value>

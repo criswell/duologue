@@ -430,7 +430,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game Pause.
+        ///   Looks up a localized string similar to Game Paused.
         /// </summary>
         internal static string PauseScreen_GamePaused {
             get {
