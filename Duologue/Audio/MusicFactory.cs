@@ -630,7 +630,13 @@ namespace Duologue.Audio
                                     { off, on, on, off },
                                     { off, on, on, on }
                                 };
-            Superbowl = new Song(manager.Game, sbSounds, sbWaves, SBarr, SBVolumes);
+            bool[,] SBVolumesFlattened = {
+                                             { off, on, on, on },
+                                             { off, on, on, on },
+                                             { off, on, on, on }
+                                         };
+
+            Superbowl = new Song(manager.Game, sbSounds, sbWaves, SBarr, SBVolumesFlattened);
             Superbowl.beater.lengthOfBeat = 355f;
 
             //Dance8ths

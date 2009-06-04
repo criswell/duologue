@@ -11,7 +11,7 @@ namespace Duologue.Audio
 {
     public class Song : GameComponent
     {
-        private void these_are_the_cases_that_need_to_be_handled()
+        protected void these_are_the_cases_that_need_to_be_handled()
         {
             if (Managed)
             {
