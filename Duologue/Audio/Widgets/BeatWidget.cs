@@ -8,13 +8,8 @@ namespace Duologue.Audio.Widgets
 {
     public class BeatWidget
     {
-        //constants for milliseconds per beat
-        public const float BPM120 = 1000f * 60f/120f;
-        public const float BPM140 = (3433.039f / 8.000f);
-        //got 3433.039 by visual measure of one song, seems to be working
-        public const float BPM170 = 1000f * 60f/170f;
         public int NumberOfBeats;
-        public float lengthOfBeat;
+        protected float lengthOfBeat;
 
         protected float beatTimer = 0f;
         protected int currentBeat = 0;
@@ -24,7 +19,7 @@ namespace Duologue.Audio.Widgets
         {
             parentSong = song;
             NumberOfBeats = beats;
-            lengthOfBeat = (3433.039f / 8.000f);
+            lengthOfBeat = AudioManager.BPM140;
             //FIXME: This only matches 140BPM
         }
 

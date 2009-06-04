@@ -636,8 +636,8 @@ namespace Duologue.Audio
                                              { off, on, on, on }
                                          };
 
-            Superbowl = new Song(manager.Game, sbSounds, sbWaves, SBarr, SBVolumesFlattened);
-            Superbowl.beater.lengthOfBeat = 355f;
+            Superbowl = new Song(manager.Game, sbSounds, sbWaves, 
+                SBarr, SBVolumesFlattened, AudioManager.BPM170);
 
             //Dance8ths
             string[,] D8arr = { 
@@ -656,7 +656,7 @@ namespace Duologue.Audio
                                   {on, on, on, on, on}
                               };
             Dance8ths = new Song(manager.Game, dance8thsSounds, dance8thsWaves,
-                D8arr, D8volumes);
+                D8arr, D8volumes, AudioManager.BPM140);
 
             //LandOfSand16ths
             string[,] LoS16arr = { 
@@ -684,7 +684,7 @@ namespace Duologue.Audio
                                   {on, off, off, on, on, on, on},
                               };
             LandOfSand16ths = new Song(manager.Game, LoS16Sounds, LoS16Waves,
-                LoS16arr, LoS16volumes);
+                LoS16arr, LoS16volumes, AudioManager.BPM140);
 
             //Ultrafix
             string[,] UFarr = {
@@ -701,8 +701,8 @@ namespace Duologue.Audio
                       {on, on, on, on},
                                 };
 
-            Ultrafix = new Song(manager.Game, UFSounds, UFWaves, UFarr, UFvolumes);
-            Ultrafix.beater.lengthOfBeat = 500f;
+            Ultrafix = new Song(manager.Game, UFSounds, UFWaves,
+                UFarr, UFvolumes, AudioManager.BPM120);
 
             //WinOne
             string[,] W1arr = {
@@ -744,8 +744,8 @@ namespace Duologue.Audio
                                     {on, on, on, off, on, off}
                                 };
 
-            WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves, W1arr, W1volumes);
-            WinOne.beater.lengthOfBeat = 450f;
+            WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves,
+                W1arr, W1volumes, AudioManager.BPM140);
 
             //SecondChance
             string[,] SCarr = {
@@ -763,9 +763,8 @@ namespace Duologue.Audio
                       {on, on, on},
                                 };
 
-            SecondChance = new Song(manager.Game, SecondChanceSounds, SecondChanceWaves, SCarr, SCvolumes);
-            SecondChance.beater.lengthOfBeat = 450f;
-
+            SecondChance = new Song(manager.Game, SecondChanceSounds, SecondChanceWaves,
+                SCarr, SCvolumes, AudioManager.BPM140);
 
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);
