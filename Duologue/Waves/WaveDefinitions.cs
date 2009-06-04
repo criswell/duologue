@@ -4690,12 +4690,102 @@ namespace Duologue.Waves
 
             #region Wave 19
             #region Wavedef (19-1) "Deny me and be doomed"
+            #region Metadata
+            Waves[GetIndex(18, 1)] = new GameWave();
+            Waves[GetIndex(18, 1)].Background = 4;
+            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(18, 1)].ColorState = 2;
+            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
+            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
             #endregion
 
             #region Wavedef (19-2) "Tamsin Gnosis"
+            #region Metadata
+            Waves[GetIndex(18, 1)] = new GameWave();
+            Waves[GetIndex(18, 1)].Background = 4;
+            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(18, 1)].ColorState = 2;
+            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
+            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
             #endregion
 
             #region Wavedef (19-3) "Center of the Abzu" (water/swamp)
+            #region Metadata
+            Waves[GetIndex(18, 1)] = new GameWave();
+            Waves[GetIndex(18, 1)].Background = 4;
+            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(18, 1)].ColorState = 2;
+            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
+            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
+            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            #endregion
+
+            Wavelets = new Wavelet[3];
+            // First wavelet
+            #region
+            #endregion
+            // Second wavelet
+            #region
+            #endregion
+            // Third wavelet
+            #region
+            #endregion
+
+            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
 
