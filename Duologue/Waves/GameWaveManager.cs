@@ -182,7 +182,7 @@ namespace Duologue.Waves
             //if (MWMathHelper.CoinToss())
                 //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Dance8ths;
             //else
-                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Superbowl;
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Ultrafix;
 
             // Randomize the background and parallax elements
             thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);

@@ -4688,6 +4688,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
+            /*
             #region Wave 19
             #region Wavedef (19-1) "Deny me and be doomed"
             #region Metadata
@@ -4856,23 +4857,23 @@ namespace Duologue.Waves
             Waves[GetIndex(20, 2)].Wavelets = Wavelets;
             #endregion
 
-            #region Wavedef (20-3)
+            #region Wavedef (20-3) "Moloch whose name is the Mind!"
             #region Metadata
-            Waves[GetIndex(18, 1)] = new GameWave();
-            Waves[GetIndex(18, 1)].Background = 4;
-            Waves[GetIndex(18, 1)].ThrobColor = new Color(255, 154, 95);
-            Waves[GetIndex(18, 1)].ColorState = 2;
-            Waves[GetIndex(18, 1)].MajorWaveNumber = 18;
-            Waves[GetIndex(18, 1)].MinorWaveNumber = 1;
-            Waves[GetIndex(18, 1)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Intensity = 4;
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
-            Waves[GetIndex(18, 1)].ParallaxElementTop.Speed = 2.1f;
-            Waves[GetIndex(18, 1)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Intensity = 2;
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
-            Waves[GetIndex(18, 1)].ParallaxElementBottom.Speed = -2.2f;
-            Waves[GetIndex(18, 1)].Name = "Plane of Ginnungagap";
+            Waves[GetIndex(20, 3)] = new GameWave();
+            Waves[GetIndex(20, 3)].Background = 4;
+            Waves[GetIndex(20, 3)].ThrobColor = new Color(255, 154, 95);
+            Waves[GetIndex(20, 3)].ColorState = 2;
+            Waves[GetIndex(20, 3)].MajorWaveNumber = 20;
+            Waves[GetIndex(20, 3)].MinorWaveNumber = 3;
+            Waves[GetIndex(20, 3)].ParallaxElementTop = new ParallaxElement();
+            Waves[GetIndex(20, 3)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(20, 3)].ParallaxElementTop.Tint = new Color(39, 173, 173);
+            Waves[GetIndex(20, 3)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(20, 3)].ParallaxElementBottom = new ParallaxElement();
+            Waves[GetIndex(20, 3)].ParallaxElementBottom.Intensity = 2;
+            Waves[GetIndex(20, 3)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(20, 3)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(20, 3)].Name = "Moloch whose name is the Mind!";
             #endregion
 
             Wavelets = new Wavelet[3];
@@ -4886,9 +4887,10 @@ namespace Duologue.Waves
             #region
             #endregion
 
-            Waves[GetIndex(18, 3)].Wavelets = Wavelets;
+            Waves[GetIndex(20, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
+             * */
         }
         #endregion
 
