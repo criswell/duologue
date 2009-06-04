@@ -21,7 +21,7 @@ namespace Duologue.Audio
             if (!Managed)
             {
                 if (null == beater)
-                    beater = new BeatWidget(this, 1, 1);
+                    beater = new BeatWidget(this, 1);
                 if (null == hyper)
                     hyper = new IntensityWidget(this, new bool[1, 1]);
             }
@@ -142,7 +142,7 @@ namespace Duologue.Audio
         public Song(Game game, string sbname, string wbname, string[,] arrangement)
             : this(game, sbname, wbname)
         {
-            beater = new BeatWidget(this, arrangement.GetLength(0), arrangement.GetLength(1));
+            beater = new BeatWidget(this, arrangement.GetLength(1));
             managed = false;
             ArrayToTracks(arrangement);
             AudioHelper.Preload(this);
@@ -205,7 +205,7 @@ namespace Duologue.Audio
             if (!Managed)
             {
                 if (null == beater)
-                    beater = new BeatWidget(this, 1, 1);
+                    beater = new BeatWidget(this, 1);
             }
 
             playing = true;
