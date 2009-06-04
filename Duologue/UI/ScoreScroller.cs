@@ -403,6 +403,8 @@ namespace Duologue.UI
         public void SetLives(int p)
         {
             lives = p;
+            if (lives > maxLives)
+                lives = maxLives;
         }
 
         /// <summary>
