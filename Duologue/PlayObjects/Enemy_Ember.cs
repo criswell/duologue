@@ -33,6 +33,9 @@ namespace Duologue.PlayObjects
 
         private const int numberOfFrames = 4;
 
+        private const string filename_SmallFire = "Audio/PlayerEffects/small-fire";
+        private const float volume_SmallFire = 0.4f;
+
         /// <summary>
         /// The minimum scale for the ember
         /// </summary>
@@ -218,7 +221,9 @@ namespace Duologue.PlayObjects
         private float nearestLeaderRadius;
         private Enemy nearestLeaderObject;
         private Vector2 lastDirection;
+        // Audio
         private AudioManager audio;
+        private SoundEffect sfx_SmallFire;
         #endregion
 
         #region Properties
@@ -266,6 +271,7 @@ namespace Duologue.PlayObjects
         private void LoadAndInitialize()
         {
             ember = InstanceManager.AssetManager.LoadTexture2D(filename_Ember);
+            sfx_SmallFire = InstanceManager.AssetManager.LoadSoundEffect(filename_SmallFire);
             flameFrames = new StaticKingFrame[numberOfFrames];
 
             for (int i = 0; i < numberOfFrames; i++)
@@ -301,6 +307,14 @@ namespace Duologue.PlayObjects
 
             Initialized = true;
             Alive = true;
+        }
+
+        public override string[] GetSFXFilenames()
+        {
+            return new String[]
+                {
+                    filename_SmallFire
+                };
         }
         #endregion
 
@@ -540,6 +554,7 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
+                    sfx_SmallFire.Play(volume_SmallFire);
                     Alive = false;
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(
