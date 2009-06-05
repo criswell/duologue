@@ -35,7 +35,7 @@ namespace Duologue.PlayObjects
         private const string filename_bubbles = "Audio/Gloop/bubbles1";
 
         private const string filename_Pop = "Audio/PlayerEffects/pop";
-        private const float volume_Pop = 1f;
+        private const float volume_Pop = 0.25f;
 
         private const double minSize = 0.5;
         private const double maxSize = 1.0;
@@ -54,7 +54,7 @@ namespace Duologue.PlayObjects
         /// The min and max bubble volume
         /// </summary>
         private const double minBubbleVolume = 0.01;
-        private const double maxBubbleVolume = 0.08;
+        private const double maxBubbleVolume = 0.04;
 
         private const float deathLifetime = 0.7f;
 

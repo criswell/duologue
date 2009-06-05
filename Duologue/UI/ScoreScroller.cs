@@ -53,7 +53,7 @@ namespace Duologue.UI
         /// <summary>
         /// Extra lifes rewarded at multiples of this
         /// </summary>
-        private const int extraLifeAt = 5000;
+        private const int extraLifeAt = 3000;
 
         /// <summary>
         /// The maximum number of lives we can have
