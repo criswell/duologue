@@ -190,7 +190,8 @@ namespace Duologue.PlayObjects
 
             sfx_Bubble = InstanceManager.AssetManager.LoadSoundEffect(filename_bubbles);
             volume_CurrentBubble = (float)minBubbleVolume;
-            sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+            sfxi_Bubble = null;
+            //sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
             sfx_Pop = InstanceManager.AssetManager.LoadSoundEffect(filename_Pop);
 
             scale = (float)MWMathHelper.GetRandomInRange(minSize, maxSize);
@@ -528,12 +529,15 @@ namespace Duologue.PlayObjects
                         highlightAlphaDelta = defaultHighlightAlphaDelta;
                     }
                 }
-
-                if (sfxi_Bubble.State == SoundState.Stopped || sfxi_Bubble.State == SoundState.Paused)
+                if (sfxi_Bubble == null)
+                {
+                    sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+                }
+                else if (sfxi_Bubble.State == SoundState.Stopped || sfxi_Bubble.State == SoundState.Paused)
                 {
                     volume_CurrentBubble = (float)MWMathHelper.GetRandomInRange(minBubbleVolume, maxBubbleVolume);
                     sfxi_Bubble.Volume = volume_CurrentBubble;
-                    sfxi_Bubble.Play();
+                    sfxi_Bubble.Resume();
                 }
             }
         }

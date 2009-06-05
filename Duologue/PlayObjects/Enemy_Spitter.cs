@@ -41,9 +41,9 @@ namespace Duologue.PlayObjects
         private const string filename_spit = "Enemies/spitter/spit-{0}";
 
         private const string filename_SpitAttack = "Audio/PlayerEffects/spit-attack";
-        private const float volume_SpitAttack = 0.65f;
+        private const float volume_SpitAttack = 0.15f;
         private const string filename_Explode = "Audio/PlayerEffects/splat-explode-short";
-        private const float volume_Explode = 0.65f;
+        private const float volume_Explode = 0.35f;
 
         private const float spitSpeed = 3.5f;
         private const float minSplatterSpeed = spitSpeed / 2f;
