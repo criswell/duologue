@@ -84,7 +84,8 @@ namespace Duologue.Screens
             // Turn on background
             LocalInstanceManager.Background.Enabled = true;
             LocalInstanceManager.Background.Visible = true;
-            audio.PauseSong(SongID.Tr8or);
+            //audio.PauseSong(SongID.Tr8or);
+            audio.StopSong(SongID.Tr8or);
 
             base.ScreenExit(gameTime);
         }
