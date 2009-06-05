@@ -58,6 +58,35 @@ namespace Duologue.Waves
 
         #region Fields
         private WaveDefinitions waveDef;
+
+        // DELME - this is just here for testing the kill-everyone achievement
+        private int currentEnemyIndex = 0;
+        private TypesOfPlayObjects[] enemiesToSpawn = new TypesOfPlayObjects[]
+        {
+            TypesOfPlayObjects.Enemy_AnnMoeba,
+            TypesOfPlayObjects.Enemy_Buzzsaw,
+            TypesOfPlayObjects.Enemy_Ember,
+            TypesOfPlayObjects.Enemy_Firefly,
+            TypesOfPlayObjects.Enemy_Flambi,
+            TypesOfPlayObjects.Enemy_Flycket,
+            TypesOfPlayObjects.Enemy_Gloop,
+            TypesOfPlayObjects.Enemy_GloopPrince,
+            TypesOfPlayObjects.Enemy_KingGloop,
+            TypesOfPlayObjects.Enemy_Lahmu,
+            TypesOfPlayObjects.Enemy_Maggot,
+            TypesOfPlayObjects.Enemy_MetalTooth,
+            TypesOfPlayObjects.Enemy_MiniSaw,
+            TypesOfPlayObjects.Enemy_Mirthworm,
+            TypesOfPlayObjects.Enemy_Moloch,
+            TypesOfPlayObjects.Enemy_ProtoNora,
+            TypesOfPlayObjects.Enemy_Pyre,
+            TypesOfPlayObjects.Enemy_Roggles,
+            TypesOfPlayObjects.Enemy_Spawner,
+            TypesOfPlayObjects.Enemy_Spitter,
+            TypesOfPlayObjects.Enemy_StaticGloop,
+            TypesOfPlayObjects.Enemy_UncleanRot,
+            TypesOfPlayObjects.Enemy_Wiggles,
+        };
         #endregion
 
         #region Properties
@@ -172,7 +201,7 @@ namespace Duologue.Waves
 
             // ERE I AM JH
             int NumWavelets = 1;
-            int NumEnemies = 10;
+            int NumEnemies = 30;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelets = new Wavelet[NumWavelets];
             int hitsToKillEnemy = 0;
@@ -237,7 +266,7 @@ namespace Duologue.Waves
                 //if(MWMathHelper.IsEven(i))
                     //thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 //else
-                    thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                    thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
                 thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
                 thisWave.Wavelets[thisWave.CurrentWavelet].ColorPolarities[i] = ColorState.RandomPolarity();
             }
@@ -245,9 +274,13 @@ namespace Duologue.Waves
             /*thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[59] = TypesOfPlayObjects.Enemy_Pyre;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[59] = MathHelper.TwoPi;*/
 
-            /*thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 1] = TypesOfPlayObjects.Enemy_Spawner;
+            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 1] = enemiesToSpawn[currentEnemyIndex];
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[thisWave.NumEnemies - 1] = MathHelper.Pi;
-            thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[thisWave.NumEnemies - 1] = 0;*/
+            thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[thisWave.NumEnemies - 1] = 0;
+
+            currentEnemyIndex++;
+            if (currentEnemyIndex >= enemiesToSpawn.Length)
+                currentEnemyIndex = 0;
 
             //thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 2] = TypesOfPlayObjects.Enemy_Spawner;
             //thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[thisWave.NumEnemies - 2] = 0;

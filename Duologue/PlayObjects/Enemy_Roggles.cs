@@ -173,7 +173,7 @@ namespace Duologue.PlayObjects
         public Enemy_Roggles(GamePlayScreenManager manager)
             : base(manager)
         {
-            MyType = TypesOfPlayObjects.Enemy_Wiggles;
+            MyType = TypesOfPlayObjects.Enemy_Roggles;
             MajorType = MajorPlayObjectType.Enemy;
             baseLayer = 0f;
             outlineLayer = 0f;

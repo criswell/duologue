@@ -125,7 +125,7 @@ namespace Duologue.PlayObjects
         public Enemy_Maggot(GamePlayScreenManager manager)
             : base(manager)
         {
-            MyType = TypesOfPlayObjects.Enemy_Mirthworm;
+            MyType = TypesOfPlayObjects.Enemy_Maggot;
             MajorType = MajorPlayObjectType.Enemy;
             Initialized = false;
 

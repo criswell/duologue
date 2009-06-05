@@ -472,6 +472,7 @@ namespace Duologue.PlayObjects
             {
                 if (!LocalInstanceManager.Enemies[i].Alive)
                 {
+                    LocalInstanceManager.Enemies[i] = new Enemy_MiniSaw(MyManager);
                     LocalInstanceManager.Enemies[i].Initialize(
                         GetBabbySpawnPosition(),
                         GetBabbySpawnPosition(),
