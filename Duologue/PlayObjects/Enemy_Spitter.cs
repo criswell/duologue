@@ -40,6 +40,11 @@ namespace Duologue.PlayObjects
         private const string filename_spawnExplode = "Enemies/spitter/spawn-explode";
         private const string filename_spit = "Enemies/spitter/spit-{0}";
 
+        private const string filename_SpitAttack = "Audio/PlayerEffects/spit-attack";
+        private const float volume_SpitAttack = 0.95f;
+        private const string filename_Explode = "Audio/PlayerEffects/splat-explode-short";
+        private const float volume_Explode = 0.95f;
+
         private const float spitSpeed = 3.5f;
         private const float minSplatterSpeed = spitSpeed / 2f;
         private const float maxSplatterSpeed = spitSpeed;
@@ -287,6 +292,9 @@ namespace Duologue.PlayObjects
         private bool isFleeing;
 
         private AudioManager audio;
+        private SoundEffect sfx_SpitAttack;
+        private SoundEffectInstance sfxi_SpitAttack;
+        private SoundEffect sfx_Explode;
         #endregion
 
         #region Properties
@@ -350,6 +358,14 @@ namespace Duologue.PlayObjects
 
             LoadAndInitialize();
         }
+
+        public override String[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_SpitAttack
+            };
+        }
         #endregion
 
         #region Private methods
@@ -370,6 +386,11 @@ namespace Duologue.PlayObjects
             spitDroppingSizeDeltas = new float[maxSpitFrames];
             spitDroppingSizes = new float[maxSpitFrames];
             spitDroppingDirections = new Vector2[maxSpitFrames];
+
+            // Audio
+            sfx_SpitAttack = InstanceManager.AssetManager.LoadSoundEffect(filename_SpitAttack);
+            sfxi_SpitAttack = null;
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_Explode);
 
             // Load the animation frames
             for (int i = 0; i < maxAnimationFrames; i++)
@@ -542,6 +563,22 @@ namespace Duologue.PlayObjects
 
             spitSplatting = false;
             spitAlive = true;
+            if (sfxi_SpitAttack == null)
+            {
+                try
+                {
+                    sfxi_SpitAttack = sfx_SpitAttack.Play(volume_SpitAttack);
+                }
+                catch { }
+            }
+            else
+            {
+                try
+                {
+                    sfxi_SpitAttack.Play();
+                }
+                catch { }
+            }
         }
 
         /// <summary>
@@ -720,7 +757,7 @@ namespace Duologue.PlayObjects
                     Alive = false;
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    //audio.PlayEffect(EffectID.BuzzDeath);
+                    sfx_Explode.Play(volume_Explode);
                     return false;
                 }
                 else
