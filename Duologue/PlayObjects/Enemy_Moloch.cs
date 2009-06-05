@@ -647,7 +647,8 @@ namespace Duologue.PlayObjects
             Vector2 pos = GetPartPosition(index) + offset_Shot * GetRandomUnitVector();
 
             if ((pos.X >= 0 && pos.X <= InstanceManager.DefaultViewport.Width) &&
-                (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
+                (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height) &&
+                (nearestPlayer != null || MWMathHelper.CoinToss()))
             {
                 // We only proceed if we are on screen
                 SpawnBabby(

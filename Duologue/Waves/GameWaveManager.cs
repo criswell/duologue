@@ -63,6 +63,7 @@ namespace Duologue.Waves
         private int currentEnemyIndex = 0;
         private TypesOfPlayObjects[] enemiesToSpawn = new TypesOfPlayObjects[]
         {
+            TypesOfPlayObjects.Enemy_Moloch,
             TypesOfPlayObjects.Enemy_AnnMoeba,
             TypesOfPlayObjects.Enemy_Buzzsaw,
             TypesOfPlayObjects.Enemy_Ember,
@@ -77,7 +78,6 @@ namespace Duologue.Waves
             TypesOfPlayObjects.Enemy_MetalTooth,
             TypesOfPlayObjects.Enemy_MiniSaw,
             TypesOfPlayObjects.Enemy_Mirthworm,
-            TypesOfPlayObjects.Enemy_Moloch,
             TypesOfPlayObjects.Enemy_ProtoNora,
             TypesOfPlayObjects.Enemy_Pyre,
             TypesOfPlayObjects.Enemy_Roggles,
