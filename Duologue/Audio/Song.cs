@@ -315,23 +315,34 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            if (Managed && null != fader)
+            if (Managed)
             {
-                fader.Update(gameTime, this);
-                if (!Playing && !Paused)
+                if (null != fader)
                 {
-                    Play();
-                    for (int t = 0; t < TrackCount; t++)
+                    fader.Update(gameTime, this);
+                }
+                if (null != fader)
+                {
+                    if (!Playing && !Paused)
                     {
-                        Tracks[t].Cues[0].ChangeVolume(Loudness.Silent);
+                        Play();
+                        for (int t = 0; t < TrackCount; t++)
+                        {
+                            Tracks[t].Cues[0].ChangeVolume(Loudness.Silent);
+                        }
+                    }
+                    else if (Paused)
+                    {
                     }
                 }
-                else if (Paused)
+            }
+            else
+            {
+                if (null != beater)
                 {
+                    beater.Update(gameTime, this);
                 }
             }
-            else if (!Managed && null != beater)
-                beater.Update(gameTime, this);
             base.Update(gameTime);
         }
 
