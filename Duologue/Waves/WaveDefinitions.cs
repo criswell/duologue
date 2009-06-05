@@ -1429,7 +1429,7 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[2].Enemies.Length - 1; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
-                Wavelets[2].StartAngle[i] = i * MathHelper.Pi / (float)Wavelets[2].Enemies.Length + 3f * MathHelper.PiOver4;
+                Wavelets[2].StartAngle[i] = 5f * MathHelper.PiOver4;//i * MathHelper.Pi / (float)Wavelets[2].Enemies.Length + 3f * MathHelper.PiOver4;
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_KingGloop;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 5f * MathHelper.PiOver4;
