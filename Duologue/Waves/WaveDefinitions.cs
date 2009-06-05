@@ -1333,12 +1333,12 @@ namespace Duologue.Waves
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_GloopPrince;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = MathHelper.Pi;
-            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 2] = 4;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 2] = 6;
             Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 2] = ColorPolarity.Positive;
 
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 0;
-            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 4;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 6;
             Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Negative;
             #endregion
 
