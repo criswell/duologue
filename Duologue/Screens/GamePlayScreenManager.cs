@@ -175,10 +175,10 @@ namespace Duologue.Screens
         public override void ScreenExit(GameTime gameTime)
         {
             AudioManager audio = ServiceLocator.GetService<AudioManager>();
-            audio.FadeOut(lastSongID);
+            audio.StopSong(lastSongID);
             if (LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID != lastSongID)
             {
-                audio.FadeOut(
+                audio.StopSong(
                     LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SongID);
             }
 

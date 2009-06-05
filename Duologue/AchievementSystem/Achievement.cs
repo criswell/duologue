@@ -17,11 +17,17 @@ using Microsoft.Xna.Framework.Content;
 namespace Duologue.AchievementSystem
 {
     [Serializable]
+    public struct EnemyTypeSerialized
+    {
+        public bool Killed;
+        public string Name;
+    }
+    [Serializable]
     public struct AchievementData
     {
         public bool[] MedalEarned;
         public int NumberOfEnemiesKilled;
-        public bool[] EnemyTypesKilled;
+        public EnemyTypeSerialized[] EnemyTypesKilled;
         public int DataVersion;
         public int NumberOfGamesPlayed;
     }

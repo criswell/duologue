@@ -76,6 +76,8 @@ namespace Duologue.PlayObjects
         private const float standardEnemyRepulse = 5f;
 
         private const float speed = 1.3f;
+
+        private const float offScreenSpeed = 3.4f;
         #endregion
         #endregion
 
@@ -125,7 +127,7 @@ namespace Duologue.PlayObjects
         public Enemy_Maggot(GamePlayScreenManager manager)
             : base(manager)
         {
-            MyType = TypesOfPlayObjects.Enemy_Mirthworm;
+            MyType = TypesOfPlayObjects.Enemy_Maggot;
             MajorType = MajorPlayObjectType.Enemy;
             Initialized = false;
 
@@ -231,6 +233,13 @@ namespace Duologue.PlayObjects
             return temp;
         }
 
+        private bool OnScreen()
+        {
+            return (Position.X > 0 && Position.Y > 0 &&
+                Position.X < InstanceManager.DefaultViewport.Width &&
+                Position.Y < InstanceManager.DefaultViewport.Height);
+        }
+
         private Vector2 RandomJitter(double lower, double upper)
         {
             return new Vector2(
@@ -285,7 +294,10 @@ namespace Duologue.PlayObjects
             {
                 Orientation.Normalize();
 
-                offset += Orientation * speed;
+                if (OnScreen())
+                    offset += Orientation * speed;
+                else
+                    offset += Orientation * offScreenSpeed;
 
                 this.Position += offset;
                 Orientation = offset;
@@ -451,8 +463,11 @@ namespace Duologue.PlayObjects
                 if (timeSinceSwitch > timeBetweenTurns)
                 {
                     // Turn randomly
-                    Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
-                        (float)MWMathHelper.GetRandomInRange(minTurnAngle, maxTurnAngle));
+                    if (OnScreen())
+                        Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
+                            (float)MWMathHelper.GetRandomInRange(minTurnAngle, maxTurnAngle));
+                    else
+                        Orientation = GetStartingVector();
                     timeSinceSwitch = 0;
                 }
 

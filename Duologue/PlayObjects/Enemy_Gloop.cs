@@ -34,6 +34,9 @@ namespace Duologue.PlayObjects
 
         private const string filename_bubbles = "Audio/Gloop/bubbles1";
 
+        private const string filename_Pop = "Audio/PlayerEffects/pop";
+        private const float volume_Pop = 1f;
+
         private const double minSize = 0.5;
         private const double maxSize = 1.0;
 
@@ -126,6 +129,7 @@ namespace Duologue.PlayObjects
         private SoundEffectInstance sfxi_Bubble;
         private float volume_CurrentBubble;
         private AudioManager audio;
+        private SoundEffect sfx_Pop;
         #endregion
 
         #region Properties
@@ -187,6 +191,7 @@ namespace Duologue.PlayObjects
             sfx_Bubble = InstanceManager.AssetManager.LoadSoundEffect(filename_bubbles);
             volume_CurrentBubble = (float)minBubbleVolume;
             sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+            sfx_Pop = InstanceManager.AssetManager.LoadSoundEffect(filename_Pop);
 
             scale = (float)MWMathHelper.GetRandomInRange(minSize, maxSize);
 
@@ -416,6 +421,7 @@ namespace Duologue.PlayObjects
                         sfxi_Bubble.Stop();
                     }
                     catch { }
+                    sfx_Pop.Play(volume_Pop);
 
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     timeSinceStart = 0.0;

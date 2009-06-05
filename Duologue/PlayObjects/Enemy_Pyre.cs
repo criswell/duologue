@@ -43,6 +43,11 @@ namespace Duologue.PlayObjects
 
         private const int numberOfFrames = 4;
 
+        private const string filename_Fire = "Audio/PlayerEffects/rumbling-fire";
+        private const float volume_Fire = 0.25f;
+        private const string filename_SmallFire = "Audio/PlayerEffects/small-fire";
+        private const float volume_SmallFire = 1f;
+
         /// <summary>
         /// The starting scale for each frame
         /// </summary>
@@ -162,6 +167,9 @@ namespace Duologue.PlayObjects
 
         // Sound
         private AudioManager audio;
+        private SoundEffect sfx_SmallFire;
+        private SoundEffect sfx_Rumble;
+        private SoundEffectInstance sfxi_Rumble;
         #endregion
 
         #region Constructor / Init
@@ -205,6 +213,10 @@ namespace Duologue.PlayObjects
         private void LoadAndInitialize()
         {
             textureFace = InstanceManager.AssetManager.LoadTexture2D(filename_face);
+            sfx_Rumble = InstanceManager.AssetManager.LoadSoundEffect(filename_Fire);
+            sfxi_Rumble = null;
+            sfx_SmallFire = InstanceManager.AssetManager.LoadSoundEffect(filename_SmallFire);
+
             frames = new StaticKingFrame[numberOfFrames];
             
             for (int i = 0; i < numberOfFrames; i++)
@@ -232,6 +244,16 @@ namespace Duologue.PlayObjects
 
             Initialized = true;
             Alive = true;
+        }
+
+
+        public override string[] GetSFXFilenames()
+        {
+            return new String[]
+                {
+                    filename_SmallFire,
+                    filename_Fire
+                };
         }
         #endregion
 
@@ -399,6 +421,12 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
+                    sfx_SmallFire.Play(volume_SmallFire);
+                    try
+                    {
+                        sfxi_Rumble.Stop();
+                    }
+                    catch { }
                     Alive = false;
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     // Fire off explosions for each frame, if we can
@@ -510,6 +538,15 @@ namespace Duologue.PlayObjects
                     if (frames[i].Alpha < minAlpha)
                         SetupFrame(i);
                 }
+            }
+
+            if (sfxi_Rumble == null)
+            {
+                try
+                {
+                    sfxi_Rumble = sfx_Rumble.Play(volume_Fire, 0, 0, true);
+                }
+                catch { }
             }
         }
         #endregion

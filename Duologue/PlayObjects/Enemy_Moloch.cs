@@ -216,9 +216,9 @@ namespace Duologue.PlayObjects
         /// as well as the step-size for each additional hitpoint requested.
         /// E.g., if you request this boss have "2" HP, then he will *really* get "2 x realHitPointMultiplier" HP
         /// </summary>
-        private const int realHitPoints = 16;
+        private const int realHitPoints = 13;
 
-        private const int eyeBallHitPoints = 30;
+        private const int eyeBallHitPoints = 25;
 
         private const float offscreenMovementMultiplier = 0.35f;
         #endregion
@@ -647,7 +647,8 @@ namespace Duologue.PlayObjects
             Vector2 pos = GetPartPosition(index) + offset_Shot * GetRandomUnitVector();
 
             if ((pos.X >= 0 && pos.X <= InstanceManager.DefaultViewport.Width) &&
-                (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height))
+                (pos.Y >= 0 && pos.Y <= InstanceManager.DefaultViewport.Height) &&
+                (nearestPlayer != null || MWMathHelper.CoinToss()))
             {
                 // We only proceed if we are on screen
                 SpawnBabby(

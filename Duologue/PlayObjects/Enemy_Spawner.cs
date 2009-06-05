@@ -39,6 +39,10 @@ namespace Duologue.PlayObjects
         private const string filename_Flare = "Enemies/spawner/flare";
         private const string filename_Base = "Enemies/spawner/spawner-base";
         private const string filename_Lights = "Enemies/spawner/spawner-lights{0}";
+        private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
+        private const float volume_Explode = 0.95f;
+        private const string filename_BeamIn = "Audio/PlayerEffects/enemy-beam-in";
+        private const float volume_BeamIn = 0.85f;
 
         private const int numOfLightLevels = 3;
 
@@ -128,6 +132,9 @@ namespace Duologue.PlayObjects
 
         // Sound
         private AudioManager audio;
+        private SoundEffect sfx_Explode;
+        private SoundEffect sfx_BeamIn;
+        private SoundEffectInstance sfxi_BeamIn;
         #endregion
 
         #region Properties
@@ -175,6 +182,9 @@ namespace Duologue.PlayObjects
             texture_Flare = InstanceManager.AssetManager.LoadTexture2D(filename_Flare);
             texture_Base = InstanceManager.AssetManager.LoadTexture2D(filename_Base);
             texture_Lights = new Texture2D[numOfLightLevels];
+            sfx_Explode = InstanceManager.AssetManager.LoadSoundEffect(filename_Explode);
+            sfx_BeamIn = InstanceManager.AssetManager.LoadSoundEffect(filename_BeamIn);
+            sfxi_BeamIn = null;
 
             for (int i = 0; i < numOfLightLevels; i++)
             {
@@ -254,6 +264,15 @@ namespace Duologue.PlayObjects
             filenames[filenames.Length - 1] = filename_Flare;
 
             return filenames;
+        }
+
+        public override String[] GetSFXFilenames()
+        {
+            return new String[]
+                {
+                    filename_BeamIn,
+                    filename_Explode
+                };
         }
         #endregion
 
@@ -482,6 +501,7 @@ namespace Duologue.PlayObjects
                         myPointValue + hitPointMultiplier * StartHitPoints,
                         Position);
                     //audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
+                    sfx_Explode.Play(volume_Explode);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Current);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Base);
                     Alive = false;
@@ -592,6 +612,22 @@ namespace Duologue.PlayObjects
                 timer_Thinking = 0;
                 timer_Flare = 0;
                 currentState = SpawnerState.FlareUp;
+                if (sfxi_BeamIn == null)
+                {
+                    try
+                    {
+                        sfxi_BeamIn = sfx_BeamIn.Play(volume_BeamIn);
+                    }
+                    catch { }
+                }
+                else
+                {
+                    try
+                    {
+                        sfxi_BeamIn.Play();
+                    }
+                    catch { }
+                }
             }
         }
 

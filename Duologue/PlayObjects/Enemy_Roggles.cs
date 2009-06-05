@@ -135,7 +135,7 @@ namespace Duologue.PlayObjects
         private float outlineLayer;
 
         private double timeSinceStart;
-        private double currentTimePerFrameDying;
+        //private double currentTimePerFrameDying;
 
         private double rotationChangeTimer;
 
@@ -153,6 +153,8 @@ namespace Duologue.PlayObjects
 
         private bool isFleeing;
         private bool inBeam;
+
+        private AudioManager audio;
         #endregion
 
         #region Properties
@@ -171,7 +173,7 @@ namespace Duologue.PlayObjects
         public Enemy_Roggles(GamePlayScreenManager manager)
             : base(manager)
         {
-            MyType = TypesOfPlayObjects.Enemy_Wiggles;
+            MyType = TypesOfPlayObjects.Enemy_Roggles;
             MajorType = MajorPlayObjectType.Enemy;
             baseLayer = 0f;
             outlineLayer = 0f;
@@ -180,6 +182,7 @@ namespace Duologue.PlayObjects
             Initialized = false;
             Alive = false;
             OffscreenArrow = true;
+            audio = ServiceLocator.GetService<AudioManager>();
         }
 
         public override void Initialize(
@@ -595,13 +598,14 @@ namespace Duologue.PlayObjects
                     //WigglesDeath
                     //AudioManager am = ServiceLocator.GetService<AudioManager>();
                     //am.PlayEffect(EffectID.WigglesDeath);
+                    audio.PlayEffect(EffectID.WigglesDeath);
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, c);
                     return false;
                 }
                 else
                 {
-                    AudioManager am = ServiceLocator.GetService<AudioManager>();
-                    am.PlayEffect(EffectID.Sploosh);
+                    //AudioManager am = ServiceLocator.GetService<AudioManager>();
+                    audio.PlayEffect(EffectID.Sploosh);
                     TriggerShieldDisintegration(outlineFrames[currentFrame], c, Position, 0f);
                     return true;
                 }

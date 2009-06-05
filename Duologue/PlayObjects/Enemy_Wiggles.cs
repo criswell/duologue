@@ -292,6 +292,13 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private Methods
+        private bool OnScreen()
+        {
+            return (Position.X > 0 && Position.Y > 0 &&
+                Position.X < InstanceManager.DefaultViewport.Width &&
+                Position.Y < InstanceManager.DefaultViewport.Height);
+        }
+
         /// <summary>
         /// Returns a vector pointing to the origin
         /// </summary>
@@ -502,7 +509,10 @@ namespace Duologue.PlayObjects
         {
             if (CurrentState != WigglesState.Dying && CurrentState != WigglesState.Fading)
             {
-                offset = Orientation * walkingSpeed;
+                if (OnScreen())
+                    offset = Orientation * walkingSpeed;
+                else
+                    offset = Orientation * egressSpeed;
                 if (CurrentState == WigglesState.Running)
                     offset = Vector2.Zero;
                 nearestPlayerRadius = 3 * InstanceManager.DefaultViewport.Width; // Feh, good enough

@@ -806,6 +806,7 @@ namespace Duologue.PlayObjects
                     }
                     catch { }
                     Alive = false;
+                    LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                 }
                 else
                 {

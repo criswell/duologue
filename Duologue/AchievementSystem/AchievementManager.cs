@@ -174,6 +174,7 @@ namespace Duologue.AchievementSystem
         /// index.
         /// </summary>
         private int[] enemyObjectLookupTable;
+        private string[] enemyObjectNameTable;
         private int maxNumEnemies;
         private int dataVersion;
 
@@ -229,7 +230,7 @@ namespace Duologue.AchievementSystem
             orderedAchievementList = new List<int>(possibleAchievements);
             unlockedYetToDisplay = new Queue<Achievement>(possibleAchievements);
             storageDeviceIsSet = false;
-            dataVersion = 11;
+            dataVersion = 14;
             alpha_Achievement = 1f;
             size_Achievement = 1f;
             color_Text = Color.Bisque;
@@ -322,10 +323,11 @@ namespace Duologue.AchievementSystem
                 {
                     // Let's creat a new save data
                     achievementData = new AchievementData();
-                    achievementData.EnemyTypesKilled = new bool[maxNumEnemies];
+                    achievementData.EnemyTypesKilled = new EnemyTypeSerialized[maxNumEnemies];
                     for (int i = 0; i < maxNumEnemies; i++)
                     {
-                        achievementData.EnemyTypesKilled[i] = false;
+                        achievementData.EnemyTypesKilled[i].Killed = false;
+                        achievementData.EnemyTypesKilled[i].Name = enemyObjectNameTable[i];
                     }
                     achievementData.MedalEarned = new bool[possibleAchievements];
                     for (int i = 0; i < possibleAchievements; i++)
@@ -599,6 +601,11 @@ namespace Duologue.AchievementSystem
         {
             enemyObjectLookupTable = new int[30]; // Probably should be bigger than possible enemies to allow for growth
 
+            for (int i = 0; i < enemyObjectLookupTable.Length; i++)
+            {
+                enemyObjectLookupTable[i] = -1;
+            }
+
             // We need to only populate this list with the destructable enemy types
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_AnnMoeba] = 0;
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Buzzsaw] = 1;
@@ -625,6 +632,33 @@ namespace Duologue.AchievementSystem
             enemyObjectLookupTable[(int)TypesOfPlayObjects.Enemy_Moloch] = 22;
 
             maxNumEnemies = 23;
+
+            enemyObjectNameTable = new String[]
+            {
+                "AnnMoeba",
+                "Buzzaw",
+                "Ember",
+                "Gloop",
+                "KingGloop",
+                "Maggot",
+                "Mirthworm",
+                "ProtoNora",
+                "Pyre",
+                "Roggles",
+                "Spawner",
+                "Spitter",
+                "StaticGloop",
+                "UncleanRot",
+                "Wiggles",
+                "MetalTooth",
+                "MiniSaw",
+                "GloopPrince",
+                "Flycket",
+                "Flambi",
+                "Firefly",
+                "Lahmu",
+                "Moloch"
+            };
         }
 
         private void GenerateAchievements()
@@ -781,7 +815,7 @@ namespace Duologue.AchievementSystem
             numberOfEnemyTypesKilled = 0;
             for (int i = 0; i < maxNumEnemies; i++)
             {
-                if (achievementData.EnemyTypesKilled[i])
+                if (achievementData.EnemyTypesKilled[i].Killed)
                     numberOfEnemyTypesKilled++;
             }
         }
@@ -857,14 +891,14 @@ namespace Duologue.AchievementSystem
                 {
                     UnlockAchievement(PossibleMedals.Seriously);
                 }
-                if (!achievementData.EnemyTypesKilled[enemyObjectLookupTable[(int)po]])
+                if (!achievementData.EnemyTypesKilled[enemyObjectLookupTable[(int)po]].Killed)
                 {
-                    achievementData.EnemyTypesKilled[enemyObjectLookupTable[(int)po]] = true;
+                    achievementData.EnemyTypesKilled[enemyObjectLookupTable[(int)po]].Killed = true;
                     // See if that was all we were lacking
                     int enemyCount = 0;
                     for (int i = 0; i < maxNumEnemies; i++)
                     {
-                        if (achievementData.EnemyTypesKilled[i])
+                        if (achievementData.EnemyTypesKilled[i].Killed)
                             enemyCount++;
                     }
                     if (enemyCount >= maxNumEnemies)
