@@ -348,7 +348,7 @@ namespace Duologue.PlayObjects
 
         private void LoadAndInitialize()
         {
-            currentBlendMode = RenderSpriteBlendMode.AlphaBlendTop;
+            currentBlendMode = RenderSpriteBlendMode.AlphaBlend;
             // Set up the color array that will be used for all of the non-tub stuffs
             colorArray_TasteTheRainbow = new Color[]
             {
