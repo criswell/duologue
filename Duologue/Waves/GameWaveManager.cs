@@ -77,6 +77,7 @@ namespace Duologue.Waves
             TypesOfPlayObjects.Enemy_MetalTooth,
             TypesOfPlayObjects.Enemy_MiniSaw,
             TypesOfPlayObjects.Enemy_Mirthworm,
+            TypesOfPlayObjects.Enemy_Maggot,
             TypesOfPlayObjects.Enemy_ProtoNora,
             TypesOfPlayObjects.Enemy_Pyre,
             TypesOfPlayObjects.Enemy_Roggles,
