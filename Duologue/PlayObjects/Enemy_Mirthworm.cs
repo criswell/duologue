@@ -80,6 +80,7 @@ namespace Duologue.PlayObjects
         private const float standardEnemyRepulse = 5f;
 
         private const float speed = 2f;
+        private const float offScreenSpeed = 4f;
         #endregion
         #endregion
 
@@ -195,6 +196,13 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private Methods
+        private bool OnScreen()
+        {
+            return (Position.X > 0 && Position.Y > 0 &&
+                Position.X < InstanceManager.DefaultViewport.Width &&
+                Position.Y < InstanceManager.DefaultViewport.Height);
+        }
+
         /// <summary>
         /// Returns a vector pointing to the origin
         /// </summary>
@@ -265,7 +273,10 @@ namespace Duologue.PlayObjects
             {
                 Orientation.Normalize();
 
-                offset += Orientation * speed;
+                if (OnScreen())
+                    offset += Orientation * speed;
+                else
+                    offset += Orientation * offScreenSpeed;
 
                 this.Position += offset;
                 Orientation = offset;
@@ -418,8 +429,11 @@ namespace Duologue.PlayObjects
                 if (timeSinceSwitch > timeBetweenTurns)
                 {
                     // Turn randomly
-                    Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
-                        (float)MWMathHelper.GetRandomInRange(minTurnAngle, maxTurnAngle));
+                    if (OnScreen())
+                        Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
+                            (float)MWMathHelper.GetRandomInRange(minTurnAngle, maxTurnAngle));
+                    else
+                        Orientation = GetStartingVector();
                     timeSinceSwitch = 0;
                 }
 
