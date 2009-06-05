@@ -239,6 +239,7 @@ namespace Duologue.PlayObjects
             return new String[]
             {
                 filename_bubbles,
+                filename_Pop
             };
         }
 
