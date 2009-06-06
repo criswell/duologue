@@ -1619,7 +1619,7 @@ namespace Duologue.Waves
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                     Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / 2f;
-                    Wavelets[1].StartHitPoints[i] = 2;
+                    Wavelets[1].StartHitPoints[i] = 1;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
                     else
@@ -1656,7 +1656,7 @@ namespace Duologue.Waves
                 {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                     Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 2f;
-                    Wavelets[2].StartHitPoints[i] = 2;
+                    Wavelets[2].StartHitPoints[i] = 1;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
                     else
