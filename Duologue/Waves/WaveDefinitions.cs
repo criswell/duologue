@@ -2465,7 +2465,10 @@ namespace Duologue.Waves
                 if (i / 4f == i / 4)
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 else if (i / 3f == i / 3)
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    Wavelets[1].StartAngle[i] = MathHelper.Pi;
+                }
                 else
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
             }
