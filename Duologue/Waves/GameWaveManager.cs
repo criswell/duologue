@@ -233,7 +233,7 @@ namespace Duologue.Waves
             // Dance8ths - Small number of levels, guitar rock track, highly repetitive
             // LandOfSand16ths - Kind of 80s sound synth piano, good number of levels
             //if (MWMathHelper.CoinToss())
-                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Superbowl;
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.WinOne;
             //else
                 //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
 
