@@ -256,6 +256,7 @@ namespace Duologue.Screens
                 gameOver.Visible = true;
                 gameOver.Enabled = true;
                 currentState = GamePlayState.GameOver;
+                TutorialManager.TipPopUp();
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {

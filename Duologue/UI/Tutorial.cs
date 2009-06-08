@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Content;
 // Mimicware
 using Mimicware.Manager;
 using Mimicware.Graphics;
+using Mimicware;
 // Duologue
 using Duologue;
 using Duologue.Properties;
@@ -34,6 +35,7 @@ namespace Duologue.UI
         public string Text;
         public Vector2 TextSize;
         public Vector2 Center;
+        public bool SmallFont;
     }
 
     public enum PopUpState
@@ -54,6 +56,7 @@ namespace Duologue.UI
         #region Constants
         private const string filename_PopUpWindow = "PlayerUI/pop-up-window";
         private const string filename_Font = "Fonts\\inero-28";
+        private const string filename_TipFont = "Fonts/inero-small";
 
         private const double time_ScaleVert = 0.2f;
         private const double time_ScaleHoriz = 0.6f;
@@ -78,6 +81,7 @@ namespace Duologue.UI
         private Texture2D texture_PopUpWindow;
         private Vector2 center_PopUpWindow;
         private SpriteFont font;
+        private SpriteFont tipFont;
         private TutorialEntry[] theEntries;
         private Queue<TutorialEntry> requestedToBeDisplayed;
         private TutorialEntry currentEntry;
@@ -90,6 +94,8 @@ namespace Duologue.UI
         private Color color_Text;
         private Color color_TextShadow;
         private Vector2[] shadowOffset;
+
+        private TutorialEntry[] proTips;
         #endregion
 
         #region Constructor / Init
@@ -130,6 +136,7 @@ namespace Duologue.UI
                 texture_PopUpWindow.Width / 2f, texture_PopUpWindow.Height / 2f);
 
             font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
+            tipFont = InstanceManager.AssetManager.LoadSpriteFont(filename_TipFont);
 
             theEntries = new TutorialEntry[3];
             theEntries[0].Text = Resources.Tutorial_1;
@@ -140,6 +147,32 @@ namespace Duologue.UI
                 theEntries[i].TextSize = font.MeasureString(theEntries[i].Text);
                 theEntries[i].Center = new Vector2(
                     theEntries[i].TextSize.X / 2f, theEntries[i].TextSize.Y / 2f);
+                theEntries[i].SmallFont = false;
+            }
+
+            string[] tempTips = new string[]
+            {
+                Resources.Tip001,
+                Resources.Tip002,
+                Resources.Tip003,
+                Resources.Tip004,
+                Resources.Tip005,
+                Resources.Tip006,
+                Resources.Tip007,
+                Resources.Tip008,
+                Resources.Tip009,
+                Resources.Tip010,
+            };
+
+            proTips = new TutorialEntry[tempTips.Length];
+
+            for (int i = 0; i < tempTips.Length; i++)
+            {
+                proTips[i].Text = tempTips[i];
+                proTips[i].TextSize = tipFont.MeasureString(tempTips[i]);
+                proTips[i].Center = new Vector2(
+                    proTips[i].TextSize.X / 2f, proTips[i].TextSize.Y / 2f);
+                proTips[i].SmallFont = true;
             }
 
             base.LoadContent();
@@ -185,6 +218,23 @@ namespace Duologue.UI
                 Enabled = true;
             }
         }
+
+        /// <summary>
+        /// Call when the game is over to (maybe) display a tip
+        /// </summary>
+        public void TipPopUp()
+        {
+            if (MWMathHelper.CoinToss())
+            {
+                int i = MWMathHelper.GetRandomInRange(0, proTips.Length);
+
+                InstanceManager.Logger.LogEntry(String.Format("Pro-tip to display: {0}", i.ToString()));
+
+                requestedToBeDisplayed.Enqueue(proTips[i]);
+                Visible = true;
+                Enabled = true;
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -225,16 +275,32 @@ namespace Duologue.UI
             if (position == Vector2.Zero)
                 SetPosition();
 
-            InstanceManager.RenderSprite.DrawString(
-                font,
-                currentEntry.Text,
-                position,
-                color_Text,
-                color_TextShadow,
-                1f,
-                currentEntry.Center,
-                shadowOffset,
-                RenderSpriteBlendMode.AbsoluteTop);
+            if (currentEntry.SmallFont)
+            {
+                InstanceManager.RenderSprite.DrawString(
+                    tipFont,
+                    currentEntry.Text,
+                    position,
+                    color_Text,
+                    color_TextShadow,
+                    1f,
+                    currentEntry.Center,
+                    shadowOffset,
+                    RenderSpriteBlendMode.AbsoluteTop);
+            }
+            else
+            {
+                InstanceManager.RenderSprite.DrawString(
+                    font,
+                    currentEntry.Text,
+                    position,
+                    color_Text,
+                    color_TextShadow,
+                    1f,
+                    currentEntry.Center,
+                    shadowOffset,
+                    RenderSpriteBlendMode.AbsoluteTop);
+            }
         }
         #endregion
 
