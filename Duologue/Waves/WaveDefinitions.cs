@@ -663,7 +663,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Positive);
-            Wavelets[0].SongID = SongID.Ultrafix;
+            Wavelets[0].SongID = SongID.SecondChance;
             Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[0].StartAngle[0] = MathHelper.PiOver4;
             Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
@@ -676,7 +676,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Negative);
-            Wavelets[1].SongID = SongID.Ultrafix;
+            Wavelets[1].SongID = SongID.SecondChance;
             Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
             Wavelets[1].StartAngle[0] = MathHelper.PiOver4;
             Wavelets[1].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
@@ -689,7 +689,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(20, 0);
-            Wavelets[2].SongID = SongID.Ultrafix;
+            Wavelets[2].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[2].Enemies.Length - 1; i++)
             {
                 if (MWMathHelper.IsEven(i))
