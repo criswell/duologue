@@ -151,13 +151,13 @@
     <value>Back to main menu</value>
   </data>
   <data name="MainMenu_GameSelect_Campaign" xml:space="preserve">
-    <value>Join the campaign</value>
+    <value>Play campaign mode</value>
   </data>
   <data name="MainMenu_GameSelect_Infinite" xml:space="preserve">
     <value>Play infinite mode</value>
   </data>
   <data name="MainMenu_Play" xml:space="preserve">
-    <value>Enlist for the war!</value>
+    <value>Join the battle!</value>
   </data>
   <data name="MainMenu_PressStart" xml:space="preserve">
     <value>Press Start</value>
@@ -238,7 +238,7 @@
     <value>Wet feet</value>
   </data>
   <data name="PauseScreen_ExitMainMenu" xml:space="preserve">
-    <value>Extract to Main Menu</value>
+    <value>Return to Main Menu</value>
   </data>
   <data name="PauseScreen_GamePaused" xml:space="preserve">
     <value>Game Paused</value>

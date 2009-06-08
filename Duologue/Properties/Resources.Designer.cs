@@ -160,7 +160,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Join the campaign.
+        ///   Looks up a localized string similar to Play campaign mode.
         /// </summary>
         internal static string MainMenu_GameSelect_Campaign {
             get {
@@ -178,7 +178,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enlist for the war!.
+        ///   Looks up a localized string similar to Join the battle!.
         /// </summary>
         internal static string MainMenu_Play {
             get {
@@ -421,7 +421,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extract to Main Menu.
+        ///   Looks up a localized string similar to Return to Main Menu.
         /// </summary>
         internal static string PauseScreen_ExitMainMenu {
             get {
