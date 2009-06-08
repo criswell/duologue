@@ -151,13 +151,13 @@
     <value>Back to main menu</value>
   </data>
   <data name="MainMenu_GameSelect_Campaign" xml:space="preserve">
-    <value>Join the campaign</value>
+    <value>Play campaign mode</value>
   </data>
   <data name="MainMenu_GameSelect_Infinite" xml:space="preserve">
     <value>Play infinite mode</value>
   </data>
   <data name="MainMenu_Play" xml:space="preserve">
-    <value>Enlist for the war!</value>
+    <value>Join the battle!</value>
   </data>
   <data name="MainMenu_PressStart" xml:space="preserve">
     <value>Press Start</value>
@@ -238,7 +238,7 @@
     <value>Wet feet</value>
   </data>
   <data name="PauseScreen_ExitMainMenu" xml:space="preserve">
-    <value>Extract to Main Menu</value>
+    <value>Return to Main Menu</value>
   </data>
   <data name="PauseScreen_GamePaused" xml:space="preserve">
     <value>Game Paused</value>
@@ -272,6 +272,36 @@
   </data>
   <data name="ScoreUI_Lives" xml:space="preserve">
     <value>Lives:</value>
+  </data>
+  <data name="Tip001" xml:space="preserve">
+    <value>Tip: To kill Spawners, shoot them as they beam in reinforcements.</value>
+  </data>
+  <data name="Tip002" xml:space="preserve">
+    <value>Tip: Some enemies can change their color. Be sure to watch for it.</value>
+  </data>
+  <data name="Tip003" xml:space="preserve">
+    <value>Tip: If an enemy does not have eyes, light will have no effect on them.</value>
+  </data>
+  <data name="Tip004" xml:space="preserve">
+    <value>Tip: Off screen enemies have arrows that point to them.</value>
+  </data>
+  <data name="Tip005" xml:space="preserve">
+    <value>Tip: Shooting enemies to the rhythm boosts your score.</value>
+  </data>
+  <data name="Tip006" xml:space="preserve">
+    <value>Tip: The intensity of the background music reflects your performance.</value>
+  </data>
+  <data name="Tip007" xml:space="preserve">
+    <value>Tip: Enemies that are grey are immune to attack.</value>
+  </data>
+  <data name="Tip008" xml:space="preserve">
+    <value>Tip: Don't stand between two Unclean Rots.</value>
+  </data>
+  <data name="Tip009" xml:space="preserve">
+    <value>Tip: Sometimes it is best to not kill the leader first.</value>
+  </data>
+  <data name="Tip010" xml:space="preserve">
+    <value>Tip: Remember to use your light to keep enemies at bay.</value>
   </data>
   <data name="Tutorial_1" xml:space="preserve">
     <value>Use the Left Stick to move and the Right Stick to fire.</value>

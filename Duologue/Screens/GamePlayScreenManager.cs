@@ -256,6 +256,7 @@ namespace Duologue.Screens
                 gameOver.Visible = true;
                 gameOver.Enabled = true;
                 currentState = GamePlayState.GameOver;
+                TutorialManager.TipPopUp();
             }
             else if (!t && currentState == GamePlayState.GameOver)
             {
@@ -333,6 +334,7 @@ namespace Duologue.Screens
             {
                 try
                 {
+                    CleanEnemies();
                     // Get the next wave
                     LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
                     LocalInstanceManager.CurrentGameWave.CurrentWavelet = 0;

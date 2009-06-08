@@ -1333,12 +1333,12 @@ namespace Duologue.Waves
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_GloopPrince;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = MathHelper.Pi;
-            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 2] = 4;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 2] = 6;
             Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 2] = ColorPolarity.Positive;
 
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 0;
-            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 4;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 6;
             Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Negative;
             #endregion
 
@@ -1429,7 +1429,7 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[2].Enemies.Length - 1; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
-                Wavelets[2].StartAngle[i] = i * MathHelper.Pi / (float)Wavelets[2].Enemies.Length + 3f * MathHelper.PiOver4;
+                Wavelets[2].StartAngle[i] = 5f * MathHelper.PiOver4;//i * MathHelper.Pi / (float)Wavelets[2].Enemies.Length + 3f * MathHelper.PiOver4;
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_KingGloop;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 5f * MathHelper.PiOver4;
@@ -1619,7 +1619,7 @@ namespace Duologue.Waves
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                     Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / 2f;
-                    Wavelets[1].StartHitPoints[i] = 2;
+                    Wavelets[1].StartHitPoints[i] = 1;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
                     else
@@ -1656,7 +1656,7 @@ namespace Duologue.Waves
                 {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                     Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 2f;
-                    Wavelets[2].StartHitPoints[i] = 2;
+                    Wavelets[2].StartHitPoints[i] = 1;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
                     else
@@ -2863,12 +2863,17 @@ namespace Duologue.Waves
             for (int i = Wavelets[0].Enemies.Length - 4; i < Wavelets[0].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
+                {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+                    Wavelets[0].StartHitPoints[i] = 10;
+                }
                 else
+                {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
+                    Wavelets[0].StartHitPoints[i] = 1;
+                }
                 Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
                 Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / 4f;
-                Wavelets[0].StartHitPoints[i] = 20;
             }
             #endregion
             // Second wavelet
@@ -2901,11 +2906,15 @@ namespace Duologue.Waves
             for (int i = Wavelets[2].Enemies.Length - 4; i < Wavelets[2].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
+                }
                 else
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                }
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 4f;
-                Wavelets[2].StartHitPoints[i] = 10;
+                Wavelets[2].StartHitPoints[i] = 1;
             }
             #endregion
 
