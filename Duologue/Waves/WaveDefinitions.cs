@@ -1368,7 +1368,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(25, 0);
-            Wavelets[0].SongID = SongID.WinOne;
+            Wavelets[0].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[0].Enemies.Length - 1; i++)
             {
                 if (i < 20)
@@ -1394,7 +1394,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(30, 0);
-            Wavelets[1].SongID = SongID.WinOne;
+            Wavelets[1].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[1].Enemies.Length - 1; i++)
             {
                 if (i < 24)
@@ -1425,7 +1425,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(50, 0, ColorPolarity.Negative);
-            Wavelets[2].SongID = SongID.WinOne;
+            Wavelets[2].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[2].Enemies.Length - 1; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
