@@ -2491,11 +2491,22 @@ namespace Duologue.Waves
                 if (i >= Wavelets[2].Enemies.Length - 2) {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
                     Wavelets[2].StartHitPoints[i] = 15;
+                    if (MWMathHelper.IsEven(i))
+                        Wavelets[2].StartAngle[i] = MathHelper.PiOver2;
+                    else
+                        Wavelets[2].StartAngle[i] = 3f * MathHelper.PiOver2;
+
                 }
                 else if (i / 4f == i / 4)
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 else if (i / 3f == i / 3)
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    if (MWMathHelper.IsEven(i))
+                        Wavelets[2].StartAngle[i] = MathHelper.PiOver2;
+                    else
+                        Wavelets[2].StartAngle[i] = 3f * MathHelper.PiOver2;
+                }
                 else if (i / 5f == i / 5)
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 else
