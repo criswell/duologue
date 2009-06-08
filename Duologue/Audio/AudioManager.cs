@@ -12,12 +12,20 @@ namespace Duologue.Audio
         Credits, Ultrafix, WinOne, SecondChance, SuperbowlIntro, Superbowl, Tr8or }
 
     //keep from having to tweak floats and add levels in many places
-    public struct Loudness
+    //stupidly, these values are from 0f to 100f
+    //I swear to god, I ended up with that from following an MS tutorial
+    //In fact, I've never tried creating a map of 0 to 1 in XACT.
+    public struct VolumePresets
     {
         public const float Silent = 0f;
         public const float Quiet = 40f;
         public const float Normal = 80f;
         public const float Full = 100f;
+
+        public const float SelectMenu = 80f;
+        public const float Credits = 80f;
+        public const float Tr8or = 80f; //Medals Display
+
     }
 
     /// <summary>
@@ -31,6 +39,8 @@ namespace Duologue.Audio
         //got 3433.039 by visual measure of one song, seems to be working
         public const float BPM170 = 1000f * 60f / 170f;
 
+        public static Dictionary<SongID, float> VolumeOverrideTable =
+            new Dictionary<SongID,float>();
 
         protected AudioHelper helper;
         protected SoundEffects soundEffects;
@@ -66,6 +76,10 @@ namespace Duologue.Audio
             helper = new AudioHelper(Game, engine);
             soundEffects = new SoundEffects();
 
+            VolumeOverrideTable.Add(SongID.SelectMenu, VolumePresets.SelectMenu);
+            VolumeOverrideTable.Add(SongID.Credits, VolumePresets.Credits);
+            VolumeOverrideTable.Add(SongID.Tr8or, VolumePresets.Tr8or);
+
             Game.Components.Add(helper);
             //Game.Components.Add(soundEffects);
             music = new MusicFactory(this);
@@ -97,7 +111,15 @@ namespace Duologue.Audio
 
         public void FadeIn(SongID ID)
         {
-            songMap[ID].FadeIn(Loudness.Normal);
+            if (VolumeOverrideTable.ContainsKey(ID))
+            {
+                AudioHelper.SetMusicVolume(0f);
+                PlaySong(ID, VolumeOverrideTable[ID]);
+            }
+            else
+            {
+                songMap[ID].FadeIn(VolumePresets.Normal);
+            }
             if (songMap[ID].hyper != null)
                 songMap[ID].hyper.SetIntensity(
                     ServiceLocator.GetService<IntensityNotifier>().Intensity);
@@ -110,6 +132,18 @@ namespace Duologue.Audio
             {
                 songMap[ID].Play();
                 PlayingSong = ID;
+            }
+        }
+
+        public void PlaySong(SongID ID, float volume)
+        {
+            if (!SongIsPlaying(ID))
+            {
+                PlaySong(ID);
+                if (songMap[ID].fader != null)
+                {
+                    songMap[ID].fader.ChangeVolume(volume, 1, false);
+                }
             }
         }
 

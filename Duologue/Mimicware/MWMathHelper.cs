@@ -131,6 +131,8 @@ namespace Mimicware
             return value;
         }
 
+        //Looks a lot like what MathHelper.Clamp does, doesn't it?
+        //With some casting, we could just use that
         public static int LimitToRange(int value, int min, int max)
         {
             if (value < min)

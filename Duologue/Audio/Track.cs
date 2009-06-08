@@ -10,14 +10,10 @@ namespace Duologue.Audio
     {
         public string SoundbankName;
         public Q[] Cues;
-        public float Volume = Loudness.Normal;
+        public float Volume = VolumePresets.Normal;
         public bool VolumeChanging;
         public bool Enabled = true;
         public int QCount;
-
-        //things relevant to songs with volume fades
-        //public VolumeChangeWidget Fade;
-        //protected int MILLISECONDS_FADE = 500;
 
         public Track()
         {
@@ -59,7 +55,7 @@ namespace Duologue.Audio
         /*
         public void FadeIn(float vol)
         {
-            SetFade(Loudness.Quiet, Loudness.Normal, MILLISECONDS_FADE); //FIXME
+            SetFade(VolumePresets.Quiet, VolumePresets.Normal, MILLISECONDS_FADE); //FIXME
             Fade.FadeIn();
         }
          */
