@@ -529,6 +529,96 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tip: To kill Spawners, shoot them as they beam in reinforcements..
+        /// </summary>
+        internal static string Tip001 {
+            get {
+                return ResourceManager.GetString("Tip001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: Some enemies can change their color. Be sure to watch for it..
+        /// </summary>
+        internal static string Tip002 {
+            get {
+                return ResourceManager.GetString("Tip002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: If an enemy does not have eyes, light will have no effect on them..
+        /// </summary>
+        internal static string Tip003 {
+            get {
+                return ResourceManager.GetString("Tip003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: Off screen enemies have arrows that point to them..
+        /// </summary>
+        internal static string Tip004 {
+            get {
+                return ResourceManager.GetString("Tip004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: Shooting enemies to the rhythm boosts your score..
+        /// </summary>
+        internal static string Tip005 {
+            get {
+                return ResourceManager.GetString("Tip005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: The intensity of the background music reflects your performance..
+        /// </summary>
+        internal static string Tip006 {
+            get {
+                return ResourceManager.GetString("Tip006", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: Enemies that are grey are immune to attack..
+        /// </summary>
+        internal static string Tip007 {
+            get {
+                return ResourceManager.GetString("Tip007", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: Don&apos;t stand between two Unclean Rots..
+        /// </summary>
+        internal static string Tip008 {
+            get {
+                return ResourceManager.GetString("Tip008", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: Sometimes it is best to not kill the leader first..
+        /// </summary>
+        internal static string Tip009 {
+            get {
+                return ResourceManager.GetString("Tip009", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: Remember to use your light to keep enemies at bay..
+        /// </summary>
+        internal static string Tip010 {
+            get {
+                return ResourceManager.GetString("Tip010", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use the Left Stick to move and the Right Stick to fire..
         /// </summary>
         internal static string Tutorial_1 {
