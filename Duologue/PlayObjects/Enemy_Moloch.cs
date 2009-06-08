@@ -1000,6 +1000,15 @@ namespace Duologue.PlayObjects
                         }
                         catch { }
                     }
+                    else
+                    {
+                        try
+                        {
+                            sfxi_TubeExplode.Stop();
+                            sfxi_TubeExplode.Play();
+                        }
+                        catch { }
+                    }
                 }
             }
             else

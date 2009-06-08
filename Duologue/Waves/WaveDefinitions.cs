@@ -2863,12 +2863,17 @@ namespace Duologue.Waves
             for (int i = Wavelets[0].Enemies.Length - 4; i < Wavelets[0].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
+                {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+                    Wavelets[0].StartHitPoints[i] = 10;
+                }
                 else
+                {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
+                    Wavelets[0].StartHitPoints[i] = 1;
+                }
                 Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
                 Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / 4f;
-                Wavelets[0].StartHitPoints[i] = 20;
             }
             #endregion
             // Second wavelet
@@ -2901,11 +2906,15 @@ namespace Duologue.Waves
             for (int i = Wavelets[2].Enemies.Length - 4; i < Wavelets[2].Enemies.Length; i++)
             {
                 if (MWMathHelper.IsEven(i))
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
+                }
                 else
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                }
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 4f;
-                Wavelets[2].StartHitPoints[i] = 10;
+                Wavelets[2].StartHitPoints[i] = 1;
             }
             #endregion
 

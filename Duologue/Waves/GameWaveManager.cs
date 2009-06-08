@@ -54,6 +54,7 @@ namespace Duologue.Waves
 
         private const float medal_WetFeet = 0.25f;
         private const float medal_Experienced = 0.5f;
+        private const float medal_KeyParty = 0.5f;
         #endregion
 
         #region Fields
@@ -127,6 +128,14 @@ namespace Duologue.Waves
                 String.Format("Current progress: {0}/{1}={2}", lastMajorNumber, waveDef.TotalNumberOfMajorWaves,
                     (float)lastMajorNumber / (float)waveDef.TotalNumberOfMajorWaves));
 
+            // Figure out number of players
+            int players = 0;
+            for (int i = 0; i < LocalInstanceManager.MaxNumberOfPlayers; i++)
+            {
+                if (LocalInstanceManager.Players[i].Active)
+                    players++;
+            }
+
             if ((float)lastMajorNumber / (float)waveDef.TotalNumberOfMajorWaves > medal_WetFeet)
             {
                 LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.WetFeet);
@@ -134,6 +143,11 @@ namespace Duologue.Waves
             if ((float)lastMajorNumber / (float)waveDef.TotalNumberOfMajorWaves > medal_Experienced)
             {
                 LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.Experienced);
+            }
+            if ((float)lastMajorNumber / (float)waveDef.TotalNumberOfMajorWaves > medal_KeyParty &&
+                players > 3)
+            {
+                LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.KeyParty);
             }
 
             int[] k = IncrementWaveNumbers(lastMajorNumber, lastMinorNumber);
@@ -148,6 +162,8 @@ namespace Duologue.Waves
             catch
             {
                 LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.TourOfDuty);
+                if (players > 1)
+                    LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.BFF);
                 throw;
             }
         }
@@ -208,8 +224,16 @@ namespace Duologue.Waves
             thisWave.Wavelets[thisWave.CurrentWavelet] =
                 new Wavelet(NumEnemies, hitsToKillEnemy);
 
+            // Possible beat engine songs
+            // Dance8ths, LandOfSand16ths, 
+            // Ultrafix, WinOne, SecondChance
+            // SecondChance - Small number of levels, good for boss battles?
+            // WinOne - Good number of levels, synth guitar, breath, good for long usage
+            // Ultrafix - Decent number of levels, hammer "ping", highly repetative
+            // Dance8ths - Small number of levels, guitar rock track, highly repetitive
+            // LandOfSand16ths - Kind of 80s sound synth piano, good number of levels
             //if (MWMathHelper.CoinToss())
-                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Dance8ths;
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Superbowl;
             //else
                 //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
 
