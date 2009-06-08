@@ -2299,7 +2299,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(10, 0, ColorPolarity.Negative);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2309,7 +2309,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(20, 0, ColorPolarity.Positive);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2319,7 +2319,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(40, 0);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2357,7 +2357,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(40, 0);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[0].Enemies.Length;
@@ -2375,7 +2375,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(40, 0);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[1].Enemies.Length;
@@ -2393,7 +2393,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(40, 0);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[2].Enemies.Length;
@@ -2439,7 +2439,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(40, 1, ColorPolarity.Negative);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2453,7 +2453,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(40, 0);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[1].Enemies.Length;
@@ -2476,7 +2476,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(40, 0);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / Wavelets[2].Enemies.Length;
@@ -2528,7 +2528,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(50, 1);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length - 20; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2562,7 +2562,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(50, 1);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length - 20; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2596,7 +2596,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(50, 1);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length - 20; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2653,7 +2653,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(50, 0);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length - 10; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2681,7 +2681,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(50, 0);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length - 10; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2717,7 +2717,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(50, 0);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length - 20; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2776,7 +2776,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(50, 1);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2790,7 +2790,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(50, 1);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2804,7 +2804,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(50, 1);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2853,7 +2853,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(50, 2);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2879,7 +2879,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(50, 2);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2893,7 +2893,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(50, 2);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2944,7 +2944,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(50, 0);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2958,7 +2958,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(50, 2);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -2972,7 +2972,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(50, 0);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -3016,7 +3016,7 @@ namespace Duologue.Waves
             // First wavelet
             #region
             Wavelets[0] = new Wavelet(50, 0);
-            Wavelets[0].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -3034,7 +3034,7 @@ namespace Duologue.Waves
             // Second wavelet
             #region
             Wavelets[1] = new Wavelet(50, 2);
-            Wavelets[1].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
@@ -3052,7 +3052,7 @@ namespace Duologue.Waves
             // Third wavelet
             #region
             Wavelets[2] = new Wavelet(50, 2);
-            Wavelets[2].SongID = SongID.Ultrafix; // FIXME DIFFERENT MUSIC?
+            Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
