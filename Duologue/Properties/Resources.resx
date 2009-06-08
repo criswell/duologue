@@ -247,7 +247,7 @@
     <value>Resume the battle</value>
   </data>
   <data name="PauseScreen_WaveNum" xml:space="preserve">
-    <value>Wave {0}-{1}</value>
+    <value>Wave {0}-{1}.{2}</value>
   </data>
   <data name="PlayerSelect_ConnectController" xml:space="preserve">
     <value>Connect controller</value>
