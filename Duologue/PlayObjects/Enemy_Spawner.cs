@@ -40,9 +40,9 @@ namespace Duologue.PlayObjects
         private const string filename_Base = "Enemies/spawner/spawner-base";
         private const string filename_Lights = "Enemies/spawner/spawner-lights{0}";
         private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
-        private const float volume_Explode = 0.95f;
+        private const float volume_Explode = 0.25f;
         private const string filename_BeamIn = "Audio/PlayerEffects/enemy-beam-in";
-        private const float volume_BeamIn = 0.85f;
+        private const float volume_BeamIn = 0.35f;
 
         private const int numOfLightLevels = 3;
 

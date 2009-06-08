@@ -35,7 +35,7 @@ namespace Duologue.PlayObjects
         private const string filename_bubbles = "Audio/Gloop/bubbles1";
 
         private const string filename_Pop = "Audio/PlayerEffects/pop";
-        private const float volume_Pop = 1f;
+        private const float volume_Pop = 0.25f;
 
         private const double minSize = 0.5;
         private const double maxSize = 1.0;
@@ -54,7 +54,7 @@ namespace Duologue.PlayObjects
         /// The min and max bubble volume
         /// </summary>
         private const double minBubbleVolume = 0.01;
-        private const double maxBubbleVolume = 0.08;
+        private const double maxBubbleVolume = 0.04;
 
         private const float deathLifetime = 0.7f;
 
@@ -190,7 +190,8 @@ namespace Duologue.PlayObjects
 
             sfx_Bubble = InstanceManager.AssetManager.LoadSoundEffect(filename_bubbles);
             volume_CurrentBubble = (float)minBubbleVolume;
-            sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+            sfxi_Bubble = null;
+            //sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
             sfx_Pop = InstanceManager.AssetManager.LoadSoundEffect(filename_Pop);
 
             scale = (float)MWMathHelper.GetRandomInRange(minSize, maxSize);
@@ -239,6 +240,7 @@ namespace Duologue.PlayObjects
             return new String[]
             {
                 filename_bubbles,
+                filename_Pop
             };
         }
 
@@ -527,12 +529,15 @@ namespace Duologue.PlayObjects
                         highlightAlphaDelta = defaultHighlightAlphaDelta;
                     }
                 }
-
-                if (sfxi_Bubble.State == SoundState.Stopped || sfxi_Bubble.State == SoundState.Paused)
+                if (sfxi_Bubble == null)
+                {
+                    sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+                }
+                else if (sfxi_Bubble.State == SoundState.Stopped || sfxi_Bubble.State == SoundState.Paused)
                 {
                     volume_CurrentBubble = (float)MWMathHelper.GetRandomInRange(minBubbleVolume, maxBubbleVolume);
                     sfxi_Bubble.Volume = volume_CurrentBubble;
-                    sfxi_Bubble.Play();
+                    sfxi_Bubble.Resume();
                 }
             }
         }

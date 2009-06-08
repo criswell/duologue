@@ -333,6 +333,7 @@ namespace Duologue.Screens
             {
                 try
                 {
+                    CleanEnemies();
                     // Get the next wave
                     LocalInstanceManager.CurrentGameWave = gameWaveManager.GetNextWave();
                     LocalInstanceManager.CurrentGameWave.CurrentWavelet = 0;
