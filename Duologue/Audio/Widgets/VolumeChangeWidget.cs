@@ -11,8 +11,10 @@ namespace Duologue.Audio.Widgets
 {
     public class VolumeChangeWidget
     {
+        private const bool ControlVolumeByMusicCategory = true;
+
         //Most recently commanded Volume
-        public float Volume = Loudness.Normal;
+        public float Volume = VolumePresets.Normal;
 
         //This number should be in a fairly tight window - smaller numbers make a fade tax the CPU more,
         //larger numbers compromise the smoothness of the audio transition
@@ -39,19 +41,28 @@ namespace Duologue.Audio.Widgets
         //allow for re-use of this widget over the life of a song
         protected void init()
         {
-            StartVolume = Loudness.Quiet;
-            Volume = Loudness.Quiet;
+            StartVolume = VolumePresets.Quiet;
+            Volume = VolumePresets.Quiet;
         }
 
         protected void SetTimingVars(int milliseconds)
         {
             milliseconds = MWMathHelper.LimitToRange(milliseconds, 1, 5000);
             steps = milliseconds / UPDATE_MILLISECONDS;
+            steps = MWMathHelper.LimitToRange(steps, 1, 1000); 
+            //left room in case UPDATE_MILLISECONDS is changed
             stepAmount = (EndVolume - StartVolume) / steps;
         }
 
         public void ChangeVolume(float newVol, int milliseconds, bool stop)
         {
+            if (milliseconds == 0) //immediate mode
+            {
+                for (int t = 0; t < parentSong.TrackCount; t++)
+                    parentSong.Tracks[t].ChangeVolume(newVol);
+                Volume = newVol;
+            }
+
             if (newVol != Volume)
             {
                 StartVolume = MWMathHelper.LimitToRange(Volume, 0f, 100f);
@@ -73,7 +84,7 @@ namespace Duologue.Audio.Widgets
 
         public void FadeIn(int milliseconds)
         {
-            FadeIn(Loudness.Normal, milliseconds);
+            FadeIn(VolumePresets.Normal, milliseconds);
         }
 
         public void FadeIn()
@@ -83,7 +94,7 @@ namespace Duologue.Audio.Widgets
 
         public void FadeOut(int milliseconds)
         {
-            ChangeVolume(Loudness.Quiet, milliseconds, true);
+            ChangeVolume(VolumePresets.Quiet, milliseconds, true);
         }
 
         public void FadeOut()
@@ -106,6 +117,11 @@ namespace Duologue.Audio.Widgets
                         parentSong.SoundBankName + " " + Volume.ToString();
                     Debug.WriteLine(message);
 
+                    if (ControlVolumeByMusicCategory)
+                    {
+                        float floatVolume = Volume/100f;
+                        AudioHelper.SetMusicVolume(floatVolume);
+                    }
                     for (int t = 0; t < song.TrackCount; t++)
                         song.Tracks[t].ChangeVolume(Volume);
 
@@ -119,6 +135,7 @@ namespace Duologue.Audio.Widgets
                         song.Stop();
                         StopAfterChange = false;
                     }
+
                 }
             }
         }

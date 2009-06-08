@@ -30,7 +30,7 @@ namespace Duologue.Audio
         public SoundEffectThing(string cue)
         {
             CueName = cue;
-            Volume = Loudness.Normal;
+            Volume = VolumePresets.Normal;
         }
         public SoundEffectThing(string cue, float vol)
         {

@@ -202,7 +202,10 @@ namespace Duologue.Audio
                     Tracks[t].Cues[0].Play();
                 }
                 if (null == fader)
+                {
                     fader = new VolumeChangeWidget(this);
+                    fader.Volume = VolumePresets.Full;
+                }
             }
             if (!Managed)
             {
@@ -298,7 +301,7 @@ namespace Duologue.Audio
                 }
                 for (int t = 0; t < TrackCount; t++)
                 {
-                    Tracks[t].Cues[0].ChangeVolume(Loudness.Silent);
+                    Tracks[t].Cues[0].ChangeVolume(VolumePresets.Silent);
                 }
                 fader.FadeIn();
                 Enabled = true;
@@ -328,7 +331,7 @@ namespace Duologue.Audio
                         Play();
                         for (int t = 0; t < TrackCount; t++)
                         {
-                            Tracks[t].Cues[0].ChangeVolume(Loudness.Silent);
+                            Tracks[t].Cues[0].ChangeVolume(VolumePresets.Silent);
                         }
                     }
                     else if (Paused)
