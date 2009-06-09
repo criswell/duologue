@@ -56,5 +56,15 @@ namespace Duologue.Audio
         {
             ChangeIntensity(0);
         }
+
+        public void ResetIntensity()
+        {
+            //if a song is playing, it will assign an intensity
+            //otherwise, it will stay zero. Well, good!
+            intensity = 0f;
+            Detensify();
+        }
+
+
     }
 }

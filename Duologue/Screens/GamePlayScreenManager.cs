@@ -227,6 +227,7 @@ namespace Duologue.Screens
                 {
                     //FIXME what if some other song is playing?
                     //ServiceLocator.GetService<AudioManager>().FadeOut(lastSongID);
+                    ServiceLocator.GetService<IntensityNotifier>().ResetIntensity();
                     LocalInstanceManager.Enemies = null;
                     LocalInstanceManager.CurrentNumberEnemies = 0;
                 }
@@ -250,7 +251,7 @@ namespace Duologue.Screens
             if (t && currentState != GamePlayState.GameOver)
             {
                 gameOver.Reset();
-                ServiceLocator.GetService<AudioManager>().GameOver();
+                ServiceLocator.GetService<AudioManager>().FadeOutAllSongs();
                 // FIXME
                 // Should probably do some gameover music here
                 gameOver.Visible = true;

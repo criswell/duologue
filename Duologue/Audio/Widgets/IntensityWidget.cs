@@ -60,9 +60,21 @@ namespace Duologue.Audio.Widgets
             {
                 parentSong.Tracks[t].Enabled = intensityMap[intensity - 1, t];
             }
-            ServiceLocator.GetService<IntensityNotifier>().Intensity = 
-                ((float)intensity) / ((float)maxIntensity);
 
+            if (parentSong.Playing)
+            {
+                notifier.Intensity = intensity / maxIntensity;
+            }
+            else
+            {
+                SetIntensity(notifier.Intensity);
+            }
+
+        }
+
+        public float PercentIntensity()
+        {
+            return ((float)intensity) / ((float)maxIntensity);
         }
 
         public void Attach()
@@ -72,6 +84,7 @@ namespace Duologue.Audio.Widgets
                 attached = true;
                 notifier = ServiceLocator.GetService<IntensityNotifier>();
                 notifier.Changed += new IntensityEventHandler(UpdateIntensity);
+                //Get the current intensity
             }
             else
             {

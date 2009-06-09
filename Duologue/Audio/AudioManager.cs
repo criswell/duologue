@@ -79,7 +79,7 @@ namespace Duologue.Audio
             base.Initialize();
         }
 
-        public void GameOver()
+        public void FadeOutAllSongs()
         {
             songMap.Values.ToList().ForEach(song =>
                 {
@@ -187,6 +187,22 @@ namespace Duologue.Audio
                 }
             }
             return retVal;
+        }
+
+        protected float PlayingIntensity()
+        {
+            if (songMap[PlayingSong].hyper == null)
+            {
+                return 0f;
+            }
+            if (this.PlayingSong == SongID.None)
+            {
+                return 0f;
+            }
+            else
+            {
+                return songMap[PlayingSong].hyper.PercentIntensity();
+            }
         }
 
         /// <summary>
