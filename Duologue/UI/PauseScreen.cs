@@ -708,7 +708,8 @@ namespace Duologue.UI
                 String.Format(
                     Resources.PauseScreen_WaveNum,
                     LocalInstanceManager.CurrentGameWave.MajorWaveNumber,
-                    LocalInstanceManager.CurrentGameWave.MinorWaveNumber),
+                    LocalInstanceManager.CurrentGameWave.MinorWaveNumber,
+                    LocalInstanceManager.CurrentGameWave.CurrentWavelet),
                     wavePosition,
                 Color.BlanchedAlmond,
                 RenderSpriteBlendMode.AlphaBlendTop);

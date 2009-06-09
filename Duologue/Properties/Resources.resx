@@ -202,7 +202,7 @@
     <value>Killed 39,516 enemies</value>
   </data>
   <data name="Medal_Desc_TourOfDuty" xml:space="preserve">
-    <value>Completed the campaign in single player</value>
+    <value>Completed the campaign</value>
   </data>
   <data name="Medal_Desc_WetFeet" xml:space="preserve">
     <value>Completed 25% of the campaign</value>
@@ -247,7 +247,7 @@
     <value>Resume the battle</value>
   </data>
   <data name="PauseScreen_WaveNum" xml:space="preserve">
-    <value>Wave {0}-{1}</value>
+    <value>Wave {0}-{1}.{2}</value>
   </data>
   <data name="PlayerSelect_ConnectController" xml:space="preserve">
     <value>Connect controller</value>

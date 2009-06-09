@@ -93,7 +93,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// How far we can go outside the screen before we should stop
         /// </summary>
-        private const float outsideScreenMultiplier = 1.1f;
+        private const float outsideScreenMultiplier = 0.8f;
 
         /// <summary>
         /// The radius multiplier for determining radius from size
