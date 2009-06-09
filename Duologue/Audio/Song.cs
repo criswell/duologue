@@ -13,6 +13,10 @@ namespace Duologue.Audio
     {
         protected void these_are_the_cases_that_need_to_be_handled()
         {
+            //There are two methods to start a song:
+            //Play() and
+            //FadeIn(float volume)
+            //They both take care of this condition
             if (Managed)
             {
                 if (null == fader)
@@ -20,8 +24,23 @@ namespace Duologue.Audio
             }
             if (!Managed)
             {
+                //There are two methods to start a song:
+                //Play() and
+                //FadeIn(float volume)
+                //They both take care of this condition
+                //(The removal of a constructor with no timing parameter
+                // and required change to this code points out the trouble with doing this.)
                 if (null == beater)
-                    beater = new BeatWidget(this, 1);
+                    beater = new BeatWidget(this, 1, AudioConstants.BPM140);
+
+                //Shouldn't be needed
+                //Just because a song isn't Managed doesn't mean
+                //it's an intensity song, and, if you do this, it will
+                //try to be one. The creation of an intensity song
+                //involves calling the proper constructor with the proper
+                //arguments passed in.
+                //And there aren't any code paths that access hyper outside
+                //of intensity handling.
                 if (null == hyper)
                     hyper = new IntensityWidget(this, new bool[1, 1]);
             }
@@ -209,8 +228,9 @@ namespace Duologue.Audio
             }
             if (!Managed)
             {
+                //this should never happen. The BPM is a wild guess
                 if (null == beater)
-                    beater = new BeatWidget(this, 1);
+                    beater = new BeatWidget(this, 1, AudioConstants.BPM140);
             }
 
             playing = true;
@@ -293,7 +313,7 @@ namespace Duologue.Audio
 
         public void FadeIn(float volume)        
         {
-            AudioHelper.SetTimedMusicVolume(0f, 300);
+            AudioHelper.SetTimedMusicVolume(VolumePresets.Silent, AudioConstants.PREFADE_MUTE_MS);
             if (Managed)
             {
                 for (int t = 0; t < TrackCount; t++)

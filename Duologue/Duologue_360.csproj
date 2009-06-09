@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="AchievementSystem\Achievement.cs" />
     <Compile Include="AchievementSystem\AchievementManager.cs" />
+    <Compile Include="Audio\AudioConstants.cs" />
     <Compile Include="Audio\AudioHelper.cs" />
     <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Audio\IntensityNotifier.cs" />

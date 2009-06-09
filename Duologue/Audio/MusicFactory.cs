@@ -636,8 +636,8 @@ namespace Duologue.Audio
                                              { off, on, on, on }
                                          };
 
-            Superbowl = new Song(manager.Game, sbSounds, sbWaves, 
-                SBarr, SBVolumesFlattened, AudioManager.BPM170);
+            Superbowl = new Song(manager.Game, sbSounds, sbWaves,
+                SBarr, SBVolumesFlattened, AudioConstants.BPM170);
 
             //Dance8ths
             string[,] D8arr = { 
@@ -656,7 +656,7 @@ namespace Duologue.Audio
                                   {on, on, on, on, on}
                               };
             Dance8ths = new Song(manager.Game, dance8thsSounds, dance8thsWaves,
-                D8arr, D8volumes, AudioManager.BPM140);
+                D8arr, D8volumes, AudioConstants.BPM140);
 
             //LandOfSand16ths
             string[,] LoS16arr = { 
@@ -684,7 +684,7 @@ namespace Duologue.Audio
                                   {on, off, off, on, on, on, on},
                               };
             LandOfSand16ths = new Song(manager.Game, LoS16Sounds, LoS16Waves,
-                LoS16arr, LoS16volumes, AudioManager.BPM140);
+                LoS16arr, LoS16volumes, AudioConstants.BPM140);
 
             //Ultrafix
             string[,] UFarr = {
@@ -702,7 +702,7 @@ namespace Duologue.Audio
                                 };
 
             Ultrafix = new Song(manager.Game, UFSounds, UFWaves,
-                UFarr, UFvolumes, AudioManager.BPM120);
+                UFarr, UFvolumes, AudioConstants.BPM120);
 
             //WinOne
             string[,] W1arr = {
@@ -745,7 +745,7 @@ namespace Duologue.Audio
                                 };
 
             WinOne = new Song(manager.Game, WinOneSounds, WinOneWaves,
-                W1arr, W1volumes, AudioManager.BPM140);
+                W1arr, W1volumes, AudioConstants.BPM140);
 
             //SecondChance
             string[,] SCarr = {
@@ -764,7 +764,7 @@ namespace Duologue.Audio
                                 };
 
             SecondChance = new Song(manager.Game, SecondChanceSounds, SecondChanceWaves,
-                SCarr, SCvolumes, AudioManager.BPM140);
+                SCarr, SCvolumes, AudioConstants.BPM140);
 
             //Addition of songs to Game Components
             manager.Game.Components.Add(SelectSong);

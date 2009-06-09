@@ -70,7 +70,6 @@ namespace Duologue.Audio
             engineFileName = engineName;
             engine = new AudioEngine(engineFileName, lookahead, Guid.Empty);
             musicCategory = engine.GetCategory("Music");
-            SetMusicVolume(0.5f);
         }
 
         protected static void ProcessPlayedCues()
@@ -184,26 +183,6 @@ namespace Duologue.Audio
             }
         }
 
-        /*
-         * testing as candidates for expungement grs 2009.06.08
-        public static void Play(Q q, float volume)
-        {
-            Play(q, true);
-            cues[q.SoundBankName][q.CueName].SetVariable(volumeName, volume);
-            //we *could* range limit the volume before making that call
-        }
-        public static void Play(Song song)
-        {
-            for (int t = 0; t < song.TrackCount; t++)
-            {
-                for (int q = 0; q < song.Tracks[t].QCount; q++)
-                {
-                    Play(song.Tracks[t].Cues[q], song.Tracks[t].Volume);
-                }
-            }
-            UpdateCues(song);
-        }
-         */
 
         public static void Pause(Q q)
         {

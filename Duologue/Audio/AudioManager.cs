@@ -11,34 +11,11 @@ namespace Duologue.Audio
     public enum SongID { None, SelectMenu, Dance8ths, LandOfSand16ths, 
         Credits, Ultrafix, WinOne, SecondChance, SuperbowlIntro, Superbowl, Tr8or }
 
-    //keep from having to tweak floats and add levels in many places
-    //stupidly, these values are from 0f to 100f
-    //I swear to god, I ended up with that from following an MS tutorial
-    //In fact, I've never tried creating a map of 0 to 1 in XACT.
-    public struct VolumePresets
-    {
-        public const float Silent = 0f;
-        public const float Quiet = 40f;
-        public const float Normal = 80f;
-        public const float Full = 100f;
-
-        public const float SelectMenu = 71f;
-        public const float Credits = 71f;
-        public const float Tr8or = 71f; //Medals Display
-        public const float Ultrasux = 72f;
-
-    }
-
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
     public class AudioManager : Microsoft.Xna.Framework.GameComponent, IService
     {
-        //constants for milliseconds per beat
-        public const float BPM120 = 1000f * 60f / 120f;
-        public const float BPM140 = (3433.039f / 8.000f);
-        //got 3433.039 by visual measure of one song, seems to be working
-        public const float BPM170 = 1000f * 60f / 170f;
 
         public static Dictionary<SongID, float> VolumeOverrideTable =
             new Dictionary<SongID,float>();
@@ -97,6 +74,8 @@ namespace Duologue.Audio
             songMap.Add(SongID.Superbowl, music.Superbowl);
             songMap.Add(SongID.Tr8or, music.Tr8or);
 
+            AudioHelper.SetMusicVolume(AudioConstants.MusicCategoryDefaultVolume);
+
             base.Initialize();
         }
 
@@ -140,12 +119,10 @@ namespace Duologue.Audio
         {
             if (!SongIsPlaying(ID))
             {
-                if (songMap[ID].fader == null)
-                {
-                }
                 PlaySong(ID);
                 if (songMap[ID].fader != null)
                 {
+                    //probably an erroneous call. Hope this doesn't get used.
                     songMap[ID].fader.ChangeVolume(volume, 1, false);
                 }
             }

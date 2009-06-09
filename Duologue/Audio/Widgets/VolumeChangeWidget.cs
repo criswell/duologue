@@ -14,16 +14,6 @@ namespace Duologue.Audio.Widgets
         //Most recently commanded Volume
         public float Volume = VolumePresets.Normal;
 
-        //This number should be in a fairly tight window - smaller numbers make a fade tax the CPU more,
-        //larger numbers compromise the smoothness of the audio transition
-        public const int UPDATE_MILLISECONDS = 50;
-        //A "client" command only dictates the duration of the volume transition,
-        //The rest is calculated by this class
-
-        //or maybe we don't let the client dictate that...
-        public const int FADE_IN_TIME = 1300;
-        public const int FADE_OUT_TIME = 500;
-
         protected int steps;
         protected float stepAmount;
         protected double previousVolChangeTime;
@@ -44,15 +34,19 @@ namespace Duologue.Audio.Widgets
         protected void init()
         {
             StartVolume = VolumePresets.Quiet;
-            Volume = VolumePresets.Quiet;
+            Volume = VolumePresets.Full; //Full is really the truth, right? Until someone calls a change!
         }
 
         protected void SetTimingVars(int milliseconds)
         {
-            milliseconds = MWMathHelper.LimitToRange(milliseconds, 1, 5000);
-            steps = milliseconds / UPDATE_MILLISECONDS;
-            steps = MWMathHelper.LimitToRange(steps, 1, 1000); 
-            //left room in case UPDATE_MILLISECONDS is changed
+            milliseconds = MWMathHelper.LimitToRange(
+                milliseconds, AudioConstants.MIN_VOL_CHANGE_MS, AudioConstants.MAX_VOL_CHANGE_MS);
+
+            steps = milliseconds / AudioConstants.VOL_CHANGE_UPDATE_MS;
+
+            steps = MWMathHelper.LimitToRange(
+                steps, AudioConstants.MIN_VOL_CHANGE_STEPS, AudioConstants.MAX_VOL_CHANGE_STEPS); 
+
             stepAmount = (EndVolume - StartVolume) / steps;
         }
 
@@ -65,28 +59,34 @@ namespace Duologue.Audio.Widgets
                 Volume = newVol;
             }
 
+            //this comparison has given me anguish when I magically set the volume
+            //for a particular song at the initial Volume set in init() above
+            //Can't I just do the code inside this conditional regardless?
+            
             if (newVol != Volume)
             {
-                StartVolume = MWMathHelper.LimitToRange(Volume, 0f, 100f);
-                EndVolume = MWMathHelper.LimitToRange(newVol, 0f, 100f);
+                StartVolume = MWMathHelper.LimitToRange(
+                    Volume, AudioConstants.MIN_XACT_VOL, AudioConstants.MAX_XACT_VOL);
+                EndVolume = MWMathHelper.LimitToRange(
+                    newVol, AudioConstants.MIN_XACT_VOL, AudioConstants.MAX_XACT_VOL);
                 SetTimingVars(milliseconds);
                 VolumeChanging = true;
                 StopAfterChange = stop;
             }
             else
             {
-                SetTimingVars(5000);
+                SetTimingVars(AudioConstants.WTF);
             }
         }
 
         public void FadeIn(float targetVolume)
         {
-            ChangeVolume(targetVolume, FADE_IN_TIME, false);
+            ChangeVolume(targetVolume, AudioConstants.FADE_IN_TIME, false);
         }
 
         public void FadeOut()
         {
-            ChangeVolume(VolumePresets.Quiet, FADE_OUT_TIME, true);
+            ChangeVolume(VolumePresets.Quiet, AudioConstants.FADE_OUT_TIME, true);
         }
 
         public void Update(GameTime gameTime, Song song)
@@ -94,7 +94,7 @@ namespace Duologue.Audio.Widgets
             if (VolumeChanging)
             {
                 if (gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime >
-                    UPDATE_MILLISECONDS)
+                    AudioConstants.VOL_CHANGE_UPDATE_MS)
                 {
                     previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
                     VolumeChanging = false;

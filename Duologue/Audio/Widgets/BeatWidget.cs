@@ -15,23 +15,18 @@ namespace Duologue.Audio.Widgets
         protected int currentBeat = 0;
         protected Song parentSong;
 
-        public BeatWidget(Song song, int beats)
+        public BeatWidget(Song song, int beats, float beatLength)
         {
             parentSong = song;
             NumberOfBeats = beats;
-            lengthOfBeat = AudioManager.BPM140;
-            //FIXME: This only matches 140BPM
-        }
-
-        public BeatWidget(Song song, int beats, float beatLength)
-            : this(song, beats)
-        {
             lengthOfBeat = beatLength;
         }
 
         public double BeatPercentage()
         {
-            return 0.75d + 0.25d * Math.Cos(2d * Math.PI * (beatTimer / lengthOfBeat));
+            return AudioConstants.MEDIAN_BEAT_SCORE + AudioConstants.BEAT_SCORE_DEV *
+                Math.Cos(2d * Math.PI * (beatTimer / lengthOfBeat));
+            //return 0.75d + 0.25d * Math.Cos(2d * Math.PI * (beatTimer / lengthOfBeat));
         }
 
         public void Update(GameTime gameTime, Song song)
