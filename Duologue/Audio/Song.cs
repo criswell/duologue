@@ -291,19 +291,20 @@ namespace Duologue.Audio
             }
         }
 
-        public void FadeIn(float volume)
+        public void FadeIn(float volume)        
         {
+            AudioHelper.SetTimedMusicVolume(0f, 300);
             if (Managed)
             {
-                if (null == fader)
-                {
-                    fader = new VolumeChangeWidget(this);
-                }
                 for (int t = 0; t < TrackCount; t++)
                 {
                     Tracks[t].Cues[0].ChangeVolume(VolumePresets.Silent);
                 }
-                fader.FadeIn();
+                if (null == fader)
+                {
+                    fader = new VolumeChangeWidget(this);
+                }
+                fader.FadeIn(volume);
                 Enabled = true;
             }
             else

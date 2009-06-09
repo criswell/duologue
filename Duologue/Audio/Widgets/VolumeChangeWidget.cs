@@ -11,8 +11,6 @@ namespace Duologue.Audio.Widgets
 {
     public class VolumeChangeWidget
     {
-        private const bool ControlVolumeByMusicCategory = true;
-
         //Most recently commanded Volume
         public float Volume = VolumePresets.Normal;
 
@@ -21,6 +19,10 @@ namespace Duologue.Audio.Widgets
         public const int UPDATE_MILLISECONDS = 50;
         //A "client" command only dictates the duration of the volume transition,
         //The rest is calculated by this class
+
+        //or maybe we don't let the client dictate that...
+        public const int FADE_IN_TIME = 1300;
+        public const int FADE_OUT_TIME = 500;
 
         protected int steps;
         protected float stepAmount;
@@ -77,29 +79,14 @@ namespace Duologue.Audio.Widgets
             }
         }
 
-        public void FadeIn(float volume, int milliseconds)
+        public void FadeIn(float targetVolume)
         {
-            ChangeVolume(volume, milliseconds, false);
-        }
-
-        public void FadeIn(int milliseconds)
-        {
-            FadeIn(VolumePresets.Normal, milliseconds);
-        }
-
-        public void FadeIn()
-        {
-            FadeIn(1000);
-        }
-
-        public void FadeOut(int milliseconds)
-        {
-            ChangeVolume(VolumePresets.Quiet, milliseconds, true);
+            ChangeVolume(targetVolume, FADE_IN_TIME, false);
         }
 
         public void FadeOut()
         {
-            FadeOut(500);
+            ChangeVolume(VolumePresets.Quiet, FADE_OUT_TIME, true);
         }
 
         public void Update(GameTime gameTime, Song song)
@@ -117,13 +104,10 @@ namespace Duologue.Audio.Widgets
                         parentSong.SoundBankName + " " + Volume.ToString();
                     Debug.WriteLine(message);
 
-                    if (ControlVolumeByMusicCategory)
-                    {
-                        float floatVolume = Volume/100f;
-                        AudioHelper.SetMusicVolume(floatVolume);
-                    }
-                    for (int t = 0; t < song.TrackCount; t++)
-                        song.Tracks[t].ChangeVolume(Volume);
+                    //this is bookkeeping only: so if you check the Volume property
+                    //on a Track, it will have the correct value. It should go away somehow.
+                    //for (int t = 0; t < song.TrackCount; t++)
+                    //    song.Tracks[t].ChangeVolume(Volume);
 
                     VolumeChanging =
                         (((StartVolume > EndVolume) && (Volume > EndVolume)) ||

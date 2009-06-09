@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -32,6 +33,15 @@ namespace Duologue.Audio
         protected static string engineFileName;
         protected static AudioEngine engine;
         protected static AudioCategory musicCategory;
+        public static float MusicCategoryVolume;
+
+        //variables used by SetTimedMusicDelay/UpdateTimedMusicVolume
+        //which exist only to eliminate the jolt of loud music right before a FadeIn
+        protected static GameTime localGameTime;
+        protected static double previousVolChangeTime = 0;
+        protected static float regularVolume;
+        protected static float musicVolumeDelayTime;
+        protected static bool musicVolumeTimerRunning = false;
 
         // These SoundBanks are where we pull new copies of Cues. We don't play them there.
         protected static Dictionary<string, SoundBank> soundBanks = new Dictionary<string, SoundBank>();
@@ -60,7 +70,7 @@ namespace Duologue.Audio
             engineFileName = engineName;
             engine = new AudioEngine(engineFileName, lookahead, Guid.Empty);
             musicCategory = engine.GetCategory("Music");
-            musicCategory.SetVolume(0.5f);
+            SetMusicVolume(0.5f);
         }
 
         protected static void ProcessPlayedCues()
@@ -152,17 +162,6 @@ namespace Duologue.Audio
             });
         }
 
-/*
-        public static bool CueIsPlaying(string sbname, string cuename)
-        {
-            return cues[sbname][cuename].IsPlaying;
-        }
-
-        public static bool CueIsStopping(string sbname, string cuename)
-        {
-            return cues[sbname][cuename].IsStopping;
-        }
-*/
         public static void PlayCue(string sbname, string cueName)
         {
             Q q = new Q(sbname, cueName);
@@ -185,13 +184,14 @@ namespace Duologue.Audio
             }
         }
 
+        /*
+         * testing as candidates for expungement grs 2009.06.08
         public static void Play(Q q, float volume)
         {
             Play(q, true);
             cues[q.SoundBankName][q.CueName].SetVariable(volumeName, volume);
             //we *could* range limit the volume before making that call
         }
-
         public static void Play(Song song)
         {
             for (int t = 0; t < song.TrackCount; t++)
@@ -203,6 +203,7 @@ namespace Duologue.Audio
             }
             UpdateCues(song);
         }
+         */
 
         public static void Pause(Q q)
         {
@@ -253,28 +254,41 @@ namespace Duologue.Audio
             UpdateCues(song);
         }
 
-        /*
-        protected static void Stop(Track track)
-        {
-            if (cues[track.SoundbankName][track.CueName].IsPlaying)
-            {
-                StopCue(track.SoundbankName, track.CueName);
-            }
-        }
-
-        public static void Stop(Song song)
-        {
-            song.Tracks.ForEach(track =>
-                {
-                    StopCue(song.SoundBankName, track.CueName);
-                });
-        }
-        */
-
         public static void SetMusicVolume(float vol)
         {
-            float volume = MWMathHelper.LimitToRange(vol, 0f, 1f);
-            musicCategory.SetVolume(volume);
+            MusicCategoryVolume = MWMathHelper.LimitToRange(vol, 0f, 1f);
+            musicCategory.SetVolume(MusicCategoryVolume);
+        }
+
+        public static void SetTimedMusicVolume(float vol, float milliSeconds)
+        {
+            regularVolume = MusicCategoryVolume;
+            SetMusicVolume(vol);
+            previousVolChangeTime = localGameTime.TotalRealTime.TotalMilliseconds;
+            musicVolumeDelayTime = milliSeconds;
+            musicVolumeTimerRunning = true;
+            string message = "Set Timed Music Volume " +
+                previousVolChangeTime.ToString() + " mS, Volume= " + vol.ToString()
+                + "  Requested delay in mS: " + musicVolumeDelayTime.ToString();
+            Debug.WriteLine(message);
+        }
+
+        protected static void UpdateTimedMusicVolume(GameTime time)
+        {
+            if (musicVolumeTimerRunning)
+            {
+                if (time.TotalRealTime.TotalMilliseconds - previousVolChangeTime >
+                        musicVolumeDelayTime)
+                {
+                    musicVolumeTimerRunning = false;
+                    SetMusicVolume(regularVolume);
+                    string message = "Revert Timed Music Volume " +
+                        time.TotalRealTime.TotalMilliseconds.ToString() +
+                        " mS, Volume= " + regularVolume.ToString()
+                    +"  Requested delay in mS: " + musicVolumeDelayTime.ToString();
+                    Debug.WriteLine(message);
+                }
+            }
         }
 
 
@@ -306,8 +320,10 @@ namespace Duologue.Audio
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            localGameTime = gameTime;
             engine.Update();
             ProcessPlayedCues();
+            UpdateTimedMusicVolume(gameTime);
             base.Update(gameTime);
         }
     }

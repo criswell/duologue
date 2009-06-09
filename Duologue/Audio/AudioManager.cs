@@ -22,9 +22,10 @@ namespace Duologue.Audio
         public const float Normal = 80f;
         public const float Full = 100f;
 
-        public const float SelectMenu = 80f;
-        public const float Credits = 80f;
-        public const float Tr8or = 80f; //Medals Display
+        public const float SelectMenu = 71f;
+        public const float Credits = 71f;
+        public const float Tr8or = 71f; //Medals Display
+        public const float Ultrasux = 72f;
 
     }
 
@@ -79,6 +80,7 @@ namespace Duologue.Audio
             VolumeOverrideTable.Add(SongID.SelectMenu, VolumePresets.SelectMenu);
             VolumeOverrideTable.Add(SongID.Credits, VolumePresets.Credits);
             VolumeOverrideTable.Add(SongID.Tr8or, VolumePresets.Tr8or);
+            VolumeOverrideTable.Add(SongID.Ultrafix, VolumePresets.Ultrasux);
 
             Game.Components.Add(helper);
             //Game.Components.Add(soundEffects);
@@ -113,8 +115,7 @@ namespace Duologue.Audio
         {
             if (VolumeOverrideTable.ContainsKey(ID))
             {
-                AudioHelper.SetMusicVolume(0f);
-                PlaySong(ID, VolumeOverrideTable[ID]);
+                songMap[ID].FadeIn(VolumeOverrideTable[ID]);
             }
             else
             {
@@ -139,6 +140,9 @@ namespace Duologue.Audio
         {
             if (!SongIsPlaying(ID))
             {
+                if (songMap[ID].fader == null)
+                {
+                }
                 PlaySong(ID);
                 if (songMap[ID].fader != null)
                 {

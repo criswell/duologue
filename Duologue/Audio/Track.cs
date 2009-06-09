@@ -33,39 +33,10 @@ namespace Duologue.Audio
             }
         }
 
-        public void PlayBeat(int beat)
-        {
-            //Manipulations by the IntensityWidget (if any) are reacted to here!
-            if (Enabled)
-            {
-                Cues[beat - 1].Play();
-            }
-        }
-
         public void ChangeVolume(float newVol)
         {
             Volume = newVol;
             VolumeChanging = true;
-            //if (null != Fade)
-            {
-                //Fade.ChangeVolume(newVol, stop);
-            }
-        }
-
-        /*
-        public void FadeIn(float vol)
-        {
-            SetFade(VolumePresets.Quiet, VolumePresets.Normal, MILLISECONDS_FADE); //FIXME
-            Fade.FadeIn();
-        }
-         */
-
-        public void Play()
-        {
-            for (int q = 0; q < QCount; q++)
-            {
-                Cues[q].Play();
-            }
         }
 
         public void Pause()
