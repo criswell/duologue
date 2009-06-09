@@ -17,9 +17,9 @@ namespace Duologue.Audio
         public const float Normal = 80f;
         public const float Full = 100f;
 
-        public const float SelectMenu = 71f;
-        public const float Credits = 71f;
-        public const float Tr8or = 71f; //Medals Display
+        public const float SelectMenu = 99f;
+        public const float Credits = 80f;
+        public const float Tr8or = 79f; //Medals Display
         public const float Ultrasux = 72f; //playing with this to see if this trick works for beat music
 
     }

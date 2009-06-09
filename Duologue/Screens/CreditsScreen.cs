@@ -120,8 +120,8 @@ namespace Duologue.Screens
                     }
                     else
                     {
-                        audio.PlaySong(SongID.Credits);
-                        //audio.FadeIn(SongID.Credits);
+                        //audio.PlaySong(SongID.Credits);
+                        audio.FadeIn(SongID.Credits);
                     }
                     
                 }

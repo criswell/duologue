@@ -16,8 +16,8 @@ namespace Duologue.Audio.Widgets
 
         protected int steps;
         protected float stepAmount;
-        protected double previousVolChangeTime;
         protected Song parentSong;
+        protected float updateTimer = 0f;
 
         public float StartVolume; //prefer read-only, set in c'tor
         public float EndVolume; //prefer read-only, set in c'tor
@@ -35,6 +35,8 @@ namespace Duologue.Audio.Widgets
         {
             StartVolume = VolumePresets.Quiet;
             Volume = VolumePresets.Full; //Full is really the truth, right? Until someone calls a change!
+            Volume = VolumePresets.Silent; //But that causes FadeIn to fade from full down to
+                                            //the target volume, which sounds messed up
         }
 
         protected void SetTimingVars(int milliseconds)
@@ -93,10 +95,9 @@ namespace Duologue.Audio.Widgets
         {
             if (VolumeChanging)
             {
-                if (gameTime.TotalRealTime.TotalMilliseconds - previousVolChangeTime >
-                    AudioConstants.VOL_CHANGE_UPDATE_MS)
+                updateTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (updateTimer > AudioConstants.VOL_CHANGE_UPDATE_MS)
                 {
-                    previousVolChangeTime = gameTime.TotalRealTime.TotalMilliseconds;
                     VolumeChanging = false;
                     Volume += stepAmount;
 
@@ -106,8 +107,8 @@ namespace Duologue.Audio.Widgets
 
                     //this is bookkeeping only: so if you check the Volume property
                     //on a Track, it will have the correct value. It should go away somehow.
-                    //for (int t = 0; t < song.TrackCount; t++)
-                    //    song.Tracks[t].ChangeVolume(Volume);
+                    for (int t = 0; t < song.TrackCount; t++)
+                        song.Tracks[t].ChangeVolume(Volume);
 
                     VolumeChanging =
                         (((StartVolume > EndVolume) && (Volume > EndVolume)) ||
@@ -119,7 +120,7 @@ namespace Duologue.Audio.Widgets
                         song.Stop();
                         StopAfterChange = false;
                     }
-
+                    updateTimer = 0f;
                 }
             }
         }
