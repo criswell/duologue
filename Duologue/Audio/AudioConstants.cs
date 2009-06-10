@@ -25,7 +25,12 @@ namespace Duologue.Audio
 
     class AudioConstants
     {
+        //this is the proportional volume control for *all* in-game music (hell, maybe even out of game)
         public const float MusicCategoryDefaultVolume = 0.5f;
+        //these are the limits that AudioHelper uses to clamp the above volume. Change if you really need to.
+        //It's supposed to be, I think, 1.0f = 6db
+        public const float MIN_MUSIC_CAT_VOL = 0f;
+        public const float MAX_MUSIC_CAT_VOL = 2f;
 
         //XACT stuff - you can't change these unless you actually change the XACT project!
         public const float MIN_XACT_VOL = 0f;
