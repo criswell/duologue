@@ -26,7 +26,7 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
-    public enum MolochIntroState
+    /*public enum MolochIntroState
     {
         InitialWait,
         MovingInTentacles,
@@ -35,13 +35,15 @@ namespace Duologue.PlayObjects
         Speech,
         Intense,
         Exit,
-    }
+    }*/
 
     public struct Tentacle
     {
-        public Vector2 Position;
+        public Vector2 StartPosition;
+        public Vector2 EndPosition;
         public double Timer_Orientated; // EAT IT, DOCTORCAL
         public double Timer_ColorChange;
+        public double Timer_Movement;
         public int LastColor;
         public int NextColor;
     }
@@ -68,8 +70,6 @@ namespace Duologue.PlayObjects
         private const float min_ShadowOffset = 5f;
         private const float max_ShadowOffset = 50f;
 
-        //private const double totalTime_InitialWait = 
-
         /// <summary>
         /// The offset length of the eyeball from center of body
         /// </summary>
@@ -82,6 +82,25 @@ namespace Duologue.PlayObjects
 
         private const double totalTime_Orbit = 2.54;
         private const double totalTime_ColorChange = 1.51;
+
+        /// <summary>
+        /// The time, from start to finish, for this intro to be alive
+        /// </summary>
+        private const double totalTime_StartToFinish = 50.987;
+        private const double timeTrigger_AllLeave = 42.011;
+        /// <summary>
+        /// The roll-in times for each tentacle
+        /// </summary>
+        private const double timeTrigger_RollInOne = 8.325;
+        private const double timeTrigger_RollInTwo = 10.567;
+        private const double timeTrigger_RollInThree = 12.89;
+        private const double timeTrigger_RollInFour = 15.04;
+        private const double timeTrigger_RollInFive = 17.293;//16.731;
+        private const double timeTrigger_RollInSix = 19.353;
+
+        private const double timeTrigger_EyeBallMoveIn = 25.042;
+
+        private const double totalTime_TentacleMove = 2.15;
         #endregion
 
         #region Fields
@@ -100,6 +119,9 @@ namespace Duologue.PlayObjects
         private Tentacle[] tentacles;
 
         private Vector2 centerOfScreen;
+
+        private double mainTimer;
+        private double[] timeTriggers;
         #endregion
 
         #region Constructor / Init
@@ -132,6 +154,16 @@ namespace Duologue.PlayObjects
 
         private void LoadAndInitialize()
         {
+            timeTriggers = new double[]
+            {
+                timeTrigger_RollInOne,
+                timeTrigger_RollInTwo,
+                timeTrigger_RollInThree,
+                timeTrigger_RollInFour,
+                timeTrigger_RollInFive,
+                timeTrigger_RollInSix
+            };
+
             colorArray_TasteTheRainbow = new Color[]
             {
                 new Color(146, 203, 80),
@@ -184,12 +216,17 @@ namespace Duologue.PlayObjects
             };
 
             tentacles = new Tentacle[tempPos.Length];
+            Vector2 tempOffset;
 
             for (int i = 0; i < tentacles.Length; i++)
             {
-                tentacles[i].Position = tempPos[i];
+                tentacles[i].EndPosition = tempPos[i];
+                tempOffset = tempPos[i] - centerOfScreen;
+                tempOffset.Normalize();
+                tentacles[i].StartPosition = tempPos[i] + offsetLength * tempOffset; // + center_Blob.X)
                 tentacles[i].Timer_Orientated = MWMathHelper.GetRandomInRange(0, totalTime_Orbit);
                 tentacles[i].Timer_ColorChange = MWMathHelper.GetRandomInRange(0, totalTime_ColorChange);
+                tentacles[i].Timer_Movement = 0;
                 int t = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
                 tentacles[i].LastColor = t;
                 if (t < colorArray_TasteTheRainbow.Length - 1)
@@ -197,6 +234,8 @@ namespace Duologue.PlayObjects
                 else
                     tentacles[i].NextColor = 0;
             }
+
+            mainTimer = 0;
 
             Initialized = true;
         }
@@ -266,12 +305,21 @@ namespace Duologue.PlayObjects
         #region Private Draw
         private void DrawTentacle(Tentacle tentacle)
         {
-            Vector2 orientated = AimAtWiggle(tentacle.Position,
+            Vector2 orientated = AimAtWiggle(tentacle.EndPosition,
                 (float)(tentacle.Timer_Orientated / totalTime_Orbit));
 
             Color tempColor;
             float tempSize;
             float tempOffset;
+            Vector2 tempPos = new Vector2(
+                    MathHelper.Lerp(
+                        tentacle.StartPosition.X,
+                        tentacle.EndPosition.X,
+                        (float)(tentacle.Timer_Movement / totalTime_TentacleMove)),
+                    MathHelper.Lerp(
+                        tentacle.StartPosition.Y,
+                        tentacle.EndPosition.Y,
+                        (float)(tentacle.Timer_Movement / totalTime_TentacleMove)));
 
             for (int i = numberOfBlobsInShaft - 1; i >= 0; i--)
             {
@@ -280,7 +328,7 @@ namespace Duologue.PlayObjects
                 // Draw outline
                 InstanceManager.RenderSprite.Draw(
                     texture_Blob,
-                    tentacle.Position + orientated * tempOffset,
+                    tempPos + orientated * tempOffset,
                     center_Blob,
                     null,
                     Color.Black,
@@ -304,7 +352,7 @@ namespace Duologue.PlayObjects
                 // Draw body
                 InstanceManager.RenderSprite.Draw(
                     texture_Blob,
-                    tentacle.Position + orientated * tempOffset,
+                    tempPos + orientated * tempOffset,
                     center_Blob,
                     null,
                     tempColor,
@@ -316,7 +364,7 @@ namespace Duologue.PlayObjects
                 // Draw highlight
                 InstanceManager.RenderSprite.Draw(
                     texture_BlobHighlight,
-                    tentacle.Position + orientated * tempOffset
+                    tempPos + orientated * tempOffset
                         + offsetY_BlobHighlight * tempSize * Vector2.UnitY,
                     center_BlobHighlight,
                     null,
@@ -329,7 +377,7 @@ namespace Duologue.PlayObjects
                 // Draw shadow
                 InstanceManager.RenderSprite.Draw(
                     texture_Blob,
-                    tentacle.Position + orientated * tempOffset + Vector2.UnitY *
+                    tempPos + orientated * tempOffset + Vector2.UnitY *
                         MathHelper.Lerp(min_ShadowOffset, max_ShadowOffset, (float)i / (float)numberOfBlobsInShaft),
                     center_Blob,
                     null,
@@ -355,8 +403,15 @@ namespace Duologue.PlayObjects
         public override void Update(GameTime gameTime)
         {
             double delta = gameTime.ElapsedGameTime.TotalSeconds;
+            mainTimer += delta;
+            if (mainTimer > totalTime_StartToFinish)
+            {
+                Alive = false;
+            }
+
             for (int i = 0; i < tentacles.Length; i++)
             {
+                // Color change
                 tentacles[i].Timer_ColorChange += delta;
                 if (tentacles[i].Timer_ColorChange > totalTime_ColorChange)
                 {
@@ -367,10 +422,28 @@ namespace Duologue.PlayObjects
                         tentacles[i].NextColor = 0;
                 }
 
+                // Orientation change
                 tentacles[i].Timer_Orientated += delta;
                 if (tentacles[i].Timer_Orientated > totalTime_Orbit)
                 {
                     tentacles[i].Timer_Orientated -= totalTime_Orbit;
+                }
+
+                // Movement
+                if (mainTimer < timeTrigger_AllLeave)
+                {
+                    if (mainTimer > timeTriggers[i] && tentacles[i].Timer_Movement < totalTime_TentacleMove)
+                    {
+                        tentacles[i].Timer_Movement += delta;
+                        if (tentacles[i].Timer_Movement > totalTime_TentacleMove)
+                            tentacles[i].Timer_Movement = totalTime_TentacleMove;
+                    }
+                }
+                else
+                {
+                    tentacles[i].Timer_Movement -= delta;
+                    if (tentacles[i].Timer_Movement < 0)
+                        tentacles[i].Timer_Movement = 0;
                 }
             }
         }
