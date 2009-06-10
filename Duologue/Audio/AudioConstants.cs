@@ -34,11 +34,11 @@ namespace Duologue.Audio
 
         //This is the number of milliseconds between volume changes in a "fade".
         //Smaller numbers tax the CPU more, larger numbers may make it choppy
-        public const int VOL_CHANGE_UPDATE_MS = 50;
+        public const int VOL_CHANGE_UPDATE_MS = 5;
 
         //Default values for volume changes in milliseconds
-        public const int FADE_IN_TIME = 1300;
-        public const int FADE_OUT_TIME = 500;
+        public const int FADE_IN_TIME = 100;
+        public const int FADE_OUT_TIME = 100;
 
         //More volume change constants
         public const int MIN_VOL_CHANGE_MS = 1;
@@ -47,7 +47,7 @@ namespace Duologue.Audio
         public const int MAX_VOL_CHANGE_STEPS = 1000;
 
         //length of silence to avoid the big loud blast before fading in
-        public const int PREFADE_MUTE_MS = 300;
+        public const int PREFADE_MUTE_MS = 10;
 
 
         //constants for control of scoring on "close to the beat"
