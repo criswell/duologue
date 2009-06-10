@@ -235,7 +235,8 @@ namespace Duologue.Audio
 
         public static void SetMusicVolume(float vol)
         {
-            MusicCategoryVolume = MWMathHelper.LimitToRange(vol, 0f, 1f);
+            MusicCategoryVolume = MWMathHelper.LimitToRange(
+                vol, AudioConstants.MIN_MUSIC_CAT_VOL, AudioConstants.MAX_MUSIC_CAT_VOL);
             musicCategory.SetVolume(MusicCategoryVolume);
         }
 
