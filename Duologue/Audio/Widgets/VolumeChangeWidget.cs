@@ -35,7 +35,7 @@ namespace Duologue.Audio.Widgets
         {
             StartVolume = VolumePresets.Quiet;
             Volume = VolumePresets.Full; //Full is really the truth, right? Until someone calls a change!
-            Volume = VolumePresets.Silent; //But that causes FadeIn to fade from full down to
+            Volume = VolumePresets.Quiet; //But that causes FadeIn to fade from full down to
                                             //the target volume, which sounds messed up
         }
 

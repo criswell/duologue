@@ -119,6 +119,9 @@ namespace Duologue.Waves
                         case TypesOfPlayObjects.Enemy_Moloch:
                             Init_Moloch(i, manager);
                             break;
+                        case TypesOfPlayObjects.Enemy_MolochIntro:
+                            Init_MolochIntro(i, manager);
+                            break;
                         default:
                             // Throw a fit, this silent fail means we get null enemies!
                             throw new Exception("Hey, fool, check your wave defs for null set enemies!");
@@ -135,6 +138,11 @@ namespace Duologue.Waves
         #endregion
 
         #region Enemy inits
+        private static void Init_MolochIntro(int i, GamePlayScreenManager manager)
+        {
+            LocalInstanceManager.Enemies[i] = new Enemy_MolochIntro(manager);
+        }
+
         private static void Init_Moloch(int i, GamePlayScreenManager manager)
         {
             LocalInstanceManager.Enemies[i] = new Enemy_Moloch(manager);
