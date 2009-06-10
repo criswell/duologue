@@ -4913,7 +4913,7 @@ namespace Duologue.Waves
             Waves[GetIndex(20, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
-             * */
+             */
         }
         #endregion
 
