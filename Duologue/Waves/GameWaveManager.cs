@@ -217,13 +217,14 @@ namespace Duologue.Waves
             }*/
 
             // ERE I AM JH
-            int NumWavelets = 1;
+            int NumWavelets = 2;
             int NumEnemies = 30;
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelets = new Wavelet[NumWavelets];
             int hitsToKillEnemy = 0;
             thisWave.Wavelets[thisWave.CurrentWavelet] =
                 new Wavelet(NumEnemies, hitsToKillEnemy);
+            thisWave.Wavelets[1] = new Wavelet(NumEnemies, hitsToKillEnemy);
 
             // Possible beat engine songs
             // Dance8ths, LandOfSand16ths, 
@@ -237,6 +238,8 @@ namespace Duologue.Waves
                 //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.WinOne;
             //else
                 thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
+
+                thisWave.Wavelets[1].SongID = SongID.Superbowl;
 
             // Randomize the background and parallax elements
             thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);
@@ -294,14 +297,23 @@ namespace Duologue.Waves
                     thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
                 thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
                 thisWave.Wavelets[thisWave.CurrentWavelet].ColorPolarities[i] = ColorState.RandomPolarity();
+
+                thisWave.Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                thisWave.Wavelets[1].StartAngle[i] = (float)InstanceManager.Random.NextDouble() * MathHelper.TwoPi;
+                thisWave.Wavelets[1].ColorPolarities[i] = ColorState.RandomPolarity();
+
             }
             //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[80] = TypesOfPlayObjects.Enemy_KingGloop;
             /*thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[59] = TypesOfPlayObjects.Enemy_Pyre;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[59] = MathHelper.TwoPi;*/
 
-            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 1] = enemiesToSpawn[currentEnemyIndex];
+            thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 1] = TypesOfPlayObjects.Enemy_MolochIntro;//enemiesToSpawn[currentEnemyIndex];
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[thisWave.NumEnemies - 1] = MathHelper.Pi;
             thisWave.Wavelets[thisWave.CurrentWavelet].StartHitPoints[thisWave.NumEnemies - 1] = 0;
+
+            thisWave.Wavelets[1].Enemies[thisWave.NumEnemies - 1] = TypesOfPlayObjects.Enemy_Moloch;//enemiesToSpawn[currentEnemyIndex];
+            thisWave.Wavelets[1].StartAngle[thisWave.NumEnemies - 1] = MathHelper.Pi;
+            thisWave.Wavelets[1].StartHitPoints[thisWave.NumEnemies - 1] = 0;
 
             /*currentEnemyIndex++;
             if (currentEnemyIndex >= enemiesToSpawn.Length)
