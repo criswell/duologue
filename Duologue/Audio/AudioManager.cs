@@ -57,7 +57,6 @@ namespace Duologue.Audio
             VolumeOverrideTable.Add(SongID.SelectMenu, VolumePresets.SelectMenu);
             VolumeOverrideTable.Add(SongID.Credits, VolumePresets.Credits);
             VolumeOverrideTable.Add(SongID.Tr8or, VolumePresets.Tr8or);
-            VolumeOverrideTable.Add(SongID.Ultrafix, VolumePresets.Ultrasux);
 
             Game.Components.Add(helper);
             //Game.Components.Add(soundEffects);
