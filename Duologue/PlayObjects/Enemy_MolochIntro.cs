@@ -26,6 +26,27 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
+    public enum MolochIntroState
+    {
+        InitialWait,
+        MovingInTentacles,
+        WiggleTentaclesWait,
+        MovingInEyeBall,
+        Speech,
+        Intense,
+        Exit,
+    }
+
+    public struct Tentacle
+    {
+        public Vector2 Position;
+        public Vector2 Orientation;
+        public double Timer_Orientated; // EAT IT, DOCTORCAL
+        public double Timer_ColorChange;
+        public Color LastColor;
+        public Color NextColor;
+    }
+
     public class Enemy_MolochIntro : Enemy
     {
         #region Constants
@@ -43,9 +64,28 @@ namespace Duologue.PlayObjects
         private const float offsetY_BlobHighlight = -10f;
         private const float scale_BlobOutline = 0.82f;
         private const int numberOfBlobsInShaft = 10;
+
+        //private const double totalTime_InitialWait = 
+
+        private const float maxOrbit_X = 80f;
+        private const float maxOrbit_Y = 70f;
         #endregion
 
         #region Fields
+        private EyeBallFrame[] eyes;
+        private Texture2D texture_Blob;
+        private Texture2D texture_BlobHighlight;
+        private Texture2D texture_EyePupil;
+        private Vector2 center_Pupil;
+        private Vector2 center_Blob;
+        private Vector2 center_BlobHighlight;
+        private Vector2 center_Eye;
+
+        private Color[] colorArray_TasteTheRainbow;
+
+        private Tentacle[] tentacles;
+
+        private Vector2 centerOfScreen;
         #endregion
 
         #region Constructor / Init
@@ -70,7 +110,50 @@ namespace Duologue.PlayObjects
             ColorPolarity startColorPolarity, 
             int? hitPoints)
         {
-            throw new NotImplementedException();
+            ColorState = currentColorState;
+            ColorPolarity = startColorPolarity;
+            LoadAndInitialize();
+        }
+
+        private void LoadAndInitialize()
+        {
+            colorArray_TasteTheRainbow = new Color[]
+            {
+                new Color(146, 203, 80),
+                new Color(76, 56, 80),
+                new Color(195, 94, 80),
+                new Color(22, 74, 32),
+                new Color(137, 22, 128),
+                new Color(8, 140, 128),
+                new Color(183,172,182),
+                new Color(255,135,39),
+                new Color(153,100,167),
+            };
+
+            centerOfScreen = new Vector2(
+                InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
+
+            eyes = new EyeBallFrame[frames_Eye];
+            texture_EyePupil = InstanceManager.AssetManager.LoadTexture2D(filename_EyePupil);
+            center_Pupil = new Vector2(
+                texture_EyePupil.Width / 2f, texture_EyePupil.Height / 2f);
+            for (int i = 0; i < frames_Eye; i++)
+            {
+                eyes[i].Base = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeBall, i.ToString()));
+                eyes[i].Outline = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeOutline, i.ToString()));
+                eyes[i].ShadeLower = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeShadeLower, i.ToString()));
+                eyes[i].ShadeMiddle = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeShadeMiddle, i.ToString()));
+                eyes[i].ShadeUpper = InstanceManager.AssetManager.LoadTexture2D(String.Format(filename_EyeShadeUpper, i.ToString()));
+            }
+            center_Eye = new Vector2(
+                eyes[0].Base.Width / 2f, eyes[0].Base.Height / 2f);
+
+            texture_Blob = InstanceManager.AssetManager.LoadTexture2D(filename_EyeShaftBlob);
+            texture_BlobHighlight = InstanceManager.AssetManager.LoadTexture2D(filename_EyeShaftHighlight);
+            center_Blob = new Vector2(
+                texture_Blob.Width / 2f, texture_Blob.Height / 2f);
+            center_BlobHighlight = new Vector2(
+                texture_BlobHighlight.Width / 2f, texture_BlobHighlight.Height / 2f);
         }
 
         public override string[] GetTextureFilenames()
@@ -96,6 +179,20 @@ namespace Duologue.PlayObjects
             }
 
             return filenames;
+        }
+        #endregion
+
+        #region Private methods
+        public Vector2 AimAtWiggle(float multiplier_X, float multiplier_Y, Vector2 curPos)
+        {
+            // Lissajous curve for what he's looking at
+            Vector2 localOffset = new Vector2(
+                maxOrbit_X * (float)Math.Sin(multiplier_X * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))),
+                maxOrbit_Y * (float)Math.Sin(multiplier_Y * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))));
+            // Place eye ball with relation to center
+            localOffset = centerOfScreen + localOffset - curPos;
+            localOffset.Normalize();
+            return localOffset;
         }
         #endregion
 
