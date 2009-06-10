@@ -63,7 +63,7 @@ namespace Duologue.PlayObjects
         private const float offsetY_BlobHighlight = -10f;
         private const float scale_BlobOutline = 1.05f;
         private const int numberOfBlobsInShaft = 10;
-        private const float max_BlobSize = 3.1f;
+        private const float max_BlobSize = 2.1f;
         private const float min_BlobSize = 0.08f;
         private const float min_ShadowOffset = 5f;
         private const float max_ShadowOffset = 50f;
