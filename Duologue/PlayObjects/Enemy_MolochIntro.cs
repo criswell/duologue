@@ -63,7 +63,7 @@ namespace Duologue.PlayObjects
         private const float offsetY_BlobHighlight = -10f;
         private const float scale_BlobOutline = 1.05f;
         private const int numberOfBlobsInShaft = 10;
-        private const float max_BlobSize = 3.1f;
+        private const float max_BlobSize = 2.1f;
         private const float min_BlobSize = 0.08f;
         private const float min_ShadowOffset = 5f;
         private const float max_ShadowOffset = 50f;
@@ -178,9 +178,9 @@ namespace Duologue.PlayObjects
                 new Vector2(InstanceManager.DefaultViewport.Width, 0),
                 new Vector2(0, InstanceManager.DefaultViewport.Height),
                 new Vector2(InstanceManager.DefaultViewport.Width, InstanceManager.DefaultViewport.Height),
-                new Vector2(0, centerOfScreen.Y),
-                new Vector2(InstanceManager.DefaultViewport.Width, centerOfScreen.Y),
-                new Vector2(centerOfScreen.X, InstanceManager.DefaultViewport.Height)
+                new Vector2(-20f, centerOfScreen.Y),
+                new Vector2(20 + InstanceManager.DefaultViewport.Width, centerOfScreen.Y),
+                //new Vector2(centerOfScreen.X, InstanceManager.DefaultViewport.Height) // YOU GON GIT RAPED
             };
 
             tentacles = new Tentacle[tempPos.Length];
