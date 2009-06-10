@@ -178,9 +178,9 @@ namespace Duologue.PlayObjects
                 new Vector2(InstanceManager.DefaultViewport.Width, 0),
                 new Vector2(0, InstanceManager.DefaultViewport.Height),
                 new Vector2(InstanceManager.DefaultViewport.Width, InstanceManager.DefaultViewport.Height),
-                new Vector2(0, centerOfScreen.Y),
-                new Vector2(InstanceManager.DefaultViewport.Width, centerOfScreen.Y),
-                new Vector2(centerOfScreen.X, InstanceManager.DefaultViewport.Height)
+                new Vector2(-20f, centerOfScreen.Y),
+                new Vector2(20 + InstanceManager.DefaultViewport.Width, centerOfScreen.Y),
+                //new Vector2(centerOfScreen.X, InstanceManager.DefaultViewport.Height) // YOU GON GIT RAPED
             };
 
             tentacles = new Tentacle[tempPos.Length];
