@@ -60,6 +60,7 @@ namespace Duologue.PlayObjects
         Enemy_Lahmu,
         Enemy_Moloch,
         Enemy_MolochPart,
+        Enemy_MolochIntro,
     }
 
     /// <summary>
