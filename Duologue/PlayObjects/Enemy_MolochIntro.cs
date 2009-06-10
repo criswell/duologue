@@ -40,11 +40,10 @@ namespace Duologue.PlayObjects
     public struct Tentacle
     {
         public Vector2 Position;
-        public Vector2 Orientation;
         public double Timer_Orientated; // EAT IT, DOCTORCAL
         public double Timer_ColorChange;
-        public Color LastColor;
-        public Color NextColor;
+        public int LastColor;
+        public int NextColor;
     }
 
     public class Enemy_MolochIntro : Enemy
@@ -62,13 +61,27 @@ namespace Duologue.PlayObjects
         private const string filename_EyeShaftHighlight = "Enemies/gloop/glooplet-highlight";
         private const float scale_Blob = 0.8f;
         private const float offsetY_BlobHighlight = -10f;
-        private const float scale_BlobOutline = 0.82f;
+        private const float scale_BlobOutline = 1.05f;
         private const int numberOfBlobsInShaft = 10;
+        private const float max_BlobSize = 3.1f;
+        private const float min_BlobSize = 0.08f;
+        private const float min_ShadowOffset = 5f;
+        private const float max_ShadowOffset = 50f;
 
         //private const double totalTime_InitialWait = 
 
+        /// <summary>
+        /// The offset length of the eyeball from center of body
+        /// </summary>
+        private const float offsetLength = 350f;
+
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
+        private const float multiplierOrbit_X = 3f;
+        private const float multiplierOrbit_Y = 2f;
+
+        private const double totalTime_Orbit = 2.54;
+        private const double totalTime_ColorChange = 1.51;
         #endregion
 
         #region Fields
@@ -82,6 +95,7 @@ namespace Duologue.PlayObjects
         private Vector2 center_Eye;
 
         private Color[] colorArray_TasteTheRainbow;
+        private Color color_Shadow;
 
         private Tentacle[] tentacles;
 
@@ -112,6 +126,7 @@ namespace Duologue.PlayObjects
         {
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            Alive = true;
             LoadAndInitialize();
         }
 
@@ -129,6 +144,8 @@ namespace Duologue.PlayObjects
                 new Color(255,135,39),
                 new Color(153,100,167),
             };
+
+            color_Shadow = new Color(Color.Black, 125);
 
             centerOfScreen = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
@@ -154,6 +171,34 @@ namespace Duologue.PlayObjects
                 texture_Blob.Width / 2f, texture_Blob.Height / 2f);
             center_BlobHighlight = new Vector2(
                 texture_BlobHighlight.Width / 2f, texture_BlobHighlight.Height / 2f);
+
+            Vector2[] tempPos = new Vector2[]
+            {
+                Vector2.Zero,
+                new Vector2(InstanceManager.DefaultViewport.Width, 0),
+                new Vector2(0, InstanceManager.DefaultViewport.Height),
+                new Vector2(InstanceManager.DefaultViewport.Width, InstanceManager.DefaultViewport.Height),
+                new Vector2(0, centerOfScreen.Y),
+                new Vector2(InstanceManager.DefaultViewport.Width, centerOfScreen.Y),
+                new Vector2(centerOfScreen.X, InstanceManager.DefaultViewport.Height)
+            };
+
+            tentacles = new Tentacle[tempPos.Length];
+
+            for (int i = 0; i < tentacles.Length; i++)
+            {
+                tentacles[i].Position = tempPos[i];
+                tentacles[i].Timer_Orientated = MWMathHelper.GetRandomInRange(0, totalTime_Orbit);
+                tentacles[i].Timer_ColorChange = MWMathHelper.GetRandomInRange(0, totalTime_ColorChange);
+                int t = MWMathHelper.GetRandomInRange(0, colorArray_TasteTheRainbow.Length);
+                tentacles[i].LastColor = t;
+                if (t < colorArray_TasteTheRainbow.Length - 1)
+                    tentacles[i].NextColor = t + 1;
+                else
+                    tentacles[i].NextColor = 0;
+            }
+
+            Initialized = true;
         }
 
         public override string[] GetTextureFilenames()
@@ -183,13 +228,13 @@ namespace Duologue.PlayObjects
         #endregion
 
         #region Private methods
-        public Vector2 AimAtWiggle(float multiplier_X, float multiplier_Y, Vector2 curPos)
+        public Vector2 AimAtWiggle(Vector2 curPos, float percentage)
         {
-            // Lissajous curve for what he's looking at
+            // Lissajous curve
             Vector2 localOffset = new Vector2(
-                maxOrbit_X * (float)Math.Sin(multiplier_X * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))),
-                maxOrbit_Y * (float)Math.Sin(multiplier_Y * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))));
-            // Place eye ball with relation to center
+                maxOrbit_X * (float)Math.Sin(multiplierOrbit_X * MathHelper.Lerp(0, MathHelper.TwoPi, percentage)),
+                maxOrbit_Y * (float)Math.Sin(multiplierOrbit_Y * MathHelper.Lerp(0, MathHelper.TwoPi, percentage)));
+
             localOffset = centerOfScreen + localOffset - curPos;
             localOffset.Normalize();
             return localOffset;
@@ -199,34 +244,135 @@ namespace Duologue.PlayObjects
         #region Motion overrides
         public override bool StartOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool ApplyOffset()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool TriggerHit(PlayObject pobj)
         {
-            throw new NotImplementedException();
+            return true;
+        }
+        #endregion
+
+        #region Private Draw
+        private void DrawTentacle(Tentacle tentacle)
+        {
+            Vector2 orientated = AimAtWiggle(tentacle.Position,
+                (float)(tentacle.Timer_Orientated / totalTime_Orbit));
+
+            Color tempColor;
+            float tempSize;
+            float tempOffset;
+
+            for (int i = numberOfBlobsInShaft - 1; i >= 0; i--)
+            {
+                tempSize = MathHelper.Lerp(max_BlobSize, min_BlobSize, (float)i / (float)numberOfBlobsInShaft);
+                tempOffset = MathHelper.Lerp(0, offsetLength, (float)i / (float)numberOfBlobsInShaft);
+                // Draw outline
+                InstanceManager.RenderSprite.Draw(
+                    texture_Blob,
+                    tentacle.Position + orientated * tempOffset,
+                    center_Blob,
+                    null,
+                    Color.Black,
+                    0f,
+                    tempSize,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+
+                // Compute color
+                tempColor = new Color(
+                    (byte)MathHelper.Lerp(
+                        (float)colorArray_TasteTheRainbow[tentacle.LastColor].R,
+                        (float)colorArray_TasteTheRainbow[tentacle.NextColor].R, (float)(tentacle.Timer_ColorChange / totalTime_ColorChange)),
+                    (byte)MathHelper.Lerp(
+                        (float)colorArray_TasteTheRainbow[tentacle.LastColor].G,
+                        (float)colorArray_TasteTheRainbow[tentacle.NextColor].G, (float)(tentacle.Timer_ColorChange / totalTime_ColorChange)),
+                    (byte)MathHelper.Lerp(
+                        (float)colorArray_TasteTheRainbow[tentacle.LastColor].B,
+                        (float)colorArray_TasteTheRainbow[tentacle.NextColor].B, (float)(tentacle.Timer_ColorChange / totalTime_ColorChange)));
+
+                // Draw body
+                InstanceManager.RenderSprite.Draw(
+                    texture_Blob,
+                    tentacle.Position + orientated * tempOffset,
+                    center_Blob,
+                    null,
+                    tempColor,
+                    0f,
+                    tempSize,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+
+                // Draw highlight
+                InstanceManager.RenderSprite.Draw(
+                    texture_BlobHighlight,
+                    tentacle.Position + orientated * tempOffset
+                        + offsetY_BlobHighlight * tempSize * Vector2.UnitY,
+                    center_BlobHighlight,
+                    null,
+                    Color.White,
+                    0f,
+                    tempSize,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+
+                // Draw shadow
+                InstanceManager.RenderSprite.Draw(
+                    texture_Blob,
+                    tentacle.Position + orientated * tempOffset + Vector2.UnitY *
+                        MathHelper.Lerp(min_ShadowOffset, max_ShadowOffset, (float)i / (float)numberOfBlobsInShaft),
+                    center_Blob,
+                    null,
+                    color_Shadow,
+                    0f,
+                    tempSize,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlend);
+                    
+            }
         }
         #endregion
 
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < tentacles.Length; i++)
+            {
+                DrawTentacle(tentacles[i]);
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            double delta = gameTime.ElapsedGameTime.TotalSeconds;
+            for (int i = 0; i < tentacles.Length; i++)
+            {
+                tentacles[i].Timer_ColorChange += delta;
+                if (tentacles[i].Timer_ColorChange > totalTime_ColorChange)
+                {
+                    tentacles[i].Timer_ColorChange = 0;
+                    tentacles[i].LastColor = tentacles[i].NextColor;
+                    tentacles[i].NextColor++;
+                    if (tentacles[i].NextColor >= colorArray_TasteTheRainbow.Length)
+                        tentacles[i].NextColor = 0;
+                }
+
+                tentacles[i].Timer_Orientated += delta;
+                if (tentacles[i].Timer_Orientated > totalTime_Orbit)
+                {
+                    tentacles[i].Timer_Orientated -= totalTime_Orbit;
+                }
+            }
         }
         #endregion
     }

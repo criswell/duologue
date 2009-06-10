@@ -64,6 +64,7 @@ namespace Duologue.Waves
         private int currentEnemyIndex = 0;
         private TypesOfPlayObjects[] enemiesToSpawn = new TypesOfPlayObjects[]
         {
+            TypesOfPlayObjects.Enemy_MolochIntro,
             TypesOfPlayObjects.Enemy_Moloch,
             TypesOfPlayObjects.Enemy_AnnMoeba,
             TypesOfPlayObjects.Enemy_Buzzsaw,
@@ -235,7 +236,7 @@ namespace Duologue.Waves
             //if (MWMathHelper.CoinToss())
                 //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.WinOne;
             //else
-                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.Superbowl;
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
 
             // Randomize the background and parallax elements
             thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);
