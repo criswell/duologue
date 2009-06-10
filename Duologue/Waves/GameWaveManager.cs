@@ -64,6 +64,7 @@ namespace Duologue.Waves
         private int currentEnemyIndex = 0;
         private TypesOfPlayObjects[] enemiesToSpawn = new TypesOfPlayObjects[]
         {
+            TypesOfPlayObjects.Enemy_MolochIntro,
             TypesOfPlayObjects.Enemy_Moloch,
             TypesOfPlayObjects.Enemy_AnnMoeba,
             TypesOfPlayObjects.Enemy_Buzzsaw,
@@ -233,9 +234,9 @@ namespace Duologue.Waves
             // Dance8ths - Small number of levels, guitar rock track, highly repetitive
             // LandOfSand16ths - Kind of 80s sound synth piano, good number of levels
             //if (MWMathHelper.CoinToss())
-                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.WinOne;
+                //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.WinOne;
             //else
-                //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
+                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
 
             // Randomize the background and parallax elements
             thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);
