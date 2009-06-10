@@ -25,7 +25,7 @@ namespace Duologue.Audio
 
     class AudioConstants
     {
-        public const float MusicCategoryDefaultVolume = 0.5f;
+        public const float MusicCategoryDefaultVolume = 1.1f;
 
         //XACT stuff - you can't change these unless you actually change the XACT project!
         public const float MIN_XACT_VOL = 0f;
