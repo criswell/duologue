@@ -61,11 +61,20 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You may have defeated my minions, but you will not defeat me!.
+        ///   Looks up a localized string similar to You may have defeated my minions,.
         /// </summary>
-        internal static string Boss_Moloch {
+        internal static string Boss_Moloch1 {
             get {
-                return ResourceManager.GetString("Boss_Moloch", resourceCulture);
+                return ResourceManager.GetString("Boss_Moloch1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to but you will not defeat me!.
+        /// </summary>
+        internal static string Boss_Moloch2 {
+            get {
+                return ResourceManager.GetString("Boss_Moloch2", resourceCulture);
             }
         }
         

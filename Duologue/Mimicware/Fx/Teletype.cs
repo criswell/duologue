@@ -299,7 +299,6 @@ namespace Mimicware.Fx
 
         #region Fields
         private Game myGame;
-        private RenderSprite rsprite;
 
         private TeletypeEntry[] entries;
         #endregion
@@ -308,10 +307,9 @@ namespace Mimicware.Fx
         #endregion
 
         #region Constructor / Init
-        public Teletype(Game game, RenderSprite rendersprite)
+        public Teletype(Game game)
             : base(game)
         {
-            rsprite = rendersprite;
             myGame = game;
             Enabled = false;
             Visible = false;

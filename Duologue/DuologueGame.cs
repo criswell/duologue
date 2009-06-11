@@ -16,6 +16,7 @@ using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Mimicware.Debug;
+using Mimicware.Fx;
 // Duologue
 using Duologue.ParticleEffects;
 using Duologue.AchievementSystem;
@@ -232,6 +233,13 @@ namespace Duologue
             pauseScreen.Visible = false;
             this.Components.Add(pauseScreen);
             pauseScreen.DrawOrder = 300;
+
+            Teletype teletype = new Teletype(this);
+            ServiceLocator.RegisterService(teletype);
+            teletype.DrawOrder = 200;
+            teletype.Enabled = false;
+            teletype.Visible = false;
+            this.Components.Add(teletype);
 
             windowManager = new WindowManager();
 

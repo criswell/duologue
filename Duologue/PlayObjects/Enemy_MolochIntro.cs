@@ -17,10 +17,12 @@ using Microsoft.Xna.Framework.Content;
 using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
+using Mimicware.Fx;
 // Duologue
 using Duologue.Audio;
 using Duologue.State;
 using Duologue.Screens;
+using Duologue.Properties;
 #endregion
 
 
@@ -46,6 +48,8 @@ namespace Duologue.PlayObjects
         private const string filename_EyeShadeMiddle = "Enemies/end/end-boss-eye{0}-shade-middle";
         private const string filename_EyeShadeUpper = "Enemies/end/end-boss-eye{0}-shade-upper";
         private const int frames_Eye = 5;
+
+        private const string filename_Font = "Fonts/inero-40";
 
         private const string filename_EyePupil = "Enemies/gloop/king-gloop-eye";
         private const string filename_EyeShaftBlob = "Enemies/gloop/glooplet";
@@ -78,6 +82,10 @@ namespace Duologue.PlayObjects
         private const double totalTime_EyeBallBlinkTick = 0.1;
         private const double totalTime_EyeBallOpen = 1.5;
 
+        private const double totalTime_TextOnScreen1 = 13.98;
+        private const double totalTime_Type = 3.55;
+        private const double totalTime_TextOnScreen2 = 10.43;
+
         /// <summary>
         /// The time, from start to finish, for this intro to be alive
         /// </summary>
@@ -94,6 +102,8 @@ namespace Duologue.PlayObjects
         private const double timeTrigger_RollInSix = 19.353;
 
         private const double timeTrigger_EyeBallMoveIn = 25.042;
+        private const double timeTrigger_Talk1 = 27.538;
+        private const double timeTrigger_Talk2 = 31.088;
 
         private const double totalTime_TentacleMove = 2.15;
         /// <summary>
@@ -104,6 +114,7 @@ namespace Duologue.PlayObjects
 
         #region Fields
         private EyeBallFrame[] eyes;
+        private SpriteFont font;
         private Texture2D texture_Blob;
         private Texture2D texture_BlobHighlight;
         private Texture2D texture_EyePupil;
@@ -136,6 +147,11 @@ namespace Duologue.PlayObjects
         private Vector2 startPos;
         private Vector2 endPos;
         private double timer_EyeMove;
+        private Teletype teletype;
+        private bool shotText1;
+        private bool shotText2;
+        private TeletypeEntry entry1;
+        private TeletypeEntry entry2;
         #endregion
 
         #region Constructor / Init
@@ -163,6 +179,7 @@ namespace Duologue.PlayObjects
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             Alive = true;
+            teletype = ServiceLocator.GetService<Teletype>();
             LoadAndInitialize();
         }
 
@@ -267,6 +284,45 @@ namespace Duologue.PlayObjects
             startPos = endPos - Vector2.UnitY * (offsetLength_EyeBall + center_Eye.Y);
             Position = startPos;
             timer_EyeMove = 0;
+
+            // Set up text stuff
+            font = InstanceManager.AssetManager.LoadSpriteFont(filename_Font);
+            Vector2 tempSize = font.MeasureString(Resources.Boss_Moloch1);
+            Vector2[] shadowOffset = new Vector2[] 
+            {
+                new Vector2(-1f, -1f),
+                new Vector2(1f, 1f),
+                new Vector2(0, 1f),
+                new Vector2(1f, 0),
+                new Vector2(10f, 10f),
+            };
+            entry1 = new TeletypeEntry(
+                font,
+                Resources.Boss_Moloch1,
+                centerOfScreen - Vector2.UnitY * tempSize.Y/2f,
+                new Vector2(tempSize.X/2f, tempSize.Y/2f),
+                new Color(248, 233, 218),
+                totalTime_Type,
+                totalTime_TextOnScreen1,
+                new Color(37, 9, 44, 170),
+                shadowOffset,
+                InstanceManager.RenderSprite);
+
+            tempSize = font.MeasureString(Resources.Boss_Moloch2);
+            entry2 = new TeletypeEntry(
+                font,
+                Resources.Boss_Moloch2,
+                centerOfScreen + Vector2.UnitY * tempSize.Y/2f,
+                new Vector2(tempSize.X / 2f, tempSize.Y / 2f),
+                new Color(248, 233, 218),
+                totalTime_Type,
+                totalTime_TextOnScreen2,
+                new Color(37, 9, 44, 170),
+                shadowOffset,
+                InstanceManager.RenderSprite);
+
+            shotText1 = false;
+            shotText2 = false;
 
             Initialized = true;
         }
@@ -725,6 +781,15 @@ namespace Duologue.PlayObjects
                 timer_EyeMove -= delta;
                 if (timer_EyeMove < 0)
                     timer_EyeMove = 0;
+            }
+
+            if (mainTimer > timeTrigger_Talk1 && !shotText1)
+            {
+                shotText1 = teletype.AddEntry(entry1);
+            }
+            else if (mainTimer > timeTrigger_Talk2 && !shotText2)
+            {
+                shotText2 = teletype.AddEntry(entry2);
             }
         }
         #endregion
