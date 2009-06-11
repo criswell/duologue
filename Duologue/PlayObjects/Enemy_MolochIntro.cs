@@ -64,6 +64,8 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const float offsetLength = 350f;
 
+        private const float offsetLength_EyeBall = 450f;
+
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
         private const float multiplierOrbit_X = 3f;
@@ -71,6 +73,9 @@ namespace Duologue.PlayObjects
 
         private const double totalTime_Orbit = 2.54;
         private const double totalTime_ColorChange = 1.51;
+        private const double totalTime_EyeStareOrbit = 2.54;
+        private const double totalTime_EyeBallBlinkTick = 0.1;
+        private const double totalTime_EyeBallOpen = 1.5;
 
         /// <summary>
         /// The time, from start to finish, for this intro to be alive
@@ -90,6 +95,10 @@ namespace Duologue.PlayObjects
         private const double timeTrigger_EyeBallMoveIn = 25.042;
 
         private const double totalTime_TentacleMove = 2.15;
+        /// <summary>
+        /// The offset length of the pupil from center of eyeball
+        /// </summary>
+        private const float offsetLength_Pupil = 22f;
         #endregion
 
         #region Fields
@@ -111,6 +120,17 @@ namespace Duologue.PlayObjects
 
         private double mainTimer;
         private double[] timeTriggers;
+
+        private Vector2 offset_Eye;
+        private Vector2 offset_Pupil;
+        private Vector2 vectorToNearestPlayer;
+        private Player nearestPlayer;
+        private int color_NextEye;
+        private int color_LastEye;
+        private double timer_EyeColorChange;
+        private double timer_EyeStare;
+        private int currentEyeFrame;
+        private double timer_EyeBall;
         #endregion
 
         #region Constructor / Init
@@ -226,6 +246,17 @@ namespace Duologue.PlayObjects
 
             mainTimer = 0;
 
+            // Set up a default eye stuff
+            vectorToNearestPlayer = Vector2.Zero;
+            nearestPlayer = null;
+            SetEyeOffsets();
+            color_LastEye = 0;
+            color_NextEye = 1;
+            timer_EyeColorChange = 0;
+            timer_EyeStare = 0;
+            currentEyeFrame = 0;
+            timer_EyeBall = 0;
+
             Initialized = true;
         }
 
@@ -266,6 +297,36 @@ namespace Duologue.PlayObjects
             localOffset = centerOfScreen + localOffset - curPos;
             localOffset.Normalize();
             return localOffset;
+        }
+
+        /// <summary>
+        /// Will set the current offsets for the eyeball and pupil
+        /// </summary>
+        private void SetEyeOffsets()
+        {
+            // Lissajous curve for what he's looking at
+            Vector2 localOffset = new Vector2(
+                maxOrbit_X * (float)Math.Sin(multiplierOrbit_X * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))),
+                maxOrbit_Y * (float)Math.Sin(multiplierOrbit_Y * MathHelper.Lerp(0, MathHelper.TwoPi, (float)(timer_EyeStare / totalTime_EyeStareOrbit))));
+            // Place eye ball with relation to center
+            offset_Eye = centerOfScreen + localOffset - Position;
+            offset_Eye.Normalize();
+            Vector2 temp_offset_Eye = offset_Eye * offsetLength_EyeBall;
+            //rotation_Eye = MWMathHelper.ComputeAngleAgainstX(offset_Eye) - MathHelper.PiOver4;
+
+            // Aim the pupil
+            if (nearestPlayer == null || vectorToNearestPlayer == Vector2.Zero)
+            {
+                // Aim at the center of screen
+                offset_Pupil = centerOfScreen - (Position + temp_offset_Eye);
+            }
+            else
+            {
+                // Aim at the player
+                offset_Pupil = nearestPlayer.Position - (Position + temp_offset_Eye);
+            }
+            offset_Pupil.Normalize();
+            offset_Pupil = offset_Pupil * offsetLength_Pupil;
         }
         #endregion
 
@@ -378,6 +439,214 @@ namespace Duologue.PlayObjects
                     
             }
         }
+
+        private void DrawEye()
+        {
+            // Compute color
+            Color tempColor = new Color(
+                (byte)MathHelper.Lerp(
+                    (float)colorArray_TasteTheRainbow[color_LastEye].R,
+                    (float)colorArray_TasteTheRainbow[color_NextEye].R, (float)(timer_EyeColorChange / totalTime_ColorChange)),
+                (byte)MathHelper.Lerp(
+                    (float)colorArray_TasteTheRainbow[color_LastEye].G,
+                    (float)colorArray_TasteTheRainbow[color_NextEye].G, (float)(timer_EyeColorChange / totalTime_ColorChange)),
+                (byte)MathHelper.Lerp(
+                    (float)colorArray_TasteTheRainbow[color_LastEye].B,
+                    (float)colorArray_TasteTheRainbow[color_NextEye].B, (float)(timer_EyeColorChange / totalTime_ColorChange)));
+
+            #region Draw the eye
+            // Draw the shaft
+            for (int i = 0; i < numberOfBlobsInShaft; i++)
+            {
+                // Draw the outline
+                InstanceManager.RenderSprite.Draw(
+                    texture_Blob,
+                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
+                    center_Blob,
+                    null,
+                    Color.Black,
+                    0f,
+                    scale_BlobOutline,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                // Draw the blob
+                InstanceManager.RenderSprite.Draw(
+                    texture_Blob,
+                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye,
+                    center_Blob,
+                    null,
+                    tempColor,
+                    0f,
+                    scale_Blob,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+                // Draw the highlight
+                InstanceManager.RenderSprite.Draw(
+                    texture_BlobHighlight,
+                    Position + MathHelper.Lerp(0, offsetLength_EyeBall, (float)i / (float)numberOfBlobsInShaft) * offset_Eye +
+                    offsetY_BlobHighlight * Vector2.UnitY,
+                    center_BlobHighlight,
+                    null,
+                    Color.White,
+                    0f,
+                    scale_Blob,
+                    0f,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+            }
+            // Draw the base
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].Base,
+                Position + offsetLength_EyeBall * offset_Eye,
+                center_Eye,
+                null,
+                Color.White,
+                0f,//rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            // Draw the pupil
+            InstanceManager.RenderSprite.Draw(
+                texture_EyePupil,
+                Position + offsetLength_EyeBall * offset_Eye + offset_Pupil,
+                center_Pupil,
+                null,
+                tempColor,
+                0f,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            // Draw the layers
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].ShadeLower,
+                Position + offsetLength_EyeBall * offset_Eye,
+                center_Eye,
+                null,
+                tempColor,
+                0f,//rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].ShadeMiddle,
+                Position + offsetLength_EyeBall * offset_Eye,
+                center_Eye,
+                null,
+                tempColor,
+                0f,//rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].ShadeUpper,
+                Position + offsetLength_EyeBall * offset_Eye,
+                center_Eye,
+                null,
+                tempColor,
+                0f,//rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            // Draw the outline
+            InstanceManager.RenderSprite.Draw(
+                eyes[currentEyeFrame].Outline,
+                Position + offsetLength_EyeBall * offset_Eye,
+                center_Eye,
+                null,
+                Color.White,
+                0f,//rotation_Eye,
+                1f,
+                0f,
+                RenderSpriteBlendMode.AlphaBlendTop);
+            #endregion
+        }
+        #endregion
+
+        #region Private update
+        private void UpdateEye(double delta)
+        {
+            // Eyeball
+            timer_EyeBall += delta;
+            switch (currentEyeState)
+            {
+                case MolochEyeState.Opening:
+                    if (timer_EyeBall > totalTime_EyeBallBlinkTick)
+                    {
+                        timer_EyeBall = 0;
+                        currentEyeFrame--;
+                        if (currentEyeFrame < 0)
+                        {
+                            currentEyeFrame = 0;
+                            currentEyeState = MolochEyeState.Open;
+                        }
+                    }
+                    break;
+                case MolochEyeState.Closing:
+                    if (timer_EyeBall > totalTime_EyeBallBlinkTick)
+                    {
+                        timer_EyeBall = 0;
+                        currentEyeFrame++;
+                        if (currentEyeFrame >= eyes.Length)
+                        {
+                            currentEyeFrame = eyes.Length - 1;
+                            if (polarity_EyeBall == ColorPolarity.Negative)
+                                polarity_EyeBall = ColorPolarity.Positive;
+                            else
+                                polarity_EyeBall = ColorPolarity.Negative;
+                            color_Pupil++;
+                            if (color_Pupil >= colorArray_TasteTheRainbow.Length)
+                                color_Pupil = 0;
+                            if (isEyeEngaged)
+                            {
+                                LocalInstanceManager.Enemies[0].ColorPolarity = polarity_EyeBall;
+                            }
+                            currentEyeState = MolochEyeState.Opening;
+                        }
+                    }
+                    break;
+                default:
+                    // Default is open
+                    if (timer_EyeBall > totalTime_EyeBallOpen)
+                    {
+                        timer_EyeBall = 0;
+                        currentEyeState = MolochEyeState.Closing;
+                    }
+                    break;
+            }
+            timer_EyeStare += delta;
+            if (timer_EyeStare > totalTime_EyeStareOrbit)
+                timer_EyeStare -= totalTime_EyeStareOrbit;
+            SetEyeOffsets();
+            if (isEyeEngaged && currentState != MolochState.EyeDying && currentState != MolochState.GeneralDying)
+            {
+                if (sfxi_EyeBallWobble == null)
+                {
+                    try
+                    {
+                        sfxi_EyeBallWobble = sfx_EyeBallWobble.Play(volume_EyeBallWobble);
+                    }
+                    catch { }
+                }
+                else
+                {
+                    try
+                    {
+                        if (sfxi_EyeBallWobble.State == SoundState.Paused ||
+                            sfxi_EyeBallWobble.State == SoundState.Stopped)
+                        {
+                            sfxi_EyeBallWobble.Play();
+                        }
+                    }
+                    catch
+                    { }
+                }
+                timer_EyeShot += delta;
+                if (timer_EyeShot >= totalTime_EyeShots)
+                {
+                    SpawnEyeBabby();
+                    timer_EyeShot = 0;
+                }
+            }
+        }
         #endregion
 
         #region Draw / Update
@@ -387,6 +656,7 @@ namespace Duologue.PlayObjects
             {
                 DrawTentacle(tentacles[i]);
             }
+            DrawEye();
         }
 
         public override void Update(GameTime gameTime)
