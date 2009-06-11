@@ -53,6 +53,7 @@ namespace Duologue.PlayObjects
         private const float scale_Blob = 0.8f;
         private const float offsetY_BlobHighlight = -10f;
         private const float scale_BlobOutline = 1.05f;
+        private const float scale_EyeBlobOutline = 0.82f;
         private const int numberOfBlobsInShaft = 10;
         private const float max_BlobSize = 2.1f;
         private const float min_BlobSize = 0.08f;
@@ -64,7 +65,7 @@ namespace Duologue.PlayObjects
         /// </summary>
         private const float offsetLength = 350f;
 
-        private const float offsetLength_EyeBall = 450f;
+        private const float offsetLength_EyeBall = 250f;
 
         private const float maxOrbit_X = 80f;
         private const float maxOrbit_Y = 70f;
@@ -131,6 +132,10 @@ namespace Duologue.PlayObjects
         private double timer_EyeStare;
         private int currentEyeFrame;
         private double timer_EyeBall;
+        private MolochEyeState currentEyeState;
+        private Vector2 startPos;
+        private Vector2 endPos;
+        private double timer_EyeMove;
         #endregion
 
         #region Constructor / Init
@@ -256,6 +261,12 @@ namespace Duologue.PlayObjects
             timer_EyeStare = 0;
             currentEyeFrame = 0;
             timer_EyeBall = 0;
+            currentEyeState = MolochEyeState.Open;
+            endPos = new Vector2(
+                centerOfScreen.X, 0);
+            startPos = endPos - Vector2.UnitY * (offsetLength_EyeBall + center_Eye.Y);
+            Position = startPos;
+            timer_EyeMove = 0;
 
             Initialized = true;
         }
@@ -333,12 +344,26 @@ namespace Duologue.PlayObjects
         #region Motion overrides
         public override bool StartOffset()
         {
+            vectorToNearestPlayer = Vector2.One * 3f * InstanceManager.DefaultViewport.Width;
+            nearestPlayer = null;
             return true;
         }
 
         public override bool UpdateOffset(PlayObject pobj)
         {
+            if (pobj.MajorType == MajorPlayObjectType.Player)
+            {
+                // Player
+                Vector2 vToPlayer = this.Position - pobj.Position;
+                float len = vToPlayer.Length();
+                if (len < vectorToNearestPlayer.Length())
+                {
+                    vectorToNearestPlayer = vToPlayer;
+                    nearestPlayer = (Player)pobj;
+                }
+            }
             return true;
+
         }
 
         public override bool ApplyOffset()
@@ -466,7 +491,7 @@ namespace Duologue.PlayObjects
                     null,
                     Color.Black,
                     0f,
-                    scale_BlobOutline,
+                    scale_EyeBlobOutline,
                     0f,
                     RenderSpriteBlendMode.AlphaBlendTop);
                 // Draw the blob
@@ -588,17 +613,6 @@ namespace Duologue.PlayObjects
                         if (currentEyeFrame >= eyes.Length)
                         {
                             currentEyeFrame = eyes.Length - 1;
-                            if (polarity_EyeBall == ColorPolarity.Negative)
-                                polarity_EyeBall = ColorPolarity.Positive;
-                            else
-                                polarity_EyeBall = ColorPolarity.Negative;
-                            color_Pupil++;
-                            if (color_Pupil >= colorArray_TasteTheRainbow.Length)
-                                color_Pupil = 0;
-                            if (isEyeEngaged)
-                            {
-                                LocalInstanceManager.Enemies[0].ColorPolarity = polarity_EyeBall;
-                            }
                             currentEyeState = MolochEyeState.Opening;
                         }
                     }
@@ -615,37 +629,27 @@ namespace Duologue.PlayObjects
             timer_EyeStare += delta;
             if (timer_EyeStare > totalTime_EyeStareOrbit)
                 timer_EyeStare -= totalTime_EyeStareOrbit;
-            SetEyeOffsets();
-            if (isEyeEngaged && currentState != MolochState.EyeDying && currentState != MolochState.GeneralDying)
+            timer_EyeColorChange += delta;
+            if (timer_EyeColorChange > totalTime_ColorChange)
             {
-                if (sfxi_EyeBallWobble == null)
-                {
-                    try
-                    {
-                        sfxi_EyeBallWobble = sfx_EyeBallWobble.Play(volume_EyeBallWobble);
-                    }
-                    catch { }
-                }
-                else
-                {
-                    try
-                    {
-                        if (sfxi_EyeBallWobble.State == SoundState.Paused ||
-                            sfxi_EyeBallWobble.State == SoundState.Stopped)
-                        {
-                            sfxi_EyeBallWobble.Play();
-                        }
-                    }
-                    catch
-                    { }
-                }
-                timer_EyeShot += delta;
-                if (timer_EyeShot >= totalTime_EyeShots)
-                {
-                    SpawnEyeBabby();
-                    timer_EyeShot = 0;
-                }
+                timer_EyeColorChange -= totalTime_ColorChange;
+                color_LastEye = color_NextEye;
+                color_NextEye++;
+                if (color_NextEye >= colorArray_TasteTheRainbow.Length)
+                    color_NextEye = 0;
             }
+            SetEyeOffsets();
+
+            // Eye position
+            Position = new Vector2(
+                    MathHelper.Lerp(
+                        startPos.X,
+                        endPos.X,
+                        (float)(timer_EyeMove / totalTime_TentacleMove)),
+                    MathHelper.Lerp(
+                        startPos.Y,
+                        endPos.Y,
+                        (float)(timer_EyeMove / totalTime_TentacleMove)));
         }
         #endregion
 
@@ -662,6 +666,7 @@ namespace Duologue.PlayObjects
         public override void Update(GameTime gameTime)
         {
             double delta = gameTime.ElapsedGameTime.TotalSeconds;
+            UpdateEye(delta);
             mainTimer += delta;
             if (mainTimer > totalTime_StartToFinish)
             {
@@ -704,6 +709,22 @@ namespace Duologue.PlayObjects
                     if (tentacles[i].Timer_Movement < 0)
                         tentacles[i].Timer_Movement = 0;
                 }
+            }
+
+            if (mainTimer < timeTrigger_AllLeave)
+            {
+                if (mainTimer > timeTrigger_EyeBallMoveIn && timer_EyeMove < totalTime_TentacleMove)
+                {
+                    timer_EyeMove += delta;
+                    if (timer_EyeMove > totalTime_TentacleMove)
+                        timer_EyeMove = totalTime_TentacleMove;
+                }
+            }
+            else
+            {
+                timer_EyeMove -= delta;
+                if (timer_EyeMove < 0)
+                    timer_EyeMove = 0;
             }
         }
         #endregion
