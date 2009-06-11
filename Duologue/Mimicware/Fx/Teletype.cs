@@ -344,11 +344,33 @@ namespace Mimicware.Fx
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
+            for (int i = 0; i < maxTeletypeEntries; i++)
+            {
+                if (entries[i] != null && entries[i].Alive)
+                {
+                    entries[i].Draw(gameTime);
+                }
+            }
             base.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
+            int numAlive = 0;
+            for (int i = 0; i < maxTeletypeEntries; i++)
+            {
+                if (entries[i] != null && entries[i].Alive)
+                {
+                    numAlive++;
+                    entries[i].Update(gameTime);
+                }
+            }
+
+            if (numAlive < 1)
+            {
+                Enabled = false;
+                Visible = false;
+            }
             base.Update(gameTime);
         }
         #endregion
