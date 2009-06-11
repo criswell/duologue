@@ -287,7 +287,7 @@ namespace Duologue.PlayObjects
         // Audio stuff
         private AudioManager audio;
         private SoundEffect sfx_TubeExplode;
-        private SoundEffectInstance sfxi_TubeExplode;
+        private SoundEffectInstance[] sfxi_TubeExplode;
         private SoundEffect sfx_EyeBallWobble;
         private SoundEffectInstance sfxi_EyeBallWobble;
         private SoundEffect sfx_EndBoom;
@@ -525,7 +525,7 @@ namespace Duologue.PlayObjects
 
             // Load audio things
             sfx_TubeExplode = InstanceManager.AssetManager.LoadSoundEffect(filename_TubeExplode);
-            sfxi_TubeExplode = null;
+            sfxi_TubeExplode = new SoundEffectInstance[tubes.Length];
             sfx_EyeBallWobble = InstanceManager.AssetManager.LoadSoundEffect(filename_EyeBallWobble);
             sfxi_EyeBallWobble = null;
             sfx_EndBoom = InstanceManager.AssetManager.LoadSoundEffect(filename_EndBoom);
@@ -614,7 +614,8 @@ namespace Duologue.PlayObjects
             catch { }
             try
             {
-                sfxi_TubeExplode.Stop();
+                for(int i = 0; i < sfxi_TubeExplode.Length; i++)
+                    sfxi_TubeExplode[i].Stop();
             }
             catch { }
             base.CleanUp();
@@ -983,20 +984,20 @@ namespace Duologue.PlayObjects
                 {
                     tubes[index].Alive = false;
                     tubes[index].Timer = 0;
-                    if (sfxi_TubeExplode == null)
+                    if (sfxi_TubeExplode[index] == null)
                     {
                         try
                         {
-                            sfxi_TubeExplode = sfx_TubeExplode.Play(volume_TubeExplode);
+                            sfxi_TubeExplode[index] = sfx_TubeExplode.Play(volume_TubeExplode);
                         }
                         catch { }
                     }
-                    else if (sfxi_TubeExplode.State == SoundState.Stopped ||
-                             sfxi_TubeExplode.State == SoundState.Paused)
+                    else if (sfxi_TubeExplode[index].State == SoundState.Stopped ||
+                             sfxi_TubeExplode[index].State == SoundState.Paused)
                     {
                         try
                         {
-                            sfxi_TubeExplode.Play();
+                            sfxi_TubeExplode[index].Play();
                         }
                         catch { }
                     }
@@ -1004,8 +1005,8 @@ namespace Duologue.PlayObjects
                     {
                         try
                         {
-                            sfxi_TubeExplode.Stop();
-                            sfxi_TubeExplode.Play();
+                            sfxi_TubeExplode[index].Stop();
+                            sfxi_TubeExplode[index].Play();
                         }
                         catch { }
                     }
@@ -1500,7 +1501,8 @@ namespace Duologue.PlayObjects
                         catch { }
                         try
                         {
-                            sfxi_TubeExplode.Stop();
+                            for(int i = 0; i < sfxi_TubeExplode.Length; i++)
+                                sfxi_TubeExplode[i].Stop();
                         }
                         catch { }
                         audio.PlayEffect(EffectID.PlayerExplosion);
