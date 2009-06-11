@@ -26,17 +26,6 @@ using Duologue.Screens;
 
 namespace Duologue.PlayObjects
 {
-    /*public enum MolochIntroState
-    {
-        InitialWait,
-        MovingInTentacles,
-        WiggleTentaclesWait,
-        MovingInEyeBall,
-        Speech,
-        Intense,
-        Exit,
-    }*/
-
     public struct Tentacle
     {
         public Vector2 StartPosition;
