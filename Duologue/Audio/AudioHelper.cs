@@ -103,37 +103,58 @@ namespace Duologue.Audio
             cues[sbname][cueName] = soundBanks[sbname].GetCue(cueName);
         }
 
-        protected static void Preload(string soundbank, string cue)
+        protected static void Preload(string soundbank, string cue, bool disposeFirst)
         {
+            
+            if (disposeFirst)
+            {
+                if (cues[soundbank].Keys.Contains(cue))
+                {
+                    cues[soundbank][cue].Dispose();
+                    cues[soundbank].Remove(cue);
+                }
+            }
+          
             if (!cues[soundbank].Keys.Contains(cue))
             {
                 cues[soundbank].Add(cue, soundBanks[soundbank].GetCue(cue));
             }
         }
 
-        protected static void Preload(Q q)
+        protected static void Preload(Q q, bool disposeFirst)
         {
-            Preload(q.SoundBankName, q.CueName);
+            Preload(q.SoundBankName, q.CueName, disposeFirst);
         }
 
-        protected static void Preload(Track track)
+        protected static void Preload(Track track, bool disposeFirst)
         {
             for (int q = 0; q < track.QCount; q++)
             {
-                Preload(track.Cues[q]);
+                Preload(track.Cues[q], disposeFirst);
             }
         }
 
-        public static void Preload(Song song)
+        public static void Preload(Song song, bool disposeFirst)
         {
+            if (disposeFirst && soundBanks.Keys.Contains(song.SoundBankName))
+            {
+                soundBanks[song.SoundBankName].Dispose();
+                soundBanks.Remove(song.SoundBankName);
+                waveBanks[song.WaveBankName].Dispose();
+                waveBanks.Remove(song.WaveBankName);
+                cues.Remove(song.SoundBankName);
+            }
             AddBank(song.SoundBankName, song.WaveBankName);
             SoundBank sb = soundBanks[song.SoundBankName];
             if (song.Managed)
             {
                 for (int t = 0; t < song.TrackCount; t++)
                 {
-                    Preload(song.Tracks[t]);
+                    Preload(song.Tracks[t], disposeFirst);
                 }
+            }
+            else
+            {
             }
         }
 
@@ -157,7 +178,7 @@ namespace Duologue.Audio
             AddBank(soundBankName, waveBankName);
             cueNames.ForEach(delegate(string cueName)
             {
-                Preload(soundBankName, cueName);
+                Preload(soundBankName, cueName, false);
             });
         }
 

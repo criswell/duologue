@@ -117,7 +117,7 @@ namespace Duologue.Audio
                 arrange[row, 0] = cues[row];
             }
             ArrayToTracks(arrange);
-            AudioHelper.Preload(this);
+            AudioHelper.Preload(this, false);
         }
 
 
@@ -142,7 +142,7 @@ namespace Duologue.Audio
         {
             managed = true;
             hyper = new IntensityWidget(this, intensityMap);
-            AudioHelper.Preload(this);
+            AudioHelper.Preload(this, false);
         }
         
 
@@ -165,7 +165,7 @@ namespace Duologue.Audio
             beater = new BeatWidget(this, arrangement.GetLength(1), beatLength);
             managed = false;
             ArrayToTracks(arrangement);
-            AudioHelper.Preload(this);
+            AudioHelper.Preload(this, false);
         }
 
         /// <summary>
@@ -255,6 +255,8 @@ namespace Duologue.Audio
             {
                 fader = null;
             }
+            //could it really be this simple? No.
+            AudioHelper.Preload(this, true);
             Enabled = false;
             playing = false;
             paused = false;
