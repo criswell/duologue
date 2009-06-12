@@ -96,6 +96,15 @@ namespace Duologue.UI
         private Vector2[] shadowOffset;
 
         private TutorialEntry[] proTips;
+
+        private bool tutOnscreen;
+        #endregion
+
+        #region Properties
+        public bool TutorialOnscreen
+        {
+            get { return tutOnscreen; }
+        }
         #endregion
 
         #region Constructor / Init
@@ -189,6 +198,7 @@ namespace Duologue.UI
             requestedToBeDisplayed.Clear();
             currentState = PopUpState.None;
             position = Vector2.Zero;
+            tutOnscreen = false;
             Visible = false;
             Enabled = false;
         }
@@ -208,6 +218,7 @@ namespace Duologue.UI
                     lastEntryCount++;
                     Visible = true;
                     Enabled = true;
+                    tutOnscreen = true;
                 }
             }
             else if (lastEntryCount < theEntries.Length)
@@ -216,6 +227,7 @@ namespace Duologue.UI
                 lastEntryCount++;
                 Visible = true;
                 Enabled = true;
+                tutOnscreen = true;
             }
         }
 
@@ -363,6 +375,7 @@ namespace Duologue.UI
                         // Nothing left, shut ourselves down
                         Enabled = false;
                         Visible = false;
+                        tutOnscreen = false;
                         stateTimer = 0;
                     }
                     break;

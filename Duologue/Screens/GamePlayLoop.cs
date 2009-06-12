@@ -220,7 +220,7 @@ namespace Duologue.Screens
 
             #region Enemy Stuff
             // Only do this stuff if we're not in wave intro
-            if (myManager.CurrentState != GamePlayState.WaveIntro)
+            if (myManager.CurrentState != GamePlayState.WaveIntro && !myManager.TutorialManager.TutorialOnscreen)
             {
                 for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
                 {
@@ -278,7 +278,7 @@ namespace Duologue.Screens
 
             // If we have no living enemies, it means we need to get them from the next wavelet,
             // or move to next wave
-            if ((livingEnemies < 1 && livingPlayers > 0) || skip)
+            if ((livingEnemies < 1 && livingPlayers > 0 && !myManager.TutorialManager.TutorialOnscreen) || skip)
             {
                 if (myManager.CurrentState == GamePlayState.Playing)
                     LocalInstanceManager.CurrentGameWave.CurrentWavelet++;
