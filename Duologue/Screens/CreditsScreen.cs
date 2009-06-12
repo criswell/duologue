@@ -25,28 +25,31 @@ using Duologue.Screens;
 using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
-//using Scurvy.Media.VideoModel;
-//using Scurvy.Media;
 #endregion
 
 namespace Duologue.Screens
 {
+    [Serializable]
+    public struct CreditPage
+    {
+        public string ImageFilename;
+        public string[] Headers;
+        public string[] Content;
+    }
+
     public class CreditsScreen : DrawableGameComponent
     {
         #region Constants
-        private const string fontFilename = "Fonts/inero-50";
-        private const string vidFilename = "Content/cred";
+        //private const string fontFilename = "Fonts/inero-50";
         #endregion
 
         #region Fields
         private CreditsScreenManager myManager;
-        private SpriteFont font;
+        //private SpriteFont font;
         private DuologueGame localGame;
 
         private Vector2 pos;
         private AudioManager audio;
-        //private ContentManager contentMangler;
-        //private Video vid;
         #endregion
 
         #region Properties
@@ -58,8 +61,6 @@ namespace Duologue.Screens
         {
             localGame = (DuologueGame)game;
             myManager = manager;
-            //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
-            //contentMangler = new VideoContentManager(game.Services);
         }
 
         public override void Initialize()
@@ -70,12 +71,8 @@ namespace Duologue.Screens
 
         protected override void LoadContent()
         {
-            font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
-            pos = new Vector2(400, 400);
-
-            //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
-            //vid = contentMangler.Load<Video>(vidFilename);
-            //vid.Loop = false;
+            //font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
+            //pos = new Vector2(400, 400);
 
             base.LoadContent();
         }
@@ -84,24 +81,11 @@ namespace Duologue.Screens
         #region Update / Draw
         public override void Update(GameTime gameTime)
         {
-            //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
-            //vid.Update();
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            InstanceManager.RenderSprite.DrawString(
-                font, "Placeholder for credits", pos, Color.Azure);
-
-            //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
-            //if (vid.IsPlaying)
-            //{
-            //    localGame.spriteBatch.Begin();
-            //    localGame.spriteBatch.Draw(vid.CurrentTexture, new Vector2(10, 10), Color.White);
-            //    localGame.spriteBatch.End();
-            //}
-
             base.Draw(gameTime);
         }
 
@@ -111,24 +95,18 @@ namespace Duologue.Screens
             {
                 if (Enabled)
                 {
-                    //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
-                    //vid.Play();
-                    
                     if (audio.SongIsPaused(SongID.Credits))
                     {
                         audio.ResumeSong(SongID.Credits);
                     }
                     else
                     {
-                        //audio.PlaySong(SongID.Credits);
                         audio.FadeIn(SongID.Credits);
                     }
                     
                 }
                 else
                 {
-                    //FFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU
-                    //vid.Stop();
                     audio.PauseSong(SongID.Credits);
                 }
             }
