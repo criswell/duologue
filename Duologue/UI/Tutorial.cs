@@ -55,8 +55,8 @@ namespace Duologue.UI
     {
         #region Constants
         private const string filename_PopUpWindow = "PlayerUI/pop-up-window";
-        private const string filename_Font = "Fonts\\inero-28";
-        private const string filename_TipFont = "Fonts/inero-small";
+        private const string filename_Font = "Fonts/deja-med";//"Fonts\\inero-28";
+        private const string filename_TipFont = "Fonts/deja-med";//"Fonts/inero-small";
 
         private const double time_ScaleVert = 0.2f;
         private const double time_ScaleHoriz = 0.6f;
