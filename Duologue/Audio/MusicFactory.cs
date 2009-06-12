@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 namespace Duologue.Audio
 {
 
-    public class MusicFactory
+    public partial class MusicFactory
     {
         //Select Menu Song constants
         protected const string selectMenuWaves = "Content\\Audio\\SelectMenu.xwb";

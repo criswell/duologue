@@ -107,6 +107,8 @@ namespace Duologue.Audio.Widgets
 
                     //this is bookkeeping only: so if you check the Volume property
                     //on a Track, it will have the correct value. It should go away somehow.
+                    //Edit: nuh uh. I commented this out, and it broke the hell out of it,
+                    //so ignore what I said about it going away!
                     for (int t = 0; t < song.TrackCount; t++)
                         song.Tracks[t].ChangeVolume(Volume);
 

@@ -78,6 +78,21 @@ namespace Duologue.Audio
             base.Initialize();
         }
 
+        protected void Recycle(SongID ID)
+        {
+            /*Option A:
+             * - "recycle" all the cues in the existing Song in songMap
+             * 
+             * Option B:
+             * - Dispose of the the existing song in its entirety
+             * remove it from songMap, create a new one, and add it to songMap
+             * 
+             * Trying Option A first
+             * 
+             */
+
+        }
+
         public void FadeOutAllSongs()
         {
             songMap.Values.ToList().ForEach(song =>
@@ -114,7 +129,7 @@ namespace Duologue.Audio
             }
         }
 
-        public void PlaySong(SongID ID, float volume)
+        private void PlaySong(SongID ID, float volume)
         {
             if (!SongIsPlaying(ID))
             {
