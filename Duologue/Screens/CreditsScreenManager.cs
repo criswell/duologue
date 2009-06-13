@@ -29,7 +29,7 @@ using Duologue.UI;
 
 namespace Duologue.Screens
 {
-    public class CreditsScreenManager : GameScreen
+    public class CreditsScreenManager : GameScreen, IService
     {
         #region Constants
         #endregion
@@ -60,6 +60,9 @@ namespace Duologue.Screens
             this.SetEnable(false);
             this.SetVisible(false);
         }
+        #endregion
+
+        #region Public
         #endregion
 
         #region Update

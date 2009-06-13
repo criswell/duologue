@@ -19,6 +19,7 @@ using Mimicware.Graphics;
 using Duologue;
 using Duologue.Properties;
 using Duologue.State;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.Screens
@@ -544,6 +545,7 @@ namespace Duologue.Screens
                     if (device.IsConnected)
                     {
                         LocalInstanceManager.AchievementManager.InitStorageData(device);
+                        
                         startPressed = true;
                         currentState = MainMenuState.MainMenu;
                     }
