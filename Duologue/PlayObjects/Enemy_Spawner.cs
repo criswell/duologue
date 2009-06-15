@@ -69,10 +69,10 @@ namespace Duologue.PlayObjects
         private const float delta_FlareSize = 0.09f;
 
         private const double timeBetweenColorSwitches = 0.33;
-        private const double timeBetweenRingColorCycles = 0.45;
+        private const double timeBetweenRingColorCycles = 1.01;
         private const double timeToThink = 0.202;
-        private const double timeFlareUp = 0.5;
-        private const double timeFlareDown = 0.1;
+        private const double timeFlareUp = 0.9;
+        private const double timeFlareDown = 0.2;
 
         private const double shieldCoolOffTime = 0.2;
 
@@ -676,6 +676,7 @@ namespace Duologue.PlayObjects
                 else
                     ColorPolarity = ColorPolarity.Negative;
                 color_Current = GetMyColor(ColorState.Light);
+                color_RingFull = GetMyColor(ColorState.Light);
             }
         }
 
