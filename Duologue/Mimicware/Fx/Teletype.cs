@@ -243,6 +243,17 @@ namespace Mimicware.Fx
         }
         #endregion
 
+        #region Public methods
+        /// <summary>
+        /// Call to flush this entry
+        /// </summary>
+        public void Flush()
+        {
+            masterTimer = TotalTimeOnScreen;
+            alive = false;
+        }
+        #endregion
+
         #region Draw / Update
         public void Update(GameTime gameTime)
         {
@@ -336,6 +347,22 @@ namespace Mimicware.Fx
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Run through, and flush all the current entries
+        /// </summary>
+        public void FlushEntries()
+        {
+            for (int i = 0; i < maxTeletypeEntries; i++)
+            {
+                if (entries[i] != null && entries[i].Alive)
+                {
+                    entries[i].Flush();
+                }
+                Enabled = false;
+                Visible = false;
+            }
         }
         #endregion
 

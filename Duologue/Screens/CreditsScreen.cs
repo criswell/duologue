@@ -242,9 +242,13 @@ namespace Duologue.Screens
             {
                 "Special thanks",
             };
+            // schultmc:  Krissy Schultheiss, Tony Thompson, Jerry and Kellie Hoover, Cody Barth, Jennifer Stack
+            // sam: Sam & Iris Hart, 
             tempPage.Content = new string[]
             {
-                "Blah, blah, blah",
+                "Sam and Iris Hart, Krissy Schultheiss,",
+                "Tony Thompson, Jerry and Kellie Hoover, Cody Barth,",
+                "Jennifer Stack, Collin and Cary Lierman"
             };
 
             thePages.Add(tempPage);
