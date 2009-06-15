@@ -69,6 +69,7 @@ namespace Duologue.PlayObjects
         private const float delta_FlareSize = 0.09f;
 
         private const double timeBetweenColorSwitches = 0.33;
+        private const double timeBetweenRingColorCycles = 0.45;
         private const double timeToThink = 0.202;
         private const double timeFlareUp = 0.5;
         private const double timeFlareDown = 0.1;
@@ -123,8 +124,11 @@ namespace Duologue.PlayObjects
         private Color color_Base;
         private int[] colorIndex_Lights;
         private Color[] color_PossibleLightColors;
+        private Color color_RingFull;
 
         private double timer_ColorSwitchCountdown;
+        private double timer_RingColorCycle;
+        private int direction_RingColorCycle;
         private double timer_Thinking;
         private double timer_Flare;
         private TypesOfPlayObjects[] possibleNigglets;
@@ -220,9 +224,12 @@ namespace Duologue.PlayObjects
                 Color.Turquoise,
                 Color.SteelBlue,
             };
+            color_RingFull = GetMyColor(ColorState.Light);
 
             SetLightColors();
             timer_ColorSwitchCountdown = 0;
+            timer_RingColorCycle = 0;
+            direction_RingColorCycle = 1;
 
             GetNextPosition(Vector2.Zero);
 
@@ -456,6 +463,18 @@ namespace Duologue.PlayObjects
                 ColorState,
                 ColorPolarity,
                 StartHitPoints);
+        }
+
+        private Color GetRingColor(double p)
+        {
+            Color c;
+
+            c = new Color(
+                (byte)MathHelper.Lerp(color_Base.R, color_RingFull.R, (float)p),
+                (byte)MathHelper.Lerp(color_Base.G, color_RingFull.G, (float)p),
+                (byte)MathHelper.Lerp(color_Base.B, color_RingFull.B, (float)p));
+
+            return c;
         }
         #endregion
 
@@ -696,7 +715,7 @@ namespace Duologue.PlayObjects
                 Position,
                 center_Base,
                 null,
-                color_Base,
+                GetRingColor(timer_RingColorCycle/timeBetweenRingColorCycles),
                 rotation_OuterRing,
                 1f,
                 0f,
@@ -707,7 +726,7 @@ namespace Duologue.PlayObjects
                 Position,
                 center_Base,
                 null,
-                color_Base,
+                GetRingColor(1.0 - timer_RingColorCycle/timeBetweenRingColorCycles),
                 rotation_InnerRing,
                 scale_InnerRing,
                 0f,
@@ -748,6 +767,18 @@ namespace Duologue.PlayObjects
             {
                 timer_ColorSwitchCountdown = 0;
                 SetLightColors();
+            }
+
+            timer_RingColorCycle += direction_RingColorCycle * gameTime.ElapsedGameTime.TotalSeconds;
+            if (timer_RingColorCycle < 0)
+            {
+                timer_RingColorCycle = 0;
+                direction_RingColorCycle = 1;
+            }
+            else if (timer_RingColorCycle > timeBetweenRingColorCycles)
+            {
+                timer_RingColorCycle = timeBetweenRingColorCycles;
+                direction_RingColorCycle = -1;
             }
 
             shieldCoolOff += gameTime.ElapsedGameTime.TotalSeconds;
