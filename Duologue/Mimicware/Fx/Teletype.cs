@@ -294,7 +294,7 @@ namespace Mimicware.Fx
     public class Teletype : DrawableGameComponent, IService
     {
         #region Constants
-        private const int maxTeletypeEntries = 10;
+        private const int maxTeletypeEntries = 20;
         #endregion
 
         #region Fields

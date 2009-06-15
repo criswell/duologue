@@ -65,6 +65,7 @@ namespace Duologue.Screens
         private const double totalTime_TextOnScreen = totalTime_MoveIn + totalTime_Steady + totalTime_MoveOut * .5;
 
         private const float offsetHeader = 40f;
+        private const float offsetLineSpacing = 7f;
         private const float standardWidthOfTexture = 250f;
         private const float windowWidth = 640f;
         private const float windowHeight = 550f;
@@ -99,6 +100,7 @@ namespace Duologue.Screens
         private Color color_Text;
         private Color color_Shadow;
         private Vector2[] shadow;
+        private Vector2 screenCenter;
 
         private Teletype teletype;
         #endregion
@@ -133,7 +135,8 @@ namespace Duologue.Screens
             };
             tempPage.Content = new string[]
             {
-                "Copyright (c) 2009 Funavision Electronic Entertainment"
+                "Copyright (c) 2009",
+                "Funavision Electronic Entertainment"
             };
 
             thePages.Add(tempPage);
@@ -192,7 +195,7 @@ namespace Duologue.Screens
             thePages.Add(tempPage);
             tempPage = new CreditPage();
 
-            // Fifth page
+            // testers page
             tempPage.ImageFilename = "credits/testers";
             tempPage.Headers = new string[]
             {
@@ -202,14 +205,38 @@ namespace Duologue.Screens
             {
                 "Jake Tabke (RavenclawX)",
                 "Jessica Hart (Jesness)",
-                "Justin Lebreck (Raprot)",
                 "Melanie Smith (melanieeeeeee)",
+                "Justin Lebreck (Raprot)",
             };
 
             thePages.Add(tempPage);
             tempPage = new CreditPage();
 
-            // Sixth page
+            // Music
+            tempPage.ImageFilename = null;
+            tempPage.Headers = new string[]
+            {
+                "Music and audio",
+            };
+            tempPage.Content = new string[]
+            {
+                "Original music by Glen Smith",
+                "'WinOne', 'SecondChance', 'Tr8or',",
+                "'SuperBowlSix', 'Credits'",
+                " ",
+                "Original sound effects:",
+                "Glen Smith, Sam Hart",
+                " ",
+                "Additional music and sound effects",
+                "available under Creative Commons licenses.",
+                "See www.funavision.com/Duologue/legal for more",
+                "information",
+            };
+
+            thePages.Add(tempPage);
+            tempPage = new CreditPage();
+
+            // thanks
             tempPage.ImageFilename = null;
             tempPage.Headers = new string[]
             {
@@ -235,6 +262,7 @@ namespace Duologue.Screens
             currentState = CreditState.SetNext;
             pos_StartText = Vector2.Zero;
             pos_Texture = Vector2.Zero;
+            screenCenter = Vector2.Zero;
         }
 
         protected override void LoadContent()
@@ -289,15 +317,24 @@ namespace Duologue.Screens
         #region Update / Draw
         public override void Update(GameTime gameTime)
         {
-            if(pos_Texture == Vector2.Zero)
+            if (screenCenter == Vector2.Zero)
+                screenCenter = new Vector2(
+                    InstanceManager.DefaultViewport.Width / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            if (pos_Texture == Vector2.Zero)
+            {
                 pos_Texture = new Vector2(
-                    InstanceManager.DefaultViewport.TitleSafeArea.Right - standardWidthOfTexture/2f,
-                    InstanceManager.DefaultViewport.Height/2f);
-            if(pos_StartText == Vector2.Zero)
+                    screenCenter.X + windowWidth / 2f - standardWidthOfTexture / 2f,
+                    InstanceManager.DefaultViewport.Height / 2f);
+            }
+
+            if (pos_StartText == Vector2.Zero)
+            {
                 pos_StartText = new Vector2(
-                    InstanceManager.DefaultViewport.TitleSafeArea.X,
-                    InstanceManager.DefaultViewport.TitleSafeArea.Y);
-            
+                    screenCenter.X - windowWidth / 2f,
+                    screenCenter.Y - windowHeight / 2f);
+            }
+
             if (teletype == null)
                 teletype = ServiceLocator.GetService<Teletype>();
 
@@ -360,16 +397,16 @@ namespace Duologue.Screens
                             if (i == 0)
                             {
                                 tempEntry.Font = font_HeaderOne;
-                                tempPos += Vector2.UnitY * font_HeaderOne.LineSpacing;
+                                tempPos += Vector2.UnitY * (font_HeaderOne.LineSpacing + offsetLineSpacing);
                             }
                             else
                             {
-                                tempPos += Vector2.UnitY * font_HeaderTwo.LineSpacing;
+                                tempPos += Vector2.UnitY * (font_HeaderTwo.LineSpacing + offsetLineSpacing);
                             }
 
                             teletype.AddEntry(tempEntry);
                         }
-                        tempPos += Vector2.UnitY * offsetHeader;
+                        tempPos += Vector2.UnitY * (offsetHeader + offsetLineSpacing);
 
                         for (int i = 0; i < thePages[currentPage].Content.Length; i++)
                         {
@@ -384,7 +421,7 @@ namespace Duologue.Screens
                                 shadow,
                                 InstanceManager.RenderSprite);
                             teletype.AddEntry(tempEntry);
-                            tempPos += Vector2.UnitY * font_Content.LineSpacing;
+                            tempPos += Vector2.UnitY * (font_Content.LineSpacing + offsetLineSpacing);
                         }
                         currentState = CreditState.MoveIn;
                     }
