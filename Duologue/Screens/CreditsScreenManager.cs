@@ -63,6 +63,18 @@ namespace Duologue.Screens
         #endregion
 
         #region Public
+        public override void ScreenEntrance(GameTime gameTime)
+        {
+            creditsScreen.ResetAll();
+            base.ScreenEntrance(gameTime);
+        }
+
+        /*
+        public override void ScreenExit(GameTime gameTime)
+        {
+            creditsScreen.ResetAll();
+            base.ScreenExit(gameTime);
+        }*/
         #endregion
 
         #region Update

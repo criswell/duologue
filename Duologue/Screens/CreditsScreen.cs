@@ -45,6 +45,8 @@ namespace Duologue.Screens
         #region Constants
         //private const string fontFilename = "Fonts/inero-50";
         private const int maxNumOfPages = 20;
+
+        private const double timePerPage = 4.0;
         #endregion
 
         #region Fields
@@ -58,6 +60,9 @@ namespace Duologue.Screens
         /// List of pages
         /// </summary>
         private List<CreditPage> thePages;
+        private int currentPage;
+
+        private double timer_Page;
         #endregion
 
         #region Properties
@@ -150,9 +155,45 @@ namespace Duologue.Screens
             tempPage = new CreditPage();
 
             // Fifth page
+            tempPage.ImageFilename = "credits/testers";
+            tempPage.Headers = new string[]
+            {
+                "Testers",
+            };
+            tempPage.Content = new string[]
+            {
+                "Jake Tabke (RavenclawX)",
+                "Jessica Hart (Jesness)",
+                "Justin Lebreck (Raprot)",
+                "Melanie Smith (melanieeeeeee)",
+            };
+
+            thePages.Add(tempPage);
+            tempPage = new CreditPage();
+
+            // Sixth page
+            tempPage.ImageFilename = null;
+            tempPage.Headers = new string[]
+            {
+                "Special thanks",
+            };
+            tempPage.Content = new string[]
+            {
+                "Blah, blah, blah",
+            };
+
+            thePages.Add(tempPage);
             #endregion
 
+            ResetAll();
+
             base.Initialize();
+        }
+
+        public void ResetAll()
+        {
+            timer_Page = 0;
+            currentPage = 0;
         }
 
         protected override void LoadContent()
@@ -160,73 +201,11 @@ namespace Duologue.Screens
             //font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
             //pos = new Vector2(400, 400);
 
-            CreditPage tempPage;
-
-            
-
             base.LoadContent();
         }
         #endregion
 
         #region Public methods
-        public void TestDataFormat(StorageDevice device)
-        {
-            Console.WriteLine("HEY BITCH FIX THIS FUCKER! CreditsScreen.cs");
-            CreditPage tempPage = new CreditPage();
-
-            tempPage.ImageFilename = "credits/criswellious";
-            tempPage.Headers = new string[]
-            {
-                "Sam Hart",
-                "Gamertag: Criswellious",
-                "Studio Head (CVTL FTW)",
-            };
-            tempPage.Content = new string[]
-            {
-                "Game creator",
-                "Lead developer",
-                "Game artwork"
-            };
-
-            // Open a storage container.
-            StorageContainer container =
-                device.OpenContainer("Duologue");
-
-            // Get the path of the save game.
-            string filename = Path.Combine(container.Path, "credittest");
-            FileStream stream;
-            if (File.Exists(filename))
-            {
-                stream = File.Open(filename, FileMode.Truncate);
-            }
-            else
-            {
-                stream = File.Open(filename, FileMode.CreateNew);
-            }
-
-            // Convert the object to XML data and put it in the stream.
-            XmlSerializer serializer = new XmlSerializer(typeof(CreditPage));
-            serializer.Serialize(stream, tempPage);
-
-            // Close the file.
-            stream.Close();
-
-            // Dispose the container, to commit changes.
-            container.Dispose();
-        }
-        #endregion
-
-        #region Update / Draw
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-        }
-
         protected override void OnEnabledChanged(object sender, EventArgs args)
         {
             if (null != audio)
@@ -241,7 +220,7 @@ namespace Duologue.Screens
                     {
                         audio.FadeIn(SongID.Credits);
                     }
-                    
+
                 }
                 else
                 {
@@ -249,6 +228,18 @@ namespace Duologue.Screens
                 }
             }
             base.OnEnabledChanged(sender, args);
+        }
+        #endregion
+
+        #region Update / Draw
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
         }
         #endregion
     }
