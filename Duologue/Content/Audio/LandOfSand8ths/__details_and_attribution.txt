@@ -1,0 +1,56 @@
+
+=================== FREESOUND ATTRIBUTION FORM =======================
+
+This form below lists all the samples in this pack with their descriptions and tags.
+You can use this form to attribute samples to users when you use them.
+
+=========================== CUT HERE =================================
+
+File:
+	Name: "Chaser 1_Flicker.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=46094
+	Date of upload: 2008-01-03 18:02:49
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : http://www.myspace.com/chronosceptor New style of synth I\'m working on. Its got a phased and a slide note effect. Key of G 130 bpm
+
+Tags:
+	130-bpm beat distorted distortion hard melody pad phase progression sequence synth techno trance 
+======================================================================
+
+File:
+	Name: "Chaser.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=46184
+	Date of upload: 2008-01-04 14:53:02
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : http://www.myspace.com/chronosceptor The Chaser effect. it will get the people movin. 
+
+Tags:
+	140-bpm bass bassline beat distorted distortion drum drumloop flange hard melody phase progression sequence synth techno trance 
+======================================================================
+
+File:
+	Name: "Chaser 2_Flicker.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=46186
+	Date of upload: 2008-01-04 14:53:56
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : http://www.myspace.com/chronosceptor 2nd phase to chaser 1 with different bass theory.
+
+Tags:
+	130-bpm beat distorted distortion hard melody phase progression sequence synth techno trance 
+======================================================================
+

@@ -1,0 +1,88 @@
+
+=================== FREESOUND ATTRIBUTION FORM =======================
+
+This form below lists all the samples in this pack with their descriptions and tags.
+You can use this form to attribute samples to users when you use them.
+
+=========================== CUT HERE =================================
+
+File:
+	Name: "bass line loop.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=60690
+	Date of upload: 2008-09-24 13:36:25
+	
+Designer / Creator / Uploader:
+	Name: "ultrafix"
+	Url: http://www.freesound.org/usersViewSingle.php?id=753755
+	
+Description:
+	By "ultrafix" : synth bass line
+
+Tags:
+	bass 
+======================================================================
+
+File:
+	Name: "drum loop.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=60691
+	Date of upload: 2008-09-24 13:36:30
+	
+Designer / Creator / Uploader:
+	Name: "ultrafix"
+	Url: http://www.freesound.org/usersViewSingle.php?id=753755
+	
+Description:
+	By "ultrafix" : drum loop
+
+Tags:
+	drums 
+======================================================================
+
+File:
+	Name: "full loop.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=60692
+	Date of upload: 2008-09-24 13:36:42
+	
+Designer / Creator / Uploader:
+	Name: "ultrafix"
+	Url: http://www.freesound.org/usersViewSingle.php?id=753755
+	
+Description:
+	By "ultrafix" : all 4 loops together
+
+Tags:
+	pattern 
+======================================================================
+
+File:
+	Name: "fx loop.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=60693
+	Date of upload: 2008-09-24 13:37:56
+	
+Designer / Creator / Uploader:
+	Name: "ultrafix"
+	Url: http://www.freesound.org/usersViewSingle.php?id=753755
+	
+Description:
+	By "ultrafix" : fx loop
+
+Tags:
+	fx 
+======================================================================
+
+File:
+	Name: "synth lead loop.WAV"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=60694
+	Date of upload: 2008-09-24 13:38:10
+	
+Designer / Creator / Uploader:
+	Name: "ultrafix"
+	Url: http://www.freesound.org/usersViewSingle.php?id=753755
+	
+Description:
+	By "ultrafix" : synth lead loop
+
+Tags:
+	lead synth 
+======================================================================
+

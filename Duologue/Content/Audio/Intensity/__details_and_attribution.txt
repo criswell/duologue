@@ -1,0 +1,168 @@
+
+=================== FREESOUND ATTRIBUTION FORM =======================
+
+This form below lists all the samples in this pack with their descriptions and tags.
+You can use this form to attribute samples to users when you use them.
+
+=========================== CUT HERE =================================
+
+File:
+	Name: "Organic.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45142
+	Date of upload: 2007-12-19 11:03:17
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : some pads arpeggiated to play together with a flange and phase effect on em. 140 BPM
+
+Tags:
+	arp euphoric melody pad strings synth trance 
+======================================================================
+
+File:
+	Name: "Dance Pt. 3.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45203
+	Date of upload: 2007-12-21 18:54:03
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : 3rd step...lifting pads.
+
+Tags:
+	pad progression strings synth techno trance 
+======================================================================
+
+File:
+	Name: "Bounce seq 5.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45610
+	Date of upload: 2007-12-30 14:10:56
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : http://www.myspace.com/chronosceptor Chopped choir vocals. slightly off beat if your planning to use drums on it place the loop a fraction of a second before the first hit of the drums. 150 bpm
+
+Tags:
+	150-bpm bass bassline beat distorted progression sequence synth techno trance 
+======================================================================
+
+File:
+	Name: "Medievel.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45613
+	Date of upload: 2007-12-30 14:11:02
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : Strings i composed together for a medieval feel in a song. 140 bpm
+
+Tags:
+	140-bpm bass beat melody pad phase progression sequence strings synth techno trance 
+======================================================================
+
+File:
+	Name: "Riser 2_Flicker.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45616
+	Date of upload: 2007-12-30 14:11:09
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : Phased pad with distorted feel. 150 bpm
+
+Tags:
+	150-bpm beat melody pad phase progression strings synth techno trance 
+======================================================================
+
+File:
+	Name: "Riser 3_Flicker.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45617
+	Date of upload: 2007-12-30 14:11:10
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : Synth strings made for progression techno/trance. 150 bpm
+
+Tags:
+	150-bpm beat melody pad phase progression sequence strings synth techno trance 
+======================================================================
+
+File:
+	Name: "Riser 5_Flicker.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45619
+	Date of upload: 2007-12-30 14:11:13
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : Basic opening pad for a song. 150 bpm
+
+Tags:
+	150-bpm beat distorted distortion melody pad phase progression strings synth techno trance 
+======================================================================
+
+File:
+	Name: "Riser 6_Flicker.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45620
+	Date of upload: 2007-12-30 14:11:15
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : Strings for riser 5. 150 bpm
+
+Tags:
+	150-bpm beat melody pad progression strings synth techno trance 
+======================================================================
+
+File:
+	Name: "Riser 7_Flicker.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45621
+	Date of upload: 2007-12-30 14:11:16
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : More strings added. 150 bpm
+
+Tags:
+	150-bpm flange melody pad phase strings synth techno trance 
+======================================================================
+
+File:
+	Name: "Riser 8_Flicker.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=45622
+	Date of upload: 2007-12-30 14:11:22
+	
+Designer / Creator / Uploader:
+	Name: "Flick3r"
+	Url: http://www.freesound.org/usersViewSingle.php?id=508997
+	
+Description:
+	By "Flick3r" : Full strings. 150 bpm
+
+Tags:
+	150-bpm flange melody pad phase strings synth techno trance 
+======================================================================
+
