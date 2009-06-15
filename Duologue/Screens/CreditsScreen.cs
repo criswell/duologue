@@ -148,7 +148,7 @@ namespace Duologue.Screens
             {
                 "Sam Hart",
                 "Gamertag: Criswellious",
-                "Studio Head (CVTL FTW)",
+                "Studio Head (CVTL)",
             };
             tempPage.Content = new string[]
             {
