@@ -75,6 +75,12 @@ namespace Duologue.Screens
             creditsScreen.ResetAll();
             base.ScreenExit(gameTime);
         }*/
+
+        public void QuitScreen()
+        {
+            LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+            creditsScreen.Enabled = false;
+        }
         #endregion
 
         #region Update
