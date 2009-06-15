@@ -315,19 +315,24 @@ namespace Duologue.PlayObjects
                 }
 
                 // Beam handling
-                int temp = ((Player)pobj).IsInBeam(this);
                 inBeam = false;
                 isFleeing = false;
-                if (temp != 0)
+                if (Position.X > 0 && Position.X < InstanceManager.DefaultViewport.Width &&
+                    Position.Y > 0 && Position.Y < InstanceManager.DefaultViewport.Height)
                 {
-                    inBeam = true;
-                    if (temp == -1)
+                    // We only want to handle this stuff if we're onscreen
+                    int temp = ((Player)pobj).IsInBeam(this);
+                    if (temp != 0)
                     {
-                        isFleeing = true;
-                        Color c = ColorState.Negative[ColorState.Light];
-                        if(ColorPolarity == ColorPolarity.Positive)
-                            c = ColorState.Positive[ColorState.Light];
-                        LocalInstanceManager.Steam.AddParticles(Position, c);
+                        inBeam = true;
+                        if (temp == -1)
+                        {
+                            isFleeing = true;
+                            Color c = ColorState.Negative[ColorState.Light];
+                            if (ColorPolarity == ColorPolarity.Positive)
+                                c = ColorState.Positive[ColorState.Light];
+                            LocalInstanceManager.Steam.AddParticles(Position, c);
+                        }
                     }
                 }
                 return true;
