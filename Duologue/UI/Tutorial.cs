@@ -36,6 +36,7 @@ namespace Duologue.UI
         public Vector2 TextSize;
         public Vector2 Center;
         public bool SmallFont;
+        public bool IsTip;
     }
 
     public enum PopUpState
@@ -184,6 +185,7 @@ namespace Duologue.UI
                 proTips[i].Center = new Vector2(
                     proTips[i].TextSize.X / 2f, proTips[i].TextSize.Y / 2f);
                 proTips[i].SmallFont = true;
+                proTips[i].IsTip = true;
             }
 
             base.LoadContent();
@@ -238,16 +240,13 @@ namespace Duologue.UI
         /// </summary>
         public void TipPopUp()
         {
-            if (MWMathHelper.CoinToss())
-            {
-                int i = MWMathHelper.GetRandomInRange(0, proTips.Length);
+            int i = MWMathHelper.GetRandomInRange(0, proTips.Length);
 
-                InstanceManager.Logger.LogEntry(String.Format("Pro-tip to display: {0}", i.ToString()));
+            InstanceManager.Logger.LogEntry(String.Format("Pro-tip to display: {0}", i.ToString()));
 
-                requestedToBeDisplayed.Enqueue(proTips[i]);
-                Visible = true;
-                Enabled = true;
-            }
+            requestedToBeDisplayed.Enqueue(proTips[i]);
+            Visible = true;
+            Enabled = true;
         }
         #endregion
 
@@ -374,7 +373,10 @@ namespace Duologue.UI
                     {
                         currentEntry = requestedToBeDisplayed.Dequeue();
                         currentState = PopUpState.ScaleVert;
-                        tutOnscreen = true;
+                        if (currentEntry.IsTip)
+                            tutOnscreen = false;
+                        else
+                            tutOnscreen = true;
                         stateTimer = 0;
                     }
                     else

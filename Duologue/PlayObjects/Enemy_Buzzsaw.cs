@@ -51,7 +51,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// How far we can go outside the screen before we should stop
         /// </summary>
-        private const float outsideScreenMultiplier = 3;
+        private const float outsideScreenMultiplier = 1.1f;
 
         /// <summary>
         /// The divisor that determines the radius of the entire
