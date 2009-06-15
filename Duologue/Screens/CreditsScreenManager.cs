@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Content;
 using Mimicware.Manager;
 using Mimicware.Graphics;
 using Mimicware;
+using Mimicware.Fx;
 // Duologue
 using Duologue;
 using Duologue.Audio;
@@ -32,11 +33,15 @@ namespace Duologue.Screens
     public class CreditsScreenManager : GameScreen, IService
     {
         #region Constants
+        private const double timeBackGroundChange = 4.3;
         #endregion
 
         #region Fields
         private DuologueGame localGame;
         private CreditsScreen creditsScreen;
+
+        private double timer_BackgroundChange;
+        private Teletype teletype;
         #endregion
 
         #region Properties
@@ -52,6 +57,8 @@ namespace Duologue.Screens
             creditsScreen.Enabled = false;
             creditsScreen.Visible = false;
             localGame.Components.Add(creditsScreen);
+            timer_BackgroundChange = 0;
+            teletype = null;
         }
         protected override void InitializeConstants()
         {
@@ -66,6 +73,8 @@ namespace Duologue.Screens
         public override void ScreenEntrance(GameTime gameTime)
         {
             creditsScreen.ResetAll();
+            timer_BackgroundChange = 0;
+            SetRandomParallax();
             base.ScreenEntrance(gameTime);
         }
 
@@ -78,6 +87,9 @@ namespace Duologue.Screens
 
         public void QuitScreen()
         {
+            if (teletype == null)
+                teletype = ServiceLocator.GetService<Teletype>();
+            teletype.FlushEntries();
             LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
             creditsScreen.Enabled = false;
         }
@@ -88,8 +100,34 @@ namespace Duologue.Screens
         {
             if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back) || 
                 InstanceManager.InputManager.NewButtonPressed(Buttons.B))
-                LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+                QuitScreen();
+
+            timer_BackgroundChange += gameTime.ElapsedGameTime.TotalSeconds;
+            if (timer_BackgroundChange > timeBackGroundChange)
+            {
+                timer_BackgroundChange = 0;
+                LocalInstanceManager.Background.NextBackground();
+                SetRandomParallax();
+            }
             base.Update(gameTime);
+        }
+
+        private void SetRandomParallax()
+        {
+            ParallaxElement pe = new ParallaxElement();
+            pe.Intensity = 1;
+            pe.Speed = 0.5f;
+            pe.Tint = new Color(
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(0, 255));
+
+            LocalInstanceManager.Background.SetParallaxElement(pe, true);
+            pe.Tint = new Color(
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(0, 255),
+                (byte)MWMathHelper.GetRandomInRange(0, 255));
+            LocalInstanceManager.Background.SetParallaxElement(pe, false);
         }
         #endregion
     }
