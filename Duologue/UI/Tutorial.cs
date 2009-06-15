@@ -75,6 +75,8 @@ namespace Duologue.UI
 
         private const float offset_WindowVert = -25f;
         private const float offset_ShadowScale = 2f;
+
+        private const double percentageToSpawnEnemies = 0.75;
         #endregion
 
         #region Fields
@@ -342,6 +344,10 @@ namespace Duologue.UI
                     }
                     break;
                 case PopUpState.Steady:
+                    if (stateTimer > time_Steady * percentageToSpawnEnemies)
+                    {
+                        tutOnscreen = false;
+                    }
                     if (stateTimer > time_Steady)
                     {
                         stateTimer = 0;
@@ -368,6 +374,7 @@ namespace Duologue.UI
                     {
                         currentEntry = requestedToBeDisplayed.Dequeue();
                         currentState = PopUpState.ScaleVert;
+                        tutOnscreen = true;
                         stateTimer = 0;
                     }
                     else
