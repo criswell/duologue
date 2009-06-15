@@ -55,17 +55,19 @@ namespace Duologue.Screens
         private const string filename_FontHeaderOne = "Fonts/inero-50";
         private const string filename_FontHeaderTwo = "Fonts/inero-40";
         private const string filename_FontContent = "Fonts/inero-28";
-        private const string filename_Blank = "Mimicware/blank";
+        private const string filename_Blank = "Mimicware/blank-trans";
         private const int maxNumOfPages = 20;
 
-        private const double totalTime_MoveIn = 0.5;
-        private const double totalTime_Steady = 4.0;
-        private const double totalTime_MoveOut = 0.5;
-        private const double totalTime_Type = 0.35;
+        private const double totalTime_MoveIn = 2.1;
+        private const double totalTime_Steady = 6.1;
+        private const double totalTime_MoveOut = 2.0;
+        private const double totalTime_Type = 1.89;
         private const double totalTime_TextOnScreen = totalTime_MoveIn + totalTime_Steady + totalTime_MoveOut * .5;
 
         private const float offsetHeader = 40f;
         private const float standardWidthOfTexture = 250f;
+        private const float windowWidth = 640f;
+        private const float windowHeight = 550f;
         private const float offsetShadow = 9.76f;
         #endregion
 
@@ -303,8 +305,19 @@ namespace Duologue.Screens
             switch (currentState)
             {
                 case CreditState.MoveIn:
+                    if (timer_Page > totalTime_MoveIn)
+                    {
+                        timer_Page = 0;
+                        currentState = CreditState.Steady;
+                    }
                     break;
                 case CreditState.MoveOut:
+                    if (timer_Page > totalTime_MoveOut)
+                    {
+                        timer_Page = 0;
+                        currentPage++;
+                        currentState = CreditState.SetNext;
+                    }
                     break;
                 case CreditState.SetNext:
                     // Verify we have another to get
@@ -378,6 +391,11 @@ namespace Duologue.Screens
 
                     break;
                 default:
+                    if (timer_Page > totalTime_Steady)
+                    {
+                        timer_Page = 0;
+                        currentState = CreditState.MoveOut;
+                    }
                     // Steady
                     break;
             }
@@ -386,7 +404,74 @@ namespace Duologue.Screens
 
         public override void Draw(GameTime gameTime)
         {
+            switch (currentState)
+            {
+                case CreditState.MoveIn:
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Current,
+                        GetTexturePosition(),
+                        center,
+                        null,
+                        Color.White,
+                        0f,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlend);
+                    break;
+                case CreditState.MoveOut:
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Current,
+                        GetTexturePosition(),
+                        center,
+                        null,
+                        Color.White,
+                        0f,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlend);
+                    break;
+                case CreditState.Steady:
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Current,
+                        pos_Texture,
+                        center,
+                        null,
+                        Color.White,
+                        0f,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlend);
+                    break;
+                default:
+                    // Set next
+                    break;
+            }
             base.Draw(gameTime);
+        }
+
+        private Vector2 GetTexturePosition()
+        {
+            Vector2 temp;
+
+            if (currentState == CreditState.MoveIn)
+            {
+                temp = new Vector2(
+                    MathHelper.Lerp(
+                        InstanceManager.DefaultViewport.Width + texture_Current.Width,
+                        pos_Texture.X, (float)(timer_Page/totalTime_MoveIn)),
+                    pos_Texture.Y);
+            }
+            else
+            {
+                temp = new Vector2(
+                    MathHelper.Lerp(
+                        pos_Texture.X,
+                        0 - texture_Current.Width,
+                        (float)(timer_Page / totalTime_MoveIn)),
+                    pos_Texture.Y);
+            }
+
+            return temp;
         }
         #endregion
     }
