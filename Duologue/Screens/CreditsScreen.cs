@@ -275,7 +275,8 @@ namespace Duologue.Screens
             {
                 "Sam and Iris Hart, Krissy Schultheiss,",
                 "Tony Thompson, Jerry and Kellie Hoover, Cody Barth,",
-                "Jennifer Stack, Collin and Cary Lierman"
+                "Jennifer Stack, Collin and Cary Lierman,",
+                "Chris, Ann, Kevin, Brian and Joey"
             };
 
             thePages.Add(tempPage);
