@@ -2177,16 +2177,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="credits\raprot.png">
-      <Name>raprot</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="credits\ravenclawx.png">
-      <Name>ravenclawx</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="credits\schultmc.png">
       <Name>schultmc</Name>
       <Importer>TextureImporter</Importer>
