@@ -149,6 +149,7 @@ namespace Duologue.Screens
             thePages.Add(tempPage);
             tempPage = new CreditPage();
 
+            // Fifth page
             #endregion
 
             base.Initialize();
