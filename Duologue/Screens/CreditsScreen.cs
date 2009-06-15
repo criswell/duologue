@@ -136,7 +136,11 @@ namespace Duologue.Screens
             tempPage.Content = new string[]
             {
                 "Copyright (c) 2009",
-                "Funavision Electronic Entertainment"
+                "Funavision Electronic Entertainment",
+                " ",
+                "Powered by the Mimicware Engine",
+                "Mimicware Engine copyright (c) 2009",
+                "Funavision Electronic Entertainment",
             };
 
             thePages.Add(tempPage);
@@ -236,6 +240,29 @@ namespace Duologue.Screens
             thePages.Add(tempPage);
             tempPage = new CreditPage();
 
+            // Source
+            tempPage.ImageFilename = null;
+            tempPage.Headers = new string[]
+            {
+                "Mimicware Engine",
+            };
+            tempPage.Content = new string[]
+            {
+                "Lead Developer",
+                "Sam Hart",
+                " ",
+                "Secondary Development",
+                "Glen Smith, Michael Schultheiss",
+                " ",
+                "Contains code released under the",
+                "Microsoft Permissive License (Ms-PL).",
+                "See www.funavision.com/Duologue/legal for more",
+                "information",
+            };
+
+            thePages.Add(tempPage);
+            tempPage = new CreditPage();
+
             // thanks
             tempPage.ImageFilename = null;
             tempPage.Headers = new string[]
@@ -249,6 +276,22 @@ namespace Duologue.Screens
                 "Sam and Iris Hart, Krissy Schultheiss,",
                 "Tony Thompson, Jerry and Kellie Hoover, Cody Barth,",
                 "Jennifer Stack, Collin and Cary Lierman"
+            };
+
+            thePages.Add(tempPage);
+            tempPage = new CreditPage();
+
+            // thanks
+            tempPage.ImageFilename = null;
+            tempPage.Headers = new string[]
+            {
+                "Special thanks",
+            };
+            tempPage.Content = new string[]
+            {
+                " ",
+                " ",
+                "Thank you for playing!"
             };
 
             thePages.Add(tempPage);
@@ -277,13 +320,11 @@ namespace Duologue.Screens
 
             texture_Blank = InstanceManager.AssetManager.LoadTexture2D(filename_Blank);
 
-            color_Text = new Color(212, 189, 255);
-            color_Shadow = new Color(Color.Black, 165);
+            color_Text = new Color(234, 223, 255);
+            color_Shadow = new Color(Color.Black, 201);
             shadow = new Vector2[]
             {
                 offsetShadow * Vector2.One,
-                offsetShadow * Vector2.UnitY,
-                offsetShadow * Vector2.UnitX
             };
 
             teletype = null;
@@ -450,6 +491,16 @@ namespace Duologue.Screens
                 case CreditState.MoveIn:
                     InstanceManager.RenderSprite.Draw(
                         texture_Current,
+                        GetTexturePosition() + offsetShadow * Vector2.One,
+                        center,
+                        null,
+                        color_Shadow,
+                        0f,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlend);
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Current,
                         GetTexturePosition(),
                         center,
                         null,
@@ -462,6 +513,16 @@ namespace Duologue.Screens
                 case CreditState.MoveOut:
                     InstanceManager.RenderSprite.Draw(
                         texture_Current,
+                        GetTexturePosition() + offsetShadow * Vector2.One,
+                        center,
+                        null,
+                        color_Shadow,
+                        0f,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlend);
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Current,
                         GetTexturePosition(),
                         center,
                         null,
@@ -472,6 +533,16 @@ namespace Duologue.Screens
                         RenderSpriteBlendMode.AlphaBlend);
                     break;
                 case CreditState.Steady:
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Current,
+                        pos_Texture + offsetShadow * Vector2.One,
+                        center,
+                        null,
+                        color_Shadow,
+                        0f,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlend);
                     InstanceManager.RenderSprite.Draw(
                         texture_Current,
                         pos_Texture,
