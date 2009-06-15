@@ -18,7 +18,7 @@ namespace Duologue.Audio
         public const float Full = 100f;
 
         public const float SelectMenu = 82f;
-        public const float Credits = 80f;
+        public const float Credits = 90f;
         public const float Tr8or = 79f; //Medals Display
 
     }
@@ -26,7 +26,7 @@ namespace Duologue.Audio
     class AudioConstants
     {
         //this is the proportional volume control for *all* in-game music (hell, maybe even out of game)
-        public const float MusicCategoryDefaultVolume = 0.5f;
+        public const float MusicCategoryDefaultVolume = 0.8f;
         //these are the limits that AudioHelper uses to clamp the above volume. Change if you really need to.
         //It's supposed to be, I think, 1.0f = 6db
         public const float MIN_MUSIC_CAT_VOL = 0f;

@@ -234,7 +234,7 @@ namespace Duologue.Screens
                 "Additional music and sound effects",
                 "available under Creative Commons licenses.",
                 "See www.funavision.com/Duologue/legal for more",
-                "information",
+                "information.",
             };
 
             thePages.Add(tempPage);
@@ -257,7 +257,7 @@ namespace Duologue.Screens
                 "Contains code released under the",
                 "Microsoft Permissive License (Ms-PL).",
                 "See www.funavision.com/Duologue/legal for more",
-                "information",
+                "information.",
             };
 
             thePages.Add(tempPage);
