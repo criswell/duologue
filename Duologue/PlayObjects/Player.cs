@@ -666,6 +666,26 @@ namespace Duologue.PlayObjects
         {
             state = PlayerState.Spawning;
         }
+
+        /// <summary>
+        /// Call when the player just needs to be instantly alive
+        /// WARNING: Only use when you know what this does!
+        /// </summary>
+        public void SetAlive()
+        {
+            state = PlayerState.Alive;
+            Alive = true;
+        }
+
+        /// <summary>
+        /// Set the player state as dead
+        /// WARNING: Only use when you know what this does!
+        /// </summary>
+        public void SetDead()
+        {
+            state = PlayerState.Dead;
+            Alive = false;
+        }
         #endregion
 
         #region Draw / Update

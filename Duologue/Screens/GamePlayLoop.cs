@@ -171,6 +171,13 @@ namespace Duologue.Screens
                         if (InstanceManager.InputManager.NewKeyPressed(Keys.PageUp))
                             skip = true;
 
+                        // FIXME as well... delete this fucker for release
+                        if (InstanceManager.InputManager.NewKeyPressed(Keys.End))
+                        {
+                            LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
+                            skip = true;
+                        }
+
                         // Now, make sure no one is stepping on eachother
                         dumb = p.StartOffset();
                         // Yeah, not efficient... but we have very low n in O(n^2)
