@@ -36,6 +36,7 @@ namespace Duologue.UI
         public Vector2 TextSize;
         public Vector2 Center;
         public bool SmallFont;
+        public bool IsTip;
     }
 
     public enum PopUpState
@@ -75,6 +76,8 @@ namespace Duologue.UI
 
         private const float offset_WindowVert = -25f;
         private const float offset_ShadowScale = 2f;
+
+        private const double percentageToSpawnEnemies = 0.75;
         #endregion
 
         #region Fields
@@ -182,6 +185,7 @@ namespace Duologue.UI
                 proTips[i].Center = new Vector2(
                     proTips[i].TextSize.X / 2f, proTips[i].TextSize.Y / 2f);
                 proTips[i].SmallFont = true;
+                proTips[i].IsTip = true;
             }
 
             base.LoadContent();
@@ -236,16 +240,13 @@ namespace Duologue.UI
         /// </summary>
         public void TipPopUp()
         {
-            if (MWMathHelper.CoinToss())
-            {
-                int i = MWMathHelper.GetRandomInRange(0, proTips.Length);
+            int i = MWMathHelper.GetRandomInRange(0, proTips.Length);
 
-                InstanceManager.Logger.LogEntry(String.Format("Pro-tip to display: {0}", i.ToString()));
+            InstanceManager.Logger.LogEntry(String.Format("Pro-tip to display: {0}", i.ToString()));
 
-                requestedToBeDisplayed.Enqueue(proTips[i]);
-                Visible = true;
-                Enabled = true;
-            }
+            requestedToBeDisplayed.Enqueue(proTips[i]);
+            Visible = true;
+            Enabled = true;
         }
         #endregion
 
@@ -342,6 +343,10 @@ namespace Duologue.UI
                     }
                     break;
                 case PopUpState.Steady:
+                    if (stateTimer > time_Steady * percentageToSpawnEnemies)
+                    {
+                        tutOnscreen = false;
+                    }
                     if (stateTimer > time_Steady)
                     {
                         stateTimer = 0;
@@ -368,6 +373,10 @@ namespace Duologue.UI
                     {
                         currentEntry = requestedToBeDisplayed.Dequeue();
                         currentState = PopUpState.ScaleVert;
+                        if (currentEntry.IsTip)
+                            tutOnscreen = false;
+                        else
+                            tutOnscreen = true;
                         stateTimer = 0;
                     }
                     else
