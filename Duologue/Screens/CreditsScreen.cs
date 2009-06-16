@@ -273,7 +273,7 @@ namespace Duologue.Screens
             // sam: Sam & Iris Hart, 
             tempPage.Content = new string[]
             {
-                "Sam and Iris Hart, Krissy Schultheiss,",
+                "Sam and Iris Hart, Krissy Schultheiss, Alice Lee Smith,",
                 "Tony Thompson, Jerry and Kellie Hoover, Cody Barth,",
                 "Jennifer Stack, Collin and Cary Lierman,",
                 "Chris, Ann, Kevin, Brian and Joey"
