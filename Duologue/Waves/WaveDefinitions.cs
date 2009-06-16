@@ -2964,7 +2964,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(50, 0);
+            Wavelets[0] = new Wavelet(50, 3);
             Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -2973,12 +2973,12 @@ namespace Duologue.Waves
                 Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
             }
             Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_ProtoNora;
-            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 4;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 2;
             Wavelets[0].ColorPolarities[Wavelets[0].Enemies.Length - 1] = ColorPolarity.Negative;
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(50, 2);
+            Wavelets[1] = new Wavelet(50, 3);
             Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
@@ -2988,11 +2988,11 @@ namespace Duologue.Waves
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_ProtoNora;
             Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 1] = ColorPolarity.Positive;
-            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 5;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 2;
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(50, 0);
+            Wavelets[2] = new Wavelet(50, 3);
             Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -3007,7 +3007,7 @@ namespace Duologue.Waves
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
                 Wavelets[2].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f;
-                Wavelets[2].StartHitPoints[i] = 5;
+                Wavelets[2].StartHitPoints[i] = 2;
             }
             #endregion
 
@@ -3036,7 +3036,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(50, 0);
+            Wavelets[0] = new Wavelet(50, 4);
             Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -3048,13 +3048,13 @@ namespace Duologue.Waves
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
                 Wavelets[0].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f + MathHelper.Pi;
-                Wavelets[0].StartHitPoints[i] = 5;
+                Wavelets[0].StartHitPoints[i] = 2;
                 Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
             }
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(50, 2);
+            Wavelets[1] = new Wavelet(50, 4);
             Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
@@ -3066,13 +3066,13 @@ namespace Duologue.Waves
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
                 Wavelets[1].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f + MathHelper.PiOver4 * 5f;
-                Wavelets[1].StartHitPoints[i] = 5;
+                Wavelets[1].StartHitPoints[i] = 2;
                 Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
             }
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(50, 2);
+            Wavelets[2] = new Wavelet(50, 4);
             Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -3087,7 +3087,7 @@ namespace Duologue.Waves
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
                 Wavelets[2].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f;
-                Wavelets[2].StartHitPoints[i] = 5;
+                Wavelets[2].StartHitPoints[i] = 2;
             }
             #endregion
 
