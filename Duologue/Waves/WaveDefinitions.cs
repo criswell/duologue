@@ -88,8 +88,8 @@ namespace Duologue.Waves
             // Currently MaxMinorNumber is 3 and MaxMajorNumber is 999
 
             /* NOTES
-[01:03:14] <criswe1l> criswell: 12-2, 12-3 -> annmoeba more HP, protonora *much* less HP (50% or less)
-[01:04:50] <criswe1l> and 12-3.1 (blah, likely all 12-3)
+[01:03:14] <criswe1l> criswell: 12-2, 12-3 -> annmoeba more HP, protonora *much* less HP (50% or less) - Done? TEST
+[01:04:50] <criswe1l> and 12-3.1 (blah, likely all 12-3) - Done? TEST
 [01:09:33] <criswe1l> 13-X totalbullshit too many mobs
 [01:22:09] <criswe1l> 15-3.0 too manybullshit buzsaws
 [01:30:10] <criswe1l> 16-1 crash? code 4
