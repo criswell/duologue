@@ -356,6 +356,10 @@ namespace Duologue.UI
                     if (LocalInstanceManager.Players[i].Active)
                         LocalInstanceManager.Scores[i].Visible = false;
                 }
+                // Turn off background
+                LocalInstanceManager.Background.Enabled = false;
+                LocalInstanceManager.Background.Visible = false;
+
                 LocalInstanceManager.AchievementManager.EnableMedalScreen();
                 LocalInstanceManager.AchievementManager.ReturnToPause = true;
                 inMedalScreen = true;
@@ -615,6 +619,9 @@ namespace Duologue.UI
             // OMG HACKERY
             ServiceLocator.GetService<GamePlayLoop>().Visible = true;
             LocalInstanceManager.AchievementManager.DisableMedalScreen();
+            // Turn on background
+            LocalInstanceManager.Background.Enabled = true;
+            LocalInstanceManager.Background.Visible = true;
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
                 if (LocalInstanceManager.Players[i].Active)
