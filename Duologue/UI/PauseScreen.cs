@@ -359,6 +359,14 @@ namespace Duologue.UI
                 // Turn off background
                 LocalInstanceManager.Background.Enabled = false;
                 LocalInstanceManager.Background.Visible = false;
+                // Turn off particle effects
+                LocalInstanceManager.BulletParticle.Visible = false;
+                LocalInstanceManager.EnemyExplodeSystem.Visible = false;
+                LocalInstanceManager.EnemySplatterSystem.Visible = false;
+                LocalInstanceManager.PlayerExplosion.Visible = false;
+                LocalInstanceManager.PlayerRing.Visible = false;
+                LocalInstanceManager.PlayerSmoke.Visible = false;
+                LocalInstanceManager.Steam.Visible = false;
 
                 LocalInstanceManager.AchievementManager.EnableMedalScreen();
                 LocalInstanceManager.AchievementManager.ReturnToPause = true;
@@ -622,6 +630,15 @@ namespace Duologue.UI
             // Turn on background
             LocalInstanceManager.Background.Enabled = true;
             LocalInstanceManager.Background.Visible = true;
+            // Turn on particle effects
+            LocalInstanceManager.BulletParticle.Visible = true;
+            LocalInstanceManager.EnemyExplodeSystem.Visible = true;
+            LocalInstanceManager.EnemySplatterSystem.Visible = true;
+            LocalInstanceManager.PlayerExplosion.Visible = true;
+            LocalInstanceManager.PlayerRing.Visible = true;
+            LocalInstanceManager.PlayerSmoke.Visible = true;
+            LocalInstanceManager.Steam.Visible = true;
+
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
                 if (LocalInstanceManager.Players[i].Active)
