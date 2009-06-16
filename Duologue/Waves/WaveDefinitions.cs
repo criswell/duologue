@@ -518,7 +518,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 3 (Boss)
+            #region Wave 3 (Boss) "Metal Tooth"
             #region WaveDef (3-1) "Buzzsaw lead-up"
             #region Metadata
             Waves[GetIndex(3, 1)] = new GameWave();
@@ -1215,7 +1215,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 6 (Boss)
+            #region Wave 6 (Boss) "King Gloop"
             #region WaveDef (6-1) "Land of the Gloops"
             #region Metadata
             Waves[GetIndex(6, 1)] = new GameWave();
@@ -2025,7 +2025,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 9 (Boss)
+            #region Wave 9 (Boss) "Unclean Rot"
             #region WaveDef (9-1) "Alien haboob"
             #region Metadata
             Waves[GetIndex(9, 1)] = new GameWave();
@@ -2850,7 +2850,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 12 (Boss)
+            #region Wave 12 (Boss) "ProtoNora"
             #region Wave (12-1) "Peleus and Thetis begat Achilles"
             #region Metadata
             Waves[GetIndex(12, 1)] = new GameWave();
@@ -3341,7 +3341,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 14 (Boss) - Flambi used
+            #region Wave 14 (Boss) "Pyre" - Flambi used
             #region WaveDef (14-1) "Screamin' Meanies"
             #region Metadata
             Waves[GetIndex(14, 1)] = new GameWave();
