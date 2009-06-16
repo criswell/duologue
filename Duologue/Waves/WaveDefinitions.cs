@@ -669,29 +669,35 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Positive);
+            Wavelets[0] = new Wavelet(11, 0);
             Wavelets[0].SongID = SongID.Ultrafix;
-            Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[0].StartAngle[0] = MathHelper.PiOver4;
-            Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[0].StartAngle[1] = MathHelper.Pi;
-            Wavelets[0].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[0].StartAngle[2] = MathHelper.PiOver2 * 3f;
-            Wavelets[0].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[0].StartAngle[3] = MathHelper.PiOver4 * 5f;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[0].StartAngle[i] = (float)i * 3f * MathHelper.PiOver4 / (float)Wavelets[0].Enemies.Length +
+                    MathHelper.PiOver2;
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 10f, (float)i / (float)Wavelets[0].Enemies.Length);
+                if (i < Wavelets[0].Enemies.Length / 2f)
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+            }
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Negative);
+            Wavelets[1] = new Wavelet(11, 0);
             Wavelets[1].SongID = SongID.Ultrafix;
-            Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[1].StartAngle[0] = MathHelper.PiOver4;
-            Wavelets[1].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[1].StartAngle[1] = 0f;
-            Wavelets[1].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[1].StartAngle[2] = MathHelper.PiOver2;
-            Wavelets[1].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[1].StartAngle[3] = MathHelper.PiOver4 * 5f;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[1].StartAngle[i] = (float)i * 3f * MathHelper.PiOver4 / (float)Wavelets[1].Enemies.Length +
+                    7f * MathHelper.PiOver4;
+                Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(0, 10f, (float)i / (float)Wavelets[1].Enemies.Length);
+                if (i < Wavelets[1].Enemies.Length / 2f)
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+            }
             #endregion
             // Third wavelet
             #region
