@@ -54,6 +54,8 @@ namespace Duologue.PlayObjects
             // I'm just a placeholder, so I'm never alive
             Alive = false;
             Initialized = true;
+            SpawnTimeDelay = 0;
+            SpawnTimer = 0;
         }
 
         public override bool StartOffset()

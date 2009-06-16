@@ -231,7 +231,8 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation, 
             ColorState currentColorState, 
             ColorPolarity startColorPolarity, 
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             // We say "fuck the requested starting pos"
             Position = new Vector2(
@@ -243,6 +244,8 @@ namespace Duologue.PlayObjects
                 Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
             if (hitPoints == null || (int)hitPoints == 0)
             {
                 hitPoints = 1;
@@ -919,7 +922,8 @@ namespace Duologue.PlayObjects
                                         Vector2.Zero,
                                         ColorState,
                                         ColorPolarity,
-                                        (int)(StartHitPoints / (float)realHitPointMultiplier));
+                                        (int)(StartHitPoints / (float)realHitPointMultiplier),
+                                        0);
                                     break;
                                 }
                             }

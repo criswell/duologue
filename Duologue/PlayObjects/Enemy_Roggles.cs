@@ -381,47 +381,40 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            if (SpawnTimerElapsed)
+            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+            rotationChangeTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (rotationChangeTimer > timePerRotationChange)
             {
-                timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
-                rotationChangeTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
-                if (rotationChangeTimer > timePerRotationChange)
-                {
-                    rotationAccelSign *= -1;
-                    rotationChangeTimer = 0;
-                }
-
-                //Orientation.Normalize();
-
-                switch (CurrentState)
-                {
-                    case RogglesState.Walking:
-                        if (timeSinceStart > timePerFrameWalking)
-                        {
-                            currentFrame++;
-                            timeSinceStart = 0;
-                            if (currentFrame >= numberOfWalkingFrames)
-                                currentFrame = 0;
-                        }
-                        break;
-                    default:
-                        if (timeSinceStart > timePerFrameRunning)
-                        {
-                            currentFrame++;
-                            timeSinceStart = 0;
-                            if (currentFrame >= numberOfWalkingFrames)
-                                currentFrame = 0;
-                        }
-                        break;
-                }
-
-                ComputeShadowOffset();
+                rotationAccelSign *= -1;
+                rotationChangeTimer = 0;
             }
-            else
+
+            //Orientation.Normalize();
+
+            switch (CurrentState)
             {
-                SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                case RogglesState.Walking:
+                    if (timeSinceStart > timePerFrameWalking)
+                    {
+                        currentFrame++;
+                        timeSinceStart = 0;
+                        if (currentFrame >= numberOfWalkingFrames)
+                            currentFrame = 0;
+                    }
+                    break;
+                default:
+                    if (timeSinceStart > timePerFrameRunning)
+                    {
+                        currentFrame++;
+                        timeSinceStart = 0;
+                        if (currentFrame >= numberOfWalkingFrames)
+                            currentFrame = 0;
+                    }
+                    break;
             }
+
+            ComputeShadowOffset();
         }
         #endregion
 

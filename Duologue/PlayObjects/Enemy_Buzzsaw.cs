@@ -270,20 +270,13 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            if (SpawnTimerElapsed)
-            {
-                rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
+            rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
 
-                bladesRotation += delta_Rotation;
-                if (bladesRotation > MathHelper.TwoPi)
-                    bladesRotation = 0f;
-                else if (bladesRotation < 0f)
-                    bladesRotation = MathHelper.TwoPi;
-            }
-            else
-            {
-                SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            }
+            bladesRotation += delta_Rotation;
+            if (bladesRotation > MathHelper.TwoPi)
+                bladesRotation = 0f;
+            else if (bladesRotation < 0f)
+                bladesRotation = MathHelper.TwoPi;
         }
         #endregion
 

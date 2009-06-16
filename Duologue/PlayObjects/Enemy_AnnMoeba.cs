@@ -545,53 +545,46 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            if (SpawnTimerElapsed)
-            {
-                currentPhi += gameTime.ElapsedGameTime.TotalSeconds;
-                if (currentPhi > MathHelper.TwoPi)
-                    currentPhi = 0;
+            currentPhi += gameTime.ElapsedGameTime.TotalSeconds;
+            if (currentPhi > MathHelper.TwoPi)
+                currentPhi = 0;
 
-                if (isSpawning)
+            if (isSpawning)
+            {
+                timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+                spawnScale = (float)(timeSinceSwitch / time_Spawning);
+                if (timeSinceSwitch > time_Spawning)
                 {
-                    timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
-                    spawnScale = (float)(timeSinceSwitch / time_Spawning);
-                    if (timeSinceSwitch > time_Spawning)
+                    timeSinceSwitch = 0;
+                    spawnScale = 1f;
+                    isSpawning = false;
+                }
+            }
+
+            bubbleRotation += delta_Rotation;
+            if (bubbleRotation > MathHelper.TwoPi)
+                bubbleRotation = 0;
+            else if (bubbleRotation < 0)
+                bubbleRotation = (float)MathHelper.TwoPi;
+
+            // Do any bloops as needed
+            if (MWMathHelper.GetRandomInRange(0, maxChanceOfBloopSound) == chanceOfBloopSound)
+            {
+                try
+                {
+                    if (sfxi_Bloop.State != SoundState.Playing)
                     {
-                        timeSinceSwitch = 0;
-                        spawnScale = 1f;
-                        isSpawning = false;
+                        sfxi_Bloop.Volume = (float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop);
+                        sfxi_Bloop.Play();
                     }
                 }
-
-                bubbleRotation += delta_Rotation;
-                if (bubbleRotation > MathHelper.TwoPi)
-                    bubbleRotation = 0;
-                else if (bubbleRotation < 0)
-                    bubbleRotation = (float)MathHelper.TwoPi;
-
-                // Do any bloops as needed
-                if (MWMathHelper.GetRandomInRange(0, maxChanceOfBloopSound) == chanceOfBloopSound)
+                catch
                 {
-                    try
-                    {
-                        if (sfxi_Bloop.State != SoundState.Playing)
-                        {
-                            sfxi_Bloop.Volume = (float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop);
-                            sfxi_Bloop.Play();
-                        }
-                    }
-                    catch
-                    {
-                        sfxi_Bloop = sfx_Bloop.Play((float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop));
-                    }
+                    sfxi_Bloop = sfx_Bloop.Play((float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop));
                 }
+            }
 
-                ComputeGlobuleOffsets();
-            }
-            else
-            {
-                SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            }
+            ComputeGlobuleOffsets();
         }
         #endregion
     }

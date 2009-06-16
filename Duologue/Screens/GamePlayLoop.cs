@@ -275,6 +275,10 @@ namespace Duologue.Screens
                             LocalInstanceManager.Enemies[i].Update(gameTime);
                             LocalInstanceManager.Enemies[i].InnerUpdate(gameTime);
                         }
+                        else
+                        {
+                            LocalInstanceManager.Enemies[i].SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                        }
                         livingEnemies++;
                     }
                 }
