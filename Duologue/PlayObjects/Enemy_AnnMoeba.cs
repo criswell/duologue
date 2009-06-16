@@ -192,7 +192,8 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation, 
             ColorState currentColorState, 
             ColorPolarity startColorPolarity, 
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             // We define our own start position
             Position = new Vector2(
@@ -205,6 +206,14 @@ namespace Duologue.PlayObjects
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
+            if (SpawnTimeDelay == SpawnTimer)
+                SpawnTimerElapsed = true;
+            else
+                SpawnTimerElapsed = false;
+
             if (hitPoints == null)
             {
                 hitPoints = 0;
@@ -540,46 +549,55 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            currentPhi += gameTime.ElapsedGameTime.TotalSeconds;
-            if (currentPhi > MathHelper.TwoPi)
-                currentPhi = 0;
-
-            if (isSpawning)
+            if (SpawnTimerElapsed)
             {
-                timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
-                spawnScale = (float)(timeSinceSwitch / time_Spawning);
-                if (timeSinceSwitch > time_Spawning)
-                {
-                    timeSinceSwitch = 0;
-                    spawnScale = 1f;
-                    isSpawning = false;
-                }
-            }
+                currentPhi += gameTime.ElapsedGameTime.TotalSeconds;
+                if (currentPhi > MathHelper.TwoPi)
+                    currentPhi = 0;
 
-            bubbleRotation += delta_Rotation;
-            if (bubbleRotation > MathHelper.TwoPi)
-                bubbleRotation = 0;
-            else if (bubbleRotation < 0)
-                bubbleRotation = (float)MathHelper.TwoPi;
-
-            // Do any bloops as needed
-            if (MWMathHelper.GetRandomInRange(0, maxChanceOfBloopSound) == chanceOfBloopSound)
-            {
-                try
+                if (isSpawning)
                 {
-                    if (sfxi_Bloop.State != SoundState.Playing)
+                    timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+                    spawnScale = (float)(timeSinceSwitch / time_Spawning);
+                    if (timeSinceSwitch > time_Spawning)
                     {
-                        sfxi_Bloop.Volume = (float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop);
-                        sfxi_Bloop.Play();
+                        timeSinceSwitch = 0;
+                        spawnScale = 1f;
+                        isSpawning = false;
                     }
                 }
-                catch
-                {
-                    sfxi_Bloop = sfx_Bloop.Play((float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop));
-                }
-            }
 
-            ComputeGlobuleOffsets();
+                bubbleRotation += delta_Rotation;
+                if (bubbleRotation > MathHelper.TwoPi)
+                    bubbleRotation = 0;
+                else if (bubbleRotation < 0)
+                    bubbleRotation = (float)MathHelper.TwoPi;
+
+                // Do any bloops as needed
+                if (MWMathHelper.GetRandomInRange(0, maxChanceOfBloopSound) == chanceOfBloopSound)
+                {
+                    try
+                    {
+                        if (sfxi_Bloop.State != SoundState.Playing)
+                        {
+                            sfxi_Bloop.Volume = (float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop);
+                            sfxi_Bloop.Play();
+                        }
+                    }
+                    catch
+                    {
+                        sfxi_Bloop = sfx_Bloop.Play((float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop));
+                    }
+                }
+
+                ComputeGlobuleOffsets();
+            }
+            else
+            {
+                SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (SpawnTimer >= SpawnTimeDelay)
+                    SpawnTimerElapsed = true;
+            }
         }
         #endregion
     }

@@ -136,6 +136,21 @@ namespace Duologue.PlayObjects
         /// Set this to true if we want to use offscreen arrows
         /// </summary>
         public bool OffscreenArrow = false;
+
+        /// <summary>
+        /// The time delay before this enemy spawns
+        /// </summary>
+        public double SpawnTimeDelay = 0;
+
+        /// <summary>
+        /// A convenience timer for the derived objects
+        /// </summary>
+        public double SpawnTimer = 0;
+
+        /// <summary>
+        /// True if the spawn timer has elapsed
+        /// </summary>
+        public bool SpawnTimerElapsed = false;
         #endregion
 
         #region Constructor
@@ -204,7 +219,8 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation,
             ColorState currentColorState,
             ColorPolarity startColorPolarity,
-            int? hitPoints);
+            int? hitPoints,
+            double spawnDelay);
         #endregion
 
         #region Public methods
