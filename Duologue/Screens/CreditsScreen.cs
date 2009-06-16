@@ -326,6 +326,8 @@ namespace Duologue.Screens
             shadow = new Vector2[]
             {
                 offsetShadow * Vector2.One,
+                Vector2.One,
+                -1f * Vector2.One,
             };
 
             teletype = null;
