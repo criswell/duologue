@@ -190,12 +190,15 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation,
             ColorState currentColorState,
             ColorPolarity startColorPolarity,
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             Position = startPos;
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
             if (hitPoints == null)
             {
@@ -378,40 +381,47 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
-            rotationChangeTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (rotationChangeTimer > timePerRotationChange)
+            if (SpawnTimerElapsed)
             {
-                rotationAccelSign *= -1;
-                rotationChangeTimer = 0;
+                timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+                rotationChangeTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (rotationChangeTimer > timePerRotationChange)
+                {
+                    rotationAccelSign *= -1;
+                    rotationChangeTimer = 0;
+                }
+
+                //Orientation.Normalize();
+
+                switch (CurrentState)
+                {
+                    case RogglesState.Walking:
+                        if (timeSinceStart > timePerFrameWalking)
+                        {
+                            currentFrame++;
+                            timeSinceStart = 0;
+                            if (currentFrame >= numberOfWalkingFrames)
+                                currentFrame = 0;
+                        }
+                        break;
+                    default:
+                        if (timeSinceStart > timePerFrameRunning)
+                        {
+                            currentFrame++;
+                            timeSinceStart = 0;
+                            if (currentFrame >= numberOfWalkingFrames)
+                                currentFrame = 0;
+                        }
+                        break;
+                }
+
+                ComputeShadowOffset();
             }
-
-            //Orientation.Normalize();
-
-            switch (CurrentState)
+            else
             {
-                case RogglesState.Walking:
-                    if (timeSinceStart > timePerFrameWalking)
-                    {
-                        currentFrame++;
-                        timeSinceStart = 0;
-                        if (currentFrame >= numberOfWalkingFrames)
-                            currentFrame = 0;
-                    }
-                    break;
-                default:
-                    if (timeSinceStart > timePerFrameRunning)
-                    {
-                        currentFrame++;
-                        timeSinceStart = 0;
-                        if (currentFrame >= numberOfWalkingFrames)
-                            currentFrame = 0;
-                    }
-                    break;
+                SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
             }
-
-            ComputeShadowOffset();
         }
         #endregion
 

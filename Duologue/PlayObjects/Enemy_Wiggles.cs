@@ -202,12 +202,15 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation,
             ColorState currentColorState, 
             ColorPolarity startColorPolarity, 
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             Position = startPos;
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
             if (hitPoints == null)
             {
@@ -421,60 +424,67 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
-            rotationChangeTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (rotationChangeTimer > timePerRotationChange)
+            if (SpawnTimerElapsed)
             {
-                rotationAccelSign *= -1;
-                rotationChangeTimer = 0;
-            }
+                timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
+                rotationChangeTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            //Orientation.Normalize();
+                if (rotationChangeTimer > timePerRotationChange)
+                {
+                    rotationAccelSign *= -1;
+                    rotationChangeTimer = 0;
+                }
 
-            switch(CurrentState)
-            {
-                case WigglesState.Walking:
-                    if (timeSinceStart > timePerFrameWalking)
-                    {
-                        currentFrame++;
-                        timeSinceStart = 0;
-                        if (currentFrame >= numberOfWalkingFrames)
-                            currentFrame = 0;
-                    }
-                    break;
-                case WigglesState.Running:
-                    if (timeSinceStart > timePerFrameRunning)
-                    {
-                        currentFrame++;
-                        timeSinceStart = 0;
-                        if (currentFrame >= numberOfWalkingFrames)
-                            currentFrame = 0;
-                    }
-                    break;
-                case WigglesState.Fading:
-                    if (timeSinceStart > totalFadeOutTime)
-                    {
-                        Alive = false;
-                    }
-                    break;
-                default:
-                    if (timeSinceStart > currentTimePerFrameDying)
-                    {
-                        currentFrame++;
-                        timeSinceStart = 0;
-                        currentTimePerFrameDying += deltaTimePerFrameDying;
-                        if (currentFrame >= numberOfDeathFrames)
+                //Orientation.Normalize();
+
+                switch (CurrentState)
+                {
+                    case WigglesState.Walking:
+                        if (timeSinceStart > timePerFrameWalking)
                         {
-                            currentFrame = 0;
-                            CurrentState = WigglesState.Fading;
+                            currentFrame++;
                             timeSinceStart = 0;
+                            if (currentFrame >= numberOfWalkingFrames)
+                                currentFrame = 0;
                         }
-                    }
-                    break;
-            }
+                        break;
+                    case WigglesState.Running:
+                        if (timeSinceStart > timePerFrameRunning)
+                        {
+                            currentFrame++;
+                            timeSinceStart = 0;
+                            if (currentFrame >= numberOfWalkingFrames)
+                                currentFrame = 0;
+                        }
+                        break;
+                    case WigglesState.Fading:
+                        if (timeSinceStart > totalFadeOutTime)
+                        {
+                            Alive = false;
+                        }
+                        break;
+                    default:
+                        if (timeSinceStart > currentTimePerFrameDying)
+                        {
+                            currentFrame++;
+                            timeSinceStart = 0;
+                            currentTimePerFrameDying += deltaTimePerFrameDying;
+                            if (currentFrame >= numberOfDeathFrames)
+                            {
+                                currentFrame = 0;
+                                CurrentState = WigglesState.Fading;
+                                timeSinceStart = 0;
+                            }
+                        }
+                        break;
+                }
 
-            ComputeShadowOffset();
+                ComputeShadowOffset();
+            }
+            else
+            {
+                SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            }
         }
         #endregion
 

@@ -209,10 +209,6 @@ namespace Duologue.PlayObjects
             
             SpawnTimeDelay = spawnDelay;
             SpawnTimer = 0;
-            if (SpawnTimeDelay == SpawnTimer)
-                SpawnTimerElapsed = true;
-            else
-                SpawnTimerElapsed = false;
 
             if (hitPoints == null)
             {
@@ -595,8 +591,6 @@ namespace Duologue.PlayObjects
             else
             {
                 SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (SpawnTimer >= SpawnTimeDelay)
-                    SpawnTimerElapsed = true;
             }
         }
         #endregion

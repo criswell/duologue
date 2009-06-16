@@ -153,7 +153,8 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation,
             ColorState currentColorState,
             ColorPolarity startColorPolarity,
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             Position = startPos;
             Orientation = startOrientation;
@@ -162,6 +163,8 @@ namespace Duologue.PlayObjects
             bladesRotation = 0f;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
             if (hitPoints == null)
             {
                 hitPoints = 0;
@@ -267,13 +270,20 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
+            if (SpawnTimerElapsed)
+            {
+                rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
 
-            bladesRotation += delta_Rotation;
-            if (bladesRotation > MathHelper.TwoPi)
-                bladesRotation = 0f;
-            else if (bladesRotation < 0f)
-                bladesRotation = MathHelper.TwoPi;
+                bladesRotation += delta_Rotation;
+                if (bladesRotation > MathHelper.TwoPi)
+                    bladesRotation = 0f;
+                else if (bladesRotation < 0f)
+                    bladesRotation = MathHelper.TwoPi;
+            }
+            else
+            {
+                SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            }
         }
         #endregion
 

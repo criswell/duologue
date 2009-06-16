@@ -150,7 +150,10 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// True if the spawn timer has elapsed
         /// </summary>
-        public bool SpawnTimerElapsed = false;
+        public bool SpawnTimerElapsed
+        {
+            get { return SpawnTimer >= SpawnTimeDelay; }
+        }
         #endregion
 
         #region Constructor
