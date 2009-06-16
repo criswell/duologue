@@ -87,6 +87,13 @@ namespace Duologue.Waves
             // your wave/wavelet will be ignored!
             // Currently MaxMinorNumber is 3 and MaxMajorNumber is 999
 
+            /* NOTES
+[01:03:14] <criswe1l> criswell: 12-2, 12-3 -> annmoeba more HP, protonora *much* less HP (50% or less)
+[01:04:50] <criswe1l> and 12-3.1 (blah, likely all 12-3)
+[01:09:33] <criswe1l> 13-X totalbullshit too many mobs
+[01:22:09] <criswe1l> 15-3.0 too manybullshit buzsaws
+[01:30:10] <criswe1l> 16-1 crash? code 4
+             * */
             #region Wave 1
             #region WaveDef (1-1) "The LZ is hot!"
             #region Metadata
@@ -3914,7 +3921,7 @@ namespace Duologue.Waves
             #region
             Wavelets[1] = new Wavelet(40, 2);
             Wavelets[1].SongID = SongID.WinOne;
-            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
                 if (i > Wavelets[1].Enemies.Length / 2f)
@@ -4735,6 +4742,8 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(12, 2);
+            Wavelets[0].SongID = SongID.SecondChance;
             #endregion
             // Second wavelet
             #region
@@ -4913,7 +4922,7 @@ namespace Duologue.Waves
             Waves[GetIndex(20, 3)].Wavelets = Wavelets;
             #endregion
             #endregion
-             */
+             //*/
         }
         #endregion
 
