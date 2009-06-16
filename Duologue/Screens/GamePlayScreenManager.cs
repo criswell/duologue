@@ -121,6 +121,7 @@ namespace Duologue.Screens
             gamePlayLoop = new GamePlayLoop(localGame, this);
             gamePlayLoop.DrawOrder = 4;
             localGame.Components.Add(gamePlayLoop);
+            ServiceLocator.RegisterService(gamePlayLoop);
 
             // Game over screen starts out invisble
             gameOver = new GameOver(localGame, this);

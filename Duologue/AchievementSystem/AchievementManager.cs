@@ -26,6 +26,7 @@ using Duologue.PlayObjects;
 using Duologue.UI;
 using Duologue;
 using Duologue.Properties;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.AchievementSystem
@@ -220,6 +221,11 @@ namespace Duologue.AchievementSystem
         {
             get { return achievements; }
         }
+
+        /// <summary>
+        /// Set to true when we should return to the pause screen
+        /// </summary>
+        public bool ReturnToPause = false;
         #endregion
 
         #region Constructor / Init / Load
@@ -1148,7 +1154,15 @@ namespace Duologue.AchievementSystem
             if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back) ||
                 InstanceManager.InputManager.NewButtonPressed(Buttons.B))
             {
-                LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+                if (ReturnToPause)
+                {
+                    ReturnToPause = false;
+                    ServiceLocator.GetService<PauseScreen>().ReturnFromMedalScreen();
+                }
+                else
+                {
+                    LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+                }
             }
             else if (IsMenuUp())
             {

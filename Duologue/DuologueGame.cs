@@ -233,6 +233,7 @@ namespace Duologue
             pauseScreen.Visible = false;
             this.Components.Add(pauseScreen);
             pauseScreen.DrawOrder = 300;
+            ServiceLocator.RegisterService(pauseScreen);
 
             Teletype teletype = new Teletype(this);
             ServiceLocator.RegisterService(teletype);

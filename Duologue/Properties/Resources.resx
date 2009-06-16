@@ -249,6 +249,9 @@
   <data name="PauseScreen_GamePaused" xml:space="preserve">
     <value>Game Paused</value>
   </data>
+  <data name="PauseScreen_MedalCase" xml:space="preserve">
+    <value>Medal Display Case</value>
+  </data>
   <data name="PauseScreen_ResumeGame" xml:space="preserve">
     <value>Resume the battle</value>
   </data>

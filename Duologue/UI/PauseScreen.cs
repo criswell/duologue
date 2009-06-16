@@ -25,6 +25,7 @@ using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
 using Duologue.State;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.UI
@@ -32,7 +33,7 @@ namespace Duologue.UI
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class PauseScreen : Microsoft.Xna.Framework.DrawableGameComponent
+    public class PauseScreen : Microsoft.Xna.Framework.DrawableGameComponent, IService
     {
         #region Constants
         private const string filename_overlay = "pause-overlay";
@@ -99,6 +100,7 @@ namespace Duologue.UI
         private List<MenuItem> pauseMenuItems;
         private int resumeGame;
         private int exitMainMenu;
+        private int medalCase;
         private Rectangle pauseMenuWindowLocation;
         private Vector2 position;
         private Vector2[] shadowOffsets;
@@ -111,6 +113,9 @@ namespace Duologue.UI
         private bool konamiCodeDone;
         private SoundEffect sfx_LifeUp;
         private SoundEffectInstance sfxi_LifeUp;
+
+        // Medal screen stopper
+        private bool inMedalScreen = false;
         #endregion
 
         #region Properties
@@ -126,8 +131,10 @@ namespace Duologue.UI
 
             pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ResumeGame));
             resumeGame = 0;
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_MedalCase));
+            medalCase = 1;
             pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ExitMainMenu));
-            exitMainMenu = 1;
+            exitMainMenu = 2;
 
             shadowOffsets = new Vector2[numberOfOffsets];
             shadowOffsets[0] = Vector2.One;
@@ -338,6 +345,20 @@ namespace Duologue.UI
                 ResetMenuItems(pauseMenuItems);
                 LocalInstanceManager.Pause = false;
                 LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+            }
+            else if (currentSelection == medalCase)
+            {
+                ResetMenuItems(pauseMenuItems);
+                // OMG HACKERY
+                ServiceLocator.GetService<GamePlayLoop>().Visible = false;
+                for (int i = 0; i < InputManager.MaxInputs; i++)
+                {
+                    if (LocalInstanceManager.Players[i].Active)
+                        LocalInstanceManager.Scores[i].Visible = false;
+                }
+                LocalInstanceManager.AchievementManager.EnableMedalScreen();
+                LocalInstanceManager.AchievementManager.ReturnToPause = true;
+                inMedalScreen = true;
             }
         }
 
@@ -587,6 +608,21 @@ namespace Duologue.UI
         }
         #endregion
 
+        #region Public Methods
+        public void ReturnFromMedalScreen()
+        {
+            inMedalScreen = false;
+            // OMG HACKERY
+            ServiceLocator.GetService<GamePlayLoop>().Visible = true;
+            LocalInstanceManager.AchievementManager.DisableMedalScreen();
+            for (int i = 0; i < InputManager.MaxInputs; i++)
+            {
+                if (LocalInstanceManager.Players[i].Active)
+                    LocalInstanceManager.Scores[i].Visible = true;
+            }
+        }
+        #endregion
+
         #region Update / Draw
         /// <summary>
         /// Allows the game component to update itself.
@@ -594,135 +630,145 @@ namespace Duologue.UI
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
-
-            // Check for start, back, or B
-            if ((InstanceManager.InputManager.NewButtonPressed(Buttons.B) && konamiCodeIndex != 8) ||
-                InstanceManager.InputManager.NewButtonPressed(Buttons.Start) ||
-                InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
+            if (inMedalScreen)
             {
-                ResetMenuItems(pauseMenuItems);
-                LocalInstanceManager.Pause = false;
+                LocalInstanceManager.AchievementManager.Update(gameTime);
             }
-
-            InnerUpdate(pauseMenuItems);
-
-            // We only want to proceed provided the InitAll() was called
-            // Since we have no guarantee that the screen is initialized here in
-            // update, we ultimately will have to pass until Draw() is called
-            if (numberOfTiles > 0)
+            else
             {
-                // Update the font color
-                int t = (int)color_text.R + deltaTextRed;
+                timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (t > maxTextRed)
+                // Check for start, back, or B
+                if ((InstanceManager.InputManager.NewButtonPressed(Buttons.B) && konamiCodeIndex != 8) ||
+                    InstanceManager.InputManager.NewButtonPressed(Buttons.Start) ||
+                    InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
                 {
-                    t = (int)maxTextRed;
-                    deltaTextRed = -1 * maxDeltaTextRed;
-                }
-                else if (t < minTextRed)
-                {
-                    t = (int)minTextRed;
-                    deltaTextRed = maxDeltaTextRed;
+                    ResetMenuItems(pauseMenuItems);
+                    LocalInstanceManager.Pause = false;
                 }
 
-                color_text = new Color((byte)t, 128, 128);
+                InnerUpdate(pauseMenuItems);
 
-                // Update the overlays
-                if (timeSinceStart > timePerJiggle)
+                // We only want to proceed provided the InitAll() was called
+                // Since we have no guarantee that the screen is initialized here in
+                // update, we ultimately will have to pass until Draw() is called
+                if (numberOfTiles > 0)
                 {
-                    timeSinceStart = 0;
-                    int i;
-                    for (t = 0; t < numberOfUpdatesPerTick; t++)
+                    // Update the font color
+                    int t = (int)color_text.R + deltaTextRed;
+
+                    if (t > maxTextRed)
                     {
-                        i = MWMathHelper.GetRandomInRange(0, numberOfTiles);
-                        if (tileEffects[i] == SpriteEffects.None)
-                            tileEffects[i] = SpriteEffects.FlipHorizontally;
-                        else
-                            tileEffects[i] = SpriteEffects.None;
+                        t = (int)maxTextRed;
+                        deltaTextRed = -1 * maxDeltaTextRed;
+                    }
+                    else if (t < minTextRed)
+                    {
+                        t = (int)minTextRed;
+                        deltaTextRed = maxDeltaTextRed;
+                    }
+
+                    color_text = new Color((byte)t, 128, 128);
+
+                    // Update the overlays
+                    if (timeSinceStart > timePerJiggle)
+                    {
+                        timeSinceStart = 0;
+                        int i;
+                        for (t = 0; t < numberOfUpdatesPerTick; t++)
+                        {
+                            i = MWMathHelper.GetRandomInRange(0, numberOfTiles);
+                            if (tileEffects[i] == SpriteEffects.None)
+                                tileEffects[i] = SpriteEffects.FlipHorizontally;
+                            else
+                                tileEffects[i] = SpriteEffects.None;
+                        }
                     }
                 }
+                LocalInstanceManager.WindowManager.Update(gameTime);
             }
-            LocalInstanceManager.WindowManager.Update(gameTime);
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            if (numberOfTiles <= 0)
+            if (!inMedalScreen)
             {
-                InitAll();
-                SetPostion();
-            }
-
-            float x = 0f;
-            float y = 0f;
-            // Draw the tiles
-            for (int i = 0; i < numberOfTiles; i++)
-            {
-                InstanceManager.RenderSprite.Draw(
-                    overlay,
-                    new Vector2(x, y),
-                    Vector2.Zero,
-                    null,
-                    color_overlay,
-                    0f,
-                    1f,
-                    0f,
-                    RenderSpriteBlendMode.AlphaBlendTop,
-                    tileEffects[i]);
-
-                x += overlay.Width;
-                if (x >= screenWidth)
+                if (numberOfTiles <= 0)
                 {
-                    x = 0f;
-                    y += overlay.Height;
-                    if (y >= screenHeight)
+                    InitAll();
+                    SetPostion();
+                }
+
+                float x = 0f;
+                float y = 0f;
+                // Draw the tiles
+                for (int i = 0; i < numberOfTiles; i++)
+                {
+                    InstanceManager.RenderSprite.Draw(
+                        overlay,
+                        new Vector2(x, y),
+                        Vector2.Zero,
+                        null,
+                        color_overlay,
+                        0f,
+                        1f,
+                        0f,
+                        RenderSpriteBlendMode.AlphaBlendTop,
+                        tileEffects[i]);
+
+                    x += overlay.Width;
+                    if (x >= screenWidth)
                     {
-                        // okay, wtf, we shouldn't be here
-                        y = 0f;
+                        x = 0f;
+                        y += overlay.Height;
+                        if (y >= screenHeight)
+                        {
+                            // okay, wtf, we shouldn't be here
+                            y = 0f;
+                        }
                     }
                 }
+
+                LocalInstanceManager.WindowManager.Draw(gameTime);
+
+                // Draw the menu
+                menuOffset = Vector2.Zero;
+
+                InstanceManager.RenderSprite.DrawString(
+                    fontTitle,
+                    Resources.PauseScreen_GamePaused,
+                    position + menuOffset,
+                    color_text,
+                    color_outline,
+                    shadowOffset,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+
+                menuOffset.Y += fontTitle.LineSpacing + titleSpacing;
+
+                DrawMenu(pauseMenuItems, gameTime, position + menuOffset);
+
+                InstanceManager.RenderSprite.DrawString(
+                    fontWaveNum,
+                    String.Format(
+                        Resources.PauseScreen_WaveNum,
+                        LocalInstanceManager.CurrentGameWave.MajorWaveNumber,
+                        LocalInstanceManager.CurrentGameWave.MinorWaveNumber,
+                        LocalInstanceManager.CurrentGameWave.CurrentWavelet),
+                        wavePosition,
+                    Color.BlanchedAlmond,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+
+                InstanceManager.RenderSprite.DrawString(
+                    fontWaveNum,
+                    InstanceManager.Localization.Get(
+                        LocalInstanceManager.CurrentGameWave.Name),
+                    wavePosition + Vector2.UnitX * (waveSize.X / 2f - fontWaveNum.MeasureString(InstanceManager.Localization.Get(LocalInstanceManager.CurrentGameWave.Name)).X / 2f)
+                    + Vector2.UnitY * fontWaveNum.LineSpacing,
+                    Color.BlanchedAlmond,
+                    RenderSpriteBlendMode.AlphaBlendTop);
+
             }
-
-            LocalInstanceManager.WindowManager.Draw(gameTime);
-
-            // Draw the menu
-            menuOffset = Vector2.Zero;
-
-            InstanceManager.RenderSprite.DrawString(
-                fontTitle,
-                Resources.PauseScreen_GamePaused,
-                position + menuOffset,
-                color_text,
-                color_outline,
-                shadowOffset,
-                RenderSpriteBlendMode.AlphaBlendTop);
-
-            menuOffset.Y += fontTitle.LineSpacing + titleSpacing;
-
-            DrawMenu(pauseMenuItems, gameTime, position + menuOffset);
-
-            InstanceManager.RenderSprite.DrawString(
-                fontWaveNum,
-                String.Format(
-                    Resources.PauseScreen_WaveNum,
-                    LocalInstanceManager.CurrentGameWave.MajorWaveNumber,
-                    LocalInstanceManager.CurrentGameWave.MinorWaveNumber,
-                    LocalInstanceManager.CurrentGameWave.CurrentWavelet),
-                    wavePosition,
-                Color.BlanchedAlmond,
-                RenderSpriteBlendMode.AlphaBlendTop);
-
-            InstanceManager.RenderSprite.DrawString(
-                fontWaveNum,
-                InstanceManager.Localization.Get(
-                    LocalInstanceManager.CurrentGameWave.Name),
-                wavePosition + Vector2.UnitX * (waveSize.X / 2f - fontWaveNum.MeasureString(InstanceManager.Localization.Get(LocalInstanceManager.CurrentGameWave.Name)).X/2f)
-                + Vector2.UnitY * fontWaveNum.LineSpacing,
-                Color.BlanchedAlmond,
-                RenderSpriteBlendMode.AlphaBlendTop);
-
             base.Draw(gameTime);
         }
         #endregion

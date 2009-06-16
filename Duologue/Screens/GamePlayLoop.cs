@@ -24,6 +24,7 @@ using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
 using Duologue.State;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.Screens
@@ -31,7 +32,7 @@ namespace Duologue.Screens
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class GamePlayLoop : Microsoft.Xna.Framework.DrawableGameComponent
+    public class GamePlayLoop : Microsoft.Xna.Framework.DrawableGameComponent, IService
     {
         #region Constants
         private const float playerMovementModifier_X = 4f;
