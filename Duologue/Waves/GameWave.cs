@@ -55,6 +55,11 @@ namespace Duologue.Waves
         public float[] StartAngle;
 
         /// <summary>
+        /// the spawn delays for each enemy
+        /// </summary>
+        public double[] SpawnDelay;
+
+        /// <summary>
         /// The color polarities for each enemy
         /// </summary>
         public ColorPolarity[] ColorPolarities;
@@ -81,10 +86,12 @@ namespace Duologue.Waves
             StartAngle = new float[NumEnemies];
             StartHitPoints = new int[NumEnemies];
             ColorPolarities = new ColorPolarity[NumEnemies];
+            SpawnDelay = new double[NumEnemies];
             for (int i = 0; i < NumEnemies; i++)
             {
                 StartHitPoints[i] = StartHP;
                 ColorPolarities[i] = polarity;
+                SpawnDelay[i] = 0;
             }
         }
 
@@ -99,10 +106,12 @@ namespace Duologue.Waves
             StartAngle = new float[NumEnemies];
             StartHitPoints = new int[NumEnemies];
             ColorPolarities = new ColorPolarity[NumEnemies];
+            SpawnDelay = new double[NumEnemies];
             for (int i = 0; i < NumEnemies; i++)
             {
                 StartHitPoints[i] = StartHP;
                 ColorPolarities[i] = ColorPolarity.Positive;
+                SpawnDelay[i] = 0;
             }
         }
         #endregion

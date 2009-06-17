@@ -69,7 +69,8 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation, 
             ColorState currentColorState, 
             ColorPolarity startColorPolarity, 
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             throw new NotImplementedException();
         }

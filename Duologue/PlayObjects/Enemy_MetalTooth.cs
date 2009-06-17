@@ -169,12 +169,15 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation,
             ColorState currentColorState,
             ColorPolarity startColorPolarity,
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             Position = startPos;
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
             if (hitPoints == null || (int)hitPoints == 0)
             {
                 hitPoints = 1;
@@ -478,7 +481,8 @@ namespace Duologue.PlayObjects
                         GetBabbySpawnPosition(),
                         ColorState,
                         ColorState.RandomPolarity(),
-                        (int)(StartHitPoints / (float)realHitPointMultiplier));
+                        (int)(StartHitPoints / (float)realHitPointMultiplier),
+                        0);
                     numberSpawned++;
                     foundOne = true;
                     break;

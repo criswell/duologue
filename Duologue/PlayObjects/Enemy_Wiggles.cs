@@ -202,12 +202,15 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation,
             ColorState currentColorState, 
             ColorPolarity startColorPolarity, 
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             Position = startPos;
             Orientation = startOrientation;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
             rotation = MWMathHelper.ComputeAngleAgainstX(Orientation);
             if (hitPoints == null)
             {
@@ -432,7 +435,7 @@ namespace Duologue.PlayObjects
 
             //Orientation.Normalize();
 
-            switch(CurrentState)
+            switch (CurrentState)
             {
                 case WigglesState.Walking:
                     if (timeSinceStart > timePerFrameWalking)

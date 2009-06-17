@@ -88,8 +88,8 @@ namespace Duologue.Waves
             // Currently MaxMinorNumber is 3 and MaxMajorNumber is 999
 
             /* NOTES
-[01:03:14] <criswe1l> criswell: 12-2, 12-3 -> annmoeba more HP, protonora *much* less HP (50% or less)
-[01:04:50] <criswe1l> and 12-3.1 (blah, likely all 12-3)
+[01:03:14] <criswe1l> criswell: 12-2, 12-3 -> annmoeba more HP, protonora *much* less HP (50% or less) - Done? TEST
+[01:04:50] <criswe1l> and 12-3.1 (blah, likely all 12-3) - Done? TEST
 [01:09:33] <criswe1l> 13-X totalbullshit too many mobs
 [01:22:09] <criswe1l> 15-3.0 too manybullshit buzsaws
 [01:30:10] <criswe1l> 16-1 crash? code 4
@@ -518,7 +518,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 3 (Boss)
+            #region Wave 3 (Boss) "Metal Tooth"
             #region WaveDef (3-1) "Buzzsaw lead-up"
             #region Metadata
             Waves[GetIndex(3, 1)] = new GameWave();
@@ -669,29 +669,35 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(4, 0, ColorPolarity.Positive);
+            Wavelets[0] = new Wavelet(11, 0);
             Wavelets[0].SongID = SongID.Ultrafix;
-            Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[0].StartAngle[0] = MathHelper.PiOver4;
-            Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[0].StartAngle[1] = MathHelper.Pi;
-            Wavelets[0].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[0].StartAngle[2] = MathHelper.PiOver2 * 3f;
-            Wavelets[0].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[0].StartAngle[3] = MathHelper.PiOver4 * 5f;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[0].StartAngle[i] = (float)i * 3f * MathHelper.PiOver4 / (float)Wavelets[0].Enemies.Length +
+                    MathHelper.PiOver2;
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 10f, (float)i / (float)Wavelets[0].Enemies.Length);
+                if (i < Wavelets[0].Enemies.Length / 2f)
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+            }
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(4, 0, ColorPolarity.Negative);
+            Wavelets[1] = new Wavelet(11, 0);
             Wavelets[1].SongID = SongID.Ultrafix;
-            Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[1].StartAngle[0] = MathHelper.PiOver4;
-            Wavelets[1].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[1].StartAngle[1] = 0f;
-            Wavelets[1].Enemies[2] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[1].StartAngle[2] = MathHelper.PiOver2;
-            Wavelets[1].Enemies[3] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            Wavelets[1].StartAngle[3] = MathHelper.PiOver4 * 5f;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                Wavelets[1].StartAngle[i] = (float)i * 3f * MathHelper.PiOver4 / (float)Wavelets[1].Enemies.Length +
+                    7f * MathHelper.PiOver4;
+                Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(0, 10f, (float)i / (float)Wavelets[1].Enemies.Length);
+                if (i < Wavelets[1].Enemies.Length / 2f)
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+            }
             #endregion
             // Third wavelet
             #region
@@ -1215,7 +1221,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 6 (Boss)
+            #region Wave 6 (Boss) "King Gloop"
             #region WaveDef (6-1) "Land of the Gloops"
             #region Metadata
             Waves[GetIndex(6, 1)] = new GameWave();
@@ -2025,7 +2031,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 9 (Boss)
+            #region Wave 9 (Boss) "Unclean Rot"
             #region WaveDef (9-1) "Alien haboob"
             #region Metadata
             Waves[GetIndex(9, 1)] = new GameWave();
@@ -2266,7 +2272,7 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(60, 2, ColorPolarity.Positive);
+            Wavelets[2] = new Wavelet(70, 4, ColorPolarity.Positive);
             Wavelets[2].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -2275,7 +2281,7 @@ namespace Duologue.Waves
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_UncleanRot;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = 5f * MathHelper.PiOver4;
-            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 4;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 5;
             #endregion
 
             Waves[GetIndex(9, 3)].Wavelets = Wavelets;
@@ -2850,7 +2856,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 12 (Boss)
+            #region Wave 12 (Boss) "ProtoNora"
             #region Wave (12-1) "Peleus and Thetis begat Achilles"
             #region Metadata
             Waves[GetIndex(12, 1)] = new GameWave();
@@ -2964,7 +2970,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(50, 0);
+            Wavelets[0] = new Wavelet(50, 3);
             Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -2973,12 +2979,12 @@ namespace Duologue.Waves
                 Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
             }
             Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_ProtoNora;
-            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 4;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 2;
             Wavelets[0].ColorPolarities[Wavelets[0].Enemies.Length - 1] = ColorPolarity.Negative;
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(50, 2);
+            Wavelets[1] = new Wavelet(50, 3);
             Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
@@ -2988,11 +2994,11 @@ namespace Duologue.Waves
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_ProtoNora;
             Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 1] = ColorPolarity.Positive;
-            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 5;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 2;
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(50, 0);
+            Wavelets[2] = new Wavelet(50, 3);
             Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -3007,7 +3013,7 @@ namespace Duologue.Waves
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
                 Wavelets[2].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f;
-                Wavelets[2].StartHitPoints[i] = 5;
+                Wavelets[2].StartHitPoints[i] = 2;
             }
             #endregion
 
@@ -3036,7 +3042,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(50, 0);
+            Wavelets[0] = new Wavelet(50, 4);
             Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -3048,13 +3054,13 @@ namespace Duologue.Waves
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
                 Wavelets[0].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f + MathHelper.Pi;
-                Wavelets[0].StartHitPoints[i] = 5;
+                Wavelets[0].StartHitPoints[i] = 2;
                 Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
             }
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(50, 2);
+            Wavelets[1] = new Wavelet(50, 4);
             Wavelets[1].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
@@ -3066,13 +3072,13 @@ namespace Duologue.Waves
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
                 Wavelets[1].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f + MathHelper.PiOver4 * 5f;
-                Wavelets[1].StartHitPoints[i] = 5;
+                Wavelets[1].StartHitPoints[i] = 2;
                 Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
             }
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(50, 2);
+            Wavelets[2] = new Wavelet(50, 4);
             Wavelets[2].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -3087,7 +3093,7 @@ namespace Duologue.Waves
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_ProtoNora;
                 Wavelets[2].StartAngle[i] = i * 3f * MathHelper.PiOver4 / 3f;
-                Wavelets[2].StartHitPoints[i] = 5;
+                Wavelets[2].StartHitPoints[i] = 2;
             }
             #endregion
 
@@ -3341,7 +3347,7 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            #region Wave 14 (Boss) - Flambi used
+            #region Wave 14 (Boss) "Pyre" - Flambi used
             #region WaveDef (14-1) "Screamin' Meanies"
             #region Metadata
             Waves[GetIndex(14, 1)] = new GameWave();

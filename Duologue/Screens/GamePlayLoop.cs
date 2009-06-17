@@ -24,6 +24,7 @@ using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
 using Duologue.State;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.Screens
@@ -31,7 +32,7 @@ namespace Duologue.Screens
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class GamePlayLoop : Microsoft.Xna.Framework.DrawableGameComponent
+    public class GamePlayLoop : Microsoft.Xna.Framework.DrawableGameComponent, IService
     {
         #region Constants
         private const float playerMovementModifier_X = 4f;
@@ -171,6 +172,13 @@ namespace Duologue.Screens
                         if (InstanceManager.InputManager.NewKeyPressed(Keys.PageUp))
                             skip = true;
 
+                        // FIXME as well... delete this fucker for release
+                        if (InstanceManager.InputManager.NewKeyPressed(Keys.End))
+                        {
+                            LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
+                            skip = true;
+                        }
+
                         // Now, make sure no one is stepping on eachother
                         dumb = p.StartOffset();
                         // Yeah, not efficient... but we have very low n in O(n^2)
@@ -234,38 +242,45 @@ namespace Duologue.Screens
                             Vector2.Zero,
                             ColorState.GetColorStates()[LocalInstanceManager.CurrentGameWave.ColorState],
                             LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].ColorPolarities[i],
-                            LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints[i]);
+                            LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].StartHitPoints[i],
+                            LocalInstanceManager.CurrentGameWave.Wavelets[LocalInstanceManager.CurrentGameWave.CurrentWavelet].SpawnDelay[i]);
                         livingEnemies++;
                     }
                     else if (LocalInstanceManager.Enemies[i].Alive)
                     {
-                        dumb = LocalInstanceManager.Enemies[i].StartOffset();
-                        // Update each enemy with player objects
-                        for (int j = 0; j < InputManager.MaxInputs; j++)
+                        if (LocalInstanceManager.Enemies[i].SpawnTimerElapsed)
                         {
-                            if (LocalInstanceManager.Players[j].Active &&
-                                LocalInstanceManager.Players[j].State == PlayerState.Alive)
+                            dumb = LocalInstanceManager.Enemies[i].StartOffset();
+                            // Update each enemy with player objects
+                            for (int j = 0; j < InputManager.MaxInputs; j++)
                             {
-                                dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Players[j]);
+                                if (LocalInstanceManager.Players[j].Active &&
+                                    LocalInstanceManager.Players[j].State == PlayerState.Alive)
+                                {
+                                    dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Players[j]);
+                                }
                             }
-                        }
-                        // Update the enemy with remaining enemy objects
+                            // Update the enemy with remaining enemy objects
 
-                        for (int j = i + 1; j < LocalInstanceManager.CurrentNumberEnemies; j++)
-                        {
-                            if (LocalInstanceManager.Enemies[j] != null &&
-                                LocalInstanceManager.Enemies[j].Initialized &&
-                                LocalInstanceManager.Enemies[j].Alive)
+                            for (int j = i + 1; j < LocalInstanceManager.CurrentNumberEnemies; j++)
                             {
-                                dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Enemies[j]);
+                                if (LocalInstanceManager.Enemies[j] != null &&
+                                    LocalInstanceManager.Enemies[j].Initialized &&
+                                    LocalInstanceManager.Enemies[j].Alive)
+                                {
+                                    dumb = LocalInstanceManager.Enemies[i].UpdateOffset(LocalInstanceManager.Enemies[j]);
+                                }
                             }
+                            dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
+
+                            LocalInstanceManager.Enemies[i].Update(gameTime);
+                            LocalInstanceManager.Enemies[i].InnerUpdate(gameTime);
                         }
-                        dumb = LocalInstanceManager.Enemies[i].ApplyOffset();
+                        else
+                        {
+                            LocalInstanceManager.Enemies[i].SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                        }
                         livingEnemies++;
-
-
-                        LocalInstanceManager.Enemies[i].Update(gameTime);
-                        LocalInstanceManager.Enemies[i].InnerUpdate(gameTime);
                     }
                 }
             }
@@ -325,7 +340,7 @@ namespace Duologue.Screens
             for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
             {
                 Enemy e = LocalInstanceManager.Enemies[i];
-                if (e.Alive)
+                if (e.Alive && e.SpawnTimerElapsed)
                 {
                     e.Draw(gameTime);
                     e.InnerDraw(gameTime);

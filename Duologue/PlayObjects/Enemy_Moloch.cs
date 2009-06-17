@@ -318,8 +318,11 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation, 
             ColorState currentColorState, 
             ColorPolarity startColorPolarity, 
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
+            SpawnTimeDelay = 0;
+            SpawnTimer = 0;
             // Perform pre-checks
             if (LocalInstanceManager.CurrentNumberEnemies < 30)
                 throw new Exception("MOLOCH NEEDS MOAR FODDER! (In order for Moloch to work, we need a minimum of 30 enemies in the enemy list. Note, you'll probably want them all Placeholders.)");
@@ -466,7 +469,7 @@ namespace Duologue.PlayObjects
                     Vector2.Zero,
                     ColorState,
                     tubes[i].ColorPolarity,
-                    StartHitPoints);
+                    StartHitPoints, 0);
             }
 
             delta_CurrentTubeRotation = minDelta_TubeRotation;
@@ -635,7 +638,7 @@ namespace Duologue.PlayObjects
                         Vector2.Zero,
                         cs,
                         cp,
-                        1);
+                        1, 0);
                     temp.HasSpawned = true;
                     LocalInstanceManager.Enemies[i] = temp;
                     break;
@@ -1692,7 +1695,8 @@ namespace Duologue.PlayObjects
                     Vector2.Zero,
                     ColorState,
                     polarity_EyeBall,
-                    eyeBallHitPoints);
+                    eyeBallHitPoints,
+                    0);
                 LocalInstanceManager.Enemies[0].CleanUp();
                 LocalInstanceManager.Enemies[0] = molochPart_Eye;
                 timer_EyeStateChange = 0;

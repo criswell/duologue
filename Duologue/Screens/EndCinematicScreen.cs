@@ -33,6 +33,7 @@ namespace Duologue.Screens
     {
         #region Constants
         private const string fontFilename = "Fonts/inero-50";
+        private const int numberOfPlayers = 20;
         #endregion
 
         #region Fields
@@ -40,6 +41,9 @@ namespace Duologue.Screens
         private SpriteFont font;
 
         private Vector2 pos;
+        private AudioManager audio;
+
+        private Player[] players;
         #endregion
 
         #region Properties
@@ -57,6 +61,59 @@ namespace Duologue.Screens
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
             pos = new Vector2(400, 400);
             base.LoadContent();
+        }
+
+        public override void Initialize()
+        {
+            audio = ServiceLocator.GetService<AudioManager>();
+            base.Initialize();
+        }
+        #endregion
+
+        #region Public methods
+        protected override void OnEnabledChanged(object sender, EventArgs args)
+        {
+            if (null != audio)
+            {
+                if (Enabled)
+                {
+                    if (audio.SongIsPaused(SongID.Tr8or))
+                    {
+                        audio.ResumeSong(SongID.Tr8or);
+                    }
+                    else
+                    {
+                        audio.FadeIn(SongID.Tr8or);
+                    }
+
+                }
+                else
+                {
+                    audio.PauseSong(SongID.Tr8or);
+                }
+            }
+
+            if (!Enabled && players != null)
+            {
+                for (int i = 0; i < numberOfPlayers; i++)
+                {
+                    players[i].CleanUp();
+                }
+                players = null;
+            }
+            else if (Enabled && players == null)
+            {
+                players = new Player[numberOfPlayers];
+                ColorState[] tempC = ColorState.GetColorStates();
+                PlayerColors[] tempP = PlayerColors.GetPlayerColors();
+                for (int i = 0; i < numberOfPlayers; i++)
+                {
+                    players[i] = new Player();
+                    //players[i].Initialize(
+                        //PlayerColors.
+                }
+            }
+            base.OnEnabledChanged(sender, args);
         }
         #endregion
 

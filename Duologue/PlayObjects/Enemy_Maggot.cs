@@ -143,7 +143,8 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation,
             ColorState currentColorState,
             ColorPolarity startColorPolarity,
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             Position = startPos;
             if (startOrientation == Vector2.Zero)
@@ -156,6 +157,8 @@ namespace Duologue.PlayObjects
             }
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
             if (hitPoints == null)
             {
                 hitPoints = 0;
@@ -432,87 +435,94 @@ namespace Duologue.PlayObjects
 
         public override void Update(GameTime gameTime)
         {
-            timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
-            timeSinceSpawn += gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (dying)
+            if (SpawnTimerElapsed)
             {
-                if (timeSinceSwitch > timeBetweenDeaths)
+                timeSinceSwitch += gameTime.ElapsedGameTime.TotalSeconds;
+                timeSinceSpawn += gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (dying)
                 {
-                    if (nextDead >= 0)
+                    if (timeSinceSwitch > timeBetweenDeaths)
                     {
+                        if (nextDead >= 0)
+                        {
+                            timeSinceSwitch = 0;
+                            myBits[nextDead].Size = -1f;
+                            LocalInstanceManager.EnemySplatterSystem.AddParticles(
+                                myBits[nextDead].Position,
+                                color_Dark);
+                            nextDead--;
+                        }
+                        else
+                        {
+                            Alive = false;
+                            //sfx_Explode.Play(volume_Splat);
+                            LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                        }
+                    }
+                }
+                else
+                {
+                    bool spawn = false;
+
+                    if (timeSinceSwitch > timeBetweenTurns)
+                    {
+                        // Turn randomly
+                        if (OnScreen())
+                            Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
+                                (float)MWMathHelper.GetRandomInRange(minTurnAngle, maxTurnAngle));
+                        else
+                            Orientation = GetStartingVector();
                         timeSinceSwitch = 0;
-                        myBits[nextDead].Size = -1f;
-                        LocalInstanceManager.EnemySplatterSystem.AddParticles(
-                            myBits[nextDead].Position,
-                            color_Dark);
-                        nextDead--;
                     }
-                    else
+
+                    if (timeSinceSpawn > timeBetweenSpawns)
                     {
-                        Alive = false;
-                        //sfx_Explode.Play(volume_Splat);
-                        LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                        timeSinceSpawn = 0;
+                        spawn = true;
                     }
+
+                    for (int i = 1; i < numberOfWormBits; i++)
+                    {
+                        myBits[i].Position += RandomJitter(-2.0, 2);
+                        if (myBits[i].Grow)
+                        {
+                            myBits[i].Size += deltaSize;
+                        }
+                        else
+                        {
+                            myBits[i].Size -= deltaSize;
+                        }
+
+                        if (myBits[i].Size < minSize)
+                        {
+                            if (spawn)
+                            {
+                                myBits[i] = myBits[0];
+                                spawn = false;
+                            }
+                            else
+                            {
+                                myBits[i].Size = minSize;
+                            }
+                        }
+                        else if (myBits[i].Size > maxSize)
+                        {
+                            myBits[i].Size = maxSize;
+                            myBits[i].Grow = false;
+                        }
+                    }
+
+                    myBits[0].Position = Position + RandomJitter(-2.0, 2.0);
+                    myBits[0].Size = maxSize;
+                    myBits[0].Grow = false;
+
+                    bubbleOffset = RandomJitter(-1.0, 1.0);
                 }
             }
             else
             {
-                bool spawn = false;
-
-                if (timeSinceSwitch > timeBetweenTurns)
-                {
-                    // Turn randomly
-                    if (OnScreen())
-                        Orientation = MWMathHelper.RotateVectorByRadians(Orientation,
-                            (float)MWMathHelper.GetRandomInRange(minTurnAngle, maxTurnAngle));
-                    else
-                        Orientation = GetStartingVector();
-                    timeSinceSwitch = 0;
-                }
-
-                if (timeSinceSpawn > timeBetweenSpawns)
-                {
-                    timeSinceSpawn = 0;
-                    spawn = true;
-                }
-
-                for (int i = 1; i < numberOfWormBits; i++)
-                {
-                    myBits[i].Position += RandomJitter(-2.0, 2);
-                    if (myBits[i].Grow)
-                    {
-                        myBits[i].Size += deltaSize;
-                    }
-                    else
-                    {
-                        myBits[i].Size -= deltaSize;
-                    }
-
-                    if (myBits[i].Size < minSize)
-                    {
-                        if (spawn)
-                        {
-                            myBits[i] = myBits[0];
-                            spawn = false;
-                        }
-                        else
-                        {
-                            myBits[i].Size = minSize;
-                        }
-                    }
-                    else if (myBits[i].Size > maxSize)
-                    {
-                        myBits[i].Size = maxSize;
-                        myBits[i].Grow = false;
-                    }
-                }
-
-                myBits[0].Position = Position + RandomJitter(-2.0, 2.0);
-                myBits[0].Size = maxSize;
-                myBits[0].Grow = false;
-
-                bubbleOffset = RandomJitter(-1.0, 1.0);
+                SpawnTimer += gameTime.ElapsedGameTime.TotalSeconds;
             }
         }
         #endregion

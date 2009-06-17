@@ -174,10 +174,13 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation, 
             ColorState currentColorState, 
             ColorPolarity startColorPolarity, 
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
+            SpawnTimeDelay = spawnDelay;
+            SpawnTimer = 0;
             Alive = true;
             teletype = ServiceLocator.GetService<Teletype>();
             LoadAndInitialize();

@@ -457,6 +457,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Medal Display Case.
+        /// </summary>
+        internal static string PauseScreen_MedalCase {
+            get {
+                return ResourceManager.GetString("PauseScreen_MedalCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resume the battle.
         /// </summary>
         internal static string PauseScreen_ResumeGame {

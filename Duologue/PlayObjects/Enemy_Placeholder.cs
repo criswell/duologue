@@ -48,11 +48,14 @@ namespace Duologue.PlayObjects
             Vector2 startOrientation, 
             ColorState currentColorState, 
             ColorPolarity startColorPolarity,
-            int? hitPoints)
+            int? hitPoints,
+            double spawnDelay)
         {
             // I'm just a placeholder, so I'm never alive
             Alive = false;
             Initialized = true;
+            SpawnTimeDelay = 0;
+            SpawnTimer = 0;
         }
 
         public override bool StartOffset()
