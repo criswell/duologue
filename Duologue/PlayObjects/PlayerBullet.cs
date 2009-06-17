@@ -178,7 +178,7 @@ namespace Duologue.PlayObjects
 
         public override bool UpdateOffset(PlayObject pobj)
         {
-            if (pobj.MajorType == MajorPlayObjectType.Enemy)
+            if (pobj.MajorType == MajorPlayObjectType.Enemy && ((Enemy)(pobj)).SpawnTimerElapsed)
             {
                 Vector2 vToEnemy = this.Position - pobj.Position;
                 float len = vToEnemy.Length();
