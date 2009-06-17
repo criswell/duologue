@@ -2603,10 +2603,7 @@ namespace Duologue.Waves
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
                 Wavelets[0].StartAngle[i] = 0;
-                if (MWMathHelper.IsEven(i))
-                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
-                else
-                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
             }
             for (int i = Wavelets[0].Enemies.Length - 20; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -2637,10 +2634,7 @@ namespace Duologue.Waves
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
                 Wavelets[1].StartAngle[i] = 0;
-                if (MWMathHelper.IsEven(i))
-                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
-                else
-                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
             }
             for (int i = Wavelets[1].Enemies.Length - 20; i < Wavelets[1].Enemies.Length; i++)
             {
