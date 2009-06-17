@@ -2481,7 +2481,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(40, 1, ColorPolarity.Negative);
+            Wavelets[0] = new Wavelet(40, 4, ColorPolarity.Negative);
             Wavelets[0].SongID = SongID.WinOne; // FIXME DIFFERENT MUSIC?
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
