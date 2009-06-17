@@ -982,6 +982,7 @@ namespace Duologue.Waves
                 if (MWMathHelper.IsEven(i))
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[2].SpawnDelay[i] = 1.4;
                 }
                 else
                 {
@@ -1002,7 +1003,7 @@ namespace Duologue.Waves
                 }
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 6f;
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
-                Wavelets[2].SpawnDelay = 2.0;
+                Wavelets[2].SpawnDelay[i] = 2.5;
             }
             #endregion
 
@@ -1071,10 +1072,12 @@ namespace Duologue.Waves
                 if (MWMathHelper.IsEven(i))
                 {
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[1].SpawnDelay[i] = 3.4;
                 }
                 else
                 {
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[1].SpawnDelay[i] = 2.3;
                 }
                 Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / 4f;
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
@@ -1103,10 +1106,12 @@ namespace Duologue.Waves
                 if (MWMathHelper.IsEven(i))
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[2].SpawnDelay[i] = 2.1;
                 }
                 else
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[2].SpawnDelay[i] = 1.1;
                 }
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 6f;
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
