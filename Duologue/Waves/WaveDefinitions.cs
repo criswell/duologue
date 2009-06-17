@@ -2506,16 +2506,23 @@ namespace Duologue.Waves
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
 
                 if (i / 4f == i / 4)
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[1].SpawnDelay[i] = 4.4;
+                }
                 else if (i / 3f == i / 3)
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                     Wavelets[1].StartAngle[i] = MathHelper.Pi;
                 }
                 else
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                }
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_GloopPrince;
+            Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 1] = ColorPolarity.Negative;
             Wavelets[1].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 15;
             Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 1] = MathHelper.Pi;
             #endregion
@@ -2541,7 +2548,10 @@ namespace Duologue.Waves
 
                 }
                 else if (i / 4f == i / 4)
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[2].SpawnDelay[i] = 3.1;
+                }
                 else if (i / 3f == i / 3)
                 {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
@@ -2551,7 +2561,10 @@ namespace Duologue.Waves
                         Wavelets[2].StartAngle[i] = 3f * MathHelper.PiOver2;
                 }
                 else if (i / 5f == i / 5)
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    Wavelets[2].SpawnDelay[i] = 1.1;
+                }
                 else
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
             }
