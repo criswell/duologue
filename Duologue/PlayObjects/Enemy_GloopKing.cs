@@ -97,7 +97,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The time, per frame, of the dying animation
         /// </summary>
-        private const double timePerFrameDying = 0.07;
+        private const double timePerFrameDying = 0.14;
 
         #region Force interactions
         /// <summary>
