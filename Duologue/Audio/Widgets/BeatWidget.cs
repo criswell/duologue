@@ -22,6 +22,11 @@ namespace Duologue.Audio.Widgets
             lengthOfBeat = beatLength;
         }
 
+        public void Reset()
+        {
+            currentBeat = 0;
+        }
+
         public double BeatPercentage()
         {
             return AudioConstants.MEDIAN_BEAT_SCORE + AudioConstants.BEAT_SCORE_DEV *

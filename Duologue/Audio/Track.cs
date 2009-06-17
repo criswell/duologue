@@ -33,6 +33,25 @@ namespace Duologue.Audio
             }
         }
 
+        public Track[] CreateTrackArray(string[,] arrangement)
+        {
+            int TrackCount = arrangement.GetLength(0);
+            int cueCount = arrangement.GetLength(1);
+            Track[] Tracks = new Track[TrackCount];
+
+            for (int track = 0; track < TrackCount; track++)
+            {
+                string[] row = new string[cueCount];
+                for (int q = 0; q < cueCount; q++)
+                {
+                    row[q] = arrangement[track, q];
+                }
+                Tracks[track] = new Track(SoundbankName, row);
+            }
+            return Tracks;
+        }
+
+
         public void ChangeVolume(float newVol)
         {
             Volume = newVol;
