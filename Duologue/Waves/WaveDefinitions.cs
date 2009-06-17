@@ -2398,7 +2398,10 @@ namespace Duologue.Waves
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
 
                 if (i / 4f == i / 4)
+                {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[0].SpawnDelay[i] = 1.1;
+                }
                 else
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
             }
@@ -2416,7 +2419,10 @@ namespace Duologue.Waves
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
 
                 if (i / 4f == i / 4)
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    Wavelets[1].SpawnDelay[i] = 1.1;
+                }
                 else
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
             }
@@ -2433,10 +2439,16 @@ namespace Duologue.Waves
                 else
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
 
-                if (i >= Wavelets[2].Enemies.Length-2)
+                if (i >= Wavelets[2].Enemies.Length - 2)
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    Wavelets[2].SpawnDelay[i] = 3.1;
+                }
                 else if (i / 4f == i / 4)
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[2].SpawnDelay[i] = 2.1;
+                }
                 else if (i / 5f == i / 5)
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
                 else
