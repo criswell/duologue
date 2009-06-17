@@ -251,12 +251,14 @@ namespace Duologue.Audio
                     hyper.Detach();
                 }
             }
+            if (null != beater)
+            {
+                beater.Reset();
+            }
             if (null != fader)
             {
                 fader = null;
             }
-            //could it really be this simple? No.
-            AudioHelper.Preload(this, true);
             Enabled = false;
             playing = false;
             paused = false;
