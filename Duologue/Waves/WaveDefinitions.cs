@@ -1881,7 +1881,10 @@ namespace Duologue.Waves
                     if (MWMathHelper.IsEven(i))
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
                     else
+                    {
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                        Wavelets[1].SpawnDelay[i] = 0.95;
+                    }
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
                     Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / 20f;
                     Wavelets[1].StartHitPoints[i] = 2;
@@ -1922,7 +1925,10 @@ namespace Duologue.Waves
                     if (MWMathHelper.IsEven(i))
                         Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
                     else
+                    {
                         Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                        Wavelets[2].SpawnDelay[i] = 0.54;
+                    }
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
                     Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 25f;
                     Wavelets[2].StartHitPoints[i] = 2;
