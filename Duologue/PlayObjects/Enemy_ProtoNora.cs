@@ -46,7 +46,7 @@ namespace Duologue.PlayObjects
         private const float scale_SubGlobs = 0.35f;
 
         private const double timeBetweenTurns = 3.1;
-        private const double shieldCoolOffTime = 0.6;
+        private const double shieldCoolOffTime = 0.4;
         private const double minTurnAngle = -1f * MathHelper.PiOver4;
         private const double maxTurnAngle = MathHelper.PiOver4;
 

@@ -2905,7 +2905,7 @@ namespace Duologue.Waves
                 else
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 4f;
-                Wavelets[2].StartHitPoints[i] = 7;
+                Wavelets[2].StartHitPoints[i] = 4;
             }
             #endregion
 
