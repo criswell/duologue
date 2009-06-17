@@ -2749,6 +2749,7 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[1].Enemies.Length - 10; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(0, 15f, (float)i / (float)Wavelets[1].Enemies.Length);
                 Wavelets[1].StartAngle[i] = 0;
                 if (MWMathHelper.IsEven(i))
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
@@ -2775,6 +2776,7 @@ namespace Duologue.Waves
                 if ((Wavelets[1].Enemies.Length - i) / 4f == (Wavelets[1].Enemies.Length - i) / 4)
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    Wavelets[1].SpawnDelay[i] = 4.1;
                 }
             }
             #endregion
@@ -2785,6 +2787,7 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[2].Enemies.Length - 20; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(0, 15f, (float)i / (float)Wavelets[2].Enemies.Length);
                 Wavelets[2].StartAngle[i] = 0;
                 if (MWMathHelper.IsEven(i))
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
@@ -2810,6 +2813,7 @@ namespace Duologue.Waves
                 if ((Wavelets[2].Enemies.Length - i) / 4f == (Wavelets[2].Enemies.Length - i) / 4)
                 {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                    Wavelets[2].SpawnDelay[i] = 9.1;
                 }
             }
             #endregion
@@ -2844,6 +2848,7 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 15f, (float)i / (float)Wavelets[0].Enemies.Length);
                 Wavelets[0].StartAngle[i] = 0;
                 if(MWMathHelper.IsEven(i))
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
@@ -2862,6 +2867,7 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(0, 12f, (float)i / (float)Wavelets[1].Enemies.Length);
                 Wavelets[1].StartAngle[i] = MathHelper.Pi;
                 if (MWMathHelper.IsEven(i))
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
@@ -2880,6 +2886,7 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_AnnMoeba;
+                Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(0, 8f, (float)i / (float)Wavelets[2].Enemies.Length);
                 Wavelets[2].StartAngle[i] = 0;
                 if (MWMathHelper.IsEven(i))
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
