@@ -2972,7 +2972,7 @@ namespace Duologue.Waves
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_KingGloop;
             Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 1] = ColorPolarity.Positive;
-            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 20;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 10;
             #endregion
             // Third wavelet
             #region
