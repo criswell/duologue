@@ -2854,12 +2854,12 @@ namespace Duologue.Waves
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
                 else
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
-                Wavelets[0].StartHitPoints[i] = 3;
+                Wavelets[0].StartHitPoints[i] = 2;
             }
             Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_KingGloop;
             Wavelets[0].SpawnDelay[Wavelets[0].Enemies.Length - 1] = 0;
             Wavelets[0].ColorPolarities[Wavelets[0].Enemies.Length - 1] = ColorPolarity.Negative;
-            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 8;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 5;
             #endregion
             // Second wavelet
             #region
@@ -2874,12 +2874,12 @@ namespace Duologue.Waves
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
                 else
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
-                Wavelets[1].StartHitPoints[i] = 3;
+                Wavelets[1].StartHitPoints[i] = 2;
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_KingGloop;
             Wavelets[1].SpawnDelay[Wavelets[1].Enemies.Length - 1] = 0;
             Wavelets[1].ColorPolarities[Wavelets[1].Enemies.Length - 1] = ColorPolarity.Positive;
-            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 8;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 7;
             #endregion
             // Third wavelet
             #region
@@ -2894,7 +2894,7 @@ namespace Duologue.Waves
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
                 else
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
-                Wavelets[2].StartHitPoints[i] = 3;
+                Wavelets[2].StartHitPoints[i] = 2;
                 //Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(0, 20f, (float)i / (float)Wavelets[2].Enemies.Length);
             }
             for (int i = Wavelets[2].Enemies.Length - 4; i < Wavelets[2].Enemies.Length; i++)
@@ -2905,7 +2905,7 @@ namespace Duologue.Waves
                 else
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / 4f;
-                Wavelets[2].StartHitPoints[i] = 8;
+                Wavelets[2].StartHitPoints[i] = 7;
             }
             #endregion
 
