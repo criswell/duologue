@@ -504,9 +504,10 @@ namespace Duologue.PlayObjects
                     nearestPlayerRadius >= minPlayerComfortRadiusMultiplier * originalRadius)
                 {
                     // We're in our comfort zone, we just orbit the player
+                    nearestPlayer = new Vector2(nearestPlayer.Y, -nearestPlayer.X);
                     nearestPlayer.Normalize();
 
-                    nearestPlayer = new Vector2(nearestPlayer.Y, -nearestPlayer.X);
+                    //nearestPlayer = new Vector2(nearestPlayer.Y, -nearestPlayer.X);
 
                     offset += rotateSpeed * nearestPlayer;
                 }
