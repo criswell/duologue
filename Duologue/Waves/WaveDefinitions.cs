@@ -3546,24 +3546,28 @@ namespace Duologue.Waves
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
                     Wavelets[0].StartHitPoints[i] = 2;
+                    Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 14f, (float)i / (float)Wavelets[0].Enemies.Length);
                 }
                 else
                 {
                     if (i / 3f == i / 3)
                     {
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                        Wavelets[0].SpawnDelay[i] = 4.5;
                         Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
                     }
                     else if (i / 4f == i / 4)
                     {
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
                         Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                        Wavelets[0].SpawnDelay[i] = 15.1;
                     }
                     else if (i >= Wavelets[0].Enemies.Length - 4)
                     {
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spawner;
                         Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
                         Wavelets[0].StartHitPoints[i] = 2;
+                        Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(10.1f, 2.1f, (float)Wavelets[0].Enemies.Length);
                     }
                     else
                     {
@@ -3589,22 +3593,27 @@ namespace Duologue.Waves
                 if (i <= 15)
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(0, 3.1f, (float)i / (float)Wavelets[1].Enemies.Length);
                 }
                 else if (i == 16)
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Flambi;
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(0, 3.1f, (float)i / (float)Wavelets[1].Enemies.Length);
                 }
                 else if (i > 16 && i < 25)
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(2.1f, 8.1f, (float)i / (float)Wavelets[1].Enemies.Length);
                 }
                 else if (i >= 25 && i < 33)
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(3.1f, 10.1f, (float)i / (float)Wavelets[1].Enemies.Length);
                 }
                 else
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[1].SpawnDelay[i] = 9.67;
                 }
             }
             #endregion
@@ -3635,6 +3644,7 @@ namespace Duologue.Waves
                 else
                 {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(2.1f, 4f, (float)i / (float)Wavelets[2].Enemies.Length);
                 }
             }
             #endregion
