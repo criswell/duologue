@@ -4244,6 +4244,8 @@ namespace Duologue.Waves
                 {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(
+                        1.4f, 8.1f, (float)i / (float)Wavelets[0].Enemies.Length);
                 }
             }
             #endregion
@@ -4263,6 +4265,8 @@ namespace Duologue.Waves
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(
+                        1.4f, 5.1f, (float)i / (float)Wavelets[1].Enemies.Length);
                 }
             }
             #endregion
