@@ -919,7 +919,7 @@ namespace Duologue.PlayObjects
                 screenCenter = new Vector2(
                     InstanceManager.GraphicsDevice.Viewport.Width / 2f,
                     InstanceManager.GraphicsDevice.Viewport.Height / 2f);
-                InstanceManager.Logger.LogEntry(screenCenter.ToString());
+                InstanceManager.Logger.LogEntry(String.Format("Player {0} spawned", MyPlayerIndex.ToString()));
             }
             ComputeTreadOffset();
             lastPosition = Position;
