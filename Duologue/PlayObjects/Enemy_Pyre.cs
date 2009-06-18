@@ -258,6 +258,16 @@ namespace Duologue.PlayObjects
                     filename_Fire
                 };
         }
+
+        public override void CleanUp()
+        {
+            try
+            {
+                sfxi_Rumble.Stop();
+            }
+            catch { }
+            base.CleanUp();
+        }
         #endregion
 
         #region Private methods

@@ -3983,10 +3983,11 @@ namespace Duologue.Waves
             Wavelets[2].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
-                if (i > Wavelets[2].Enemies.Length - 5)
+                if (i > Wavelets[2].Enemies.Length - 4)
                 {
                     Wavelets[2].StartAngle[i] = (Wavelets[2].Enemies.Length - i) * MathHelper.TwoPi/4f;
                     Wavelets[2].SpawnDelay[i] = i / 2.0;
+                    Wavelets[2].StartHitPoints[i] = 1;
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_MetalTooth;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
