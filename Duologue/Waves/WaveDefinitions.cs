@@ -4156,8 +4156,11 @@ namespace Duologue.Waves
             {
                 Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
                 Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
-                if(Wavelets[0].StartAngle[i] >= MathHelper.PiOver2 && Wavelets[0].StartAngle[i] <= MathHelper.PiOver2 *3f)
+                if (Wavelets[0].StartAngle[i] >= MathHelper.PiOver2 && Wavelets[0].StartAngle[i] <= MathHelper.PiOver2 * 3f)
+                {
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[0].SpawnDelay[i] = 8.1;
+                }
                 else
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
             }
@@ -4173,7 +4176,10 @@ namespace Duologue.Waves
                 if (Wavelets[1].StartAngle[i] >= 0 && Wavelets[1].StartAngle[i] <= MathHelper.Pi)
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
                 else
+                {
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[1].SpawnDelay[i] = 8.1;
+                }
             }
             #endregion
             // Third wavelet
@@ -4186,7 +4192,11 @@ namespace Duologue.Waves
                 if (i > Wavelets[2].Enemies.Length - 2)
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Flambi;
                 else
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(
+                        0, 12.1f, (float)i / (float)Wavelets[2].Enemies.Length);
+                }
 
                 if (Wavelets[2].StartAngle[i] >= 0 && Wavelets[2].StartAngle[i] <= MathHelper.Pi)
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
