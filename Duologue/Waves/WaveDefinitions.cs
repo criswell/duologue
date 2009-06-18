@@ -3864,6 +3864,8 @@ namespace Duologue.Waves
                     Wavelets[i].StartAngle[j] = j * MathHelper.TwoPi / (float)Wavelets[i].Enemies.Length;
                     if (MWMathHelper.IsEven(j))
                     {
+                        Wavelets[i].SpawnDelay[j] = (double)MathHelper.Lerp(
+                            0, 15f + (11.1f * j), (float)i / (float)Wavelets[i].Enemies.Length);
                         if (MWMathHelper.IsEven(i))
                             Wavelets[i].ColorPolarities[j] = ColorPolarity.Positive;
                         else
@@ -3871,6 +3873,8 @@ namespace Duologue.Waves
                     }
                     else
                     {
+                        Wavelets[i].SpawnDelay[j] = (double)MathHelper.Lerp(
+                            15f + (11.1f * j), 0, (float)i / (float)Wavelets[i].Enemies.Length);
                         if (!MWMathHelper.IsEven(i))
                             Wavelets[i].ColorPolarities[j] = ColorPolarity.Positive;
                         else
