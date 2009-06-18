@@ -3815,7 +3815,7 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(30, 3);
+            Wavelets[2] = new Wavelet(30, 2);
             Wavelets[2].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -3829,7 +3829,6 @@ namespace Duologue.Waves
                 {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
-                    Wavelets[2].StartHitPoints[i] = 2;
                 }
                 if (i < Wavelets[2].Enemies.Length / 2f)
                     Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(
@@ -3876,7 +3875,7 @@ namespace Duologue.Waves
                     if (MWMathHelper.IsEven(j))
                     {
                         Wavelets[i].SpawnDelay[j] = (double)MathHelper.Lerp(
-                            0, 15f + (11.1f * i), (float)i / (float)Wavelets[i].Enemies.Length);
+                            0, 15f + (11.1f * i), (float)j / (float)Wavelets[i].Enemies.Length);
                         if (MWMathHelper.IsEven(i))
                             Wavelets[i].ColorPolarities[j] = ColorPolarity.Positive;
                         else
@@ -3885,13 +3884,13 @@ namespace Duologue.Waves
                     else
                     {
                         Wavelets[i].SpawnDelay[j] = (double)MathHelper.Lerp(
-                            15f + (11.1f * i), 0, (float)i / (float)Wavelets[i].Enemies.Length);
+                            15f + (11.1f * i), 0, (float)j / (float)Wavelets[i].Enemies.Length);
                         if (!MWMathHelper.IsEven(i))
                             Wavelets[i].ColorPolarities[j] = ColorPolarity.Positive;
                         else
                             Wavelets[i].ColorPolarities[j] = ColorPolarity.Negative;
                     }
-                    //Console.WriteLine("{0}-{1}={2}", i, j, Wavelets[i].SpawnDelay[j]);
+                    //Console.WriteLine("Wavlet({0}), Enemy({1})={2}", i, j, Wavelets[i].SpawnDelay[j]);
                 }
             }            
             #endregion
