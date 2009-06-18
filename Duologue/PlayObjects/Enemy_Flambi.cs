@@ -181,6 +181,8 @@ namespace Duologue.PlayObjects
             audio = ServiceLocator.GetService<AudioManager>();
 
             Initialized = true;
+
+            InstanceManager.Logger.LogEntry("Rare enemy spawn: Flambi- go get 'em, ya cheater!");
         }
 
         public override String[] GetTextureFilenames()

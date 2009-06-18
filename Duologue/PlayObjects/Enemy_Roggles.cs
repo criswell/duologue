@@ -297,7 +297,7 @@ namespace Duologue.PlayObjects
                 screenCenter = new Vector2(
                     InstanceManager.GraphicsDevice.Viewport.Width / 2f,
                     InstanceManager.GraphicsDevice.Viewport.Height / 2f);
-                InstanceManager.Logger.LogEntry(screenCenter.ToString());
+                InstanceManager.Logger.LogEntry("Rare enemy spawn: Roggles- go get 'em, ya cheater!");
             }
 
             // Get distance
@@ -309,7 +309,6 @@ namespace Duologue.PlayObjects
             // Aim at center of screen
             shadowOffset = Vector2.Add(screenCenter, Position);
             shadowOffset.Normalize();
-            //shadowOffset = Vector2.Negate(shadowOffset);
             shadowOffset *= size;
         }
         #endregion
@@ -371,7 +370,7 @@ namespace Duologue.PlayObjects
                 walkingCenters[currentFrame],
                 null,
                 outlineC,
-                0f,// + MathHelper.PiOver2,
+                0f,
                 1f,
                 outlineLayer,
                 RenderSpriteBlendMode.AlphaBlend,
@@ -389,8 +388,6 @@ namespace Duologue.PlayObjects
                 rotationAccelSign *= -1;
                 rotationChangeTimer = 0;
             }
-
-            //Orientation.Normalize();
 
             switch (CurrentState)
             {
@@ -505,9 +502,7 @@ namespace Duologue.PlayObjects
                     }
                     vToEnemy = Vector2.Negate(vToEnemy);
                     vToEnemy.Normalize();
-                    //InstanceManager.Logger.LogEntry(String.Format("Pre {0}", offset));
                     offset += standardEnemyRepulse * vToEnemy;
-                    //InstanceManager.Logger.LogEntry(String.Format("Post {0}", offset));
                 }
                 return true;
             }
@@ -598,16 +593,12 @@ namespace Duologue.PlayObjects
                     Alive = false;
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    //WigglesDeath
-                    //AudioManager am = ServiceLocator.GetService<AudioManager>();
-                    //am.PlayEffect(EffectID.WigglesDeath);
                     audio.PlayEffect(EffectID.WigglesDeath);
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, c);
                     return false;
                 }
                 else
                 {
-                    //AudioManager am = ServiceLocator.GetService<AudioManager>();
                     audio.PlayEffect(EffectID.Sploosh);
                     TriggerShieldDisintegration(outlineFrames[currentFrame], c, Position, 0f);
                     return true;
