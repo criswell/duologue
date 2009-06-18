@@ -4460,6 +4460,8 @@ namespace Duologue.Waves
                 else if (i /5f == i / 5f)
                 {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                    Wavelets[0].SpawnDelay[i] = 4.1;
+                    Wavelets[0].StartHitPoints[i] = 2;
                 }
                 else
                 {
@@ -4496,6 +4498,7 @@ namespace Duologue.Waves
                     {
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
                         Wavelets[1].StartHitPoints[i] = 0;
+                        Wavelets[1].SpawnDelay[i] = i / 2.0 - 10.0;
                     }
                     else
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
