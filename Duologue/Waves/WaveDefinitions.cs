@@ -4884,7 +4884,10 @@ namespace Duologue.Waves
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
 
                 if (i < Wavelets[1].Enemies.Length / 2f)
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    Wavelets[1].SpawnDelay[i] = 2.1;
+                }
                 else
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
             }
