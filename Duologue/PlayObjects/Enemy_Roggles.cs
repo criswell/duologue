@@ -592,6 +592,7 @@ namespace Duologue.PlayObjects
                     timeSinceStart = 0;
                     Alive = false;
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                    InstanceManager.Logger.LogEntry("Roggles dead");
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     audio.PlayEffect(EffectID.WigglesDeath);
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, c);

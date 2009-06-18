@@ -369,6 +369,7 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, bodyColor);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, altColor);
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
+                    InstanceManager.Logger.LogEntry("Flambi dead");
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
                     sfx_Explode.Play();
