@@ -4610,7 +4610,7 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(50, 3);
+            Wavelets[2] = new Wavelet(80, 4);
             Wavelets[2].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -4628,10 +4628,12 @@ namespace Duologue.Waves
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_UncleanRot;
             Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 2] = ColorPolarity.Positive;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = 0;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 2] = 5;
 
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_UncleanRot;
             Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Negative;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = MathHelper.Pi;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 5;
             #endregion
 
             Waves[GetIndex(17, 3)].Wavelets = Wavelets;
