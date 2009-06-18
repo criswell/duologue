@@ -39,7 +39,7 @@ namespace Duologue.PlayObjects
         /// <summary>
         /// The minimum scale for the ember
         /// </summary>
-        private const double minScale = 0.1;
+        private const double minScale = 0.25;
 
         /// <summary>
         /// The maximum scale for the ember
