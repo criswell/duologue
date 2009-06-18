@@ -4344,7 +4344,10 @@ namespace Duologue.Waves
                     if (MWMathHelper.IsEven(i))
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
                     else
+                    {
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                        Wavelets[0].SpawnDelay[i] = 6.1;
+                    }
                 }
             }
             #endregion
@@ -4368,7 +4371,10 @@ namespace Duologue.Waves
                 else if (MWMathHelper.IsEven(i))
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
                 else
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                    Wavelets[1].SpawnDelay[i] = 5.1;
+                }
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_GloopPrince;
             Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 2] = 0;
