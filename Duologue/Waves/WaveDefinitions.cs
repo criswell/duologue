@@ -3457,8 +3457,11 @@ namespace Duologue.Waves
             Wavelets[0].SongID = SongID.Dance8ths;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
-                if(MWMathHelper.IsEven(i))
+                if (MWMathHelper.IsEven(i))
+                {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
+                    Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(1, 5f, (float)i / (float)Wavelets[0].Enemies.Length);
+                }
                 else
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
                 Wavelets[0].ColorPolarities[i] = ColorState.RandomPolarity();
@@ -3475,6 +3478,7 @@ namespace Duologue.Waves
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
                     Wavelets[1].ColorPolarities[i] = ColorState.RandomPolarity();
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(1, 5f, (float)i / (float)Wavelets[1].Enemies.Length);
                 } else 
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
@@ -3496,11 +3500,13 @@ namespace Duologue.Waves
                     else
                         Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
                     Wavelets[2].ColorPolarities[i] = ColorState.RandomPolarity();
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(0, 10f, (float)i / (float)Wavelets[2].Enemies.Length);
                 }
                 else
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(10, 0f, (float)i / (float)Wavelets[2].Enemies.Length);
                 }
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
             }
