@@ -4573,6 +4573,8 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
                 Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].StartAngle.Length;
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(
+                    0, 10.1f, (float)i / (float)Wavelets[0].Enemies.Length);
                 if (i / 4f == i / 4)
                 {
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
@@ -4592,6 +4594,8 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
                 Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].StartAngle.Length + MathHelper.PiOver4;
+                Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(
+                    10.1f, 0, (float)i / (float)Wavelets[1].Enemies.Length);
                 if (i / 4f == i / 4)
                 {
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
