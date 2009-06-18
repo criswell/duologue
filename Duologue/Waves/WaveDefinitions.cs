@@ -3917,16 +3917,19 @@ namespace Duologue.Waves
                 {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                     Wavelets[0].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[0].Enemies.Length;
+                    Wavelets[0].SpawnDelay[i] = i / 2.0;
                 }
                 else
                 {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
                     Wavelets[0].StartAngle[i] = MathHelper.Pi;
+                    Wavelets[0].SpawnDelay[i] = 10.0;
                 }
                 Wavelets[0].ColorPolarities[i] = ColorState.RandomPolarity();
             }
             Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
             Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 1] = MathHelper.Pi;
+            Wavelets[0].SpawnDelay[Wavelets[0].Enemies.Length - 1] = 10.0;
             #endregion
             // Second wavelet
             #region
@@ -3938,21 +3941,30 @@ namespace Duologue.Waves
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
                     Wavelets[1].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[1].Enemies.Length;
+                    Wavelets[1].SpawnDelay[i] = i / 2.0;
                 }
                 else
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
                     if (i > Wavelets[1].Enemies.Length / 2f)
+                    {
                         Wavelets[1].StartAngle[i] = MathHelper.Pi;
+                        Wavelets[1].SpawnDelay[i] = 10.0;
+                    }
                     else
+                    {
                         Wavelets[1].StartAngle[i] = 0;
+                        Wavelets[1].SpawnDelay[i] = 13.2;
+                    }
                 }
                 Wavelets[1].ColorPolarities[i] = ColorState.RandomPolarity();
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
             Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 1] = MathHelper.Pi;
+            Wavelets[1].SpawnDelay[Wavelets[1].Enemies.Length - 1] = 10.0;
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_MetalTooth;
             Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 2] = 0;
+            Wavelets[1].SpawnDelay[Wavelets[1].Enemies.Length - 2] = 13.2;
             #endregion
             // Third wavelet
             #region
@@ -3963,6 +3975,7 @@ namespace Duologue.Waves
                 if (i > Wavelets[2].Enemies.Length - 5)
                 {
                     Wavelets[2].StartAngle[i] = (Wavelets[2].Enemies.Length - i) * MathHelper.TwoPi/4f;
+                    Wavelets[2].SpawnDelay[i] = i / 2.0;
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_MetalTooth;
                     if (MWMathHelper.IsEven(i))
                         Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
@@ -3972,6 +3985,7 @@ namespace Duologue.Waves
                 else
                 {
                     Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
+                    Wavelets[2].SpawnDelay[i] = 2.11;
                     if (MWMathHelper.IsEven(i))
                     {
                         Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
