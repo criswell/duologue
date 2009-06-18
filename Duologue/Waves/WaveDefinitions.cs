@@ -4817,11 +4817,15 @@ namespace Duologue.Waves
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(
+                        10.1f, 0, (float)i / (float)Wavelets[2].Enemies.Length);
                 }
                 else
                 {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(
+                        0.1f, 10f, (float)i / (float)Wavelets[2].Enemies.Length);
                 }
             }
             #endregion
