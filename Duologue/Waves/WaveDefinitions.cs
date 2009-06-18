@@ -3367,7 +3367,7 @@ namespace Duologue.Waves
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(60, 2);
+            Wavelets[1] = new Wavelet(60, 0);
             Wavelets[1].SongID = SongID.Dance8ths;
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
@@ -3397,7 +3397,7 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(60, 2);
+            Wavelets[2] = new Wavelet(60, 0);
             Wavelets[2].SongID = SongID.Dance8ths;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
