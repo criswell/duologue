@@ -4035,6 +4035,8 @@ namespace Duologue.Waves
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                     Wavelets[0].StartAngle[i] = 0;
                     Wavelets[0].ColorPolarities[i] = ColorState.RandomPolarity();
+                    Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(
+                        10f, 14f, (float)(Wavelets[0].Enemies.Length - i) / 4f);
                 }
                 else
                 {
@@ -4042,12 +4044,16 @@ namespace Duologue.Waves
                     if (MWMathHelper.IsEven(i))
                     {
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                        Wavelets[0].SpawnDelay[i] = (double)
+                            MathHelper.Lerp(0, 8f, (float)i / (float)Wavelets[0].Enemies.Length);
                         Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
                     }
                     else
                     {
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
                         Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                        Wavelets[0].SpawnDelay[i] = (double)
+                            MathHelper.Lerp(9f, 1f, (float)i / (float)Wavelets[0].Enemies.Length);
                     }
                 }
             }
@@ -4065,11 +4071,13 @@ namespace Duologue.Waves
                     {
                         Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                        Wavelets[1].SpawnDelay[i] = 0;
                     }
                     else
                     {
                         Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                        Wavelets[1].SpawnDelay[i] = 10.1;
                     }
                 }
                 else
@@ -4078,18 +4086,20 @@ namespace Duologue.Waves
                     {
                         Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                        Wavelets[1].SpawnDelay[i] = 4.1;
                     }
                     else
                     {
                         Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                        Wavelets[1].SpawnDelay[i] = 6.0;
                     }
                 }
             }
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(50, 3, ColorPolarity.Positive);
+            Wavelets[2] = new Wavelet(50, 2, ColorPolarity.Positive);
             Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -4104,6 +4114,8 @@ namespace Duologue.Waves
                     if (MWMathHelper.IsEven(i))
                     {
                         Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                        Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(
+                            0, 14.11f, (float)i / (float)Wavelets[2].Enemies.Length);
                     }
                     else
                     {
