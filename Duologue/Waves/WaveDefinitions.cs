@@ -3920,7 +3920,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(40, 2);
+            Wavelets[0] = new Wavelet(20, 2);
             Wavelets[0].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -3944,7 +3944,7 @@ namespace Duologue.Waves
             #endregion
             // Second wavelet
             #region
-            Wavelets[1] = new Wavelet(40, 2);
+            Wavelets[1] = new Wavelet(25, 2);
             Wavelets[1].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
             {
@@ -3979,14 +3979,14 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet  FIXME WTF SPAWN TIMES FUCKED UP!
             #region
-            Wavelets[2] = new Wavelet(50, 2);
+            Wavelets[2] = new Wavelet(30, 2);
             Wavelets[2].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 if (i > Wavelets[2].Enemies.Length - 4)
                 {
                     Wavelets[2].StartAngle[i] = (Wavelets[2].Enemies.Length - i) * MathHelper.TwoPi/4f;
-                    Wavelets[2].SpawnDelay[i] = i / 2.0;
+                    Wavelets[2].SpawnDelay[i] = 10.0;
                     Wavelets[2].StartHitPoints[i] = 1;
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_MetalTooth;
                     if (MWMathHelper.IsEven(i))
@@ -3997,7 +3997,8 @@ namespace Duologue.Waves
                 else
                 {
                     Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
-                    Wavelets[2].SpawnDelay[i] = 2.11;
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(0, 10f,
+                        (float)i/(float)Wavelets[2].Enemies.Length);
                     if (MWMathHelper.IsEven(i))
                     {
                         Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Buzzsaw;
@@ -4005,6 +4006,8 @@ namespace Duologue.Waves
                     else
                     {
                         Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_MiniSaw;
+                        Wavelets[2].StartHitPoints[i] = 0;
+                        Wavelets[2].SpawnDelay[i] = 10.0;
                     }
                     Wavelets[2].ColorPolarities[i] = ColorState.RandomPolarity();
                 }
