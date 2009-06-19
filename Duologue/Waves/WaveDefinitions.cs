@@ -4742,12 +4742,17 @@ namespace Duologue.Waves
                 if (i / 3f == i / 3)
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
                 else
+                {
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                    Wavelets[2].StartHitPoints[i] = 0;
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(10f, 1.01f,
+                        (float)i / (float)Wavelets[2].Enemies.Length);
+                }
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = MathHelper.PiOver2;
             Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 4;
-            Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 1] = 3.1;
+            Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 1] = 5.1;
             #endregion
 
             Waves[GetIndex(18, 1)].Wavelets = Wavelets;
@@ -4887,9 +4892,17 @@ namespace Duologue.Waves
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
 
                 if (i < Wavelets[0].Enemies.Length / 2f)
+                {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                    Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 8f,
+                        (float)i / (float)Wavelets[0].Enemies.Length);
+                }
                 else
+                {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                    Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(9f, 1f,
+                        (float)i / (float)Wavelets[0].Enemies.Length);
+                }
             }
             #endregion
             // Second wavelet
@@ -4907,7 +4920,7 @@ namespace Duologue.Waves
                 if (i < Wavelets[1].Enemies.Length / 2f)
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
-                    Wavelets[1].SpawnDelay[i] = 2.1;
+                    Wavelets[1].SpawnDelay[i] = 5.1;
                 }
                 else
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
