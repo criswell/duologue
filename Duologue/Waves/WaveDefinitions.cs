@@ -4362,7 +4362,8 @@ namespace Duologue.Waves
                     else
                     {
                         Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
-                        Wavelets[0].SpawnDelay[i] = 6.1;
+                        Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(18.1f, 6.1f,
+                            (float)i / (float)Wavelets[0].Enemies.Length);
                     }
                 }
             }
