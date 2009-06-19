@@ -125,7 +125,8 @@ namespace Duologue.Screens
                     {
                         livingPlayers++;
                         // Check for pause requests
-                        if (InstanceManager.InputManager.NewButtonPressed(Buttons.Start, p.MyPlayerIndex))
+                        if (InstanceManager.InputManager.NewButtonPressed(Buttons.Start, p.MyPlayerIndex) &&
+                            LocalInstanceManager.CanPause)
                             LocalInstanceManager.Pause = true;
 
                         // Update player position

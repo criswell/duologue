@@ -177,6 +177,8 @@ namespace Duologue.PlayObjects
             int? hitPoints,
             double spawnDelay)
         {
+            // No pausing during cinematics
+            LocalInstanceManager.CanPause = false;
             ColorState = currentColorState;
             ColorPolarity = startColorPolarity;
             SpawnTimeDelay = spawnDelay;
@@ -353,6 +355,13 @@ namespace Duologue.PlayObjects
             }
 
             return filenames;
+        }
+
+        public override void CleanUp()
+        {
+            // Reset the pause
+            LocalInstanceManager.CanPause = true;
+            base.CleanUp();
         }
         #endregion
 
@@ -729,6 +738,8 @@ namespace Duologue.PlayObjects
             mainTimer += delta;
             if (mainTimer > totalTime_StartToFinish)
             {
+                // Reset pause ability
+                LocalInstanceManager.CanPause = true;
                 Alive = false;
             }
 

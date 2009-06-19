@@ -196,6 +196,11 @@ namespace Duologue
         /// True if the system is paused, false otherwise
         /// </summary>
         public static bool Pause;
+
+        /// <summary>
+        /// True if the game can be paused, false if we're in some sort of cinematic
+        /// </summary>
+        public static bool CanPause;
         #endregion
 
         #region Public methods

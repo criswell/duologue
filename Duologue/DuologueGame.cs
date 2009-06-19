@@ -359,6 +359,7 @@ namespace Duologue
 
             // Pause stuff
             LocalInstanceManager.Pause = false;
+            LocalInstanceManager.CanPause = true;
 
             base.Initialize();
         }
