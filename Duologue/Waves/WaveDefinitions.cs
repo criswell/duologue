@@ -4751,7 +4751,7 @@ namespace Duologue.Waves
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_MetalTooth;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 1] = MathHelper.PiOver2;
-            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 4;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 2;
             Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 1] = 5.1;
             #endregion
 
@@ -4802,11 +4802,11 @@ namespace Duologue.Waves
             }
             Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_MetalTooth;
             Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 2] = MathHelper.PiOver4;
-            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 2] = 3;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 2] = 2;
 
             Wavelets[0].Enemies[Wavelets[0].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_Pyre;
             Wavelets[0].StartAngle[Wavelets[0].Enemies.Length - 1] = MathHelper.PiOver4 * 5f;
-            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 3;
+            Wavelets[0].StartHitPoints[Wavelets[0].Enemies.Length - 1] = 4;
 
             #endregion
             // Second wavelet
@@ -4834,7 +4834,7 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(30, 5);
+            Wavelets[2] = new Wavelet(30, 0);
             Wavelets[2].SongID = SongID.WinOne;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -4853,6 +4853,8 @@ namespace Duologue.Waves
                     Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(
                         0.1f, 10f, (float)i / (float)Wavelets[2].Enemies.Length);
                 }
+                Wavelets[2].StartHitPoints[i] = (int)MathHelper.Lerp(
+                    0, 5f, (float)i / (float)Wavelets[2].Enemies.Length);
             }
             #endregion
 
