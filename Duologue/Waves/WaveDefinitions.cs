@@ -4385,7 +4385,7 @@ namespace Duologue.Waves
                 if (i > Wavelets[1].Enemies.Length - 4)
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
-                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(1.1f, 2.2f, (float)i / (float)Wavelets[2].Enemies.Length);
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(1.1f, 2.2f, (float)i / (float)Wavelets[1].Enemies.Length);
                 }
                 else if (MWMathHelper.IsEven(i))
                 {
