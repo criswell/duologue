@@ -3977,7 +3977,7 @@ namespace Duologue.Waves
             Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 2] = 0;
             Wavelets[1].SpawnDelay[Wavelets[1].Enemies.Length - 2] = 13.2;
             #endregion
-            // Third wavelet  FIXME WTF SPAWN TIMES FUCKED UP!
+            // Third wavelet
             #region
             Wavelets[2] = new Wavelet(30, 2);
             Wavelets[2].SongID = SongID.SecondChance;
