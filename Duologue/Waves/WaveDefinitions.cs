@@ -4353,6 +4353,7 @@ namespace Duologue.Waves
                 if (i / 10f == i / 10)
                 {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                    Wavelets[0].SpawnDelay[i] = 8.1;
                 }
                 else
                 {
@@ -4382,9 +4383,14 @@ namespace Duologue.Waves
                     Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
                 }
                 if (i > Wavelets[1].Enemies.Length - 4)
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Flycket;
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(1.1f, 2.2f, (float)i / (float)Wavelets[2].Enemies.Length);
+                }
                 else if (MWMathHelper.IsEven(i))
+                {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                }
                 else
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
@@ -4403,7 +4409,7 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].StartAngle[i] = i * MathHelper.TwoPi / (float)Wavelets[2].Enemies.Length;
-                if (i / 4f == i / 4)
+                if ((i+1) / 4f == (i+1) / 4)
                 {
                     if (i >= 10)
                     {
@@ -4468,7 +4474,7 @@ namespace Duologue.Waves
                 else
                     Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
 
-                if (i / 4f == i / 4)
+                if ((i+1) / 4f == (i+1) / 4)
                 {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
                 }
@@ -4500,6 +4506,8 @@ namespace Duologue.Waves
                     if (MWMathHelper.IsEven(i))
                     {
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
+                        Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(0, 9.1f,
+                            (float)i / (float)Wavelets[1].Enemies.Length);
                         Wavelets[1].StartHitPoints[i] = 0;
                     }
                     else
@@ -4513,7 +4521,8 @@ namespace Duologue.Waves
                     {
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
                         Wavelets[1].StartHitPoints[i] = 0;
-                        Wavelets[1].SpawnDelay[i] = i / 2.0 - 10.0;
+                        Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(10.1f, 21.9f,
+                            (float)i / (float)Wavelets[1].Enemies.Length);
                     }
                     else
                         Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
