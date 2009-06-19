@@ -4478,12 +4478,6 @@ namespace Duologue.Waves
                 {
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
                 }
-                else if (i /5f == i / 5f)
-                {
-                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
-                    Wavelets[0].SpawnDelay[i] = 4.1;
-                    Wavelets[0].StartHitPoints[i] = 2;
-                }
                 else
                 {
                     if (MWMathHelper.IsEven(i))
