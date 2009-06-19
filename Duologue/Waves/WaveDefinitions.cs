@@ -4395,7 +4395,8 @@ namespace Duologue.Waves
                 else
                 {
                     Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Spitter;
-                    Wavelets[1].SpawnDelay[i] = 5.1;
+                    Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(6.9f, 5.1f,
+                         (float)i / (float)Wavelets[1].Enemies.Length);
                 }
             }
             Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_GloopPrince;
@@ -4405,7 +4406,7 @@ namespace Duologue.Waves
             #endregion
             // Third wavelet
             #region
-            Wavelets[2] = new Wavelet(40, 3);
+            Wavelets[2] = new Wavelet(40, 4);
             Wavelets[2].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
@@ -4424,6 +4425,7 @@ namespace Duologue.Waves
                         Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
                     }
                     Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_GloopPrince;
+                    Wavelets[2].StartHitPoints[1] = 2;
                 }
                 else
                 {
