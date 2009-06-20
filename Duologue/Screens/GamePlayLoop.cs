@@ -296,6 +296,9 @@ namespace Duologue.Screens
             // or move to next wave
             if ((livingEnemies < 1 && livingPlayers > 0 && !myManager.TutorialManager.TutorialOnscreen) || skip)
             {
+                if (skip)
+                    myManager.CleanEnemies();
+
                 if (myManager.CurrentState == GamePlayState.Playing)
                     LocalInstanceManager.CurrentGameWave.CurrentWavelet++;
 

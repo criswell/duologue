@@ -202,7 +202,10 @@ namespace Duologue.Screens
         #endregion
 
         #region Private methods
-        private void CleanEnemies()
+        #endregion
+
+        #region Public methods
+        public void CleanEnemies()
         {
             for (int i = 0; i < LocalInstanceManager.CurrentNumberEnemies; i++)
             {
@@ -212,9 +215,7 @@ namespace Duologue.Screens
             }
 
         }
-        #endregion
 
-        #region Public methods
         public override void SetEnable(bool t)
         {
             if (t)
