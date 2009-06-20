@@ -27,7 +27,6 @@ using Duologue.UI;
 using Duologue.State;
 #endregion
 
-
 namespace Duologue.UI
 {
     public struct TutorialEntry
@@ -88,6 +87,7 @@ namespace Duologue.UI
         private TutorialEntry[] theEntries;
         private Queue<TutorialEntry> requestedToBeDisplayed;
         private TutorialEntry currentEntry;
+        private TutorialEntry infiniteIntro;
         private int lastEntryCount;
         private PopUpState currentState;
         private double stateTimer;
@@ -101,6 +101,7 @@ namespace Duologue.UI
         private TutorialEntry[] proTips;
 
         private bool tutOnscreen;
+        private bool infiniteIntroDisplayed = false;
         #endregion
 
         #region Properties
@@ -188,6 +189,14 @@ namespace Duologue.UI
                 proTips[i].IsTip = true;
             }
 
+            infiniteIntro = new TutorialEntry();
+            infiniteIntro.Text = Resources.Tutorial_InfiniteMode;
+            infiniteIntro.TextSize = font.MeasureString(infiniteIntro.Text);
+            infiniteIntro.Center = new Vector2(
+                infiniteIntro.TextSize.X / 2f, infiniteIntro.TextSize.Y / 2f);
+            infiniteIntro.SmallFont = false;
+            infiniteIntro.IsTip = false;
+
             base.LoadContent();
         }
         #endregion
@@ -203,6 +212,7 @@ namespace Duologue.UI
             currentState = PopUpState.None;
             position = Vector2.Zero;
             tutOnscreen = false;
+            infiniteIntroDisplayed = false;
             Visible = false;
             Enabled = false;
         }
@@ -212,12 +222,23 @@ namespace Duologue.UI
         /// </summary>
         public void NewLevel()
         {
-            if (lastEntryCount < 1)
+            if (infiniteIntroDisplayed || LocalInstanceManager.CurrentGameState != GameState.InfiniteGame)
             {
-                if (LocalInstanceManager.AchievementManager.DisplayTutorial(numberOfTimesToDisplayTutorial))
+                if (lastEntryCount < 1)
                 {
-                    // Cool, we can display the tutorial
-                    InstanceManager.Logger.LogEntry(String.Format("Tutorial to display: {0}", theEntries[lastEntryCount].Text));
+                    if (LocalInstanceManager.AchievementManager.DisplayTutorial(numberOfTimesToDisplayTutorial))
+                    {
+                        // Cool, we can display the tutorial
+                        InstanceManager.Logger.LogEntry(String.Format("Tutorial to display: {0}", theEntries[lastEntryCount].Text));
+                        requestedToBeDisplayed.Enqueue(theEntries[lastEntryCount]);
+                        lastEntryCount++;
+                        Visible = true;
+                        Enabled = true;
+                        tutOnscreen = true;
+                    }
+                }
+                else if (lastEntryCount < theEntries.Length)
+                {
                     requestedToBeDisplayed.Enqueue(theEntries[lastEntryCount]);
                     lastEntryCount++;
                     Visible = true;
@@ -225,13 +246,13 @@ namespace Duologue.UI
                     tutOnscreen = true;
                 }
             }
-            else if (lastEntryCount < theEntries.Length)
+            else
             {
-                requestedToBeDisplayed.Enqueue(theEntries[lastEntryCount]);
-                lastEntryCount++;
+                requestedToBeDisplayed.Enqueue(infiniteIntro);
                 Visible = true;
                 Enabled = true;
                 tutOnscreen = true;
+                infiniteIntroDisplayed = true;
             }
         }
 

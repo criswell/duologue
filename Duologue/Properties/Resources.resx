@@ -327,4 +327,7 @@
   <data name="Tutorial_3" xml:space="preserve">
     <value>Use the light to ward off opposite colored enemies.</value>
   </data>
+  <data name="Tutorial_InfiniteMode" xml:space="preserve">
+    <value>Play the game with the least amount of deaths!</value>
+  </data>
 </root>

@@ -689,5 +689,14 @@ namespace Duologue.Properties {
                 return ResourceManager.GetString("Tutorial_3", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play the game with the least amount of deaths!.
+        /// </summary>
+        internal static string Tutorial_InfiniteMode {
+            get {
+                return ResourceManager.GetString("Tutorial_InfiniteMode", resourceCulture);
+            }
+        }
     }
 }
