@@ -47,8 +47,6 @@ namespace Duologue.Screens
         private const string AbuttonFilename = "PlayerUI\\buttonA";
 
         private const float playerPosOffset = 100f;
-
-        private const int startingLives = 4;
         #endregion
 
         #region Fields
@@ -361,10 +359,6 @@ namespace Duologue.Screens
                     LocalInstanceManager.Scores[i].SetPositions(
                         GetScoreStartPos(i),
                         GetScoreStartPos(i));
-                    /*if (LocalInstanceManager.NextGameState == GameState.InfiniteGame)
-                        LocalInstanceManager.Scores[i].SetLives(1);
-                    else
-                        LocalInstanceManager.Scores[i].SetLives(startingLives);*/
                     LocalInstanceManager.Scores[i].ResetLives();
                     LocalInstanceManager.Scores[i].SetAlignment(offsetModifiers[i]);
 
