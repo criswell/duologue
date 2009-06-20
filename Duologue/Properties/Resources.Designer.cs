@@ -88,11 +88,11 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Infinite Mode.
+        ///   Looks up a localized string similar to Survival Mode.
         /// </summary>
-        internal static string GameScreen_InfiniteWave {
+        internal static string GameScreen_SurvivalWave {
             get {
-                return ResourceManager.GetString("GameScreen_InfiniteWave", resourceCulture);
+                return ResourceManager.GetString("GameScreen_SurvivalWave", resourceCulture);
             }
         }
         
@@ -189,9 +189,18 @@ namespace Duologue.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Play infinite mode.
         /// </summary>
-        internal static string MainMenu_GameSelect_Infinite {
+        internal static string MainMenu_GameSelect_InfiniteMode {
             get {
-                return ResourceManager.GetString("MainMenu_GameSelect_Infinite", resourceCulture);
+                return ResourceManager.GetString("MainMenu_GameSelect_InfiniteMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play survival mode.
+        /// </summary>
+        internal static string MainMenu_GameSelect_Survival {
+            get {
+                return ResourceManager.GetString("MainMenu_GameSelect_Survival", resourceCulture);
             }
         }
         
@@ -268,7 +277,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Passed wave 100 of Infinite Mode.
+        ///   Looks up a localized string similar to Passed wave 100 of Survival Mode.
         /// </summary>
         internal static string Medal_Desc_NoEndInSight {
             get {
@@ -543,6 +552,15 @@ namespace Duologue.Properties {
         internal static string ScoreUI_GameOver {
             get {
                 return ResourceManager.GetString("ScoreUI_GameOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deaths:.
+        /// </summary>
+        internal static string ScoreUI_InfiniteMode_Lives {
+            get {
+                return ResourceManager.GetString("ScoreUI_InfiniteMode_Lives", resourceCulture);
             }
         }
         

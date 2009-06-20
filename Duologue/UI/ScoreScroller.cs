@@ -88,6 +88,8 @@ namespace Duologue.UI
         private int lengthOfMaxScore;
         private int deltaScore;
         private string playerText;
+        private string playerTextInfinite;
+        private Vector2 playerTextSizeInfinite;
         private Vector2 playerTextSize;
         private string gameOverText;
         // Pointlets
@@ -228,6 +230,7 @@ namespace Duologue.UI
             PurgePointlets();
 
             // Set the score text
+            playerTextInfinite = Resources.ScoreUI_InfiniteMode_Lives;
             playerText = Resources.ScoreUI_Lives;
             gameOverText = Resources.ScoreUI_GameOver;
             base.Initialize();
@@ -259,6 +262,7 @@ namespace Duologue.UI
             }
 
             playerTextSize = playerFont.MeasureString(playerText);
+            playerTextSizeInfinite = scoreFont.MeasureString(playerTextInfinite);
             scoreSize = scoreFont.MeasureString(maxScore.ToString());
 
             scoreSize.Y += playerTextSize.Y;
@@ -276,6 +280,14 @@ namespace Duologue.UI
         #endregion
 
         #region Private methods
+        private bool InfiniteMode()
+        {
+            return
+                (LocalInstanceManager.CurrentGameState == GameState.InfiniteGame ||
+                LocalInstanceManager.NextGameState == GameState.InfiniteGame);
+        }
+
+
         /// <summary>
         /// Add a pointlet
         /// </summary>
@@ -337,7 +349,7 @@ namespace Duologue.UI
                 scrollingScore = 0;
             }
 
-            if (score >= nextExtraLifeAt)
+            if (score >= nextExtraLifeAt && !InfiniteMode())
             {
                 timeSinceLifeUpSpawn = 0.0;
                 timeSinceLifeUpColorChange = 0.0;
@@ -402,9 +414,23 @@ namespace Duologue.UI
         /// <param name="p">Number of lives</param>
         public void SetLives(int p)
         {
-            lives = p;
-            if (lives > maxLives)
-                lives = maxLives;
+            if (!InfiniteMode())
+            {
+                lives = p;
+                if (lives > maxLives)
+                    lives = maxLives;
+            } // We ignore this request otherwise
+        }
+
+        /// <summary>
+        /// Call when we need to reset lives
+        /// </summary>
+        public void ResetLives()
+        {
+            if (InfiniteMode())
+                lives = 1;
+            else
+                lives = defaultLives;
         }
 
         /// <summary>
@@ -424,9 +450,18 @@ namespace Duologue.UI
         /// <returns>True if they have another life, false if not</returns>
         public bool LoseLife()
         {
-            if (lives > 0)
-                lives--;
-            return lives > 0;
+            if (LocalInstanceManager.CurrentGameState == GameState.InfiniteGame)
+            {
+                if(lives < maxLives)
+                    lives++;
+                return true;
+            }
+            else
+            {
+                if (lives > 0)
+                    lives--;
+                return lives > 0;
+            }
         }
 
         /// <summary>
@@ -524,89 +559,150 @@ namespace Duologue.UI
             int diffLength = difference.ToString().Length;
 
             // Next do the scoreText
-            if (lives > 0)
+            if (InfiniteMode())
             {
-                Render.DrawString(
-                    playerFont,
-                    playerText,
-                    origin,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AbsoluteTop);
-                Render.DrawString(
-                    playerFont,
-                    (lives-1).ToString(),
-                    origin + new Vector2(playerTextSize.X, 0f),
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AbsoluteTop);
-                if (timeSinceLifeUpSpawn < timeToDisplayLifeUp)
+                // Here, we do score first
+                for (int i = 0; i < lengthOfMaxScore - length; i++)
                 {
-                    if (currentLifeUpColorIsDark)
-                        Render.DrawString(
-                            playerFont,
-                            Resources.ScoreUI_ExtraLife,
-                            associatedPlayer.Position + offset_ExtraLife,
-                            associatedPlayer.PlayerColor.Colors[PlayerColors.Dark],
-                            RenderSpriteBlendMode.AbsoluteTop);
-                    else
-                        Render.DrawString(
-                            playerFont,
-                            Resources.ScoreUI_ExtraLife,
-                            associatedPlayer.Position + offset_ExtraLife,
-                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                            RenderSpriteBlendMode.AbsoluteTop);
+                    charPos = origin + new Vector2((float)(currentChar * playerFontCharSize.X), 0f);
+                    Render.DrawString(
+                        playerFont,
+                        "0",
+                        charPos,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                        RenderSpriteBlendMode.AbsoluteTop);
+                    currentChar++;
                 }
+
+                while (chars.MoveNext())
+                {
+                    charPos = origin + new Vector2((float)(currentChar * playerFontCharSize.X), 0f);
+                    Render.DrawString(
+                        playerFont,
+                        chars.Current.ToString(),
+                        charPos,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                        RenderSpriteBlendMode.AbsoluteTop);
+
+                    if (scrollingScore < score &&
+                        diffLength > 0 &&
+                        currentChar >= lengthOfMaxScore - diffLength)
+                    {
+                        Render.DrawString(
+                            playerFont,
+                            rand.Next(9).ToString(),
+                            charPos,
+                            new Color(
+                                associatedPlayer.PlayerColor.Colors[PlayerColors.Light].R,
+                                associatedPlayer.PlayerColor.Colors[PlayerColors.Light].G,
+                                associatedPlayer.PlayerColor.Colors[PlayerColors.Light].B,
+                                (byte)100),
+                            RenderSpriteBlendMode.AddititiveTop);
+                    }
+
+                    currentChar++;
+                }
+                // Next, we do lives
+                Render.DrawString(
+                    scoreFont,
+                    playerTextInfinite,
+                    offsetPos,
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    RenderSpriteBlendMode.AbsoluteTop);
+                Render.DrawString(
+                    scoreFont,
+                    (lives - 1).ToString(),
+                    offsetPos + new Vector2(playerTextSizeInfinite.X, 0f),
+                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                    RenderSpriteBlendMode.AbsoluteTop);
+
+
             }
             else
             {
-                Render.DrawString(
-                    playerFont,
-                    gameOverText,
-                    origin,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AbsoluteTop);
-            }
-
-
-            // The score itself
-            for (int i = 0; i < lengthOfMaxScore - length; i++)
-            {
-                charPos = offsetPos + new Vector2((float)(currentChar * scoreFontCharSize.X), 0f);
-                Render.DrawString(
-                    scoreFont,
-                    "0",
-                    charPos,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AbsoluteTop);
-                currentChar++;
-            }
-
-            while (chars.MoveNext())
-            {
-                charPos = offsetPos + new Vector2((float)(currentChar * scoreFontCharSize.X), 0f);
-                Render.DrawString(
-                    scoreFont,
-                    chars.Current.ToString(),
-                    charPos,
-                    associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
-                    RenderSpriteBlendMode.AbsoluteTop);
-
-                if (scrollingScore < score &&
-                    diffLength > 0 &&
-                    currentChar >= lengthOfMaxScore - diffLength)
+                if (lives > 0)
                 {
                     Render.DrawString(
-                        scoreFont,
-                        rand.Next(9).ToString(),
-                        charPos,
-                        new Color(
-                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].R,
-                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].G,
-                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].B,
-                            (byte)100),
-                        RenderSpriteBlendMode.AddititiveTop);
+                        playerFont,
+                        playerText,
+                        origin,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                        RenderSpriteBlendMode.AbsoluteTop);
+                    Render.DrawString(
+                        playerFont,
+                        (lives - 1).ToString(),
+                        origin + new Vector2(playerTextSize.X, 0f),
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                        RenderSpriteBlendMode.AbsoluteTop);
+                    if (timeSinceLifeUpSpawn < timeToDisplayLifeUp)
+                    {
+                        if (currentLifeUpColorIsDark)
+                            Render.DrawString(
+                                playerFont,
+                                Resources.ScoreUI_ExtraLife,
+                                associatedPlayer.Position + offset_ExtraLife,
+                                associatedPlayer.PlayerColor.Colors[PlayerColors.Dark],
+                                RenderSpriteBlendMode.AbsoluteTop);
+                        else
+                            Render.DrawString(
+                                playerFont,
+                                Resources.ScoreUI_ExtraLife,
+                                associatedPlayer.Position + offset_ExtraLife,
+                                associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                                RenderSpriteBlendMode.AbsoluteTop);
+                    }
+                }
+                else
+                {
+                    Render.DrawString(
+                        playerFont,
+                        gameOverText,
+                        origin,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                        RenderSpriteBlendMode.AbsoluteTop);
                 }
 
-                currentChar++;
+                // The score itself
+                for (int i = 0; i < lengthOfMaxScore - length; i++)
+                {
+                    charPos = offsetPos + new Vector2((float)(currentChar * scoreFontCharSize.X), 0f);
+                    Render.DrawString(
+                        scoreFont,
+                        "0",
+                        charPos,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                        RenderSpriteBlendMode.AbsoluteTop);
+                    currentChar++;
+                }
+
+                while (chars.MoveNext())
+                {
+                    charPos = offsetPos + new Vector2((float)(currentChar * scoreFontCharSize.X), 0f);
+                    Render.DrawString(
+                        scoreFont,
+                        chars.Current.ToString(),
+                        charPos,
+                        associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                        RenderSpriteBlendMode.AbsoluteTop);
+
+                    if (scrollingScore < score &&
+                        diffLength > 0 &&
+                        currentChar >= lengthOfMaxScore - diffLength)
+                    {
+                        Render.DrawString(
+                            scoreFont,
+                            rand.Next(9).ToString(),
+                            charPos,
+                            new Color(
+                                associatedPlayer.PlayerColor.Colors[PlayerColors.Light].R,
+                                associatedPlayer.PlayerColor.Colors[PlayerColors.Light].G,
+                                associatedPlayer.PlayerColor.Colors[PlayerColors.Light].B,
+                                (byte)100),
+                            RenderSpriteBlendMode.AddititiveTop);
+                    }
+
+                    currentChar++;
+                }
             }
 
             base.Draw(gameTime);

@@ -62,6 +62,7 @@ namespace Duologue.Screens
         private int menuCredits;
         private int menuExit;
         private int gameSelectCampaign;
+        private int gameSelectSurvival;
         private int gameSelectInfinite;
         private int gameSelectBack;
         private MainMenuState currentState;
@@ -114,10 +115,12 @@ namespace Duologue.Screens
             // Set up the game select menu
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
             gameSelectCampaign = 0;
-            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Infinite));
-            gameSelectInfinite = 1;
+            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Survival));
+            gameSelectSurvival = 1;
+            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_InfiniteMode));
+            gameSelectInfinite = 2;
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Back));
-            gameSelectBack = 2;
+            gameSelectBack = 3;
 
             debugSequence = 0;
 
@@ -270,13 +273,21 @@ namespace Duologue.Screens
                     LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
                     ResetMenuItems();
                 }
+                else if (currentSelection == gameSelectSurvival)
+                {
+                    currentState = MainMenuState.MainMenu;
+                    currentSelection = 0;
+                    ResetMenuItems();
+                    LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
+                    LocalInstanceManager.NextGameState = GameState.SurvivalGame;
+                }
                 else if (currentSelection == gameSelectInfinite)
                 {
                     currentState = MainMenuState.MainMenu;
                     currentSelection = 0;
                     ResetMenuItems();
                     LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
-                    LocalInstanceManager.NextGameState = GameState.InfinityGame;
+                    LocalInstanceManager.NextGameState = GameState.InfiniteGame;
                 }
                 else if (currentSelection == gameSelectCampaign)
                 {

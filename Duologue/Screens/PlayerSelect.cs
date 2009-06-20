@@ -361,7 +361,11 @@ namespace Duologue.Screens
                     LocalInstanceManager.Scores[i].SetPositions(
                         GetScoreStartPos(i),
                         GetScoreStartPos(i));
-                    LocalInstanceManager.Scores[i].SetLives(startingLives);
+                    /*if (LocalInstanceManager.NextGameState == GameState.InfiniteGame)
+                        LocalInstanceManager.Scores[i].SetLives(1);
+                    else
+                        LocalInstanceManager.Scores[i].SetLives(startingLives);*/
+                    LocalInstanceManager.Scores[i].ResetLives();
                     LocalInstanceManager.Scores[i].SetAlignment(offsetModifiers[i]);
 
                     for (int t = 0; t < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; t++)

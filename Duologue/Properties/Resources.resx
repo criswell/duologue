@@ -126,8 +126,8 @@
   <data name="Filename_GameOver" xml:space="preserve">
     <value>PlayerUI/game-over_en_US</value>
   </data>
-  <data name="GameScreen_InfiniteWave" xml:space="preserve">
-    <value>Infinite Mode</value>
+  <data name="GameScreen_SurvivalWave" xml:space="preserve">
+    <value>Survival Mode</value>
   </data>
   <data name="GameScreen_Wave" xml:space="preserve">
     <value>Wave {0}-{1}</value>
@@ -159,8 +159,11 @@
   <data name="MainMenu_GameSelect_Campaign" xml:space="preserve">
     <value>Play campaign mode</value>
   </data>
-  <data name="MainMenu_GameSelect_Infinite" xml:space="preserve">
+  <data name="MainMenu_GameSelect_InfiniteMode" xml:space="preserve">
     <value>Play infinite mode</value>
+  </data>
+  <data name="MainMenu_GameSelect_Survival" xml:space="preserve">
+    <value>Play survival mode</value>
   </data>
   <data name="MainMenu_Play" xml:space="preserve">
     <value>Join the battle!</value>
@@ -202,7 +205,7 @@
     <value>Killed 1000 enemies</value>
   </data>
   <data name="Medal_Desc_NoEndInSight" xml:space="preserve">
-    <value>Passed wave 100 of Infinite Mode</value>
+    <value>Passed wave 100 of Survival Mode</value>
   </data>
   <data name="Medal_Desc_Seriously" xml:space="preserve">
     <value>Killed 39,516 enemies</value>
@@ -278,6 +281,9 @@
   </data>
   <data name="ScoreUI_GameOver" xml:space="preserve">
     <value>Game Over</value>
+  </data>
+  <data name="ScoreUI_InfiniteMode_Lives" xml:space="preserve">
+    <value>Deaths:</value>
   </data>
   <data name="ScoreUI_Lives" xml:space="preserve">
     <value>Lives:</value>

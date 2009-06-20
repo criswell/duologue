@@ -201,7 +201,7 @@ namespace Duologue.Waves
             // Get a random color state
             ColorState[] theStates = ColorState.GetColorStates();
 
-            GameWave thisWave = new GameWave(Resources.GameScreen_InfiniteWave,
+            GameWave thisWave = new GameWave(Resources.GameScreen_SurvivalWave,
                 InstanceManager.Random.Next(LocalInstanceManager.Background.NumBackgrounds),
                 MWMathHelper.GetRandomInRange(0, ColorState.NumberOfColorStates),
                 lastMajorWaveNo,
@@ -363,7 +363,7 @@ namespace Duologue.Waves
         public GameWave GetNextWave()
         {
             GameWave temp;
-            if (LocalInstanceManager.CurrentGameState == GameState.InfinityGame)
+            if (LocalInstanceManager.CurrentGameState == GameState.SurvivalGame)
             {
                 temp = GenerateRandomWave(CurrentMajorNumber, CurrentMinorNumber);
                 CurrentMajorNumber = temp.MajorWaveNumber;
