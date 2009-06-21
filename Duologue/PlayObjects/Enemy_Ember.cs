@@ -388,12 +388,17 @@ namespace Duologue.PlayObjects
                 // Beam handling
                 int temp = ((Player)pobj).IsInBeam(this);
                 isFleeing = false;
-                if (temp != 0)
+                if (Position.X > 0 && Position.X < InstanceManager.DefaultViewport.Width &&
+                    Position.Y > 0 && Position.Y < InstanceManager.DefaultViewport.Height)
                 {
-                    if (temp == -1)
+                    // We only want to handle this stuff if we're onscreen
+                    if (temp != 0)
                     {
-                        isFleeing = true;
-                        LocalInstanceManager.Steam.AddParticles(Position, emberColors[currentEmberColor]);
+                        if (temp == -1)
+                        {
+                            isFleeing = true;
+                            LocalInstanceManager.Steam.AddParticles(Position, emberColors[currentEmberColor]);
+                        }
                     }
                 }
                 return true;
