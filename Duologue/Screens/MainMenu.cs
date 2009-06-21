@@ -115,10 +115,10 @@ namespace Duologue.Screens
             // Set up the game select menu
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
             gameSelectCampaign = 0;
-            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Survival));
-            gameSelectSurvival = 1;
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_InfiniteMode));
-            gameSelectInfinite = 2;
+            gameSelectInfinite = 1;
+            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Survival));
+            gameSelectSurvival = 2;
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Back));
             gameSelectBack = 3;
 
