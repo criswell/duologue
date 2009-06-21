@@ -203,7 +203,7 @@ namespace Duologue.Waves
 
             GameWave thisWave = new GameWave(Resources.GameScreen_SurvivalWave,
                 InstanceManager.Random.Next(LocalInstanceManager.Background.NumBackgrounds),
-                MWMathHelper.GetRandomInRange(0, ColorState.NumberOfColorStates),
+                0, //MWMathHelper.GetRandomInRange(0, ColorState.NumberOfColorStates),
                 lastMajorWaveNo,
                 lastMinorWaveNo);
 
@@ -237,10 +237,11 @@ namespace Duologue.Waves
             //if (MWMathHelper.CoinToss())
                 //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.WinOne;
             //else
-                thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
+            thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
 
-                thisWave.Wavelets[1].SongID = SongID.Superbowl;
+            thisWave.Wavelets[1].SongID = SongID.Superbowl;
 
+            /* FIXME, we will want this in the end
             // Randomize the background and parallax elements
             thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);
             thisWave.ThrobColor = new Color(
@@ -276,7 +277,16 @@ namespace Duologue.Waves
                     (byte)MWMathHelper.GetRandomInRange(50, 255));
 
             }
-
+            */
+            // FIXME - Final boss tests, remove this and reinstate the above when done
+            thisWave.Background = 1;
+            thisWave.ThrobColor = new Color(255, 219, 129);
+            thisWave.ParallaxElementTop.Intensity = 2;
+            thisWave.ParallaxElementTop.Speed = 2.1f;
+            thisWave.ParallaxElementTop.Tint = new Color(97, 22, 97);// new Color(133, 77, 41);
+            thisWave.ParallaxElementBottom.Intensity = 2;
+            thisWave.ParallaxElementBottom.Speed = -2.1f;
+            thisWave.ParallaxElementBottom.Tint = new Color(97, 22, 97);//new Color(124, 71, 223);
 
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;
