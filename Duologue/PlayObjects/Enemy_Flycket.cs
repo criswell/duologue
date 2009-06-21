@@ -38,6 +38,7 @@ namespace Duologue.PlayObjects
         private const float volume_Max = 0.55f;
         private const float volume_Min = 0.01f;
         private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
+        private const float volume_Explode = 0.098f;
         private const float alpha_MaxSmokeParticles = 0.55f;
         private const float alpha_MinSmokeParticles = 0.01f;
         private const float scale_MinSmokeParticle = 0.9f;
@@ -413,7 +414,7 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     stopThatInfernalScreamingWoman = true;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    sfx_Explode.Play();
+                    sfx_Explode.Play(volume_Explode);
                     return false;
                 }
                 else
