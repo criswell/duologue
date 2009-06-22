@@ -56,8 +56,8 @@ namespace Duologue.Waves
         private const float medal_Experienced = 0.5f;
         private const float medal_KeyParty = 0.5f;
 
-        private const int default_StartingMajorNum = 1;
-        private const int default_StartingMinorNum = 0;
+        private const int default_StartingMajorNum = 18;
+        private const int default_StartingMinorNum = 2;
         #endregion
 
         #region Fields

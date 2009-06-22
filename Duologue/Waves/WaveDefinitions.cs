@@ -48,7 +48,7 @@ namespace Duologue.Waves
     public class WaveDefinitions
     {
         #region Constants
-        private const int maxNumberOfMajorWaves = 18;
+        private const int maxNumberOfMajorWaves = 20;
         private const int numberOfWavelets = maxNumberOfMajorWaves * GameWaveManager.MaxMinorNumber;
         #endregion
 
@@ -88,10 +88,6 @@ namespace Duologue.Waves
             // Currently MaxMinorNumber is 3 and MaxMajorNumber is 999
 
             /* NOTES
-[01:03:14] <criswe1l> criswell: 12-2, 12-3 -> annmoeba more HP, protonora *much* less HP (50% or less) - Done? TEST
-[01:04:50] <criswe1l> and 12-3.1 (blah, likely all 12-3) - Done? TEST
-[01:09:33] <criswe1l> 13-X totalbullshit too many mobs
-[01:22:09] <criswe1l> 15-3.0 too manybullshit buzsaws
 [01:30:10] <criswe1l> 16-1 crash? code 4
              * */
             #region Wave 1
@@ -4944,7 +4940,6 @@ namespace Duologue.Waves
             #endregion
             #endregion
 
-            /*
             #region Wave 19
             #region Wavedef (19-1) "Deny me and be doomed"
             #region Metadata
@@ -4968,14 +4963,71 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(12, 2);
+            Wavelets[0] = new Wavelet(50, 0);
             Wavelets[0].SongID = SongID.SecondChance;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                else
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+
+                Wavelets[0].StartAngle[i] = MathHelper.Lerp(MathHelper.TwoPi + MathHelper.PiOver4, -MathHelper.PiOver4,
+                    (float)i / (float)Wavelets[0].Enemies.Length);
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 30f,
+                    (float)i / (float)Wavelets[0].Enemies.Length);
+
+                if (i < Wavelets[0].Enemies.Length / 2f)
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                else
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+            }
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(25, 0);
+            Wavelets[1].SongID = SongID.SecondChance;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Mirthworm;
+                Wavelets[1].StartAngle[i] = MathHelper.Lerp(0, MathHelper.TwoPi, (float)i / (float)Wavelets[1].Enemies.Length);
+                Wavelets[1].SpawnDelay[i] = MathHelper.Lerp(0, 25f, (float)i / (float)Wavelets[1].Enemies.Length);
+                Wavelets[1].StartHitPoints[i] = (int)MathHelper.Lerp(0, 10f, (float)i / (float)Wavelets[1].Enemies.Length);
+            }
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(50, 0);
+            Wavelets[2].SongID = SongID.SecondChance;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                if (i > 4)
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
+                    Wavelets[2].StartHitPoints[i] = 3;
+                }
+                else
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                    Wavelets[2].StartHitPoints[i] = 0;
+                }
+                Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                Wavelets[2].StartAngle[i] = MathHelper.PiOver2;
+            }
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_UncleanRot;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = MathHelper.PiOver2;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 2] = ColorPolarity.Positive;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 2] = 2;
+
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_Lahmu;
+            Wavelets[2].ColorPolarities[Wavelets[2].Enemies.Length - 1] = ColorPolarity.Negative;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 2;
+            Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 1] = 5.1;
             #endregion
 
             Waves[GetIndex(19, 1)].Wavelets = Wavelets;
