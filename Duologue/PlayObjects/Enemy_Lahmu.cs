@@ -437,7 +437,7 @@ namespace Duologue.PlayObjects
                     nearestPlayerRadius = len;
                     nearestPlayer = vToPlayer;
                 }
-                if (len < this.Radius + pobj.Radius && timeBeforeDangerous < time_SpawnToDeadly)
+                if (len < this.Radius + pobj.Radius && timeBeforeDangerous >= time_SpawnToDeadly)
                 {
                     // We're on them, kill em
                     return pobj.TriggerHit(this);
