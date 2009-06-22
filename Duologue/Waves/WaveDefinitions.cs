@@ -5227,24 +5227,50 @@ namespace Duologue.Waves
             #region Metadata
             Waves[GetIndex(20, 1)] = new GameWave();
             Waves[GetIndex(20, 1)].Background = 3;
-            Waves[GetIndex(20, 1)].ThrobColor = new Color(255, 154, 95);
-            Waves[GetIndex(20, 1)].ColorState = 2;
+            Waves[GetIndex(20, 1)].ThrobColor = new Color(255, 255, 255);
+            Waves[GetIndex(20, 1)].ColorState = 0;
             Waves[GetIndex(20, 1)].MajorWaveNumber = 20;
             Waves[GetIndex(20, 1)].MinorWaveNumber = 1;
             Waves[GetIndex(20, 1)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(20, 1)].ParallaxElementTop.Intensity = 4;
-            Waves[GetIndex(20, 1)].ParallaxElementTop.Tint = new Color(39, 173, 173);
-            Waves[GetIndex(20, 1)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(20, 1)].ParallaxElementTop.Intensity = 5;
+            Waves[GetIndex(20, 1)].ParallaxElementTop.Tint = new Color(224, 185, 111);
+            Waves[GetIndex(20, 1)].ParallaxElementTop.Speed = 0.1f;
             Waves[GetIndex(20, 1)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(20, 1)].ParallaxElementBottom.Intensity = 2;
-            Waves[GetIndex(20, 1)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
-            Waves[GetIndex(20, 1)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(20, 1)].ParallaxElementBottom.Intensity = 5;
+            Waves[GetIndex(20, 1)].ParallaxElementBottom.Tint = new Color(234, 36, 185);
+            Waves[GetIndex(20, 1)].ParallaxElementBottom.Speed = -0.2f;
             Waves[GetIndex(20, 1)].Name = "End times";
             #endregion
 
-            Wavelets = new Wavelet[3];
+            Wavelets = new Wavelet[1];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(80, 0);
+            Wavelets[0].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+                Wavelets[0].StartAngle[i] = MathHelper.Lerp(-MathHelper.TwoPi, MathHelper.TwoPi,
+                    (float)i / (float)Wavelets[0].Enemies.Length);
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 44.1f,
+                    (float)i / (float)Wavelets[0].Enemies.Length);
+                if (i < Wavelets[0].Enemies.Length / 4f)
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+                else if (i > Wavelets[0].Enemies.Length - Wavelets[0].Enemies.Length / 4f)
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                else if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                else
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+            }
             #endregion
             // Second wavelet
             #region
@@ -5265,19 +5291,46 @@ namespace Duologue.Waves
             Waves[GetIndex(20, 2)].MajorWaveNumber = 20;
             Waves[GetIndex(20, 2)].MinorWaveNumber = 2;
             Waves[GetIndex(20, 2)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(20, 2)].ParallaxElementTop.Intensity = 4;
-            Waves[GetIndex(20, 2)].ParallaxElementTop.Tint = new Color(39, 173, 173);
-            Waves[GetIndex(20, 2)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(20, 2)].ParallaxElementTop.Intensity = 5;
+            Waves[GetIndex(20, 2)].ParallaxElementTop.Tint = new Color(234, 36, 185);
+            Waves[GetIndex(20, 2)].ParallaxElementTop.Speed = -0.2f;
             Waves[GetIndex(20, 2)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(20, 2)].ParallaxElementBottom.Intensity = 2;
-            Waves[GetIndex(20, 2)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
-            Waves[GetIndex(20, 2)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(20, 2)].ParallaxElementBottom.Intensity = 5;
+            Waves[GetIndex(20, 2)].ParallaxElementBottom.Tint = new Color(224, 185, 111);
+            Waves[GetIndex(20, 2)].ParallaxElementBottom.Speed = 0.1f;
             Waves[GetIndex(20, 2)].Name = "Evening Star";
             #endregion
 
-            Wavelets = new Wavelet[3];
+            Wavelets = new Wavelet[1];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(80, 0);
+            Wavelets[0].SongID = SongID.WinOne;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
+
+                Wavelets[0].StartAngle[i] = MathHelper.Lerp(-MathHelper.TwoPi, MathHelper.TwoPi,
+                    (float)i / (float)Wavelets[0].Enemies.Length);
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 44.1f,
+                    (float)i / (float)Wavelets[0].Enemies.Length);
+                if (i < Wavelets[0].Enemies.Length / 4f)
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+                else if (i > Wavelets[0].Enemies.Length - Wavelets[0].Enemies.Length / 4f)
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                else if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
+                }
+                else
+                {
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+            }
             #endregion
             // Second wavelet
             #region
@@ -5292,31 +5345,41 @@ namespace Duologue.Waves
             #region Wavedef (20-3) "Moloch whose name is the Mind!"
             #region Metadata
             Waves[GetIndex(20, 3)] = new GameWave();
-            Waves[GetIndex(20, 3)].Background = 4;
-            Waves[GetIndex(20, 3)].ThrobColor = new Color(255, 154, 95);
-            Waves[GetIndex(20, 3)].ColorState = 2;
+            Waves[GetIndex(20, 3)].Background = 1;
+            Waves[GetIndex(20, 3)].ThrobColor = new Color(255, 219, 129);
+            Waves[GetIndex(20, 3)].ColorState = 0;
             Waves[GetIndex(20, 3)].MajorWaveNumber = 20;
             Waves[GetIndex(20, 3)].MinorWaveNumber = 3;
             Waves[GetIndex(20, 3)].ParallaxElementTop = new ParallaxElement();
-            Waves[GetIndex(20, 3)].ParallaxElementTop.Intensity = 4;
+            Waves[GetIndex(20, 3)].ParallaxElementTop.Intensity = 2;
             Waves[GetIndex(20, 3)].ParallaxElementTop.Tint = new Color(39, 173, 173);
             Waves[GetIndex(20, 3)].ParallaxElementTop.Speed = 2.1f;
             Waves[GetIndex(20, 3)].ParallaxElementBottom = new ParallaxElement();
             Waves[GetIndex(20, 3)].ParallaxElementBottom.Intensity = 2;
-            Waves[GetIndex(20, 3)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
+            Waves[GetIndex(20, 3)].ParallaxElementBottom.Tint = new Color(97, 22, 97);
             Waves[GetIndex(20, 3)].ParallaxElementBottom.Speed = -2.2f;
             Waves[GetIndex(20, 3)].Name = "Moloch whose name is the Mind!";
             #endregion
 
-            Wavelets = new Wavelet[3];
+            Wavelets = new Wavelet[2];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(1, 0);
+            Wavelets[0].SongID = SongID.SuperbowlIntro;
+            Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_MolochIntro;
             #endregion
             // Second wavelet
             #region
-            #endregion
-            // Third wavelet
-            #region
+            Wavelets[1] = new Wavelet(30, 0);
+            Wavelets[1].SongID = SongID.Superbowl;
+
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+            }
+            Wavelets[1].Enemies[Wavelets[1].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_Moloch;
+            Wavelets[1].StartAngle[Wavelets[1].Enemies.Length - 1] = MathHelper.Pi;
+            Wavelets[1].StartHitPoints[Wavelets[1].Enemies.Length - 1] = 0;
             #endregion
 
             Waves[GetIndex(20, 3)].Wavelets = Wavelets;
