@@ -55,6 +55,9 @@ namespace Duologue.Waves
         private const float medal_WetFeet = 0.25f;
         private const float medal_Experienced = 0.5f;
         private const float medal_KeyParty = 0.5f;
+
+        private const int default_StartingMajorNum = 1;
+        private const int default_StartingMinorNum = 0;
         #endregion
 
         #region Fields
@@ -114,8 +117,8 @@ namespace Duologue.Waves
             waveDef = new WaveDefinitions();
 
             // Sensible defaults
-            CurrentMajorNumber = 1;
-            CurrentMinorNumber = 0;
+            CurrentMajorNumber = default_StartingMajorNum;
+            CurrentMinorNumber = default_StartingMinorNum;
         }
         #endregion
 
@@ -354,7 +357,7 @@ namespace Duologue.Waves
         /// </summary>
         public void Reset()
         {
-            Reset(1, 0);
+            Reset(default_StartingMajorNum, default_StartingMinorNum);
         }
 
         /// <summary>
