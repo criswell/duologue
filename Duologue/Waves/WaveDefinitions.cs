@@ -4944,9 +4944,9 @@ namespace Duologue.Waves
             #region Wavedef (19-1) "Deny me and be doomed"
             #region Metadata
             Waves[GetIndex(19, 1)] = new GameWave();
-            Waves[GetIndex(19, 1)].Background = 4;
+            Waves[GetIndex(19, 1)].Background = 0;
             Waves[GetIndex(19, 1)].ThrobColor = new Color(255, 154, 95);
-            Waves[GetIndex(19, 1)].ColorState = 2;
+            Waves[GetIndex(19, 1)].ColorState = 0;
             Waves[GetIndex(19, 1)].MajorWaveNumber = 19;
             Waves[GetIndex(19, 1)].MinorWaveNumber = 1;
             Waves[GetIndex(19, 1)].ParallaxElementTop = new ParallaxElement();
@@ -5036,7 +5036,7 @@ namespace Duologue.Waves
             #region Wavedef (19-2) "Tamsin Gnosis"
             #region Metadata
             Waves[GetIndex(19, 2)] = new GameWave();
-            Waves[GetIndex(19, 2)].Background = 4;
+            Waves[GetIndex(19, 2)].Background = 1;
             Waves[GetIndex(19, 2)].ThrobColor = new Color(255, 154, 95);
             Waves[GetIndex(19, 2)].ColorState = 2;
             Waves[GetIndex(19, 2)].MajorWaveNumber = 19;
@@ -5121,14 +5121,20 @@ namespace Duologue.Waves
                     3f * MathHelper.PiOver2, (float)i / (float)Wavelets[2].Enemies.Length);
                 Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(0, 5f,
                     (float)i / (float)Wavelets[2].Enemies.Length);
-                Wavelets[2].StartHitPoints[i] = 2;
+
                 if (MWMathHelper.IsEven(i))
+                {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[2].StartHitPoints[i] = 2;
+                }
                 else
+                {
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[2].StartHitPoints[i] = 0;
+                }
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_Pyre;
-            Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 2] = 10;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 2] = 10;
             Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = MathHelper.Pi;
             Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 2] = 0;
 
@@ -5143,31 +5149,73 @@ namespace Duologue.Waves
             #region Wavedef (19-3) "Center of the Abzu" (water/swamp)
             #region Metadata
             Waves[GetIndex(19, 3)] = new GameWave();
-            Waves[GetIndex(19, 3)].Background = 4;
-            Waves[GetIndex(19, 3)].ThrobColor = new Color(255, 154, 95);
-            Waves[GetIndex(19, 3)].ColorState = 2;
+            Waves[GetIndex(19, 3)].Background = 2;
+            Waves[GetIndex(19, 3)].ThrobColor = new Color(176, 193, 176);
+            Waves[GetIndex(19, 3)].ColorState = 1;
             Waves[GetIndex(19, 3)].MajorWaveNumber = 19;
             Waves[GetIndex(19, 3)].MinorWaveNumber = 3;
             Waves[GetIndex(19, 3)].ParallaxElementTop = new ParallaxElement();
             Waves[GetIndex(19, 3)].ParallaxElementTop.Intensity = 4;
-            Waves[GetIndex(19, 3)].ParallaxElementTop.Tint = new Color(39, 173, 173);
-            Waves[GetIndex(19, 3)].ParallaxElementTop.Speed = 2.1f;
+            Waves[GetIndex(19, 3)].ParallaxElementTop.Tint = new Color(176, 193, 176);
+            Waves[GetIndex(19, 3)].ParallaxElementTop.Speed = -0.7f;
             Waves[GetIndex(19, 3)].ParallaxElementBottom = new ParallaxElement();
-            Waves[GetIndex(19, 3)].ParallaxElementBottom.Intensity = 2;
-            Waves[GetIndex(19, 3)].ParallaxElementBottom.Tint = new Color(234, 149, 209);
-            Waves[GetIndex(19, 3)].ParallaxElementBottom.Speed = -2.2f;
+            Waves[GetIndex(19, 3)].ParallaxElementBottom.Intensity = 3;
+            Waves[GetIndex(19, 3)].ParallaxElementBottom.Tint = new Color(176, 193, 176);
+            Waves[GetIndex(19, 3)].ParallaxElementBottom.Speed = 0.4f;
             Waves[GetIndex(19, 3)].Name = "Center of the Abzu";
             #endregion
 
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(20, 0);
+            Wavelets[0].SongID = SongID.Dance8ths;
+            
+            Wavelets[0].Enemies[0] = TypesOfPlayObjects.Enemy_Spitter;
+            Wavelets[0].ColorPolarities[0] = ColorPolarity.Negative;
+            Wavelets[0].StartAngle[0] = MathHelper.PiOver2;
+            Wavelets[0].StartHitPoints[0] = 20;
+
+            Wavelets[0].Enemies[1] = TypesOfPlayObjects.Enemy_Spitter;
+            Wavelets[0].ColorPolarities[1] = ColorPolarity.Negative;
+            Wavelets[0].StartAngle[1] = MathHelper.PiOver2 * 3f;
+            Wavelets[0].StartHitPoints[1] = 20;
+
+            for (int i = 2; i < Wavelets[0].StartHitPoints.Length; i++)
+            {
+                Wavelets[0].StartAngle[i] = MathHelper.Lerp(MathHelper.Pi, 3f * MathHelper.Pi,
+                    (float)(i - 2) / (float)Wavelets[0].Enemies.Length);
+                Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Firefly;
+                Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(5f, 35f,
+                    (float)(i - 2) / (float)Wavelets[0].Enemies.Length);
+            }
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(1, 0);
+            Wavelets[1].SongID = SongID.Dance8ths;
+            Wavelets[1].Enemies[0] = TypesOfPlayObjects.Enemy_Placeholder;
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(20, 0);
+            Wavelets[2].SongID = SongID.Dance8ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                if (i >= Wavelets[2].Enemies.Length - 3)
+                {
+                    Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Lahmu;
+                    Wavelets[2].StartHitPoints[i] = 0;
+                    Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(20.1f, 0,
+                        (float)(Wavelets[2].Enemies.Length - i) / 3f);
+                    if (MWMathHelper.IsEven(i))
+                        Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                    else
+                        Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+                }
+            }
             #endregion
 
             Waves[GetIndex(19, 3)].Wavelets = Wavelets;
@@ -5178,7 +5226,7 @@ namespace Duologue.Waves
             #region Wavedef (20-1) "End times"
             #region Metadata
             Waves[GetIndex(20, 1)] = new GameWave();
-            Waves[GetIndex(20, 1)].Background = 4;
+            Waves[GetIndex(20, 1)].Background = 3;
             Waves[GetIndex(20, 1)].ThrobColor = new Color(255, 154, 95);
             Waves[GetIndex(20, 1)].ColorState = 2;
             Waves[GetIndex(20, 1)].MajorWaveNumber = 20;
@@ -5211,7 +5259,7 @@ namespace Duologue.Waves
             #region Wavedef (20-2) "Evening Star"
             #region Metadata
             Waves[GetIndex(20, 2)] = new GameWave();
-            Waves[GetIndex(20, 2)].Background = 4;
+            Waves[GetIndex(20, 2)].Background = 3;
             Waves[GetIndex(20, 2)].ThrobColor = new Color(255, 154, 95);
             Waves[GetIndex(20, 2)].ColorState = 2;
             Waves[GetIndex(20, 2)].MajorWaveNumber = 20;
