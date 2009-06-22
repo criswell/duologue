@@ -5117,19 +5117,20 @@ namespace Duologue.Waves
             for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
             {
                 Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
-                Wavelets[2].StartAngle[i] = MathHelper.Lerp(5f * MathHelper.PiOver4,
-                    MathHelper.PiOver2, (float)i / (float)Wavelets[2].Enemies.Length);
+                Wavelets[2].StartAngle[i] = MathHelper.Lerp(MathHelper.Pi,
+                    3f * MathHelper.PiOver2, (float)i / (float)Wavelets[2].Enemies.Length);
                 Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(0, 5f,
                     (float)i / (float)Wavelets[2].Enemies.Length);
-                Wavelets[2].StartHitPoints[i] = 3;
+                Wavelets[2].StartHitPoints[i] = 2;
                 if (MWMathHelper.IsEven(i))
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
                 else
                     Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
             }
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_Pyre;
+            Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 2] = 10;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = MathHelper.Pi;
             Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 2] = 0;
-            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = 5f * MathHelper.PiOver4;
 
             Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_Lahmu;
             Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 1] = 9.1;
