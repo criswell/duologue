@@ -225,7 +225,7 @@ namespace Duologue.PlayObjects
         {
             MyType = TypesOfPlayObjects.Enemy_Lahmu;
             MajorType = MajorPlayObjectType.Enemy;
-            MyEnemyType = EnemyType.Leader;
+            MyEnemyType = EnemyType.Standard;
             Initialized = false;
 
             // Set the RealSize by hand, set this at max
