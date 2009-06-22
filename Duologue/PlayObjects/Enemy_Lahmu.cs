@@ -64,6 +64,11 @@ namespace Duologue.PlayObjects
         private const double time_TentacleAnimation = 0.1;
 
         /// <summary>
+        /// Need to make it so that lahmu isn't as deadly when he first spawns
+        /// </summary>
+        private const double time_SpawnToDeadly = 3.1;
+
+        /// <summary>
         /// This is the multiplier applied to my radius that determines how far away
         /// to spawn a babby
         /// </summary>
@@ -196,6 +201,7 @@ namespace Duologue.PlayObjects
         private double shieldCoolOff;
         private double timeSinceTentacleRotate;
         private double timeSinceTentacleWiggle;
+        private double timeBeforeDangerous;
 
         // Movement stuff
         private Vector2 offset;
@@ -357,6 +363,7 @@ namespace Duologue.PlayObjects
             timeSinceStateChange = 0;
             timeSinceTentacleRotate = 0;
             timeSinceTentacleWiggle = 0;
+            timeBeforeDangerous = 0;
             shieldCoolOff = 0;
             rotation_Flames = new float[numberOfFlames];
             spawnStateFlames = new float[numberOfFlames];
@@ -430,7 +437,7 @@ namespace Duologue.PlayObjects
                     nearestPlayerRadius = len;
                     nearestPlayer = vToPlayer;
                 }
-                if (len < this.Radius + pobj.Radius && currentState != LahmuState.Spawning)
+                if (len < this.Radius + pobj.Radius && timeBeforeDangerous < time_SpawnToDeadly)
                 {
                     // We're on them, kill em
                     return pobj.TriggerHit(this);
@@ -770,6 +777,10 @@ namespace Duologue.PlayObjects
         public override void Update(GameTime gameTime)
         {
             double timePassed = gameTime.ElapsedGameTime.TotalSeconds;
+            
+            if (timeBeforeDangerous <= time_SpawnToDeadly)
+                timeBeforeDangerous += timePassed;
+
             shieldCoolOff += timePassed;
             if (shieldCoolOff > shieldCoolOffTime)
                 shieldCoolOff = shieldCoolOffTime;
