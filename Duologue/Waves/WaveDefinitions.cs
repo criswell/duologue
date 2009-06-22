@@ -5059,20 +5059,81 @@ namespace Duologue.Waves
             Wavelets[0].SongID = SongID.LandOfSand16ths;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
-                Wavelets[0].StartHitPoints[i] = 
+                Wavelets[0].StartHitPoints[i] = (int)MathHelper.Lerp(0, 7f,
+                    (float)i / (float)Wavelets[0].Enemies.Length);
+                Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 40f,
+                    (float)i / (float)Wavelets[0].Enemies.Length);
                 if (MWMathHelper.IsEven(i))
                 {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Wiggles;
+                    Wavelets[0].StartAngle[i] = MathHelper.Lerp(-MathHelper.TwoPi, MathHelper.TwoPi,
+                        (float)i / (float)Wavelets[0].Enemies.Length);
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Negative;
                 }
                 else
                 {
+                    Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                    Wavelets[0].StartAngle[i] = MathHelper.Lerp(MathHelper.TwoPi, -MathHelper.TwoPi,
+                        (float)i / (float)Wavelets[0].Enemies.Length);
+                    Wavelets[0].ColorPolarities[i] = ColorPolarity.Positive;
                 }
             }
             #endregion
             // Second wavelet
             #region
+            Wavelets[1] = new Wavelet(40, 2);
+            Wavelets[1].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[1].Enemies.Length; i++)
+            {
+                Wavelets[1].SpawnDelay[i] = (double)MathHelper.Lerp(0, 40f,
+                    (float)i / (float)Wavelets[1].Enemies.Length);
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Positive;
+                    Wavelets[1].StartAngle[i] = MathHelper.Lerp(-MathHelper.TwoPi, MathHelper.TwoPi,
+                        (float)i / (float)Wavelets[1].Enemies.Length);
+                }
+                if (MWMathHelper.IsEven(i))
+                {
+                    Wavelets[1].ColorPolarities[i] = ColorPolarity.Negative;
+                    Wavelets[1].StartAngle[i] = MathHelper.Lerp(MathHelper.TwoPi, -MathHelper.TwoPi,
+                        (float)i / (float)Wavelets[1].Enemies.Length);
+                }
+
+                if (i < Wavelets[1].Enemies.Length / 2f)
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                }
+                else
+                {
+                    Wavelets[1].Enemies[i] = TypesOfPlayObjects.Enemy_Maggot;
+                }
+            }
             #endregion
             // Third wavelet
             #region
+            Wavelets[2] = new Wavelet(40, 0);
+            Wavelets[2].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[2].Enemies.Length; i++)
+            {
+                Wavelets[2].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
+                Wavelets[2].StartAngle[i] = MathHelper.Lerp(5f * MathHelper.PiOver4,
+                    MathHelper.PiOver2, (float)i / (float)Wavelets[2].Enemies.Length);
+                Wavelets[2].SpawnDelay[i] = (double)MathHelper.Lerp(0, 5f,
+                    (float)i / (float)Wavelets[2].Enemies.Length);
+                Wavelets[2].StartHitPoints[i] = 3;
+                if (MWMathHelper.IsEven(i))
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Negative;
+                else
+                    Wavelets[2].ColorPolarities[i] = ColorPolarity.Positive;
+            }
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 2] = TypesOfPlayObjects.Enemy_Pyre;
+            Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 2] = 0;
+            Wavelets[2].StartAngle[Wavelets[2].Enemies.Length - 2] = 5f * MathHelper.PiOver4;
+
+            Wavelets[2].Enemies[Wavelets[2].Enemies.Length - 1] = TypesOfPlayObjects.Enemy_Lahmu;
+            Wavelets[2].SpawnDelay[Wavelets[2].Enemies.Length - 1] = 9.1;
+            Wavelets[2].StartHitPoints[Wavelets[2].Enemies.Length - 1] = 0;
             #endregion
 
             Waves[GetIndex(19, 2)].Wavelets = Wavelets;
