@@ -33,6 +33,7 @@ namespace Duologue.PlayObjects
         private const string filename_Flame = "Enemies/static-king-{0}";
         private const int frames_Flame = 4;
         private const string filename_Explode = "Audio/PlayerEffects/standard-enemy-explode";
+        private const float volume_Explode = 0.2f;
         private const float scale_MaxFlame = 0.48f;
         private const float scale_MinFlame = 0.29f;
         private const float alpha_MaxFlame = 0.8f;
@@ -372,7 +373,7 @@ namespace Duologue.PlayObjects
                     InstanceManager.Logger.LogEntry("Flambi dead");
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    sfx_Explode.Play();
+                    sfx_Explode.Play(volume_Explode);
                     return false;
                 }
                 else
