@@ -4963,7 +4963,7 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
-            Wavelets[0] = new Wavelet(50, 0);
+            Wavelets[0] = new Wavelet(60, 0);
             Wavelets[0].SongID = SongID.SecondChance;
             for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
             {
@@ -4972,7 +4972,7 @@ namespace Duologue.Waves
                 else
                     Wavelets[0].Enemies[i] = TypesOfPlayObjects.Enemy_StaticGloop;
 
-                Wavelets[0].StartAngle[i] = MathHelper.Lerp(MathHelper.TwoPi + MathHelper.PiOver4, -MathHelper.PiOver4,
+                Wavelets[0].StartAngle[i] = MathHelper.Lerp(MathHelper.TwoPi + MathHelper.PiOver4, -MathHelper.TwoPi - MathHelper.PiOver4,
                     (float)i / (float)Wavelets[0].Enemies.Length);
                 Wavelets[0].SpawnDelay[i] = (double)MathHelper.Lerp(0, 30f,
                     (float)i / (float)Wavelets[0].Enemies.Length);
