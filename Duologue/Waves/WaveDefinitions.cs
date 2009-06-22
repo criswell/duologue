@@ -5055,6 +5055,18 @@ namespace Duologue.Waves
             Wavelets = new Wavelet[3];
             // First wavelet
             #region
+            Wavelets[0] = new Wavelet(40, 0);
+            Wavelets[0].SongID = SongID.LandOfSand16ths;
+            for (int i = 0; i < Wavelets[0].Enemies.Length; i++)
+            {
+                Wavelets[0].StartHitPoints[i] = 
+                if (MWMathHelper.IsEven(i))
+                {
+                }
+                else
+                {
+                }
+            }
             #endregion
             // Second wavelet
             #region

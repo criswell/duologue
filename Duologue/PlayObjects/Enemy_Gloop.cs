@@ -538,13 +538,21 @@ namespace Duologue.PlayObjects
                 }
                 if (sfxi_Bubble == null)
                 {
-                    sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+                    try
+                    {
+                        sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+                    }
+                    catch { }
                 }
                 else if (sfxi_Bubble.State == SoundState.Stopped || sfxi_Bubble.State == SoundState.Paused)
                 {
                     volume_CurrentBubble = (float)MWMathHelper.GetRandomInRange(minBubbleVolume, maxBubbleVolume);
                     sfxi_Bubble.Volume = volume_CurrentBubble;
-                    sfxi_Bubble.Resume();
+                    try
+                    {
+                        sfxi_Bubble.Resume();
+                    }
+                    catch { }
                 }
             }
         }
