@@ -181,6 +181,7 @@
     <Compile Include="Waves\GameWaveManager.cs" />
     <Compile Include="Waves\WaveDefinitions.cs" />
     <Compile Include="Waves\WaveletInit.cs" />
+    <Compile Include="Waves\WaveTemplates.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
