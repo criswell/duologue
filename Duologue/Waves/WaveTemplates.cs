@@ -430,11 +430,141 @@ namespace Duologue.Waves
         }
         #endregion
 
+        #region Private enemy ordering methods
+        private Wavelet Place_SimpleCycle(Wavelet wavelet, TypesOfPlayObjects[] enemiesToUse)
+        {
+            int poIndex = 0;
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.Enemies[i] = enemiesToUse[poIndex];
+                poIndex++;
+                if (poIndex >= enemiesToUse.Length)
+                    poIndex = 0;
+            }
+            return wavelet;
+        }
+        private Wavelet Place_WaveCycle(Wavelet wavelet, TypesOfPlayObjects[] enemiesToUse)
+        {
+            int poIndex = 0;
+            int delta = 1;
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.Enemies[i] = enemiesToUse[poIndex];
+                poIndex += delta;
+                if (poIndex >= enemiesToUse.Length)
+                {
+                    poIndex = enemiesToUse.Length - 1;
+                    delta = -1;
+                }
+                else if (poIndex < 0)
+                {
+                    poIndex = 0;
+                    delta = 1;
+                }
+            }
+            return wavelet;
+        }
+        private Wavelet Place_Random(Wavelet wavelet, TypesOfPlayObjects[] enemiesToUse)
+        {
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.Enemies[i] = enemiesToUse[MWMathHelper.GetRandomInRange(0, enemiesToUse.Length)];
+            }
+            return wavelet;
+        }
+        private Wavelet Place_Cluster(Wavelet wavelet, TypesOfPlayObjects[] enemiesToUse)
+        {
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.Enemies[i] = enemiesToUse[(int)MathHelper.Lerp(
+                    0, enemiesToUse.Length-1,
+                    (float)i/(float)wavelet.Enemies.Length)];
+            }
+            return wavelet;
+        }
+        #endregion
+
+        #region Private HP setting methods
+        private Wavelet HP_SimpleCycle(Wavelet wavelet, int[] startingHPs)
+        {
+            int hpIndex = 0;
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.StartHitPoints[i] = startingHPs[hpIndex];
+                hpIndex++;
+                if (hpIndex >= startingHPs.Length)
+                    hpIndex = 0;
+            }
+            return wavelet;
+        }
+        private Wavelet HP_WaveCycle(Wavelet wavelet, int[] startingHPs)
+        {
+            int hpIndex = 0;
+            int delta = 1;
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.StartHitPoints[i] = startingHPs[hpIndex];
+                hpIndex += delta;
+                if (hpIndex >= startingHPs.Length)
+                {
+                    hpIndex = startingHPs.Length - 1;
+                    delta = -1;
+                }
+                else if (hpIndex < 0)
+                {
+                    hpIndex = 0;
+                    delta = 1;
+                }
+            }
+            return wavelet;
+        }
+        private Wavelet HP_Random(Wavelet wavelet, int[] startingHPs)
+        {
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.StartHitPoints[i] = startingHPs[MWMathHelper.GetRandomInRange(
+                    0, startingHPs.Length)];
+            }
+            return wavelet;
+        }
+        private Wavelet HP_Cluster(Wavelet wavelet, int[] startingHPs)
+        {
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.StartHitPoints[i] = startingHPs[(int)MathHelper.Lerp(
+                    0, startingHPs.Length-1,
+                    (float)i/(float)wavelet.Enemies.Length)];
+            }
+            return wavelet;
+        }
+        private Wavelet HP_RangedForward(Wavelet wavelet, int startingHP)
+        {
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.StartHitPoints[i] = (int)MathHelper.Lerp(
+                    0, startingHP,
+                    (float)i/(float)wavelet.Enemies.Length);
+            }
+            return wavelet;
+        }
+        private Wavelet HP_RangedBackward(Wavelet wavelet, int startingHP)
+        {
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.StartHitPoints[i] = (int)MathHelper.Lerp(
+                    startingHP, 0,
+                    (float)i / (float)wavelet.Enemies.Length);
+            }
+            return wavelet;
+        }
+        #endregion
+
         #region Public methods
-        public Wavelet GenerateWavelet(int totalEnemies, TypesOfPlayObjects[] enemiesToUse, float maxTime)
+        public Wavelet GenerateWavelet(int totalEnemies, TypesOfPlayObjects[] enemiesToUse, int[] startingHPs, float maxTime)
         {
             Wavelet temp;
 
+            #region Wave Init
             if (totalEnemies >= 60)
             {
                 #region 60+ ugliness
@@ -582,6 +712,57 @@ namespace Duologue.Waves
                 }
                 #endregion
             }
+            #endregion
+
+            #region Enemy placement ugliness
+            switch (MWMathHelper.GetRandomInRange(0, 4))
+            {
+                case 0:
+                    temp = Place_Cluster(temp, enemiesToUse);
+                    break;
+                case 1:
+                    temp = Place_Random(temp, enemiesToUse);
+                    break;
+                case 2:
+                    temp = Place_SimpleCycle(temp, enemiesToUse);
+                    break;
+                default:
+                    temp = Place_WaveCycle(temp, enemiesToUse);
+                    break;
+            }
+            #endregion
+
+            #region Enemy HP ugliness
+            if (startingHPs.Length < 2 && MWMathHelper.CoinToss())
+            {
+                if (MWMathHelper.CoinToss())
+                {
+                    temp = HP_RangedBackward(temp, startingHPs[0]);
+                }
+                else
+                {
+                    temp = HP_RangedForward(temp, startingHPs[0]);
+                }
+            }
+            else
+            {
+                switch (MWMathHelper.GetRandomInRange(0, 4))
+                {
+                    case 0:
+                        temp = HP_Cluster(temp, startingHPs);
+                        break;
+                    case 1:
+                        temp = HP_Random(temp, startingHPs);
+                        break;
+                    case 2:
+                        temp = HP_SimpleCycle(temp, startingHPs);
+                        break;
+                    default:
+                        temp = HP_WaveCycle(temp, startingHPs);
+                        break;
+                }
+            }
+            #endregion
 
             return temp;
         }
