@@ -60,16 +60,33 @@ namespace Duologue.Waves
         private const int default_StartingMinorNum = 0;
 
         private const int numberOfWavesPerColorStateChange = 3;
-        private const int min_NumberOfWavesToSwitchBackground = 1;
-        private const int max_NumberOfWavesToSwitchBackground = 6;
+        private const int min_NumberOfWavesToSwitchItems = 1;
+        private const int max_NumberOfWavesToSwitchItems = 8;
         #endregion
 
         #region Fields
         private WaveDefinitions waveDef;
         private int nextMajorNumToSwitchBackgroundOn;
+        private int countdownToSwitchBackgroundElements;
+        private int countdownToSwitchSongs;
         private int currentBackground;
         private int currentColorState;
         private int wavesSinceColorStateChange;
+        private ParallaxElement currentParallaxElementTop;
+        private ParallaxElement currentParallaxElementBottom;
+        private Color throbColor;
+
+        private SongID currentSong;
+        private SongID[] possibleSongs = new SongID[]
+        {
+            SongID.Dance8ths,
+            SongID.LandOfSand16ths,
+            SongID.SecondChance,
+            SongID.Ultrafix,
+            SongID.WinOne,
+        };
+
+        private WaveTemplates waveTemplates;
 
         // DELME - this is just here for testing the kill-everyone achievement
         /*private int currentEnemyIndex = 0;
@@ -125,6 +142,10 @@ namespace Duologue.Waves
             waveDef = new WaveDefinitions();
             nextMajorNumToSwitchBackgroundOn = 0;
             wavesSinceColorStateChange = numberOfWavesPerColorStateChange;
+            countdownToSwitchBackgroundElements = 0;
+            countdownToSwitchSongs = 0;
+
+            waveTemplates = new WaveTemplates(this);
 
             // Sensible defaults
             CurrentMajorNumber = default_StartingMajorNum;
@@ -223,8 +244,8 @@ namespace Duologue.Waves
                 currentBackground = InstanceManager.Random.Next(LocalInstanceManager.Background.NumBackgrounds + 1);
                 nextMajorNumToSwitchBackgroundOn = lastMajorWaveNo +
                     MWMathHelper.GetRandomInRange(
-                        min_NumberOfWavesToSwitchBackground,
-                        max_NumberOfWavesToSwitchBackground);
+                        min_NumberOfWavesToSwitchItems,
+                        max_NumberOfWavesToSwitchItems);
 
                 if (nextMajorNumToSwitchBackgroundOn > MaxMajorNumber)
                     nextMajorNumToSwitchBackgroundOn = 0;
@@ -236,16 +257,51 @@ namespace Duologue.Waves
                 lastMajorWaveNo,
                 lastMinorWaveNo);
 
-            // ERE I AM JH.... WHAT DO I DO HERE?
+            countdownToSwitchBackgroundElements--;
+            if (countdownToSwitchBackgroundElements < 0)
+            {
+                countdownToSwitchBackgroundElements = MWMathHelper.GetRandomInRange(
+                    min_NumberOfWavesToSwitchItems,
+                    max_NumberOfWavesToSwitchItems);
 
-            int NumWavelets = 2;
-            int NumEnemies = 30;
-            thisWave.CurrentWavelet = 0;
-            thisWave.Wavelets = new Wavelet[NumWavelets];
-            int hitsToKillEnemy = 0;
-            thisWave.Wavelets[thisWave.CurrentWavelet] =
-                new Wavelet(NumEnemies, hitsToKillEnemy);
-            thisWave.Wavelets[1] = new Wavelet(NumEnemies, hitsToKillEnemy);
+                // Randomize the background and parallax elements
+                throbColor = new Color(
+                    (byte)MWMathHelper.GetRandomInRange(0, 255),
+                    (byte)MWMathHelper.GetRandomInRange(0, 255),
+                    (byte)MWMathHelper.GetRandomInRange(0, 255));
+
+                currentParallaxElementTop.Intensity = MWMathHelper.GetRandomInRange(0, 6);
+                currentParallaxElementTop.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);
+                if (currentParallaxElementTop.Speed == 0)
+                    currentParallaxElementTop.Speed = 0.1f;
+                currentParallaxElementTop.Tint = new Color(
+                    (byte)MWMathHelper.GetRandomInRange(0, 255),
+                    (byte)MWMathHelper.GetRandomInRange(0, 255),
+                    (byte)MWMathHelper.GetRandomInRange(0, 255),
+                    (byte)MWMathHelper.GetRandomInRange(50, 255));
+
+                currentParallaxElementBottom.Intensity = MWMathHelper.GetRandomInRange(0, 5);
+                if (MWMathHelper.CoinToss())
+                {
+                    currentParallaxElementBottom.Speed = currentParallaxElementTop.Speed;
+                    currentParallaxElementBottom.Tint = currentParallaxElementTop.Tint;
+                }
+                else
+                {
+                    currentParallaxElementBottom.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);
+                    if (currentParallaxElementBottom.Speed == 0)
+                        currentParallaxElementBottom.Speed = 0.1f;
+                    currentParallaxElementBottom.Tint = new Color(
+                        (byte)MWMathHelper.GetRandomInRange(0, 255),
+                        (byte)MWMathHelper.GetRandomInRange(0, 255),
+                        (byte)MWMathHelper.GetRandomInRange(0, 255),
+                        (byte)MWMathHelper.GetRandomInRange(50, 255));
+                }
+            }
+
+            thisWave.ThrobColor = throbColor;
+            thisWave.ParallaxElementBottom = currentParallaxElementBottom;
+            thisWave.ParallaxElementTop = currentParallaxElementTop;
 
             // Possible beat engine songs
             // Dance8ths, LandOfSand16ths, 
@@ -255,71 +311,73 @@ namespace Duologue.Waves
             // Ultrafix - Decent number of levels, hammer "ping", highly repetative
             // Dance8ths - Small number of levels, guitar rock track, highly repetitive
             // LandOfSand16ths - Kind of 80s sound synth piano, good number of levels
-            //if (MWMathHelper.CoinToss())
-                //thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.WinOne;
-            //else
-            thisWave.Wavelets[thisWave.CurrentWavelet].SongID = SongID.SuperbowlIntro;
-
-            thisWave.Wavelets[1].SongID = SongID.Superbowl;
-
-            /* FIXME, we will want this in the end
-            // Randomize the background and parallax elements
-            thisWave.Background = MWMathHelper.GetRandomInRange(0, LocalInstanceManager.Background.NumBackgrounds + 1);
-            thisWave.ThrobColor = new Color(
-                (byte)MWMathHelper.GetRandomInRange(0, 255),
-                (byte)MWMathHelper.GetRandomInRange(0, 255),
-                (byte)MWMathHelper.GetRandomInRange(0, 255));
-            
-            thisWave.ParallaxElementTop.Intensity = MWMathHelper.GetRandomInRange(0, 6);
-            thisWave.ParallaxElementTop.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);
-            if (thisWave.ParallaxElementTop.Speed == 0)
-                thisWave.ParallaxElementTop.Speed = 0.1f;
-            thisWave.ParallaxElementTop.Tint = new Color(
-                (byte)MWMathHelper.GetRandomInRange(0, 255),
-                (byte)MWMathHelper.GetRandomInRange(0, 255),
-                (byte)MWMathHelper.GetRandomInRange(0, 255),
-                (byte)MWMathHelper.GetRandomInRange(50, 255));
-
-            thisWave.ParallaxElementBottom.Intensity = MWMathHelper.GetRandomInRange(0, 5);
-            if (MWMathHelper.CoinToss())
+            countdownToSwitchSongs--;
+            if (countdownToSwitchSongs < 0)
             {
-                thisWave.ParallaxElementBottom.Speed = thisWave.ParallaxElementTop.Speed;
-                thisWave.ParallaxElementBottom.Tint = thisWave.ParallaxElementTop.Tint;
-            }
-            else
-            {
-                thisWave.ParallaxElementBottom.Speed = (float)MWMathHelper.GetRandomInRange(-5.0, 5.0);
-                if (thisWave.ParallaxElementBottom.Speed == 0)
-                    thisWave.ParallaxElementBottom.Speed = 0.1f;
-                thisWave.ParallaxElementBottom.Tint = new Color(
-                    (byte)MWMathHelper.GetRandomInRange(0, 255),
-                    (byte)MWMathHelper.GetRandomInRange(0, 255),
-                    (byte)MWMathHelper.GetRandomInRange(0, 255),
-                    (byte)MWMathHelper.GetRandomInRange(50, 255));
+                currentSong = possibleSongs[MWMathHelper.GetRandomInRange(
+                    0, possibleSongs.Length)];
 
+                countdownToSwitchSongs = MWMathHelper.GetRandomInRange(
+                    min_NumberOfWavesToSwitchItems,
+                    max_NumberOfWavesToSwitchItems);
             }
-            */
-            // FIXME - Final boss tests, remove this and reinstate the above when done
-            thisWave.Background = 1;
-            thisWave.ThrobColor = new Color(255, 219, 129);
-            thisWave.ParallaxElementTop.Intensity = 2;
-            thisWave.ParallaxElementTop.Speed = 2.1f;
-            thisWave.ParallaxElementTop.Tint = new Color(97, 22, 97);// new Color(133, 77, 41);
-            thisWave.ParallaxElementBottom.Intensity = 2;
-            thisWave.ParallaxElementBottom.Speed = -2.1f;
-            thisWave.ParallaxElementBottom.Tint = new Color(97, 22, 97);//new Color(124, 71, 223);
+
+            // Begin constructing the wavelet
+            thisWave.CurrentWavelet = 0;
+            thisWave.Wavelets = new Wavelet[1];
+
+            // Figure out if we're creating a boss level or not
+
+            // Figure out how many enemies we should be fighting
+            int numOfEnemies = 30;
+
+            // Figure out if we want a max starting HP
+            int[] maxStartingHPs = new int[]
+            {
+                2
+            };
+
+            // Figure out if we want a max delay
+            int maxDelay = 40;
+
+            // Figure out the enemies we should use
+            TypesOfPlayObjects[] enemiesToUse = new TypesOfPlayObjects[]
+                {
+                    TypesOfPlayObjects.Enemy_Mirthworm,
+                    TypesOfPlayObjects.Enemy_Maggot,
+                    TypesOfPlayObjects.Enemy_Buzzsaw
+                };
+
+            // Generate the wavelet(s)
+            thisWave.Wavelets[0] = waveTemplates.GenerateWavelet(
+                numOfEnemies,
+                enemiesToUse,
+                maxStartingHPs,
+                maxDelay);
+
+            thisWave.Wavelets[0].SongID = currentSong;
+
+            /*
+
+            int hitsToKillEnemy = 0;
+            thisWave.Wavelets[thisWave.CurrentWavelet] =
+                new Wavelet(NumEnemies, hitsToKillEnemy);
+            thisWave.Wavelets[1] = new Wavelet(NumEnemies, hitsToKillEnemy);
+
 
             /*thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[0] = TypesOfPlayObjects.Enemy_Wiggles;
             thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[0] = MathHelper.PiOver2;
 
             thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[1] = TypesOfPlayObjects.Enemy_Buzzsaw;
-            thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[1] = MathHelper.Pi;*/
+            thisWave.Wavelet[thisWave.CurrentWavelet].StartAngle[1] = MathHelper.Pi;* /
+
+            
             for (int i = 0; i < thisWave.NumEnemies; i++)
             {
                 /*if ((float)i / 2f == i / 2)
                     thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                 else
-                    thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;*/
+                    thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;* /
                 //thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Ember;
                 //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[i] = TypesOfPlayObjects.Enemy_Gloop;
                 //if(MWMathHelper.IsEven(i))
@@ -336,7 +394,7 @@ namespace Duologue.Waves
             }
             //thisWave.Wavelet[thisWave.CurrentWavelet].Enemies[80] = TypesOfPlayObjects.Enemy_KingGloop;
             /*thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[59] = TypesOfPlayObjects.Enemy_Pyre;
-            thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[59] = MathHelper.TwoPi;*/
+            thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[59] = MathHelper.TwoPi;* /
 
             thisWave.Wavelets[thisWave.CurrentWavelet].Enemies[thisWave.NumEnemies - 1] = TypesOfPlayObjects.Enemy_MolochIntro;//enemiesToSpawn[currentEnemyIndex];
             thisWave.Wavelets[thisWave.CurrentWavelet].StartAngle[thisWave.NumEnemies - 1] = MathHelper.Pi;
@@ -387,6 +445,8 @@ namespace Duologue.Waves
             CurrentMinorNumber = Minor;
             nextMajorNumToSwitchBackgroundOn = 0;
             wavesSinceColorStateChange = numberOfWavesPerColorStateChange;
+            countdownToSwitchBackgroundElements = 0;
+            countdownToSwitchSongs = 0;
         }
 
         /// <summary>
