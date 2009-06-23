@@ -559,6 +559,91 @@ namespace Duologue.Waves
         }
         #endregion
 
+        #region Private Colorstate setting methods
+        private Wavelet Color_Random(Wavelet wavelet)
+        {
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.ColorPolarities[i] = ColorState.RandomPolarity();
+            }
+            return wavelet;
+        }
+        private Wavelet Color_Alternating(Wavelet wavelet)
+        {
+            ColorPolarity p = ColorPolarity.Positive;
+            ColorPolarity n = ColorPolarity.Negative;
+            if (MWMathHelper.CoinToss())
+            {
+                p = ColorPolarity.Negative;
+                n = ColorPolarity.Positive;
+            }
+
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                if (MWMathHelper.IsEven(i))
+                    wavelet.ColorPolarities[i] = p;
+                else
+                    wavelet.ColorPolarities[i] = n;
+            }
+            return wavelet;
+        }
+        private Wavelet Color_HalfAndHalf(Wavelet wavelet)
+        {
+            ColorPolarity p = ColorPolarity.Positive;
+            ColorPolarity n = ColorPolarity.Negative;
+            if (MWMathHelper.CoinToss())
+            {
+                p = ColorPolarity.Negative;
+                n = ColorPolarity.Positive;
+            }
+
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                if (i < wavelet.Enemies.Length/2f)
+                    wavelet.ColorPolarities[i] = p;
+                else
+                    wavelet.ColorPolarities[i] = n;
+            }
+            return wavelet;
+        }
+        private Wavelet Color_Staggered(Wavelet wavelet)
+        {
+            ColorPolarity p = ColorPolarity.Positive;
+            ColorPolarity n = ColorPolarity.Negative;
+            if (MWMathHelper.CoinToss())
+            {
+                p = ColorPolarity.Negative;
+                n = ColorPolarity.Positive;
+            }
+
+            int k = 0;
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                k++;
+                if (k <= 2)
+                    wavelet.ColorPolarities[i] = p;
+                else
+                {
+                    wavelet.ColorPolarities[i] = n;
+                    k = 0;
+                }
+            }
+            return wavelet;
+        }
+        private Wavelet Color_AllSame(Wavelet wavelet)
+        {
+            ColorPolarity p = ColorPolarity.Positive;
+            if (MWMathHelper.CoinToss())
+                p = ColorPolarity.Negative;
+
+            for (int i = 0; i < wavelet.Enemies.Length; i++)
+            {
+                wavelet.ColorPolarities[i] = p;
+            }
+            return wavelet;
+        }
+        #endregion
+
         #region Public methods
         public Wavelet GenerateWavelet(int totalEnemies, TypesOfPlayObjects[] enemiesToUse, int[] startingHPs, float maxTime)
         {
@@ -761,6 +846,27 @@ namespace Duologue.Waves
                         temp = HP_WaveCycle(temp, startingHPs);
                         break;
                 }
+            }
+            #endregion
+
+            #region Colorstate ugliness
+            switch(MWMathHelper.GetRandomInRange(0, 5))
+            {
+                case 0:
+                    temp = Color_Alternating(temp);
+                    break;
+                case 1:
+                    temp = Color_HalfAndHalf(temp);
+                    break;
+                case 2:
+                    temp = Color_Random(temp);
+                    break;
+                case 4:
+                    temp = Color_AllSame(temp);
+                    break;
+                default:
+                    temp = Color_Staggered(temp);
+                    break;
             }
             #endregion
 

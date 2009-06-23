@@ -62,6 +62,20 @@ namespace Duologue.Waves
         private const int numberOfWavesPerColorStateChange = 3;
         private const int min_NumberOfWavesToSwitchItems = 1;
         private const int max_NumberOfWavesToSwitchItems = 8;
+
+        private const float min_NumberOfEnemies = 4f;
+        private const float max_NumberOfEnemies = 80f;
+
+        private const int min_EnemyRandomJitter = 0;
+        private const int max_EnemyRandomJitter = 5;
+
+        private const float min_HPBaseline = 0f;
+        private const float max_HPBaseline = 5f;
+
+        private const float max_TotalHP = 10f;
+
+        private const float min_DelayPerEnemy = 0.5f;
+        private const float max_DelayPerEnemy = 3.1f;
         #endregion
 
         #region Fields
@@ -87,6 +101,8 @@ namespace Duologue.Waves
         };
 
         private WaveTemplates waveTemplates;
+
+        private TypesOfPlayObjects[][] enemyClusters;
 
         // DELME - this is just here for testing the kill-everyone achievement
         /*private int currentEnemyIndex = 0;
@@ -150,6 +166,39 @@ namespace Duologue.Waves
             // Sensible defaults
             CurrentMajorNumber = default_StartingMajorNum;
             CurrentMinorNumber = default_StartingMinorNum;
+
+            // Set up the possible enemy clusters
+            enemyClusters = new TypesOfPlayObjects[][]
+            {
+                new TypesOfPlayObjects[]
+                // Tier 1
+                {
+                    TypesOfPlayObjects.Enemy_Buzzsaw,
+                    TypesOfPlayObjects.Enemy_Maggot,
+                    TypesOfPlayObjects.Enemy_Mirthworm,
+                    TypesOfPlayObjects.Enemy_Wiggles,
+                },
+                new TypesOfPlayObjects[]
+                // Tier 2
+                {
+                    TypesOfPlayObjects.Enemy_AnnMoeba,
+                    TypesOfPlayObjects.Enemy_Ember,
+                    TypesOfPlayObjects.Enemy_Spawner,
+                    TypesOfPlayObjects.Enemy_Spitter,
+                },
+                new TypesOfPlayObjects[]
+                // Tier 3
+                {
+                    TypesOfPlayObjects.Enemy_Gloop,
+                    TypesOfPlayObjects.Enemy_StaticGloop,
+                },
+                new TypesOfPlayObjects[]
+                // Tier 4
+                {
+                    TypesOfPlayObjects.Enemy_Firefly,
+                    TypesOfPlayObjects.Enemy_Flycket,
+                },
+            };
         }
         #endregion
 
@@ -236,7 +285,7 @@ namespace Duologue.Waves
             wavesSinceColorStateChange++;
             if (wavesSinceColorStateChange > numberOfWavesPerColorStateChange)
                 currentColorState =
-                    MWMathHelper.GetRandomInRange(0, ColorState.NumberOfColorStates + 1);
+                    MWMathHelper.GetRandomInRange(0, ColorState.NumberOfColorStates);
 
             // Handle background changes
             if (lastMajorWaveNo >= nextMajorNumToSwitchBackgroundOn)
@@ -326,37 +375,96 @@ namespace Duologue.Waves
             thisWave.CurrentWavelet = 0;
             thisWave.Wavelets = new Wavelet[1];
 
-            // Figure out if we're creating a boss level or not
-
-            // Figure out how many enemies we should be fighting
-            int numOfEnemies = 30;
-
-            // Figure out if we want a max starting HP
-            int[] maxStartingHPs = new int[]
+            // Get the relative wave num
+            int relativeWaveNum = lastMajorWaveNo;
+            for(int i = 900; i > 100; i = i -100)
             {
-                2
-            };
-
-            // Figure out if we want a max delay
-            int maxDelay = 40;
-
-            // Figure out the enemies we should use
-            TypesOfPlayObjects[] enemiesToUse = new TypesOfPlayObjects[]
+                if (relativeWaveNum > i)
                 {
-                    TypesOfPlayObjects.Enemy_Mirthworm,
-                    TypesOfPlayObjects.Enemy_Maggot,
-                    TypesOfPlayObjects.Enemy_Buzzsaw
-                };
+                    relativeWaveNum = relativeWaveNum - i;
+                    break;
+                }
+            }
 
-            // Generate the wavelet(s)
-            thisWave.Wavelets[0] = waveTemplates.GenerateWavelet(
-                numOfEnemies,
-                enemiesToUse,
-                maxStartingHPs,
-                maxDelay);
+            // Figure out if we're creating a boss level or not
+            if (relativeWaveNum / 10 == relativeWaveNum / 10f)
+            {
+                // Fighting boss
+            }
+            else
+            {
+                // Figure out how many enemies we should be fighting
+                int numOfEnemies = (int)MathHelper.Lerp(
+                    min_NumberOfEnemies,
+                    max_NumberOfEnemies,
+                    (float)relativeWaveNum/100f) + 
+                    MWMathHelper.GetRandomInRange(
+                        min_EnemyRandomJitter, max_EnemyRandomJitter);
 
-            thisWave.Wavelets[0].SongID = currentSong;
+                // Figure out if we want a max starting HP
+                int[] maxStartingHPs;
+                if (MWMathHelper.CoinToss())
+                {
+                    // Uniform HP
+                    maxStartingHPs = new int[]
+                    {
+                        (int)MathHelper.Lerp(
+                            MathHelper.Lerp(min_HPBaseline, max_HPBaseline,
+                                (float)lastMajorWaveNo/(float)MaxMajorNumber),
+                            max_TotalHP,
+                            (float)relativeWaveNum/100f),
+                    };
+                }
+                else
+                {
+                    // Some array of HP
+                    int start = (int)MathHelper.Lerp(min_HPBaseline, max_HPBaseline,
+                        (float)lastMajorWaveNo/(float)MaxMajorNumber);
+                    int end = (int)MathHelper.Lerp(start, max_TotalHP,
+                        (float)relativeWaveNum/100f);
+                    maxStartingHPs = new int[end - start + 1];
+                    int index = 0;
+                    for (int i = start; i <= end; i++)
+                    {
+                        maxStartingHPs[index] = i;
+                        index++;
+                    }
+                }
 
+                // Figure out if we want a max delay
+                float maxDelay = 0;
+                if (numOfEnemies > 10)
+                {
+                    maxDelay = MathHelper.Lerp(0, max_DelayPerEnemy,
+                        (float)numOfEnemies / (float)max_NumberOfEnemies);
+                }
+
+                // Figure out the enemies we should use
+                TypesOfPlayObjects[] enemiesToUse;
+                int enemyTierToUse = (int)MathHelper.Lerp(-1, enemyClusters.Length - 2,
+                    (float)relativeWaveNum / 100f) + 1;
+                int numberOfEnemyTypesToUse = MWMathHelper.GetRandomInRange(1,
+                    (int)MathHelper.Min(numOfEnemies, enemyClusters[enemyTierToUse].Length));
+                int enemyIndex = MWMathHelper.GetRandomInRange(0, enemyClusters[enemyTierToUse].Length - 1);
+
+                enemiesToUse = new TypesOfPlayObjects[numberOfEnemyTypesToUse];
+                for (int i = 0; i < numberOfEnemyTypesToUse; i++)
+                {
+                    enemiesToUse[i] = enemyClusters[enemyTierToUse][enemyIndex];
+                    enemyIndex++;
+                    if (enemyIndex >= enemyClusters[enemyTierToUse].Length)
+                        enemyIndex = 0;
+                }
+
+                // Generate the wavelet(s)
+                thisWave.Wavelets[0] = waveTemplates.GenerateWavelet(
+                    numOfEnemies,
+                    enemiesToUse,
+                    maxStartingHPs,
+                    maxDelay);
+
+                thisWave.Wavelets[0].SongID = currentSong;
+            }
             /*
 
             int hitsToKillEnemy = 0;
