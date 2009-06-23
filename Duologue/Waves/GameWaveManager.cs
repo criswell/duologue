@@ -58,13 +58,21 @@ namespace Duologue.Waves
 
         private const int default_StartingMajorNum = 1;
         private const int default_StartingMinorNum = 0;
+
+        private const int numberOfWavesPerColorStateChange = 3;
+        private const int min_NumberOfWavesToSwitchBackground = 1;
+        private const int max_NumberOfWavesToSwitchBackground = 6;
         #endregion
 
         #region Fields
         private WaveDefinitions waveDef;
+        private int nextMajorNumToSwitchBackgroundOn;
+        private int currentBackground;
+        private int currentColorState;
+        private int wavesSinceColorStateChange;
 
         // DELME - this is just here for testing the kill-everyone achievement
-        private int currentEnemyIndex = 0;
+        /*private int currentEnemyIndex = 0;
         private TypesOfPlayObjects[] enemiesToSpawn = new TypesOfPlayObjects[]
         {
             TypesOfPlayObjects.Enemy_MolochIntro,
@@ -91,7 +99,7 @@ namespace Duologue.Waves
             TypesOfPlayObjects.Enemy_StaticGloop,
             TypesOfPlayObjects.Enemy_UncleanRot,
             TypesOfPlayObjects.Enemy_Wiggles,
-        };
+        };*/
         #endregion
 
         #region Properties
@@ -115,6 +123,8 @@ namespace Duologue.Waves
         public GameWaveManager()//int? maxNumOfGameWaves)
         {
             waveDef = new WaveDefinitions();
+            nextMajorNumToSwitchBackgroundOn = 0;
+            wavesSinceColorStateChange = numberOfWavesPerColorStateChange;
 
             // Sensible defaults
             CurrentMajorNumber = default_StartingMajorNum;
@@ -201,25 +211,33 @@ namespace Duologue.Waves
             lastMajorWaveNo = k[0];
             lastMinorWaveNo = k[1];
 
-            // Get a random color state
-            ColorState[] theStates = ColorState.GetColorStates();
+            // Get a color state
+            wavesSinceColorStateChange++;
+            if (wavesSinceColorStateChange > numberOfWavesPerColorStateChange)
+                currentColorState =
+                    MWMathHelper.GetRandomInRange(0, ColorState.NumberOfColorStates + 1);
+
+            // Handle background changes
+            if (lastMajorWaveNo >= nextMajorNumToSwitchBackgroundOn)
+            {
+                currentBackground = InstanceManager.Random.Next(LocalInstanceManager.Background.NumBackgrounds + 1);
+                nextMajorNumToSwitchBackgroundOn = lastMajorWaveNo +
+                    MWMathHelper.GetRandomInRange(
+                        min_NumberOfWavesToSwitchBackground,
+                        max_NumberOfWavesToSwitchBackground);
+
+                if (nextMajorNumToSwitchBackgroundOn > MaxMajorNumber)
+                    nextMajorNumToSwitchBackgroundOn = 0;
+            }
 
             GameWave thisWave = new GameWave(Resources.GameScreen_SurvivalWave,
-                InstanceManager.Random.Next(LocalInstanceManager.Background.NumBackgrounds),
-                0, //MWMathHelper.GetRandomInRange(0, ColorState.NumberOfColorStates),
+                currentBackground,
+                currentColorState,
                 lastMajorWaveNo,
                 lastMinorWaveNo);
 
-            // Okay, this is gonna get fugly... sorry folks
-            // FIXME: If you feel adventurous enough
-            // .
-            // Okay, we'll divide up every ten levels, beyond 100 they just repeat
-            /*if (lastMajorWaveNo < 10)
-            {
+            // ERE I AM JH.... WHAT DO I DO HERE?
 
-            }*/
-
-            // ERE I AM JH
             int NumWavelets = 2;
             int NumEnemies = 30;
             thisWave.CurrentWavelet = 0;
@@ -367,6 +385,8 @@ namespace Duologue.Waves
         {
             CurrentMajorNumber = Major;
             CurrentMinorNumber = Minor;
+            nextMajorNumToSwitchBackgroundOn = 0;
+            wavesSinceColorStateChange = numberOfWavesPerColorStateChange;
         }
 
         /// <summary>
