@@ -181,20 +181,41 @@ namespace Duologue.Waves
                 new TypesOfPlayObjects[]
                 // Tier 2
                 {
+                    TypesOfPlayObjects.Enemy_Buzzsaw,
+                    TypesOfPlayObjects.Enemy_Maggot,
+                    TypesOfPlayObjects.Enemy_Mirthworm,
+                    TypesOfPlayObjects.Enemy_Wiggles,
                     TypesOfPlayObjects.Enemy_AnnMoeba,
                     TypesOfPlayObjects.Enemy_Ember,
-                    TypesOfPlayObjects.Enemy_Spawner,
                     TypesOfPlayObjects.Enemy_Spitter,
                 },
                 new TypesOfPlayObjects[]
                 // Tier 3
                 {
+                    TypesOfPlayObjects.Enemy_Buzzsaw,
+                    TypesOfPlayObjects.Enemy_Maggot,
+                    TypesOfPlayObjects.Enemy_Mirthworm,
+                    TypesOfPlayObjects.Enemy_Wiggles,
+                    TypesOfPlayObjects.Enemy_AnnMoeba,
+                    TypesOfPlayObjects.Enemy_Ember,
+                    TypesOfPlayObjects.Enemy_Spitter,
                     TypesOfPlayObjects.Enemy_Gloop,
                     TypesOfPlayObjects.Enemy_StaticGloop,
+                    TypesOfPlayObjects.Enemy_Spawner,
                 },
                 new TypesOfPlayObjects[]
                 // Tier 4
                 {
+                    TypesOfPlayObjects.Enemy_Buzzsaw,
+                    TypesOfPlayObjects.Enemy_Maggot,
+                    TypesOfPlayObjects.Enemy_Mirthworm,
+                    TypesOfPlayObjects.Enemy_Wiggles,
+                    TypesOfPlayObjects.Enemy_AnnMoeba,
+                    TypesOfPlayObjects.Enemy_Ember,
+                    TypesOfPlayObjects.Enemy_Spitter,
+                    TypesOfPlayObjects.Enemy_Gloop,
+                    TypesOfPlayObjects.Enemy_StaticGloop,
+                    TypesOfPlayObjects.Enemy_Spawner,
                     TypesOfPlayObjects.Enemy_Firefly,
                     TypesOfPlayObjects.Enemy_Flycket,
                 },
