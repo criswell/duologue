@@ -482,8 +482,8 @@ namespace Duologue.Waves
                                 hitPointBoss,
                                 hitPointMinion,
                                 intensity,
-                                TypesOfPlayObjects.Enemy_AnnMoeba,
-                                TypesOfPlayObjects.Enemy_ProtoNora);
+                                TypesOfPlayObjects.Enemy_ProtoNora,
+                                TypesOfPlayObjects.Enemy_AnnMoeba);
                             break;
                     }
                 }
