@@ -616,6 +616,7 @@ namespace Duologue.Screens
             {
                 if (gameSelectTips[currentSelection] != null)
                 {
+                    gameSelectTips[currentSelection].Reset();
                     teletype.AddEntry(gameSelectTips[currentSelection]);
                 }
             }

@@ -252,6 +252,15 @@ namespace Mimicware.Fx
             masterTimer = TotalTimeOnScreen;
             alive = false;
         }
+
+        /// <summary>
+        /// Call to reset this entry
+        /// </summary>
+        public void Reset()
+        {
+            masterTimer = 0;
+            alive = true;
+        }
         #endregion
 
         #region Draw / Update
