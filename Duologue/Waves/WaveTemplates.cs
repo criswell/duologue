@@ -856,7 +856,7 @@ namespace Duologue.Waves
             int currIndex = 0;
             for (int i = 0; i < temp.Enemies.Length; i++)
             {
-                if (i <= temp.Enemies.Length - 1 - numOfBosses)
+                if (i < temp.Enemies.Length - numOfBosses)
                     temp.Enemies[i] = minion;
                 else
                 {
