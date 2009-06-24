@@ -50,6 +50,12 @@ namespace Duologue.Screens
         private const int windowOffsetX = 30;
         private const int windowOffsetY = 10;
         private const double startThrobTime = 1.1;
+
+        private const float tooltipOffset = 75f;
+        private const float shadowOffsetToolTip = 5f;
+
+        private const double time_TypeToolTip = 1.4;
+        private const double time_ToolTipOnscreen = 30.1;
         #endregion
 
         #region Fields
@@ -74,8 +80,14 @@ namespace Duologue.Screens
         private Rectangle gameSelectWindowLocation;
         private Rectangle creditsWindowLocation;
 
+        // Tool tip stuff
         private Teletype teletype;
         private TeletypeEntry[] gameSelectTips;
+        private Color color_ToolTip;
+        private Color color_ToolTipShadow;
+        private Vector2[] toolTipShadowOffset;
+        private bool isMenuSet;
+        private bool trialMode;
 
         /// <summary>
         /// Used for the debug sequence
@@ -108,7 +120,15 @@ namespace Duologue.Screens
             gameSelectItems = new List<MenuItem>();
 
             myGame = game;
+        }
 
+        /// <summary>
+        /// Allows the game component to perform any initialization it needs to before starting
+        /// to run.  This is where it can query for any required services and load content.
+        /// </summary>
+        public override void Initialize()
+        {
+            /*
             int menuIndex = 0;
 
             // Set up the main menu
@@ -163,14 +183,12 @@ namespace Duologue.Screens
             startPressed = false;
 
             teletype = ServiceLocator.GetService<Teletype>();
-        }
+            gameSelectTips = new TeletypeEntry[gameSelectBack + 1];
+            for (int i = 0; i < gameSelectTips.Length; i++)
+            {
+                gameSelectTips[i] = null;
+            }
 
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public override void Initialize()
-        {
             foreach (MenuItem mi in mainMenuItems)
                 mi.Invisible = false;
 
@@ -188,7 +206,7 @@ namespace Duologue.Screens
             }
 
             ResetMenuItems();
-
+            */
             currentState = MainMenuState.PressStart;
             currentSelection = 0;
             timer_StartThrob = 0;
@@ -200,6 +218,18 @@ namespace Duologue.Screens
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
             tipFont = InstanceManager.AssetManager.LoadSpriteFont(tipFontFilename);
+
+            color_ToolTip = Color.BlanchedAlmond;
+            color_ToolTipShadow = new Color(Color.BurlyWood, 175);
+
+            toolTipShadowOffset = new Vector2[]
+            {
+                shadowOffsetToolTip * Vector2.One,
+                Vector2.One,
+                -Vector2.One,
+                Vector2.UnitX,
+                Vector2.UnitY,
+            };
             base.LoadContent();
         }
         #endregion
@@ -210,6 +240,90 @@ namespace Duologue.Screens
         /// </summary>
         private void SetPosition()
         {
+            if (!isMenuSet)
+            {
+                int menuIndex = 0;
+
+                // Set up the main menu
+                mainMenuItems.Add(new MenuItem(Resources.MainMenu_Play));
+                menuPlayGame = menuIndex;
+                menuIndex++;
+                mainMenuItems.Add(new MenuItem(Resources.MainMenu_Achievements));
+                menuAchievements = menuIndex;
+                menuIndex++;
+                mainMenuItems.Add(new MenuItem(Resources.MainMenu_Credits));
+                menuCredits = menuIndex;
+                menuIndex++;
+                if (Guide.IsTrialMode)
+                {
+                    mainMenuItems.Add(new MenuItem(Resources.MainMenu_BuyMe));
+                    menuBuyMe = menuIndex;
+                    menuIndex++;
+                }
+                else
+                {
+                    menuBuyMe = -1337; // LEET! We been bought!
+                }
+                mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
+                menuExit = menuIndex;
+
+                // Set up the game select menu
+                gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
+                gameSelectCampaign = 0;
+                gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_InfiniteMode));
+                gameSelectInfinite = 1;
+                gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Survival));
+                gameSelectSurvival = 2;
+
+                gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Back));
+                gameSelectBack = 3;
+
+                debugSequence = 0;
+
+                shadowOffsets = new Vector2[numberOfOffsets];
+                shadowOffsets[0] = Vector2.One;
+                shadowOffsets[1] = -1 * Vector2.One;
+                shadowOffsets[2] = new Vector2(-1f, 1f);
+                shadowOffsets[3] = new Vector2(1f, -1f);
+
+                shadowOffsetsSelected = new Vector2[numberOfOffsets];
+                shadowOffsetsSelected[0] = 2 * Vector2.One;
+                shadowOffsetsSelected[1] = -2 * Vector2.One;
+                shadowOffsetsSelected[2] = new Vector2(-2f, 2f);
+                shadowOffsetsSelected[3] = new Vector2(2f, -2f);
+
+                initialized = false;
+                startPressed = false;
+
+                teletype = ServiceLocator.GetService<Teletype>();
+                gameSelectTips = new TeletypeEntry[gameSelectBack + 1];
+                for (int i = 0; i < gameSelectTips.Length; i++)
+                {
+                    gameSelectTips[i] = null;
+                }
+
+                foreach (MenuItem mi in mainMenuItems)
+                    mi.Invisible = false;
+
+                // Turn off those items we don't support yet
+                //mainMenuItems[menuAchievements].Invisible = true;
+
+                foreach (MenuItem mi in gameSelectItems)
+                    mi.Invisible = false;
+
+                if (Guide.IsTrialMode)
+                {
+                    // Only campaign mode available in trial mode
+                    gameSelectItems[gameSelectInfinite].Invisible = true;
+                    gameSelectItems[gameSelectSurvival].Invisible = true;
+                }
+
+                isMenuSet = true;
+                trialMode = Guide.IsTrialMode;
+
+                ResetMenuItems();
+            }
+
             float center = InstanceManager.DefaultViewport.Width / 2f;
             float xOffset = center;
             float maxWidth = 0;
@@ -268,6 +382,46 @@ namespace Duologue.Screens
                 tempW, tempH);
 
             LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
+
+            // Setup the tool tips
+            Vector2 tempSizeInfMode = tipFont.MeasureString(
+                Guide.IsTrialMode ? Resources.MainMenu_ToolTip_TrialMode : Resources.MainMenu_ToolTip_InfiniteMode);
+            Vector2 tempSizeSurMode = tipFont.MeasureString(
+                Guide.IsTrialMode ? Resources.MainMenu_ToolTip_TrialMode : Resources.MainMenu_ToolTip_SurvivalMode);
+
+            Vector2 tempPos = new Vector2(
+                center,
+                gameSelectWindowLocation.Bottom);
+
+            Vector2 tempCent = new Vector2(
+                tempSizeInfMode.X/2f, tempSizeInfMode.Y/2f);
+
+            gameSelectTips[gameSelectInfinite] = new TeletypeEntry(
+                tipFont,
+                Guide.IsTrialMode ? Resources.MainMenu_ToolTip_TrialMode : Resources.MainMenu_ToolTip_InfiniteMode,
+                tempPos,
+                tempCent,
+                color_ToolTip,
+                time_TypeToolTip,
+                time_ToolTipOnscreen,
+                color_ToolTipShadow,
+                toolTipShadowOffset,
+                InstanceManager.RenderSprite);
+
+            tempCent = new Vector2(
+                tempSizeSurMode.X / 2f, tempSizeSurMode.Y / 2f);
+
+            gameSelectTips[gameSelectSurvival] = new TeletypeEntry(
+                tipFont,
+                Guide.IsTrialMode ? Resources.MainMenu_ToolTip_TrialMode : Resources.MainMenu_ToolTip_SurvivalMode,
+                tempPos,
+                tempCent,
+                color_ToolTip,
+                time_TypeToolTip,
+                time_ToolTipOnscreen,
+                color_ToolTipShadow,
+                toolTipShadowOffset,
+                InstanceManager.RenderSprite);
         }
 
         /// <summary>
@@ -535,7 +689,15 @@ namespace Duologue.Screens
 
         private void SetTooltip()
         {
-            // Nada
+            teletype.FlushEntries();
+
+            if (currentState == MainMenuState.GameSelect)
+            {
+                if (gameSelectTips[currentSelection] != null)
+                {
+                    teletype.AddEntry(gameSelectTips[currentSelection]);
+                }
+            }
         }
 
 
@@ -591,6 +753,12 @@ namespace Duologue.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (Guide.IsTrialMode != trialMode)
+            {
+                // Thanks for the purchase, but fuck XNA
+                SetPosition();
+                trialMode = Guide.IsTrialMode;
+            }
             LocalInstanceManager.WindowManager.Update(gameTime);
 
             if (currentState == MainMenuState.PressStart)
