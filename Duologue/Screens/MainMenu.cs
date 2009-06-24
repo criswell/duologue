@@ -354,6 +354,7 @@ namespace Duologue.Screens
             {
                 if (!mainMenuItems[currentSelection].Invisible)
                 {
+                    teletype.FlushEntries();
                     if (currentSelection == menuExit)
                         LocalInstanceManager.CurrentGameState = GameState.Exit;
                     else if (currentSelection == menuPlayGame)
@@ -379,6 +380,7 @@ namespace Duologue.Screens
             {
                 if (!gameSelectItems[currentSelection].Invisible)
                 {
+                    teletype.FlushEntries();
                     if (currentSelection == gameSelectBack)
                     {
                         currentState = MainMenuState.MainMenu;
