@@ -41,7 +41,7 @@ namespace Duologue.Screens
     {
         #region Constants
         private const string fontFilename = "Fonts/inero-50";
-        private const string tipFontFilename = "Fonts/inero-small";
+        private const string tipFontFilename = "Fonts/inero-28";
         private const float yOffset = 325f;
         private const float extraLineSpacing = 12;
         private const float selectOffset = 8;
@@ -128,85 +128,6 @@ namespace Duologue.Screens
         /// </summary>
         public override void Initialize()
         {
-            /*
-            int menuIndex = 0;
-
-            // Set up the main menu
-            mainMenuItems.Add(new MenuItem(Resources.MainMenu_Play));
-            menuPlayGame = menuIndex;
-            menuIndex++;
-            mainMenuItems.Add(new MenuItem(Resources.MainMenu_Achievements));
-            menuAchievements = menuIndex;
-            menuIndex++;
-            mainMenuItems.Add(new MenuItem(Resources.MainMenu_Credits));
-            menuCredits = menuIndex;
-            menuIndex++;
-            if (Guide.IsTrialMode)
-            {
-                mainMenuItems.Add(new MenuItem(Resources.MainMenu_BuyMe));
-                menuBuyMe = menuIndex;
-                menuIndex++;
-            }
-            else
-            {
-                menuBuyMe = -1337; // LEET! We been bought!
-            }
-            mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
-            menuExit = menuIndex;
-
-            // Set up the game select menu
-            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
-            gameSelectCampaign = 0;
-            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_InfiniteMode));
-            gameSelectInfinite = 1;
-            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Survival));
-            gameSelectSurvival = 2;
-
-            gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Back));
-            gameSelectBack = 3;
-
-            debugSequence = 0;
-
-            shadowOffsets = new Vector2[numberOfOffsets];
-            shadowOffsets[0] = Vector2.One;
-            shadowOffsets[1] = -1 * Vector2.One;
-            shadowOffsets[2] = new Vector2(-1f, 1f);
-            shadowOffsets[3] = new Vector2(1f, -1f);
-
-            shadowOffsetsSelected = new Vector2[numberOfOffsets];
-            shadowOffsetsSelected[0] = 2 * Vector2.One;
-            shadowOffsetsSelected[1] = -2 * Vector2.One;
-            shadowOffsetsSelected[2] = new Vector2(-2f, 2f);
-            shadowOffsetsSelected[3] = new Vector2(2f, -2f);
-
-            initialized = false;
-            startPressed = false;
-
-            teletype = ServiceLocator.GetService<Teletype>();
-            gameSelectTips = new TeletypeEntry[gameSelectBack + 1];
-            for (int i = 0; i < gameSelectTips.Length; i++)
-            {
-                gameSelectTips[i] = null;
-            }
-
-            foreach (MenuItem mi in mainMenuItems)
-                mi.Invisible = false;
-
-            // Turn off those items we don't support yet
-            //mainMenuItems[menuAchievements].Invisible = true;
-
-            foreach (MenuItem mi in gameSelectItems)
-                mi.Invisible = false;
-
-            if (Guide.IsTrialMode)
-            {
-                // Only campaign mode available in trial mode
-                gameSelectItems[gameSelectInfinite].Invisible = true;
-                gameSelectItems[gameSelectSurvival].Invisible = true;
-            }
-
-            ResetMenuItems();
-            */
             currentState = MainMenuState.PressStart;
             currentSelection = 0;
             timer_StartThrob = 0;
@@ -219,8 +140,8 @@ namespace Duologue.Screens
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
             tipFont = InstanceManager.AssetManager.LoadSpriteFont(tipFontFilename);
 
-            color_ToolTip = Color.BlanchedAlmond;
-            color_ToolTipShadow = new Color(Color.BurlyWood, 175);
+            color_ToolTip = Color.LightGoldenrodYellow;
+            color_ToolTipShadow = new Color(Color.DarkRed, 175);
 
             toolTipShadowOffset = new Vector2[]
             {
