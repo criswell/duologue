@@ -100,48 +100,8 @@ namespace Duologue.Waves
         {
             myManager = Manager;
 
-            //GenerateMasterList();
         }
 
-        private void GenerateMasterList()
-        {
-            /*possibleMobNumbers = new List<int>(maxNumberOfMobNumbersAndLetsSayNumbersAgain);
-
-            possibleMobNumbers.Add(4);
-            possibleMobNumbers.Add(8);
-            possibleMobNumbers.Add(10);
-            possibleMobNumbers.Add(12);
-            possibleMobNumbers.Add(20);
-            possibleMobNumbers.Add(25);
-            possibleMobNumbers.Add(30);
-            possibleMobNumbers.Add(35);
-            possibleMobNumbers.Add(40);
-            possibleMobNumbers.Add(50);
-            possibleMobNumbers.Add(60);
-            possibleMobNumbers.Add(80);
-            possibleMobNumbers.Add(100);
-
-            templateLookup = new Dictionary<int,List<int>>();
-
-            masterList = new List<Wavelet>();
-
-            int tempIndex = 0;
-            //List<int> tempList = new List<int>(maxNumberOfTemplatesInList);
-
-            // The upper left corner ones
-            
-            Wavelet tempT = new Wavelet(4, 0);
-            for (int i = 0; i < tempT.Enemies.Length; i++)
-            {
-                tempT.EnemyOrderTemplate[i] = 0;
-                tempT.StartAngle[i] = MathHelper.Lerp(MathHelper.PiOver2, MathHelper.Pi,
-                    (float)i / (float)tempT.Enemies.Length);
-            }
-            masterList.Add(tempT);
-            //tempList.Add(tempIndex);
-            tempIndex++;
-             * */
-        }
         #endregion
 
         #region Private position/delay template methods
