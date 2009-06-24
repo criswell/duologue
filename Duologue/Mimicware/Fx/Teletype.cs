@@ -368,6 +368,7 @@ namespace Mimicware.Fx
                 if (entries[i] != null && entries[i].Alive)
                 {
                     entries[i].Flush();
+                    entries[i] = null;
                 }
                 Enabled = false;
                 Visible = false;
