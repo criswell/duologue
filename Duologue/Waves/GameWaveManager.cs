@@ -408,7 +408,7 @@ namespace Duologue.Waves
             }
 
             // Figure out if we're creating a boss level or not
-            if (relativeWaveNum / 10 == relativeWaveNum / 10f)
+            if (relativeWaveNum / 10 == relativeWaveNum / 10f && lastMinorWaveNo == MaxMinorNumber)
             {
                 // Fighting boss
                 int numOfBosses = 1;
@@ -418,7 +418,7 @@ namespace Duologue.Waves
                 }
 
                 int hitPointBoss = 0;
-                int hitPointMinion = 4;
+                int hitPointMinion = 2;
                 float intensity = 1f;
 
                 if (relativeWaveNum <= 80)
