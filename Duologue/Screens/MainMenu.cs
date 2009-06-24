@@ -51,7 +51,7 @@ namespace Duologue.Screens
         private const int windowOffsetY = 10;
         private const double startThrobTime = 1.1;
 
-        private const float tooltipOffset = 75f;
+        private const float tooltipOffset = 50f;
         private const float shadowOffsetToolTip = 5f;
 
         private const double time_TypeToolTip = 1.4;
@@ -391,7 +391,7 @@ namespace Duologue.Screens
 
             Vector2 tempPos = new Vector2(
                 center,
-                gameSelectWindowLocation.Bottom);
+                gameSelectWindowLocation.Bottom + tooltipOffset);
 
             Vector2 tempCent = new Vector2(
                 tempSizeInfMode.X/2f, tempSizeInfMode.Y/2f);
