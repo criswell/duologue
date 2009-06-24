@@ -411,6 +411,90 @@ namespace Duologue.Waves
             if (relativeWaveNum / 10 == relativeWaveNum / 10f)
             {
                 // Fighting boss
+                int numOfBosses = 1;
+                if (relativeWaveNum >= 10 && relativeWaveNum <= 50)
+                {
+                    numOfBosses = MWMathHelper.GetRandomInRange(2, 3);
+                }
+
+                int hitPointBoss = 0;
+                int hitPointMinion = 4;
+                float intensity = 1f;
+
+                if (relativeWaveNum <= 80)
+                {
+                    switch (MWMathHelper.GetRandomInRange(0, 6))
+                    {
+                        case 0:
+                            // Gloop Prince
+                            thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
+                                numOfBosses,
+                                hitPointBoss,
+                                hitPointMinion,
+                                intensity,
+                                TypesOfPlayObjects.Enemy_GloopPrince,
+                                TypesOfPlayObjects.Enemy_Gloop);
+                            break;
+                        case 1:
+                            // Gloop king
+                            thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
+                                numOfBosses,
+                                hitPointBoss,
+                                hitPointMinion,
+                                intensity,
+                                TypesOfPlayObjects.Enemy_KingGloop,
+                                TypesOfPlayObjects.Enemy_Gloop);
+                            break;
+                        case 2:
+                            // Metal tooth
+                            thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
+                                numOfBosses,
+                                hitPointBoss,
+                                hitPointMinion,
+                                intensity,
+                                TypesOfPlayObjects.Enemy_MetalTooth,
+                                TypesOfPlayObjects.Enemy_MiniSaw);
+                            break;
+                        case 3:
+                            // Unclean Rot
+                            thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
+                                numOfBosses,
+                                hitPointBoss,
+                                hitPointMinion,
+                                intensity,
+                                TypesOfPlayObjects.Enemy_UncleanRot,
+                                TypesOfPlayObjects.Enemy_StaticGloop);
+                            break;
+                        case 4:
+                            // Pyre
+                            thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
+                                numOfBosses,
+                                hitPointBoss,
+                                hitPointMinion,
+                                intensity,
+                                TypesOfPlayObjects.Enemy_Pyre,
+                                TypesOfPlayObjects.Enemy_Ember);
+                            break;
+                        default:
+                            // ProtoNora
+                            thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
+                                numOfBosses,
+                                hitPointBoss,
+                                hitPointMinion,
+                                intensity,
+                                TypesOfPlayObjects.Enemy_AnnMoeba,
+                                TypesOfPlayObjects.Enemy_ProtoNora);
+                            break;
+                    }
+                }
+                else if (relativeWaveNum == 90)
+                {
+                    // Lahmu
+                }
+                else
+                {
+                    // Moloch
+                }
             }
             else
             {
@@ -483,9 +567,9 @@ namespace Duologue.Waves
                     enemiesToUse,
                     maxStartingHPs,
                     maxDelay);
-
-                thisWave.Wavelets[0].SongID = currentSong;
             }
+
+            thisWave.Wavelets[0].SongID = currentSong;
             /*
 
             int hitsToKillEnemy = 0;
