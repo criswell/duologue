@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Content;
 // Mimicware
 using Mimicware.Manager;
 using Mimicware.Graphics;
+using Mimicware.Fx;
 // Duologue
 using Duologue;
 using Duologue.Properties;
@@ -40,6 +41,7 @@ namespace Duologue.Screens
     {
         #region Constants
         private const string fontFilename = "Fonts/inero-50";
+        private const string tipFontFilename = "Fonts/inero-small";
         private const float yOffset = 325f;
         private const float extraLineSpacing = 12;
         private const float selectOffset = 8;
@@ -52,6 +54,7 @@ namespace Duologue.Screens
 
         #region Fields
         private SpriteFont font;
+        private SpriteFont tipFont;
         private Vector2 position;
         private List<MenuItem> mainMenuItems;
         private List<MenuItem> gameSelectItems;
@@ -60,6 +63,7 @@ namespace Duologue.Screens
         private int menuPlayGame;
         private int menuAchievements;
         private int menuCredits;
+        private int menuBuyMe;
         private int menuExit;
         private int gameSelectCampaign;
         private int gameSelectSurvival;
@@ -69,6 +73,9 @@ namespace Duologue.Screens
         private Rectangle mainMenuWindowLocation;
         private Rectangle gameSelectWindowLocation;
         private Rectangle creditsWindowLocation;
+
+        private Teletype teletype;
+        private TeletypeEntry[] gameSelectTips;
 
         /// <summary>
         /// Used for the debug sequence
@@ -102,15 +109,30 @@ namespace Duologue.Screens
 
             myGame = game;
 
+            int menuIndex = 0;
+
             // Set up the main menu
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Play));
-            menuPlayGame = 0;
+            menuPlayGame = menuIndex;
+            menuIndex++;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Achievements));
-            menuAchievements = 1;
+            menuAchievements = menuIndex;
+            menuIndex++;
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Credits));
-            menuCredits = 2;
+            menuCredits = menuIndex;
+            menuIndex++;
+            if (Guide.IsTrialMode)
+            {
+                mainMenuItems.Add(new MenuItem(Resources.MainMenu_BuyMe));
+                menuBuyMe = menuIndex;
+                menuIndex++;
+            }
+            else
+            {
+                menuBuyMe = -1337; // LEET! We been bought!
+            }
             mainMenuItems.Add(new MenuItem(Resources.MainMenu_Exit));
-            menuExit = 3;
+            menuExit = menuIndex;
 
             // Set up the game select menu
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Campaign));
@@ -119,6 +141,7 @@ namespace Duologue.Screens
             gameSelectInfinite = 1;
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Survival));
             gameSelectSurvival = 2;
+
             gameSelectItems.Add(new MenuItem(Resources.MainMenu_GameSelect_Back));
             gameSelectBack = 3;
 
@@ -138,6 +161,8 @@ namespace Duologue.Screens
 
             initialized = false;
             startPressed = false;
+
+            teletype = ServiceLocator.GetService<Teletype>();
         }
 
         /// <summary>
@@ -155,6 +180,13 @@ namespace Duologue.Screens
             foreach (MenuItem mi in gameSelectItems)
                 mi.Invisible = false;
 
+            if (Guide.IsTrialMode)
+            {
+                // Only campaign mode available in trial mode
+                gameSelectItems[gameSelectInfinite].Invisible = true;
+                gameSelectItems[gameSelectSurvival].Invisible = true;
+            }
+
             ResetMenuItems();
 
             currentState = MainMenuState.PressStart;
@@ -167,6 +199,7 @@ namespace Duologue.Screens
         protected override void LoadContent()
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
+            tipFont = InstanceManager.AssetManager.LoadSpriteFont(tipFontFilename);
             base.LoadContent();
         }
         #endregion
@@ -244,58 +277,64 @@ namespace Duologue.Screens
         {
             if (currentState == MainMenuState.MainMenu)
             {
-                if (currentSelection == menuExit)
-                    LocalInstanceManager.CurrentGameState = GameState.Exit;
-                else if (currentSelection == menuPlayGame)
+                if (!mainMenuItems[currentSelection].Invisible)
                 {
-                    currentState = MainMenuState.GameSelect;
-                    LocalInstanceManager.WindowManager.SetLocation(gameSelectWindowLocation);
-                    currentSelection = 0;
-                    ResetMenuItems();
-                }
-                else if (currentSelection == menuCredits)
-                {
-                    LocalInstanceManager.CurrentGameState = GameState.Credits;
-                    
-                }
-                else if (currentSelection == menuAchievements)
-                {
-                    LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
-                    LocalInstanceManager.CurrentGameState = GameState.MedalCase;
+                    if (currentSelection == menuExit)
+                        LocalInstanceManager.CurrentGameState = GameState.Exit;
+                    else if (currentSelection == menuPlayGame)
+                    {
+                        currentState = MainMenuState.GameSelect;
+                        LocalInstanceManager.WindowManager.SetLocation(gameSelectWindowLocation);
+                        currentSelection = 0;
+                        ResetMenuItems();
+                    }
+                    else if (currentSelection == menuCredits)
+                    {
+                        LocalInstanceManager.CurrentGameState = GameState.Credits;
+
+                    }
+                    else if (currentSelection == menuAchievements)
+                    {
+                        LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+                        LocalInstanceManager.CurrentGameState = GameState.MedalCase;
+                    }
                 }
             }
             else
             {
-                if (currentSelection == gameSelectBack)
+                if (!gameSelectItems[currentSelection].Invisible)
                 {
-                    currentState = MainMenuState.MainMenu;
-                    currentSelection = 0;
-                    LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
-                    ResetMenuItems();
-                }
-                else if (currentSelection == gameSelectSurvival)
-                {
-                    currentState = MainMenuState.MainMenu;
-                    currentSelection = 0;
-                    ResetMenuItems();
-                    LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
-                    LocalInstanceManager.NextGameState = GameState.SurvivalGame;
-                }
-                else if (currentSelection == gameSelectInfinite)
-                {
-                    currentState = MainMenuState.MainMenu;
-                    currentSelection = 0;
-                    ResetMenuItems();
-                    LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
-                    LocalInstanceManager.NextGameState = GameState.InfiniteGame;
-                }
-                else if (currentSelection == gameSelectCampaign)
-                {
-                    currentState = MainMenuState.MainMenu;
-                    currentSelection = 0;
-                    ResetMenuItems();
-                    LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
-                    LocalInstanceManager.NextGameState = GameState.CampaignGame;
+                    if (currentSelection == gameSelectBack)
+                    {
+                        currentState = MainMenuState.MainMenu;
+                        currentSelection = 0;
+                        LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
+                        ResetMenuItems();
+                    }
+                    else if (currentSelection == gameSelectSurvival)
+                    {
+                        currentState = MainMenuState.MainMenu;
+                        currentSelection = 0;
+                        ResetMenuItems();
+                        LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
+                        LocalInstanceManager.NextGameState = GameState.SurvivalGame;
+                    }
+                    else if (currentSelection == gameSelectInfinite)
+                    {
+                        currentState = MainMenuState.MainMenu;
+                        currentSelection = 0;
+                        ResetMenuItems();
+                        LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
+                        LocalInstanceManager.NextGameState = GameState.InfiniteGame;
+                    }
+                    else if (currentSelection == gameSelectCampaign)
+                    {
+                        currentState = MainMenuState.MainMenu;
+                        currentSelection = 0;
+                        ResetMenuItems();
+                        LocalInstanceManager.CurrentGameState = GameState.PlayerSelect;
+                        LocalInstanceManager.NextGameState = GameState.CampaignGame;
+                    }
                 }
             }
         }
@@ -476,8 +515,8 @@ namespace Duologue.Screens
             if (IsMenuDown())
             {
                 mis[currentSelection].Selected = false;
-
                 currentSelection++;
+                SetTooltip();
             }
 
             // Up
@@ -485,12 +524,18 @@ namespace Duologue.Screens
             {
                 mis[currentSelection].Selected = false;
                 currentSelection--;
+                SetTooltip();
             }
 
             if (currentSelection >= mis.Count)
                 currentSelection = 0;
             else if (currentSelection < 0)
                 currentSelection = mis.Count - 1;
+        }
+
+        private void SetTooltip()
+        {
+            // Nada
         }
 
 

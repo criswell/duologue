@@ -151,6 +151,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy the full game!.
+        /// </summary>
+        internal static string MainMenu_BuyMe {
+            get {
+                return ResourceManager.GetString("MainMenu_BuyMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credits.
         /// </summary>
         internal static string MainMenu_Credits {
@@ -219,6 +228,33 @@ namespace Duologue.Properties {
         internal static string MainMenu_PressStart {
             get {
                 return ResourceManager.GetString("MainMenu_PressStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try to beat the campaign with the least lives lost!.
+        /// </summary>
+        internal static string MainMenu_ToolTip_InfiniteMode {
+            get {
+                return ResourceManager.GetString("MainMenu_ToolTip_InfiniteMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Survive against an endless enemy assault!.
+        /// </summary>
+        internal static string MainMenu_ToolTip_SurvivalMode {
+            get {
+                return ResourceManager.GetString("MainMenu_ToolTip_SurvivalMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buy the full game to play this mode!.
+        /// </summary>
+        internal static string MainMenu_ToolTip_TrialMode {
+            get {
+                return ResourceManager.GetString("MainMenu_ToolTip_TrialMode", resourceCulture);
             }
         }
         

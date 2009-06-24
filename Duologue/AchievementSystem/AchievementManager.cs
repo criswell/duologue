@@ -819,10 +819,13 @@ namespace Duologue.AchievementSystem
             size_Achievement = 1f;
             // Compute the number of enemies killed
             numberOfEnemyTypesKilled = 0;
-            for (int i = 0; i < maxNumEnemies; i++)
+            if (!Guide.IsTrialMode)
             {
-                if (achievementData.EnemyTypesKilled[i].Killed)
-                    numberOfEnemyTypesKilled++;
+                for (int i = 0; i < maxNumEnemies; i++)
+                {
+                    if (achievementData.EnemyTypesKilled[i].Killed)
+                        numberOfEnemyTypesKilled++;
+                }
             }
         }
 
