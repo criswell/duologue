@@ -55,6 +55,7 @@ namespace Duologue.Waves
         private const float medal_WetFeet = 0.25f;
         private const float medal_Experienced = 0.5f;
         private const float medal_KeyParty = 0.5f;
+        private const int medal_NoEndInSight = 100;
 
         private const int default_StartingMajorNum = 1;
         private const int default_StartingMinorNum = 0;
@@ -316,6 +317,9 @@ namespace Duologue.Waves
             int[] k = IncrementWaveNumbers(lastMajorWaveNo, lastMinorWaveNo);
             lastMajorWaveNo = k[0];
             lastMinorWaveNo = k[1];
+
+            if (lastMajorWaveNo > medal_NoEndInSight)
+                LocalInstanceManager.AchievementManager.UnlockAchievement(PossibleMedals.NoEndInSight);
 
             // Get a color state
             wavesSinceColorStateChange++;
