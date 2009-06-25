@@ -416,7 +416,7 @@ namespace Duologue.Waves
                 int numOfBosses = 1;
                 if (relativeWaveNum >= 50 && relativeWaveNum < 80)
                 {
-                    numOfBosses = MWMathHelper.GetRandomInRange(2, 3);
+                    numOfBosses = MWMathHelper.GetRandomInRange(2, 4);
                 }
 
                 // ERE I AM JH
