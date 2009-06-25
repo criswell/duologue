@@ -31,43 +31,6 @@ using Duologue.AchievementSystem;
 
 namespace Duologue.Waves
 {
-    /*public class Wavelet : Wavelet
-    {
-        /// <summary>
-        /// Integer array deliminating the ordering of the enemies
-        /// </summary>
-        public int[] EnemyOrderTemplate;
-
-        public Wavelet() : base() { }
-
-        public Wavelet(int NumEnemies, int StartHP, ColorPolarity polarity)
-            : base(NumEnemies, StartHP, polarity)
-        {
-            EnemyOrderTemplate = new int[NumEnemies];
-            for (int i = 0; i < NumEnemies; i++)
-            {
-                EnemyOrderTemplate[i] = 0;
-            }
-        }
-
-        public Wavelet(int NumEnemies, int StartHP)
-            : base(NumEnemies, StartHP)
-        {
-            EnemyOrderTemplate = new int[NumEnemies];
-            for (int i = 0; i < NumEnemies; i++)
-            {
-                EnemyOrderTemplate[i] = 0;
-            }
-        }
-    }*/
-
-    /*
-    public struct WaveletList
-    {
-        public List<Wavelet> Wavelets;
-    }
-     */
-
     /// <summary>
     /// Defines various wave templates for use in survival mode
     /// </summary>
