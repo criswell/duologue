@@ -421,12 +421,12 @@ namespace Duologue.Waves
 
                 // ERE I AM JH
                 // HP boss (determined by relwaveno, real wave no)
-                int hitPointBoss = 0;
+                float percentBossHP = 1f;
 
 
 
                 // HP Minion (determined by relwavno)
-                int hitPointMinion = 0;
+                float percentMinionHP = 1f;
 
                 // intensity (determined by relwavno, real wave no)
                 float intensity = 1f;
@@ -439,8 +439,14 @@ namespace Duologue.Waves
                             // Gloop Prince
                             thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
                                 numOfBosses,
-                                hitPointBoss,
-                                hitPointMinion,
+                                (int)MathHelper.Lerp(
+                                    HP_GloopPrinceMin,
+                                    HP_GloopPrinceMax,
+                                    percentBossHP),
+                                (int)MathHelper.Lerp(
+                                    HP_GloopMin,
+                                    HP_GloopMax,
+                                    percentMinionHP),
                                 intensity,
                                 TypesOfPlayObjects.Enemy_GloopPrince,
                                 TypesOfPlayObjects.Enemy_Gloop);
@@ -449,8 +455,14 @@ namespace Duologue.Waves
                             // Gloop king
                             thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
                                 numOfBosses,
-                                hitPointBoss,
-                                hitPointMinion,
+                                (int)MathHelper.Lerp(
+                                    HP_GloopKingMin,
+                                    HP_GloopKingMax,
+                                    percentBossHP),
+                                (int)MathHelper.Lerp(
+                                    HP_GloopMin,
+                                    HP_GloopMax,
+                                    percentMinionHP),
                                 intensity,
                                 TypesOfPlayObjects.Enemy_KingGloop,
                                 TypesOfPlayObjects.Enemy_Gloop);
@@ -459,8 +471,14 @@ namespace Duologue.Waves
                             // Metal tooth
                             thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
                                 numOfBosses,
-                                hitPointBoss,
-                                hitPointMinion,
+                                (int)MathHelper.Lerp(
+                                    HP_MetalToothMin,
+                                    HP_MetalToothMax,
+                                    percentBossHP),
+                                (int)MathHelper.Lerp(
+                                    HP_MiniSawMin,
+                                    HP_MiniSawMax,
+                                    percentMinionHP),
                                 intensity,
                                 TypesOfPlayObjects.Enemy_MetalTooth,
                                 TypesOfPlayObjects.Enemy_MiniSaw);
@@ -469,8 +487,14 @@ namespace Duologue.Waves
                             // Unclean Rot
                             thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
                                 numOfBosses,
-                                hitPointBoss,
-                                hitPointMinion,
+                                (int)MathHelper.Lerp(
+                                    HP_UncleanRotMin,
+                                    HP_UncleanRotMax,
+                                    percentBossHP),
+                                (int)MathHelper.Lerp(
+                                    HP_StaticGloopMin,
+                                    HP_StaticGloopMax,
+                                    percentMinionHP),
                                 intensity,
                                 TypesOfPlayObjects.Enemy_UncleanRot,
                                 TypesOfPlayObjects.Enemy_StaticGloop);
@@ -479,8 +503,14 @@ namespace Duologue.Waves
                             // Pyre
                             thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
                                 numOfBosses,
-                                hitPointBoss,
-                                hitPointMinion,
+                                (int)MathHelper.Lerp(
+                                    HP_PyreMin,
+                                    HP_PyreMax,
+                                    percentBossHP),
+                                (int)MathHelper.Lerp(
+                                    HP_EmberMin,
+                                    HP_EmberMax,
+                                    percentMinionHP),
                                 intensity,
                                 TypesOfPlayObjects.Enemy_Pyre,
                                 TypesOfPlayObjects.Enemy_Ember);
@@ -489,8 +519,14 @@ namespace Duologue.Waves
                             // ProtoNora
                             thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
                                 numOfBosses,
-                                hitPointBoss,
-                                hitPointMinion,
+                                (int)MathHelper.Lerp(
+                                    HP_ProtoNoraMin,
+                                    HP_ProtoNoraMax,
+                                    percentBossHP),
+                                (int)MathHelper.Lerp(
+                                    HP_AnnMoebaMin,
+                                    HP_AnnMoebaMax,
+                                    percentMinionHP),
                                 intensity,
                                 TypesOfPlayObjects.Enemy_ProtoNora,
                                 TypesOfPlayObjects.Enemy_AnnMoeba);
