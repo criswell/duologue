@@ -419,13 +419,14 @@ namespace Duologue.Waves
                     numOfBosses = MWMathHelper.GetRandomInRange(2, 3);
                 }
 
+                // ERE I AM JH
                 // HP boss (determined by relwaveno, real wave no)
-                int hitPointBoss;
+                int hitPointBoss = 0;
 
 
 
                 // HP Minion (determined by relwavno)
-                int hitPointMinion;
+                int hitPointMinion = 0;
 
                 // intensity (determined by relwavno, real wave no)
                 float intensity = 1f;
