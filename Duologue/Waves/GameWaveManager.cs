@@ -107,6 +107,11 @@ namespace Duologue.Waves
         private const float HP_UncleanRotMax = 10f;
         private const float HP_StaticGloopMin = 4f;
         private const float HP_StaticGloopMax = 9f;
+        // Percentage limits
+        private const float bossHP_LowerLimit = 0.3f;
+        private const float bossHP_UpperLimit = 1f;
+        private const float intensity_LowerLimit = 0.5f;
+        private const float intensity_UpperLimit = 1.1f;
         #endregion
         #endregion
 
@@ -421,15 +426,31 @@ namespace Duologue.Waves
 
                 // ERE I AM JH
                 // HP boss (determined by relwaveno, real wave no)
-                float percentBossHP = 1f;
+                // realwaveno determines max of percentage
+                // relwaveno determines percentage up to max
+                float percentBossHP;
 
+                float maxPerc = MathHelper.Lerp(
+                    bossHP_LowerLimit,
+                    bossHP_UpperLimit,
+                    (float)lastMajorWaveNo/(float)MaxMajorNumber);
 
+                percentBossHP = MathHelper.Lerp(0, maxPerc,
+                    (float)relativeWaveNum / 100f);
 
                 // HP Minion (determined by relwavno)
-                float percentMinionHP = 1f;
+                float percentMinionHP = (float)relativeWaveNum / 100f;
 
                 // intensity (determined by relwavno, real wave no)
-                float intensity = 1f;
+                float intensity;
+
+                maxPerc = MathHelper.Lerp(
+                    intensity_LowerLimit,
+                    intensity_UpperLimit,
+                    (float)lastMajorWaveNo / (float)MaxMajorNumber);
+
+                intensity = MathHelper.Lerp(0, maxPerc,
+                    (float)relativeWaveNum / 100f);
 
                 if (relativeWaveNum <= 80)
                 {

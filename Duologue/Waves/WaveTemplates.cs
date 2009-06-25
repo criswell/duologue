@@ -39,6 +39,7 @@ namespace Duologue.Waves
         #region Constants
         //private const int maxNumberOfMobNumbersAndLetsSayNumbersAgain = 20;
         //private const inf maxNumberOfTemplatesInList = 20;
+        private const float maxNumberOfMinions = 30f;
         #endregion
 
         #region Fields
@@ -808,7 +809,12 @@ namespace Duologue.Waves
         {
             Wavelet temp;
 
-            temp = new Wavelet((int)(30 * intensity * numOfBosses), hitPointMinion);
+            int numMinions = (int)MathHelper.Lerp(
+                0,
+                maxNumberOfMinions,
+                intensity);
+
+            temp = new Wavelet((int)(numMinions * numOfBosses), hitPointMinion);
 
             float[] startAngles = new float[numOfBosses];
             for (int i = 0; i < numOfBosses; i++)
