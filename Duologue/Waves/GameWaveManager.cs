@@ -117,6 +117,9 @@ namespace Duologue.Waves
         private const float maxNumberLahmu = 3;
         private const float HP_LahmuMin = 1;
         private const float HP_LahmuMax = 3;
+        // Moloch data
+        private const float HP_MolochMin = 0;
+        private const float HP_MolochMax = 5;
         #endregion
         #endregion
 
@@ -592,6 +595,16 @@ namespace Duologue.Waves
                 {
                     // Moloch
                     // Determine HP
+                    int bossHP = (int)MathHelper.Lerp(
+                        HP_MolochMin,
+                        HP_MolochMax,
+                        (float)lastMajorWaveNo / (float)MaxMajorNumber);
+
+                    thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
+                        1,
+                        bossHP,
+                        0,
+                        TypesOfPlayObjects.Enemy_Moloch);
                 }
             }
             else
