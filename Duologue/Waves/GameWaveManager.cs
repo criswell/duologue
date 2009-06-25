@@ -74,8 +74,40 @@ namespace Duologue.Waves
 
         private const float max_TotalHP = 10f;
 
-        private const float min_DelayPerEnemy = 0.5f;
-        private const float max_DelayPerEnemy = 3.1f;
+        private const float min_EnemyDelay = 0.5f;
+        // How's this for a mind-fuck?
+        private const float maxMin_EnemyDelay = 25.1f;
+        private const float maxMax_EnemyDelay = 40.1f;
+
+        #region Boss/Minion HP max and mins for random waves
+        // Gloops
+        private const float HP_GloopPrinceMin = 2f;
+        private const float HP_GloopPrinceMax = 10f;
+        private const float HP_GloopKingMin = 2f;
+        private const float HP_GloopKingMax = 15f;
+        private const float HP_GloopMin = 0f;
+        private const float HP_GloopMax = 6f;
+        // Fire stuffs
+        private const float HP_PyreMin = 7f;
+        private const float HP_PyreMax = 15f;
+        private const float HP_EmberMin = 1f;
+        private const float HP_EmberMax = 15f;
+        // ProtoNora stuffs
+        private const float HP_ProtoNoraMin = 2f;
+        private const float HP_ProtoNoraMax = 4f;
+        private const float HP_AnnMoebaMin = 3f;
+        private const float HP_AnnMoebaMax = 5f;
+        // MetalTooth stuffs
+        private const float HP_MetalToothMin = 2f;
+        private const float HP_MetalToothMax = 4f;
+        private const float HP_MiniSawMin = 0f;
+        private const float HP_MiniSawMax = 1f;
+        // Unclean Rot stuff
+        private const float HP_UncleanRotMin = 4f;
+        private const float HP_UncleanRotMax = 10f;
+        private const float HP_StaticGloopMin = 4f;
+        private const float HP_StaticGloopMax = 9f;
+        #endregion
         #endregion
 
         #region Fields
@@ -103,36 +135,6 @@ namespace Duologue.Waves
         private WaveTemplates waveTemplates;
 
         private TypesOfPlayObjects[][] enemyClusters;
-
-        // DELME - this is just here for testing the kill-everyone achievement
-        /*private int currentEnemyIndex = 0;
-        private TypesOfPlayObjects[] enemiesToSpawn = new TypesOfPlayObjects[]
-        {
-            TypesOfPlayObjects.Enemy_MolochIntro,
-            TypesOfPlayObjects.Enemy_Moloch,
-            TypesOfPlayObjects.Enemy_AnnMoeba,
-            TypesOfPlayObjects.Enemy_Buzzsaw,
-            TypesOfPlayObjects.Enemy_Ember,
-            TypesOfPlayObjects.Enemy_Firefly,
-            TypesOfPlayObjects.Enemy_Flambi,
-            TypesOfPlayObjects.Enemy_Flycket,
-            TypesOfPlayObjects.Enemy_Gloop,
-            TypesOfPlayObjects.Enemy_GloopPrince,
-            TypesOfPlayObjects.Enemy_KingGloop,
-            TypesOfPlayObjects.Enemy_Lahmu,
-            TypesOfPlayObjects.Enemy_MetalTooth,
-            TypesOfPlayObjects.Enemy_MiniSaw,
-            TypesOfPlayObjects.Enemy_Mirthworm,
-            TypesOfPlayObjects.Enemy_Maggot,
-            TypesOfPlayObjects.Enemy_ProtoNora,
-            TypesOfPlayObjects.Enemy_Pyre,
-            TypesOfPlayObjects.Enemy_Roggles,
-            TypesOfPlayObjects.Enemy_Spawner,
-            TypesOfPlayObjects.Enemy_Spitter,
-            TypesOfPlayObjects.Enemy_StaticGloop,
-            TypesOfPlayObjects.Enemy_UncleanRot,
-            TypesOfPlayObjects.Enemy_Wiggles,
-        };*/
         #endregion
 
         #region Properties
@@ -279,7 +281,7 @@ namespace Duologue.Waves
             lastMinorNo++;
             if (lastMinorNo > MaxMinorNumber)
             {
-                lastMinorNo = 0;
+                lastMinorNo = 1;
                 lastMajorNo++;
                 if (lastMajorNo > MaxMajorNumber)
                 {
@@ -412,13 +414,20 @@ namespace Duologue.Waves
             {
                 // Fighting boss
                 int numOfBosses = 1;
-                if (relativeWaveNum >= 10 && relativeWaveNum <= 50)
+                if (relativeWaveNum >= 50 && relativeWaveNum < 80)
                 {
                     numOfBosses = MWMathHelper.GetRandomInRange(2, 3);
                 }
 
-                int hitPointBoss = 0;
-                int hitPointMinion = 2;
+                // HP boss (determined by relwaveno, real wave no)
+                int hitPointBoss;
+
+
+
+                // HP Minion (determined by relwavno)
+                int hitPointMinion;
+
+                // intensity (determined by relwavno, real wave no)
                 float intensity = 1f;
 
                 if (relativeWaveNum <= 80)
@@ -538,10 +547,11 @@ namespace Duologue.Waves
 
                 // Figure out if we want a max delay
                 float maxDelay = 0;
-                if (numOfEnemies > 10)
+                if (numOfEnemies > 15)
                 {
-                    maxDelay = MathHelper.Lerp(0, max_DelayPerEnemy,
-                        (float)numOfEnemies / (float)max_NumberOfEnemies);
+                    maxDelay = MathHelper.Lerp(min_EnemyDelay,
+                        (float)MWMathHelper.GetRandomInRange(maxMin_EnemyDelay, maxMax_EnemyDelay),
+                        (float)(numOfEnemies-15) / (float)(max_NumberOfEnemies-15));
                 }
 
                 // Figure out the enemies we should use
