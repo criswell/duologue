@@ -39,6 +39,7 @@ namespace Duologue.Waves
         #region Constants
         //private const int maxNumberOfMobNumbersAndLetsSayNumbersAgain = 20;
         //private const inf maxNumberOfTemplatesInList = 20;
+        private const float minNumberOfMinions = 10f;
         private const float maxNumberOfMinions = 30f;
         #endregion
 
@@ -810,7 +811,7 @@ namespace Duologue.Waves
             Wavelet temp;
 
             int numMinions = (int)MathHelper.Lerp(
-                0,
+                minNumberOfMinions,
                 maxNumberOfMinions,
                 intensity);
 
