@@ -844,23 +844,36 @@ namespace Duologue.Waves
             return temp;
         }
 
-        public Wavelet Boss_Lahmu(int numOfBosses, int hitPoint, float intensity)
+        /// <summary>
+        /// Used to generate the big bosses
+        /// </summary>
+        public Wavelet GenerateBoss(
+            int numOfBosses,
+            int hitPoint,
+            float maxDelay,
+            TypesOfPlayObjects boss)
         {
-            Wavelet temp;
+            Wavelet temp = new Wavelet(30, hitPoint);
 
-            temp = new Wavelet(10, 0);
-
+            for (int i = 0; i < temp.Enemies.Length; i++)
+            {
+                if (i < temp.Enemies.Length - numOfBosses)
+                {
+                    temp.Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                    temp.StartHitPoints[i] = 0;
+                }
+                else
+                {
+                    temp.Enemies[i] = boss;
+                    temp.StartHitPoints[i] = hitPoint;
+                    temp.StartAngle[i] = 0f;
+                    temp.SpawnDelay[i] = (double)MathHelper.Lerp(
+                        0, maxDelay, (float)(temp.Enemies.Length - i) / (float)numOfBosses);
+                }
+                temp.ColorPolarities[i] = ColorState.RandomPolarity();
+            }
             return temp;
         }
-        public Wavelet Boss_Moloch(int numOfBosses, int hitPoint, float intensity)
-        {
-            Wavelet temp;
-
-            temp = new Wavelet(10, 0);
-
-            return temp;
-        }
-
         #endregion
     }
 }

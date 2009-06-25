@@ -112,6 +112,11 @@ namespace Duologue.Waves
         private const float bossHP_UpperLimit = 1f;
         private const float intensity_LowerLimit = 0.5f;
         private const float intensity_UpperLimit = 1.1f;
+        // Lahmu data
+        private const float minNumberLahmu = 1;
+        private const float maxNumberLahmu = 3;
+        private const float HP_LahmuMin = 1;
+        private const float HP_LahmuMax = 3;
         #endregion
         #endregion
 
@@ -424,7 +429,6 @@ namespace Duologue.Waves
                     numOfBosses = MWMathHelper.GetRandomInRange(2, 4);
                 }
 
-                // ERE I AM JH
                 // HP boss (determined by relwaveno, real wave no)
                 // realwaveno determines max of percentage
                 // relwaveno determines percentage up to max
@@ -557,10 +561,37 @@ namespace Duologue.Waves
                 else if (relativeWaveNum == 90)
                 {
                     // Lahmu
+                    // Determine num of bosses
+                    int numBosses = (int)maxNumberLahmu;
+                    if (lastMajorWaveNo < 500)
+                    {
+                        numBosses = (int)MathHelper.Lerp(
+                            minNumberLahmu,
+                            maxNumberLahmu,
+                            (float)lastMajorWaveNo / 500f);
+                    }
+
+                    // Determine HP
+                    int bossHP = (int)MathHelper.Lerp(
+                        HP_LahmuMin,
+                        HP_LahmuMax,
+                        (float)lastMajorWaveNo / (float)MaxMajorNumber);
+
+                    // Determine delay
+                    float delay = 0;
+                    if (numBosses > 1)
+                        delay = 8f * numBosses;
+
+                    thisWave.Wavelets[0] = waveTemplates.GenerateBoss(
+                        numBosses,
+                        bossHP,
+                        delay,
+                        TypesOfPlayObjects.Enemy_Lahmu);
                 }
                 else
                 {
                     // Moloch
+                    // Determine HP
                 }
             }
             else
