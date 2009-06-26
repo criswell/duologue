@@ -36,7 +36,7 @@ namespace Duologue.PlayObjects
         private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode";
         private const float volume_Splat = 0.25f;
 
-        private const int numberOfWormBits = 4;
+        private const int numberOfWormBits = 3;
 
         private const float maxSize = 0.6f;
         private const float minSize = 0.08f;
