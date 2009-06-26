@@ -31,43 +31,6 @@ using Duologue.AchievementSystem;
 
 namespace Duologue.Waves
 {
-    /*public class Wavelet : Wavelet
-    {
-        /// <summary>
-        /// Integer array deliminating the ordering of the enemies
-        /// </summary>
-        public int[] EnemyOrderTemplate;
-
-        public Wavelet() : base() { }
-
-        public Wavelet(int NumEnemies, int StartHP, ColorPolarity polarity)
-            : base(NumEnemies, StartHP, polarity)
-        {
-            EnemyOrderTemplate = new int[NumEnemies];
-            for (int i = 0; i < NumEnemies; i++)
-            {
-                EnemyOrderTemplate[i] = 0;
-            }
-        }
-
-        public Wavelet(int NumEnemies, int StartHP)
-            : base(NumEnemies, StartHP)
-        {
-            EnemyOrderTemplate = new int[NumEnemies];
-            for (int i = 0; i < NumEnemies; i++)
-            {
-                EnemyOrderTemplate[i] = 0;
-            }
-        }
-    }*/
-
-    /*
-    public struct WaveletList
-    {
-        public List<Wavelet> Wavelets;
-    }
-     */
-
     /// <summary>
     /// Defines various wave templates for use in survival mode
     /// </summary>
@@ -76,6 +39,8 @@ namespace Duologue.Waves
         #region Constants
         //private const int maxNumberOfMobNumbersAndLetsSayNumbersAgain = 20;
         //private const inf maxNumberOfTemplatesInList = 20;
+        private const float minNumberOfMinions = 10f;
+        private const float maxNumberOfMinions = 30f;
         #endregion
 
         #region Fields
@@ -845,7 +810,12 @@ namespace Duologue.Waves
         {
             Wavelet temp;
 
-            temp = new Wavelet((int)(30 * intensity * numOfBosses), hitPointMinion);
+            int numMinions = (int)MathHelper.Lerp(
+                minNumberOfMinions,
+                maxNumberOfMinions,
+                intensity);
+
+            temp = new Wavelet((int)(numMinions * numOfBosses), hitPointMinion);
 
             float[] startAngles = new float[numOfBosses];
             for (int i = 0; i < numOfBosses; i++)
@@ -874,23 +844,36 @@ namespace Duologue.Waves
             return temp;
         }
 
-        public Wavelet Boss_Lahmu(int numOfBosses, int hitPoint, float intensity)
+        /// <summary>
+        /// Used to generate the big bosses
+        /// </summary>
+        public Wavelet GenerateBoss(
+            int numOfBosses,
+            int hitPoint,
+            float maxDelay,
+            TypesOfPlayObjects boss)
         {
-            Wavelet temp;
+            Wavelet temp = new Wavelet(30, hitPoint);
 
-            temp = new Wavelet(10, 0);
-
+            for (int i = 0; i < temp.Enemies.Length; i++)
+            {
+                if (i < temp.Enemies.Length - numOfBosses)
+                {
+                    temp.Enemies[i] = TypesOfPlayObjects.Enemy_Placeholder;
+                    temp.StartHitPoints[i] = 0;
+                }
+                else
+                {
+                    temp.Enemies[i] = boss;
+                    temp.StartHitPoints[i] = hitPoint;
+                    temp.StartAngle[i] = 0f;
+                    temp.SpawnDelay[i] = (double)MathHelper.Lerp(
+                        0, maxDelay, (float)(temp.Enemies.Length - i) / (float)numOfBosses);
+                }
+                temp.ColorPolarities[i] = ColorState.RandomPolarity();
+            }
             return temp;
         }
-        public Wavelet Boss_Moloch(int numOfBosses, int hitPoint, float intensity)
-        {
-            Wavelet temp;
-
-            temp = new Wavelet(10, 0);
-
-            return temp;
-        }
-
         #endregion
     }
 }
