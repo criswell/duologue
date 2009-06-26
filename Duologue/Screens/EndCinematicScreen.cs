@@ -34,6 +34,9 @@ namespace Duologue.Screens
         #region Constants
         private const string fontFilename = "Fonts/inero-50";
         private const int numberOfPlayers = 20;
+
+        // Time triggers and limits
+        private double time_TotalRunTime = 20.0;
         #endregion
 
         #region Fields
@@ -44,6 +47,11 @@ namespace Duologue.Screens
         private AudioManager audio;
 
         private Player[] players;
+
+        private bool infiniteModeResults;
+
+        // Timer stuff
+        private double masterTimer;
         #endregion
 
         #region Properties
@@ -54,6 +62,8 @@ namespace Duologue.Screens
             : base(game)
         {
             myManager = manager;
+            infiniteModeResults = false;
+            masterTimer = 0;
         }
 
         protected override void LoadContent()
@@ -113,6 +123,16 @@ namespace Duologue.Screens
                         //PlayerColors.
                 }
             }
+
+            if (Enabled)
+            {
+                if (LocalInstanceManager.LastGameState == GameState.InfiniteGame)
+                    infiniteModeResults = true;
+                else
+                    infiniteModeResults = false;
+
+                masterTimer = 0;
+            }
             base.OnEnabledChanged(sender, args);
         }
         #endregion
@@ -120,6 +140,12 @@ namespace Duologue.Screens
         #region Update / Draw
         public override void Update(GameTime gameTime)
         {
+            masterTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (masterTimer > time_TotalRunTime)
+            {
+                LocalInstanceManager.CurrentGameState = GameState.Credits;
+            }
             base.Update(gameTime);
         }
 

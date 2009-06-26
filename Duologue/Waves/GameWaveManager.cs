@@ -71,9 +71,9 @@ namespace Duologue.Waves
         private const int max_EnemyRandomJitter = 5;
 
         private const float min_HPBaseline = 0f;
-        private const float max_HPBaseline = 5f;
+        private const float max_HPBaseline = 2f;
 
-        private const float max_TotalHP = 10f;
+        private const float max_TotalHP = 6f;
 
         private const float min_EnemyDelay = 0.5f;
         // How's this for a mind-fuck?
