@@ -32,8 +32,23 @@ namespace Duologue.Screens
     public class EndCinematicScreen : DrawableGameComponent
     {
         #region Constants
-        private const string fontFilename = "Fonts/inero-50";
+        private const string fontFilename = "Fonts/inero-40";
         private const int numberOfPlayers = 20;
+
+        private const int minColorValue = 144;
+        private const int maxColorValue = 238;
+
+        private const float colorPercent_Medium = 75f;
+        private const float colorPercent_Dark = 50f;
+
+        private const float offscreenStart = 771f + 62f;
+        private const float playerSizeY = 64f;
+        private const float playerSizeX = 62f;
+
+        private const int minNumOffset = 2;
+        private const int maxNumOffset = 6;
+
+        private const float deltaPlayerMovementX = -4f;
 
         // Time triggers and limits
         private double time_TotalRunTime = 20.0;
@@ -47,8 +62,10 @@ namespace Duologue.Screens
         private AudioManager audio;
 
         private Player[] players;
+        private PlayerColors[] playerColors;
 
         private bool infiniteModeResults;
+        private float numberOfVertShips = -1;
 
         // Timer stuff
         private double masterTimer;
@@ -64,8 +81,22 @@ namespace Duologue.Screens
             myManager = manager;
             infiniteModeResults = false;
             masterTimer = 0;
-        }
+            playerColors = new PlayerColors[numberOfPlayers];
+            Color tempColor;
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                tempColor = new Color(
+                    (byte)MWMathHelper.GetRandomInRange(minColorValue, maxColorValue),
+                    (byte)MWMathHelper.GetRandomInRange(minColorValue, maxColorValue),
+                    (byte)MWMathHelper.GetRandomInRange(minColorValue, maxColorValue));
 
+                playerColors[i] = PlayerColors.GeneratePlayerColor(
+                    i.ToString(),
+                    tempColor,
+                    FadeColorByPercent(tempColor, colorPercent_Medium),
+                    FadeColorByPercent(tempColor, colorPercent_Dark));
+            }
+        }
         protected override void LoadContent()
         {
             font = InstanceManager.AssetManager.LoadSpriteFont(fontFilename);
@@ -77,6 +108,16 @@ namespace Duologue.Screens
         {
             audio = ServiceLocator.GetService<AudioManager>();
             base.Initialize();
+        }
+        #endregion
+
+        #region Private methods
+        private Color FadeColorByPercent(Color tempColor, float colorPercent)
+        {
+            return new Color(
+                (byte)(tempColor.R * colorPercent),
+                (byte)(tempColor.G * colorPercent),
+                (byte)(tempColor.B * colorPercent));
         }
         #endregion
 
@@ -113,14 +154,40 @@ namespace Duologue.Screens
             }
             else if (Enabled && players == null)
             {
+                if(numberOfVertShips <= 0)
+                {
+                    numberOfVertShips = InstanceManager.DefaultViewport.Height / playerSizeY;
+                }
                 players = new Player[numberOfPlayers];
                 ColorState[] tempC = ColorState.GetColorStates();
-                PlayerColors[] tempP = PlayerColors.GetPlayerColors();
+                int playerColorIndex = MWMathHelper.GetRandomInRange(0, numberOfPlayers);
+                float currentX = InstanceManager.DefaultViewport.Width + offscreenStart;
+                float currentY = playerSizeY * (float)MWMathHelper.GetRandomInRange(0, numberOfVertShips);
                 for (int i = 0; i < numberOfPlayers; i++)
                 {
                     players[i] = new Player();
-                    //players[i].Initialize(
-                        //PlayerColors.
+                    players[i].Initialize(
+                        playerColors[playerColorIndex],
+                        PlayerIndex.One,
+                        null,
+                        null,
+                        tempC[MWMathHelper.GetRandomInRange(0, tempC.Length)],
+                        new Vector2(currentX, currentY),
+                        -Vector2.UnitX,
+                        4);
+
+                    players[i].IgnoreScreenBoundaries = true;
+                    players[i].SetAssetManager(InstanceManager.AssetManager);
+                    players[i].SetGraphicsDevice(InstanceManager.GraphicsDevice);
+                    players[i].SetRenderSprite(InstanceManager.RenderSprite);
+                    players[i].SetAlive();
+
+                    currentY += playerSizeY * (float)MWMathHelper.GetRandomInRange(minNumOffset, maxNumOffset);
+                    if (currentY > InstanceManager.DefaultViewport.Height)
+                    {
+                        currentY = InstanceManager.DefaultViewport.Height - currentY;
+                        currentX += playerSizeX;
+                    }
                 }
             }
 
@@ -142,6 +209,16 @@ namespace Duologue.Screens
         {
             masterTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                players[i].Position += Vector2.UnitX * deltaPlayerMovementX;
+                if (players[i].Position.X < - playerSizeX)
+                {
+                    players[i].Position.X = InstanceManager.DefaultViewport.Width + offscreenStart;
+                    players[i].Update(gameTime);
+                }
+            }
+
             if (masterTimer > time_TotalRunTime)
             {
                 LocalInstanceManager.CurrentGameState = GameState.Credits;
@@ -156,6 +233,11 @@ namespace Duologue.Screens
                 "Placeholder for cinematics",
                 pos,
                 Color.Azure);
+
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                players[i].Draw(gameTime);
+            }
             base.Draw(gameTime);
         }
         #endregion

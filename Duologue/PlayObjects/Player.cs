@@ -194,6 +194,12 @@ namespace Duologue.PlayObjects
         public bool Active;
 
         /// <summary>
+        /// Set to true if you want to ignore the screen boundaries
+        /// (e.g., for cinematics)
+        /// </summary>
+        public bool IgnoreScreenBoundaries = false;
+
+        /// <summary>
         /// The current state of this player
         /// </summary>
         public PlayerState State
@@ -500,15 +506,18 @@ namespace Duologue.PlayObjects
         /// </summary>
         private void CheckScreenBoundary()
         {
-            if (Position.X > InstanceManager.DefaultViewport.Width - playerBase.Texture.Width / 2f)
-                Position.X = InstanceManager.DefaultViewport.Width - playerBase.Texture.Width / 2f;
-            if (Position.X < playerBase.Texture.Width / 2f)
-                Position.X = playerBase.Texture.Width / 2f;
+            if (!IgnoreScreenBoundaries)
+            {
+                if (Position.X > InstanceManager.DefaultViewport.Width - playerBase.Texture.Width / 2f)
+                    Position.X = InstanceManager.DefaultViewport.Width - playerBase.Texture.Width / 2f;
+                if (Position.X < playerBase.Texture.Width / 2f)
+                    Position.X = playerBase.Texture.Width / 2f;
 
-            if (Position.Y > InstanceManager.DefaultViewport.Height - playerBase.Texture.Height / 2f)
-                Position.Y = InstanceManager.DefaultViewport.Height - playerBase.Texture.Height / 2f;
-            if (Position.Y < playerBase.Texture.Height / 2f)
-                Position.Y = playerBase.Texture.Height / 2f;
+                if (Position.Y > InstanceManager.DefaultViewport.Height - playerBase.Texture.Height / 2f)
+                    Position.Y = InstanceManager.DefaultViewport.Height - playerBase.Texture.Height / 2f;
+                if (Position.Y < playerBase.Texture.Height / 2f)
+                    Position.Y = playerBase.Texture.Height / 2f;
+            }
         }
 
         /// <summary>

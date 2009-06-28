@@ -51,6 +51,7 @@ namespace Duologue.PlayObjects
 
         #region Fields
         private static PlayerColors[] theColors;
+        private static PlayerColors tempColor;
         #endregion
 
         #region Properties
@@ -112,6 +113,21 @@ namespace Duologue.PlayObjects
             }
 
             return theColors;
+        }
+
+        /// <summary>
+        /// Given light, medium, and dark colors, generate a custom player color
+        /// </summary>
+        public static PlayerColors GeneratePlayerColor(
+            string Name, Color Light, Color Medium, Color Dark)
+        {
+            tempColor = new PlayerColors();
+            tempColor.Name = Name;
+            tempColor.Colors[PlayerColors.Light] = Light;
+            tempColor.Colors[PlayerColors.Medium] = Medium;
+            tempColor.Colors[PlayerColors.Dark] = Dark;
+
+            return tempColor;
         }
         #endregion
     }
