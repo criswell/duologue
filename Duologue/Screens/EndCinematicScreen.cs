@@ -283,12 +283,6 @@ namespace Duologue.Screens
 
         public override void Draw(GameTime gameTime)
         {
-            InstanceManager.RenderSprite.DrawString(
-                font,
-                "Placeholder for cinematics",
-                pos,
-                Color.Azure);
-
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 players[i].Draw(gameTime);
