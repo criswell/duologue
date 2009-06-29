@@ -66,7 +66,7 @@ namespace Duologue.Screens
         private const float percentageTextNeedsToMoveForNextSpawnBreak = 4.45f;
 
         // Time triggers and limits
-        private double totalTime_TotalRun = 99.0;//64.0;
+        private double totalTime_TotalRun = 68.11;
         private double totalTime_Type = 2.1;
 
         private double trigger_StartText = 3.41;
@@ -164,8 +164,10 @@ namespace Duologue.Screens
             {
                 2f * Vector2.One,
                 -2f * Vector2.One,
-                Vector2.UnitX,
-                Vector2.UnitY,
+                2f * Vector2.UnitX,
+                2f * Vector2.UnitY,
+                -2f * Vector2.UnitX,
+                -2f * Vector2.UnitY,
                 10f * Vector2.One,
             };
 

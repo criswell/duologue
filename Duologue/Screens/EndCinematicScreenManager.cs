@@ -32,11 +32,13 @@ namespace Duologue.Screens
     public class EndCinematicScreenManager : GameScreen
     {
         #region Constants
+        private const int timesButtonMustBePressed = 10;
         #endregion
 
         #region Fields
         private DuologueGame localGame;
         private EndCinematicScreen endCinematicScreen;
+        private int numberOfButtonPresses;
         #endregion
 
         #region Properties
@@ -60,13 +62,23 @@ namespace Duologue.Screens
             this.SetEnable(false);
             this.SetVisible(false);
         }
+
+        public override void ScreenEntrance(GameTime gameTime)
+        {
+            numberOfButtonPresses = 0;
+            base.ScreenEntrance(gameTime);
+        }
         #endregion
 
         #region Update
         public override void Update(GameTime gameTime)
         {
-            if (InstanceManager.InputManager.NewButtonPressed(Buttons.Start) || InstanceManager.InputManager.NewButtonPressed(Buttons.A))
-                LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+            if (InstanceManager.InputManager.NewButtonPressed(Buttons.A))
+            {
+                numberOfButtonPresses++;
+                if(numberOfButtonPresses > timesButtonMustBePressed)
+                    LocalInstanceManager.CurrentGameState = GameState.Credits;
+            }
             base.Update(gameTime);
         }
         #endregion
