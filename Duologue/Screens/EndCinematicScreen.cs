@@ -35,23 +35,31 @@ namespace Duologue.Screens
         private const string fontFilename = "Fonts/inero-40";
         private const int numberOfPlayers = 20;
 
-        private const int minColorValue = 144;
+        private const int minColorValue = 99;
         private const int maxColorValue = 238;
 
         private const float colorPercent_Medium = 75f;
         private const float colorPercent_Dark = 50f;
 
-        private const float offscreenStart = 771f + 62f;
+        private const float offscreenStart = 671f + 62f;
         private const float playerSizeY = 64f;
         private const float playerSizeX = 62f;
 
         private const int minNumOffset = 2;
         private const int maxNumOffset = 6;
 
-        private const float deltaPlayerMovementX = -4f;
+        private const float minHorizOffset = 3.2f;
+        private const float maxHorizOffset = 5.4f;
+
+        private const int chanceDeltaChange = 45;
+
+        private const float minAimDelta = -MathHelper.PiOver4 * 0.02f;
+        private const float maxAimDelta = MathHelper.PiOver4 * 0.02f;
+
+        private const float deltaPlayerMovementX = -2.7f;
 
         // Time triggers and limits
-        private double time_TotalRunTime = 20.0;
+        private double time_TotalRunTime = 40.0;
         #endregion
 
         #region Fields
@@ -63,9 +71,12 @@ namespace Duologue.Screens
 
         private Player[] players;
         private PlayerColors[] playerColors;
-
+        private float[] playerAimDelta;
+        
         private bool infiniteModeResults;
-        private float numberOfVertShips = -1;
+        private float maxInitialOffset = -1;
+        private float minY = -1;
+        private float maxY = -1;
 
         // Timer stuff
         private double masterTimer;
@@ -154,15 +165,20 @@ namespace Duologue.Screens
             }
             else if (Enabled && players == null)
             {
-                if(numberOfVertShips <= 0)
+                if(maxInitialOffset <= 0)
                 {
-                    numberOfVertShips = InstanceManager.DefaultViewport.Height / playerSizeY;
+                    maxInitialOffset = 0.5f * InstanceManager.DefaultViewport.TitleSafeArea.Height / playerSizeY;
                 }
                 players = new Player[numberOfPlayers];
+                playerAimDelta = new float[numberOfPlayers];
                 ColorState[] tempC = ColorState.GetColorStates();
                 int playerColorIndex = MWMathHelper.GetRandomInRange(0, numberOfPlayers);
+                minY = InstanceManager.DefaultViewport.Height -
+                    InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
+                maxY = InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent;
                 float currentX = InstanceManager.DefaultViewport.Width + offscreenStart;
-                float currentY = playerSizeY * (float)MWMathHelper.GetRandomInRange(0, numberOfVertShips);
+                float currentY = playerSizeY * (float)MWMathHelper.GetRandomInRange(0, maxInitialOffset) +
+                    minY;
                 for (int i = 0; i < numberOfPlayers; i++)
                 {
                     players[i] = new Player();
@@ -172,9 +188,13 @@ namespace Duologue.Screens
                         null,
                         null,
                         tempC[MWMathHelper.GetRandomInRange(0, tempC.Length)],
-                        new Vector2(currentX, currentY),
+                        new Vector2(
+                            currentX + (float)MWMathHelper.GetRandomInRange(-1.0, 1.0) * playerSizeX,
+                            currentY),
                         -Vector2.UnitX,
                         4);
+                    /*Console.WriteLine(String.Format(
+                        "P[{0}]: {1}", i.ToString(), players[i].Position.ToString()));*/
 
                     players[i].IgnoreScreenBoundaries = true;
                     players[i].SetAssetManager(InstanceManager.AssetManager);
@@ -182,12 +202,20 @@ namespace Duologue.Screens
                     players[i].SetRenderSprite(InstanceManager.RenderSprite);
                     players[i].SetAlive();
 
-                    currentY += playerSizeY * (float)MWMathHelper.GetRandomInRange(minNumOffset, maxNumOffset);
-                    if (currentY > InstanceManager.DefaultViewport.Height)
+                    float tempOffset = (float)MWMathHelper.GetRandomInRange(minNumOffset, maxNumOffset);
+
+                    currentY += playerSizeY * tempOffset;
+                    if (currentY > maxY)
                     {
-                        currentY = InstanceManager.DefaultViewport.Height - currentY;
-                        currentX += playerSizeX;
+                        currentY = minY + playerSizeY * tempOffset;
+                        currentX += playerSizeX * (float)MWMathHelper.GetRandomInRange(minHorizOffset, maxHorizOffset);
                     }
+
+                    playerColorIndex++;
+                    if (playerColorIndex >= numberOfPlayers)
+                        playerColorIndex = 0;
+
+                    playerAimDelta[i] = (float)MWMathHelper.GetRandomInRange(minAimDelta, maxAimDelta);
                 }
             }
 
@@ -215,8 +243,14 @@ namespace Duologue.Screens
                 if (players[i].Position.X < - playerSizeX)
                 {
                     players[i].Position.X = InstanceManager.DefaultViewport.Width + offscreenStart;
-                    players[i].Update(gameTime);
                 }
+                players[i].Aim = MWMathHelper.RotateVectorByRadians(players[i].Aim, playerAimDelta[i]);
+                if (MWMathHelper.GetRandomInRange(0, chanceDeltaChange) == 1)
+                {
+                    playerAimDelta[i] = (float)MWMathHelper.GetRandomInRange(minAimDelta, maxAimDelta);
+                }
+
+                players[i].Update(gameTime);
             }
 
             if (masterTimer > time_TotalRunTime)
