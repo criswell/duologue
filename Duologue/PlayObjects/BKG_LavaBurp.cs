@@ -39,7 +39,7 @@ namespace Duologue.PlayObjects
         private const float alpha_SmokeEnd = 0.0002f;
 
         private const double totalTime_SmokeRise = 5.1;
-        private const double totalTime_FlameChange = 0.22;
+        private const double totalTime_FlameChange = 0.03;
 
         private const double size_MinStart = 0.08;
         private const double size_MaxStart = 0.4;
@@ -51,8 +51,8 @@ namespace Duologue.PlayObjects
 
         private const float deltaMinX = 0.001f;
         private const float deltaMaxX = 0.9f;
-        private const float deltaMinY = 0.002f;
-        private const float deltaMaxY = 0.0008f;
+        private const float deltaMinY = 0.01f;
+        private const float deltaMaxY = 0.008f;
 
         private const float percentSmokeBlitModeSwitch = 0.25f;
         #endregion
@@ -121,8 +121,8 @@ namespace Duologue.PlayObjects
                     deltaMinX * i, deltaMinY * i);
             }
 
-            color_SmokeStart = new Color(255, 62, 62, 170);
-            color_SmokeEnd = new Color(160, 164, 164, 25);
+            color_SmokeStart = new Color(255, 62, 62, 90);
+            color_SmokeEnd = new Color(160, 164, 164, 15);
         }
 
         public override String[] GetTextureFilenames()
@@ -198,7 +198,7 @@ namespace Duologue.PlayObjects
                 0f,
                 1f,
                 0f,
-                RenderSpriteBlendMode.AlphaBlend);
+                RenderSpriteBlendMode.Addititive);
 
             RenderSprite.Draw(
                 texture_Flames[flameFrame_Add],
