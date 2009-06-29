@@ -30,7 +30,7 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const string filename_Flame = "Cinematics/flame-{0}";
-        private const int frames_Flame = 4;
+        private const int frames_Flame = 12;
         private const string filename_Base = "Cinematics/flame-base";
         private const string filename_Smoke = "Cinematics/smoke";
 
@@ -39,7 +39,7 @@ namespace Duologue.PlayObjects
         private const float alpha_SmokeEnd = 0.0002f;
 
         private const double totalTime_SmokeRise = 5.1;
-        private const double totalTime_FlameChange = 0.03;
+        private const double totalTime_FlameChange = 0.095;
 
         private const double size_MinStart = 0.08;
         private const double size_MaxStart = 0.4;
@@ -51,8 +51,8 @@ namespace Duologue.PlayObjects
 
         private const float deltaMinX = 0.001f;
         private const float deltaMaxX = 0.9f;
-        private const float deltaMinY = 0.01f;
-        private const float deltaMaxY = 0.008f;
+        private const float deltaMinY = -0.7f;
+        private const float deltaMaxY = -0.008f;
 
         private const float percentSmokeBlitModeSwitch = 0.25f;
         #endregion
@@ -65,14 +65,15 @@ namespace Duologue.PlayObjects
         private Vector2 center_Base;
         private Vector2 center_Smoke;
 
-        private Vector2 position_End;
-
-        private int flameFrame_Add;
-        private int flameFrame_Alpha;
+        private int flameFrame_Top;
+        private int flameFrame_Bottom;
 
         private BKG_SmokeParticle[] smokeParticles;
         private Color color_SmokeStart;
         private Color color_SmokeEnd;
+
+        private Color color_Top;
+        private Color color_Bottom;
 
         private double timer_FlameChange;
         #endregion
@@ -105,9 +106,12 @@ namespace Duologue.PlayObjects
             center_Smoke = new Vector2(
                 texture_Smoke.Width / 2f, texture_Smoke.Height / 2f);
 
-            flameFrame_Add = 1;
-            flameFrame_Alpha = 0;
+            flameFrame_Top = MWMathHelper.GetRandomInRange(0, frames_Flame - 1);
+            flameFrame_Bottom = MWMathHelper.GetRandomInRange(0, frames_Flame - 1);
             timer_FlameChange = 0;
+
+            color_Top = new Color(Color.White, 125);
+            color_Bottom = new Color(Color.White, 50);
 
             // Set up the smoke particles
             smokeParticles = new BKG_SmokeParticle[numberOfSmokeParticles];
@@ -121,7 +125,7 @@ namespace Duologue.PlayObjects
                     deltaMinX * i, deltaMinY * i);
             }
 
-            color_SmokeStart = new Color(255, 62, 62, 90);
+            color_SmokeStart = new Color(255, 62, 62, 50);
             color_SmokeEnd = new Color(160, 164, 164, 15);
         }
 
@@ -188,26 +192,35 @@ namespace Duologue.PlayObjects
         #region Draw / Update
         public override void Draw(GameTime gameTime)
         {
+            float percent = (float)timer_FlameChange/(float)totalTime_FlameChange;
             // Draw the flames
             RenderSprite.Draw(
-                texture_Flames[flameFrame_Alpha],
+                texture_Flames[flameFrame_Bottom],
                 Position,
                 center_Flame,
                 null,
-                Color.White,
+                new Color(
+                    (byte)MathHelper.Lerp(color_Bottom.R, color_Top.R, percent),
+                    (byte)MathHelper.Lerp(color_Bottom.G, color_Top.G, percent),
+                    (byte)MathHelper.Lerp(color_Bottom.B, color_Top.B, percent),
+                    (byte)MathHelper.Lerp(color_Bottom.A, color_Top.A, percent)),
                 0f,
-                1f,
+                0.65f,
                 0f,
                 RenderSpriteBlendMode.Addititive);
 
             RenderSprite.Draw(
-                texture_Flames[flameFrame_Add],
+                texture_Flames[flameFrame_Top],
                 Position,
                 center_Flame,
                 null,
-                Color.White,
+                new Color(
+                    (byte)MathHelper.Lerp(color_Top.R, color_Bottom.R, percent),
+                    (byte)MathHelper.Lerp(color_Top.G, color_Bottom.G, percent),
+                    (byte)MathHelper.Lerp(color_Top.B, color_Bottom.B, percent),
+                    (byte)MathHelper.Lerp(color_Top.A, color_Bottom.A, percent)),
                 0f,
-                1f,
+                0.55f,
                 0f,
                 RenderSpriteBlendMode.Addititive);
 
@@ -223,7 +236,6 @@ namespace Duologue.PlayObjects
                 0f,
                 RenderSpriteBlendMode.AlphaBlend);
 
-            float percent;
             // Draw the smoke
             for (int i = 0; i < numberOfSmokeParticles; i++)
             {
@@ -293,10 +305,10 @@ namespace Duologue.PlayObjects
             if (timer_FlameChange > totalTime_FlameChange)
             {
                 timer_FlameChange = 0;
-                flameFrame_Alpha = flameFrame_Add;
-                flameFrame_Add++;
-                if (flameFrame_Add >= frames_Flame)
-                    flameFrame_Add = 0;
+                flameFrame_Bottom = flameFrame_Top;
+                flameFrame_Top++;
+                if (flameFrame_Top >= frames_Flame)
+                    flameFrame_Top = 0;
             }
         }
         #endregion

@@ -35,7 +35,7 @@ namespace Duologue.Screens
         private const string fontFilename = "Fonts/inero-40";
         private const int numberOfPlayers = 20;
 
-        private const int numberOfLavas = 23;
+        private const int numberOfLavas = 13;
 
         private const int minColorValue = 99;
         private const int maxColorValue = 238;
