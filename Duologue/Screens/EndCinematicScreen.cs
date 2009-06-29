@@ -207,6 +207,7 @@ namespace Duologue.Screens
                     players[i].SetGraphicsDevice(InstanceManager.GraphicsDevice);
                     players[i].SetRenderSprite(InstanceManager.RenderSprite);
                     players[i].SetAlive();
+                    players[i].Aim = -Vector2.UnitX;
 
                     float tempOffset = (float)MWMathHelper.GetRandomInRange(minNumOffset, maxNumOffset);
 
