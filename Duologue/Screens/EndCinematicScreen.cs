@@ -207,6 +207,7 @@ namespace Duologue.Screens
                     players[i].SetGraphicsDevice(InstanceManager.GraphicsDevice);
                     players[i].SetRenderSprite(InstanceManager.RenderSprite);
                     players[i].SetAlive();
+                    players[i].Aim = -Vector2.UnitX;
 
                     float tempOffset = (float)MWMathHelper.GetRandomInRange(minNumOffset, maxNumOffset);
 
@@ -282,12 +283,6 @@ namespace Duologue.Screens
 
         public override void Draw(GameTime gameTime)
         {
-            InstanceManager.RenderSprite.DrawString(
-                font,
-                "Placeholder for cinematics",
-                pos,
-                Color.Azure);
-
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 players[i].Draw(gameTime);
