@@ -174,6 +174,7 @@ namespace Duologue.Screens
                 {
                     maxInitialOffset = 0.5f * InstanceManager.DefaultViewport.TitleSafeArea.Height / playerSizeY;
                 }
+                LocalInstanceManager.Background.SetBackground(0);
                 players = new Player[numberOfPlayers];
                 playerAimDelta = new float[numberOfPlayers];
                 ColorState[] tempC = ColorState.GetColorStates();
@@ -228,7 +229,7 @@ namespace Duologue.Screens
                 {
                     lavas[i] = new BKG_LavaBurp();
                     lavas[i].Initialize(new Vector2(
-                        (float)MWMathHelper.GetRandomInRange(0, InstanceManager.DefaultViewport.Width),
+                        (float)MWMathHelper.GetRandomInRange(0, InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent),
                         (float)MWMathHelper.GetRandomInRange(minY, maxY)));
                 }
             }
