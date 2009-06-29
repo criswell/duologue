@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Content;
 using Mimicware.Manager;
 using Mimicware.Graphics;
 using Mimicware;
+using Mimicware.Fx;
 // Duologue
 using Duologue;
 using Duologue.Audio;
@@ -32,8 +33,8 @@ namespace Duologue.Screens
     public class EndCinematicScreen : DrawableGameComponent
     {
         #region Constants
-        private const string fontFilename = "Fonts/inero-40";
-        private const int numberOfPlayers = 20;
+        private const string fontFilename = "Fonts/inero-28";
+        private const int numberOfPlayers = 15;
 
         private const int numberOfLavas = 13;
 
@@ -59,9 +60,17 @@ namespace Duologue.Screens
         private const float maxAimDelta = MathHelper.PiOver4 * 0.02f;
 
         private const float deltaPlayerMovementX = -2.7f;
+        private const float deltaTextMovementY = -0.21f;
+
+        private const float percentageTextNeedsToMoveForNextSpawn = 1.45f;
+        private const float percentageTextNeedsToMoveForNextSpawnBreak = 4.45f;
 
         // Time triggers and limits
-        private double time_TotalRunTime = 40.0;
+        private double totalTime_TotalRun = 99.0;//64.0;
+        private double totalTime_Type = 2.1;
+
+        private double trigger_StartText = 3.41;
+        private double trigger_EndText = 57.38;
         #endregion
 
         #region Fields
@@ -81,6 +90,16 @@ namespace Duologue.Screens
         private float maxY = -1;
 
         private BKG_LavaBurp[] lavas;
+
+        private string[] theText;
+        private TeletypeEntry[] teletypeEntries;
+        private Vector2 textStartPos;
+        private int nextText = 0;
+        private Teletype teletype = null;
+        private Color color_Text;
+        private Color color_Shadow;
+        private Vector2[] offset_Shadow;
+        private bool stopScrolling;
 
         // Timer stuff
         private double masterTimer;
@@ -123,6 +142,36 @@ namespace Duologue.Screens
         public override void Initialize()
         {
             audio = ServiceLocator.GetService<AudioManager>();
+
+            theText = new String[]
+            {
+                Resources.EndCinematic01,
+                Resources.EndCinematic02,
+                Resources.EndCinematic03,
+                Resources.EndCinematic04,
+                Resources.EndCinematic05,
+                Resources.EndCinematic06,
+                Resources.EndCinematic07,
+                Resources.EndCinematic08,
+                Resources.EndCinematic09,
+                Resources.EndCinematic10,
+                Resources.EndCinematic11,
+            };
+
+            teletypeEntries = new TeletypeEntry[theText.Length];
+
+            offset_Shadow = new Vector2[]
+            {
+                2f * Vector2.One,
+                -2f * Vector2.One,
+                Vector2.UnitX,
+                Vector2.UnitY,
+                10f * Vector2.One,
+            };
+
+            color_Text = Color.FloralWhite;
+            color_Shadow = new Color(
+                Color.Black, 0.55f);
             base.Initialize();
         }
         #endregion
@@ -243,6 +292,40 @@ namespace Duologue.Screens
                     infiniteModeResults = false;
 
                 masterTimer = 0;
+
+                if (teletype == null)
+                {
+                    Vector2 tempSize;
+                    textStartPos = new Vector2(
+                        InstanceManager.DefaultViewport.Width / 2f,
+                        InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent - font.LineSpacing);
+
+                    teletype = ServiceLocator.GetService<Teletype>();
+                    for (int i = 0; i < theText.Length; i++)
+                    {
+                        tempSize = font.MeasureString(theText[i]);
+                        teletypeEntries[i] = new TeletypeEntry(
+                            font,
+                            theText[i],
+                            textStartPos,
+                            tempSize / 2f,
+                            color_Text,
+                            totalTime_Type,
+                            9999.0,
+                            color_Shadow,
+                            offset_Shadow,
+                            InstanceManager.RenderSprite);
+                    }
+                }
+
+                teletype.FlushEntries();
+                nextText = 0;
+                stopScrolling = false;
+            }
+            else
+            {
+                if(teletype != null)
+                    teletype.FlushEntries();
             }
             base.OnEnabledChanged(sender, args);
         }
@@ -256,9 +339,17 @@ namespace Duologue.Screens
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 players[i].Position += Vector2.UnitX * deltaPlayerMovementX;
-                if (players[i].Position.X < - playerSizeX)
+                if (players[i].Position.X < - playerSizeX && masterTimer < trigger_EndText)
                 {
                     players[i].Position.X = InstanceManager.DefaultViewport.Width + offscreenStart;
+                    // Make sure no overlap
+                    players[i].StartOffset();
+                    for (int j = 0; j < numberOfPlayers; j++)
+                    {
+                        if(i != j)
+                            players[i].UpdateOffset(players[j]);
+                    }
+                    players[i].ApplyOffset();
                 }
                 players[i].Aim = MWMathHelper.RotateVectorByRadians(players[i].Aim, playerAimDelta[i]);
                 if (MWMathHelper.GetRandomInRange(0, chanceDeltaChange) == 1)
@@ -274,9 +365,67 @@ namespace Duologue.Screens
                 lavas[i].Update(gameTime);
             }
 
-            if (masterTimer > time_TotalRunTime)
+            if (masterTimer > totalTime_TotalRun)
             {
                 LocalInstanceManager.CurrentGameState = GameState.Credits;
+            }
+            else if (masterTimer > trigger_EndText)
+            {
+                if (stopScrolling)
+                {
+                    teletype.FlushEntries();
+                    stopScrolling = false;
+                    audio.FadeOut(SongID.Tr8or);
+                }
+            }
+            else if (masterTimer > trigger_StartText)
+            {
+                if (nextText > 0)
+                {
+                    // Run through moving old entries
+                    if (!stopScrolling)
+                    {
+                        for (int i = 0; i < nextText; i++)
+                        {
+                            teletypeEntries[i].Position.Y += deltaTextMovementY;
+                        }
+                    }
+
+                    // see if time to spawn next entry
+                    if (nextText == teletypeEntries.Length)
+                    {
+                        if (teletypeEntries[nextText - 1].Position.Y < textStartPos.Y -
+                            percentageTextNeedsToMoveForNextSpawn * font.LineSpacing)
+                        {
+                            stopScrolling = true;
+                        }
+                    }
+                    else if (nextText / 3f == nextText / 3)
+                    {
+                        if (teletypeEntries[nextText - 1].Position.Y < textStartPos.Y -
+                            percentageTextNeedsToMoveForNextSpawnBreak * font.LineSpacing &&
+                            nextText < teletypeEntries.Length)
+                        {
+                            teletype.AddEntry(teletypeEntries[nextText]);
+                            nextText++;
+                        }
+                    }
+                    else
+                    {
+                        if (teletypeEntries[nextText - 1].Position.Y < textStartPos.Y -
+                            percentageTextNeedsToMoveForNextSpawn * font.LineSpacing &&
+                            nextText < teletypeEntries.Length)
+                        {
+                            teletype.AddEntry(teletypeEntries[nextText]);
+                            nextText++;
+                        }
+                    }
+                }
+                else
+                {
+                    teletype.AddEntry(teletypeEntries[nextText]);
+                    nextText++;
+                }
             }
             base.Update(gameTime);
         }
