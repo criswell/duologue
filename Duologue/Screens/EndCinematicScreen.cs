@@ -35,6 +35,8 @@ namespace Duologue.Screens
         private const string fontFilename = "Fonts/inero-40";
         private const int numberOfPlayers = 20;
 
+        private const int numberOfLavas = 23;
+
         private const int minColorValue = 99;
         private const int maxColorValue = 238;
 
@@ -78,6 +80,8 @@ namespace Duologue.Screens
         private float minY = -1;
         private float maxY = -1;
 
+        private BKG_LavaBurp[] lavas;
+
         // Timer stuff
         private double masterTimer;
         #endregion
@@ -93,6 +97,7 @@ namespace Duologue.Screens
             infiniteModeResults = false;
             masterTimer = 0;
             playerColors = new PlayerColors[numberOfPlayers];
+            lavas = new BKG_LavaBurp[numberOfLavas];
             Color tempColor;
             for (int i = 0; i < numberOfPlayers; i++)
             {
@@ -217,6 +222,15 @@ namespace Duologue.Screens
 
                     playerAimDelta[i] = (float)MWMathHelper.GetRandomInRange(minAimDelta, maxAimDelta);
                 }
+
+                // init lavas
+                for (int i = 0; i < numberOfLavas; i++)
+                {
+                    lavas[i] = new BKG_LavaBurp();
+                    lavas[i].Initialize(new Vector2(
+                        (float)MWMathHelper.GetRandomInRange(0, InstanceManager.DefaultViewport.Width),
+                        (float)MWMathHelper.GetRandomInRange(minY, maxY)));
+                }
             }
 
             if (Enabled)
@@ -253,6 +267,11 @@ namespace Duologue.Screens
                 players[i].Update(gameTime);
             }
 
+            for (int i = 0; i < numberOfLavas; i++)
+            {
+                lavas[i].Update(gameTime);
+            }
+
             if (masterTimer > time_TotalRunTime)
             {
                 LocalInstanceManager.CurrentGameState = GameState.Credits;
@@ -271,6 +290,10 @@ namespace Duologue.Screens
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 players[i].Draw(gameTime);
+            }
+            for (int i = 0; i < numberOfLavas; i++)
+            {
+                lavas[i].Draw(gameTime);
             }
             base.Draw(gameTime);
         }
