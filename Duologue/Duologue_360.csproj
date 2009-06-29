@@ -99,6 +99,7 @@
     <Compile Include="ParticleEffects\PlayerRing.cs" />
     <Compile Include="ParticleEffects\PlayerSmoke.cs" />
     <Compile Include="ParticleEffects\Steam.cs" />
+    <Compile Include="PlayObjects\BKG_LavaBurp.cs" />
     <Compile Include="PlayObjects\Enemy.cs" />
     <Compile Include="PlayObjects\Enemy_AnnMoeba.cs" />
     <Compile Include="PlayObjects\Enemy_Buzzsaw.cs" />

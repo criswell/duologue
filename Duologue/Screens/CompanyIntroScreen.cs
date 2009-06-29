@@ -152,6 +152,7 @@ namespace Duologue.Screens
                 TypesOfPlayObjects.Enemy_Moloch,
                 TypesOfPlayObjects.Enemy_MolochPart,
                 TypesOfPlayObjects.Enemy_MolochIntro,
+                TypesOfPlayObjects.BKG_LavaBurp,
             };
 
             currentPlayObjectIndex = 0;
@@ -393,6 +394,9 @@ namespace Duologue.Screens
                     break;
                 case TypesOfPlayObjects.Enemy_MolochIntro:
                     currentPlayObject = new Enemy_MolochIntro();
+                    break;
+                case TypesOfPlayObjects.BKG_LavaBurp:
+                    currentPlayObject = new BKG_LavaBurp();
                     break;
                 default:
                     // Player Bullet

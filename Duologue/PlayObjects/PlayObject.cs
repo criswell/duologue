@@ -61,6 +61,7 @@ namespace Duologue.PlayObjects
         Enemy_Moloch,
         Enemy_MolochPart,
         Enemy_MolochIntro,
+        BKG_LavaBurp,
     }
 
     /// <summary>
