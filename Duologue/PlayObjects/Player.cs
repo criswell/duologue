@@ -851,8 +851,7 @@ namespace Duologue.PlayObjects
                 state = PlayerState.Dying;
                 currentTread = InstanceManager.Random.Next(treadDestroyFrames);
                 deathTimer = 0f;
-                // FIXME?
-                // May not be the best way to kill off a player when there are no more lives
+
                 this.Active = LocalInstanceManager.Scores[(int)MyPlayerIndex].LoseLife();
                 return this.Active;
             }
