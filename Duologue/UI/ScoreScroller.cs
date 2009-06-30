@@ -43,7 +43,7 @@ namespace Duologue.UI
         private const double timePerLifeUpBlink = 0.1f;
         //private const string livesDot = "PlayerUI\\live-dot";
         private const int defaultLives = 4;
-        private const int maxScore = 9999999;
+        private const int maxScore = 99999;
         private const int defaultDeltaScore = 5;
         private const int numPointlets = 10;
         private const float timeToMovePointlet = 1f;
