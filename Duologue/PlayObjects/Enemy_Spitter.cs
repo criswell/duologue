@@ -920,7 +920,7 @@ namespace Duologue.PlayObjects
                 {
                     currentFrame = maxAnimationFrames - 1;
                     animationDirection = -1;
-                    if(nearestPlayerObject != null && nearestPlayerObject.Alive)
+                    if(nearestPlayerObject != null && ((Player)nearestPlayerObject).State == PlayerState.Alive)
                         FireSpit(gameTime);
                 }
                 else if (currentFrame < 0)
