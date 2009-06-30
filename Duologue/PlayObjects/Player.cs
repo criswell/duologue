@@ -988,7 +988,6 @@ namespace Duologue.PlayObjects
                 1f,
                 0f);
 
-
             // Base
             RenderSprite.Draw(
                 playerDestroy.Texture,
