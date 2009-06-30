@@ -312,6 +312,35 @@ namespace Duologue.UI
                         (int)(scoreFontCharSize.Y)),
                         timeToMovePointlet);
             }
+            else
+            {
+                // Blar, this shouldn't fucking happen...
+                freePointlets.Clear();
+                for (int i = 0; i < pointlets.Length; i++)
+                {
+                    if (!pointlets[i].Alive)
+                    {
+                        freePointlets.Enqueue(pointlets[i]);
+                    }
+                }
+                if (freePointlets.Count > 0)
+                {
+                    Pointlet p = freePointlets.Dequeue();
+                    p.Initialize(pointPos,
+                        new Color(
+                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].R,
+                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].G,
+                            associatedPlayer.PlayerColor.Colors[PlayerColors.Light].B,
+                            (byte)rand.Next(minPointletAlpha, maxPointletAlpha)),
+                        points,
+                        new Rectangle(
+                            (int)position.X,
+                            (int)position.Y,
+                            (int)(scoreFontCharSize.X * maxScore.ToString().Length),
+                            (int)(scoreFontCharSize.Y)),
+                            timeToMovePointlet);
+                }
+            }
         }
 
         /// <summary>

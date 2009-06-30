@@ -36,6 +36,7 @@ namespace Duologue.UI
         private Rectangle finalRect;
         private float lifetime;
         private Vector2 velocity;
+        private float timer;
         #endregion
 
         #region Properties
@@ -54,9 +55,11 @@ namespace Duologue.UI
         {
             get
             {
-                return !finalRect.Contains(
-                    (Int32)Position.X,
-                    (Int32)Position.Y);
+                if (finalRect.Contains((Int32)Position.X, (Int32)Position.Y) ||
+                    timer > lifetime)
+                    return false;
+                else
+                    return true;
             }
         }
 
@@ -145,6 +148,7 @@ namespace Duologue.UI
             points = pointValue;
             finalRect = destRectangle;
             lifetime = lifeTime;
+            timer = 0;
 
             ComputeVelocity();
         }
@@ -157,6 +161,7 @@ namespace Duologue.UI
         /// <param name="dt">Delta time</param>
         public void Update(float dt)
         {
+            timer += dt;
             Position += velocity;
         }
         #endregion
