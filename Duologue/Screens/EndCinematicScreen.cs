@@ -301,7 +301,6 @@ namespace Duologue.Screens
                     textStartPos = new Vector2(
                         InstanceManager.DefaultViewport.Width / 2f,
                         InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent - font.LineSpacing);
-
                     teletype = ServiceLocator.GetService<Teletype>();
                     for (int i = 0; i < theText.Length; i++)
                     {
@@ -317,6 +316,14 @@ namespace Duologue.Screens
                             color_Shadow,
                             offset_Shadow,
                             InstanceManager.RenderSprite);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < theText.Length; i++)
+                    {
+                        teletypeEntries[i].Reset();
+                        teletypeEntries[i].Position = textStartPos;
                     }
                 }
 
