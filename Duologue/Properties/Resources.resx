@@ -250,7 +250,7 @@
     <value>Killed 1000 enemies</value>
   </data>
   <data name="Medal_Desc_NoEndInSight" xml:space="preserve">
-    <value>Passed wave 100 of Survival Mode</value>
+    <value>Passed wave 50 of Survival Mode</value>
   </data>
   <data name="Medal_Desc_Seriously" xml:space="preserve">
     <value>Killed 39,516 enemies</value>
