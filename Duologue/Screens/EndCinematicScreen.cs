@@ -236,6 +236,10 @@ namespace Duologue.Screens
                     maxInitialOffset = 0.5f * InstanceManager.DefaultViewport.TitleSafeArea.Height / playerSizeY;
                 }
                 LocalInstanceManager.Background.SetBackground(0);
+                LocalInstanceManager.Background.SetParallaxElement(
+                    LocalInstanceManager.Background.EmptyParallaxElement, true);
+                LocalInstanceManager.Background.SetParallaxElement(
+                    LocalInstanceManager.Background.EmptyParallaxElement, false);
                 players = new Player[numberOfPlayers];
                 playerAimDelta = new float[numberOfPlayers];
                 ColorState[] tempC = ColorState.GetColorStates();
