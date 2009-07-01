@@ -391,8 +391,6 @@ namespace Duologue.UI
             Vector2 startPos = Vector2.Normalize(alignment) * infiniteMode_EndCinematicsCenterOffset + sCenter;
             if (alignment.X < 0)
                 startPos -= Vector2.UnitX * maxWidth;
-            else
-                startPos += Vector2.UnitX * maxWidth;
 
             if (alignment.Y < 0)
                 startPos -= Vector2.UnitY * totalHeight;
