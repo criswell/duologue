@@ -30,7 +30,7 @@ using Duologue.UI;
 
 namespace Duologue.Screens
 {
-    public class EndCinematicScreen : DrawableGameComponent
+    public class EndCinematicScreen : DrawableGameComponent, IService
     {
         #region Constants
         private const string fontFilename = "Fonts/inero-28";
@@ -101,6 +101,8 @@ namespace Duologue.Screens
         private Vector2[] offset_Shadow;
         private bool stopScrolling;
 
+        private List<TeletypeEntry[]> scoreEntries;
+
         // Timer stuff
         private double masterTimer;
         #endregion
@@ -131,6 +133,8 @@ namespace Duologue.Screens
                     FadeColorByPercent(tempColor, colorPercent_Medium),
                     FadeColorByPercent(tempColor, colorPercent_Dark));
             }
+
+            scoreEntries = new List<TeletypeEntry[]>(LocalInstanceManager.MaxNumberOfPlayers);
         }
         protected override void LoadContent()
         {
@@ -189,6 +193,12 @@ namespace Duologue.Screens
         #endregion
 
         #region Public methods
+        public void RegisterScoreTeletype(TeletypeEntry[] entries)
+        {
+            if(scoreEntries.Count < LocalInstanceManager.MaxNumberOfPlayers)
+                scoreEntries.Add(entries);
+        }
+
         protected override void OnEnabledChanged(object sender, EventArgs args)
         {
             if (null != audio)
@@ -328,6 +338,21 @@ namespace Duologue.Screens
                 }
 
                 teletype.FlushEntries();
+                if (infiniteModeResults)
+                {
+                    foreach (TeletypeEntry[] entries in scoreEntries)
+                    {
+                        for (int i = 0; i < entries.Length; i++)
+                        {
+                            teletype.AddEntry(entries[i]);
+                        }
+                    }
+                    scoreEntries.Clear();
+                }
+                else
+                {
+                    scoreEntries.Clear();
+                }
                 nextText = 0;
                 stopScrolling = false;
             }
@@ -387,7 +412,7 @@ namespace Duologue.Screens
                     audio.FadeOut(SongID.Tr8or);
                 }
             }
-            else if (masterTimer > trigger_StartText)
+            else if (masterTimer > trigger_StartText && !infiniteModeResults)
             {
                 if (nextText > 0)
                 {

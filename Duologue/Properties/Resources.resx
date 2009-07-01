@@ -327,6 +327,15 @@
   <data name="ScoreUI_GameOver" xml:space="preserve">
     <value>Game Over</value>
   </data>
+  <data name="ScoreUI_InfiniteModeResults_Deaths" xml:space="preserve">
+    <value>Deaths: {0}</value>
+  </data>
+  <data name="ScoreUI_InfiniteModeResults_Player" xml:space="preserve">
+    <value>Player {0} results</value>
+  </data>
+  <data name="ScoreUI_InfiniteModeResults_Score" xml:space="preserve">
+    <value>Final score: {0}</value>
+  </data>
   <data name="ScoreUI_InfiniteMode_Lives" xml:space="preserve">
     <value>Deaths:</value>
   </data>

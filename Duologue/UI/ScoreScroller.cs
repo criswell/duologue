@@ -16,12 +16,16 @@ using Microsoft.Xna.Framework.Content;
 // Mimicware
 using Mimicware.Manager;
 using Mimicware.Graphics;
+using Mimicware;
+using Mimicware.Fx;
 // Duologue
 using Duologue;
 using Duologue.Properties;
 using Duologue.State;
 using Duologue.PlayObjects;
 using Duologue.AchievementSystem;
+using Duologue.Audio;
+using Duologue.Screens;
 #endregion
 
 namespace Duologue.UI
@@ -59,6 +63,11 @@ namespace Duologue.UI
         /// The maximum number of lives we can have
         /// </summary>
         private const int maxLives = 999;
+
+        private const float infiniteMode_EndCinematicsLineSpacing = 0.4f;
+        private const float infiniteMode_EndCinematicsCenterOffset = 155f;
+        private const double infiniteMode_EndCinematicsTypeTime = 2.1;
+        private const double infiniteMode_EndCinematicsLifetime = 57.38;
         #endregion
 
         #region Fields
@@ -359,6 +368,76 @@ namespace Duologue.UI
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Call at the end of the game when we are heading to cinematics
+        /// </summary>
+        public void GameEndCinematics()
+        {
+            Vector2 size1 = playerFont.MeasureString(
+                String.Format(Resources.ScoreUI_InfiniteModeResults_Player, (myPlayerNumber+1).ToString()));
+            Vector2 size2 = playerFont.MeasureString(
+                String.Format(Resources.ScoreUI_InfiniteModeResults_Score, score.ToString()));
+            Vector2 size3 = playerFont.MeasureString(
+                String.Format(Resources.ScoreUI_InfiniteModeResults_Deaths, (lives-1).ToString()));
+
+            float totalHeight = size1.Y + size2.Y + size3.Y +
+                infiniteMode_EndCinematicsLineSpacing * 2f;
+            float maxWidth = MathHelper.Max(
+                MathHelper.Max(size1.X, size2.X), size3.X);
+
+            Vector2 sCenter = new Vector2(
+                InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
+
+            Vector2 startPos = Vector2.Normalize(alignment) * infiniteMode_EndCinematicsCenterOffset + sCenter;
+            if (alignment.X < 0)
+                startPos -= Vector2.UnitX * maxWidth;
+            else
+                startPos += Vector2.UnitX * maxWidth;
+
+            if (alignment.Y < 0)
+                startPos -= Vector2.UnitY * totalHeight;
+
+            TeletypeEntry[] entries = new TeletypeEntry[3];
+
+            entries[0] = new TeletypeEntry(
+                playerFont,
+                String.Format(Resources.ScoreUI_InfiniteModeResults_Player, (myPlayerNumber+1).ToString()),
+                startPos,
+                Vector2.Zero,
+                associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                infiniteMode_EndCinematicsTypeTime,
+                infiniteMode_EndCinematicsLifetime,
+                Color.Black,
+                new Vector2[] { Vector2.One, -Vector2.One },
+                Render);
+
+            entries[1] = new TeletypeEntry(
+                playerFont,
+                String.Format(Resources.ScoreUI_InfiniteModeResults_Score, score.ToString()),
+                startPos + Vector2.UnitY * (size1.Y + infiniteMode_EndCinematicsLineSpacing),
+                Vector2.Zero,
+                associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                infiniteMode_EndCinematicsTypeTime,
+                infiniteMode_EndCinematicsLifetime,
+                Color.Black,
+                new Vector2[] { Vector2.One, -Vector2.One },
+                Render);
+
+            entries[2] = new TeletypeEntry(
+                playerFont,
+                String.Format(Resources.ScoreUI_InfiniteModeResults_Deaths, (lives-1).ToString()),
+                startPos + Vector2.UnitY * 
+                    (size1.Y + size2.Y + 2f *infiniteMode_EndCinematicsLineSpacing),
+                Vector2.Zero,
+                associatedPlayer.PlayerColor.Colors[PlayerColors.Light],
+                infiniteMode_EndCinematicsTypeTime,
+                infiniteMode_EndCinematicsLifetime,
+                Color.Black,
+                new Vector2[] { Vector2.One, -Vector2.One },
+                Render);
+
+            ServiceLocator.GetService<EndCinematicScreen>().RegisterScoreTeletype(entries);
+        }
         /// <summary>
         /// Call when you want to add new points to the score
         /// </summary>

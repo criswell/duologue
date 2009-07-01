@@ -54,6 +54,7 @@ namespace Duologue.Screens
             endCinematicScreen.Enabled = false;
             endCinematicScreen.Visible = false;
             localGame.Components.Add(endCinematicScreen);
+            ServiceLocator.RegisterService(endCinematicScreen);
         }
         protected override void InitializeConstants()
         {

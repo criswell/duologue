@@ -176,6 +176,13 @@ namespace Duologue.Screens
                         // FIXME as well... delete this fucker for release
                         if (InstanceManager.InputManager.NewKeyPressed(Keys.End))
                         {
+                            for (int j = 0; j < InputManager.MaxInputs; j++)
+                            {
+                                if (LocalInstanceManager.Scores[j].Enabled)
+                                {
+                                    LocalInstanceManager.Scores[j].GameEndCinematics();
+                                }
+                            }
                             LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
                             skip = true;
                         }

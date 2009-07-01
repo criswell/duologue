@@ -700,6 +700,33 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deaths: {0}.
+        /// </summary>
+        internal static string ScoreUI_InfiniteModeResults_Deaths {
+            get {
+                return ResourceManager.GetString("ScoreUI_InfiniteModeResults_Deaths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player {0} results.
+        /// </summary>
+        internal static string ScoreUI_InfiniteModeResults_Player {
+            get {
+                return ResourceManager.GetString("ScoreUI_InfiniteModeResults_Player", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Final score: {0}.
+        /// </summary>
+        internal static string ScoreUI_InfiniteModeResults_Score {
+            get {
+                return ResourceManager.GetString("ScoreUI_InfiniteModeResults_Score", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lives:.
         /// </summary>
         internal static string ScoreUI_Lives {
