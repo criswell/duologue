@@ -157,6 +157,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="CreatorsClub\ScreenManager.cs" />
+    <Compile Include="Screens\BuyScreen.cs" />
+    <Compile Include="Screens\BuyScreenManager.cs" />
     <Compile Include="Screens\ColorStateTestComponent.cs" />
     <Compile Include="Screens\ColorStateTestScreen.cs" />
     <Compile Include="Screens\CreditsScreen.cs" />
