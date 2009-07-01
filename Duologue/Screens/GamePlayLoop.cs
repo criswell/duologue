@@ -173,20 +173,6 @@ namespace Duologue.Screens
                         if (InstanceManager.InputManager.NewKeyPressed(Keys.PageUp))
                             skip = true;
 
-                        // FIXME as well... delete this fucker for release
-                        if (InstanceManager.InputManager.NewKeyPressed(Keys.End))
-                        {
-                            for (int j = 0; j < InputManager.MaxInputs; j++)
-                            {
-                                if (LocalInstanceManager.Scores[j].Enabled)
-                                {
-                                    LocalInstanceManager.Scores[j].GameEndCinematics();
-                                }
-                            }
-                            LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
-                            skip = true;
-                        }
-
                         // Now, make sure no one is stepping on eachother
                         dumb = p.StartOffset();
                         // Yeah, not efficient... but we have very low n in O(n^2)
@@ -209,6 +195,7 @@ namespace Duologue.Screens
 
                     p.Update(gameTime);
                 }
+
                 #region Bullet updates
                 for (int j = 0; j < LocalInstanceManager.MaxNumberOfBulletsPerPlayer; j++)
                 {
@@ -233,6 +220,20 @@ namespace Duologue.Screens
                 #endregion
             }
             #endregion Player Stuff
+
+            // FIXME as well... delete this fucker for release
+            if (InstanceManager.InputManager.NewKeyPressed(Keys.End))
+            {
+                for (int j = 0; j < InputManager.MaxInputs; j++)
+                {
+                    if (LocalInstanceManager.Scores[j].Enabled)
+                    {
+                        LocalInstanceManager.Scores[j].GameEndCinematics();
+                    }
+                }
+                LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
+                skip = true;
+            }
 
             #region Enemy Stuff
             // Only do this stuff if we're not in wave intro
@@ -292,6 +293,7 @@ namespace Duologue.Screens
                     }
                 }
             }
+            #endregion Enemy Stuff
 
             if (activePlayers < 1 && myManager.CurrentState != GamePlayState.GameOver)
             {
@@ -324,8 +326,6 @@ namespace Duologue.Screens
                     myManager.NextTutorial();
                 }
             }
-
-            #endregion Enemy Stuff
 
             base.Update(gameTime);
         }
