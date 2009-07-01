@@ -32,5 +32,27 @@ namespace Duologue.Screens
 {
     public class BuyScreen : DrawableGameComponent
     {
+        #region Constants
+        #endregion
+
+        #region Fields
+        private Game myGame;
+        private BuyScreenManager myManager;
+        #endregion
+
+        #region Constructor / Init
+        public BuyScreen(Game game, BuyScreenManager manager) 
+            : base(game)
+        {
+            myGame = game;
+            myManager = manager;
+        }
+        #endregion
+
+        #region Public methods
+        #endregion
+
+        #region Draw / Update
+        #endregion
     }
 }

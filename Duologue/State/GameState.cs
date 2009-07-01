@@ -21,5 +21,6 @@ namespace Duologue.State
         Exit,
         CompanyIntro,
         MedalCase,
+        BuyScreen,
     }
 }

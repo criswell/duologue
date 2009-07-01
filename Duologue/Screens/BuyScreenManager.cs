@@ -31,9 +31,41 @@ namespace Duologue.Screens
 {
     public class BuyScreenManager : GameScreen, IService
     {
+        #region Constants
+        #endregion
+
+        #region Fields
+        private Game myGame;
+        private BuyScreen buyScreen;
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructor/Init
+        public BuyScreenManager(Game game)
+            : base(game)
+        {
+            myGame = game;
+            buyScreen = new BuyScreen(myGame, this);
+            buyScreen.DrawOrder = 4;
+            buyScreen.Enabled = false;
+            buyScreen.Visible = false;
+            myGame.Components.Add(buyScreen);
+        }
         protected override void InitializeConstants()
         {
-            throw new NotImplementedException();
+            MyComponents.Add(buyScreen);
+
+            this.SetEnable(false);
+            this.SetVisible(false);
         }
+        #endregion
+
+        #region Public methods
+        #endregion
+
+        #region Update
+        #endregion
     }
 }
