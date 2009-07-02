@@ -184,7 +184,7 @@ namespace Duologue.PlayObjects
         private const double totalTime_GeneralDeath = 7.123;
         private const double totalTime_Explosion = 0.81;
         private const double totalTime_EyeShots = 1.4;
-        private const double totalTime_TrialMode = 10.1;
+        private const double totalTime_TrialMode = 30.2;
 
         private const int chanceOfExternalExposion = 5;
 
