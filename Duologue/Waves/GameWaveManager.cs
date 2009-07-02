@@ -31,10 +31,15 @@ using Duologue.AchievementSystem;
 
 namespace Duologue.Waves
 {
-    public struct TrialWave
+    public class TrialWave
     {
         public int Major;
         public int Minor;
+        public TrialWave(int major, int minor)
+        {
+            Major = major;
+            Minor = minor;
+        }
     }
 
     /// <summary>
@@ -159,7 +164,7 @@ namespace Duologue.Waves
         // Trial mode stuff
         private bool runningTrialMode = false;
         private int currentTrialWave;
-        private List<TrialWave> trialWaves;
+        private TrialWave[] trialWaves;
         #endregion
 
         #region Properties
@@ -248,10 +253,23 @@ namespace Duologue.Waves
                 },
             };
 
-            //trialWaves = new TrialWave[]
-            //{
-
-            //};
+            trialWaves = new TrialWave[]
+            {
+                new TrialWave(1,1),
+                new TrialWave(2,1),
+                new TrialWave(4,3),
+                new TrialWave(6,2),
+                new TrialWave(7,2),
+                new TrialWave(9,1),
+                new TrialWave(9,3),
+                new TrialWave(11,3),
+                new TrialWave(14,3),
+                new TrialWave(15,2),
+                new TrialWave(16,2),
+                new TrialWave(16,3),
+                new TrialWave(20,3)
+            };
+            currentTrialWave = 0;
         }
         #endregion
 
@@ -308,19 +326,35 @@ namespace Duologue.Waves
         private int[] IncrementWaveNumbers(int lastMajorNo, int lastMinorNo)
         {
             int[] k = new int[2];
-            lastMinorNo++;
-            if (lastMinorNo > MaxMinorNumber)
+            if (Guide.IsTrialMode)
             {
-                lastMinorNo = 1;
-                lastMajorNo++;
-                if (lastMajorNo > MaxMajorNumber)
+                if (currentTrialWave >= trialWaves.Length)
                 {
-                    lastMajorNo = 0;
+                    k[0] = MaxMajorNumber;
+                    k[1] = MaxMinorNumber;
+                }
+                else
+                {
+                    k[0] = trialWaves[currentTrialWave].Major;
+                    k[1] = trialWaves[currentTrialWave].Minor;
+                    currentTrialWave++;
                 }
             }
-            k[0] = lastMajorNo;
-            k[1] = lastMinorNo;
-
+            else
+            {
+                lastMinorNo++;
+                if (lastMinorNo > MaxMinorNumber)
+                {
+                    lastMinorNo = 1;
+                    lastMajorNo++;
+                    if (lastMajorNo > MaxMajorNumber)
+                    {
+                        lastMajorNo = 0;
+                    }
+                }
+                k[0] = lastMajorNo;
+                k[1] = lastMinorNo;
+            }
             return k;
         }
 
@@ -727,6 +761,7 @@ namespace Duologue.Waves
             wavesSinceColorStateChange = numberOfWavesPerColorStateChange;
             countdownToSwitchBackgroundElements = 0;
             countdownToSwitchSongs = 0;
+            currentTrialWave = 0;
         }
 
         /// <summary>
