@@ -143,7 +143,7 @@ namespace Duologue
             this.Components.Add(GamerServices);
             debug = false;
             // Uncomment to simulate trial mode
-            //Guide.SimulateTrialMode = true;
+            Guide.SimulateTrialMode = true;
         }
 
         /// <summary>
@@ -335,9 +335,11 @@ namespace Duologue
             this.Components.Add(medalCaseScreenManager);
             dispatchTable.Add(GameState.MedalCase, medalCaseScreenManager);
 
+            // Buy screen manager
             buyScreenManager = new BuyScreenManager(this);
             this.Components.Add(buyScreenManager);
             dispatchTable.Add(GameState.BuyScreen, buyScreenManager);
+            ServiceLocator.RegisterService(buyScreenManager);
 
             // Ensure that everything in the dispatch is disabled
             foreach (GameScreen scr in dispatchTable.Values)

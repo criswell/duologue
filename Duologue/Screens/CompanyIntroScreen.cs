@@ -20,6 +20,7 @@ using Mimicware.Graphics;
 using Duologue;
 using Duologue.Properties;
 using Duologue.PlayObjects;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.Screens
@@ -283,6 +284,11 @@ namespace Duologue.Screens
                 }
                 else
                 {
+                    // If trial mode, load that stuff
+                    if (Guide.IsTrialMode)
+                    {
+                        ServiceLocator.GetService<BuyScreenManager>().LoadForTrialMode();
+                    }
                     // We're all done
                     VoidSpinner();
                     timeSinceSwitch = 0;
