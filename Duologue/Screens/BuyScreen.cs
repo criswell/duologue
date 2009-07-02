@@ -47,6 +47,8 @@ namespace Duologue.Screens
         private const int numberOfScreens = 14;
 
         private const float delta_LayerOffset = 0.32416f;
+
+        private const float alpha_Layer = 0.65f;
         #endregion
 
         #region Fields
@@ -62,6 +64,7 @@ namespace Duologue.Screens
         private Screenshots[] screenshots;
         private Vector2[] possibleSpeeds;
         private int currentSpeed;
+        private Color color_Layer;
         #endregion
 
         #region Constructor / Init
@@ -83,6 +86,9 @@ namespace Duologue.Screens
                 -3.05f * Vector2.UnitX,
             };
             currentSpeed = 0;
+
+            color_Layer = new Color(
+                Color.White, alpha_Layer);
         }
 
         protected override void LoadContent()
@@ -228,7 +234,7 @@ namespace Duologue.Screens
                 Vector2.Zero,
                 position_Layer,
                 null,
-                Color.White,
+                color_Layer,
                 0f,
                 1f,
                 0f);
@@ -237,7 +243,7 @@ namespace Duologue.Screens
                 Vector2.UnitX * ((float)texture_Layer.Width - position_Layer.X),
                 Vector2.Zero,
                 null,
-                Color.White,
+                color_Layer,
                 0f,
                 1f,
                 0f);
