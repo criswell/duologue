@@ -73,7 +73,7 @@ namespace Duologue.Screens
             possibleSpeeds = new Vector2[]
             {
                 -1.5f * Vector2.UnitX,
-                -0.1f * Vector2.UnitX,
+                -0.92f * Vector2.UnitX,
                 -3.3f * Vector2.UnitX,
                 -2.1f * Vector2.UnitX,
                 -1.9f * Vector2.UnitX,
@@ -170,7 +170,7 @@ namespace Duologue.Screens
                     screenshots[i].Position.X > screenshots[i].Position.X + InstanceManager.DefaultViewport.Width)
                 {
                     screenshots[i].Position = new Vector2(
-                        screenshots[i].Position.X + InstanceManager.DefaultViewport.Width,
+                        screenshots[i].Center.X + InstanceManager.DefaultViewport.Width,
                         (float)MWMathHelper.GetRandomInRange(
                                 InstanceManager.DefaultViewport.TitleSafeArea.Top,
                                 InstanceManager.DefaultViewport.TitleSafeArea.Bottom));
@@ -188,7 +188,7 @@ namespace Duologue.Screens
                 position_Layer.X = texture_Layer.Width;
 
             if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
-                LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
+                LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
 
             base.Update(gameTime);
         }

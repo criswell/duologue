@@ -374,6 +374,11 @@ namespace Duologue.Screens
                         LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
                         LocalInstanceManager.CurrentGameState = GameState.MedalCase;
                     }
+                    else if (Guide.IsTrialMode && currentSelection == menuBuyMe)
+                    {
+                        LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+                        LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
+                    }
                 }
             }
             else
