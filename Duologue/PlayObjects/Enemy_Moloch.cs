@@ -184,6 +184,7 @@ namespace Duologue.PlayObjects
         private const double totalTime_GeneralDeath = 7.123;
         private const double totalTime_Explosion = 0.81;
         private const double totalTime_EyeShots = 1.4;
+        private const double totalTime_TrialMode = 10.1;
 
         private const int chanceOfExternalExposion = 5;
 
@@ -283,6 +284,7 @@ namespace Duologue.PlayObjects
         private Vector2 position_Next;
         private int currentUpperLimit;
         private double timer_EyeShot;
+        private double timer_TrialMode;
 
         // Audio stuff
         private AudioManager audio;
@@ -534,6 +536,9 @@ namespace Duologue.PlayObjects
             sfx_EndBoom = InstanceManager.AssetManager.LoadSoundEffect(filename_EndBoom);
             sfxi_EndBoom = null;
             sfx_FinaleBoom = InstanceManager.AssetManager.LoadSoundEffect(filename_FinaleBoom);
+
+            // Trial mode
+            timer_TrialMode = 0;
 
             Alive = true;
             Initialized = true;
@@ -1375,6 +1380,19 @@ namespace Duologue.PlayObjects
         public override void Update(GameTime gameTime)
         {
             double delta = gameTime.ElapsedGameTime.TotalSeconds;
+
+            #region Trial mode
+            if (Guide.IsTrialMode)
+            {
+                timer_TrialMode += delta;
+                if (timer_TrialMode > totalTime_TrialMode)
+                {
+                    LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+                    LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
+                }
+            }
+            #endregion
+
             float bp = MathHelper.Clamp(((float)ServiceLocator.GetService<AudioManager>().BeatPercentage() - 0.5f) / 0.5f, 0, 1f);
             // Spinner
             size_Spinner = MathHelper.Lerp(minScale_Spinner, maxScale_Spinner, bp);
