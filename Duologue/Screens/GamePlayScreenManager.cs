@@ -370,15 +370,23 @@ namespace Duologue.Screens
                 }
                 catch (WavesOutOfRangeException e)
                 {
-                    // Score end
-                    for (int i = 0; i < InputManager.MaxInputs; i++)
+                    if (Guide.IsTrialMode)
                     {
-                        if (LocalInstanceManager.Scores[i].Enabled)
-                        {
-                            LocalInstanceManager.Scores[i].GameEndCinematics();
-                        }
+                        LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+                        LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
                     }
-                    LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
+                    else
+                    {
+                        // Score end
+                        for (int i = 0; i < InputManager.MaxInputs; i++)
+                        {
+                            if (LocalInstanceManager.Scores[i].Enabled)
+                            {
+                                LocalInstanceManager.Scores[i].GameEndCinematics();
+                            }
+                        }
+                        LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
+                    }
                 }
             }
         }
