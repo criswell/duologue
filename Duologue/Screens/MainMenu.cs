@@ -213,7 +213,7 @@ namespace Duologue.Screens
                 shadowOffsetsSelected[2] = new Vector2(-2f, 2f);
                 shadowOffsetsSelected[3] = new Vector2(2f, -2f);
 
-                initialized = false;
+                //initialized = false;
                 startPressed = false;
 
                 teletype = ServiceLocator.GetService<Teletype>();
@@ -343,6 +343,8 @@ namespace Duologue.Screens
                 color_ToolTipShadow,
                 toolTipShadowOffset,
                 InstanceManager.RenderSprite);
+
+            initialized = true;
         }
 
         /// <summary>
@@ -598,7 +600,10 @@ namespace Duologue.Screens
             {
                 mis[currentSelection].Selected = false;
                 currentSelection++;
-                SetTooltip();
+                if (currentSelection >= mis.Count)
+                    currentSelection = 0;
+                else
+                    SetTooltip();
             }
 
             // Up
@@ -606,13 +611,16 @@ namespace Duologue.Screens
             {
                 mis[currentSelection].Selected = false;
                 currentSelection--;
-                SetTooltip();
+                if (currentSelection < 0)
+                    currentSelection = mis.Count - 1;
+                else
+                    SetTooltip();
             }
 
-            if (currentSelection >= mis.Count)
+            /*if (currentSelection >= mis.Count)
                 currentSelection = 0;
             else if (currentSelection < 0)
-                currentSelection = mis.Count - 1;
+                currentSelection = mis.Count - 1;*/
         }
 
         private void SetTooltip()
@@ -665,6 +673,7 @@ namespace Duologue.Screens
         {
             if (initialized)
             {
+                SetPosition();
                 LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
                 // Get rid of parallax
                 LocalInstanceManager.Background.SetParallaxElement(
@@ -685,6 +694,7 @@ namespace Duologue.Screens
             if (Guide.IsTrialMode != trialMode)
             {
                 // Thanks for the purchase, but fuck XNA
+                isMenuSet = false;
                 SetPosition();
                 trialMode = Guide.IsTrialMode;
             }
@@ -788,7 +798,7 @@ namespace Duologue.Screens
             if (position == Vector2.Zero)
             {
                 SetPosition();
-                initialized = true;
+                //initialized = true;
             }
 
             if (currentState == MainMenuState.PressStart)
