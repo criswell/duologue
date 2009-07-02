@@ -31,6 +31,12 @@ using Duologue.AchievementSystem;
 
 namespace Duologue.Waves
 {
+    public struct TrialWave
+    {
+        public int Major;
+        public int Minor;
+    }
+
     /// <summary>
     /// The manager of the game waves
     /// </summary>
@@ -149,6 +155,11 @@ namespace Duologue.Waves
         private WaveTemplates waveTemplates;
 
         private TypesOfPlayObjects[][] enemyClusters;
+
+        // Trial mode stuff
+        private bool runningTrialMode = false;
+        private int currentTrialWave;
+        private List<TrialWave> trialWaves;
         #endregion
 
         #region Properties
@@ -236,6 +247,11 @@ namespace Duologue.Waves
                     TypesOfPlayObjects.Enemy_Flycket,
                 },
             };
+
+            //trialWaves = new TrialWave[]
+            //{
+
+            //};
         }
         #endregion
 
