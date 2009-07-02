@@ -78,7 +78,9 @@ namespace Duologue.Screens
                 -2.1f * Vector2.UnitX,
                 -1.9f * Vector2.UnitX,
                 -1.7f * Vector2.UnitX,
-                -2.8f * Vector2.UnitX
+                -2.8f * Vector2.UnitX,
+                -2.32f * Vector2.UnitX,
+                -3.05f * Vector2.UnitX,
             };
             currentSpeed = 0;
         }
