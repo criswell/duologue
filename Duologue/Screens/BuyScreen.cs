@@ -50,6 +50,11 @@ namespace Duologue.Screens
         private const string filename_FeatureFont = "Fonts/deja-med";
         private const string filename_Buttons = "Fonts/deja-med";
 
+        private const string filename_ButtonA = "PlayerUI/buttonA";
+        private const string filename_ButtonB = "PlayerUI/buttonB";
+        private const string filename_ButtonX = "PlayerUI/buttonX";
+        private const string filename_ButtonY = "PlayerUI/buttonY";
+
         private const float delta_LayerOffset = 0.32416f;
 
         private const float alpha_Layer = 0.65f;
@@ -69,8 +74,16 @@ namespace Duologue.Screens
         private Vector2[] possibleSpeeds;
         private int currentSpeed;
         private Color color_Layer;
+        private Texture2D[] texture_Buttons;
 
         // Text
+
+        // Input
+        private Dictionary<Buttons, int> buttonLookup;
+        private Buttons button_Exit;
+        private Buttons button_Buy;
+        private Buttons button_Menu;
+        private Queue<Buttons> availableButtons;
         #endregion
 
         #region Constructor / Init
@@ -95,6 +108,10 @@ namespace Duologue.Screens
 
             color_Layer = new Color(
                 Color.White, alpha_Layer);
+
+            availableButtons = new Queue<Buttons>(4);
+            buttonLookup = new Dictionary<Buttons, int>(4);
+            availableButtons = new Queue<Buttons>(4);
         }
 
         protected override void LoadContent()
@@ -129,6 +146,19 @@ namespace Duologue.Screens
 
             center_Screen = new Vector2(
                 InstanceManager.DefaultViewport.Width / 2f, InstanceManager.DefaultViewport.Height / 2f);
+
+            texture_Buttons = new Texture2D[]
+            {
+                InstanceManager.AssetManager.LoadTexture2D(filename_ButtonA),
+                InstanceManager.AssetManager.LoadTexture2D(filename_ButtonB),
+                InstanceManager.AssetManager.LoadTexture2D(filename_ButtonX),
+                InstanceManager.AssetManager.LoadTexture2D(filename_ButtonY),
+            };
+
+            buttonLookup.Add(Buttons.A, 0);
+            buttonLookup.Add(Buttons.B, 1);
+            buttonLookup.Add(Buttons.X, 2);
+            buttonLookup.Add(Buttons.Y, 3);
 
         }
         #endregion
@@ -168,6 +198,12 @@ namespace Duologue.Screens
                         if (currentSpeed >= possibleSpeeds.Length)
                             currentSpeed = 0;
                     }
+
+                    availableButtons.Clear();
+                    availableButtons.Enqueue(Buttons.A);
+                    availableButtons.Enqueue(Buttons.B);
+                    availableButtons.Enqueue(Buttons.X);
+                    availableButtons.Enqueue(Buttons.Y);
                 }
             }
             base.OnEnabledChanged(sender, args);
