@@ -162,7 +162,7 @@ namespace Duologue.Waves
         private TypesOfPlayObjects[][] enemyClusters;
 
         // Trial mode stuff
-        private bool runningTrialMode = false;
+        //private bool runningTrialMode = false;
         private int currentTrialWave;
         private TrialWave[] trialWaves;
         #endregion
@@ -260,11 +260,11 @@ namespace Duologue.Waves
                 new TrialWave(4,3),
                 new TrialWave(6,2),
                 new TrialWave(7,2),
-                new TrialWave(9,1),
+                //new TrialWave(9,1),
                 new TrialWave(9,3),
-                new TrialWave(11,3),
-                new TrialWave(14,3),
-                new TrialWave(15,2),
+                //new TrialWave(11,3),
+                //new TrialWave(14,3),
+                //new TrialWave(15,2),
                 new TrialWave(16,2),
                 new TrialWave(16,3),
                 new TrialWave(20,3)
