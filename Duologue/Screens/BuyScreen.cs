@@ -46,6 +46,10 @@ namespace Duologue.Screens
         private const string filename_Screens = "BuyScreen/{0}";
         private const int numberOfScreens = 14;
 
+        private const string filename_TitleFont = "Fonts/bloj-36";
+        private const string filename_FeatureFont = "Fonts/deja-med";
+        private const string filename_Buttons = "Fonts/deja-med";
+
         private const float delta_LayerOffset = 0.32416f;
 
         private const float alpha_Layer = 0.65f;
@@ -65,6 +69,8 @@ namespace Duologue.Screens
         private Vector2[] possibleSpeeds;
         private int currentSpeed;
         private Color color_Layer;
+
+        // Text
         #endregion
 
         #region Constructor / Init

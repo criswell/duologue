@@ -79,6 +79,24 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy.
+        /// </summary>
+        internal static string BuyScreen_Buy {
+            get {
+                return ResourceManager.GetString("BuyScreen_Buy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit game.
+        /// </summary>
+        internal static string BuyScreen_Exit {
+            get {
+                return ResourceManager.GetString("BuyScreen_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Over 60 level campaign mode!.
         /// </summary>
         internal static string BuyScreen_Feature1 {
@@ -120,6 +138,24 @@ namespace Duologue.Properties {
         internal static string BuyScreen_Feature5 {
             get {
                 return ResourceManager.GetString("BuyScreen_Feature5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7 bosses with special attacks!.
+        /// </summary>
+        internal static string BuyScreen_Feature6 {
+            get {
+                return ResourceManager.GetString("BuyScreen_Feature6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main menu.
+        /// </summary>
+        internal static string BuyScreen_Menu {
+            get {
+                return ResourceManager.GetString("BuyScreen_Menu", resourceCulture);
             }
         }
         
