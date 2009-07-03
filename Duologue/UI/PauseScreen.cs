@@ -497,7 +497,7 @@ namespace Duologue.UI
 
         /// <summary>
         /// Check to see if the A or select button is pressed
-        /// FIXME should be in abstract class
+        /// FIXME should be in abstract class - Fix next game
         /// </summary>
         /// <returns>True if it was</returns>
         private bool CheckButtonA()
@@ -524,7 +524,7 @@ namespace Duologue.UI
 
         /// <summary>
         /// Check to see if the B or select button is pressed
-        /// FIXME should be in abstract class
+        /// FIXME should be in abstract class  - Fix next game
         /// </summary>
         /// <returns>True if it was</returns>
         private bool CheckButtonB()
@@ -551,7 +551,7 @@ namespace Duologue.UI
 
         /// <summary>
         /// Checks to see if the "menu down" controll was triggered
-        /// FIXME should be in abstract class
+        /// FIXME should be in abstract class - Fix next game
         /// </summary>
         private bool IsMenuDown()
         {
@@ -579,7 +579,7 @@ namespace Duologue.UI
 
         /// <summary>
         /// Checks to see if the "menu up" control was triggered
-        /// FIXME should be in abstract class
+        /// FIXME should be in abstract class  - Fix next game
         /// </summary>
         private bool IsMenuUp()
         {
