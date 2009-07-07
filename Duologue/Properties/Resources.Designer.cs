@@ -160,15 +160,6 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duologue.
-        /// </summary>
-        internal static string BuyScreen_Title {
-            get {
-                return ResourceManager.GetString("BuyScreen_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Our tanks rolled across the sparse alien landscapes.....
         /// </summary>
         internal static string EndCinematic01 {
