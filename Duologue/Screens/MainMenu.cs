@@ -682,6 +682,15 @@ namespace Duologue.Screens
                     LocalInstanceManager.Background.EmptyParallaxElement, false);
             }
         }
+
+        /// <summary>
+        /// Call when we've made a live purchase and need to reset everything
+        /// </summary>
+        public void LivePurchaseReset()
+        {
+            currentState = MainMenuState.PressStart;
+            guideResult = null;
+        }
         #endregion
 
         #region Update / Draw
