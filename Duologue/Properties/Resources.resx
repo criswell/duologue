@@ -124,7 +124,7 @@
     <value>but you will not defeat me!</value>
   </data>
   <data name="BuyScreen_Buy" xml:space="preserve">
-    <value>Buy</value>
+    <value>Buy Game</value>
   </data>
   <data name="BuyScreen_Feature1" xml:space="preserve">
     <value>Over 60 level campaign mode!</value>

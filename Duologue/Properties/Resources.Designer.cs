@@ -79,7 +79,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Buy.
+        ///   Looks up a localized string similar to Buy Game.
         /// </summary>
         internal static string BuyScreen_Buy {
             get {
