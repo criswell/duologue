@@ -168,10 +168,12 @@ namespace Duologue.Screens
                             p.SwapColors();
                         }
 
+                        /*
                         // Level skip
                         // FIXME this is for debugging... if we leave it in, we should make it harder to pull off
                         if (InstanceManager.InputManager.NewKeyPressed(Keys.PageUp))
                             skip = true;
+                         */
 
                         // Now, make sure no one is stepping on eachother
                         dumb = p.StartOffset();
@@ -221,6 +223,7 @@ namespace Duologue.Screens
             }
             #endregion Player Stuff
 
+            /*
             // FIXME as well... delete this fucker for release
             if (InstanceManager.InputManager.NewKeyPressed(Keys.End))
             {
@@ -234,6 +237,7 @@ namespace Duologue.Screens
                 LocalInstanceManager.CurrentGameState = GameState.EndCinematics;
                 skip = true;
             }
+             */
 
             #region Enemy Stuff
             // Only do this stuff if we're not in wave intro
