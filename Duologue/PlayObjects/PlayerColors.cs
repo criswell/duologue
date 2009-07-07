@@ -44,7 +44,6 @@ namespace Duologue.PlayObjects
 
         /// <summary>
         /// The dark version of the color
-        /// FIXME: Currently no one supports this really
         /// </summary>
         public const int Dark = 2;
         #endregion
@@ -81,7 +80,6 @@ namespace Duologue.PlayObjects
                 theColors = new PlayerColors[InputManager.MaxInputs];
 
                 // Wahoo, more slop!
-                // FIXME: These colors are in dire need of refinement
 
                 // Melon for player #1
                 theColors[0] = new PlayerColors();

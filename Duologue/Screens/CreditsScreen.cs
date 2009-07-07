@@ -6,8 +6,8 @@
 using System;
 using System.Collections.Generic;
 // FIXME, will we need this later on?
-using System.IO;
-using System.Xml.Serialization;
+/*using System.IO;
+using System.Xml.Serialization;*/
 // XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.GamerServices;
@@ -33,7 +33,7 @@ using Duologue.UI;
 
 namespace Duologue.Screens
 {
-    [Serializable]
+    /*[Serializable]*/
     public struct CreditPage
     {
         public string ImageFilename;

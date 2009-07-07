@@ -34,9 +34,9 @@ namespace Duologue.PlayObjects
             Fading
         }
         #region Constants
-        private const string filename_base = "Enemies/wiggles/0{0}-base"; // FIXME, silliness
-        private const string filename_outline = "Enemies/wiggles/0{0}-outline"; // FIXME, silliness
-        private const string filename_invertOutline = "Enemies/wiggles/0{0}-invert-outline"; // Bah, who cares
+        private const string filename_base = "Enemies/wiggles/0{0}-base";
+        private const string filename_outline = "Enemies/wiggles/0{0}-outline";
+        private const string filename_invertOutline = "Enemies/wiggles/0{0}-invert-outline";
         private const string filename_deathOutline = "Enemies/wiggles/death-0{0}-outline";
         private const string filename_deathBase = "Enemies/wiggles/death-0{0}-base";
 

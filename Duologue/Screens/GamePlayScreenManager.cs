@@ -254,8 +254,6 @@ namespace Duologue.Screens
             {
                 gameOver.Reset();
                 ServiceLocator.GetService<AudioManager>().FadeOutAllSongs();
-                // FIXME
-                // Should probably do some gameover music here
                 gameOver.Visible = true;
                 gameOver.Enabled = true;
                 currentState = GamePlayState.GameOver;
@@ -265,7 +263,6 @@ namespace Duologue.Screens
             {
                 gameOver.Visible = false;
                 gameOver.Enabled = false;
-                // FIXME
                 // Should probably reset things here, like the music, etc
                 // Run through and clean players, scores and bullets
                 for (int i = 0; i < InputManager.MaxInputs; i++)

@@ -34,7 +34,7 @@ namespace Duologue.PlayObjects
     public abstract class Enemy : PlayObject
     {
         #region Constants
-        private const string filename_bulletHit = "bullet-hit-0{0}"; // FIXME, silliness
+        private const string filename_bulletHit = "bullet-hit-0{0}";
         private const string filename_OffScreenArrowMeat = "Enemies/offscreen-arrow-meat";
         private const string filename_OffScreenArrowOutline = "Enemies/offscreen-arrow-outline";
         private const int maxNumBulletFrames = 6;

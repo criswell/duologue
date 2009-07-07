@@ -32,8 +32,8 @@ namespace Duologue.PlayObjects
             Running,
         }
         #region Constants
-        private const string filename_base = "Enemies/roller-0{0}-color"; // FIXME, silliness
-        private const string filename_outline = "Enemies/roller-0{0}-face"; // FIXME, silliness
+        private const string filename_base = "Enemies/roller-0{0}-color";
+        private const string filename_outline = "Enemies/roller-0{0}-face";
 
         private const float maxShadowOffset = 10f;
 

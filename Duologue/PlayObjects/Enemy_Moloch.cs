@@ -1649,7 +1649,6 @@ namespace Duologue.PlayObjects
                             tubes[i].CurrentFrame--;
                         if (tubes[i].CurrentFrame >= tubeFrames.Length)
                         {
-                            // FIXME should fire here
                             SpawnTubeBabby(i);
                             tubes[i].MoveOut = false;
                             tubes[i].CurrentFrame = tubeFrames.Length - 1;

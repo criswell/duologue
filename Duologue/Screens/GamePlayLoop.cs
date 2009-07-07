@@ -206,7 +206,6 @@ namespace Duologue.Screens
                         LocalInstanceManager.Bullets[i][j].Update(gameTime);
                         LocalInstanceManager.Bullets[i][j].StartOffset();
                         // Run through active enemies
-                        // FIXME- Blech, is there a more efficient way?
                         for (int k = 0; k < LocalInstanceManager.CurrentNumberEnemies; k++)
                         {
                             if (LocalInstanceManager.Enemies[k] != null &&

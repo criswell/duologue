@@ -36,19 +36,19 @@ namespace Duologue
     {
         #region Constants
         /// <summary>
-        /// FIXME
+        /// Max number of steam effects
         /// </summary>
         public const int MaxSteamEffects = 4;
         /// <summary>
-        /// FIXME
+        /// Max number of explosion effects
         /// </summary>
         public const int MaxExplosionEffects = 5;
         /// <summary>
-        /// FIXME - We want this zero?
+        /// The time it takes for the score to move into place
         /// </summary>
         public const float scoreMoveTime = 0f;
         /// <summary>
-        /// FIXME
+        /// The time it takes for the score to scroll
         /// </summary>
         public const float scoreScrollTime = 1f;
         /// <summary>
@@ -155,7 +155,7 @@ namespace Duologue
         protected override void Initialize()
         {
             // Determine what our aspect ratio is, and set resolution accordingly
-            // FIXME
+            // FIXME - WONTFIX, look into doing better next game
             // BAH! We really should check for available modes and not just do this
             DisplayMode currentMode = GraphicsDevice.DisplayMode;
             if (currentMode.AspectRatio > 1.25)
@@ -172,8 +172,6 @@ namespace Duologue
             }
             Graphics.ApplyChanges();
 
-            // FIXME:
-            // In the final game, the enable/visible stuff set here should be in a game state engine
             Assets = new AssetManager(Content);
 
             background = new Background(this);

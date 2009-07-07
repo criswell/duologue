@@ -57,7 +57,6 @@ namespace Duologue.State
 
         /// <summary>
         /// Dark version of the color
-        /// FIXME: no one currently supports this
         /// </summary>
         public const int Dark = 2;
         #endregion

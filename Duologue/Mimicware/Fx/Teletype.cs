@@ -17,7 +17,7 @@ using Mimicware;
 using Mimicware.Graphics;
 using Mimicware.Manager;
 using Mimicware.Debug;
-using Duologue.Audio; // BAH! IService and SL need to be in Mimicware space FIXME
+using Duologue.Audio; // BAH! IService and SL need to be in Mimicware space FIXME - Fix next game
 #endregion
 
 namespace Mimicware.Fx

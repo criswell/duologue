@@ -28,7 +28,7 @@ namespace Duologue.PlayObjects
     {
         #region Constants
         private const string filename_ShotBase = "shot-base";
-        private const string filename_ShotHighlight = "shot-highlight-0{0}"; // FIXME, will need to fix this if more are added
+        private const string filename_ShotHighlight = "shot-highlight-0{0}";
 
         private const double minTimeBetweenParticles = 0.05;
         private const double maxtimeBetweenParticles = 0.2;

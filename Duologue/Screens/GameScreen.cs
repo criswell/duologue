@@ -60,15 +60,6 @@ namespace Duologue.Screens
         #region Abstract  & protected methods
         protected abstract void InitializeConstants();
 
-        // FIXME is this ever even used?
-        /*protected virtual void InitAll()
-        {
-            foreach (DrawableGameComponent comp in MyComponents)
-            {
-                comp.Initialize();
-            }
-        }*/
-
         /// <summary>
         /// To be called when the screen is first entered
         /// </summary>
