@@ -45,7 +45,7 @@ namespace Duologue.Screens
         private const string filename_Screens = "BuyScreen/{0}";
         private const int numberOfScreens = 14;
 
-        private const string filename_TitleFont = "Fonts/bloj-36";
+        private const string filename_TitleFont = "Fonts/inero-50";
         private const string filename_FeatureFont = "Fonts/deja-med";
         private const string filename_ButtonFont = "Fonts/deja-med";
 
@@ -74,12 +74,22 @@ namespace Duologue.Screens
 
         private const int numOfBlurredScreens = 20;
 
+        private const float buttonFontOffset = 14f;
+
+        private const float shadowLength = 6f;
+
+        private const float spacing_Title = 35f;
+        private const float spacing_Features = 10f;
+        private const float spacing_HorizFeatures = 25f;
+
         #region Timers
         private const double totalTime_BackgroundCycle = 4.3;
         private const double totalTime_FadeIn = 0.45;
         private const double totalTime_Steady = 2.1;
         private const double totalTime_FadeOut = 0.45;
         private const double totalTime_Wait = 0.15;
+
+        private const double totalTime_Type = 0.23;
         #endregion
         #endregion
 
@@ -88,9 +98,7 @@ namespace Duologue.Screens
         private BuyScreenManager myManager;
 
         // Graphic stuff
-        //private Texture2D texture_Background;
         private Texture2D texture_Layer;
-        //private Vector2 center_Background;
         private Vector2 position_Layer;
         private Vector2 scale_Layer;
         private Vector2 center_Screen;
@@ -99,8 +107,6 @@ namespace Duologue.Screens
         private int currentScreenshot;
         private BuyScreenState currentState;
         private Vector2 position_Screenshot;
-        //private Vector2[] possibleSpeeds;
-        //private int currentSpeed;
         private Color color_Layer;
         private Texture2D[] texture_Buttons;
         private int[] possibleBackgrounds;
@@ -117,6 +123,8 @@ namespace Duologue.Screens
         private SpriteFont font_Buttons;
         private Vector2 size_Buy;
         private Vector2 size_Menu;
+        private Vector2[] offset_Shadow;
+        private Color color_Shadow;
 
         // Timers
         private double delta;
@@ -148,6 +156,18 @@ namespace Duologue.Screens
                 Color.Gray, alpha_Layer);
 
             buttonLookup = new Dictionary<Buttons, int>(4);
+
+            offset_Shadow = new Vector2[]
+            {
+                Vector2.One,
+                -Vector2.One,
+                shadowLength * Vector2.One,
+            };
+
+            color_Shadow = new Color(
+                0.12f, 0.12f, 0.12f, 0.87f);
+                
+                //new Color(Color.Black, 0.87f);
         }
 
         protected override void LoadContent()
@@ -216,6 +236,52 @@ namespace Duologue.Screens
             position_Screenshot = new Vector2(
                 buyScreenWindow.Right - maxSize.X/2f,
                 buyScreenWindow.Top + maxSize.Y/2f);
+
+            // Teletype stuff
+            Vector2 pos = new Vector2(buyScreenWindow.X, buyScreenWindow.Y);
+
+            teletype_Title = new TeletypeEntry(
+                font_Title,
+                Resources.BuyScreen_Title,
+                pos,
+                Vector2.Zero,
+                new Color(255,235,174),
+                totalTime_Type,
+                -1,
+                color_Shadow,
+                offset_Shadow,
+                InstanceManager.RenderSprite);
+
+            pos.Y += font_Title.MeasureString(Resources.BuyScreen_Title).Y + spacing_Title;
+
+            string[] temp = new string[]
+            {
+                Resources.BuyScreen_Feature1,
+                Resources.BuyScreen_Feature2,
+                Resources.BuyScreen_Feature3,
+                Resources.BuyScreen_Feature4,
+                Resources.BuyScreen_Feature5,
+                Resources.BuyScreen_Feature6,
+                Resources.BuyScreen_Feature7,
+            };
+            teletype_Features = new TeletypeEntry[temp.Length];
+            for (int i = 0; i < temp.Length; i++)
+            {
+                teletype_Features[i] = new TeletypeEntry(
+                    font_Features,
+                    temp[i],
+                    pos,
+                    Vector2.Zero,
+                    new Color(236,210,130),
+                    totalTime_Type,
+                    -1,
+                    color_Shadow,
+                    offset_Shadow,
+                    InstanceManager.RenderSprite);
+
+                pos.Y += font_Features.MeasureString(temp[i]).Y + spacing_Features;
+                pos.X += spacing_HorizFeatures;
+            }
         }
         #endregion
 
@@ -276,7 +342,20 @@ namespace Duologue.Screens
                     LocalInstanceManager.Background.SetParallaxElement(
                         LocalInstanceManager.Background.EmptyParallaxElement, true);
                     timer_Background = totalTime_BackgroundCycle;
+
+                    // Set up teletypes
+                    teletype_Title.Reset();
+                    ServiceLocator.GetService<Teletype>().AddEntry(teletype_Title);
+                    for (int i = 0; i < teletype_Features.Length; i++)
+                    {
+                        teletype_Features[i].Reset();
+                        ServiceLocator.GetService<Teletype>().AddEntry(teletype_Features[i]);
+                    }
                 }
+            }
+            else
+            {
+                ServiceLocator.GetService<Teletype>().FlushEntries();
             }
             base.OnEnabledChanged(sender, args);
         }
@@ -412,7 +491,7 @@ namespace Duologue.Screens
             InstanceManager.RenderSprite.DrawString(
                 font_Buttons,
                 Resources.BuyScreen_Buy,
-                position_ButtonStart + texture_Buttons[buttonLookup[button_Buy]].Width * Vector2.UnitX,
+                position_ButtonStart + texture_Buttons[buttonLookup[button_Buy]].Width * Vector2.UnitX + buttonFontOffset * Vector2.UnitY,
                 Color.White);
 
             InstanceManager.RenderSprite.Draw(
@@ -428,7 +507,7 @@ namespace Duologue.Screens
             InstanceManager.RenderSprite.DrawString(
                 font_Buttons,
                 Resources.BuyScreen_Menu,
-                position_ButtonStart + (texture_Buttons[buttonLookup[button_Buy]].Width + size_Buy.X + spacing_Buttons + texture_Buttons[buttonLookup[button_Menu]].Width) * Vector2.UnitX,
+                position_ButtonStart + (texture_Buttons[buttonLookup[button_Buy]].Width + size_Buy.X + spacing_Buttons + texture_Buttons[buttonLookup[button_Menu]].Width) * Vector2.UnitX + buttonFontOffset * Vector2.UnitY,
                 Color.White);
 
             base.Draw(gameTime);

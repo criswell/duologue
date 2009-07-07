@@ -266,11 +266,14 @@ namespace Mimicware.Fx
         #region Draw / Update
         public void Update(GameTime gameTime)
         {
-            masterTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            if (masterTimer > TotalTimeOnScreen)
+            if (alive)
             {
-                masterTimer = TotalTimeOnScreen;
-                alive = false;
+                masterTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (masterTimer > TotalTimeOnScreen && TotalTimeOnScreen > 0)
+                {
+                    masterTimer = TotalTimeOnScreen;
+                    alive = false;
+                }
             }
         }
 
@@ -330,6 +333,7 @@ namespace Mimicware.Fx
         public Teletype(Game game)
             : base(game)
         {
+            entries = new TeletypeEntry[maxTeletypeEntries];
             myGame = game;
             Enabled = false;
             Visible = false;
@@ -337,7 +341,6 @@ namespace Mimicware.Fx
 
         public override void Initialize()
         {
-            entries = new TeletypeEntry[maxTeletypeEntries];
             base.Initialize();
         }
         #endregion

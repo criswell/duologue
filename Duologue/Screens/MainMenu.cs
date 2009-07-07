@@ -747,6 +747,9 @@ namespace Duologue.Screens
                 {
                     if (CheckButtonB())
                     {
+                        teletype.FlushEntries();
+                        ResetMenuItems();
+                        currentSelection = 0;
                         currentState = MainMenuState.MainMenu;
                         LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
                     }
