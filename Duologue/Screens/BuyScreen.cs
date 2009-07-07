@@ -82,7 +82,7 @@ namespace Duologue.Screens
         private const float shadowLength = 6f;
 
         private const float spacing_Title = 45f;
-        private const float spacing_Features = 20f;
+        private const float spacing_Features = 17f;
         private const float spacing_HorizFeatures = 25f;
 
         #region Timers
