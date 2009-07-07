@@ -144,6 +144,7 @@ namespace Duologue.Screens
         private Dictionary<Buttons, int> buttonLookup;
         private Buttons button_Buy;
         private Buttons button_Menu;
+        SignedInGamerCollection signedIn;
         #endregion
 
         #region Constructor / Init
@@ -298,6 +299,21 @@ namespace Duologue.Screens
         #endregion
 
         #region Private methods
+        public static bool CanPlayerBuyGame(PlayerIndex player)
+        {
+            SignedInGamer gamer = Gamer.SignedInGamers[player];
+
+            // if the player isn't signed in, they can't buy games
+            if (gamer == null)
+                return false;
+
+            // if the player isn't on LIVE, they can't buy games
+            if (!gamer.IsSignedInToLive)
+                return false;
+
+            // lastly check to see if the account is allowed to buy games
+            return gamer.Privileges.AllowPurchaseContent;
+        }
         #endregion
 
         #region Public methods
@@ -442,8 +458,27 @@ namespace Duologue.Screens
                 }
 
                 // Input handling
-                if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
+                if (InstanceManager.InputManager.NewButtonPressed(button_Menu))
                     LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+                else {
+                    for (int i = 0; i < InputManager.MaxInputs; i++)
+                    {
+                        if(InstanceManager.InputManager.NewButtonPressed(button_Buy, (PlayerIndex)i))
+                        {
+                            if(CanPlayerBuyGame((PlayerIndex)i))
+                            {
+                                Guide.ShowMarketplace((PlayerIndex)i);
+                                break;
+                            }
+                            else
+                            {
+                                // Sign in, buddy
+                                Guide.ShowSignIn(1, false);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
             else
             {
