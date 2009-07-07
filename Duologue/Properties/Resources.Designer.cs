@@ -673,6 +673,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Purchase full game.
+        /// </summary>
+        internal static string PauseScreen_Buy {
+            get {
+                return ResourceManager.GetString("PauseScreen_Buy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return to Main Menu.
         /// </summary>
         internal static string PauseScreen_ExitMainMenu {

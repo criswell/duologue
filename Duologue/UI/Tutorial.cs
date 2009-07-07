@@ -25,6 +25,7 @@ using Duologue.PlayObjects;
 using Duologue.Waves;
 using Duologue.UI;
 using Duologue.State;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.UI
@@ -51,7 +52,7 @@ namespace Duologue.UI
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class Tutorial : Microsoft.Xna.Framework.DrawableGameComponent
+    public class Tutorial : Microsoft.Xna.Framework.DrawableGameComponent, IService
     {
         #region Constants
         private const string filename_PopUpWindow = "PlayerUI/pop-up-window";

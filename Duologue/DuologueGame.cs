@@ -466,6 +466,7 @@ namespace Duologue
         public void LivePurchaseReset()
         {
             mainMenuScreen.LivePurchaseReset();
+            pauseScreen.LivePurchaseReset();
         }
     }
 }

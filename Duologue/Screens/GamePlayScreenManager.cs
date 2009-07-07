@@ -135,6 +135,7 @@ namespace Duologue.Screens
             TutorialManager.Visible = false;
             localGame.Components.Add(TutorialManager);
             TutorialManager.DrawOrder = 300;
+            ServiceLocator.RegisterService(TutorialManager);
 
             initialized = false;
         }

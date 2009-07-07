@@ -101,6 +101,7 @@ namespace Duologue.UI
         private int resumeGame;
         private int exitMainMenu;
         private int medalCase;
+        private int buyGame;
         private Rectangle pauseMenuWindowLocation;
         private Vector2 position;
         private Vector2[] shadowOffsets;
@@ -129,12 +130,7 @@ namespace Duologue.UI
 
             pauseMenuItems = new List<MenuItem>();
 
-            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ResumeGame));
-            resumeGame = 0;
-            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_MedalCase));
-            medalCase = 1;
-            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ExitMainMenu));
-            exitMainMenu = 2;
+            InitMenu();
 
             shadowOffsets = new Vector2[numberOfOffsets];
             shadowOffsets[0] = Vector2.One;
@@ -163,6 +159,33 @@ namespace Duologue.UI
             };
 
             initialized = false;
+        }
+
+        public void InitMenu()
+        {
+            pauseMenuItems.Clear();
+
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ResumeGame));
+            resumeGame = 0;
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_MedalCase));
+            medalCase = 1;
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ExitMainMenu));
+            exitMainMenu = 2;
+            if (Guide.IsTrialMode)
+            {
+                pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_Buy));
+                buyGame = 3;
+            }
+            else
+            {
+                buyGame = -999;
+            }
+        }
+
+        public void LivePurchaseReset()
+        {
+            InitMenu();
+            numberOfTiles = -1;
         }
 
         /// <summary>
@@ -370,7 +393,19 @@ namespace Duologue.UI
 
                 LocalInstanceManager.AchievementManager.EnableMedalScreen();
                 LocalInstanceManager.AchievementManager.ReturnToPause = true;
+
+                // Quiet the tutorial
+                ServiceLocator.GetService<Tutorial>().Enabled = false;
+                ServiceLocator.GetService<Tutorial>().Visible = false;
+
                 inMedalScreen = true;
+            }
+            else if (currentSelection == buyGame)
+            {
+                ResetMenuItems(pauseMenuItems);
+                LocalInstanceManager.Pause = false;
+                LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
+                LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
             }
         }
 
@@ -638,6 +673,10 @@ namespace Duologue.UI
             LocalInstanceManager.PlayerRing.Visible = true;
             LocalInstanceManager.PlayerSmoke.Visible = true;
             LocalInstanceManager.Steam.Visible = true;
+
+            // Get tutorial back
+            ServiceLocator.GetService<Tutorial>().Enabled = true;
+            ServiceLocator.GetService<Tutorial>().Visible = true;
 
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {

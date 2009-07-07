@@ -321,6 +321,9 @@
   <data name="Medal_Name_WetFeet" xml:space="preserve">
     <value>Wet feet</value>
   </data>
+  <data name="PauseScreen_Buy" xml:space="preserve">
+    <value>Purchase full game</value>
+  </data>
   <data name="PauseScreen_ExitMainMenu" xml:space="preserve">
     <value>Return to Main Menu</value>
   </data>
