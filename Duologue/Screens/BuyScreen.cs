@@ -501,7 +501,7 @@ namespace Duologue.Screens
                 position_Logo,
                 center_Logo,
                 null,
-                new Color(Color.White, 0.09f),
+                new Color(Color.Yellow, 0.09f),
                 0f,
                 scale_Logo,
                 0f,
