@@ -144,7 +144,6 @@ namespace Duologue.Screens
         private Dictionary<Buttons, int> buttonLookup;
         private Buttons button_Buy;
         private Buttons button_Menu;
-        SignedInGamerCollection signedIn;
         #endregion
 
         #region Constructor / Init
