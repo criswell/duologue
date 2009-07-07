@@ -54,14 +54,32 @@ namespace Duologue.Screens
         private const string filename_ButtonX = "PlayerUI/buttonX";
         private const string filename_ButtonY = "PlayerUI/buttonY";
 
-        //private const float delta_LayerOffset = 0.32416f;
-
         private const float alpha_Layer = 1f;//0.65f;
 
         private const float spacing_Buttons = 15f;
 
+        private const float maxOffsetScreenshot = 80f;
+
+        private const float screenWidth = 850f;
+        private const float screenHeight = 650f;
+
+        private const float minSize_FadeIn = 0.56f;
+        private const float maxSize_FadeIn = 0.96f;
+
+        private const float minSize_Steady = 0.96f;
+        private const float maxSize_Steady = 1.1f;
+
+        private const float minSize_FadeOut = 1.1f;
+        private const float maxSize_FadeOut = 1.5f;
+
+        private const int numOfBlurredScreens = 20;
+
         #region Timers
         private const double totalTime_BackgroundCycle = 4.3;
+        private const double totalTime_FadeIn = 0.45;
+        private const double totalTime_Steady = 2.1;
+        private const double totalTime_FadeOut = 0.45;
+        private const double totalTime_Wait = 0.15;
         #endregion
         #endregion
 
@@ -79,12 +97,16 @@ namespace Duologue.Screens
         private Texture2D[] texture_Screenshots;
         private Vector2[] center_Screenshots;
         private int currentScreenshot;
+        private BuyScreenState currentState;
+        private Vector2 position_Screenshot;
         //private Vector2[] possibleSpeeds;
         //private int currentSpeed;
         private Color color_Layer;
         private Texture2D[] texture_Buttons;
         private int[] possibleBackgrounds;
         private int currentBackground;
+        private Rectangle buyScreenWindow;
+        private float percentage;
 
         // Text
         private TeletypeEntry teletype_Title;
@@ -99,6 +121,7 @@ namespace Duologue.Screens
         // Timers
         private double delta;
         private double timer_Background;
+        private double timer_ScreenshotState;
 
         // Input
         private Dictionary<Buttons, int> buttonLookup;
@@ -146,12 +169,18 @@ namespace Duologue.Screens
 
             texture_Screenshots = new Texture2D[numberOfScreens];
             center_Screenshots = new Vector2[numberOfScreens];
+            Vector2 maxSize = Vector2.Zero;
             for (int i = 0; i < numberOfScreens; i++)
             {
                 texture_Screenshots[i] = InstanceManager.AssetManager.LoadTexture2D(
                     String.Format(filename_Screens, (i + 1).ToString()));
                 center_Screenshots[i] = new Vector2(
                     texture_Screenshots[i].Width / 2f, texture_Screenshots[i].Height / 2f);
+                if (texture_Screenshots[i].Width > maxSize.X)
+                {
+                    maxSize.X = texture_Screenshots[i].Width;
+                    maxSize.Y = texture_Screenshots[i].Height;
+                }
             }
 
             center_Screen = new Vector2(
@@ -178,6 +207,15 @@ namespace Duologue.Screens
             font_Features = InstanceManager.AssetManager.LoadSpriteFont(filename_FeatureFont);
             font_Title = InstanceManager.AssetManager.LoadSpriteFont(filename_TitleFont);
 
+            // buy screen window stuff
+            buyScreenWindow = new Rectangle(
+                (int)(center_Screen.X - screenWidth / 2f),
+                (int)(center_Screen.Y - screenHeight / 2f),
+                (int)screenWidth, (int)screenHeight);
+
+            position_Screenshot = new Vector2(
+                buyScreenWindow.Right - maxSize.X/2f,
+                buyScreenWindow.Top + maxSize.Y/2f);
         }
         #endregion
 
@@ -201,21 +239,10 @@ namespace Duologue.Screens
                         myManager.LoadForTrialMode();
                     }
 
-                    // Set up screenshots
-                    /*for (int i = 0; i < texture_Screenshots.Length; i++)
-                    {
-                        texture_Screenshots[i].Position = new Vector2(
-                            (float)MWMathHelper.GetRandomInRange(
-                                InstanceManager.DefaultViewport.TitleSafeArea.Left,
-                                InstanceManager.DefaultViewport.TitleSafeArea.Right),
-                            (float)MWMathHelper.GetRandomInRange(
-                                InstanceManager.DefaultViewport.TitleSafeArea.Top,
-                                InstanceManager.DefaultViewport.TitleSafeArea.Bottom));
-                        texture_Screenshots[i].Speed = possibleSpeeds[currentSpeed];
-                        currentSpeed++;
-                        if (currentSpeed >= possibleSpeeds.Length)
-                            currentSpeed = 0;
-                    }*/
+                    // Set up screen stuff
+                    currentScreenshot = 0;
+                    currentState = BuyScreenState.FadeIn;
+                    timer_ScreenshotState = 0;
 
                     // Set up buttons
                     if (MWMathHelper.CoinToss())
@@ -237,8 +264,7 @@ namespace Duologue.Screens
                             2f * texture_Buttons[0].Width -
                             size_Buy.X -
                             size_Menu.X -
-                            spacing_Buttons
-                        ,
+                            spacing_Buttons,
                             InstanceManager.DefaultViewport.TitleSafeArea.Bottom -
                             MathHelper.Max(size_Menu.Y,
                                 MathHelper.Max(texture_Buttons[0].Height, size_Buy.Y))
@@ -263,6 +289,7 @@ namespace Duologue.Screens
             {
                 delta = gameTime.ElapsedGameTime.TotalSeconds;
 
+                // background
                 timer_Background += delta;
                 if (timer_Background > totalTime_BackgroundCycle)
                 {
@@ -276,6 +303,45 @@ namespace Duologue.Screens
                         possibleBackgrounds[currentBackground]);
                 }
 
+                // screenshot
+                timer_ScreenshotState += delta;
+                switch (currentState)
+                {
+                    case BuyScreenState.FadeIn:
+                        if (timer_ScreenshotState > totalTime_FadeIn)
+                        {
+                            currentState = BuyScreenState.Steady;
+                            timer_ScreenshotState = 0;
+                        }
+                        break;
+                    case BuyScreenState.FadeOut:
+                        if (timer_ScreenshotState > totalTime_FadeOut)
+                        {
+                            currentState = BuyScreenState.Wait;
+                            timer_ScreenshotState = 0;
+                        }
+                        break;
+                    case BuyScreenState.Steady:
+                        if (timer_ScreenshotState > totalTime_Steady)
+                        {
+                            currentState = BuyScreenState.FadeOut;
+                            timer_ScreenshotState = 0;
+                        }
+                        break;
+                    default:
+                        // Wait
+                        if (timer_ScreenshotState > totalTime_Wait)
+                        {
+                            currentState = BuyScreenState.FadeIn;
+                            timer_ScreenshotState = 0;
+                            currentScreenshot += MWMathHelper.GetRandomInRange(1, 4);
+                            if (currentScreenshot >= texture_Screenshots.Length)
+                                currentScreenshot -= texture_Screenshots.Length;
+                        }
+                        break;
+                }
+
+                // Input handling
                 if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
                     LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
             }
@@ -298,6 +364,37 @@ namespace Duologue.Screens
                 0f,
                 scale_Layer,
                 0f);
+
+            // Draw screenshot
+            switch (currentState)
+            {
+                case BuyScreenState.FadeIn:
+                    percentage = (float)(timer_ScreenshotState / totalTime_FadeIn);
+                    DrawShotOffset(
+                        percentage,
+                        MathHelper.Lerp(minSize_FadeIn, maxSize_FadeIn, percentage));
+                    break;
+                case BuyScreenState.FadeOut:
+                    percentage = 1f - (float)(timer_ScreenshotState / totalTime_FadeOut);
+                    DrawShotOffset(
+                        percentage,
+                        MathHelper.Lerp(minSize_FadeOut, maxSize_FadeOut, percentage));
+                    break;
+                case BuyScreenState.Steady:
+                    InstanceManager.RenderSprite.Draw(
+                        texture_Screenshots[currentScreenshot],
+                        position_Screenshot,
+                        center_Screenshots[currentScreenshot],
+                        null,
+                        Color.White,
+                        0f,
+                        MathHelper.Lerp(minSize_Steady, maxSize_Steady, (float)(timer_ScreenshotState / totalTime_Steady)),
+                        0f);
+                    break;
+                default:
+                    // wait, do nothing
+                    break;
+            }
 
             // Draw dialog
 
@@ -335,6 +432,28 @@ namespace Duologue.Screens
                 Color.White);
 
             base.Draw(gameTime);
+        }
+
+        private void DrawShotOffset(float percentage, float size)
+        {
+            Color tempColor = new Color(
+                Color.White, percentage);
+
+            for (int i = 0; i < numOfBlurredScreens; i++)
+            {
+                InstanceManager.RenderSprite.Draw(
+                    texture_Screenshots[currentScreenshot],
+                    position_Screenshot + MathHelper.Lerp(maxOffsetScreenshot, 0 , percentage) * 
+                        MWMathHelper.RotateVectorByRadians(
+                            Vector2.UnitX, MathHelper.Lerp(-MathHelper.Pi, MathHelper.Pi, (float)(i) / (float)(numOfBlurredScreens))),
+                    center_Screenshots[currentScreenshot],
+                    null,
+                    tempColor,
+                    0f,
+                    size,
+                    0f);//,
+                    //RenderSpriteBlendMode.Addititive);
+            }
         }
         #endregion
     }
