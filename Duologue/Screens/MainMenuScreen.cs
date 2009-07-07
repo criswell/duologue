@@ -79,6 +79,13 @@ namespace Duologue.Screens
         #region Private methods
         #endregion
 
+        #region Public methods
+        internal void LivePurchaseReset()
+        {
+            mainMenu.LivePurchaseReset();
+        }
+        #endregion
+
         #region Overrides
         public override void SetEnable(bool t)
         {

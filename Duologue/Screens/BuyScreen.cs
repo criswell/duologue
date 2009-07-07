@@ -482,6 +482,7 @@ namespace Duologue.Screens
             else
             {
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+                ((DuologueGame)myGame).LivePurchaseReset();
             }
             base.Update(gameTime);
         }

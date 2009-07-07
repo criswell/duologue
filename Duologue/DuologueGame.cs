@@ -462,5 +462,10 @@ namespace Duologue
             LocalInstanceManager.AchievementManager.SaveStorageData();
             base.OnExiting(sender, args);
         }
+
+        public void LivePurchaseReset()
+        {
+            mainMenuScreen.LivePurchaseReset();
+        }
     }
 }
