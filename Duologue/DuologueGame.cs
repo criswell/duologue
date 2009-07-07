@@ -460,6 +460,12 @@ namespace Duologue
         protected override void OnExiting(object sender, EventArgs args)
         {
             LocalInstanceManager.AchievementManager.SaveStorageData();
+            // if in trial mode, pop up a buy screen
+            if (Guide.IsTrialMode)
+            {
+                if(BuyScreen.CanPlayerBuyGame(PlayerIndex.One))
+                    Guide.ShowMarketplace(PlayerIndex.One);
+            }
             base.OnExiting(sender, args);
         }
 
