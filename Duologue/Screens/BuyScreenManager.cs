@@ -74,17 +74,11 @@ namespace Duologue.Screens
         #region Public methods
         public override void ScreenEntrance(GameTime gameTime)
         {
-            // Turn off background
-            LocalInstanceManager.Background.Enabled = false;
-            LocalInstanceManager.Background.Visible = false;
             base.ScreenEntrance(gameTime);
         }
 
         public override void ScreenExit(GameTime gameTime)
         {
-            // Turn on background
-            LocalInstanceManager.Background.Enabled = true;
-            LocalInstanceManager.Background.Visible = true;
             base.ScreenExit(gameTime);
         }
         #endregion

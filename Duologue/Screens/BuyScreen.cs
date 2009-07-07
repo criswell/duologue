@@ -96,6 +96,10 @@ namespace Duologue.Screens
         private Vector2 size_Buy;
         private Vector2 size_Menu;
 
+        // Timers
+        private double delta;
+        private double timer_Background;
+
         // Input
         private Dictionary<Buttons, int> buttonLookup;
         private Buttons button_Buy;
@@ -109,7 +113,13 @@ namespace Duologue.Screens
             myGame = game;
             myManager = manager;
 
+            possibleBackgrounds = new int[]
+            {
+                0, 2, 3
+            };
+
             currentScreenshot = 0;
+            currentBackground = 0;
 
             color_Layer = new Color(
                 Color.Gray, alpha_Layer);
@@ -135,6 +145,7 @@ namespace Duologue.Screens
             position_Layer = Vector2.Zero;
 
             texture_Screenshots = new Texture2D[numberOfScreens];
+            center_Screenshots = new Vector2[numberOfScreens];
             for (int i = 0; i < numberOfScreens; i++)
             {
                 texture_Screenshots[i] = InstanceManager.AssetManager.LoadTexture2D(
@@ -233,6 +244,12 @@ namespace Duologue.Screens
                                 MathHelper.Max(texture_Buttons[0].Height, size_Buy.Y))
                          );
 
+                    // Set up background
+                    LocalInstanceManager.Background.SetParallaxElement(
+                        LocalInstanceManager.Background.EmptyParallaxElement, false);
+                    LocalInstanceManager.Background.SetParallaxElement(
+                        LocalInstanceManager.Background.EmptyParallaxElement, true);
+                    timer_Background = totalTime_BackgroundCycle;
                 }
             }
             base.OnEnabledChanged(sender, args);
@@ -244,65 +261,34 @@ namespace Duologue.Screens
         {
             if (Guide.IsTrialMode)
             {
-                /*for (int i = 0; i < texture_Screenshots.Length; i++)
-                {
-                    texture_Screenshots[i].Position += texture_Screenshots[i].Speed;
-                    if (texture_Screenshots[i].Position.X < -texture_Screenshots[i].Center.X ||
-                        texture_Screenshots[i].Position.X > texture_Screenshots[i].Position.X + InstanceManager.DefaultViewport.Width)
-                    {
-                        texture_Screenshots[i].Position = new Vector2(
-                            texture_Screenshots[i].Center.X + InstanceManager.DefaultViewport.Width,
-                            (float)MWMathHelper.GetRandomInRange(
-                                    InstanceManager.DefaultViewport.TitleSafeArea.Top,
-                                    InstanceManager.DefaultViewport.TitleSafeArea.Bottom));
-                        texture_Screenshots[i].Speed = possibleSpeeds[currentSpeed];
-                        currentSpeed++;
-                        if (currentSpeed >= possibleSpeeds.Length)
-                            currentSpeed = 0;
-                    }
-                }*/
+                delta = gameTime.ElapsedGameTime.TotalSeconds;
 
-                /*position_Layer.X += delta_LayerOffset;
-                if (position_Layer.X > texture_Layer.Width)
-                    position_Layer.X = 0;
-                else if (position_Layer.X < 0)
-                    position_Layer.X = texture_Layer.Width;*/
+                timer_Background += delta;
+                if (timer_Background > totalTime_BackgroundCycle)
+                {
+                    timer_Background = 0;
+                    currentBackground++;
+                    if (currentBackground >= possibleBackgrounds.Length)
+                    {
+                        currentBackground = 0;
+                    }
+                    LocalInstanceManager.Background.SetBackground(
+                        possibleBackgrounds[currentBackground]);
+                }
 
                 if (InstanceManager.InputManager.NewButtonPressed(Buttons.Back))
                     LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
-
+            }
+            else
+            {
+                LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
             }
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            // Draw background
-            InstanceManager.RenderSprite.Draw(
-                texture_Background,
-                center_Screen,
-                center_Background,
-                null,
-                Color.White,
-                0f,
-                1f,
-                0f);
-
-            // Draw screenshots
-            for (int i = 0; i < texture_Screenshots.Length; i++)
-            {
-                InstanceManager.RenderSprite.Draw(
-                    texture_Screenshots[i].Texture,
-                    texture_Screenshots[i].Position,
-                    texture_Screenshots[i].Center,
-                    null,
-                    Color.White,
-                    0f,
-                    1f,
-                    0f);
-            }
-
-            // Draw layers
+            // Draw layer
             InstanceManager.RenderSprite.Draw(
                 texture_Layer,
                 Vector2.Zero,
