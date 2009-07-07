@@ -269,11 +269,11 @@ namespace Mimicware.Fx
             if (alive)
             {
                 masterTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (masterTimer > TotalTimeOnScreen && TotalTimeOnScreen > 0)
-                {
-                    masterTimer = TotalTimeOnScreen;
-                    alive = false;
-                }
+            }
+            if (masterTimer > TotalTimeOnScreen && TotalTimeOnScreen > 0)
+            {
+                masterTimer = TotalTimeOnScreen;
+                alive = false;
             }
         }
 

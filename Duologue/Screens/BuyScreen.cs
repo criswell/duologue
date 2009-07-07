@@ -45,9 +45,12 @@ namespace Duologue.Screens
         private const string filename_Screens = "BuyScreen/{0}";
         private const int numberOfScreens = 14;
 
-        private const string filename_TitleFont = "Fonts/inero-50";
         private const string filename_FeatureFont = "Fonts/deja-med";
         private const string filename_ButtonFont = "Fonts/deja-med";
+
+        private const string filename_LogoBase = "logo-base";
+        private const string filename_LogoBorder = "logo-border-{0}";
+        private const int numberOfBorderFrames = 6;
 
         private const string filename_ButtonA = "PlayerUI/buttonA";
         private const string filename_ButtonB = "PlayerUI/buttonB";
@@ -61,7 +64,7 @@ namespace Duologue.Screens
         private const float maxOffsetScreenshot = 80f;
 
         private const float screenWidth = 850f;
-        private const float screenHeight = 650f;
+        private const float screenHeight = 500f;
 
         private const float minSize_FadeIn = 0.56f;
         private const float maxSize_FadeIn = 0.96f;
@@ -78,8 +81,8 @@ namespace Duologue.Screens
 
         private const float shadowLength = 6f;
 
-        private const float spacing_Title = 35f;
-        private const float spacing_Features = 10f;
+        private const float spacing_Title = 45f;
+        private const float spacing_Features = 20f;
         private const float spacing_HorizFeatures = 25f;
 
         #region Timers
@@ -90,6 +93,7 @@ namespace Duologue.Screens
         private const double totalTime_Wait = 0.15;
 
         private const double totalTime_Type = 0.23;
+        private const double totalTime_LogoFrame = 0.075;
         #endregion
         #endregion
 
@@ -113,12 +117,16 @@ namespace Duologue.Screens
         private int currentBackground;
         private Rectangle buyScreenWindow;
         private float percentage;
+        private Texture2D texture_Logo;
+        private Texture2D[] texture_LogoBorder;
+        private Vector2 center_Logo;
+        private Vector2 position_Logo;
+        private float scale_Logo;
+        private int currentLogoFrame;
 
         // Text
-        private TeletypeEntry teletype_Title;
         private TeletypeEntry[] teletype_Features;
         private Vector2 position_ButtonStart;
-        private SpriteFont font_Title;
         private SpriteFont font_Features;
         private SpriteFont font_Buttons;
         private Vector2 size_Buy;
@@ -130,6 +138,7 @@ namespace Duologue.Screens
         private double delta;
         private double timer_Background;
         private double timer_ScreenshotState;
+        private double timer_LogoAnimation;
 
         // Input
         private Dictionary<Buttons, int> buttonLookup;
@@ -225,7 +234,6 @@ namespace Duologue.Screens
 
             font_Buttons = InstanceManager.AssetManager.LoadSpriteFont(filename_ButtonFont);
             font_Features = InstanceManager.AssetManager.LoadSpriteFont(filename_FeatureFont);
-            font_Title = InstanceManager.AssetManager.LoadSpriteFont(filename_TitleFont);
 
             // buy screen window stuff
             buyScreenWindow = new Rectangle(
@@ -233,26 +241,29 @@ namespace Duologue.Screens
                 (int)(center_Screen.Y - screenHeight / 2f),
                 (int)screenWidth, (int)screenHeight);
 
+            // Screenshot
             position_Screenshot = new Vector2(
                 buyScreenWindow.Right - maxSize.X/2f,
                 buyScreenWindow.Top + maxSize.Y/2f);
 
+            // Logo stuff
+            texture_Logo = InstanceManager.AssetManager.LoadTexture2D(filename_LogoBase);
+            texture_LogoBorder = new Texture2D[numberOfBorderFrames];
+            for (int i = 0; i < numberOfBorderFrames; i++)
+            {
+                texture_LogoBorder[i] = InstanceManager.AssetManager.LoadTexture2D(String.Format(
+                   filename_LogoBorder, i.ToString()));
+            }
+
+            center_Logo = Vector2.Zero;
+            position_Logo = new Vector2(
+                buyScreenWindow.X, buyScreenWindow.Y);
+            scale_Logo = (buyScreenWindow.Width - maxSize.X * maxSize_Steady) / (float)texture_Logo.Width;
+
             // Teletype stuff
             Vector2 pos = new Vector2(buyScreenWindow.X, buyScreenWindow.Y);
 
-            teletype_Title = new TeletypeEntry(
-                font_Title,
-                Resources.BuyScreen_Title,
-                pos,
-                Vector2.Zero,
-                new Color(255,235,174),
-                totalTime_Type,
-                -1,
-                color_Shadow,
-                offset_Shadow,
-                InstanceManager.RenderSprite);
-
-            pos.Y += font_Title.MeasureString(Resources.BuyScreen_Title).Y + spacing_Title;
+            pos.Y += texture_Logo.Height * scale_Logo + spacing_Title;
 
             string[] temp = new string[]
             {
@@ -272,7 +283,7 @@ namespace Duologue.Screens
                     temp[i],
                     pos,
                     Vector2.Zero,
-                    new Color(236,210,130),
+                    new Color(255,235,174),
                     totalTime_Type,
                     -1,
                     color_Shadow,
@@ -309,6 +320,7 @@ namespace Duologue.Screens
                     currentScreenshot = 0;
                     currentState = BuyScreenState.FadeIn;
                     timer_ScreenshotState = 0;
+                    timer_LogoAnimation = 0;
 
                     // Set up buttons
                     if (MWMathHelper.CoinToss())
@@ -344,8 +356,6 @@ namespace Duologue.Screens
                     timer_Background = totalTime_BackgroundCycle;
 
                     // Set up teletypes
-                    teletype_Title.Reset();
-                    ServiceLocator.GetService<Teletype>().AddEntry(teletype_Title);
                     for (int i = 0; i < teletype_Features.Length; i++)
                     {
                         teletype_Features[i].Reset();
@@ -380,6 +390,16 @@ namespace Duologue.Screens
                     }
                     LocalInstanceManager.Background.SetBackground(
                         possibleBackgrounds[currentBackground]);
+                }
+
+                // Logo
+                timer_LogoAnimation += delta;
+                if (timer_LogoAnimation > totalTime_LogoFrame)
+                {
+                    timer_LogoAnimation = 0;
+                    currentLogoFrame++;
+                    if (currentLogoFrame >= numberOfBorderFrames)
+                        currentLogoFrame = 0;
                 }
 
                 // screenshot
@@ -475,8 +495,37 @@ namespace Duologue.Screens
                     break;
             }
 
-            // Draw dialog
-
+            // Draw Logo
+            InstanceManager.RenderSprite.Draw(
+                texture_Logo,
+                position_Logo,
+                center_Logo,
+                null,
+                new Color(Color.White, 0.09f),
+                0f,
+                scale_Logo,
+                0f,
+                RenderSpriteBlendMode.Addititive);
+            InstanceManager.RenderSprite.Draw(
+                texture_LogoBorder[currentLogoFrame],
+                position_Logo,
+                center_Logo,
+                null,
+                Color.White,
+                0f,
+                scale_Logo,
+                0f,
+                RenderSpriteBlendMode.Addititive);
+            InstanceManager.RenderSprite.Draw(
+                texture_Logo,
+                position_Logo,
+                center_Logo,
+                null,
+                Color.White,
+                0f,
+                scale_Logo,
+                0f,
+                RenderSpriteBlendMode.Multiplicative);
             // Draw buttons
             InstanceManager.RenderSprite.Draw(
                 texture_Buttons[buttonLookup[button_Buy]],
@@ -522,7 +571,7 @@ namespace Duologue.Screens
             {
                 InstanceManager.RenderSprite.Draw(
                     texture_Screenshots[currentScreenshot],
-                    position_Screenshot + MathHelper.Lerp(maxOffsetScreenshot, 0 , percentage) * 
+                    position_Screenshot + MathHelper.Lerp(maxOffsetScreenshot, 0, percentage) *
                         MWMathHelper.RotateVectorByRadians(
                             Vector2.UnitX, MathHelper.Lerp(-MathHelper.Pi, MathHelper.Pi, (float)(i) / (float)(numOfBlurredScreens))),
                     center_Screenshots[currentScreenshot],
@@ -530,8 +579,7 @@ namespace Duologue.Screens
                     tempColor,
                     0f,
                     size,
-                    0f);//,
-                    //RenderSpriteBlendMode.Addititive);
+                    0f);
             }
         }
         #endregion
