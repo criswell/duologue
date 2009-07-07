@@ -360,7 +360,17 @@ namespace Duologue.Screens
                 {
                     teletype.FlushEntries();
                     if (currentSelection == menuExit)
-                        LocalInstanceManager.CurrentGameState = GameState.Exit;
+                    {
+                        if (Guide.IsTrialMode)
+                        {
+                            LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
+                            LocalInstanceManager.NextGameState = GameState.Exit;
+                        }
+                        else
+                        {
+                            LocalInstanceManager.CurrentGameState = GameState.Exit;
+                        }
+                    }
                     else if (currentSelection == menuPlayGame)
                     {
                         currentState = MainMenuState.GameSelect;

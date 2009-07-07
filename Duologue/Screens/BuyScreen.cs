@@ -133,6 +133,7 @@ namespace Duologue.Screens
         private Vector2 size_Menu;
         private Vector2[] offset_Shadow;
         private Color color_Shadow;
+        private string menuText;
 
         // Timers
         private double delta;
@@ -351,7 +352,11 @@ namespace Duologue.Screens
                     }
 
                     size_Buy = font_Buttons.MeasureString(Resources.BuyScreen_Buy);
-                    size_Menu = font_Buttons.MeasureString(Resources.BuyScreen_Menu);
+                    if (LocalInstanceManager.NextGameState == GameState.MainMenuSystem)
+                        menuText = Resources.BuyScreen_Menu;
+                    else
+                        menuText = Resources.BuyScreen_Exit;
+                    size_Menu = font_Buttons.MeasureString(menuText);
 
                     position_ButtonStart = new Vector2(
                             InstanceManager.DefaultViewport.TitleSafeArea.Right -
@@ -591,7 +596,7 @@ namespace Duologue.Screens
 
             InstanceManager.RenderSprite.DrawString(
                 font_Buttons,
-                Resources.BuyScreen_Menu,
+                menuText,
                 position_ButtonStart + (texture_Buttons[buttonLookup[button_Buy]].Width + size_Buy.X + spacing_Buttons + texture_Buttons[buttonLookup[button_Menu]].Width) * Vector2.UnitX + buttonFontOffset * Vector2.UnitY,
                 Color.White);
 

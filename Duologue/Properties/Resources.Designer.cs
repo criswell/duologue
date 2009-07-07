@@ -88,6 +88,15 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string BuyScreen_Exit {
+            get {
+                return ResourceManager.GetString("BuyScreen_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to * Over 60 level campaign mode!.
         /// </summary>
         internal static string BuyScreen_Feature1 {

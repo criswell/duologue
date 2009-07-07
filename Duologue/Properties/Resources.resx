@@ -126,6 +126,9 @@
   <data name="BuyScreen_Buy" xml:space="preserve">
     <value>Buy Game</value>
   </data>
+  <data name="BuyScreen_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
   <data name="BuyScreen_Feature1" xml:space="preserve">
     <value>* Over 60 level campaign mode!</value>
   </data>
