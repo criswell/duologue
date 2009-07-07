@@ -378,7 +378,7 @@ namespace Duologue.Screens
                     percentage = 1f - (float)(timer_ScreenshotState / totalTime_FadeOut);
                     DrawShotOffset(
                         percentage,
-                        MathHelper.Lerp(minSize_FadeOut, maxSize_FadeOut, percentage));
+                        MathHelper.Lerp(maxSize_FadeOut, minSize_FadeOut, percentage));
                     break;
                 case BuyScreenState.Steady:
                     InstanceManager.RenderSprite.Draw(
@@ -437,7 +437,7 @@ namespace Duologue.Screens
         private void DrawShotOffset(float percentage, float size)
         {
             Color tempColor = new Color(
-                Color.White, percentage);
+                Color.White, percentage * 0.5f);
 
             for (int i = 0; i < numOfBlurredScreens; i++)
             {
