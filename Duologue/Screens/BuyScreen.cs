@@ -64,7 +64,7 @@ namespace Duologue.Screens
         private const float maxOffsetScreenshot = 80f;
 
         private const float screenWidth = 850f;
-        private const float screenHeight = 500f;
+        private const float screenHeight = 525f;
 
         private const float minSize_FadeIn = 0.56f;
         private const float maxSize_FadeIn = 0.96f;
@@ -274,6 +274,7 @@ namespace Duologue.Screens
                 Resources.BuyScreen_Feature5,
                 Resources.BuyScreen_Feature6,
                 Resources.BuyScreen_Feature7,
+                Resources.BuyScreen_Feature8,
             };
             teletype_Features = new TeletypeEntry[temp.Length];
             for (int i = 0; i < temp.Length; i++)

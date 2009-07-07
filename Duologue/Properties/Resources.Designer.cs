@@ -88,7 +88,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Over 60 level campaign mode!.
+        ///   Looks up a localized string similar to * Over 60 level campaign mode!.
         /// </summary>
         internal static string BuyScreen_Feature1 {
             get {
@@ -97,7 +97,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 23 unique and dynamic enemies!.
+        ///   Looks up a localized string similar to * 23 unique and dynamic enemies!.
         /// </summary>
         internal static string BuyScreen_Feature2 {
             get {
@@ -106,7 +106,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3 modes of gameplay!.
+        ///   Looks up a localized string similar to * 3 modes of gameplay!.
         /// </summary>
         internal static string BuyScreen_Feature3 {
             get {
@@ -115,7 +115,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exciting 4-player co-op!.
+        ///   Looks up a localized string similar to * Exciting 4-player co-op!.
         /// </summary>
         internal static string BuyScreen_Feature4 {
             get {
@@ -124,7 +124,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 10 medals to achieve!.
+        ///   Looks up a localized string similar to * 10 medals to achieve!.
         /// </summary>
         internal static string BuyScreen_Feature5 {
             get {
@@ -133,7 +133,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7 bosses with special attacks!.
+        ///   Looks up a localized string similar to * 7 bosses with special attacks!.
         /// </summary>
         internal static string BuyScreen_Feature6 {
             get {
@@ -142,11 +142,20 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dynamic music that responds to the action!.
+        ///   Looks up a localized string similar to * Rhythm based scoring!.
         /// </summary>
         internal static string BuyScreen_Feature7 {
             get {
                 return ResourceManager.GetString("BuyScreen_Feature7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Dynamic music that responds to the action!.
+        /// </summary>
+        internal static string BuyScreen_Feature8 {
+            get {
+                return ResourceManager.GetString("BuyScreen_Feature8", resourceCulture);
             }
         }
         

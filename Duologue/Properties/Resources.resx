@@ -127,25 +127,28 @@
     <value>Buy Game</value>
   </data>
   <data name="BuyScreen_Feature1" xml:space="preserve">
-    <value>Over 60 level campaign mode!</value>
+    <value>* Over 60 level campaign mode!</value>
   </data>
   <data name="BuyScreen_Feature2" xml:space="preserve">
-    <value>23 unique and dynamic enemies!</value>
+    <value>* 23 unique and dynamic enemies!</value>
   </data>
   <data name="BuyScreen_Feature3" xml:space="preserve">
-    <value>3 modes of gameplay!</value>
+    <value>* 3 modes of gameplay!</value>
   </data>
   <data name="BuyScreen_Feature4" xml:space="preserve">
-    <value>Exciting 4-player co-op!</value>
+    <value>* Exciting 4-player co-op!</value>
   </data>
   <data name="BuyScreen_Feature5" xml:space="preserve">
-    <value>10 medals to achieve!</value>
+    <value>* 10 medals to achieve!</value>
   </data>
   <data name="BuyScreen_Feature6" xml:space="preserve">
-    <value>7 bosses with special attacks!</value>
+    <value>* 7 bosses with special attacks!</value>
   </data>
   <data name="BuyScreen_Feature7" xml:space="preserve">
-    <value>Dynamic music that responds to the action!</value>
+    <value>* Rhythm based scoring!</value>
+  </data>
+  <data name="BuyScreen_Feature8" xml:space="preserve">
+    <value>* Dynamic music that responds to the action!</value>
   </data>
   <data name="BuyScreen_Menu" xml:space="preserve">
     <value>Main menu</value>
