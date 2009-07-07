@@ -437,7 +437,7 @@ namespace Duologue.Screens
         private void DrawShotOffset(float percentage, float size)
         {
             Color tempColor = new Color(
-                Color.White, percentage * 0.5f);
+                Color.White, percentage * 0.25f);
 
             for (int i = 0; i < numOfBlurredScreens; i++)
             {
