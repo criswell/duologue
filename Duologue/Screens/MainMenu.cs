@@ -164,6 +164,8 @@ namespace Duologue.Screens
             if (!isMenuSet)
             {
                 int menuIndex = 0;
+                mainMenuItems.Clear();
+                gameSelectItems.Clear();
 
                 // Set up the main menu
                 mainMenuItems.Add(new MenuItem(Resources.MainMenu_Play));
