@@ -183,7 +183,10 @@ namespace Duologue.PlayObjects
             ColorPolarity = startColorPolarity;
             SpawnTimeDelay = spawnDelay;
             SpawnTimer = 0;
-            Alive = true;
+            if (Guide.IsTrialMode)
+                Alive = false; // Skip on trial mode
+            else
+                Alive = true;
             teletype = ServiceLocator.GetService<Teletype>();
             LoadAndInitialize();
         }

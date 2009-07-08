@@ -222,6 +222,10 @@ namespace Duologue.PlayObjects
             {
                 hitPoints = 0;
             }
+            if (Guide.IsTrialMode)
+            {
+                hitPoints = 0;
+            }
             StartHitPoints = (int)hitPoints;
             CurrentHitPoints = (int)hitPoints;
             audio = ServiceLocator.GetService<AudioManager>();
