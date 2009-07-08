@@ -145,7 +145,7 @@ namespace Duologue
             this.Components.Add(GamerServices);
             debug = false;
             // Uncomment to simulate trial mode
-            Guide.SimulateTrialMode = true;
+            //Guide.SimulateTrialMode = true;
         }
 
         /// <summary>

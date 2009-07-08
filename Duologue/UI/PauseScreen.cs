@@ -394,10 +394,6 @@ namespace Duologue.UI
                 LocalInstanceManager.AchievementManager.EnableMedalScreen();
                 LocalInstanceManager.AchievementManager.ReturnToPause = true;
 
-                // Quiet the tutorial
-                ServiceLocator.GetService<Tutorial>().Enabled = false;
-                ServiceLocator.GetService<Tutorial>().Visible = false;
-
                 inMedalScreen = true;
             }
             else if (currentSelection == buyGame)
@@ -651,6 +647,22 @@ namespace Duologue.UI
                 konamiCodeIndex = 0;
                 konamiCodeDone = false;
             }
+            
+            if (this.Enabled)
+            {
+                // Quiet the tutorial
+                ServiceLocator.GetService<Tutorial>().Enabled = false;
+                ServiceLocator.GetService<Tutorial>().Visible = false;
+            }
+            else
+            {
+                // Get tutorial back
+                if (ServiceLocator.GetService<Tutorial>() != null)
+                {
+                    ServiceLocator.GetService<Tutorial>().Enabled = true;
+                    ServiceLocator.GetService<Tutorial>().Visible = true;
+                }
+            }
             base.OnEnabledChanged(sender, args);
         }
         #endregion
@@ -673,10 +685,6 @@ namespace Duologue.UI
             LocalInstanceManager.PlayerRing.Visible = true;
             LocalInstanceManager.PlayerSmoke.Visible = true;
             LocalInstanceManager.Steam.Visible = true;
-
-            // Get tutorial back
-            ServiceLocator.GetService<Tutorial>().Enabled = true;
-            ServiceLocator.GetService<Tutorial>().Visible = true;
 
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
