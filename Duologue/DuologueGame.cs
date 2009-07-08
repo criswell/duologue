@@ -115,6 +115,8 @@ namespace Duologue
         public MedalCaseScreenManager medalCaseScreenManager;
         public BuyScreenManager buyScreenManager;
 
+        public double trialTimer;
+
         /// <summary>
         /// The dispatch table for game state changes
         /// </summary>
@@ -366,6 +368,8 @@ namespace Duologue
             // Pause stuff
             LocalInstanceManager.Pause = false;
             LocalInstanceManager.CanPause = true;
+
+            trialTimer = 0;
 
             base.Initialize();
         }
