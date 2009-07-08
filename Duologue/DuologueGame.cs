@@ -68,6 +68,11 @@ namespace Duologue
         /// Maximum number of enemy explosion effects
         /// </summary>
         public const int MaxEnemyExplosions = 20;
+
+        /// <summary>
+        /// The total trial time (currently set to roughly 7 and a quarter minutes)
+        /// </summary>
+        public const double TotalTrialTime = 7.25;
         #endregion
 
         #region Fields
@@ -407,6 +412,18 @@ namespace Duologue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            // Trial stuff
+            if (Guide.IsTrialMode)
+            {
+                trialTimer += gameTime.ElapsedGameTime.TotalMinutes;
+                if (trialTimer > TotalTrialTime)
+                {
+                    trialTimer = 0;
+                    LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
+                    LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+                }
+            }
+
             // Update the input manager every update
             InstanceManager.InputManager.Update();
 
