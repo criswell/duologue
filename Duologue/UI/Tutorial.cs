@@ -69,7 +69,7 @@ namespace Duologue.UI
         /// This is how many separate game times the player has to play before
         /// the tutorial goes away
         /// </summary>
-        private const int numberOfTimesToDisplayTutorial = 10;
+        private const int numberOfTimesToDisplayTutorial = 8;
 
         private const float width_MinPopup = 10f;
         private const float width_ExtraPopup = 50f;
