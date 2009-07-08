@@ -419,6 +419,7 @@ namespace Duologue
                 if (trialTimer > TotalTrialTime)
                 {
                     trialTimer = 0;
+                    LocalInstanceManager.Pause = false;
                     LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
                     LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
                 }
