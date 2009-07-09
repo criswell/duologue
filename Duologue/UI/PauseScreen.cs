@@ -654,6 +654,7 @@ namespace Duologue.UI
                 InitMenu();
                 SetPostion();
                 isTrialMode = Guide.IsTrialMode;
+                inMedalScreen = false;
             }
             
             if (this.Enabled)
