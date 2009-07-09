@@ -393,6 +393,8 @@ namespace Duologue.UI
                 LocalInstanceManager.PlayerRing.Visible = false;
                 LocalInstanceManager.PlayerSmoke.Visible = false;
                 LocalInstanceManager.Steam.Visible = false;
+                // Turn off the game wave display
+                ServiceLocator.GetService<WaveDisplay>().Visible = false;
 
                 LocalInstanceManager.AchievementManager.EnableMedalScreen();
                 LocalInstanceManager.AchievementManager.ReturnToPause = true;
@@ -692,6 +694,8 @@ namespace Duologue.UI
             LocalInstanceManager.PlayerRing.Visible = true;
             LocalInstanceManager.PlayerSmoke.Visible = true;
             LocalInstanceManager.Steam.Visible = true;
+            // Turn on the game wave display
+            ServiceLocator.GetService<WaveDisplay>().Visible = true;
 
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {

@@ -19,6 +19,7 @@ using Mimicware.Graphics;
 // Duologue
 using Duologue;
 using Duologue.Properties;
+using Duologue.Audio;
 #endregion
 
 namespace Duologue.UI
@@ -34,7 +35,7 @@ namespace Duologue.UI
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class WaveDisplay : Microsoft.Xna.Framework.DrawableGameComponent
+    public class WaveDisplay : Microsoft.Xna.Framework.DrawableGameComponent, IService
     {
         #region Constants
         private const string fontFilename = "Fonts/inero-50";

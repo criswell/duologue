@@ -420,8 +420,12 @@ namespace Duologue
                 {
                     trialTimer = 0;
                     LocalInstanceManager.Pause = false;
+                    LocalInstanceManager.Background.Enabled = true;
+                    LocalInstanceManager.Background.Visible = true;
                     LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
                     LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+                    LocalInstanceManager.AchievementManager.DisableMedalScreen();
+                    LocalInstanceManager.AchievementManager.ReturnToPause = false;
                 }
             }
 

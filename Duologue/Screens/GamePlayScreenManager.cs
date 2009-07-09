@@ -118,6 +118,7 @@ namespace Duologue.Screens
             waveDisplay = new WaveDisplay(localGame);
             waveDisplay.DrawOrder = 200;
             localGame.Components.Add(waveDisplay);
+            ServiceLocator.RegisterService(waveDisplay);
             gamePlayLoop = new GamePlayLoop(localGame, this);
             gamePlayLoop.DrawOrder = 4;
             localGame.Components.Add(gamePlayLoop);
