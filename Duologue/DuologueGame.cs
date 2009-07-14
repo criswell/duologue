@@ -162,15 +162,6 @@ namespace Duologue
         protected override void Initialize()
         {
             // Determine what our aspect ratio is, and set resolution accordingly
-            // FIXME - WONTFIX, look into doing better next game
-            // BAH! We really should check for available modes and not just do this
-            /*DisplayMode currentMode = GraphicsDevice.DisplayMode;
-            Console.WriteLine("--------------------------------------------FUCK");
-            Console.WriteLine(currentMode.AspectRatio);
-            Console.WriteLine("--------------------------------------------FUCK");
-            Console.WriteLine("--------------------------------------------FUCK");
-            Console.WriteLine("--------------------------------------------FUCK");*/
-            //if (currentMode.AspectRatio > 1.25)
             if(GraphicsAdapter.DefaultAdapter.IsWideScreen)
             {
                 // Set to 720p (1280×720)
