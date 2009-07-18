@@ -84,7 +84,7 @@ namespace Duologue.Waves
         private const float min_HPBaseline = 0f;
         private const float max_HPBaseline = 2f;
 
-        private const float max_TotalHP = 6f;
+        private const float max_TotalHP = 5f;
 
         private const float min_EnemyDelay = 0.5f;
         // How's this for a mind-fuck?
@@ -233,7 +233,6 @@ namespace Duologue.Waves
                     TypesOfPlayObjects.Enemy_Spitter,
                     TypesOfPlayObjects.Enemy_Gloop,
                     TypesOfPlayObjects.Enemy_StaticGloop,
-                    TypesOfPlayObjects.Enemy_Spawner,
                 },
                 new TypesOfPlayObjects[]
                 // Tier 4
@@ -247,7 +246,6 @@ namespace Duologue.Waves
                     TypesOfPlayObjects.Enemy_Spitter,
                     TypesOfPlayObjects.Enemy_Gloop,
                     TypesOfPlayObjects.Enemy_StaticGloop,
-                    TypesOfPlayObjects.Enemy_Spawner,
                     TypesOfPlayObjects.Enemy_Firefly,
                     TypesOfPlayObjects.Enemy_Flycket,
                 },

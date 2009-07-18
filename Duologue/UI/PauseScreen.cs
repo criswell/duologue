@@ -93,6 +93,8 @@ namespace Duologue.UI
         private Game myGame;
         private bool initialized;
 
+        private bool isTrialMode;
+
         // Menu items
         private Vector2 wavePosition;
         private Vector2 waveSize;
@@ -185,6 +187,7 @@ namespace Duologue.UI
         public void LivePurchaseReset()
         {
             InitMenu();
+            SetPostion();
             numberOfTiles = -1;
         }
 
@@ -390,6 +393,8 @@ namespace Duologue.UI
                 LocalInstanceManager.PlayerRing.Visible = false;
                 LocalInstanceManager.PlayerSmoke.Visible = false;
                 LocalInstanceManager.Steam.Visible = false;
+                // Turn off the game wave display
+                ServiceLocator.GetService<WaveDisplay>().Visible = false;
 
                 LocalInstanceManager.AchievementManager.EnableMedalScreen();
                 LocalInstanceManager.AchievementManager.ReturnToPause = true;
@@ -646,11 +651,16 @@ namespace Duologue.UI
                 LocalInstanceManager.WindowManager.SetLocation(pauseMenuWindowLocation);
                 konamiCodeIndex = 0;
                 konamiCodeDone = false;
+                InitMenu();
+                SetPostion();
+                isTrialMode = Guide.IsTrialMode;
+                inMedalScreen = false;
             }
             
             if (this.Enabled)
             {
                 // Quiet the tutorial
+                InitMenu();
                 ServiceLocator.GetService<Tutorial>().Enabled = false;
                 ServiceLocator.GetService<Tutorial>().Visible = false;
             }
@@ -685,6 +695,8 @@ namespace Duologue.UI
             LocalInstanceManager.PlayerRing.Visible = true;
             LocalInstanceManager.PlayerSmoke.Visible = true;
             LocalInstanceManager.Steam.Visible = true;
+            // Turn on the game wave display
+            ServiceLocator.GetService<WaveDisplay>().Visible = true;
 
             for (int i = 0; i < InputManager.MaxInputs; i++)
             {
@@ -701,6 +713,13 @@ namespace Duologue.UI
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (isTrialMode != Guide.IsTrialMode)
+            {
+                InitMenu();
+                SetPostion();
+                isTrialMode = Guide.IsTrialMode;
+            }
+
             if (inMedalScreen)
             {
                 LocalInstanceManager.AchievementManager.Update(gameTime);
@@ -824,8 +843,7 @@ namespace Duologue.UI
                     String.Format(
                         Resources.PauseScreen_WaveNum,
                         LocalInstanceManager.CurrentGameWave.MajorWaveNumber,
-                        LocalInstanceManager.CurrentGameWave.MinorWaveNumber,
-                        LocalInstanceManager.CurrentGameWave.CurrentWavelet),
+                        LocalInstanceManager.CurrentGameWave.MinorWaveNumber),
                         wavePosition,
                     Color.BlanchedAlmond,
                     RenderSpriteBlendMode.AlphaBlendTop);

@@ -42,7 +42,7 @@ namespace Duologue.UI
         private const string fontFilename = "Fonts/inero-40";
         private const string smallFontFilename = "Fonts/inero-28";
         private const string filename_LifeUp = "Audio/PlayerEffects/life-up";
-        private const float volume_LifeUp = 1f;
+        private const float volume_LifeUp = 0.65f;
         private const double timeToDisplayLifeUp = 1.2f;
         private const double timePerLifeUpBlink = 0.1f;
         //private const string livesDot = "PlayerUI\\live-dot";
