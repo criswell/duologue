@@ -50,7 +50,7 @@ namespace Duologue.PlayObjects
         private const double maxEndShieldSizeMultiplier = 0.7;
         private const byte maxShieldAlpha = 255;
         private const double timeBetweenColorSwitched = 0.15;
-        private const float arrowPositionPercentage = 0.95f;
+        private const float arrowPositionPercentage = 0.90f;
         #endregion
 
         #region Fields
