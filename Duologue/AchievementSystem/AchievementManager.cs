@@ -520,87 +520,97 @@ namespace Duologue.AchievementSystem
 
         private bool LoadAchievementData()
         {
-            // Open a storage container.
-            StorageContainer container =
-                storageDevice.OpenContainer(containerName);
-
-            // Get the path of the save game.
-            string filename = Path.Combine(container.Path, filename_SavedData);
-
-            // Check to see whether the save exists.
-            if (File.Exists(filename))
+            if (storageDevice.IsConnected)
             {
-                InstanceManager.Logger.LogEntry("Medal data file:");
-                InstanceManager.Logger.LogEntry(filename);
+                // Open a storage container.
+                StorageContainer container =
+                    storageDevice.OpenContainer(containerName);
 
-                // Open the file.
-                FileStream stream = File.Open(filename, FileMode.OpenOrCreate,
-                    FileAccess.Read);
+                // Get the path of the save game.
+                string filename = Path.Combine(container.Path, filename_SavedData);
 
-                // Read the data from the file.
-                XmlSerializer serializer = new XmlSerializer(typeof(AchievementData));
-                try
+                // Check to see whether the save exists.
+                if (File.Exists(filename))
                 {
-                    achievementData = (AchievementData)serializer.Deserialize(stream);
-                }
-                catch
-                {
+                    InstanceManager.Logger.LogEntry("Medal data file:");
+                    InstanceManager.Logger.LogEntry(filename);
+
+                    // Open the file.
+                    FileStream stream = File.Open(filename, FileMode.OpenOrCreate,
+                        FileAccess.Read);
+
+                    // Read the data from the file.
+                    XmlSerializer serializer = new XmlSerializer(typeof(AchievementData));
+                    try
+                    {
+                        achievementData = (AchievementData)serializer.Deserialize(stream);
+                    }
+                    catch
+                    {
+                        stream.Close();
+                        container.Dispose();
+                        dataLoaded = false;
+                        return false;
+                    }
+
+                    // Close the file.
                     stream.Close();
+
+                    // Dispose the container.
                     container.Dispose();
-                    dataLoaded = false;
+                    dataLoaded = true;
+                    if (achievementData.DataVersion == dataVersion)
+                        return true;
+                    else
+                        return false; // Yeah, so we nuke their medals... should only happen during development
+                }
+                else
+                {
+                    container.Dispose();
                     return false;
                 }
-
-                // Close the file.
-                stream.Close();
-
-                // Dispose the container.
-                container.Dispose();
-                dataLoaded = true;
-                if (achievementData.DataVersion == dataVersion)
-                    return true;
-                else
-                    return false; // Yeah, so we nuke their medals... should only happen during development
             }
             else
             {
-                container.Dispose();
                 return false;
             }
         }
 
         private void SaveAchievementData()
         {
-            // Open a storage container.
-            StorageContainer container =
-                storageDevice.OpenContainer(containerName);
-
-            // Get the path of the save game.
-            string filename = Path.Combine(container.Path, filename_SavedData);
-
-            InstanceManager.Logger.LogEntry("Medal data file:");
-            InstanceManager.Logger.LogEntry(filename);
-
-            // Open the file, creating it if necessary.
-            FileStream stream;
-            if (File.Exists(filename))
+            if (storageDevice.IsConnected)
             {
-                stream = File.Open(filename, FileMode.Truncate);
+                // Open a storage container.
+                StorageContainer container =
+                    storageDevice.OpenContainer(containerName);
+
+                // Get the path of the save game.
+                string filename = Path.Combine(container.Path, filename_SavedData);
+
+                InstanceManager.Logger.LogEntry("Medal data file:");
+                InstanceManager.Logger.LogEntry(filename);
+
+                // Open the file, creating it if necessary.
+                FileStream stream;
+                if (File.Exists(filename))
+                {
+                    stream = File.Open(filename, FileMode.Truncate);
+                }
+                else
+                {
+                    stream = File.Open(filename, FileMode.CreateNew);
+                }
+
+                // Convert the object to XML data and put it in the stream.
+                XmlSerializer serializer = new XmlSerializer(typeof(AchievementData));
+                serializer.Serialize(stream, achievementData);
+
+                // Close the file.
+                stream.Close();
+
+                // Dispose the container, to commit changes.
+                container.Dispose();
             }
-            else
-            {
-                stream = File.Open(filename, FileMode.CreateNew);
-            }
-
-            // Convert the object to XML data and put it in the stream.
-            XmlSerializer serializer = new XmlSerializer(typeof(AchievementData));
-            serializer.Serialize(stream, achievementData);
-
-            // Close the file.
-            stream.Close();
-
-            // Dispose the container, to commit changes.
-            container.Dispose();
         }
 
         private void GenerateEnemyList()

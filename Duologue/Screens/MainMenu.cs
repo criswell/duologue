@@ -106,6 +106,7 @@ namespace Duologue.Screens
         private PlayerIndex playerWhoPressedStart;
         private IAsyncResult guideResult;
         private double timer_StartThrob;
+        private StorageDevice device;
         #endregion
 
         #region Properties
@@ -725,7 +726,7 @@ namespace Duologue.Screens
             {
                 if (startPressed && guideResult.IsCompleted)
                 {
-                    StorageDevice device = Guide.EndShowStorageDeviceSelector(guideResult);
+                    device = Guide.EndShowStorageDeviceSelector(guideResult);
                     if (device.IsConnected)
                     {
                         LocalInstanceManager.AchievementManager.InitStorageData(device);
@@ -761,56 +762,62 @@ namespace Duologue.Screens
             }
             else
             {
+                if (device.IsConnected)
+                {
+                    if (currentState == MainMenuState.MainMenu)
+                        InnerUpdate(mainMenuItems);
+                    else
+                    {
+                        if (CheckButtonB())
+                        {
+                            teletype.FlushEntries();
+                            ResetMenuItems();
+                            currentSelection = 0;
+                            currentState = MainMenuState.MainMenu;
+                            LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
+                        }
+                        else
+                            InnerUpdate(gameSelectItems);
+                    }
 
-                if (currentState == MainMenuState.MainMenu)
-                    InnerUpdate(mainMenuItems);
+                    // Our debug sequence can happen in any menu
+                    switch (debugSequence)
+                    {
+                        case 3:
+                            // the fourth and final button is X for logger
+                            if (InstanceManager.InputManager.ButtonPressed(Buttons.X))
+                            {
+                                debugSequence = 0;
+                                ((DuologueGame)myGame).Debug = !((DuologueGame)myGame).Debug;
+                                InstanceManager.Logger.LogEntry("MainMenu.Update() - Debugging toggle");
+                            }
+                            else if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
+                            {
+                                // Or RB if we want the color state test
+                                debugSequence = 0;
+                                LocalInstanceManager.CurrentGameState = GameState.ColorStateTest;
+                            }
+                            break;
+                        case 2:
+                            // the third button is Y
+                            if (InstanceManager.InputManager.ButtonPressed(Buttons.Y))
+                                debugSequence = 3;
+                            break;
+                        case 1:
+                            // the second button is RB
+                            if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
+                                debugSequence = 2;
+                            break;
+                        default:
+                            // the first button is LB
+                            if (InstanceManager.InputManager.ButtonPressed(Buttons.LeftShoulder))
+                                debugSequence = 1;
+                            break;
+                    }
+                }
                 else
                 {
-                    if (CheckButtonB())
-                    {
-                        teletype.FlushEntries();
-                        ResetMenuItems();
-                        currentSelection = 0;
-                        currentState = MainMenuState.MainMenu;
-                        LocalInstanceManager.WindowManager.SetLocation(mainMenuWindowLocation);
-                    }
-                    else
-                        InnerUpdate(gameSelectItems);
-                }
-
-                // Our debug sequence can happen in any menu
-                switch (debugSequence)
-                {
-                    case 3:
-                        // the fourth and final button is X for logger
-                        if (InstanceManager.InputManager.ButtonPressed(Buttons.X))
-                        {
-                            debugSequence = 0;
-                            ((DuologueGame)myGame).Debug = !((DuologueGame)myGame).Debug;
-                            InstanceManager.Logger.LogEntry("MainMenu.Update() - Debugging toggle");
-                        }
-                        else if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
-                        {
-                            // Or RB if we want the color state test
-                            debugSequence = 0;
-                            LocalInstanceManager.CurrentGameState = GameState.ColorStateTest;
-                        }
-                        break;
-                    case 2:
-                        // the third button is Y
-                        if (InstanceManager.InputManager.ButtonPressed(Buttons.Y))
-                            debugSequence = 3;
-                        break;
-                    case 1:
-                        // the second button is RB
-                        if (InstanceManager.InputManager.ButtonPressed(Buttons.RightShoulder))
-                            debugSequence = 2;
-                        break;
-                    default:
-                        // the first button is LB
-                        if (InstanceManager.InputManager.ButtonPressed(Buttons.LeftShoulder))
-                            debugSequence = 1;
-                        break;
+                    currentState = MainMenuState.PressStart;
                 }
             }
             
