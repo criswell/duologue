@@ -220,7 +220,7 @@
     <value>Credits</value>
   </data>
   <data name="MainMenu_Exit" xml:space="preserve">
-    <value>Return to Arcade</value>
+    <value>Return to Library</value>
   </data>
   <data name="MainMenu_GameSelect_Back" xml:space="preserve">
     <value>Back to main menu</value>
