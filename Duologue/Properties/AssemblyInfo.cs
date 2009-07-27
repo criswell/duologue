@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Duologue")]
 [assembly: AssemblyProduct("Duologue")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("Hewlett-Packard Company")]
+[assembly: AssemblyDescription("Join the battle on the planet Ur to defeat the oppressive regime of Moloch, the evil leader of an army of strange and sinister aliens!")]
+[assembly: AssemblyCompany("Funavision, Inc")]
 
-[assembly: AssemblyCopyright("Copyright © Hewlett-Packard Company 2008")]
+[assembly: AssemblyCopyright("Copyright © Funavision, Inc 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
