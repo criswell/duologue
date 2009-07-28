@@ -818,6 +818,8 @@ namespace Duologue.Screens
                 else
                 {
                     currentState = MainMenuState.PressStart;
+                    startPressed = false;
+                    guideResult = null;
                 }
             }
             
