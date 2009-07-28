@@ -719,6 +719,14 @@ namespace Duologue.Screens
             currentState = MainMenuState.PressStart;
             guideResult = null;
         }
+
+        internal void ResetStorage()
+        {
+            startPressed = false;
+            guideResult = null;
+            storageText = false;
+            currentState = MainMenuState.PressStart;
+        }
         #endregion
 
         #region Update / Draw

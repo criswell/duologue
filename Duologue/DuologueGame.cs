@@ -299,6 +299,7 @@ namespace Duologue
             mainMenuScreen = new MainMenuScreen(this);
             this.Components.Add(mainMenuScreen);
             dispatchTable.Add(GameState.MainMenuSystem, mainMenuScreen);
+            ServiceLocator.RegisterService(mainMenuScreen);
 
             // Player select
             playerSelectScreen = new PlayerSelectScreen(this);

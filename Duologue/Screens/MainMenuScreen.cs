@@ -26,7 +26,7 @@ using Duologue.Screens;
 
 namespace Duologue.Screens
 {
-    public class MainMenuScreen : GameScreen
+    public class MainMenuScreen : GameScreen, IService
     {
         #region Constants
         private const float backgroundTimer = 8f;
@@ -83,6 +83,11 @@ namespace Duologue.Screens
         internal void LivePurchaseReset()
         {
             mainMenu.LivePurchaseReset();
+        }
+
+        public void ResetStorage()
+        {
+            mainMenu.ResetStorage();
         }
         #endregion
 
