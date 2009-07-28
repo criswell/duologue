@@ -430,7 +430,7 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select a stroage device.
+        ///   Looks up a localized string similar to Please select a storage device.
         /// </summary>
         internal static string MainMenu_SelectSave {
             get {

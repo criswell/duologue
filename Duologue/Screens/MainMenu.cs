@@ -107,7 +107,7 @@ namespace Duologue.Screens
         private IAsyncResult guideResult;
         private double timer_StartThrob;
         private StorageDevice device;
-        private bool storageText;
+        private bool storageText = false;
         #endregion
 
         #region Properties
@@ -659,6 +659,7 @@ namespace Duologue.Screens
                 timer_StartThrob = 0;
 
             Vector2 temp = font.MeasureString(Resources.MainMenu_PressStart);
+            Vector2 tempSave = tipFont.MeasureString(Resources.MainMenu_SelectSave);
 
             InstanceManager.RenderSprite.DrawString(
                 font,
@@ -679,6 +680,19 @@ namespace Duologue.Screens
                 new Color(Color.Tan, (float)(timer_StartThrob/startThrobTime)),
                 Vector2.One,
                 temp / 2f);
+
+            if (storageText)
+            {
+                InstanceManager.RenderSprite.DrawString(
+                    tipFont,
+                    Resources.MainMenu_SelectSave,
+                    new Vector2(
+                        InstanceManager.DefaultViewport.Width / 2f,
+                        InstanceManager.DefaultViewport.Height / 2f + temp.Y/2f),
+                    Color.Tan,
+                    Vector2.One,
+                    tempSave / 2f);
+            }
         }
         #endregion
 
@@ -736,11 +750,14 @@ namespace Duologue.Screens
 
                             startPressed = true;
                             currentState = MainMenuState.MainMenu;
+                            storageText = false;
                         }
                         else
                         {
                             startPressed = false;
                             currentState = MainMenuState.PressStart;
+                            storageText = false;
+                            storageText = true;
                         }
                     }
                     catch
@@ -748,6 +765,7 @@ namespace Duologue.Screens
                         startPressed = false;
                         guideResult = null;
                         SetTooltip();
+                        storageText = true;
                     }
                 }
                 else
