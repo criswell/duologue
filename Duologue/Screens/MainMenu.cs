@@ -774,15 +774,23 @@ namespace Duologue.Screens
                     {
                         if(InstanceManager.InputManager.ButtonPressed(Buttons.Start, (PlayerIndex)i))
                         {
-                            try
+                            SignedInGamerCollection signedIn = Gamer.SignedInGamers;
+                            if (signedIn[(PlayerIndex)i] != null)
                             {
-                                playerWhoPressedStart = (PlayerIndex)i;
-                                guideResult = Guide.BeginShowStorageDeviceSelector(playerWhoPressedStart, null, null);
-                                startPressed = true;
-                                break;
+                                try
+                                {
+                                    playerWhoPressedStart = (PlayerIndex)i;
+                                    guideResult = Guide.BeginShowStorageDeviceSelector(playerWhoPressedStart, null, null);
+                                    startPressed = true;
+                                    break;
+                                }
+                                catch
+                                {
+                                }
                             }
-                            catch
+                            else
                             {
+                                Guide.ShowSignIn(1, false);
                             }
                         }
                     }
