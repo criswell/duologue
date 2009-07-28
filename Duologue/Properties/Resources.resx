@@ -240,6 +240,9 @@
   <data name="MainMenu_PressStart" xml:space="preserve">
     <value>Press Start</value>
   </data>
+  <data name="MainMenu_SelectSave" xml:space="preserve">
+    <value>Please select a stroage device</value>
+  </data>
   <data name="MainMenu_ToolTip_InfiniteMode" xml:space="preserve">
     <value>Try to beat the campaign with the least lives lost!</value>
   </data>

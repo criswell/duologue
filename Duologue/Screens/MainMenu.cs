@@ -107,6 +107,7 @@ namespace Duologue.Screens
         private IAsyncResult guideResult;
         private double timer_StartThrob;
         private StorageDevice device;
+        private bool storageText;
         #endregion
 
         #region Properties
@@ -727,17 +728,26 @@ namespace Duologue.Screens
                 if (startPressed && guideResult.IsCompleted)
                 {
                     device = Guide.EndShowStorageDeviceSelector(guideResult);
-                    if (device.IsConnected)
+                    try
                     {
-                        LocalInstanceManager.AchievementManager.InitStorageData(device);
-                        
-                        startPressed = true;
-                        currentState = MainMenuState.MainMenu;
+                        if (device.IsConnected)
+                        {
+                            LocalInstanceManager.AchievementManager.InitStorageData(device);
+
+                            startPressed = true;
+                            currentState = MainMenuState.MainMenu;
+                        }
+                        else
+                        {
+                            startPressed = false;
+                            currentState = MainMenuState.PressStart;
+                        }
                     }
-                    else
+                    catch
                     {
                         startPressed = false;
-                        currentState = MainMenuState.PressStart;
+                        guideResult = null;
+                        SetTooltip();
                     }
                 }
                 else
@@ -820,6 +830,7 @@ namespace Duologue.Screens
                     currentState = MainMenuState.PressStart;
                     startPressed = false;
                     guideResult = null;
+                    SetTooltip();
                 }
             }
             
