@@ -114,7 +114,7 @@ namespace Mimicware.Debug
                 this.RenderSprite.DrawString(
                     font,
                     Log[i],
-                    startingPos + new Vector2(0f, fontSize.Y * i + 1),
+                    startingPos + new Vector2(0f, fontSize.Y * (i + 1)),
                     Color.White,
                     RenderSpriteBlendMode.AbsoluteTop);
             }

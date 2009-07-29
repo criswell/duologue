@@ -71,7 +71,8 @@ namespace Duologue.Screens
                 timeSinceStart = 0f;
                 LocalInstanceManager.Background.NextBackground();
             }
-            if (InstanceManager.InputManager.ButtonPressed(Buttons.Back))
+            if (InstanceManager.InputManager.ButtonPressed(Buttons.Back) ||
+                InstanceManager.InputManager.ButtonPressed(Buttons.B))
                 LocalInstanceManager.CurrentGameState = GameState.MainMenuSystem;
             base.Update(gameTime);
         }

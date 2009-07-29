@@ -457,6 +457,9 @@ namespace Duologue.Waves
                 countdownToSwitchSongs = MWMathHelper.GetRandomInRange(
                     min_NumberOfWavesToSwitchItems,
                     max_NumberOfWavesToSwitchItems);
+
+                InstanceManager.Logger.LogEntry("Song change to ID");
+                InstanceManager.Logger.LogEntry(currentSong.ToString());
             }
 
             // Begin constructing the wavelet
