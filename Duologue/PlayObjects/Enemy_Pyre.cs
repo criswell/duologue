@@ -557,7 +557,11 @@ namespace Duologue.PlayObjects
             {
                 try
                 {
-                    sfxi_Rumble = sfx_Rumble.Play(volume_Fire, 0, 0, true);
+                    sfxi_Rumble = sfx_Rumble.CreateInstance();
+                    sfxi_Rumble.Volume = volume_Fire;
+                    sfxi_Rumble.IsLooped = true;
+                    sfxi_Rumble.Play();
+                        //sfx_Rumble.Play(volume_Fire, 0, 0, true);
                 }
                 catch { }
             }

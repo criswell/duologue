@@ -855,12 +855,16 @@ namespace Duologue.PlayObjects
                         ColorPolarity = ColorPolarity.Positive;
                     SetCurrentColors();
                     MyEnemyType = EnemyType.Standard;
-                    sfxi_Scream = sfx_Scream.Play(volume_Scream);
+                    sfxi_Scream = sfx_Scream.CreateInstance();
+                    sfxi_Scream.Volume = volume_Scream;
+                    sfxi_Scream.Play();
                 }
                 else
                 {
                     currentState = RotState.FadeIn;
-                    sfxi_FaceOn = sfx_FaceOn.Play(volume_FaceOn);
+                    sfxi_FaceOn = sfx_FaceOn.CreateInstance();
+                    sfxi_FaceOn.Volume = volume_FaceOn;
+                    sfxi_FaceOn.Play();
                 }
             }
         }

@@ -474,7 +474,9 @@ namespace Duologue.UI
                                 {
                                     try
                                     {
-                                        sfxi_LifeUp = sfx_LifeUp.Play(volume_LifeUp);
+                                        sfxi_LifeUp = sfx_LifeUp.CreateInstance();
+                                        sfxi_LifeUp.Volume = volume_LifeUp;
+                                        sfxi_LifeUp.Play();
                                     }
                                     catch { }
                                 }

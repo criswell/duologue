@@ -996,7 +996,10 @@ namespace Duologue.PlayObjects
                     {
                         try
                         {
-                            sfxi_TubeExplode[index] = sfx_TubeExplode.Play(volume_TubeExplode);
+                            sfxi_TubeExplode[index] = sfx_TubeExplode.CreateInstance();
+                            sfxi_TubeExplode[index].Volume = volume_TubeExplode;
+                            sfxi_TubeExplode[index].Play();
+                                //sfx_TubeExplode.Play(volume_TubeExplode);
                         }
                         catch { }
                     }
@@ -1447,7 +1450,10 @@ namespace Duologue.PlayObjects
                     {
                         try
                         {
-                            sfxi_EndBoom = sfx_EndBoom.Play(volume_EndBoom);
+                            sfxi_EndBoom = sfx_EndBoom.CreateInstance();
+                            sfxi_EndBoom.Volume = volume_EndBoom;
+                            sfxi_EndBoom.Play();
+                                //sfx_EndBoom.Play(volume_EndBoom);
                         }
                         catch { }
                     }
@@ -1476,7 +1482,10 @@ namespace Duologue.PlayObjects
                     {
                         try
                         {
-                            sfxi_EndBoom = sfx_EndBoom.Play(volume_EndBoom);
+                            sfxi_EndBoom = sfx_EndBoom.CreateInstance();
+                            sfxi_EndBoom.Volume = volume_EndBoom;
+                            sfxi_EndBoom.Play();
+                                //sfx_EndBoom.Play(volume_EndBoom);
                         }
                         catch { }
                     }
@@ -1782,7 +1791,10 @@ namespace Duologue.PlayObjects
                 {
                     try
                     {
-                        sfxi_EyeBallWobble = sfx_EyeBallWobble.Play(volume_EyeBallWobble);
+                        sfxi_EyeBallWobble = sfx_EyeBallWobble.CreateInstance();
+                        sfxi_EyeBallWobble.Volume = volume_EyeBallWobble;
+                        sfxi_EyeBallWobble.Play();
+                            //sfx_EyeBallWobble.Play(volume_EyeBallWobble);
                     }
                     catch { }
                 }

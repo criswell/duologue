@@ -595,7 +595,9 @@ namespace Duologue.PlayObjects
                     float vol = MathHelper.Lerp(volume_Min, volume_Max, (float)(timer_stopScreaming / timeToStopScreaming));
                     if (sfxi_Scream == null)
                     {
-                        sfxi_Scream = sfx_Scream.Play(vol);
+                        sfxi_Scream = sfx_Scream.CreateInstance();
+                        sfxi_Scream.Volume = vol;
+                        sfxi_Scream.Play();
                     }
                     else
                     {
@@ -620,7 +622,12 @@ namespace Duologue.PlayObjects
                 if (hasSpawned)
                 {
                     if (sfxi_Scream == null)
-                        sfxi_Scream = sfx_Scream.Play(volume_Max);
+                    {
+                        sfxi_Scream = sfx_Scream.CreateInstance();
+                        sfxi_Scream.Volume = volume_Max;
+                        sfxi_Scream.Play();
+
+                    }
 
                     if (sfxi_Scream.State != SoundState.Playing)
                         sfxi_Scream.Play();

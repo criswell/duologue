@@ -575,7 +575,9 @@ namespace Duologue.PlayObjects
                     catch { }
                     try
                     {
-                        sfxi_Boom = sfx_Boom.Play(volume_Boom);
+                        sfxi_Boom = sfx_Boom.CreateInstance();
+                        sfxi_Boom.Volume = volume_Boom;
+                        sfxi_Boom.Play();
                     }
                     catch { }
                     //Alive = false;
@@ -792,7 +794,9 @@ namespace Duologue.PlayObjects
                 {
                     try
                     {
-                        sfxi_Boom = sfx_Boom.Play(volume_Boom,0,0);
+                        sfxi_Boom = sfx_Boom.CreateInstance();
+                        sfxi_Boom.Volume = volume_Boom;
+                        sfxi_Boom.Play();
                     }
                     catch { }
                 }
@@ -948,7 +952,9 @@ namespace Duologue.PlayObjects
                 {
                     try
                     {
-                        sfxi_SquidWalk = sfx_SquidWalk.Play(volume_SquidWalk);
+                        sfxi_SquidWalk = sfx_SquidWalk.CreateInstance();
+                        sfxi_SquidWalk.Volume = volume_SquidWalk;
+                        sfxi_SquidWalk.Play();
                     }
                     catch { }
                 }

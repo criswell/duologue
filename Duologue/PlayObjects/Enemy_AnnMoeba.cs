@@ -580,7 +580,9 @@ namespace Duologue.PlayObjects
                 }
                 catch
                 {
-                    sfxi_Bloop = sfx_Bloop.Play((float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop));
+                    sfxi_Bloop = sfx_Bloop.CreateInstance();
+                    sfxi_Bloop.Volume = (float)MWMathHelper.GetRandomInRange(volume_MinBloop, volume_MaxBloop);
+                    sfxi_Bloop.Play();
                 }
             }
 

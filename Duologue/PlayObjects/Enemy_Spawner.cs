@@ -639,7 +639,9 @@ namespace Duologue.PlayObjects
                 {
                     try
                     {
-                        sfxi_BeamIn = sfx_BeamIn.Play(volume_BeamIn);
+                        sfxi_BeamIn = sfx_BeamIn.CreateInstance();
+                        sfxi_BeamIn.Volume = volume_BeamIn;
+                        sfxi_BeamIn.Play();
                     }
                     catch { }
                 }

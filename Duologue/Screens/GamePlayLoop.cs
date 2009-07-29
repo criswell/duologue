@@ -94,7 +94,9 @@ namespace Duologue.Screens
             }
             catch
             {
-                sfxi_BeamIn = sfx_BeamIn.Play(volume_BeamIn);
+                sfxi_BeamIn = sfx_BeamIn.CreateInstance();
+                sfxi_BeamIn.Volume = volume_BeamIn;
+                sfxi_BeamIn.Play();
             }
         }
         #endregion

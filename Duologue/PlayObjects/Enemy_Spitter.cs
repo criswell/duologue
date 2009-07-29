@@ -570,7 +570,9 @@ namespace Duologue.PlayObjects
             {
                 try
                 {
-                    sfxi_SpitAttack = sfx_SpitAttack.Play(volume_SpitAttack);
+                    sfxi_SpitAttack = sfx_SpitAttack.CreateInstance();
+                    sfxi_SpitAttack.Volume = volume_SpitAttack;
+                    sfxi_SpitAttack.Play();
                 }
                 catch { }
             }
@@ -760,7 +762,7 @@ namespace Duologue.PlayObjects
                     Alive = false;
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    sfx_Explode.Play(volume_Explode);
+                    sfx_Explode.Play(volume_Explode,0,0);
                     return false;
                 }
                 else

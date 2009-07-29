@@ -540,7 +540,10 @@ namespace Duologue.PlayObjects
                 {
                     try
                     {
-                        sfxi_Bubble = sfx_Bubble.Play(volume_CurrentBubble);
+                        sfxi_Bubble = sfx_Bubble.CreateInstance();
+                        sfxi_Bubble.Volume = volume_CurrentBubble;
+                        sfxi_Bubble.Play();
+                            //sfx_Bubble.Play(volume_CurrentBubble);
                     }
                     catch { }
                 }
