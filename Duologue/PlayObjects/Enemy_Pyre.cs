@@ -434,7 +434,7 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
-                    sfx_SmallFire.Play(volume_SmallFire);
+                    sfx_SmallFire.Play(volume_SmallFire,0,0);
                     try
                     {
                         sfxi_Rumble.Stop();

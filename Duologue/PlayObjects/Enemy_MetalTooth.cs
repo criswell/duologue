@@ -352,7 +352,7 @@ namespace Duologue.PlayObjects
                 Alive = false;
                 LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                 //audio.PlayEffect(EffectID.BuzzDeath);
-                sfx_Explode.Play(volume_Explosions);
+                sfx_Explode.Play(volume_Explosions,0,0);
                 return false;
             }
             else
@@ -514,7 +514,7 @@ namespace Duologue.PlayObjects
                 {
                     currentColor = myColor.Length - 1;
                     currentState = MetalToothState.Spawning;
-                    sfx_Dwoop.Play(volume_Dwoop);
+                    sfx_Dwoop.Play(volume_Dwoop,0,0);
                 }
             }
         }

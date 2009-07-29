@@ -563,7 +563,7 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
-                    sfx_SmallFire.Play(volume_SmallFire);
+                    sfx_SmallFire.Play(volume_SmallFire,0,0);
                     Alive = false;
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(

@@ -1507,7 +1507,7 @@ namespace Duologue.PlayObjects
                             KickOffExternalRandomExplosion();
                         try
                         {
-                            sfx_FinaleBoom.Play(volume_FinaleBoom);
+                            sfx_FinaleBoom.Play(volume_FinaleBoom,0,0);
                         }
                         catch { }
                         try

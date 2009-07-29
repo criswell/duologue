@@ -479,7 +479,7 @@ namespace Duologue.PlayObjects
                 CurrentHitPoints--;
                 if (CurrentHitPoints <= 0)
                 {
-                    sfx_Explode.Play(volume_Splat);
+                    sfx_Explode.Play(volume_Splat,0,0);
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(Position, color_Bubble);
                     LocalInstanceManager.EnemySplatterSystem.AddParticles(
                         Position + offset_Globules[MWMathHelper.GetRandomInRange(0, numberOfGlobules - 1)],

@@ -792,7 +792,7 @@ namespace Duologue.PlayObjects
                 {
                     try
                     {
-                        sfxi_Boom = sfx_Boom.Play(volume_Boom);
+                        sfxi_Boom = sfx_Boom.Play(volume_Boom,0,0);
                     }
                     catch { }
                 }

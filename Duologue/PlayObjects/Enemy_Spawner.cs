@@ -524,7 +524,7 @@ namespace Duologue.PlayObjects
                         myPointValue + hitPointMultiplier * StartHitPoints,
                         Position);
                     //audio.soundEffects.PlayEffect(EffectID.BuzzDeath);
-                    sfx_Explode.Play(volume_Explode);
+                    sfx_Explode.Play(volume_Explode,0,0);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Current);
                     LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, color_Base);
                     Alive = false;

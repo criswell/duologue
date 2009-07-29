@@ -327,7 +327,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     //LocalInstanceManager.EnemyExplodeSystem.AddParticles(Position, currentColor);
-                    sfx_Explode.Play(volume_Splat);
+                    sfx_Explode.Play(volume_Splat, 0,0);
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue, Position);
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     Alive = false;

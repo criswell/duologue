@@ -414,7 +414,7 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     stopThatInfernalScreamingWoman = true;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    sfx_Explode.Play(volume_Explode);
+                    sfx_Explode.Play(volume_Explode,0,0);
                     return false;
                 }
                 else

@@ -1216,7 +1216,7 @@ namespace Duologue.AchievementSystem
                 currentSelection = achievements.Length - 1;
 
             if (lastSelection != currentSelection)
-                sfx_MenuMove.Play(volume_MenuBeep);
+                sfx_MenuMove.Play(volume_MenuBeep,0,0);
         }
 
         private void DrawCaseScreen(GameTime gameTime)

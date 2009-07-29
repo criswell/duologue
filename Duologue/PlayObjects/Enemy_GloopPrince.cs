@@ -356,7 +356,7 @@ namespace Duologue.PlayObjects
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     Alive = false;
                     MyManager.TriggerPoints(((PlayerBullet)pobj).MyPlayerIndex, myPointValue + hitPointMultiplier * StartHitPoints, Position);
-                    sfx_Explode.Play(volume_Explosions);
+                    sfx_Explode.Play(volume_Explosions,0,0);
                     return false;
                 }
                 else

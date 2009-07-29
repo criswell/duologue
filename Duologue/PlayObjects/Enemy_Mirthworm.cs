@@ -319,7 +319,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0)
                 {
                     dying = true;
-                    sfx_Explode.Play(volume_Splat);
+                    sfx_Explode.Play(volume_Splat, 0, 0);
                     timeSinceSwitch = timeBetweenDeaths;
                     nextDead = numberOfWormBits - 1;
                     MyManager.TriggerPoints(

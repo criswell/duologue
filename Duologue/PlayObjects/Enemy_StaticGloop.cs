@@ -500,7 +500,7 @@ namespace Duologue.PlayObjects
                 if (CurrentHitPoints <= 0 && !isDying)
                 {
                     isDying = true;
-                    sfx_Explosion.Play(volume_Explosion);
+                    sfx_Explosion.Play(volume_Explosion,0,0);
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     timeSinceStart = 0.0;
                     deathRotation = (float)MWMathHelper.GetRandomInRange(0.0, (double)MathHelper.TwoPi);

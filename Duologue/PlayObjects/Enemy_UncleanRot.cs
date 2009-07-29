@@ -513,7 +513,7 @@ namespace Duologue.PlayObjects
                     }
                     catch { }
 
-                    sfx_Explode.Play(volume_Explosions);
+                    sfx_Explode.Play(volume_Explosions,0,0);
                     for (int i = 0; i < 4; i++)
                     {
                         LocalInstanceManager.EnemyExplodeSystem.AddParticles(

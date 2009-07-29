@@ -430,7 +430,7 @@ namespace Duologue.PlayObjects
                         sfxi_Bubble.Stop();
                     }
                     catch { }
-                    sfx_Pop.Play(volume_Pop);
+                    sfx_Pop.Play(volume_Pop,0,0);
 
                     LocalInstanceManager.AchievementManager.EnemyDeathCount(MyType);
                     timeSinceStart = 0.0;
