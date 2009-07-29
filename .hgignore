@@ -11,3 +11,4 @@ Duologue.Test\bin\*
 Duologue.Test\obj\*
 Duologue\Content\Content.contentproj.user
 *.cachefile
+Duologue\Duologue.csproj.user
