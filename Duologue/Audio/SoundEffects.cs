@@ -104,7 +104,7 @@ namespace Duologue.Audio
             //FIXME I want this to be:
             //AudioManager.PlayEffect(EffectsMap[ID]);
         }
-
+        /*
         public SoundEffectInstance PlayEffectFile(EffectFileID ID, 
             float volume, float pitch, float pan)
         {
@@ -121,7 +121,7 @@ namespace Duologue.Audio
         {
             AudioHelper.StopCue(PlayerEffectsSB, IDNameMap[ID]);
         }
-
+        */
         public void UpdateIntensity(IntensityEventArgs e)
         {
         }
