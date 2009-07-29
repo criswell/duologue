@@ -68,7 +68,7 @@ namespace Duologue.Audio
             long ticks = seconds * 10000000000;
             TimeSpan lookahead = new TimeSpan(ticks); // tick is ten to the -10 seconds
             engineFileName = engineName;
-            engine = new AudioEngine(engineFileName, lookahead, Guid.Empty);
+            engine = new AudioEngine(engineFileName, lookahead, "");
             musicCategory = engine.GetCategory("Music");
         }
 
