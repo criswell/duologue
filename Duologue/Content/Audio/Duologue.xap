@@ -16,8 +16,8 @@ Global Settings
     Header File = Duologue.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 3474651794;
-    Last Modified High = 30008336;
+    Last Modified Low = 30008336;
+    Last Modified High = 3474651794;
 
     Category
     {
@@ -264,7 +264,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+            Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -13310,7 +13310,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
@@ -13369,7 +13369,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
@@ -13428,7 +13428,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
@@ -13487,7 +13487,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
@@ -13546,7 +13546,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
@@ -14051,7 +14051,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
@@ -14090,7 +14090,7 @@ Sound Bank
     Sound
     {
         Name = bass8th;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14137,7 +14137,7 @@ Sound Bank
     Sound
     {
         Name = bassplus-1;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14184,7 +14184,7 @@ Sound Bank
     Sound
     {
         Name = bassplus-2;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14231,7 +14231,7 @@ Sound Bank
     Sound
     {
         Name = bassplus-3;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14278,7 +14278,7 @@ Sound Bank
     Sound
     {
         Name = bassplus-4;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14325,7 +14325,7 @@ Sound Bank
     Sound
     {
         Name = bassplus-5;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14372,7 +14372,7 @@ Sound Bank
     Sound
     {
         Name = bassplus-6;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14419,7 +14419,7 @@ Sound Bank
     Sound
     {
         Name = bassplus-7;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14466,7 +14466,7 @@ Sound Bank
     Sound
     {
         Name = bassplus-8;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14513,7 +14513,7 @@ Sound Bank
     Sound
     {
         Name = guitar-1;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14560,7 +14560,7 @@ Sound Bank
     Sound
     {
         Name = guitar-2;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14607,7 +14607,7 @@ Sound Bank
     Sound
     {
         Name = guitar-3;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14654,7 +14654,7 @@ Sound Bank
     Sound
     {
         Name = guitar-4;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14701,7 +14701,7 @@ Sound Bank
     Sound
     {
         Name = guitar-5;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14748,7 +14748,7 @@ Sound Bank
     Sound
     {
         Name = guitar-6;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14795,7 +14795,7 @@ Sound Bank
     Sound
     {
         Name = guitar-7;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14842,7 +14842,7 @@ Sound Bank
     Sound
     {
         Name = guitar-8;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14889,7 +14889,7 @@ Sound Bank
     Sound
     {
         Name = organ-1;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14936,7 +14936,7 @@ Sound Bank
     Sound
     {
         Name = organ-2;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -14983,7 +14983,7 @@ Sound Bank
     Sound
     {
         Name = organ-3;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -15030,7 +15030,7 @@ Sound Bank
     Sound
     {
         Name = organ-4;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -15077,7 +15077,7 @@ Sound Bank
     Sound
     {
         Name = organ-5;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -15124,7 +15124,7 @@ Sound Bank
     Sound
     {
         Name = organ-6;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -15171,7 +15171,7 @@ Sound Bank
     Sound
     {
         Name = organ-7;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -15218,7 +15218,7 @@ Sound Bank
     Sound
     {
         Name = organ-8;
-        Volume = -1200;
+        Volume = -500;
         Pitch = 0;
         Priority = 0;
 
@@ -15776,7 +15776,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-01;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -15823,7 +15823,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-02;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -15870,7 +15870,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-03;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -15917,7 +15917,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-04;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -15964,7 +15964,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-05;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16011,7 +16011,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-06;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16058,7 +16058,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-07;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16105,7 +16105,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-08;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16152,7 +16152,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-09;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16199,7 +16199,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-10;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16246,7 +16246,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-11;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16293,7 +16293,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-12;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16340,7 +16340,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-13;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16387,7 +16387,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-14;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16434,7 +16434,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-15;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16481,7 +16481,7 @@ Sound Bank
     Sound
     {
         Name = LoSAccent-16;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16528,7 +16528,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-01;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16575,7 +16575,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-02;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16622,7 +16622,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-03;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16669,7 +16669,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-04;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16716,7 +16716,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-05;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16763,7 +16763,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-06;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16810,7 +16810,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-07;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16857,7 +16857,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-08;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16904,7 +16904,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-09;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16951,7 +16951,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-10;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -16998,7 +16998,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-11;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17045,7 +17045,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-12;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17092,7 +17092,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-13;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17139,7 +17139,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-14;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17186,7 +17186,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-15;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17233,7 +17233,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassDrum-16;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17280,7 +17280,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-01;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17327,7 +17327,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-02;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17374,7 +17374,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-03;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17421,7 +17421,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-04;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17468,7 +17468,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-05;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17515,7 +17515,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-06;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17562,7 +17562,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-07;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17609,7 +17609,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-08;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17656,7 +17656,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-09;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17703,7 +17703,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-10;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17750,7 +17750,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-11;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17797,7 +17797,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-12;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17844,7 +17844,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-13;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17891,7 +17891,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-14;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17938,7 +17938,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-15;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -17985,7 +17985,7 @@ Sound Bank
     Sound
     {
         Name = LoSBassSynth-16;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18032,7 +18032,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-01;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18079,7 +18079,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-02;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18126,7 +18126,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-03;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18173,7 +18173,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-04;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18220,7 +18220,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-05;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18267,7 +18267,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-06;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18314,7 +18314,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-07;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18361,7 +18361,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-08;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18408,7 +18408,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-09;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18455,7 +18455,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-10;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18502,7 +18502,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-11;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18549,7 +18549,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-12;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18596,7 +18596,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-13;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18643,7 +18643,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-14;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18690,7 +18690,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-15;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18737,7 +18737,7 @@ Sound Bank
     Sound
     {
         Name = LoSHiHat-16;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18784,7 +18784,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-01;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18831,7 +18831,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-02;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18878,7 +18878,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-03;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18925,7 +18925,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-04;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -18972,7 +18972,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-05;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19019,7 +19019,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-06;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19066,7 +19066,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-07;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19113,7 +19113,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-08;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19160,7 +19160,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-09;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19207,7 +19207,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-10;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19254,7 +19254,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-11;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19301,7 +19301,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-12;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19348,7 +19348,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-13;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19395,7 +19395,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-14;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19442,7 +19442,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-15;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19489,7 +19489,7 @@ Sound Bank
     Sound
     {
         Name = LoSMelody-16;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19536,7 +19536,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-01;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19583,7 +19583,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-02;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19630,7 +19630,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-03;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19677,7 +19677,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-04;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19724,7 +19724,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-05;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19771,7 +19771,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-06;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19818,7 +19818,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-07;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19865,7 +19865,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-08;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19912,7 +19912,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-09;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -19959,7 +19959,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-10;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20006,7 +20006,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-11;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20053,7 +20053,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-12;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20100,7 +20100,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-13;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20147,7 +20147,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-14;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20194,7 +20194,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-15;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20241,7 +20241,7 @@ Sound Bank
     Sound
     {
         Name = LoSStabs-16;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20288,7 +20288,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-01;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20335,7 +20335,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-02;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20382,7 +20382,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-03;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20429,7 +20429,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-04;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20476,7 +20476,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-05;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20523,7 +20523,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-06;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20570,7 +20570,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-07;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20617,7 +20617,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-08;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20664,7 +20664,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-09;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20711,7 +20711,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-10;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20758,7 +20758,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-11;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20805,7 +20805,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-12;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20852,7 +20852,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-13;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20899,7 +20899,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-14;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20946,7 +20946,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-15;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -20993,7 +20993,7 @@ Sound Bank
     Sound
     {
         Name = LoSToms-16;
-        Volume = -2180;
+        Volume = -910;
         Pitch = 0;
         Priority = 0;
 
@@ -23342,7 +23342,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
@@ -23381,7 +23381,7 @@ Sound Bank
     Sound
     {
         Name = bass_line-1;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23428,7 +23428,7 @@ Sound Bank
     Sound
     {
         Name = bass_line-2;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23475,7 +23475,7 @@ Sound Bank
     Sound
     {
         Name = bass_line-3;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23522,7 +23522,7 @@ Sound Bank
     Sound
     {
         Name = bass_line-4;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23569,7 +23569,7 @@ Sound Bank
     Sound
     {
         Name = bass_line-5;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23616,7 +23616,7 @@ Sound Bank
     Sound
     {
         Name = bass_line-6;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23663,7 +23663,7 @@ Sound Bank
     Sound
     {
         Name = bass_line-7;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23710,7 +23710,7 @@ Sound Bank
     Sound
     {
         Name = bass_line-8;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23757,7 +23757,7 @@ Sound Bank
     Sound
     {
         Name = drum-1;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23804,7 +23804,7 @@ Sound Bank
     Sound
     {
         Name = drum-2;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23851,7 +23851,7 @@ Sound Bank
     Sound
     {
         Name = drum-3;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23898,7 +23898,7 @@ Sound Bank
     Sound
     {
         Name = drum-4;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23945,7 +23945,7 @@ Sound Bank
     Sound
     {
         Name = drum-5;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -23992,7 +23992,7 @@ Sound Bank
     Sound
     {
         Name = drum-6;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24039,7 +24039,7 @@ Sound Bank
     Sound
     {
         Name = drum-7;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24086,7 +24086,7 @@ Sound Bank
     Sound
     {
         Name = drum-8;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24133,7 +24133,7 @@ Sound Bank
     Sound
     {
         Name = fx-1;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24180,7 +24180,7 @@ Sound Bank
     Sound
     {
         Name = fx-2;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24227,7 +24227,7 @@ Sound Bank
     Sound
     {
         Name = fx-3;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24274,7 +24274,7 @@ Sound Bank
     Sound
     {
         Name = fx-4;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24321,7 +24321,7 @@ Sound Bank
     Sound
     {
         Name = fx-5;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24368,7 +24368,7 @@ Sound Bank
     Sound
     {
         Name = fx-6;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24415,7 +24415,7 @@ Sound Bank
     Sound
     {
         Name = fx-7;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24462,7 +24462,7 @@ Sound Bank
     Sound
     {
         Name = fx-8;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24509,7 +24509,7 @@ Sound Bank
     Sound
     {
         Name = synth-1;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24556,7 +24556,7 @@ Sound Bank
     Sound
     {
         Name = synth-2;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24603,7 +24603,7 @@ Sound Bank
     Sound
     {
         Name = synth-3;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24650,7 +24650,7 @@ Sound Bank
     Sound
     {
         Name = synth-4;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24697,7 +24697,7 @@ Sound Bank
     Sound
     {
         Name = synth-5;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24744,7 +24744,7 @@ Sound Bank
     Sound
     {
         Name = synth-6;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24791,7 +24791,7 @@ Sound Bank
     Sound
     {
         Name = synth-7;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -24838,7 +24838,7 @@ Sound Bank
     Sound
     {
         Name = synth-8;
-        Volume = -2010;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 
@@ -25536,7 +25536,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-16;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25583,7 +25583,7 @@ Sound Bank
     Sound
     {
         Name = beat-1;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25630,7 +25630,7 @@ Sound Bank
     Sound
     {
         Name = beat-2;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25677,7 +25677,7 @@ Sound Bank
     Sound
     {
         Name = beat-3;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25724,7 +25724,7 @@ Sound Bank
     Sound
     {
         Name = beat-4;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25771,7 +25771,7 @@ Sound Bank
     Sound
     {
         Name = orionA-1;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25818,7 +25818,7 @@ Sound Bank
     Sound
     {
         Name = orionA-2;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25865,7 +25865,7 @@ Sound Bank
     Sound
     {
         Name = orionA-3;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25912,7 +25912,7 @@ Sound Bank
     Sound
     {
         Name = orionA-4;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -25959,7 +25959,7 @@ Sound Bank
     Sound
     {
         Name = orionA-5;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26006,7 +26006,7 @@ Sound Bank
     Sound
     {
         Name = orionA-6;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26053,7 +26053,7 @@ Sound Bank
     Sound
     {
         Name = orionA-7;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26100,7 +26100,7 @@ Sound Bank
     Sound
     {
         Name = orionA-8;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26147,7 +26147,7 @@ Sound Bank
     Sound
     {
         Name = orionA-9;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26194,7 +26194,7 @@ Sound Bank
     Sound
     {
         Name = orionB-01;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26241,7 +26241,7 @@ Sound Bank
     Sound
     {
         Name = orionB-02;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26288,7 +26288,7 @@ Sound Bank
     Sound
     {
         Name = orionB-03;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26335,7 +26335,7 @@ Sound Bank
     Sound
     {
         Name = orionB-04;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26382,7 +26382,7 @@ Sound Bank
     Sound
     {
         Name = orionB-05;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26429,7 +26429,7 @@ Sound Bank
     Sound
     {
         Name = orionB-06;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26476,7 +26476,7 @@ Sound Bank
     Sound
     {
         Name = orionB-07;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26523,7 +26523,7 @@ Sound Bank
     Sound
     {
         Name = orionB-08;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26570,7 +26570,7 @@ Sound Bank
     Sound
     {
         Name = orionB-09;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26617,7 +26617,7 @@ Sound Bank
     Sound
     {
         Name = orionB-10;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26664,7 +26664,7 @@ Sound Bank
     Sound
     {
         Name = orionB-11;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26711,7 +26711,7 @@ Sound Bank
     Sound
     {
         Name = orionB-12;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26758,7 +26758,7 @@ Sound Bank
     Sound
     {
         Name = orionB-13;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26805,7 +26805,7 @@ Sound Bank
     Sound
     {
         Name = orionB-14;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26852,7 +26852,7 @@ Sound Bank
     Sound
     {
         Name = orionB-15;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26899,7 +26899,7 @@ Sound Bank
     Sound
     {
         Name = orionB-16;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26946,7 +26946,7 @@ Sound Bank
     Sound
     {
         Name = orionB-17;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -26993,7 +26993,7 @@ Sound Bank
     Sound
     {
         Name = raveA-1;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27040,7 +27040,7 @@ Sound Bank
     Sound
     {
         Name = raveA-2;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27087,7 +27087,7 @@ Sound Bank
     Sound
     {
         Name = raveA-3;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27134,7 +27134,7 @@ Sound Bank
     Sound
     {
         Name = raveA-4;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27181,7 +27181,7 @@ Sound Bank
     Sound
     {
         Name = raveA-5;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27228,7 +27228,7 @@ Sound Bank
     Sound
     {
         Name = raveB-01;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27275,7 +27275,7 @@ Sound Bank
     Sound
     {
         Name = raveB-02;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27322,7 +27322,7 @@ Sound Bank
     Sound
     {
         Name = raveB-03;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27369,7 +27369,7 @@ Sound Bank
     Sound
     {
         Name = raveB-04;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27416,7 +27416,7 @@ Sound Bank
     Sound
     {
         Name = raveB-05;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27463,7 +27463,7 @@ Sound Bank
     Sound
     {
         Name = raveB-06;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27510,7 +27510,7 @@ Sound Bank
     Sound
     {
         Name = raveB-07;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27557,7 +27557,7 @@ Sound Bank
     Sound
     {
         Name = raveB-08;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27604,7 +27604,7 @@ Sound Bank
     Sound
     {
         Name = raveB-09;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27651,7 +27651,7 @@ Sound Bank
     Sound
     {
         Name = raveB-10;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27698,7 +27698,7 @@ Sound Bank
     Sound
     {
         Name = raveB-11;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27745,7 +27745,7 @@ Sound Bank
     Sound
     {
         Name = raveB-12;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27792,7 +27792,7 @@ Sound Bank
     Sound
     {
         Name = raveB-13;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27839,7 +27839,7 @@ Sound Bank
     Sound
     {
         Name = raveB-14;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27886,7 +27886,7 @@ Sound Bank
     Sound
     {
         Name = raveB-15;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27933,7 +27933,7 @@ Sound Bank
     Sound
     {
         Name = raveB-16;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -27980,7 +27980,7 @@ Sound Bank
     Sound
     {
         Name = raveB-17;
-        Volume = -3810;
+        Volume = -2790;
         Pitch = 0;
         Priority = 0;
 
@@ -28027,7 +28027,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-01;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28074,7 +28074,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-02;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28121,7 +28121,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-03;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28168,7 +28168,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-04;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28215,7 +28215,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-05;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28262,7 +28262,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-06;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28309,7 +28309,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-07;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28356,7 +28356,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-08;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28403,7 +28403,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-09;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28450,7 +28450,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-10;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28497,7 +28497,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-11;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28544,7 +28544,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-12;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28591,7 +28591,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-13;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28638,7 +28638,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-14;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28685,7 +28685,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-15;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28732,7 +28732,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatA-16;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28779,7 +28779,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-01;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28826,7 +28826,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-02;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28873,7 +28873,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-03;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28920,7 +28920,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-04;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -28967,7 +28967,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-05;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29014,7 +29014,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-06;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29061,7 +29061,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-07;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29108,7 +29108,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-08;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29155,7 +29155,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-09;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29202,7 +29202,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-10;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29249,7 +29249,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-11;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29296,7 +29296,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-12;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29343,7 +29343,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-13;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29390,7 +29390,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-14;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29437,7 +29437,7 @@ Sound Bank
     Sound
     {
         Name = synth_beatB-15;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29484,7 +29484,7 @@ Sound Bank
     Sound
     {
         Name = jamB-17;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29531,7 +29531,7 @@ Sound Bank
     Sound
     {
         Name = jamA-01;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29578,7 +29578,7 @@ Sound Bank
     Sound
     {
         Name = jamA-02;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29625,7 +29625,7 @@ Sound Bank
     Sound
     {
         Name = jamA-03;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29672,7 +29672,7 @@ Sound Bank
     Sound
     {
         Name = jamA-04;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29719,7 +29719,7 @@ Sound Bank
     Sound
     {
         Name = jamA-05;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29766,7 +29766,7 @@ Sound Bank
     Sound
     {
         Name = jamA-06;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29813,7 +29813,7 @@ Sound Bank
     Sound
     {
         Name = jamA-07;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29860,7 +29860,7 @@ Sound Bank
     Sound
     {
         Name = jamA-08;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29907,7 +29907,7 @@ Sound Bank
     Sound
     {
         Name = jamA-09;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -29954,7 +29954,7 @@ Sound Bank
     Sound
     {
         Name = jamA-10;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30001,7 +30001,7 @@ Sound Bank
     Sound
     {
         Name = jamA-11;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30048,7 +30048,7 @@ Sound Bank
     Sound
     {
         Name = jamA-12;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30095,7 +30095,7 @@ Sound Bank
     Sound
     {
         Name = jamA-13;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30142,7 +30142,7 @@ Sound Bank
     Sound
     {
         Name = jamA-14;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30189,7 +30189,7 @@ Sound Bank
     Sound
     {
         Name = jamA-15;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30236,7 +30236,7 @@ Sound Bank
     Sound
     {
         Name = jamA-16;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30283,7 +30283,7 @@ Sound Bank
     Sound
     {
         Name = jamA-17;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30330,7 +30330,7 @@ Sound Bank
     Sound
     {
         Name = jamB-01;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30377,7 +30377,7 @@ Sound Bank
     Sound
     {
         Name = jamB-02;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30424,7 +30424,7 @@ Sound Bank
     Sound
     {
         Name = jamB-03;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30471,7 +30471,7 @@ Sound Bank
     Sound
     {
         Name = jamB-04;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30518,7 +30518,7 @@ Sound Bank
     Sound
     {
         Name = jamB-05;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30565,7 +30565,7 @@ Sound Bank
     Sound
     {
         Name = jamB-06;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30612,7 +30612,7 @@ Sound Bank
     Sound
     {
         Name = jamB-07;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30659,7 +30659,7 @@ Sound Bank
     Sound
     {
         Name = jamB-08;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30706,7 +30706,7 @@ Sound Bank
     Sound
     {
         Name = jamB-09;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30753,7 +30753,7 @@ Sound Bank
     Sound
     {
         Name = jamB-10;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30800,7 +30800,7 @@ Sound Bank
     Sound
     {
         Name = jamB-11;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30847,7 +30847,7 @@ Sound Bank
     Sound
     {
         Name = jamB-12;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30894,7 +30894,7 @@ Sound Bank
     Sound
     {
         Name = jamB-13;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30941,7 +30941,7 @@ Sound Bank
     Sound
     {
         Name = jamB-14;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -30988,7 +30988,7 @@ Sound Bank
     Sound
     {
         Name = jamB-15;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -31035,7 +31035,7 @@ Sound Bank
     Sound
     {
         Name = jamB-16;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -31082,7 +31082,7 @@ Sound Bank
     Sound
     {
         Name = breath;
-        Volume = -2700;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -46456,7 +46456,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
@@ -46546,7 +46546,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::4a1d1308-4760-43e9-921b-b5b3709734ad;
+                RPC Curve Name = 1::25717c20-72d6-4f03-a189-161ed6151cf2;
             }
         }
     }
