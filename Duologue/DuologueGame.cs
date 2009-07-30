@@ -1,3 +1,5 @@
+#define TSATEST
+
 #region File Description
 #endregion
 
@@ -77,6 +79,11 @@ namespace Duologue
 
         #region Fields
         private bool debug;
+#if TSATEST
+        private Texture2D tsaTexture;
+        private Vector2 tsaCenter;
+        private Vector2[] tsaPos;
+#endif
         #endregion
 
         #region Properties
@@ -390,6 +397,13 @@ namespace Duologue
             InstanceManager.GraphicsDevice = GraphicsDevice;
             InstanceManager.DefaultViewport = GraphicsDevice.Viewport;
 
+#if TSATEST
+            tsaTexture = Content.Load<Texture2D>("PlayerUI/tsa_test");
+            tsaCenter = new Vector2(
+                tsaTexture.Width / 2f, tsaTexture.Height / 2f);
+            tsaPos = null;
+#endif
+
             windowManager.LoadContents();
         }
 
@@ -478,7 +492,35 @@ namespace Duologue
         protected override void Draw(GameTime gameTime)
         {
             Render.Run();
+
+#if TSATEST
+            if (tsaPos == null)
+            {
+                tsaPos = new Vector2[]
+                {
+                    new Vector2(InstanceManager.DefaultViewport.TitleSafeArea.Left, InstanceManager.DefaultViewport.TitleSafeArea.Top),
+                    new Vector2(InstanceManager.DefaultViewport.TitleSafeArea.Left, InstanceManager.DefaultViewport.TitleSafeArea.Bottom),
+                    new Vector2(InstanceManager.DefaultViewport.TitleSafeArea.Right, InstanceManager.DefaultViewport.TitleSafeArea.Top),
+                    new Vector2(InstanceManager.DefaultViewport.TitleSafeArea.Right, InstanceManager.DefaultViewport.TitleSafeArea.Bottom)
+                };
+            }
+            spriteBatch.Begin();
+            for (int i = 0; i < tsaPos.Length; i++)
+            {
+                spriteBatch.Draw(
+                    tsaTexture,
+                    tsaPos[i],
+                    null,
+                    Color.White,
+                    0f,
+                    tsaCenter,
+                    1f,
+                    SpriteEffects.None,
+                    0f);
+            }
+            spriteBatch.End();
             base.Draw(gameTime);
+#endif
         }
 
         protected override void OnExiting(object sender, EventArgs args)
