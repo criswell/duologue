@@ -1,4 +1,4 @@
-#define TSATEST
+//#define PENIS
 
 #region File Description
 #endregion
@@ -519,8 +519,8 @@ namespace Duologue
                     0f);
             }
             spriteBatch.End();
-            base.Draw(gameTime);
 #endif
+            base.Draw(gameTime);
         }
 
         protected override void OnExiting(object sender, EventArgs args)
