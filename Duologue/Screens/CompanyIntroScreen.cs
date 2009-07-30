@@ -427,8 +427,10 @@ namespace Duologue.Screens
             
             // Location and scale
             position_Loading = new Vector2(
-                (float)InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent - loadingSize.X,
-                (float)InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent - loadingSize.Y);
+                InstanceManager.DefaultViewport.TitleSafeArea.Right - loadingSize.X - loadingPadding,
+                InstanceManager.DefaultViewport.TitleSafeArea.Bottom - loadingSize.Y - loadingPadding);
+                //(float)InstanceManager.DefaultViewport.Width * InstanceManager.TitleSafePercent - loadingSize.X,
+                //(float)InstanceManager.DefaultViewport.Height * InstanceManager.TitleSafePercent - loadingSize.Y);
             LocalInstanceManager.Spinner.Position = position_Loading;
             LocalInstanceManager.Spinner.Scale = Vector2.One;
 
