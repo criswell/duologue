@@ -40,7 +40,7 @@ namespace Duologue.PlayObjects
         private const string filename_Highlight = "Enemies/gloop/glooplet-highlight";
         private const string filename_Death = "Enemies/gloop/glooplet-death";
         private const string filename_SplatExplode = "Audio/PlayerEffects/splat-explode";
-        private const float volume_Splat = 0.18f;
+        private const float volume_Splat = 0.12f;
 
         private const int numberOfWormBits = 4;
 
