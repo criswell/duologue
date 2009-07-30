@@ -107,18 +107,18 @@ namespace Duologue.AchievementSystem
         private const float multiplyer_LayerOffset = 2.4f;
 
         private const float offsetX_MedalStart = 20f;
-        private const float offsetY_MedalStart = 175f;
+        private const float offsetY_MedalStart = 185f;
 
         private const float offsetX_UI = 435f + 7f;
         private const float offsetY_UI = 326.5f + 7f;
 
-        private const float offsetY_MedalCaseTitle = -2f;
+        private const float offsetY_MedalCaseTitle = 15f;
 
         private const float offsetX_MedalCaseIcon = -35f;
-        private const float offsetY_MedalCaseIcon = -35f;
+        private const float offsetY_MedalCaseIcon = -45f;
         private const float offset_IconShadow = 8f;
 
-        private const float offsetY_Stats = -60f;
+        private const float offsetY_Stats = -80f;
 
         private const int numberMedalsWide = 3;
         private const int numberMedalsHigh = 4;
