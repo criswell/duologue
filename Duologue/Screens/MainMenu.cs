@@ -287,7 +287,7 @@ namespace Duologue.Screens
                     maxWidth = size.X;
                 maxHeight += font.LineSpacing + extraLineSpacing;
             }
-            position = new Vector2(xOffset, yOffset);
+            position = new Vector2(xOffset, yOffset - tipFont.LineSpacing);
 
             gameSelectWindowLocation = new Rectangle(
                 (int)position.X - windowOffsetX,
