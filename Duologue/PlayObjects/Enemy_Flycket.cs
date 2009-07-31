@@ -634,7 +634,8 @@ namespace Duologue.PlayObjects
 
                     // Adjust the scream according to where we are on the screen
                     sfxi_Scream.Pan = MathHelper.Lerp(1f, -1f,
-                        ((float)InstanceManager.DefaultViewport.Width - Position.X) / (float)InstanceManager.DefaultViewport.Width);
+                        MathHelper.Clamp((float)InstanceManager.DefaultViewport.Width - Position.X 
+                        / (float)InstanceManager.DefaultViewport.Width, 0, 1f));
                 }
 
                 UpdateSmokeParticles(gameTime);
