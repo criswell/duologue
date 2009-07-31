@@ -16,8 +16,8 @@ Global Settings
     Header File = Duologue.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 3474651794;
-    Last Modified High = 30008336;
+    Last Modified Low = 30008336;
+    Last Modified High = 3474651794;
 
     Category
     {
@@ -264,7 +264,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+            Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             Property = 0;
             Sound = 0;
             Line Color = 4284848867;
@@ -13310,7 +13310,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
@@ -13369,7 +13369,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
@@ -13428,7 +13428,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
@@ -13487,7 +13487,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
@@ -13546,7 +13546,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
@@ -14051,7 +14051,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
@@ -23342,7 +23342,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
@@ -33520,7 +33520,7 @@ Sound Bank
     Sound
     {
         Name = nernt-15;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33567,7 +33567,7 @@ Sound Bank
     Sound
     {
         Name = nernt-16;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33614,7 +33614,7 @@ Sound Bank
     Sound
     {
         Name = beat-01;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33661,7 +33661,7 @@ Sound Bank
     Sound
     {
         Name = beat-02;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33708,7 +33708,7 @@ Sound Bank
     Sound
     {
         Name = beat-03;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33755,7 +33755,7 @@ Sound Bank
     Sound
     {
         Name = beat-04;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33802,7 +33802,7 @@ Sound Bank
     Sound
     {
         Name = beat-05;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33849,7 +33849,7 @@ Sound Bank
     Sound
     {
         Name = beat-06;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33896,7 +33896,7 @@ Sound Bank
     Sound
     {
         Name = beat-07;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33943,7 +33943,7 @@ Sound Bank
     Sound
     {
         Name = beat-08;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -33990,7 +33990,7 @@ Sound Bank
     Sound
     {
         Name = beat-09;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34037,7 +34037,7 @@ Sound Bank
     Sound
     {
         Name = beat-10;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34084,7 +34084,7 @@ Sound Bank
     Sound
     {
         Name = beat-11;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34131,7 +34131,7 @@ Sound Bank
     Sound
     {
         Name = beat-12;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34178,7 +34178,7 @@ Sound Bank
     Sound
     {
         Name = beat-13;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34225,7 +34225,7 @@ Sound Bank
     Sound
     {
         Name = beat-14;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34272,7 +34272,7 @@ Sound Bank
     Sound
     {
         Name = beat-15;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34319,7 +34319,7 @@ Sound Bank
     Sound
     {
         Name = beat-16;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34366,7 +34366,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-01;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34413,7 +34413,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-02;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34460,7 +34460,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-03;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34507,7 +34507,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-04;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34554,7 +34554,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-05;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34601,7 +34601,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-06;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34648,7 +34648,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-07;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34695,7 +34695,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-08;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34742,7 +34742,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-09;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34789,7 +34789,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-10;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34836,7 +34836,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-11;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34883,7 +34883,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-12;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34930,7 +34930,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-13;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -34977,7 +34977,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-14;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35024,7 +35024,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-15;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35071,7 +35071,7 @@ Sound Bank
     Sound
     {
         Name = cartoon-16;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35118,7 +35118,7 @@ Sound Bank
     Sound
     {
         Name = nernt-01;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35165,7 +35165,7 @@ Sound Bank
     Sound
     {
         Name = nernt-02;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35212,7 +35212,7 @@ Sound Bank
     Sound
     {
         Name = nernt-03;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35259,7 +35259,7 @@ Sound Bank
     Sound
     {
         Name = nernt-04;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35306,7 +35306,7 @@ Sound Bank
     Sound
     {
         Name = nernt-05;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35353,7 +35353,7 @@ Sound Bank
     Sound
     {
         Name = nernt-06;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35400,7 +35400,7 @@ Sound Bank
     Sound
     {
         Name = nernt-07;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35447,7 +35447,7 @@ Sound Bank
     Sound
     {
         Name = nernt-08;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35494,7 +35494,7 @@ Sound Bank
     Sound
     {
         Name = nernt-09;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35541,7 +35541,7 @@ Sound Bank
     Sound
     {
         Name = nernt-10;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35588,7 +35588,7 @@ Sound Bank
     Sound
     {
         Name = nernt-11;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35635,7 +35635,7 @@ Sound Bank
     Sound
     {
         Name = nernt-12;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35682,7 +35682,7 @@ Sound Bank
     Sound
     {
         Name = nernt-13;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -35729,7 +35729,7 @@ Sound Bank
     Sound
     {
         Name = nernt-14;
-        Volume = -1200;
+        Volume = -850;
         Pitch = 0;
         Priority = 0;
 
@@ -46456,7 +46456,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
@@ -46546,7 +46546,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Volume;
-                RPC Curve Name = 1::eb40eb18-07eb-4dee-af97-f088629e3ea0;
+                RPC Curve Name = 1::d64ff044-2966-4089-8ffd-445ac2ff9d31;
             }
         }
     }
