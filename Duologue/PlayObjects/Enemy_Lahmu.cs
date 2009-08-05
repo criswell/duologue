@@ -379,6 +379,14 @@ namespace Duologue.PlayObjects
             Alive = true;
         }
 
+        public override String[] GetSFXFilenames()
+        {
+            return new String[]
+            {
+                filename_BigBaddaBoom,
+                filename_SquidWalk
+            };
+        }
         public override String[] GetTextureFilenames()
         {
             String[] filenames = new String[frames_Tentacle * 2 + 4 + frames_Flame];
