@@ -264,8 +264,10 @@ namespace Duologue.PlayObjects
             try
             {
                 sfxi_Rumble.Stop();
+                sfxi_Rumble.Dispose();
             }
             catch { }
+
             base.CleanUp();
         }
         #endregion

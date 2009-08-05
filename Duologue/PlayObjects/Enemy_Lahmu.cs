@@ -410,6 +410,13 @@ namespace Duologue.PlayObjects
             try
             {
                 sfxi_SquidWalk.Stop();
+                sfxi_SquidWalk.Dispose();
+            }
+            catch { }
+            try
+            {
+                sfxi_Boom.Stop();
+                sfxi_Boom.Dispose();
             }
             catch { }
             base.CleanUp();

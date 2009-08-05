@@ -613,17 +613,22 @@ namespace Duologue.PlayObjects
             try
             {
                 sfxi_EndBoom.Stop();
+                sfxi_EndBoom.Dispose();
             }
             catch { }
             try
             {
                 sfxi_EyeBallWobble.Stop();
+                sfxi_EyeBallWobble.Dispose();
             }
             catch { }
             try
             {
-                for(int i = 0; i < sfxi_TubeExplode.Length; i++)
+                for (int i = 0; i < sfxi_TubeExplode.Length; i++)
+                {
                     sfxi_TubeExplode[i].Stop();
+                    sfxi_TubeExplode[i].Dispose();
+                }
             }
             catch { }
             base.CleanUp();

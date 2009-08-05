@@ -221,6 +221,7 @@ namespace Duologue.PlayObjects
             try
             {
                 sfxi_Bubble.Stop();
+                sfxi_Bubble.Dispose();
             }
             catch { }
             base.CleanUp();

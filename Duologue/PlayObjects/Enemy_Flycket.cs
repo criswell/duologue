@@ -242,6 +242,7 @@ namespace Duologue.PlayObjects
             try
             {
                 sfxi_Scream.Stop();
+                sfxi_Scream.Dispose();
             }
             catch { }
             base.CleanUp();
