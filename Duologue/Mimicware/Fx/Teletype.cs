@@ -368,7 +368,7 @@ namespace Mimicware.Fx
         {
             for (int i = 0; i < maxTeletypeEntries; i++)
             {
-                if (entries[i] != null && entries[i].Alive)
+                if (entries[i] != null) // && entries[i].Alive)
                 {
                     entries[i].Flush();
                     entries[i] = null;
