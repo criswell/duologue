@@ -191,7 +191,7 @@ namespace Mimicware.Manager
                 LastGamePadStates[i] = CurrentGamePadStates[i];
 
                 CurrentKeyboardStates[i] = Keyboard.GetState((PlayerIndex)i);
-                CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex)i);
+                CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex)i, GamePadDeadZone.Circular);
             }
         }
         #endregion

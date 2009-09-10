@@ -577,6 +577,7 @@ namespace Duologue.UI
         /// </summary>
         public void PurgePointlets()
         {
+            freePointlets.Clear();
             for (int i = 0; i < numPointlets; i++)
             {
                 pointlets[i] = new Pointlet(
