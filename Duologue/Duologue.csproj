@@ -96,8 +96,8 @@
     <Compile Include="Audio\Widgets\IntensityWidget.cs" />
     <Compile Include="Audio\Widgets\VolumeChangeWidget.cs" />
     <Compile Include="Background.cs" />
-    <Compile Include="CreatorsClub\GameScreen.cs" />
-    <Compile Include="CreatorsClub\InputState.cs" />
+    <None Include="CreatorsClub\GameScreen.cs" />
+    <None Include="CreatorsClub\InputState.cs" />
     <Compile Include="LocalInstanceManager.cs" />
     <Compile Include="Mimicware\Fx\Particle.cs" />
     <Compile Include="Mimicware\Fx\ParticleSystem.cs" />
@@ -152,7 +152,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="CreatorsClub\ScreenManager.cs" />
+    <None Include="CreatorsClub\ScreenManager.cs" />
     <Compile Include="Screens\BuyScreen.cs" />
     <Compile Include="Screens\BuyScreenManager.cs" />
     <Compile Include="Screens\ColorStateTestComponent.cs" />
