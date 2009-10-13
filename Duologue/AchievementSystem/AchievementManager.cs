@@ -374,8 +374,8 @@ namespace Duologue.AchievementSystem
                 }
                 if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Down == ButtonState.Pressed &&
                     InstanceManager.InputManager.LastGamePadStates[i].DPad.Down == ButtonState.Released) ||
-                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y < 0 &&
-                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y >= 0))
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y < -0.3f &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y >= -0.3f))
                 {
                     pressed = true;
                     break;
@@ -401,8 +401,8 @@ namespace Duologue.AchievementSystem
                 }
                 if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Left == ButtonState.Pressed &&
                     InstanceManager.InputManager.LastGamePadStates[i].DPad.Left == ButtonState.Released) ||
-                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.X < 0 &&
-                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.X >= 0))
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.X < -0.3f &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.X >= -0.3f))
                 {
                     pressed = true;
                     break;
@@ -428,8 +428,8 @@ namespace Duologue.AchievementSystem
                 }
                 if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Right == ButtonState.Pressed &&
                     InstanceManager.InputManager.LastGamePadStates[i].DPad.Right == ButtonState.Released) ||
-                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.X > 0 &&
-                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.X <= 0))
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.X > 0.3f &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.X <= 0.3f))
                 {
                     pressed = true;
                     break;
@@ -455,8 +455,8 @@ namespace Duologue.AchievementSystem
                 }
                 if ((InstanceManager.InputManager.CurrentGamePadStates[i].DPad.Up == ButtonState.Pressed &&
                     InstanceManager.InputManager.LastGamePadStates[i].DPad.Up == ButtonState.Released) ||
-                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y > 0 &&
-                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y <= 0))
+                   (InstanceManager.InputManager.CurrentGamePadStates[i].ThumbSticks.Left.Y > 0.3f &&
+                    InstanceManager.InputManager.LastGamePadStates[i].ThumbSticks.Left.Y <= 0.3f))
                 {
                     pressed = true;
                     break;
