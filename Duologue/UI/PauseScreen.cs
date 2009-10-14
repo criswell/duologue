@@ -191,7 +191,8 @@ namespace Duologue.UI
             }
 
             if (!(LocalInstanceManager.CurrentGameState == GameState.CampaignGame ||
-                LocalInstanceManager.CurrentGameState == GameState.SurvivalGame))
+                LocalInstanceManager.CurrentGameState == GameState.SurvivalGame) ||
+                Guide.IsTrialMode)
             {
                 pauseMenuItems[loadSaveGame].Invisible = true;
             }
