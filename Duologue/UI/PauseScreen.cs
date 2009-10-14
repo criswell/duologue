@@ -92,6 +92,7 @@ namespace Duologue.UI
 
         private Game myGame;
         private bool initialized;
+        private SaveGame saveGame;
 
         private bool isTrialMode;
 
@@ -104,6 +105,7 @@ namespace Duologue.UI
         private int exitMainMenu;
         private int medalCase;
         private int buyGame;
+        private int loadSaveGame;
         private Rectangle pauseMenuWindowLocation;
         private Vector2 position;
         private Vector2[] shadowOffsets;
@@ -119,6 +121,7 @@ namespace Duologue.UI
 
         // Medal screen stopper
         private bool inMedalScreen = false;
+        private bool inSaveScreen = false;
         #endregion
 
         #region Properties
@@ -129,6 +132,7 @@ namespace Duologue.UI
             : base(game)
         {
             myGame = game;
+            saveGame = ServiceLocator.GetService<SaveGame>();
 
             pauseMenuItems = new List<MenuItem>();
 
@@ -171,16 +175,29 @@ namespace Duologue.UI
             resumeGame = 0;
             pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_MedalCase));
             medalCase = 1;
+            pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_SaveLoad));
+            loadSaveGame = 2;
             pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_ExitMainMenu));
-            exitMainMenu = 2;
+            exitMainMenu = 3;
             if (Guide.IsTrialMode)
             {
                 pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_Buy));
-                buyGame = 3;
+                buyGame = 4;
+                pauseMenuItems[loadSaveGame].Invisible = true;
             }
             else
             {
                 buyGame = -999;
+            }
+
+            if (!(LocalInstanceManager.CurrentGameState == GameState.CampaignGame ||
+                LocalInstanceManager.CurrentGameState == GameState.SurvivalGame))
+            {
+                pauseMenuItems[loadSaveGame].Invisible = true;
+            }
+            else
+            {
+                pauseMenuItems[loadSaveGame].Invisible = false;
             }
         }
 
@@ -225,6 +242,8 @@ namespace Duologue.UI
 
             sfx_LifeUp = InstanceManager.AssetManager.LoadSoundEffect(filename_LifeUp);
             sfxi_LifeUp = null;
+
+            saveGame.LoadContent();
 
             base.LoadContent();
         }
@@ -407,6 +426,12 @@ namespace Duologue.UI
                 LocalInstanceManager.Pause = false;
                 LocalInstanceManager.CurrentGameState = GameState.BuyScreen;
                 LocalInstanceManager.NextGameState = GameState.MainMenuSystem;
+            }
+            else if (currentSelection == loadSaveGame && !Guide.IsTrialMode &&
+                !pauseMenuItems[loadSaveGame].Invisible)
+            {
+                inSaveScreen = true;
+                saveGame.Entrance();
             }
         }
 
@@ -706,6 +731,11 @@ namespace Duologue.UI
                     LocalInstanceManager.Scores[i].Visible = true;
             }
         }
+
+        public void ReturnFromSaveScreen()
+        {
+            inSaveScreen = false;
+        }
         #endregion
 
         #region Update / Draw
@@ -726,6 +756,10 @@ namespace Duologue.UI
             {
                 LocalInstanceManager.AchievementManager.Update(gameTime);
             }
+            else if (inSaveScreen)
+            {
+                saveGame.Update(gameTime);
+            }
             else
             {
                 timeSinceStart += gameTime.ElapsedGameTime.TotalSeconds;
@@ -739,6 +773,15 @@ namespace Duologue.UI
                     LocalInstanceManager.Pause = false;
                 }
 
+                /* This is how you skip levels
+                if (InstanceManager.InputManager.NewKeyPressed(Keys.S))
+                {
+                    LocalInstanceManager.LevelSet = true;
+                    LocalInstanceManager.LevelSkip = true;
+                    LocalInstanceManager.NextMajorWave = 10;
+                    LocalInstanceManager.NextMinorWave = 0;
+                }
+                 */
                 InnerUpdate(pauseMenuItems);
 
                 // We only want to proceed provided the InitAll() was called
@@ -784,7 +827,10 @@ namespace Duologue.UI
 
         public override void Draw(GameTime gameTime)
         {
-            if (!inMedalScreen)
+            if (inSaveScreen)
+            {
+                saveGame.Draw(gameTime);
+            } else if (!inMedalScreen)
             {
                 if (numberOfTiles <= 0)
                 {

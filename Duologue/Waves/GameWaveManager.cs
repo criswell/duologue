@@ -45,7 +45,7 @@ namespace Duologue.Waves
     /// <summary>
     /// The manager of the game waves
     /// </summary>
-    public class GameWaveManager
+    public class GameWaveManager : IService
     {
         #region Constants
         /// <summary>
@@ -772,6 +772,13 @@ namespace Duologue.Waves
         public GameWave GetNextWave()
         {
             GameWave temp;
+            if (LocalInstanceManager.LevelSet)
+            {
+                CurrentMajorNumber = LocalInstanceManager.NextMajorWave;
+                CurrentMinorNumber = LocalInstanceManager.NextMinorWave;
+                LocalInstanceManager.LevelSet = false;
+            }
+
             if (LocalInstanceManager.CurrentGameState == GameState.SurvivalGame)
             {
                 temp = GenerateRandomWave(CurrentMajorNumber, CurrentMinorNumber);

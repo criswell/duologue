@@ -201,6 +201,14 @@ namespace Duologue
         /// True if the game can be paused, false if we're in some sort of cinematic
         /// </summary>
         public static bool CanPause;
+
+        public static bool LevelSet = false;
+
+        public static int NextMajorWave;
+
+        public static int NextMinorWave;
+
+        public static bool LevelSkip = false;
         #endregion
 
         #region Public methods

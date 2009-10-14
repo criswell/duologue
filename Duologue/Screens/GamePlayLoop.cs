@@ -308,10 +308,25 @@ namespace Duologue.Screens
 
             // If we have no living enemies, it means we need to get them from the next wavelet,
             // or move to next wave
-            if ((livingEnemies < 1 && livingPlayers > 0 && !myManager.TutorialManager.TutorialOnscreen) || skip)
+            if ((livingEnemies < 1 && livingPlayers > 0 && !myManager.TutorialManager.TutorialOnscreen) 
+                || skip || LocalInstanceManager.LevelSkip)
             {
-                if (skip)
+                if (skip || LocalInstanceManager.LevelSkip)
+                {
                     myManager.CleanEnemies();
+                    LocalInstanceManager.CurrentGameWave.CurrentWavelet =
+                        LocalInstanceManager.CurrentGameWave.NumWavelets;
+                    // Reset player scores and lives
+                    for (int i = 0; i < InputManager.MaxInputs; i++)
+                    {
+                        if (LocalInstanceManager.Players[i].Active)
+                        {
+                            LocalInstanceManager.Scores[i].SetScore(0);
+                            LocalInstanceManager.Scores[i].ResetLives();
+                        }
+                    }
+                    LocalInstanceManager.LevelSkip = false;
+                }
 
                 if (myManager.CurrentState == GamePlayState.Playing)
                     LocalInstanceManager.CurrentGameWave.CurrentWavelet++;

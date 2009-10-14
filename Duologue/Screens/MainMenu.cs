@@ -95,6 +95,7 @@ namespace Duologue.Screens
         private int debugSequence;
 
         private Game myGame;
+        private SaveGame saveGame;
 
         private Vector2[] shadowOffsets;
         private Vector2[] shadowOffsetsSelected;
@@ -122,6 +123,7 @@ namespace Duologue.Screens
             gameSelectItems = new List<MenuItem>();
 
             myGame = game;
+            saveGame = ServiceLocator.GetService<SaveGame>();
         }
 
         /// <summary>
@@ -755,6 +757,7 @@ namespace Duologue.Screens
                         if (device.IsConnected)
                         {
                             LocalInstanceManager.AchievementManager.InitStorageData(device);
+                            saveGame.SetStorageDevice(device);
 
                             startPressed = true;
                             currentState = MainMenuState.MainMenu;

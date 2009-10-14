@@ -340,6 +340,132 @@ namespace Duologue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string LoadSave_Cancel {
+            get {
+                return ResourceManager.GetString("LoadSave_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        internal static string LoadSave_Done {
+            get {
+                return ResourceManager.GetString("LoadSave_Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wave: {0} Date: {1}/{2}/{3} {4}:{5}.
+        /// </summary>
+        internal static string LoadSave_FileFormat {
+            get {
+                return ResourceManager.GetString("LoadSave_FileFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load game.
+        /// </summary>
+        internal static string LoadSave_Load {
+            get {
+                return ResourceManager.GetString("LoadSave_Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load game?.
+        /// </summary>
+        internal static string LoadSave_LoadConfirm {
+            get {
+                return ResourceManager.GetString("LoadSave_LoadConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        internal static string LoadSave_Loading {
+            get {
+                return ResourceManager.GetString("LoadSave_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string LoadSave_No {
+            get {
+                return ResourceManager.GetString("LoadSave_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No save data.
+        /// </summary>
+        internal static string LoadSave_NoSave {
+            get {
+                return ResourceManager.GetString("LoadSave_NoSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save game.
+        /// </summary>
+        internal static string LoadSave_Save {
+            get {
+                return ResourceManager.GetString("LoadSave_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save current game?.
+        /// </summary>
+        internal static string LoadSave_SaveConfirm {
+            get {
+                return ResourceManager.GetString("LoadSave_SaveConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite current save-.
+        /// </summary>
+        internal static string LoadSave_SaveOverwrite {
+            get {
+                return ResourceManager.GetString("LoadSave_SaveOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving....
+        /// </summary>
+        internal static string LoadSave_Saving {
+            get {
+                return ResourceManager.GetString("LoadSave_Saving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Mode.
+        /// </summary>
+        internal static string LoadSave_Title {
+            get {
+                return ResourceManager.GetString("LoadSave_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        internal static string LoadSave_Yes {
+            get {
+                return ResourceManager.GetString("LoadSave_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Medal Display Case.
         /// </summary>
         internal static string MainMenu_Achievements {
@@ -732,6 +858,15 @@ namespace Duologue.Properties {
         internal static string PauseScreen_ResumeGame {
             get {
                 return ResourceManager.GetString("PauseScreen_ResumeGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load/Save.
+        /// </summary>
+        internal static string PauseScreen_SaveLoad {
+            get {
+                return ResourceManager.GetString("PauseScreen_SaveLoad", resourceCulture);
             }
         }
         

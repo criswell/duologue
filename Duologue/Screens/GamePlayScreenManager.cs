@@ -115,6 +115,7 @@ namespace Duologue.Screens
         {
             localGame = (DuologueGame)game;
             gameWaveManager = new GameWaveManager();
+            ServiceLocator.RegisterService(gameWaveManager);
             waveDisplay = new WaveDisplay(localGame);
             waveDisplay.DrawOrder = 200;
             localGame.Components.Add(waveDisplay);

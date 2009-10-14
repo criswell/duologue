@@ -238,6 +238,9 @@ namespace Duologue
             this.Components.Add(achievements);
             achievements.DrawOrder = 300;
 
+            SaveGame saveGame = new SaveGame();
+            ServiceLocator.RegisterService(saveGame);
+
             pauseScreen = new PauseScreen(this);
             pauseScreen.Enabled = false;
             pauseScreen.Visible = false;

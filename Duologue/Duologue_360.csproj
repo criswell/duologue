@@ -159,6 +159,7 @@
     <Compile Include="Screens\PlayerSelectScreen.cs" />
     <Compile Include="Screens\PlayerSelectBase.cs" />
     <Compile Include="State\GameState.cs" />
+    <Compile Include="State\SaveGame.cs" />
     <Compile Include="Tests\GamePlayTest.cs" />
     <Compile Include="Mimicware\Debug\Logger.cs" />
     <Compile Include="Mimicware\Graphics\RenderSprite.cs" />
