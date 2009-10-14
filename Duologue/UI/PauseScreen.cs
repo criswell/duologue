@@ -183,7 +183,6 @@ namespace Duologue.UI
             {
                 pauseMenuItems.Add(new MenuItem(Resources.PauseScreen_Buy));
                 buyGame = 4;
-                pauseMenuItems[loadSaveGame].Invisible = true;
             }
             else
             {
