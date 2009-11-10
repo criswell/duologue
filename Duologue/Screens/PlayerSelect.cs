@@ -319,6 +319,7 @@ namespace Duologue.Screens
             if (numActive > 0 && LocalInstanceManager.CurrentGameState == GameState.PlayerSelect)
             {
                 LocalInstanceManager.CurrentGameState = LocalInstanceManager.NextGameState;
+                LocalInstanceManager.LevelSkip = false;
                 // Set the players
                 SetPlayers();
             }
