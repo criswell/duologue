@@ -14,6 +14,7 @@ var _current_screen: Node = null
 func _ready() -> void:
 	# Build the screen map at runtime where autoload is guaranteed available.
 	_screens = {
+		GameState.State.COMPANY_INTRO: "res://scenes/ui/company_intro.tscn",
 		GameState.State.MAIN_MENU: "res://scenes/ui/main_menu.tscn",
 		GameState.State.GAMEPLAY: "res://scenes/game/game_play.tscn",
 		GameState.State.GAME_OVER: "res://scenes/ui/game_over.tscn",
@@ -21,8 +22,8 @@ func _ready() -> void:
 	}
 
 	GameState.state_changed.connect(_on_state_changed)
-	# Defer initial screen load to ensure tree is ready.
-	call_deferred("_change_screen", GameState.State.MAIN_MENU)
+	# Start with company intro
+	call_deferred("_change_screen", GameState.State.COMPANY_INTRO)
 
 
 func _on_state_changed(_old_state: GameState.State, new_state: GameState.State) -> void:

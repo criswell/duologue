@@ -43,6 +43,10 @@ func intensify() -> void:
 		current_intensity += 1
 
 
+func register_kill() -> void:
+	intensify()
+
+
 func detensify() -> void:
 	current_intensity -= 1
 

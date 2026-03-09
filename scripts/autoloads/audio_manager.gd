@@ -28,6 +28,7 @@ var _is_managed: bool = false
 # Beat tracking (replaces BeatWidget)
 var _beat_timer: float = 0.0
 var _beat_length_ms: float = 0.0
+const MUSIC_VOLUME_DB := -2.5  # ~75% volume
 var _current_beat: int = 0
 var _beat_count: int = 0
 
@@ -68,14 +69,13 @@ func _setup_buses() -> void:
 			AudioServer.set_bus_name(idx, bus_name)
 			AudioServer.set_bus_send(idx, "Master")
 
-	# Create track sub-buses under Music (max 7 tracks)
+	# Create track sub-buses under Music (max 7 tracks + 1 managed)
 	var music_bus := "Music"
-	for i in range(7):
-		var track_name := "Track_%d" % i
-		if AudioServer.get_bus_index(track_name) == -1:
+	for bus_suffix in ["Managed", "Track_0", "Track_1", "Track_2", "Track_3", "Track_4", "Track_5", "Track_6"]:
+		if AudioServer.get_bus_index(bus_suffix) == -1:
 			var idx := AudioServer.bus_count
 			AudioServer.add_bus(idx)
-			AudioServer.set_bus_name(idx, track_name)
+			AudioServer.set_bus_name(idx, bus_suffix)
 			AudioServer.set_bus_send(idx, music_bus)
 
 
@@ -163,19 +163,24 @@ func _play_managed() -> void:
 		return
 
 	_is_managed = true
-	_managed_player = AudioStreamPlayer.new()
-	_managed_player.bus = "Music"
-	_managed_player.stream = stream
-	add_child(_managed_player)
 
-	# Enable looping
-	_set_stream_loop(stream, true)
+	var player := AudioStreamPlayer.new()
+	player.bus = "Music"
+	add_child(player)
+	_track_players.append(player)
+	_track_enabled.append(true)
 
-	_managed_player.play()
+	# Don't use AudioStreamWAV loop_mode — imported WAVs have loop_end=0
+	# which creates a zero-length loop (silence). Use signal-based looping.
+	player.stream = stream
+	player.finished.connect(player.play)
+	player.play()
+
+	_managed_player = player
 	_is_playing = true
-	# Reset music bus volume in case a previous fade left it low
+
 	var music_bus_idx := AudioServer.get_bus_index("Music")
-	AudioServer.set_bus_volume_db(music_bus_idx, 0.0)
+	AudioServer.set_bus_volume_db(music_bus_idx, MUSIC_VOLUME_DB)
 
 
 # --- Private: Beat song playback ---
@@ -222,7 +227,7 @@ func _play_beat() -> void:
 
 	# Reset music bus volume
 	var music_bus_idx := AudioServer.get_bus_index("Music")
-	AudioServer.set_bus_volume_db(music_bus_idx, 0.0)
+	AudioServer.set_bus_volume_db(music_bus_idx, MUSIC_VOLUME_DB)
 
 	# Play first beat immediately
 	_play_current_beat()

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_gloop.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/gloop/glooplet.png" id="2_base"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/gloop/glooplet-highlight.png" id="3_highlight"]
+
+[node name="Gloop" type="Area2D"]
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="BaseSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_base")
+
+[node name="HighlightSprite" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("3_highlight")

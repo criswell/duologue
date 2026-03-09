@@ -70,6 +70,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
+signal pause_toggled(paused: bool)
+
 func _input(event: InputEvent) -> void:
 	# Auto-detect input mode for UI hints and aim behavior
 	if event is InputEventKey or event is InputEventMouseMotion or event is InputEventMouseButton:
@@ -78,6 +80,12 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
 		if input_mode != InputMode.GAMEPAD:
 			input_mode = InputMode.GAMEPAD
+
+	# Handle pause globally (works even while tree is paused)
+	if event.is_action_pressed("pause") and current_state == State.GAMEPLAY:
+		is_paused = !is_paused
+		get_tree().paused = is_paused
+		pause_toggled.emit(is_paused)
 
 
 func reset_game() -> void:
