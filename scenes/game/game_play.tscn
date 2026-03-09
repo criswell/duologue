@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkr4v8m2xpn6w"]
+
+[ext_resource type="Script" path="res://scripts/game/game_play.gd" id="1_gameplay"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/background-01.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/clouds-01.png" id="3_clouds1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/clouds-02.png" id="4_clouds2"]
+[ext_resource type="FontFile" path="res://assets/fonts/inero.ttf" id="5_font"]
+
+[node name="GamePlay" type="Node2D"]
+script = ExtResource("1_gameplay")
+
+[node name="Background" type="ParallaxBackground" parent="."]
+
+[node name="BGLayer" type="ParallaxLayer" parent="Background"]
+motion_scale = Vector2(0, 0)
+
+[node name="BGSprite" type="Sprite2D" parent="Background/BGLayer"]
+position = Vector2(640, 360)
+texture = ExtResource("2_bg")
+
+[node name="CloudLayer1" type="ParallaxLayer" parent="Background"]
+motion_scale = Vector2(0.1, 0.05)
+motion_mirroring = Vector2(1280, 720)
+
+[node name="CloudSprite" type="Sprite2D" parent="Background/CloudLayer1"]
+position = Vector2(640, 360)
+modulate = Color(1, 1, 1, 0.3)
+scale = Vector2(2.67, 2.0)
+texture = ExtResource("3_clouds1")
+
+[node name="CloudLayer2" type="ParallaxLayer" parent="Background"]
+motion_scale = Vector2(0.15, 0.08)
+motion_mirroring = Vector2(1280, 720)
+
+[node name="CloudSprite" type="Sprite2D" parent="Background/CloudLayer2"]
+position = Vector2(640, 360)
+modulate = Color(1, 1, 1, 0.2)
+scale = Vector2(2.67, 2.0)
+texture = ExtResource("4_clouds2")
+
+[node name="EntityLayer" type="Node2D" parent="."]
+
+[node name="EffectsLayer" type="Node2D" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="ScoreLabel" type="Label" parent="HUD"]
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 300.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 22
+text = "Score: 0"
+
+[node name="LivesLabel" type="Label" parent="HUD"]
+offset_left = 20.0
+offset_top = 40.0
+offset_right = 300.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 22
+text = "Lives: 3"
+
+[node name="WaveLabel" type="Label" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -400.0
+offset_top = 10.0
+offset_bottom = 70.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 20
+text = "Wave 1"
+horizontal_alignment = 2
