@@ -1,0 +1,15 @@
+# Godot
+.godot/
+*.import
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AI cerebrum (symlink to personal memory system)
+.ai-cerebrum
+.ai/
+.claude/
+
+# XNA reference (temporary, will be removed after port is complete)
+_xna_reference/
